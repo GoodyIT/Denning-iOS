@@ -39,6 +39,7 @@
     [self registerNibs];
     //    [self configureSearch];
     [self getHeaderInfo];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -129,6 +130,7 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getStaffOnlineWithURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        [SVProgressHUD dismiss];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         if (error == nil) {
             

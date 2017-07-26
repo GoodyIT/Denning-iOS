@@ -29,9 +29,9 @@
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
-@property (weak, nonatomic) IBOutlet UIButton *btnAll;
-@property (weak, nonatomic) IBOutlet UIButton *btnToday;
-@property (weak, nonatomic) IBOutlet UIButton *btnThisweek;
+@property (weak, nonatomic) IBOutlet MIBadgeButton *btnAll;
+@property (weak, nonatomic) IBOutlet MIBadgeButton *btnToday;
+@property (weak, nonatomic) IBOutlet MIBadgeButton *btnThisweek;
 
 @property (strong, nonatomic) NSArray<UILabel*>* topLabels;
 @end
@@ -46,6 +46,7 @@
     [self configureSearch];
     _idx = 1;
     [self getHeaderWithCompletion:^{
+        [SVProgressHUD showWithStatus:@"Loading"];
         [self getList];
     }];
     
@@ -115,7 +116,9 @@
     [self resetAllButtons];
     [self setStatus:btnArray[index]];
     _idx = index;
+    _page = @(1);
     _url = _items[_idx].api;
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -146,7 +149,7 @@
         [btnArray[i] setTitle:_items[i].label forState:UIControlStateNormal];
         [DIHelpers configureButton:btnArray[i] withBadge:_items[i].value withColor:[UIColor grayColor]];
     }
-    [btnArray[0] setBadgeBackgroundColor:[UIColor redColor]];
+    [btnArray[1] setBadgeBackgroundColor:[UIColor redColor]];
 }
 
 - (void) getHeaderWithCompletion:(void(^)(void))completion;
@@ -172,6 +175,7 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getNewMatterInURL:_url withPage:self.page withFilter:self.filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        [SVProgressHUD dismiss];
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^UpdateContactHandler)(SearchResultModel* model);
+
 @interface DashboardContact : UIViewController
+
+@property (strong, nonatomic) NSString* url;
 
 @end

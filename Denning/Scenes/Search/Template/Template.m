@@ -1,54 +1,63 @@
 //
-//  DashboarMyDueTask.m
+//  Template.m
 //  Denning
 //
-//  Created by Ho Thong Mee on 28/06/2017.
+//  Created by Ho Thong Mee on 24/07/2017.
 //  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-#import "DashboarMyDueTask.h"
-#import "myDueTaskCell.h"
+#import "Template.h"
 #import <HTHorizontalSelectionList/HTHorizontalSelectionList.h>
+#import "TemplateCell.h"
+#import "ListWithDescriptionViewController.h"
+#import "TemplateType.h"
 
-@interface DashboarMyDueTask ()
-<UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,  HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate>
+@interface Template ()<UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,  HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate,
+ContactListWithDescSelectionDelegate>
 {
     __block BOOL isFirstLoading;
     __block BOOL isLoading;
     BOOL initCall;
     BOOL isAppending;
     NSInteger selectedIndex;
-    NSString* baseUrl;
+    NSString* curUserFilter, *baseUrl;
+    NSString* curCategory, *curType;
+    NSString* titleOfList;
+    NSString* nameOfField;
 }
+@property (weak, nonatomic) IBOutlet UILabel *fileNo;
+@property (weak, nonatomic) IBOutlet UILabel *fileName;
+@property (weak, nonatomic) IBOutlet UIButton *btnCategory;
+@property (weak, nonatomic) IBOutlet UIButton *btnType;
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray* listOfTasks;
+@property (strong, nonatomic) NSMutableArray* listOfTemplates;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
-
+@property (strong, nonatomic) NSString* url;
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
 @property (strong, nonatomic) NSArray* topFilter;
 @property (strong, nonatomic) NSArray* arrayOfFilterValues;
 @end
 
-@implementation DashboarMyDueTask
+@implementation Template
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self parseUrl];
     [self prepareUI];
+    [self updateHeaderInfo];
     [self registerNibs];
     [self configureSearch];
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self getList];
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:NO];
     [super viewWillDisappear:animated];
 }
 
@@ -60,6 +69,11 @@
 
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) updateHeaderInfo {
+    _fileNo.text = [DIHelpers separateFileNameAndNoFromTitle:_model.title][0];
+    _fileName.text = [DIHelpers separateFileNameAndNoFromTitle:_model.title][1];
 }
 
 - (void) configureSearch
@@ -76,19 +90,10 @@
 }
 
 - (void)registerNibs {
-    [myDueTaskCell registerForReuseInTableView:self.tableView];
+    [TemplateCell registerForReuseInTableView:self.tableView];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
-}
-
-- (void) parseUrl {
-    NSRange range =  [_url rangeOfString:@"?" options:NSBackwardsSearch];
-    if (range.location > _url.length) {
-        baseUrl = _url;
-        return;
-    }
-    baseUrl = [_url substringToIndex:range.location];
 }
 
 - (void) prepareUI
@@ -98,21 +103,30 @@
     self.filter = @"";
     initCall = YES;
     isAppending = NO;
+    curUserFilter = @"all";
+    
+    self.btnCategory.titleLabel.minimumScaleFactor = 0.5f;
+    self.btnCategory.titleLabel.numberOfLines = 0;
+    self.btnCategory.titleLabel.adjustsFontSizeToFitWidth = YES;
+    
+    self.btnType.titleLabel.minimumScaleFactor = 0.5f;
+    self.btnType.titleLabel.numberOfLines = 0;
+    self.btnType.titleLabel.adjustsFontSizeToFitWidth = YES;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
-    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 66, self.view.frame.size.width, 44)];
+    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
     self.selectionList.dataSource = self;
     
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
-    _topFilter = @[@"Today", @"Next 7 Days",  @"After 7 Days"];
-    _arrayOfFilterValues = @[@"Today", @"next7", @"afterNext7"];
+    _topFilter = @[@"All", @"Online", @"User"];
+    _arrayOfFilterValues = @[@"all", @"online", @"user"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -146,13 +160,21 @@
 #pragma mark - HTHorizontalSelectionListDelegate Protocol Methods
 
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index {
+    if (curCategory.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select a category first" actionSuccess:NO inViewController:self];
+        return;
+    } else if (curType.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select a type" actionSuccess:NO inViewController:self];
+        return;
+    }
     // update the view for the corresponding index
     selectedIndex = index;
     isAppending = NO;
-  //  self.filter = @"";
     self.page = @(1);
-    [SVProgressHUD showWithStatus:@"Loading"];
+    curUserFilter = _arrayOfFilterValues[index];
     [self getList];
+    
+    [self.tableView reloadData];
 }
 
 - (void) appendList {
@@ -160,37 +182,49 @@
     [self getList];
 }
 
-- (NSString*) buildURL:(NSInteger) index {
-    return [NSString stringWithFormat:@"%@?filterBy=%@", baseUrl, _arrayOfFilterValues[index]];
+- (void) parseUrl {
+    NSRange range =  [_url rangeOfString:@"/" options:NSBackwardsSearch];
+    baseUrl = [_url substringToIndex:range.location+1];
+    curUserFilter = [_url substringFromIndex:range.location+1];
+}
+
+- (IBAction)didTapCategory:(id)sender {
+    titleOfList = @"Category";
+    nameOfField = @"Category";
+    [self performSegueWithIdentifier:kListWithDescriptionSegue sender:SEARCH_TEMPLATE_CATEGORY_GET];
+}
+
+- (IBAction)didTapType:(id)sender {
+    if (curCategory.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select a category first" actionSuccess:NO inViewController:self];
+        return;
+    }
+    [self performSegueWithIdentifier:kTemplateTypeSegue sender:SEARCH_TEMPLATE_CATEGORY_GET];
 }
 
 - (void) getList{
-    
     if (isLoading) return;
     isLoading = YES;
-    
-    NSString* newUrl = [self buildURL:selectedIndex];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+  //  _url = [NSString stringWithFormat:@"%@%@", baseUrl, curUserFilter];
     @weakify(self)
-    [[QMNetworkManager sharedManager] getDashboardMyDueTaskWithURL:newUrl withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
-        @strongify(self)
+    [[QMNetworkManager sharedManager] getTemplateWithFileno:[_fileNo.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] online:curUserFilter category:curCategory type:curType page:_page search:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
+        @strongify(self)
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
             }
             if (isAppending) {
-                self.listOfTasks = [[self.listOfTasks arrayByAddingObjectsFromArray:result] mutableCopy];
+                self.listOfTemplates = [[self.listOfTemplates arrayByAddingObjectsFromArray:result] mutableCopy];
                 
             } else {
-                self.listOfTasks = [result mutableCopy];
+                self.listOfTemplates = [result mutableCopy];
             }
             
             [self.tableView reloadData];
         }
         else {
-            [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
         
         [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];
@@ -211,13 +245,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.listOfTasks.count;
+    return self.listOfTemplates.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TaskCheckModel *model = self.listOfTasks[indexPath.row];
+    TemplateModel *model = self.listOfTemplates[indexPath.row];
     
-    myDueTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:[myDueTaskCell cellIdentifier] forIndexPath:indexPath];
+    TemplateCell *cell = [tableView dequeueReusableCellWithIdentifier:[TemplateCell cellIdentifier] forIndexPath:indexPath];
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [cell configureCellWithModel:model];
     
@@ -226,7 +262,9 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   
+    
 }
 
 #pragma mark - ScrollView Delegate
@@ -272,20 +310,46 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfTasks.count-1 && initCall) {
+    if (indexPath.row == self.listOfTemplates.count-1 && initCall) {
         isFirstLoading = NO;
         initCall = NO;
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - ContactListWithDescriptionDelegate
+- (void) didSelectListWithDescription:(UIViewController *)listVC name:(NSString*) name withString:(NSString *)description
+{
+    if ([name isEqualToString:@"Category"]) {
+        [self.btnCategory setTitle:description forState:UIControlStateNormal];
+        curCategory = description;
+    } else {
+        [self.btnType setTitle:description forState:UIControlStateNormal];
+        curType = description;
+    }
 }
-*/
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kListWithDescriptionSegue]) {
+        UINavigationController *navVC =segue.destinationViewController;
+        
+        ListWithDescriptionViewController *listDescVC = navVC.viewControllers.firstObject;
+        listDescVC.contactDelegate = self;
+        listDescVC.titleOfList = titleOfList;
+        listDescVC.name = nameOfField;
+        listDescVC.url = sender;
+    } else if ([segue.identifier isEqualToString:kTemplateTypeSegue]) {
+        UINavigationController *navVC =segue.destinationViewController;
+        TemplateType* vc = navVC.viewControllers.firstObject;
+        vc.category = curCategory;
+        vc.updateHandler = ^(NSDictionary *type) {
+            curType = [type valueForKeyNotNull:@"strTypeCode"];
+            [self.btnType setTitle:[type valueForKeyNotNull:@"strTypeName"] forState:UIControlStateNormal];
+            
+            [SVProgressHUD showWithStatus:@"Loading"];
+            [self getList];
+        };
+    }
+}
 
 @end

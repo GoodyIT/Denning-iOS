@@ -33,6 +33,7 @@
     [self prepareUI];
     [self registerNibs];
     [self configureSearch];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -86,6 +87,7 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardItemModelWithURL:DASHBOARD_DUE_TASK_GET_URL withPage:@(1) withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        [SVProgressHUD dismiss];
         if (error == nil) {
             self.listOfTasks = [result mutableCopy];
             

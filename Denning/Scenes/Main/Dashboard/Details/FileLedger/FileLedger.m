@@ -45,6 +45,7 @@
     [self prepareUI];
     [self registerNibs];
     [self configureSearch];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -106,6 +107,7 @@
     self.selectionList.showsEdgeFadeEffect = YES;
     
     _topFilter = @[@"All", @"Client", @"Disbursment", @"FD", @"Advance", @"Other"];
+    _arrayOfFilterValues = @[@"all", @"client", @"disb", @"fd", @"advance", @"other"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -143,7 +145,7 @@
     selectedIndex = index;
     isAppending = NO;
     self.page = @(1);
-    curBalanceFilter = _topFilter[index];
+    curBalanceFilter = _arrayOfFilterValues[index];
     [self getList];
     
     [self.tableView reloadData];
@@ -168,6 +170,7 @@
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardBankReconWithURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
         @strongify(self)
         if (error == nil) {
             if (result.count != 0) {

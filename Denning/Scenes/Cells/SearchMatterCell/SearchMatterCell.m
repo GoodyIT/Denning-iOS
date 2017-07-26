@@ -10,6 +10,7 @@
 @interface SearchMatterCell()
 {
     NSString* fileNo;
+    SearchResultModel* _model;
 }
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
@@ -45,6 +46,7 @@
     self.descriptionLabel.text = model.searchDescription;
     
     fileNo = model.key;
+    _model = model;
 }
 
 - (IBAction)fileFolderTapped:(id)sender {
@@ -56,7 +58,7 @@
 }
 
 - (IBAction)tempateTapped:(id)sender {
-    [self.delegate didTapTemplate:self];
+    [self.delegate didTapTemplate:self withModel:_model];
 }
 
 - (IBAction)uploadTapped:(id)sender {

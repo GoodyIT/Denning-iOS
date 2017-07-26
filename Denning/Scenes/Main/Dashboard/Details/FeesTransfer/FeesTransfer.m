@@ -42,6 +42,7 @@
     [self prepareUI];
     [self registerNibs];
     [self configureSearch];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -100,16 +101,18 @@
 }
 
 - (IBAction)didTapUntransfer:(id)sender {
-    curFeeFilter = @"batch";
+    curFeeFilter = @"new";
     [self.btnUntransfer setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.btnTransfer setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
 - (IBAction)didTapTransfer:(id)sender {
-    curFeeFilter = @"new";
+    curFeeFilter = @"batch";
     [self.btnUntransfer setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.btnTransfer setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -133,6 +136,7 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardFeeTransferInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        [SVProgressHUD dismiss];
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];

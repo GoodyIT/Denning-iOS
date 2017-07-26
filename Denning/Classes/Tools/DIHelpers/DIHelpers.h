@@ -45,7 +45,6 @@
 
 + (NSString*) trim:(NSString*) str;
 
-
 + (BOOL) isWordFile:(NSString*) fileExt;
 
 + (BOOL) isImageFile: (NSString*) fileExt;

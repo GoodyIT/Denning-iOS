@@ -31,7 +31,7 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRc-IM-vAN">
+                    <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRc-IM-vAN">
                         <rect key="frame" x="202" y="11" width="36" height="17"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,7 +42,6 @@
                     <constraint firstItem="cRc-IM-vAN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hay-JN-Gpo" secondAttribute="trailing" constant="8" id="4qn-hB-t9L"/>
                     <constraint firstItem="hay-JN-Gpo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="A5f-DY-Rdd"/>
                     <constraint firstItem="hay-JN-Gpo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="M7c-O7-mc7"/>
-                    <constraint firstItem="cRc-IM-vAN" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="SB8-gZ-ExB"/>
                     <constraint firstAttribute="bottomMargin" secondItem="hay-JN-Gpo" secondAttribute="bottom" constant="2.5" id="Tj4-6Z-a2Q"/>
                     <constraint firstItem="cRc-IM-vAN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="Wvj-Ll-hKp"/>
                     <constraint firstItem="hay-JN-Gpo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="cUw-Zo-N05"/>

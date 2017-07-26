@@ -75,7 +75,7 @@
 }
 
 - (void) prepareUI {
-    _filterTitleArray = [@[@"Client", @"Disbursment", @"FD", @"Advance"] mutableCopy];
+    _filterTitleArray = [@[@"Client", @"Disbursment", @"FD", @"Advance", @"Office"] mutableCopy];
     
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 74, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;

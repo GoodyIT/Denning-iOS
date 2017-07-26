@@ -27,6 +27,7 @@
 #import "AddPropertyViewController.h"
 #import "FileNoteList.h"
 #import "PaymentRecord.h"
+#import "Template.h"
 
 typedef NS_ENUM(NSInteger, DISearchCellType) {
     DIContactCell = 1,
@@ -403,6 +404,11 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 - (void) didTapPaymentRecord: (SearchMatterCell*) cell fileNo:(NSString *)fileNo
 {
     [self performSegueWithIdentifier:kPaymentSegue sender:fileNo];
+}
+
+- (void) didTapTemplate:(SearchMatterCell *)cell withModel:(SearchResultModel *)model
+{
+    [self performSegueWithIdentifier:kTemplateSegue sender:model];
 }
 
 #pragma mark - HTHorizontalSelectionListDataSource Protocol Methods
@@ -908,6 +914,11 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         UINavigationController* navC = segue.destinationViewController;
         PaymentRecord* vc = navC.viewControllers.firstObject;
         vc.fileNo = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:kTemplateSegue]){
+        Template* vc = segue.destinationViewController;
+        vc.model = sender;
     }
 }
 

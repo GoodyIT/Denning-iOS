@@ -359,10 +359,9 @@ iCarouselDataSource, iCarouselDelegate>
     } else if (indexPath.row == 8) {
         [self showComingSoon];
         
-    } else if (indexPath.row == 9) {
-        [self showComingSoon];
+    } else if (indexPath.row == 9) { // File Upload
         
-    } else if (indexPath.row == 10) {
+    } else if (indexPath.row == 10) { // Calendar
         if (![[DataManager sharedManager].user.userType isEqualToString:@""]) {
             [self geteventsArrayWithCompletion:^(NSArray * array) {
                 [self performSegueWithIdentifier:kEventSegue sender:array];

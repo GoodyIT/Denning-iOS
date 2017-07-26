@@ -162,6 +162,7 @@
 #import "CompletionTrackingModel.h"
 #import "FileNoteSubModel.h"
 #import "FileNoteModel.h"
+#import "TemplateModel.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

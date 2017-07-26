@@ -211,6 +211,13 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 - (void) getPaymentRecordWithFileNo:(NSString*) fileNo completion:(void(^)(NSDictionary* result, NSError* error)) completion;
 
+// Template
+- (void) getTemplateWithFileno:(NSString*) fileNo online:(NSString*) online category:(NSString*) category type:(NSString*) type page:(NSNumber*)  page search:(NSString*) search withCompletion:(void(^)(NSArray* result, NSError* error)) completion;
+
+- (void) getTemplateCategoryWithCompletion:(void(^)(NSArray* result, NSError* error)) completion;
+
+- (void) getTemplateTypeWithFilter:(NSString*) filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion;
+
 // Legal firm (Solicitor)
 - (void) loadLegalFirmWithCode: (NSString*) code completion: (void(^)(LegalFirmModel* legalFirmModel, NSError* error)) completion;
 

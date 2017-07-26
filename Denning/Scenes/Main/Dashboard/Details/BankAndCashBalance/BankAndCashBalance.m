@@ -44,6 +44,7 @@
     [self prepareUI];
     [self registerNibs];
     [self configureSearch];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -104,8 +105,8 @@
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
-    _topFilter = @[@"Client", @"Disbursment", @"FD", @"Advance", @"Other"];
-    _arrayOfFilterValues = @[@"client", @"disb", @"fd", @"advance", @"other"];
+    _topFilter = @[@"All", @"Client", @"Disbursment", @"FD", @"Advance", @"Other"];
+    _arrayOfFilterValues = @[@"all", @"client", @"disb", @"fd", @"advance", @"other"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -144,9 +145,8 @@
     isAppending = NO;
     self.page = @(1);
     curBalanceFilter = _arrayOfFilterValues[index];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
-    
-    [self.tableView reloadData];
 }
 
 - (void) appendList {
@@ -169,6 +169,7 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardBankReconWithURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        [SVProgressHUD dismiss];
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];

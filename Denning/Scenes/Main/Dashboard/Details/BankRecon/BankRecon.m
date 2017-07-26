@@ -103,7 +103,8 @@
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
-    _topFilter = @[@"Client", @"Disbursment", @"FD", @"Advance", @"Other"];
+    _topFilter = @[@"Client", @"Disbursment", @"FD", @"Advance", @"Office", @"Other"];
+    _arrayOfFilterValues = @[@"client", @"disb", @"fdeposit", @"advance", @"office", @"other"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -141,7 +142,7 @@
     selectedIndex = index;
     isAppending = NO;
     self.page = @(1);
-    curBalanceFilter = _topFilter[index];
+    curBalanceFilter = _arrayOfFilterValues[index];
     [self getList];
     
     [self.tableView reloadData];

@@ -16,6 +16,7 @@
 #import "DashboardThirdHeaderCell.h"
 #import "DashboardForthCell.h"
 
+#import "DashboardContact.h"
 #import "DashboardFileListing.h"
 #import "DashboardDueTask.h"
 #import "DashboarMyDueTask.h"
@@ -456,6 +457,12 @@ NSMutableDictionary* keyValue;
         vc.url = ((SecondItemModel*)sender).api;
         vc.selectedID = ((SecondItemModel*)sender).itemId;
         vc.secondItem = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:kContactGetListSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        DashboardContact* vc = nav.viewControllers.firstObject;
+        vc.url = sender;
     }
     
     if ([segue.identifier isEqualToString:kBankReconSegue]) {

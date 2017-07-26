@@ -152,7 +152,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="icon_home.png" id="cas-ce-5h9"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="8d8-px-nXR" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="8d8-px-nXR" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -204,7 +204,7 @@
                                                     <rect key="frame" x="51" y="43.5" width="28" height="20"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZM-b5-G8X">
-                                                    <rect key="frame" x="40.5" y="68.5" width="49" height="16"/>
+                                                    <rect key="frame" x="41" y="68.5" width="49" height="16"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="13"/>
                                                     <color key="textColor" red="0.65490196079999996" green="0.66274509800000003" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -261,7 +261,7 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j92-x1-lZQ">
-                                        <rect key="frame" x="338" y="12.5" width="25" height="25"/>
+                                        <rect key="frame" x="345" y="14" width="18" height="22"/>
                                         <state key="normal" image="icon_searchswitch.png"/>
                                         <connections>
                                             <action selector="changeBranch:" destination="p6s-xC-Q4n" eventType="touchUpInside" id="r7U-wV-nkz"/>
@@ -347,6 +347,7 @@
                         <segue destination="c5j-Co-BfI" kind="presentation" identifier="AuthSegue" id="9BF-h0-tfB"/>
                         <segue destination="5qi-ge-IcO" kind="show" identifier="ChangeBranchSegue" id="t51-e3-eMK"/>
                         <segue destination="Wme-2n-0zk" kind="show" identifier="ComingSoonSegue" id="8Rs-Fl-9Kd"/>
+                        <segue destination="zp3-x4-HjK" kind="show" identifier="FileUploadSegue" id="9Hh-M1-spp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uZZ-C2-f2w" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -740,7 +741,7 @@
                 <viewControllerPlaceholder storyboardName="Auth" id="c5j-Co-BfI" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0l2-j4-gjw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3290" y="134"/>
+            <point key="canvasLocation" x="2926" y="287"/>
         </scene>
         <!--Coming Soon-->
         <scene sceneID="VSX-4M-xrc">
@@ -878,7 +879,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dg3-dV-Y9A" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="oJq-4P-nyc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="oJq-4P-nyc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -903,7 +904,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="98K-PN-Fhb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="r8K-Lc-SgC">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="r8K-Lc-SgC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -928,7 +929,7 @@
                 <navigationController storyboardIdentifier="CalendarNavigation" automaticallyAdjustsScrollViewInsets="NO" id="VqM-Ye-o3a" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="2ZM-6U-yum" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="2ZM-6U-yum" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -953,7 +954,7 @@
                 <viewControllerPlaceholder storyboardName="Auth" referencedIdentifier="NewDeviceLoginViewController" id="Mfn-10-AWh" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpo-Ip-EKC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3342" y="279"/>
+            <point key="canvasLocation" x="3054" y="370"/>
         </scene>
         <!--ChangePasswordViewController-->
         <scene sceneID="p2l-bc-yft">
@@ -979,6 +980,14 @@
             </objects>
             <point key="canvasLocation" x="3870" y="322"/>
         </scene>
+        <!--FileUploadNavigation-->
+        <scene sceneID="jX6-iK-7kc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="FileUploadNavigation" id="zp3-x4-HjK" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w1Q-3W-2uJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2809" y="175"/>
+        </scene>
         <!--Calculator-->
         <scene sceneID="ZvR-kK-WF0">
             <objects>
@@ -992,7 +1001,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Wme-2n-0zk" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="5mh-Ss-EKc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="5mh-Ss-EKc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1018,7 +1027,7 @@
         <image name="icon_delivery.png" width="28" height="20"/>
         <image name="icon_home.png" width="20" height="20"/>
         <image name="icon_home_white.png" width="12" height="12"/>
-        <image name="icon_searchswitch.png" width="25" height="25"/>
+        <image name="icon_searchswitch.png" width="18" height="18"/>
         <image name="maxresdefault.jpg" width="556" height="313"/>
         <image name="shutterstock.jpg" width="468" height="312"/>
     </resources>

@@ -85,6 +85,12 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define SEARCH_UPLOAD_SUGGESTED_FILENAME    @"denningwcf/v1/table/cboDocumentName?search="
 
+#define SEARCH_TEMPLATE_MAIN_GET @"denningwcf/v1/Table/cbotemplatecategory"
+
+#define SEARCH_TEMPLATE_CATEGORY_GET    @"denningwcf/v1/Table/cbotemplatecategory/only?search="
+
+#define SEARCH_TYPE_CATEGORY_GET    @"denningwcf/v1/Table/cbotemplatecategory?filter="
+
 #define PUBLIC_KEYWORD_SEARCH_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/publicSearch/keyword?search="
 
 #define PUBLIC_SEARCH_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/publicSearch?search="

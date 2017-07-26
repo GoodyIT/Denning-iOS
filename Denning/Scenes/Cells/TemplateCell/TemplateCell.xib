@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Light.otf">
+            <string>SFUIText-Light</string>
+        </array>
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="66" id="KGk-i7-Jjw" customClass="TemplateCell">
+            <rect key="frame" x="0.0" y="0.0" width="381" height="66"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="381" height="65.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Template Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CX7-dH-y41">
+                        <rect key="frame" x="16" y="13" width="110.5" height="18"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version no." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9t-L9-j8r">
+                        <rect key="frame" x="16" y="34" width="73" height="20.5"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(2017-07-23)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9lg-3u-ksd">
+                        <rect key="frame" x="92" y="34" width="88" height="17"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bti-iP-3A9">
+                        <rect key="frame" x="329" y="25" width="44" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="44" id="YnB-Ps-i2f"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
+                        <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="x9t-L9-j8r" firstAttribute="top" secondItem="CX7-dH-y41" secondAttribute="bottom" constant="3" id="4a1-Re-9o0"/>
+                    <constraint firstItem="bti-iP-3A9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CX7-dH-y41" secondAttribute="trailing" constant="12" id="6Ca-Nf-hcE"/>
+                    <constraint firstItem="x9t-L9-j8r" firstAttribute="leading" secondItem="CX7-dH-y41" secondAttribute="leading" id="Ct3-VD-BS5"/>
+                    <constraint firstItem="9lg-3u-ksd" firstAttribute="top" secondItem="x9t-L9-j8r" secondAttribute="top" id="TL3-wE-72Y"/>
+                    <constraint firstItem="CX7-dH-y41" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="WSL-MI-bJT"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="x9t-L9-j8r" secondAttribute="bottom" constant="3" id="cup-q8-OtA"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="bti-iP-3A9" secondAttribute="trailing" id="dAE-0W-5nS"/>
+                    <constraint firstItem="bti-iP-3A9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fVU-jQ-dWb"/>
+                    <constraint firstItem="9lg-3u-ksd" firstAttribute="leading" secondItem="x9t-L9-j8r" secondAttribute="trailing" constant="3" id="qyB-zv-rge"/>
+                    <constraint firstItem="bti-iP-3A9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9lg-3u-ksd" secondAttribute="trailing" constant="12" id="vAe-VL-Mdy"/>
+                    <constraint firstItem="CX7-dH-y41" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="wv2-IB-q0v"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="date" destination="9lg-3u-ksd" id="5aO-tX-D1H"/>
+                <outlet property="templateName" destination="CX7-dH-y41" id="9XS-Yo-25V"/>
+                <outlet property="user" destination="bti-iP-3A9" id="ar9-Lz-khM"/>
+                <outlet property="versionNo" destination="x9t-L9-j8r" id="i0U-CY-8ST"/>
+            </connections>
+            <point key="canvasLocation" x="2" y="-20"/>
+        </tableViewCell>
+    </objects>
+</document>

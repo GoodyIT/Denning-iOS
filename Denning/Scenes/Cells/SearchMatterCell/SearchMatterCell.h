@@ -30,7 +30,7 @@
 
 - (void) didTapUpload: (SearchMatterCell*) cell;
 
-- (void) didTapTemplate: (SearchMatterCell*) cell;
+- (void) didTapTemplate: (SearchMatterCell*) cell withModel:(SearchResultModel*) model;
 
 @end
 

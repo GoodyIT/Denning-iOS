@@ -660,6 +660,71 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         // Error Message
     }];
 }
+
+// Template
+- (void) getTemplateWithFileno:(NSString*) fileNo online:(NSString*) online category:(NSString*) category type:(NSString*) type page:(NSNumber*) page search:(NSString*) search withCompletion:(void(^)(NSArray* result, NSError* error)) completion
+{
+    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cboTemplate?fileno=%@&Online=%@&category=%@&Type=%@&page=%@&search=%@", [DataManager sharedManager].user.serverAPI, fileNo, online, category, type, page, search];
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    [self setOtherForLoginHTTPHeader];
+    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSArray* result = [TemplateModel getTemplateArrayFromResponse:responseObject];
+        
+        if (completion != nil) {
+            completion(result, nil);
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if (completion != nil) {
+            completion(nil, error);
+        }
+        
+        // Error Message
+    }];
+}
+
+- (void) getTemplateCategoryWithCompletion:(void(^)(NSArray* result, NSError* error)) completion
+{
+    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cbotemplatecategory/only", [DataManager sharedManager].user.serverAPI];
+    [self setOtherForLoginHTTPHeader];
+    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (completion != nil) {
+            completion(responseObject, nil);
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if (completion != nil) {
+            completion(nil, error);
+        }
+        
+        // Error Message
+    }];
+}
+
+- (void) getTemplateTypeWithFilter:(NSString*) filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
+{
+    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cbotemplatecategory?filter=%@", [DataManager sharedManager].user.serverAPI, [filter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+    [self setOtherForLoginHTTPHeader];
+    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        if (completion != nil) {
+            completion(responseObject, nil);
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        if (completion != nil) {
+            completion(nil, error);
+        }
+        
+        // Error Message
+    }];
+}
+
 // Bank
 - (void) loadBankFromSearchWithCode: (NSString*) code completion: (void(^)(BankModel* bankModel, NSError* error)) completion
 {
@@ -1695,7 +1760,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) getDashboardMyDueTaskWithURL: (NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
     [self setAddContactLoginHTTPHeader];
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1773,7 +1838,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
-            NSArray *result = [ClientModel getClientArrayFromReponse:responseObject];
+            NSArray *result = [SearchResultModel getSearchResultArrayFromResponse:responseObject];
             completion(result, nil);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

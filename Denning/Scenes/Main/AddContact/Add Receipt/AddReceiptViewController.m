@@ -38,6 +38,8 @@
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *checqueAmount;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *remarks;
 
+@property (weak, nonatomic) IBOutlet SWTableViewCell *QRCodeCell;
+
 @property (weak, nonatomic) IBOutlet SWTableViewCell *fileNoCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *billNoCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *accountTypeCell;
@@ -157,24 +159,28 @@
    
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            self.QRCodeCell.leftUtilityButtons = [self leftButtons];
+            self.QRCodeCell.delegate = self;
+            return self.QRCodeCell;
+        } else if (indexPath.row == 1) {
             self.fileNoCell.leftUtilityButtons = [self leftButtons];
             self.fileNoCell.delegate = self;
             return self.fileNoCell;
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == 2) {
             self.billNoCell.leftUtilityButtons = [self leftButtons];
             self.billNoCell.delegate = self;
             return self.billNoCell;
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == 3) {
             self.accountTypeCell.leftUtilityButtons = [self leftButtons];
             self.accountTypeCell.delegate = self;
             return self.accountTypeCell;
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == 4) {
             self.receivedFromCell.leftUtilityButtons = [self leftButtons];
             self.receivedFromCell.delegate = self;
             return self.receivedFromCell;;
-        } else if (indexPath.row == 4) {
-            return self.amountCell;
         } else if (indexPath.row == 5) {
+            return self.amountCell;
+        } else if (indexPath.row == 6) {
             return self.transactionCell;
         }
     } else if (indexPath.section == 1) {
@@ -332,6 +338,10 @@
             nameOfField = @"payment";
             [self performSegueWithIdentifier:kListWithDescriptionSegue sender:ACCOUNT_PAYMENT_MODE_GET_URL];
         } else if (indexPath.row == 1) {
+            titleOfList = @"Select Issuer";
+            nameOfField = @"issuer";
+            [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];;
+        } else if (indexPath.row == 2) {
             titleOfList = @"Select Issuer";
             nameOfField = @"issuer";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];;

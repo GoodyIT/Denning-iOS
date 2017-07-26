@@ -154,7 +154,7 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="15"/>
                                         <state key="normal" title="ALL">
-                                            <color key="titleColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="didTapAll:" destination="OTq-cY-dGu" eventType="touchUpInside" id="5ZI-hC-c2X"/>
@@ -173,7 +173,7 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="15"/>
                                         <state key="normal" title="TODAY">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="didTapToday:" destination="OTq-cY-dGu" eventType="touchUpInside" id="N1s-Py-ehJ"/>
@@ -825,7 +825,7 @@
                 <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="ContactViewNavigation" id="2SD-jm-qHY" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QTO-XB-qbm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4088" y="8827"/>
+            <point key="canvasLocation" x="4088" y="8924"/>
         </scene>
         <!--CalendarNavigation-->
         <scene sceneID="w1n-ai-LHz">
@@ -1543,7 +1543,7 @@
         <!--Navigation Controller-->
         <scene sceneID="FO5-zd-aOb">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="edj-de-mkX" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TaxInvoiceNavigation" automaticallyAdjustsScrollViewInsets="NO" id="edj-de-mkX" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="r1r-PL-DTx" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1700,7 +1700,7 @@
             </objects>
             <point key="canvasLocation" x="7552.8000000000002" y="13482.908545727138"/>
         </scene>
-        <!--Staff Due Task-->
+        <!--Contact Listing-->
         <scene sceneID="6HS-X9-MGI">
             <objects>
                 <viewController id="ml1-nY-yqF" customClass="DashboardContact" sceneMemberID="viewController">
@@ -1749,7 +1749,7 @@
                             <constraint firstAttribute="trailing" secondItem="nmO-ZX-tD7" secondAttribute="trailing" id="wWF-57-pIQ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Staff Due Task" id="QVM-eg-enV">
+                    <navigationItem key="navigationItem" title="Contact Listing" id="QVM-eg-enV">
                         <barButtonItem key="leftBarButtonItem" image="Back.png" id="I5a-tm-ZJV">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -2382,7 +2382,7 @@
         <!--Navigation Controller-->
         <scene sceneID="vND-cQ-xcI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iE8-pn-bW2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DashboardContactNavigation" automaticallyAdjustsScrollViewInsets="NO" id="iE8-pn-bW2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="gJM-Ml-HS2" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
