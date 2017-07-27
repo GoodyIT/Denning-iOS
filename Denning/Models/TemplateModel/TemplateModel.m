@@ -19,6 +19,7 @@
     model.strSource = [response valueForKeyNotNull:@"strSource"];
     model.strLangauge = [response valueForKeyNotNull:@"strLangauge"];
     model.strDescription = [response valueForKeyNotNull:@"strDescription"];
+    model.generateAPI = [response valueForKeyNotNull:@"generateAPI"];
     model.intVersionID = [response valueForKeyNotNull:@"intVersionID"];
     
     return model;

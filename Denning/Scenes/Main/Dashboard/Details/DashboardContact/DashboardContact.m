@@ -155,8 +155,8 @@
     SearchResultModel *model = self.listOfContacts[indexPath.row];
     
     SecondContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SecondContactCell cellIdentifier] forIndexPath:indexPath];
-    cell.firstValue.text = model.title;
-    cell.secondValue.text = model.header;
+    cell.firstValue.text = [model.JsonDesc valueForKeyNotNull:@"name"];
+    cell.secondValue.text = [NSString stringWithFormat:@"%@\n%@", [model.JsonDesc valueForKeyNotNull:@"IDNo"], [model.JsonDesc valueForKeyNotNull:@"KPLama"]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;

@@ -106,7 +106,7 @@
     self.selectionList.showsEdgeFadeEffect = YES;
     
     _topFilter = @[@"All", @"Client", @"Disbursment", @"FD", @"Advance", @"Other"];
-    _arrayOfFilterValues = @[@"all", @"client", @"disb", @"fd", @"advance", @"other"];
+    _arrayOfFilterValues = @[@"bank-all", @"bank-client", @"bank-disb", @"bank-fd", @"bank-advance", @"bank-other"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -116,7 +116,7 @@
     
     [self.view addSubview:self.selectionList];
     self.selectionList.backgroundColor = [UIColor blackColor];
-    self.selectionList.selectedButtonIndex = 0;
+    self.selectionList.selectedButtonIndex = 1;
     self.selectionList.hidden = NO;
 }
 
@@ -216,6 +216,11 @@
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     BankReconHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconHeaderCell cellIdentifier]];
     
+    cell.firstValue.text = @"A/C name";
+    cell.secondValue.text = @"A/C no.";
+    cell.thirdValue.text = @"Amount";
+    
+    
     return cell;
 }
 
@@ -225,7 +230,7 @@
     BankReconCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconCell cellIdentifier] forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    [cell configureCellWithModel:model];
+    [cell configureCellForBankBalance:model];
     
     return cell;
 }

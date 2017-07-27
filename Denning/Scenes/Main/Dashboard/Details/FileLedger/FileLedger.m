@@ -146,9 +146,8 @@
     isAppending = NO;
     self.page = @(1);
     curBalanceFilter = _arrayOfFilterValues[index];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
-    
-    [self.tableView reloadData];
 }
 
 - (void) appendList {

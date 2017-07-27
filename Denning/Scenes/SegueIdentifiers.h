@@ -225,3 +225,5 @@ static NSString* const kComingSoonSegue = @"ComingSoonSegue";
 static NSString* const kTemplateSegue = @"TemplateSegue";
 
 static NSString* const kTemplateTypeSegue = @"TemplateTypeSegue";
+
+static NSString* const kFeeTransferDetailSegue = @"FeeTransferDetailSegue";

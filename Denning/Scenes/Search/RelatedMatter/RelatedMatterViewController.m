@@ -369,15 +369,15 @@
     } else if (indexPath.section == 2) { // Party Group
         NSDictionary* partySectionInfo = [self getPartySectionInfo:(int)indexPath.row];
         PartyGroupModel* partyGroup = relatedMatterModel.partyGroupArray[[[partySectionInfo objectForKey:@"group"] integerValue]];
-        PartyModel* party = (PartyModel*)partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
+        ClientModel* party = partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
         if ([[partySectionInfo objectForKey:@"party"] integerValue] == 0) {
             ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
-           [cell configureCellWithContact:partyGroup.partyGroupName text:party.partyName];
+           [cell configureCellWithContact:partyGroup.partyGroupName text:party.name];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         } else {
             CommonTextCell *cell = [tableView dequeueReusableCellWithIdentifier:[CommonTextCell cellIdentifier] forIndexPath:indexPath];
-            [cell configureCellWithString:party.partyName];
+            [cell configureCellWithString:party.name];
             cell.valueLabel.font = [UIFont fontWithName:@"SFUIText-Light" size:13];
              cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
              return cell;

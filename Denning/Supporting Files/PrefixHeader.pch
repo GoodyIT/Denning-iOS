@@ -74,6 +74,7 @@
 #import "UIFloatLabelTextView.h"
 #import "JVFloatLabeledTextView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImage+Base64.h"
 
 #import "TimePickerViewController.h"
 #import "FZAccordionTableView.h"
@@ -163,6 +164,7 @@
 #import "FileNoteSubModel.h"
 #import "FileNoteModel.h"
 #import "TemplateModel.h"
+#import "FeeUntransferModel.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

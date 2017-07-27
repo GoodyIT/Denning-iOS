@@ -94,7 +94,7 @@
 }
 
 - (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:action];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:imageName] style:UIBarButtonItemStylePlain target:self action:action];
     [backButtonItem setTintColor:[UIColor whiteColor]];
     
     [self.tabBarController.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];

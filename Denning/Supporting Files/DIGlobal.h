@@ -146,7 +146,13 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define MATTERSIMPLE_GET_URL @"denningwcf/v1/matter/simpleList?search="
 
-#define MATTER_FILEFOLDER @"denningwcf/v1/app/matter/fileFolder"
+#define MATTER_STAFF_FILEFOLDER @"denningwcf/v1/app/matter/fileFolder"
+
+#define MATTER_STAFF_TRANSIT_FOLDER @"denningwcf/v1/app/matter/fileFolder"
+
+#define MATTER_STAFF_CONTACT_FOLDER @"denningwcf/v1/app/matter/fileFolder"
+
+#define MATTER_CLIENT_FILEFOLDER @"denningwcf/v1/app/userClientFolder"
 
 #define MATTER_FILE_STATUS_GET_LIST_URL @"denningwcf/v1/FileStatus?search="
 

@@ -189,7 +189,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:action];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:imageName] style:UIBarButtonItemStylePlain target:self action:action];
     [backButtonItem setTintColor:[UIColor whiteColor]];
     
     [self.tabBarController.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
@@ -382,8 +382,11 @@ NSMutableDictionary* keyValue;
             [self performSegueWithIdentifier:kMyDueTaskSegue sender:_mainModel.s1.items[indexPath.row]];
         }
     } else if (indexPath.section == 2) {
-        [self performSegueWithIdentifier:kDashboardCollectionSegue sender:_mainModel.s2.items[indexPath.row - 1]];
-    } else if (indexPath.section == 3) {
+        if (indexPath.row > 0) {
+            [self performSegueWithIdentifier:kDashboardCollectionSegue sender:_mainModel.s2.items[indexPath.row - 1]];
+        }
+    } else if (indexPath.section == 3)
+        {
         [self performSegueWithIdentifier:kCompletionTrackingSegue sender:_mainModel.s3.items[indexPath.row-1]];
     } else if (indexPath.section == 4) {
         NSString* url = _mainModel.s4.items[indexPath.row].mainAPI;

@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString* dtCreatedDate;
 @property (strong, nonatomic) NSString* intVersionID;
 @property (strong, nonatomic) NSString* strDescription;
+@property (strong, nonatomic) NSString* generateAPI;
 @property (strong, nonatomic) NSString* strLangauge;
 @property (strong, nonatomic) NSString* strSource;
 

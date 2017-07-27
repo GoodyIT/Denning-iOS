@@ -117,6 +117,7 @@
     [self setStatus:btnArray[index]];
     _idx = index;
     _page = @(1);
+    isAppending = NO;
     _url = _items[_idx].api;
     [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];

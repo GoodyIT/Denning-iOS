@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSString* fileNo;
 @property (strong, nonatomic) NSString* fileName;
 @property (strong, nonatomic) NSString* ledgerDescription;
+@property (strong, nonatomic) NSString* displayAmount;
 @property (strong, nonatomic) NSString* documentNo;
 @property (strong, nonatomic) NSString* drORcr;
 @property (strong, nonatomic) NSString* recdPaid;
@@ -27,7 +28,7 @@
 @property (strong, nonatomic) NSString* updatedBy;
 @property (strong, nonatomic) NSString* paymentMode;
 @property (strong, nonatomic) NSString* taxInvoice;
-@property (strong, nonatomic) NSNumber* isDebit;
+@property (strong, nonatomic) NSString* isDebit;
 
 + (LedgerDetailModel*) getLedgerDetailFromResponse: (NSDictionary*) response;
 

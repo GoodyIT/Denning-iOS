@@ -23,6 +23,7 @@
     ledgerDetailModel.date = [response valueForKeyNotNull:@"date"];
     ledgerDetailModel.ledgerDescription = [response valueForKeyNotNull:@"description"];
     ledgerDetailModel.documentNo = [response valueForKeyNotNull:@"documentNo"];
+    ledgerDetailModel.displayAmount = [response valueForKeyNotNull:@"displayAmount"];
     ledgerDetailModel.drORcr = [response valueForKeyNotNull:@"drORcr"];
     ledgerDetailModel.fileNo = [response valueForKeyNotNull:@"fileNo"];
     ledgerDetailModel.fileName = [response valueForKeyNotNull:@"fileName"];

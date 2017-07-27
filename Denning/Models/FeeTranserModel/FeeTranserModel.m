@@ -22,7 +22,7 @@
     return model;
 }
 
-+ (NSArray*) getFeeTranserArrayFromResponse: (NSDictionary*) response
++ (NSArray*) getFeeTranserArrayFromResponse: (NSArray*) response
 {
     NSMutableArray *result = [NSMutableArray new];
     for (id obj in response) {

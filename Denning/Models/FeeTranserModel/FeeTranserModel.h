@@ -18,5 +18,5 @@
 
 + (FeeTranserModel*) getFeeTranserFromResponse: (NSDictionary*) response;
 
-+ (NSArray*) getFeeTranserArrayFromResponse: (NSDictionary*) response;
++ (NSArray*) getFeeTranserArrayFromResponse: (NSArray*) response;
 @end

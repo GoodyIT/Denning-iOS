@@ -26,7 +26,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Documentation (1~10)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2D-mD-YKD">
-                        <rect key="frame" x="28" y="9" width="220" height="21.5"/>
+                        <rect key="frame" x="28" y="9" width="219.5" height="21.5"/>
                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -50,6 +50,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="dotValue" destination="t6D-HX-fHb" id="XOz-lH-XhW"/>
                 <outlet property="leftLabel" destination="N2D-mD-YKD" id="qVT-CF-T4r"/>
             </connections>
             <point key="canvasLocation" x="91" y="61"/>

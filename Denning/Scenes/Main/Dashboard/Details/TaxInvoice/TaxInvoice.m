@@ -44,6 +44,7 @@
     [self prepareUI];
     [self registerNibs];
     [self configureSearch];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -144,9 +145,8 @@
     isAppending = NO;
     self.page = @(1);
     curBalanceFilter = _arrayOfFilterValues[index];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
-    
-    [self.tableView reloadData];
 }
 
 - (void) appendList {
@@ -167,6 +167,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardTaxInvoiceInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
         @strongify(self)
         if (error == nil) {
             if (result.count != 0) {

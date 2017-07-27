@@ -9,6 +9,8 @@
 #import "FeesTransfer.h"
 #import "BankReconCell.h"
 #import "BankReconHeaderCell.h"
+#import "ThreeColumnSecondCell.h"
+#import "FeeTransferDetail.h"
 
 @interface FeesTransfer ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -19,6 +21,7 @@
     BOOL isAppending;
     NSInteger selectedIndex;
     NSString* curFeeFilter, *baseUrl;
+    BOOL isUntransfer;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
@@ -76,6 +79,7 @@
 - (void)registerNibs {
     [BankReconCell registerForReuseInTableView:self.tableView];
     [BankReconHeaderCell registerForReuseInTableView:self.tableView];
+    [ThreeColumnSecondCell registerForReuseInTableView:self.tableView];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
@@ -88,6 +92,7 @@
     self.filter = @"";
     initCall = YES;
     isAppending = NO;
+    isUntransfer = YES;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
@@ -102,6 +107,8 @@
 
 - (IBAction)didTapUntransfer:(id)sender {
     curFeeFilter = @"new";
+    isUntransfer = YES;
+    _page = @(1);
     [self.btnUntransfer setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.btnTransfer setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [SVProgressHUD showWithStatus:@"Loading"];
@@ -110,6 +117,8 @@
 
 - (IBAction)didTapTransfer:(id)sender {
     curFeeFilter = @"batch";
+    isUntransfer = NO;
+    _page = @(1);
     [self.btnUntransfer setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.btnTransfer setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [SVProgressHUD showWithStatus:@"Loading"];
@@ -137,6 +146,11 @@
     [[QMNetworkManager sharedManager] getDashboardFeeTransferInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         [SVProgressHUD dismiss];
+        if (isUntransfer) {
+            result = [FeeUntransferModel getFeeUntransferArrayFromResponse:result];
+        } else {
+            result = [FeeTranserModel getFeeTranserArrayFromResponse:result];
+        }
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
@@ -182,26 +196,45 @@
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     BankReconHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconHeaderCell cellIdentifier]];
-    cell.firstValue.text = @"Date";
-    cell.secondValue.text = @"Batch";
-    cell.thirdValue.text = @"Amount";
+    if (isUntransfer) {
+        cell.firstValue.text = @"File no.";
+        cell.secondValue.text = @"Tax Invoice no.";
+        cell.thirdValue.text = @"Amount";
+    } else {
+        cell.firstValue.text = @"Date";
+        cell.secondValue.text = @"Batch";
+        cell.thirdValue.text = @"Amount";
+    }
     
     return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FeeTranserModel *model = self.listOfFees[indexPath.row];
+    if (isUntransfer) {
+        FeeUntransferModel *model = self.listOfFees[indexPath.row];
+        ThreeColumnSecondCell *cell = [tableView dequeueReusableCellWithIdentifier:[ThreeColumnSecondCell cellIdentifier] forIndexPath:indexPath];
+        
+        [cell configureCellWithModel:model];
+        
+        return cell;
+    }
     
+    FeeTranserModel *model = self.listOfFees[indexPath.row];
     BankReconCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconCell cellIdentifier] forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [cell configureCellForFeesTransfer:model];
+    return cell;
     
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (!isUntransfer) {
+        FeeTranserModel* model = _listOfFees[indexPath.row];
+        [self performSegueWithIdentifier:kFeeTransferDetailSegue sender:model];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -253,16 +286,21 @@
         initCall = NO;
     }
 }
-@end
 
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:kFeeTransferDetailSegue]) {
+        FeeTransferDetail* vc = segue.destinationViewController;
+        vc.model = sender;
+    }
 }
-*/
+
+@end
+
+
+
 

@@ -35,8 +35,10 @@
     searchResult.score = [response objectForKey:@"Score"];
     searchResult.title = [response objectForKey:@"Title"];
     searchResult.searchCode = [response objectForKey:@"code"];
-    searchResult.sortDate = [response valueForKeyNotNull:@"sortDate"];
-    searchResult.dummy = [response objectForKey:@"dummy"];
+    searchResult.sortDate = [response valueForKeyNotNull:@"SortDate"];
+    
+    NSData *jsonData= [[response objectForKey:@"JsonDesc"] dataUsingEncoding:NSUTF8StringEncoding];
+    searchResult.JsonDesc = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     searchResult.key = [response objectForKey:@"key"];
     searchResult.row_number = [response objectForKey:@"row_number"];
     

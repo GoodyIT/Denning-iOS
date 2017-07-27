@@ -15,4 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *invoiceNo;
 @property (weak, nonatomic) IBOutlet UILabel *amount;
 
+- (void) configureCellWithModel:(FeeUntransferModel*) model;
+
+- (void) configureCellWithDict:(NSDictionary*) dict;
+
 @end

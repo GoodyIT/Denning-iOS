@@ -50,14 +50,10 @@
     self.lineChart.showGenYLabels = NO;
     self.lineChart.showYGridLines = YES;
     
-    NSMutableArray* sortedArray = [NSMutableArray new];
-    for (NSString *val in graph.yValue) {
-        [sortedArray addObject:[NSNumber numberWithFloat:[val floatValue]]];
-    }
-    
-    NSNumber* maxValue = [sortedArray valueForKeyPath:@"@max.floatValue"];
-    NSNumber* minValue = [sortedArray valueForKeyPath:@"@min.floatValue"];
-    NSMutableArray* newYValue = [NSMutableArray new];
+//    NSMutableArray* sortedArray = [NSMutableArray new];
+//    for (NSString *val in graph.yValue) {
+//        [sortedArray addObject:[NSNumber numberWithFloat:[val floatValue]]];
+//    }
     
     //Use yFixedValueMax and yFixedValueMin to Fix the Max and Min Y Value
     //Only if you needed

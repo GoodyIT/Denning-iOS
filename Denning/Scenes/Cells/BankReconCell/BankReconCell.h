@@ -20,4 +20,6 @@
 
 - (void) configureCellForFeesTransfer: (FeeTranserModel*) model;
 
+- (void) configureCellForBankBalance:(BankReconModel*) model;
+
 @end

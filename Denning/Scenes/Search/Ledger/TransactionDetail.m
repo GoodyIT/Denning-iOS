@@ -31,10 +31,10 @@
     [super viewDidLoad];
     self.title = @"Transaction Detail";
     self.date.text = [DIHelpers convertDateToCustomFormat:_model.date];
-    self.transactionNo.text = _model.ledgerCode;
+    self.transactionNo.text = _model.documentNo;
     self.fileNo.text = _model.fileNo;
     self.fileName.text = _model.fileName;
-    self.billNo.text = _model.documentNo;
+    self.billNo.text = _model.taxInvoice;
     self.recdPaid.text = _model.recdPaid;
     self.descriptionValue.text = _model.ledgerDescription;
     self.DRAmount.text = _model.amountDR;

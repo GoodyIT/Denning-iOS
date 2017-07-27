@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomFileUpload.h"
 
-@interface FileUpload : UITableViewController
+@interface FileUpload : CustomFileUpload
 
 @end

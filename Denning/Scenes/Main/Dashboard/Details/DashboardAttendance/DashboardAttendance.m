@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet MIBadgeButton *btnOnDuty;
 @property (weak, nonatomic) IBOutlet MIBadgeButton *btnOffDuty;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) NSArray<ItemModel*> *headerModel;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 
@@ -56,6 +57,7 @@
 {
     _page = @(1);
     _filter = @"";
+    _url = [_url stringByAppendingString:@"?"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -87,16 +89,31 @@
 - (IBAction)didTapAll:(id)sender {
     [self resetAllButtons];
     [self setStatus:_btnAll];
+    _url = [_headerModel[0].api  stringByAppendingString:@"?"];
+    _page = @(1);
+    isAppending = NO;
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self getList];
 }
 
 - (IBAction)didTapOnDuty:(id)sender {
     [self resetAllButtons];
     [self setStatus:_btnOnDuty];
+    _url = _headerModel[1].api;
+    _page = @(1);
+    isAppending = NO;
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self getList];
 }
 
 - (IBAction)didTapOffDuty:(id)sender {
     [self resetAllButtons];
     [self setStatus:_btnOffDuty];
+    _url = _headerModel[2].api;
+    _page = @(1);
+    isAppending = NO;
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [self getList];
 }
 
 - (void) updateHeaderInfo:(ThreeItemModel*) info {
@@ -114,6 +131,7 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
         if (error == nil) {
+            _headerModel = result.items;
             [self updateHeaderInfo:result];
             [self.tableView reloadData];
         } else {

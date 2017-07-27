@@ -57,6 +57,7 @@
 {
     _page = @(1);
     _filter = @"";
+    _url = [_url stringByAppendingString:@"?"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -82,20 +83,26 @@
 //}
 
 - (IBAction)didTapAll:(id)sender {
-    _url = _headerModel[0].api;
+    _url = [_headerModel[0].api  stringByAppendingString:@"?"];
     _page = @(1);
+    isAppending = NO;
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
 - (IBAction)didTapOnline:(id)sender {
     _url = _headerModel[1].api;
     _page = @(1);
+    isAppending = NO;
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
 - (IBAction)didTapOffline:(id)sender {
     _url = _headerModel[2].api;
     _page = @(1);
+    isAppending = NO;
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 

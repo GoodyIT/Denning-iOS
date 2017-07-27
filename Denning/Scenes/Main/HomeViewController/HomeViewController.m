@@ -18,6 +18,7 @@
 #import "UITextField+LeftView.h"
 #import "MenuCell.h"
 #import "ChangeBranchViewController.h"
+#import "MainTabBarController.h"
 
 @interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate,
     UITextFieldDelegate,
@@ -51,6 +52,18 @@ iCarouselDataSource, iCarouselDelegate>
     [self loadsAds];
     [self prepareUI];
     [self showTabBar];
+}
+
+- (void) gotoLogin {
+    MainTabBarController *mainTabBarController = (MainTabBarController*)self.tabBarController;
+    [mainTabBarController tapLogin:nil];
+}
+
+- (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_user"] style:UIBarButtonItemStylePlain target:self action:action];
+    [backButtonItem setTintColor:[UIColor whiteColor]];
+    
+    [self.tabBarController.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,6 +104,7 @@ iCarouselDataSource, iCarouselDelegate>
     [self changeTitle];
     [self displayBranchInfo];
     [self setTabBarVisible:YES animated:NO completion:nil];
+    [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
 }
 
 - (void) loadsAds {
@@ -360,7 +374,11 @@ iCarouselDataSource, iCarouselDelegate>
         [self showComingSoon];
         
     } else if (indexPath.row == 9) { // File Upload
-        
+        if ([DataManager sharedManager].user.userType.length == 0) {
+            [QMAlert showAlertWithMessage:@"Please subscribe to the denning app" actionSuccess:NO inViewController:self];
+            return;
+        }
+        [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
     } else if (indexPath.row == 10) { // Calendar
         if (![[DataManager sharedManager].user.userType isEqualToString:@""]) {
             [self geteventsArrayWithCompletion:^(NSArray * array) {

@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
 @property (nonatomic, strong) NSMutableArray* filterTitleArray;
+@property (nonatomic, strong) NSArray* arrayOfFilter;
 @property (nonatomic, strong) NSArray<LedgerDetailModel*>* listOfLedgers;
 @property (strong, nonatomic) NSArray<LedgerDetailModel*>* listOfSelectedLedgers;
 @end
@@ -67,6 +68,13 @@
 }
 
 - (void) displayTitleAndFooter {
+    NSMutableArray *items = [[_model.accountNo componentsSeparatedByString:@"/"] mutableCopy];
+    
+    if (items.count == 2) {
+        _fileNo.text = items[0];
+    } else {
+        _fileNo.text = _model.accountNo;
+    }
     _fileNo.text = _model.accountNo;
     _fileName.text = _model.accountName;
     if ([_model.credit floatValue] == 0) {
@@ -77,7 +85,8 @@
 }
 
 - (void) prepareUI {
-    _filterTitleArray = [@[@"Client", @"Disbursment", @"FD", @"Advance", @"Other"] mutableCopy];
+    _filterTitleArray = [@[@"Client", @"Disbursment", @"FD", @"Advance", @"Other", @"Receivable"] mutableCopy];
+    _arrayOfFilter = @[@"client", @"disb", @"fd", @"advance", @"other", @"recv"];
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 74, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
     self.selectionList.dataSource = self;
@@ -117,14 +126,14 @@
         self.listOfSelectedLedgers = self.listOfLedgers;
     } else if (self.topFilterSegmented.selectedSegmentIndex == 1) {
         for (LedgerDetailModel* model in self.listOfLedgers) {
-            if (model.amountDR.length > 0) {
+            if ([model.isDebit isEqualToString:@"1"]) {
                 [newArray addObject:model];
             }
         }
         self.listOfSelectedLedgers = [newArray copy];
     } else {
         for (LedgerDetailModel* model in self.listOfLedgers) {
-            if (model.amountDR.length == 0) {
+            if ([model.isDebit isEqualToString:@"0"]) {
                 [newArray addObject:model];
             }
         }
@@ -187,7 +196,7 @@
 
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index {
     // update the view for the corresponding index
-    curBalanceFilter = _filterTitleArray[index];
+    curBalanceFilter = _arrayOfFilter[index];
     [self loadLedgersWithCompletion:nil];
 }
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TaxInvoice : UIViewController
+@interface TaxInvoice : UIViewController <UIDocumentInteractionControllerDelegate>
 
 @property (strong, nonatomic) NSString* url;
 

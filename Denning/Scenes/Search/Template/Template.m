@@ -57,7 +57,7 @@ ContactListWithDescSelectionDelegate>
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:NO];
+
     [super viewWillDisappear:animated];
 }
 
@@ -68,7 +68,8 @@ ContactListWithDescSelectionDelegate>
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) updateHeaderInfo {
@@ -173,8 +174,6 @@ ContactListWithDescSelectionDelegate>
     self.page = @(1);
     curUserFilter = _arrayOfFilterValues[index];
     [self getList];
-    
-    [self.tableView reloadData];
 }
 
 - (void) appendList {
@@ -262,9 +261,9 @@ ContactListWithDescSelectionDelegate>
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    TemplateModel *model = self.listOfTemplates[indexPath.row];
+    [self viewDocument:model.generateAPI];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-   
-    
 }
 
 #pragma mark - ScrollView Delegate

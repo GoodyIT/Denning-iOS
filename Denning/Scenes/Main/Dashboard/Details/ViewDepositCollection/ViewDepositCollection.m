@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
 @property (nonatomic, strong) NSMutableArray* filterTitleArray;
+@property (nonatomic, strong) NSArray* arrayOfFilters;
 @property (nonatomic, strong) NSArray<LedgerDetailModel*>* listOfLedgers;
 @property (strong, nonatomic) NSArray<LedgerDetailModel*>* listOfSelectedLedgers;
 @end
@@ -75,7 +76,8 @@
 }
 
 - (void) prepareUI {
-    _filterTitleArray = [@[@"Client", @"Disbursment", @"FD", @"Advance", @"Office"] mutableCopy];
+    _filterTitleArray = [@[@"All", @"Client", @"Disbursment", @"FD", @"Advance", @"Office"] mutableCopy];
+    _arrayOfFilters = @[@"all", @"client", @"disb", @"fdeposit", @"advance", @"office"];
     
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 74, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
@@ -111,9 +113,9 @@
 
 - (IBAction)filterForDebitOrCredit:(id)sender {
     if (self.topFilterSegmented.selectedSegmentIndex == 0) {
-        curTopFilter = @"Deposited";
-    } else {
         curTopFilter = @"notDeposited";
+    } else {
+        curTopFilter = @"Deposited";
     }
     [self loadLedgersWithCompletion:nil];
 }
@@ -172,7 +174,7 @@
 
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index {
     // update the view for the corresponding index
-    curBalanceFilter = _filterTitleArray[index];
+    curBalanceFilter = _arrayOfFilters[index];
     [self loadLedgersWithCompletion:nil];
 }
 

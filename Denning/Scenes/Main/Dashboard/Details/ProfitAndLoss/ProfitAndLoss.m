@@ -102,7 +102,12 @@
     
     cell.leftLabel.text = model.label;
     cell.rightLabel.text = [DIHelpers addThousandsSeparatorWithDecimal: model.value];
-    cell.rightLabel.textColor = [UIColor redColor];
+    if ([model.value floatValue] > 0.0) {
+        cell.rightLabel.textColor = [UIColor babyGreen];
+    } else {
+        cell.rightLabel.textColor = [UIColor redColor];
+    }
+    
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     

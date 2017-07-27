@@ -64,6 +64,7 @@
     NSRange range =  [_url rangeOfString:@"/" options:NSBackwardsSearch];
     baseUrl = [_url substringToIndex:range.location+1];
     curYear = [_url substringFromIndex:range.location+1];
+    _topYear.text = curYear;
 }
 
 - (void) getList{

@@ -64,15 +64,15 @@
 {
     FirmURLModel* model = self.branchArray[indexPath.row];
     
-    if (_updateHandler != nil) {
-        _updateHandler(model);
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
+    {
         [[DataManager sharedManager] setServerAPI:model.firmServerURL withFirmName:model.name withFirmCity:model.city];
         if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
             [[QMNetworkManager sharedManager] denningSignIn:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSString * _Nonnull error, NSDictionary * _Nonnull responseObject) {
                 if (error == nil) {
                     [[DataManager sharedManager] setSessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+                    if (_updateHandler != nil) {
+                        _updateHandler(model);
+                    }
                     [self.navigationController popViewControllerAnimated:YES];
                 } else {
                     [QMAlert showAlertWithMessage:error.localizedLowercaseString actionSuccess:NO inViewController:self];

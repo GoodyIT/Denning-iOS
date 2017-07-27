@@ -87,7 +87,6 @@
         if (error == nil) {
             self.selectedLedgerDetailArray = ledgerDetailModelArray;
             self.originalLedgerDetailArray = ledgerDetailModelArray;
-            [self updateFooterInfo];
             if (completion != nil) {
                 completion();
             }
@@ -108,9 +107,9 @@
 - (void) updateFooterInfo {
     CGFloat currentBalance = 0;
     for (LedgerDetailModel* model in self.originalLedgerDetailArray) {
-        if (model.amountDR.length > 0) {
+        if ([model.isDebit isEqualToString:@"1"]) {
             currentBalance += [[model.amountDR  stringByReplacingOccurrencesOfString:@"," withString:@""] floatValue];
-        } else {
+        } else if ([model.isDebit isEqualToString:@"0"]) {
             currentBalance -= [[model.amountCR  stringByReplacingOccurrencesOfString:@"," withString:@""] floatValue];
         }
     }
@@ -173,14 +172,14 @@
         self.selectedLedgerDetailArray = self.originalLedgerDetailArray;
     } else if (self.filterForDebitOrCredit.selectedSegmentIndex == 1) {
         for (LedgerDetailModel* model in self.originalLedgerDetailArray) {
-            if (model.amountDR.length > 0) {
+            if ([model.isDebit isEqualToString:@"1"]) {
                 [newArray addObject:model];
             }
         }
         self.selectedLedgerDetailArray = [newArray copy];
     } else {
         for (LedgerDetailModel* model in self.originalLedgerDetailArray) {
-            if (model.amountDR.length == 0) {
+            if ([model.isDebit isEqualToString:@"0"]) {
                 [newArray addObject:model];
             }
         }
@@ -206,6 +205,9 @@
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index {
     // update the view for the corresponding index
     [self loadDetailLedger:index withCompletion:nil];
+    
+    selectedIndex = index;
+    [self displayTitleAndFooterInfo];
     
     self.filterForDebitOrCredit.selectedSegmentIndex = 0;
     

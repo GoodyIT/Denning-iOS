@@ -39,6 +39,7 @@ target ‘Denning’ do
 	pod "MIBadgeButton"
 	pod 'PNChart'
 	pod ‘TOCropViewController’
+	pod 'DLRadioButton', '~> 1.4'
 
 	pod 'AFNetworking’
 	pod 'Bolts'

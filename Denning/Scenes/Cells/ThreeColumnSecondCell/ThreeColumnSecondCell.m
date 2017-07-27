@@ -21,4 +21,21 @@
     // Configure the view for the selected state
 }
 
+- (void) configureCellWithModel:(FeeUntransferModel*) model
+{
+    _fileNo.text = model.fileNo;
+    _fileName.text = model.fileName;
+    _invoiceNo.text = model.invoiceNo;
+    _amount.text = [DIHelpers addThousandsSeparatorWithDecimal:model.fee];
+}
+
+
+- (void) configureCellWithDict:(NSDictionary*) dict
+{
+    _fileNo.text = [dict valueForKeyNotNull:@"fileNo"];
+    _fileName.text = [dict valueForKeyNotNull:@"fileName"];
+    _invoiceNo.text = [dict valueForKeyNotNull:@"invoiceNo"];
+    _amount.text = [DIHelpers addThousandsSeparatorWithDecimal:[dict valueForKeyNotNull:@"fee"]];
+}
+
 @end

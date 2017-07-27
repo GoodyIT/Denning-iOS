@@ -205,7 +205,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 // File Upload
 - (void) getSuggestedNameWithUrl:(NSString*) url withPage:(NSNumber*)page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion;
 
-- (void) uploadFileWithUrl:(NSString*) url params:(NSDictionary*) params WithCompletion:(void(^)(NSString* result, NSError* error)) completion;
+- (void) uploadFileWithUrl:(NSString*) url params:(NSDictionary*) params WithCompletion:(void(^)(NSArray* result, NSError* error)) completion;
 
 // Payment Record
 

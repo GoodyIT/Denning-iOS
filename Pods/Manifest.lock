@@ -28,6 +28,7 @@ PODS:
     - Fabric (~> 1.6.3)
   - Digits (1.15.3):
     - TwitterCore (= 1.15.3)
+  - DLRadioButton (1.4.9)
   - DZNEmptyDataSet (1.8.1)
   - DZNPhotoPickerController/Editor (2.0)
   - Fabric (1.6.11)
@@ -149,6 +150,7 @@ DEPENDENCIES:
   - ChameleonFramework
   - Crashlytics
   - Digits (= 1.15.3)
+  - DLRadioButton (~> 1.4)
   - DZNEmptyDataSet
   - DZNPhotoPickerController/Editor
   - Fabric
@@ -199,6 +201,7 @@ SPEC CHECKSUMS:
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Digits: 9823f8aad766c0aa824fac9b08938e22bc635fac
+  DLRadioButton: 7bb8a6e3768b572469ace553391ab4d2af6f9c19
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   DZNPhotoPickerController: 1a9b83a53a2f35094e35c163417ab0aeb8653fd1
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
@@ -245,6 +248,6 @@ SPEC CHECKSUMS:
   UILabel+Copyable: 39749df0a0a7112db8091a2b15ac9140a64b45a8
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
 
-PODFILE CHECKSUM: 378f1a96f526dedfb6e4b420c063b706eba0ca61
+PODFILE CHECKSUM: f5a9e0d33a6b9b0f960f7188a7b53029ff5c03e3
 
 COCOAPODS: 1.2.1

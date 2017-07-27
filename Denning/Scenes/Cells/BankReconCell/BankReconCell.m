@@ -37,6 +37,17 @@
     }
 }
 
+- (void) configureCellForBankBalance:(BankReconModel*) model
+{
+    _firstValue.text = model.accountName;
+    _secondValue.text = model.accountNo;
+    if ([model.credit floatValue] != 0.0f) {
+        _thirdValue.text = [model.credit stringByAppendingString:@" (CR)"];
+    } else {
+        _thirdValue.text = model.debit;
+    }
+}
+
 - (void) configureCellForFeesTransfer: (FeeTranserModel*) model
 {
     _firstValue.text = [DIHelpers getDateInShortForm:model.batchDate];

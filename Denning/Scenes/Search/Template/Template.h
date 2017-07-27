@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomDocumentViewController.h"
 
-@interface Template : UIViewController
+@interface Template : CustomDocumentViewController
 
 @property (strong, nonatomic) SearchResultModel* model;
 @end

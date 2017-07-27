@@ -47,6 +47,7 @@
     [self getHeaderInfo];
     [self resetAllButtons];
     [self setStatus:btnArray[[_selHeaderId integerValue]-1]];
+    [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
 
@@ -96,6 +97,8 @@
     [self resetAllButtons];
     [self setStatus:btnArray[index]];
     _url = _headerModel[index].api;
+    _page = @(1);
+    isAppending = NO;
     [self getList];
 }
 
@@ -133,7 +136,7 @@
 
 - (void) prepareUI
 {
-    btnArray = @[_btnFirst, _btnSecond, _btnThird, _btnForth, _btnCritical, _btnUncertain, _btnTerminal, _btnCompleted];
+    btnArray = @[_btnFirst, _btnSecond, _btnThird, _btnForth, _btnCritical, _btnTerminal, _btnUncertain, _btnCompleted];
     _page = @(1);
     _filter = @"";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
