@@ -224,7 +224,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:kAttendanceDetailSegue sender:_listOfAttendance[indexPath.row].API];
+    [self performSegueWithIdentifier:kAttendanceDetailSegue sender:_listOfAttendance[indexPath.row]];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -237,6 +237,7 @@
     if (offsetY > 10) {
         
         [self.searchBar endEditing:YES];
+        _searchBar.showsCancelButton = NO;
     }
 }
 
@@ -254,14 +255,6 @@
 #pragma mark - Search Delegate
 
 
-- (void)willDismissSearchController:(UISearchController *) __unused searchController {
-    self.filter = @"";
-    self.page = @(1);
-    searchController.searchBar.text = @"";
-    isAppending = NO;
-    [self getList];
-}
-
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     _searchBar.showsCancelButton = YES;
@@ -272,6 +265,17 @@
 {
     [_searchBar resignFirstResponder];
     _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [_searchBar resignFirstResponder];
 }
 
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
@@ -295,7 +299,7 @@
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      if ([segue.identifier isEqualToString:kAttendanceDetailSegue]) {
          DashboardAttendanceDetail* vc = segue.destinationViewController;
-         vc.url = sender;
+         vc.model = sender;
      }
  }
 

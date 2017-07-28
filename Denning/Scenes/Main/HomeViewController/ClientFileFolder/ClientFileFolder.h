@@ -11,4 +11,5 @@
 
 @interface ClientFileFolder : CustomFileUpload
 
+@property (strong, nonatomic) SearchResultModel *model;
 @end

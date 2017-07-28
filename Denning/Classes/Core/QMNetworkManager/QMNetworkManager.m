@@ -15,6 +15,7 @@
 #import "DIGlobal.h"
 #import "DIHelpers.h"
 #import "ClientModel.h"
+#import "AFHTTPSessionOperation.h"
 
 @interface QMNetworkManager ()
 
@@ -332,6 +333,9 @@
 
 - (void) getGlobalSearchFromKeyword: (NSString*) keyword searchURL:(NSString*)searchURL forCategory:(NSInteger)category searchType:(NSString*)searchType withPage:(NSNumber*)page withCompletion:(void(^)(NSArray* resultArray, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* urlString;
     if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]){
         [self setLoginHTTPHeader];
@@ -344,22 +348,21 @@
     if ([searchType isEqualToString:@"Normal"]) { // Direct Tap on the search button
         urlString = [urlString stringByAppendingString:@"&isAutoComplete=1"];
     }
-    
-    [self.manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [SearchResultModel getSearchResultArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:urlString
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                      NSArray* result = [SearchResultModel getSearchResultArrayFromResponse:responseObject];                    completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 // Updates
@@ -603,23 +606,26 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // File Upload
 - (void) getSuggestedNameWithUrl:(NSString*) url withPage:(NSNumber*)page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, url,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     [self setAddContactLoginHTTPHeader];
-    
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completion != nil) {
-            completion(responseObject, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                         completion(responseObject, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) uploadFileWithUrl:(NSString*) url params:(NSDictionary*) params WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
@@ -664,25 +670,27 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Template
 - (void) getTemplateWithFileno:(NSString*) fileNo online:(NSString*) online category:(NSString*) category type:(NSString*) type page:(NSNumber*) page search:(NSString*) search withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cboTemplate?fileno=%@&Online=%@&category=%@&Type=%@&page=%@&search=%@", [DataManager sharedManager].user.serverAPI, fileNo, online, category, type, page, search];
     url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     [self setOtherForLoginHTTPHeader];
-    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [TemplateModel getTemplateArrayFromResponse:responseObject];
-        
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                       NSArray* result = [TemplateModel getTemplateArrayFromResponse:responseObject];   completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getTemplateCategoryWithCompletion:(void(^)(NSArray* result, NSError* error)) completion
@@ -707,22 +715,26 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getTemplateTypeWithFilter:(NSString*) filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cbotemplatecategory?filter=%@", [DataManager sharedManager].user.serverAPI, [filter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     [self setOtherForLoginHTTPHeader];
-    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completion != nil) {
-            completion(responseObject, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          completion(responseObject, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 // Bank
@@ -806,7 +818,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) loadLedgerWithCode: (NSString*) code completion: (void(^)(NewLedgerModel* newLedgerModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/%@/fileLedger", [DataManager sharedManager].user.serverAPI, code];
-//    NSString* url = [NSString stringWithFormat:@"http://121.196.213.102:9339/denningwcf/v1/%@/ledger", code];
+
     [self setOtherForLoginHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -829,23 +841,28 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Ledger detail
 - (void) loadLedgerDetailURL:(NSString*) url completion: (void(^)(NSArray* ledgerModelDetailArray, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
 
     [self setOtherForLoginHTTPHeader];
-    
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSArray* result = [LedgerDetailModel getLedgerDetailArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray* result = [LedgerDetailModel getLedgerDetailArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 // Documents
@@ -998,126 +1015,151 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getCodeDescWithUrl:(NSString*) url withPage:(NSNumber*)page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, url,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     [self setAddContactLoginHTTPHeader];
-    
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [CodeDescription getCodeDescriptionArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                      NSArray* result = [CodeDescription getCodeDescriptionArrayFromResponse:responseObject];    completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getDescriptionWithUrl: (NSString*) url withPage: (NSNumber*) page withSearch:(NSString*)search withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, url,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     [self setAddContactLoginHTTPHeader];
-    
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completion != nil) {
-            completion(responseObject, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          completion(responseObject, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getPostCodeWithPage:(NSNumber*) page withSearch:(NSString*)search withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, CONTACT_POSTCODE_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     [self setAddContactLoginHTTPHeader];
-    
-    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [CityModel getCityModelArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray* result = [CityModel getCityModelArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getBankBranchWithPage:(NSNumber*) page withSearch:(NSString*)search withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, BANK_BRANCH_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     [self setAddContactLoginHTTPHeader];
-    
-    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [BankBranchModel getBankBranchArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray* result = [BankBranchModel getBankBranchArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getSolicitorList: (NSNumber*) page withSearch:(NSString*) search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI,CONTACT_SOLICITOR_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [SoliciorModel getSolicitorArrayFromRespsonse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [SoliciorModel getSolicitorArrayFromRespsonse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) checkIDorNameDuplication:(NSString*) string url:(NSString*)url WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI,url, [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            completion(responseObject, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          completion(responseObject, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) saveContactWithData:(NSDictionary*) data withCompletion:(void(^)(ContactModel* addContact, NSError* error)) completion
@@ -1162,39 +1204,53 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getSimpleMatter:(NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTERSIMPLE_GET_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [MatterSimple getMatterSimpleArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [MatterSimple getMatterSimpleArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getStaffArray:(NSNumber*) page withSearch:(NSString*)search WithURL:(NSString*) url WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI,url, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [StaffModel getStaffArrayFromRepsonse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [StaffModel getStaffArrayFromRepsonse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getCourtWithCode:(NSString*) code WithCompletion:(void(^)(EditCourtModel* model, NSError* error)) completion
@@ -1218,41 +1274,54 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getCourtDiaryArrayWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, COURTDIARY_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [CourtDiaryModel getCourtDiaryArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
-
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [CourtDiaryModel getCourtDiaryArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getCoramArrayWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, COURT_CORAM_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [CoramModel getCoramArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                           NSArray *result = [CoramModel getCoramArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
     
 }
 
@@ -1331,78 +1400,108 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getPropertyType: (NSNumber*) page withSearch:(NSString*) search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_TYPE_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
+    
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [MatterCodeModel getMatterCodeArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [MatterCodeModel getMatterCodeArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
+ 
 }
 
 - (void) getPropertyList: (NSNumber*) page withSearch:(NSString*) search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [FullPropertyModel getFullPropertyArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [FullPropertyModel getFullPropertyArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getMukimValue: (NSNumber*) page withSearch:(NSString*) search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_MUKIM_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [MukimModel getMukimArrayFromReponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [MukimModel getMukimArrayFromReponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getMasterTitle:(NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_MASTER_TITLE_GETLIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [MasterTitleModel getMasterTitleArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [MasterTitleModel getMasterTitleArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) savePropertyWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(AddPropertyModel* result, NSError* error)) completion
@@ -1445,45 +1544,57 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getMatterLitigation:(NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTER_LITIGATION_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [MatterLitigationModel getMatterLitigationArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [MatterLitigationModel getMatterLitigationArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getMatterCode:(NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTER_LIST_GET_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [MatterCodeModel getMatterCodeArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [MatterCodeModel getMatterCodeArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) saveMatterWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(RelatedMatterModel* result, NSError* error)) completion
 {
-//    NSString* _url = [@"http://43.252.215.163/" stringByAppendingString:url];
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
     [self setAddContactLoginHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -1501,7 +1612,6 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) updateMatterWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(RelatedMatterModel* result, NSError* error)) completion
 {
-//    NSString* _url = [@"http://43.252.215.163/" stringByAppendingString:url];
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
     [self setAddContactLoginHTTPHeader];
     [self.manager PUT:_url parameters:data success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -1523,40 +1633,54 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getPropertyProjectHousingWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_PROJECT_HOUSING_GET_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [ProjectHousingModel getProjectHousingArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [ProjectHousingModel getProjectHousingArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getPropertyContactListWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, CONTACT_GETLIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [StaffModel getStaffArrayFromRepsonse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [StaffModel getStaffArrayFromRepsonse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 /*
@@ -1564,21 +1688,28 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
  */
 
 - (void) getPresetBillCode:(NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion{
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PRESET_BILL_GET_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [PresetBillModel getPresetBillArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [PresetBillModel getPresetBillArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) calculateTaxInvoiceWithParams: (NSDictionary*) data withCompletion: (void(^)(NSDictionary* result, NSError* error)) completion
@@ -1616,28 +1747,36 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 }
 
 
-
 /*
  * Bill
  */
 
 - (void) getQuotationListWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, QUOTATION_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [QuotationModel getQuotationArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [QuotationModel getQuotationArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 /*
@@ -1646,21 +1785,28 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getAccountTypeListWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, ACCOUNT_TYPE_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [AccountTypeModel getAccountTypeArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [AccountTypeModel getAccountTypeArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) saveReceiptWithParams: (NSDictionary*) data WithCompletion: (void(^)(NSDictionary* result, NSError* error)) completion
@@ -1741,150 +1887,218 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardItemModelWithURL: (NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    [self setAddContactLoginHTTPHeader];
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray* result = [ItemModel getItemArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    [self setAddContactLoginHTTPHeader];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray* result = [ItemModel getItemArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getDashboardMyDueTaskWithURL: (NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    [self setAddContactLoginHTTPHeader];
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray* result = [TaskCheckModel getTaskCheckArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    [self setAddContactLoginHTTPHeader];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray* result = [TaskCheckModel getTaskCheckArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getDashboardBankReconWithURL:(NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    [self setAddContactLoginHTTPHeader];
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray* result = [BankReconModel getBankReconArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    [self setAddContactLoginHTTPHeader];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray* result = [BankReconModel getBankReconArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
+    
 }
 
 - (void) getDashboardTrialBalanceWithURL:(NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    [self setAddContactLoginHTTPHeader];
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray* result = [TrialBalanceModel getTrialBalanceArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    [self setAddContactLoginHTTPHeader];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray* result = [TrialBalanceModel getTrialBalanceArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getNewMatterInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter  withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [SearchResultModel getSearchResultArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [SearchResultModel getSearchResultArrayFromResponse:responseObject];
+                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getDashboardContactInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [SearchResultModel getSearchResultArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {                                                                      if  (completion != nil)
+                                                                  {
+                                                                      NSArray *result = [SearchResultModel getSearchResultArrayFromResponse:responseObject];
+                                                                      completion(result, nil);
+                                                                  }               } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                      if  (completion != nil)
+                                                                      {
+                                                                          completion(nil, error);
+                                                                      }
+                                                                  }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getDashboardTaxInvoiceInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [TaxInvoceModel getTaxInvoiceArrayFromResonse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {                                                                      if  (completion != nil)
+                                                                  {
+                                                                      NSArray *result = [TaxInvoceModel getTaxInvoiceArrayFromResonse:responseObject];
+                                                                      completion(result, nil);
+                                                                  }               } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                      if  (completion != nil)
+                                                                      {
+                                                                          completion(nil, error);
+                                                                      }
+                                                                  }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getDashboardFeeTransferInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
     [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            
-            completion(responseObject, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                              completion(responseObject, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                          if  (completion != nil)
+                                                                          {
+                                                                              completion(nil, error);
+                                                                          }
+                                                                      }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getProfitLossDetailWithURL:(NSString*) url withCompletion:(void(^)(ProfitLossDetailModel* result, NSError* error)) completion {
@@ -1906,38 +2120,71 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getStaffOnlineWithURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     
-    [self setAddContactLoginHTTPHeader];
-    [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSArray *result = [StaffOnlineModel getStaffOnlineArrayFromResponse:responseObject];
-            completion(result, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
-    }];
-}
-
-- (void) getAttendanceDetailWithURL:(NSString*)url withCompletion: (void(^)(NSArray* result, NSError* error)) completion
-{
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
+    [self setAddContactLoginHTTPHeader];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [StaffOnlineModel getStaffOnlineArrayFromResponse:responseObject];
+                                                                          completion(result, nil);
+                                                                      }
+                                                                  } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                          if  (completion != nil)
+                                                                          {
+                                                                              completion(nil, error);
+                                                                          }
+                                                                      }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 - (void) getCompletionTrackingWithURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    [self setAddContactLoginHTTPHeader];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          NSArray *result = [CompletionTrackingModel getCompletionTrackingArrayFromResponse:responseObject];
+                                                                          completion(result, nil);
+                                                                      }                 } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                          if  (completion != nil)
+                                                                          {
+                                                                              completion(nil, error);
+                                                                          }
+                                                                      }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
+}
+
+- (void) getResponseWithUrl:(NSString*) url withCompletion:(void(^)(id result, NSError* error)) completion
+{
+    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
     [self setAddContactLoginHTTPHeader];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
-            NSArray *result = [CompletionTrackingModel getCompletionTrackingArrayFromResponse:responseObject];
-            completion(result, nil);
+            completion(responseObject, nil);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if  (completion != nil)

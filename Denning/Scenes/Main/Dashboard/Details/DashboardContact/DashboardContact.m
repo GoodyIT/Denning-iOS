@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSArray* copyedList;
 
 @property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 @end
@@ -39,7 +40,7 @@
     
     keyword = @"cust";
     [self prepareUI];
-    [self configureSearch];
+//    [self configureSearch];
     [self registerNib];
     [self getListWithCompletion:nil];
 }
@@ -101,7 +102,6 @@
     [[QMNetworkManager sharedManager] getDashboardContactInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
-        
         if (error == nil) {
             if (isAppending) {
                 self.listOfContacts = [[self.listOfContacts arrayByAddingObjectsFromArray:result] mutableCopy];
@@ -114,7 +114,7 @@
             
             [self.tableView reloadData];
             if (completion != nil) {
-                [self performSelector:@selector(searchBarResponder) withObject:nil afterDelay:1];
+                
             }
         }
         else {
@@ -193,7 +193,8 @@
     //    CGFloat contentHeight = scrollView.contentSize.height;
     if (offsetY > 10) {
         
-        [self.searchController.searchBar endEditing:YES];
+        [self.searchBar endEditing:YES];
+        _searchBar.showsCancelButton = NO;
     }
 }
 
@@ -210,14 +211,28 @@
 
 #pragma mark - Search Delegate
 
-- (void)didPresentSearchController:(UISearchController *)searchController
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    [self.tableView reloadData];
-    [self performSelector:@selector(searchBarResponder) withObject:nil afterDelay:1];
+    _searchBar.showsCancelButton = YES;
+    return YES;
 }
 
-- (void) searchBarResponder {
-    [self.searchController.searchBar becomeFirstResponder];
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getListWithCompletion:nil];
+    [_searchBar resignFirstResponder];
 }
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {

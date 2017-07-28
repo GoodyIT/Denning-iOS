@@ -22,4 +22,6 @@
 
 - (void) configureCellForBankBalance:(BankReconModel*) model;
 
+- (void) configureCellWithDict:(NSDictionary*) dict;
+
 @end

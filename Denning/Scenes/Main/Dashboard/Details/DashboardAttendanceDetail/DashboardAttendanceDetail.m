@@ -16,6 +16,7 @@
 }
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *date;
+@property (weak, nonatomic) IBOutlet UILabel *totalHour;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSArray* listOfDetails;
@@ -51,6 +52,10 @@
 
 - (void) prepareUI
 {
+    _name.text = _model.name;
+    _date.text = [DIHelpers today];
+    _totalHour.text = _model.totalHour;
+    
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -63,7 +68,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self)
-    [[QMNetworkManager sharedManager]  getAttendanceDetailWithURL:_url withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager]  getResponseWithUrl:_model.API withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         if (error == nil) {
             self.listOfDetails = [result mutableCopy];
@@ -88,18 +93,16 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BankReconModel *model = self.listOfDetails[indexPath.row];
-    
     BankReconCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconCell cellIdentifier] forIndexPath:indexPath];
     
-    [cell configureCellWithModel:model];
+    [cell configureCellWithDict:self.listOfDetails[indexPath.row]];
     
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

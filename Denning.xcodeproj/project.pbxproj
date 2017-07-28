@@ -778,6 +778,8 @@
 		9620834C1EDE236D00BB595C /* BankCashSecondCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9620834A1EDE236D00BB595C /* BankCashSecondCell.xib */; };
 		962083551EDE492200BB595C /* DashboardContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 962083531EDE492200BB595C /* DashboardContactCell.m */; };
 		962083561EDE492200BB595C /* DashboardContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 962083541EDE492200BB595C /* DashboardContactCell.xib */; };
+		9635BB9E1F2A54FD00BE7CF0 /* SearchContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */; };
+		9635BB9F1F2A54FD00BE7CF0 /* SearchContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */; };
 		9636DC961F03A339008DDA41 /* AdsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9636DC951F03A339008DDA41 /* AdsModel.m */; };
 		9636DCBB1F03C6C8008DDA41 /* icon_db_attendance.png in Resources */ = {isa = PBXBuildFile; fileRef = 9636DC971F03C6C8008DDA41 /* icon_db_attendance.png */; };
 		9636DCBC1F03C6C8008DDA41 /* icon_db_attendance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9636DC981F03C6C8008DDA41 /* icon_db_attendance@2x.png */; };
@@ -2115,6 +2117,9 @@
 		962083521EDE492200BB595C /* DashboardContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardContactCell.h; sourceTree = "<group>"; };
 		962083531EDE492200BB595C /* DashboardContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardContactCell.m; sourceTree = "<group>"; };
 		962083541EDE492200BB595C /* DashboardContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardContactCell.xib; sourceTree = "<group>"; };
+		9635BB9B1F2A54FD00BE7CF0 /* SearchContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchContactCell.h; sourceTree = "<group>"; };
+		9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchContactCell.m; sourceTree = "<group>"; };
+		9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchContactCell.xib; sourceTree = "<group>"; };
 		9636DC941F03A339008DDA41 /* AdsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdsModel.h; sourceTree = "<group>"; };
 		9636DC951F03A339008DDA41 /* AdsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdsModel.m; sourceTree = "<group>"; };
 		9636DC971F03C6C8008DDA41 /* icon_db_attendance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_db_attendance.png; sourceTree = "<group>"; };
@@ -5394,6 +5399,7 @@
 				960A66291F02A6AB0063AB6C /* SearchLastCell */,
 				79EC0E411E8A8DDF00320A28 /* SearchDocumentCell */,
 				79EC0E421E8A8DDF00320A28 /* SearchMatterCell */,
+				9635BB9A1F2A545F00BE7CF0 /* SearchContactCell */,
 				79EC0E2E1E89F50D00320A28 /* DocumentCell */,
 				79EC0E091E89AD0500320A28 /* ThreeFieldsCell */,
 				79EC0DE11E88095F00320A28 /* ContactHeaderCell */,
@@ -6641,6 +6647,16 @@
 				962083541EDE492200BB595C /* DashboardContactCell.xib */,
 			);
 			path = DashboardContactCell;
+			sourceTree = "<group>";
+		};
+		9635BB9A1F2A545F00BE7CF0 /* SearchContactCell */ = {
+			isa = PBXGroup;
+			children = (
+				9635BB9B1F2A54FD00BE7CF0 /* SearchContactCell.h */,
+				9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */,
+				9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */,
+			);
+			path = SearchContactCell;
 			sourceTree = "<group>";
 		};
 		9636DC931F0371F0008DDA41 /* AdsModel */ = {
@@ -7983,6 +7999,7 @@
 				793FF1871EBD4BDF001F83A5 /* icon_contact_blue@2x.png in Resources */,
 				795DF2421E6E4C3F006D617D /* Lato-Bold.ttf in Resources */,
 				795DF22D1E6E3A81006D617D /* Contact.png in Resources */,
+				9635BB9F1F2A54FD00BE7CF0 /* SearchContactCell.xib in Resources */,
 				96A73A971F1B240900B97156 /* icon_prev.png in Resources */,
 				793FF1311EBB78C9001F83A5 /* icon_edit_red@2x.png in Resources */,
 				9636DCD61F03C6C8008DDA41 /* icon_db_task_checklist.png in Resources */,
@@ -8260,6 +8277,7 @@
 				7903CF7D1ECD37510090206C /* PropertyCodeCell.m in Sources */,
 				962082BB1ED40C3000BB595C /* MatterLitigationModel.m in Sources */,
 				79D929C81E8D84B0000A53D2 /* PersonalDocumentViewController.m in Sources */,
+				9635BB9E1F2A54FD00BE7CF0 /* SearchContactCell.m in Sources */,
 				793C1A0F1EC5314C00271B7F /* PresetBillModel.m in Sources */,
 				960F030A1F29512900B25BBC /* ClientFileFolder.m in Sources */,
 				79F7322A1E96A929004F88DF /* DEMOCustomAutoCompleteObject.m in Sources */,

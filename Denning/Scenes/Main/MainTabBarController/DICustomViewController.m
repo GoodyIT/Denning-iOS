@@ -72,6 +72,14 @@
     } completion:completion];
 }
 
+- (void) configureMenuRightBtnWithImagename:(NSString*) imageName withSelector:(SEL) action
+{
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:imageName] style:UIBarButtonItemStylePlain target:self action:action];
+    [backButtonItem setTintColor:[UIColor whiteColor]];
+    
+    [self.tabBarController.navigationItem setRightBarButtonItems:@[backButtonItem] animated:YES];
+}
+
 - (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:imageName] style:UIBarButtonItemStylePlain target:self action:action];
     [backButtonItem setTintColor:[UIColor whiteColor]];

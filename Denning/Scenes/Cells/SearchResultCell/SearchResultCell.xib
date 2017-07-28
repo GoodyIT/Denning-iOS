@@ -16,30 +16,30 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="120" id="KGk-i7-Jjw" customClass="SearchResultCell">
-            <rect key="frame" x="0.0" y="0.0" width="562" height="120"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="146" id="KGk-i7-Jjw" customClass="SearchResultCell">
+            <rect key="frame" x="0.0" y="0.0" width="562" height="146"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="562" height="119.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="562" height="145.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuC-jd-efq" userLabel="inner view">
-                        <rect key="frame" x="10" y="8" width="542" height="103.5"/>
+                        <rect key="frame" x="10" y="8" width="542" height="129.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avY-CP-Yhs">
-                                <rect key="frame" x="8" y="1" width="66.5" height="30"/>
+                                <rect key="frame" x="8" y="1" width="66.5" height="33.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                 <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GL8-NT-Xqf">
-                                <rect key="frame" x="8" y="36" width="76.5" height="17.5"/>
+                                <rect key="frame" x="8" y="62" width="76.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.57647058823529407" green="0.58431372549019611" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ9-mg-BhY">
-                                <rect key="frame" x="20" y="58.5" width="159" height="44"/>
+                                <rect key="frame" x="20" y="84.5" width="159" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="159" id="fYQ-FO-iX4"/>
@@ -59,17 +59,25 @@
                                     <action selector="relatedMatterTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5r0-tv-XG2"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDP-m6-ta2">
+                                <rect key="frame" x="8" y="39.5" width="76.5" height="17.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="GL8-NT-Xqf" firstAttribute="top" secondItem="avY-CP-Yhs" secondAttribute="bottom" constant="5" id="BOm-3l-vQr"/>
                             <constraint firstItem="TJ9-mg-BhY" firstAttribute="top" secondItem="GL8-NT-Xqf" secondAttribute="bottom" constant="5" id="G8M-SQ-frb"/>
                             <constraint firstItem="avY-CP-Yhs" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="8" id="IL7-Fd-vdI"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="avY-CP-Yhs" secondAttribute="trailing" constant="12" id="Ilk-4X-4n4"/>
                             <constraint firstItem="avY-CP-Yhs" firstAttribute="top" secondItem="uuC-jd-efq" secondAttribute="top" constant="1" id="J9d-Ze-9l8"/>
                             <constraint firstItem="TJ9-mg-BhY" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="20" id="Q0L-gW-uHJ"/>
+                            <constraint firstItem="hDP-m6-ta2" firstAttribute="top" secondItem="avY-CP-Yhs" secondAttribute="bottom" constant="5" id="UR6-Wo-EzN"/>
                             <constraint firstAttribute="bottom" secondItem="TJ9-mg-BhY" secondAttribute="bottom" constant="1" id="fFj-50-e9w"/>
+                            <constraint firstItem="GL8-NT-Xqf" firstAttribute="top" secondItem="hDP-m6-ta2" secondAttribute="bottom" constant="5" id="iDa-oD-dc9"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GL8-NT-Xqf" secondAttribute="trailing" constant="20" id="m2s-AP-ptG"/>
+                            <constraint firstItem="hDP-m6-ta2" firstAttribute="leading" secondItem="avY-CP-Yhs" secondAttribute="leading" id="m5F-Yc-Jdt"/>
                             <constraint firstItem="GL8-NT-Xqf" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="8" id="n8f-4S-TTW"/>
                         </constraints>
                     </view>
@@ -84,9 +92,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="descriptionLabel" destination="GL8-NT-Xqf" id="2y5-0S-N5n"/>
+                <outlet property="indexData" destination="hDP-m6-ta2" id="bUt-Nl-Lwi"/>
                 <outlet property="titleLabel" destination="avY-CP-Yhs" id="aXy-L5-lFw"/>
             </connections>
-            <point key="canvasLocation" x="-375" y="-496"/>
+            <point key="canvasLocation" x="-375" y="-449"/>
         </tableViewCell>
     </objects>
 </document>

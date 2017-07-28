@@ -54,18 +54,6 @@ iCarouselDataSource, iCarouselDelegate>
     [self showTabBar];
 }
 
-- (void) gotoLogin {
-    MainTabBarController *mainTabBarController = (MainTabBarController*)self.tabBarController;
-    [mainTabBarController tapLogin:nil];
-}
-
-- (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_user"] style:UIBarButtonItemStylePlain target:self action:action];
-    [backButtonItem setTintColor:[UIColor whiteColor]];
-    
-    [self.tabBarController.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -105,6 +93,7 @@ iCarouselDataSource, iCarouselDelegate>
     [self displayBranchInfo];
     [self setTabBarVisible:YES animated:NO completion:nil];
     [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
+    [self configureMenuRightBtnWithImagename:@"icon_user" withSelector:@selector(gotoMenu)];
 }
 
 - (void) loadsAds {

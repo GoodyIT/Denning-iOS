@@ -23,15 +23,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="178" id="KGk-i7-Jjw" customClass="SearchMatterCell">
-            <rect key="frame" x="0.0" y="0.0" width="459" height="178"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="206" id="KGk-i7-Jjw" customClass="SearchMatterCell">
+            <rect key="frame" x="0.0" y="0.0" width="459" height="206"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="459" height="177.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="459" height="205.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="VRL-yJ-H1w">
-                        <rect key="frame" x="20" y="65.5" width="419" height="44"/>
+                        <rect key="frame" x="20" y="93.5" width="419" height="44"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8l9-Ew-eBm">
                                 <rect key="frame" x="0.0" y="0.0" width="129.5" height="44"/>
@@ -121,13 +121,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zZp-gX-TBh">
-                        <rect key="frame" x="20" y="35.5" width="81.5" height="18"/>
+                        <rect key="frame" x="20" y="58.5" width="81.5" height="23"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="QjK-Pj-sGq">
-                        <rect key="frame" x="20" y="117.5" width="419" height="44"/>
+                        <rect key="frame" x="20" y="145.5" width="419" height="44"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdT-iI-szx">
                                 <rect key="frame" x="0.0" y="0.0" width="129.5" height="44"/>
@@ -214,17 +214,25 @@
                             <constraint firstAttribute="height" constant="44" id="rsg-Jk-CcO"/>
                         </constraints>
                     </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-Ky-Z1a">
+                        <rect key="frame" x="20" y="35.5" width="81.5" height="18"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                        <color key="textColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="zZp-gX-TBh" secondAttribute="trailing" constant="12" id="0gW-n5-B4T"/>
+                    <constraint firstItem="5kh-Ky-Z1a" firstAttribute="leading" secondItem="rsD-eB-gL0" secondAttribute="leading" id="CJm-nH-GAq"/>
+                    <constraint firstItem="5kh-Ky-Z1a" firstAttribute="top" secondItem="rsD-eB-gL0" secondAttribute="bottom" constant="5" id="COi-Td-ZyU"/>
                     <constraint firstItem="VRL-yJ-H1w" firstAttribute="leading" secondItem="rsD-eB-gL0" secondAttribute="leading" id="Haz-uP-O9T"/>
                     <constraint firstItem="zZp-gX-TBh" firstAttribute="leading" secondItem="rsD-eB-gL0" secondAttribute="leading" id="JAg-47-qmx"/>
-                    <constraint firstItem="zZp-gX-TBh" firstAttribute="top" secondItem="rsD-eB-gL0" secondAttribute="bottom" constant="5" id="XvX-bB-NbY"/>
                     <constraint firstAttribute="trailingMargin" secondItem="QjK-Pj-sGq" secondAttribute="trailing" constant="12" id="Y2g-RV-wC4"/>
                     <constraint firstItem="QjK-Pj-sGq" firstAttribute="top" secondItem="VRL-yJ-H1w" secondAttribute="bottom" constant="8" id="Z7a-7j-aU6"/>
                     <constraint firstItem="rsD-eB-gL0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="ZUw-5A-RiR"/>
                     <constraint firstAttribute="bottomMargin" secondItem="QjK-Pj-sGq" secondAttribute="bottom" constant="8" id="Zu1-ae-C6c"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="rsD-eB-gL0" secondAttribute="trailing" constant="12" id="ern-XK-r0b"/>
+                    <constraint firstItem="zZp-gX-TBh" firstAttribute="top" secondItem="5kh-Ky-Z1a" secondAttribute="bottom" constant="5" id="fVE-yD-u3D"/>
                     <constraint firstItem="VRL-yJ-H1w" firstAttribute="top" secondItem="zZp-gX-TBh" secondAttribute="bottom" constant="12" id="gFM-kb-5Ey"/>
                     <constraint firstAttribute="trailingMargin" secondItem="VRL-yJ-H1w" secondAttribute="trailing" constant="12" id="kB9-re-ZpC"/>
                     <constraint firstItem="rsD-eB-gL0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="rPQ-dw-hsM"/>
@@ -233,10 +241,11 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="descriptionLabel" destination="zZp-gX-TBh" id="4iK-YA-p4i"/>
+                <outlet property="headerLabel" destination="5kh-Ky-Z1a" id="s2b-WR-gAx"/>
                 <outlet property="paymentRecordBtn" destination="vdT-iI-szx" id="zwM-bu-mFX"/>
                 <outlet property="titleLabel" destination="rsD-eB-gL0" id="odn-AP-YlY"/>
             </connections>
-            <point key="canvasLocation" x="92.5" y="-128"/>
+            <point key="canvasLocation" x="92.5" y="-114"/>
         </tableViewCell>
     </objects>
 </document>

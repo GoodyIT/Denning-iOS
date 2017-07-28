@@ -153,7 +153,7 @@
                     <tabBarItem key="tabBarItem" title="Home" image="icon_home.png" id="cas-ce-5h9"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="8d8-px-nXR" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="8d8-px-nXR" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -880,7 +880,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dg3-dV-Y9A" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="oJq-4P-nyc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="oJq-4P-nyc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -905,7 +905,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="98K-PN-Fhb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="r8K-Lc-SgC">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="r8K-Lc-SgC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -930,7 +930,7 @@
                 <navigationController storyboardIdentifier="CalendarNavigation" automaticallyAdjustsScrollViewInsets="NO" id="VqM-Ye-o3a" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="2ZM-6U-yum" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="2ZM-6U-yum" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1010,7 +1010,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Wme-2n-0zk" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="5mh-Ss-EKc">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="5mh-Ss-EKc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1032,9 +1032,9 @@
         <!--Navigation Controller-->
         <scene sceneID="bRR-rf-zQf">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KWs-Rb-WJ3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ClientUploadNavigation" automaticallyAdjustsScrollViewInsets="NO" id="KWs-Rb-WJ3" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="UXP-3V-qrF" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UXP-3V-qrF" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

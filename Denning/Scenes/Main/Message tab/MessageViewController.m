@@ -57,6 +57,8 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     [self hideTabBar];
     [self checkLoginState];
     [self addView:self.viewControllers[0]];
+    [self configureBackBtnWithImageName:@"Back" withSelector:@selector(popupScreen:)];
+    self.tabBarController.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void) checkLoginState {

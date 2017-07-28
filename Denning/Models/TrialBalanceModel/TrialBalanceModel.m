@@ -14,8 +14,8 @@
 {
     TrialBalanceModel* model = [TrialBalanceModel new];
     
-    model.API = [response valueForKeyNotNull:@"API"];
-    
+    model.APIcredit = [response valueForKeyNotNull:@"APIcredit"];
+    model.APIdebit = [response valueForKeyNotNull:@"APIdebit"];
     model.accountName = [response valueForKeyNotNull:@"accountName"];
     model.accountType = [response valueForKeyNotNull:@"accountType"];
     model.credit = [response valueForKeyNotNull:@"credit"];

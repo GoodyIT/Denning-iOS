@@ -55,4 +55,10 @@
     _thirdValue.text = [DIHelpers addThousandsSeparatorWithDecimal:model.totalAmount];
 }
 
+- (void) configureCellWithDict:(NSDictionary*) dict{
+    _firstValue.text = [dict valueForKeyNotNull:@"timeIn"];
+    _secondValue.text = [dict valueForKeyNotNull:@"timeOut"];
+    _thirdValue.text = [dict valueForKeyNotNull:@"hours"];
+}
+
 @end

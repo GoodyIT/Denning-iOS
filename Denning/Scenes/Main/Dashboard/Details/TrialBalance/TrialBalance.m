@@ -9,6 +9,7 @@
 #import "TrialBalance.h"
 #import "TrialBalanceCell.h"
 #import "TrialBalanceHeaderCell.h"
+#import "FileLedger.h"
 
 @interface TrialBalance ()
 <UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -21,6 +22,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* listOfTrialBalances;
 @property (strong, nonatomic) NSArray* copyedList;
@@ -36,7 +38,7 @@
     [super viewDidLoad];
     
     [self prepareUI];
-    [self configureSearch];
+//    [self configureSearch];
     [self registerNib];
     [self getListWithCompletion:nil];
 }
@@ -147,20 +149,65 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    TrialBalanceModel *model = self.listOfTrialBalances[indexPath.row];
+    NSString* url;
+    if ([model.isBalance isEqualToString:@"Yes"]) {
+        url = model.APIdebit;
+    } else {
+        url = model.APIcredit;
+    }
+    [self performSegueWithIdentifier:kFileLedgerSegue sender:url];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    //    CGFloat contentHeight = scrollView.contentSize.height;
+    if (offsetY > 10) {
+        
+        [self.searchBar endEditing:YES];
+        _searchBar.showsCancelButton = NO;
+    }
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    CGFloat contentHeight = scrollView.contentSize.height;
+    
+    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
+        
+        [self appendList];
+    }
 }
 
 #pragma mark - Search Delegate
 
-- (void)didPresentSearchController:(UISearchController *)searchController
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    [self.tableView reloadData];
-    [self performSelector:@selector(searchBarResponder) withObject:nil afterDelay:1];
+    _searchBar.showsCancelButton = YES;
+    return YES;
 }
 
-- (void) searchBarResponder {
-    [self.searchController.searchBar becomeFirstResponder];
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getListWithCompletion:nil];
+    [_searchBar resignFirstResponder];
 }
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
@@ -192,5 +239,14 @@
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kFileLedgerSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        FileLedger* vc = nav.viewControllers.firstObject;
+        vc.url = sender;
+    }
+}
 
 @end

@@ -49,8 +49,12 @@
         return;
     }
     NSData* imageData = UIImageJPEGRepresentation(self.imagePreview.image, 1);
+    NSString* fileNo1 = @"0";
+    if (_model != nil) {
+        fileNo1 = _model.key;
+    }
     NSNumber* length = [NSNumber numberWithInteger:imageData.length];
-    NSDictionary* params = @{@"fileNo1":@"0",
+    NSDictionary* params = @{@"fileNo1":fileNo1,
                              @"FileName":[self.renameFile.text stringByAppendingString:@".jpg"],
                              @"MimeType":@"jpg",
                              @"dateCreate":[DIHelpers todayWithTime],

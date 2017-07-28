@@ -373,9 +373,9 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 - (void) getStaffOnlineWithURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion;
 
-- (void) getAttendanceDetailWithURL:(NSString*)url withCompletion: (void(^)(NSArray* result, NSError* error)) completion;
-
 - (void) getCompletionTrackingWithURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion;
+
+- (void) getResponseWithUrl:(NSString*) url withCompletion:(void(^)(id result, NSError* error)) completion;
 
 @end
 

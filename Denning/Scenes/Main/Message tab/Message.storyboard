@@ -102,7 +102,7 @@ out here.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="4cW-an-Q3r" userLabel="ChatOptionView">
-                                <rect key="frame" x="16" y="-14" width="343" height="24"/>
+                                <rect key="frame" x="16" y="28" width="343" height="24"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lf8-LT-V58" userLabel="Recent">
                                         <rect key="frame" x="0.0" y="0.0" width="21" height="24"/>
@@ -165,7 +165,7 @@ out here.</string>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k2D-zg-hGn">
-                                <rect key="frame" x="0.0" y="18" width="375" height="649"/>
+                                <rect key="frame" x="0.0" y="60" width="375" height="607"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -173,7 +173,7 @@ out here.</string>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="4cW-an-Q3r" secondAttribute="trailing" id="4bs-nU-mWm"/>
                             <constraint firstAttribute="trailing" secondItem="k2D-zg-hGn" secondAttribute="trailing" id="BPN-bx-RGU"/>
-                            <constraint firstItem="4cW-an-Q3r" firstAttribute="top" secondItem="DNp-Bt-HN9" secondAttribute="bottom" constant="-34" id="EGm-8P-LQD"/>
+                            <constraint firstItem="4cW-an-Q3r" firstAttribute="top" secondItem="DNp-Bt-HN9" secondAttribute="bottom" constant="8" id="EGm-8P-LQD"/>
                             <constraint firstItem="k2D-zg-hGn" firstAttribute="leading" secondItem="dwJ-lI-E6y" secondAttribute="leading" id="FZU-be-9WU"/>
                             <constraint firstItem="4cW-an-Q3r" firstAttribute="leading" secondItem="dwJ-lI-E6y" secondAttribute="leadingMargin" id="U4c-6H-0Bd"/>
                             <constraint firstItem="k2D-zg-hGn" firstAttribute="top" secondItem="4cW-an-Q3r" secondAttribute="bottom" constant="8" id="mpa-l6-hKx"/>

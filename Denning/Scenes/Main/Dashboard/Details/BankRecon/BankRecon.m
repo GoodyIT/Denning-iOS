@@ -23,6 +23,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* listOfBankRecons;
 @property (strong, nonatomic) UISearchController *searchController;
@@ -42,7 +43,7 @@
     [self parseUrl];
     [self prepareUI];
     [self registerNibs];
-    [self configureSearch];
+//    [self configureSearch];
     [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
@@ -236,13 +237,15 @@
 
 #pragma mark - ScrollView Delegate
 
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
     //    CGFloat contentHeight = scrollView.contentSize.height;
     if (offsetY > 10) {
         
-        [self.searchController.searchBar endEditing:YES];
+        [self.searchBar endEditing:YES];
+        _searchBar.showsCancelButton = NO;
     }
 }
 
@@ -259,6 +262,29 @@
 
 #pragma mark - Search Delegate
 
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    _searchBar.showsCancelButton = YES;
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [_searchBar resignFirstResponder];
+}
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";

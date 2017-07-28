@@ -24,15 +24,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="138" id="KGk-i7-Jjw" customClass="SearchDocumentCell">
-            <rect key="frame" x="0.0" y="0.0" width="544" height="138"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="150" id="KGk-i7-Jjw" customClass="SearchDocumentCell">
+            <rect key="frame" x="0.0" y="0.0" width="544" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="544" height="137.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="544" height="149.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8cH-bW-wZy">
-                        <rect key="frame" x="28" y="77.5" width="217.5" height="44"/>
+                        <rect key="frame" x="28" y="89.5" width="217.5" height="44"/>
                         <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="kRv-Wr-ufA"/>
@@ -52,7 +52,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5b-Hy-hOC">
-                        <rect key="frame" x="265.5" y="77.5" width="218" height="44"/>
+                        <rect key="frame" x="265.5" y="89.5" width="218" height="44"/>
                         <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="18"/>
                         <state key="normal" title="Open Matter">
@@ -75,24 +75,32 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfC-KQ-A2v">
-                        <rect key="frame" x="20" y="35" width="92" height="37.5"/>
+                        <rect key="frame" x="20" y="64" width="92" height="20.5"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40q-cf-IKV">
+                        <rect key="frame" x="20" y="35" width="92" height="24"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                        <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="b5b-Hy-hOC" firstAttribute="leading" secondItem="8cH-bW-wZy" secondAttribute="trailing" constant="20" id="0KV-GT-6Mv"/>
                     <constraint firstItem="8cH-bW-wZy" firstAttribute="top" secondItem="cfC-KQ-A2v" secondAttribute="bottom" constant="5" id="85K-ts-mfs"/>
-                    <constraint firstItem="cfC-KQ-A2v" firstAttribute="top" secondItem="Gtw-2e-DFW" secondAttribute="bottom" constant="5" id="BVE-iR-GQy"/>
                     <constraint firstItem="8cH-bW-wZy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="ClA-hM-1Id"/>
+                    <constraint firstItem="40q-cf-IKV" firstAttribute="leading" secondItem="Gtw-2e-DFW" secondAttribute="leading" id="EqS-bG-fDL"/>
                     <constraint firstItem="b5b-Hy-hOC" firstAttribute="height" secondItem="8cH-bW-wZy" secondAttribute="height" id="GYd-UN-QbL"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Gtw-2e-DFW" secondAttribute="trailing" constant="12" id="I7B-Am-KwB"/>
                     <constraint firstItem="b5b-Hy-hOC" firstAttribute="width" secondItem="8cH-bW-wZy" secondAttribute="width" id="IDj-CB-xXY"/>
                     <constraint firstItem="8cH-bW-wZy" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.4" id="MZf-SG-fVc"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="cfC-KQ-A2v" secondAttribute="trailing" constant="12" id="Nm3-gP-caj"/>
                     <constraint firstItem="Gtw-2e-DFW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="UbK-MX-XYH"/>
+                    <constraint firstItem="cfC-KQ-A2v" firstAttribute="top" secondItem="40q-cf-IKV" secondAttribute="bottom" constant="5" id="YVB-dj-vdL"/>
                     <constraint firstItem="cfC-KQ-A2v" firstAttribute="leading" secondItem="Gtw-2e-DFW" secondAttribute="leading" id="gXK-Px-vCw"/>
+                    <constraint firstItem="40q-cf-IKV" firstAttribute="top" secondItem="Gtw-2e-DFW" secondAttribute="bottom" constant="5" id="iso-8c-KwO"/>
                     <constraint firstItem="b5b-Hy-hOC" firstAttribute="bottom" secondItem="8cH-bW-wZy" secondAttribute="bottom" id="mBx-fn-xcG"/>
                     <constraint firstAttribute="bottomMargin" secondItem="8cH-bW-wZy" secondAttribute="bottom" constant="8" id="n9P-RX-5qI"/>
                     <constraint firstItem="Gtw-2e-DFW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="uqP-Qu-rfp"/>
@@ -100,9 +108,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="descriptionLabel" destination="cfC-KQ-A2v" id="fbZ-qk-U3l"/>
+                <outlet property="headerLabel" destination="40q-cf-IKV" id="Is8-PN-Euw"/>
                 <outlet property="titleLabel" destination="Gtw-2e-DFW" id="dTg-ra-plL"/>
             </connections>
-            <point key="canvasLocation" x="322" y="-48"/>
+            <point key="canvasLocation" x="322" y="-42"/>
         </tableViewCell>
     </objects>
 </document>

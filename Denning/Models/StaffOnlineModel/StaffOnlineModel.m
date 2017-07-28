@@ -18,6 +18,7 @@
     model.device = [response valueForKeyNotNull:@"device"];
     model.inTime = [response valueForKeyNotNull:@"inTime"];
     model.name = [response valueForKeyNotNull:@"name"];
+    model.totalHour = [response valueForKeyNotNull:@"totalHour"];
     model.outTime = [response valueForKeyNotNull:@"outTime"];
     model.status = [response valueForKeyNotNull:@"status"];
     

@@ -10,7 +10,8 @@
 
 @interface TrialBalanceModel : NSObject
 
-@property (strong, nonatomic) NSString* API;
+@property (strong, nonatomic) NSString* APIcredit;
+@property (strong, nonatomic) NSString* APIdebit;
 @property (strong, nonatomic) NSString* accountName;
 @property (strong, nonatomic) NSString* accountType;
 @property (strong, nonatomic) NSString* credit;

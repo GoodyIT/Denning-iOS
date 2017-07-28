@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSMutableArray* listOfFiles;
 @property (strong, nonatomic) NSArray<ItemModel*> *items;
 @property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 @property (weak, nonatomic) IBOutlet MIBadgeButton *btnAll;
@@ -43,7 +44,7 @@
     
     [self prepareUI];
     [self registerNibs];
-    [self configureSearch];
+//    [self configureSearch];
     _idx = 1;
     [self getHeaderWithCompletion:^{
         [SVProgressHUD showWithStatus:@"Loading"];
@@ -249,7 +250,8 @@
     //    CGFloat contentHeight = scrollView.contentSize.height;
     if (offsetY > 10) {
         
-        [self.searchController.searchBar endEditing:YES];
+        [self.searchBar endEditing:YES];
+        _searchBar.showsCancelButton = NO;
     }
 }
 
@@ -266,6 +268,29 @@
 
 #pragma mark - Search Delegate
 
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    _searchBar.showsCancelButton = YES;
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [_searchBar resignFirstResponder];
+}
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";

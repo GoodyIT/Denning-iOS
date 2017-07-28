@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NSString* device;
 @property (strong, nonatomic) NSString* inTime;
 @property (strong, nonatomic) NSString* name;
+@property (strong, nonatomic) NSString* totalHour;
 @property (strong, nonatomic) NSString* outTime;
 @property (strong, nonatomic) NSString* status;
 + (StaffOnlineModel*) getStaffOnlineFromResponse:(NSDictionary*) response;

@@ -10,6 +10,6 @@
 
 @interface DashboardAttendanceDetail : UIViewController
 
-@property (strong, nonatomic) NSString* url;
+@property (strong, nonatomic) StaffOnlineModel* model;
 
 @end

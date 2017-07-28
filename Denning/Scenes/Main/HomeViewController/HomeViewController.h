@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DICustomViewController.h"
 
-@interface HomeViewController : UIViewController //UITableViewController
+@interface HomeViewController : DICustomViewController //UITableViewController
 
 @end

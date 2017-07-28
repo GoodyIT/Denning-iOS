@@ -11,6 +11,7 @@
 #import "SearchResultCell.h"
 #import "SearchMatterCell.h"
 #import "SearchDocumentCell.h"
+#import "SearchContactCell.h"
 #import "ContactViewController.h"
 #import "RelatedMatterViewController.h"
 #import "PropertyViewController.h"
@@ -28,6 +29,7 @@
 #import "FileNoteList.h"
 #import "PaymentRecord.h"
 #import "Template.h"
+#import "ClientFileFolder.h"
 
 typedef NS_ENUM(NSInteger, DISearchCellType) {
     DIContactCell = 1,
@@ -267,6 +269,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [SearchResultCell registerForReuseInTableView:self.tableView];
     [SearchMatterCell registerForReuseInTableView:self.tableView];
     [SearchDocumentCell registerForReuseInTableView:self.tableView];
+    [SearchContactCell registerForReuseInTableView:self.tableView];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT/2;
 }
@@ -516,7 +519,26 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     SearchResultModel* model = self.searchResultArray[indexPath.section];
     NSUInteger cellType = [self detectItemType:model.form];
 
-    if (cellType == 0 || cellType == DIContactCell || cellType == DIBankCell || cellType == DIGovernmentPTGOfficesCell || cellType == DIGovernmentLandOfficesCell || cellType == DILegalFirmCell || cellType == DIPropertyCell) {
+    if (cellType == DIContactCell) {
+        SearchContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchContactCell cellIdentifier] forIndexPath:indexPath];
+        [cell configureCellWithModel:model];
+        cell.matterHandler = ^(SearchResultModel *_model) {
+            gotoMatter = @"Matter";
+            [self performSearchCellSelect:_model];
+        };
+        
+        cell.contactHandler = ^(SearchResultModel *_model) {
+            [self openDocumentFromContact:_model];
+        };
+        
+        cell.uploadHandler = ^(SearchResultModel *_model) {
+            [self performSegueWithIdentifier:kClientFileUploadSegue sender:model];
+        };
+        
+        return cell;
+    }
+    
+    if (cellType == 0  || cellType == DIBankCell || cellType == DIGovernmentPTGOfficesCell || cellType == DIGovernmentLandOfficesCell || cellType == DILegalFirmCell || cellType == DIPropertyCell) {
         SearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchResultCell cellIdentifier] forIndexPath:indexPath];
         
         cell.tag = indexPath.section;
@@ -576,6 +598,23 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         [SVProgressHUD dismiss];
         if (error == nil) {
             [self performSegueWithIdentifier:kRelatedMatterSegue sender:relatedModel];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
+- (void) openDocumentFromContact:(SearchResultModel*) model {
+    NSString* url = [NSString stringWithFormat:@"denningwcf/v1/app/contactFolder/%@", model.key];
+    @weakify(self);
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [[QMNetworkManager sharedManager] getResponseWithUrl:url withCompletion:^(id  _Nonnull result, NSError * _Nonnull error) {
+        @strongify(self);
+        self->isLoading = false;
+        [SVProgressHUD dismiss];
+        if (error == nil) {
+            DocumentModel* documentModel = [DocumentModel getDocumentFromResponse:result];
+            [self performSegueWithIdentifier:kDocumentSearchSegue sender:documentModel];
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
@@ -918,6 +957,11 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     
     if ([segue.identifier isEqualToString:kTemplateSegue]){
         Template* vc = segue.destinationViewController;
+        vc.model = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:kClientFileUploadSegue]){
+        ClientFileFolder* vc = segue.destinationViewController;
         vc.model = sender;
     }
 }
