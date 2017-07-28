@@ -10,6 +10,7 @@
 #import "TrialBalanceCell.h"
 #import "TrialBalanceHeaderCell.h"
 #import "FileLedger.h"
+#import "BankAndCashBalance.h"
 
 @interface TrialBalance ()
 <UISearchBarDelegate, UISearchControllerDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -153,10 +154,12 @@
     NSString* url;
     if ([model.isBalance isEqualToString:@"Yes"]) {
         url = model.APIdebit;
+        [self performSegueWithIdentifier:kBankAndCashBalanceSegue sender:url];
     } else {
         url = model.APIcredit;
+        [self performSegueWithIdentifier:kFileLedgerSegue sender:url];
     }
-    [self performSegueWithIdentifier:kFileLedgerSegue sender:url];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -245,6 +248,10 @@
     if ([segue.identifier isEqualToString:kFileLedgerSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         FileLedger* vc = nav.viewControllers.firstObject;
+        vc.url = sender;
+    } else if ([segue.identifier isEqualToString:kBankAndCashBalanceSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        BankAndCashBalance* vc = nav.viewControllers.firstObject;
         vc.url = sender;
     }
 }

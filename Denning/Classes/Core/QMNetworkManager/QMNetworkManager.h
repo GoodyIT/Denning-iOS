@@ -224,6 +224,8 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 // Ledger
 - (void) loadLedgerWithCode: (NSString*) code completion: (void(^)(NewLedgerModel* newLedgerModel, NSError* error)) completion;
 
+- (void) loadLedgerWithUrl: (NSString*) url completion: (void(^)(NewLedgerModel* newLedgerModel, NSError* error)) completion;
+
 // Ledger detail
 - (void) loadLedgerDetailURL:(NSString*) url completion: (void(^)(NSArray* ledgerDetailModelArray, NSError* error)) completion;
 

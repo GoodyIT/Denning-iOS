@@ -43,6 +43,7 @@
     [super viewDidLoad];
     
     [self parseUrl];
+    [self getSelectedIndex];
     [self prepareUI];
     [self registerNibs];
 //    [self configureSearch];
@@ -87,6 +88,16 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
 }
 
+- (void) getSelectedIndex {
+    _arrayOfFilterValues = @[@"all", @"client", @"disb", @"fd", @"advance", @"other"];
+    for (NSInteger i = 0; i < _arrayOfFilterValues.count; i++) {
+        
+        if ([curBalanceFilter isEqualToString:_arrayOfFilterValues[i]]) {
+            selectedIndex = i;
+        }
+    }
+}
+
 - (void) prepareUI
 {
     self.page = @(1);
@@ -108,7 +119,7 @@
     self.selectionList.showsEdgeFadeEffect = YES;
     
     _topFilter = @[@"All", @"Client", @"Disbursement", @"FD", @"Advance", @"Other"];
-    _arrayOfFilterValues = @[@"all", @"client", @"disb", @"fd", @"advance", @"other"];
+    
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -118,7 +129,7 @@
     
     [self.view addSubview:self.selectionList];
     self.selectionList.backgroundColor = [UIColor blackColor];
-    self.selectionList.selectedButtonIndex = 0;
+    self.selectionList.selectedButtonIndex = selectedIndex;
     self.selectionList.hidden = NO;
 }
 
@@ -160,6 +171,7 @@
     NSRange range =  [_url rangeOfString:@"/" options:NSBackwardsSearch];
     baseUrl = [_url substringToIndex:range.location+1];
     curBalanceFilter = [_url substringFromIndex:range.location+1];
+//    curBalanceFilter = @"all";
 }
 
 - (void) getList{

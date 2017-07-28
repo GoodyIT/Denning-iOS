@@ -14,10 +14,10 @@
 {
     FileNoteSubModel* model = [FileNoteSubModel new];
     
-    model.subCode = [response valueForKeyNotNull:@""];
-    model.strIdno = [response valueForKeyNotNull:@""];
-    model.strName = [response valueForKeyNotNull:@""];
-    model.strInitials = [response valueForKeyNotNull:@""];
+    model.subCode = [response valueForKeyNotNull:@"subCode"];
+    model.strIdno = [response valueForKeyNotNull:@"strIdno"];
+    model.strName = [response valueForKeyNotNull:@"strName"];
+    model.strInitials = [response valueForKeyNotNull:@"strInitials"];
     
     return model;
 }

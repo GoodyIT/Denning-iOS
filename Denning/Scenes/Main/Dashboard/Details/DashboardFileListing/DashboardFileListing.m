@@ -9,6 +9,7 @@
 #import "DashboardFileListing.h"
 #import "FileListingHeaderCell.h"
 #import "FileListingCell.h"
+#import "RelatedMatterViewController.h"
 
 @interface DashboardFileListing ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -231,15 +232,37 @@
     
     FileListingCell *cell = [tableView dequeueReusableCellWithIdentifier:[FileListingCell cellIdentifier] forIndexPath:indexPath];
     cell.fileNo.text = model.key;
-    cell.fileName.text = [DIHelpers separateNameIntoTwo:[model.title substringFromIndex:10]][1];
+    if ([model.title containsString:@"File No."]) {
+        cell.fileName.text = [DIHelpers separateNameIntoTwo:[model.title substringFromIndex:10]][1];
+    } else {
+        cell.fileName.text = [DIHelpers separateNameIntoTwo:model.title][1];
+    }
+    
     cell.openDate.text = [DIHelpers getDateInShortForm:model.sortDate];
     
     return cell;
 }
 
+- (void) openRelatedMatter: (SearchResultModel*) model {
+    [SVProgressHUD showWithStatus:@"Loading"];
+    @weakify(self);
+    [[QMNetworkManager sharedManager] loadRelatedMatterWithCode:model.key completion:^(RelatedMatterModel * _Nonnull relatedModel, NSError * _Nonnull error) {
+        
+        @strongify(self);
+        self->isLoading = false;
+        [SVProgressHUD dismiss];
+        if (error == nil) {
+            [self performSegueWithIdentifier:kRelatedMatterSegue sender:relatedModel];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self openRelatedMatter:self.listOfFiles[indexPath.row]];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - ScrollView Delegate
@@ -315,14 +338,18 @@
     }
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:kRelatedMatterSegue]){
+        RelatedMatterViewController* relatedMatterVC = segue.destinationViewController;
+        relatedMatterVC.relatedMatterModel = sender;
+        relatedMatterVC.previousScreen = @"Dashboard FileListing";
+    }
+
 }
-*/
+
 
 @end

@@ -93,7 +93,7 @@ iCarouselDataSource, iCarouselDelegate>
     [self displayBranchInfo];
     [self setTabBarVisible:YES animated:NO completion:nil];
     [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
-    [self configureMenuRightBtnWithImagename:@"icon_user" withSelector:@selector(gotoMenu)];
+    [self configureMenuRightBtnWithImagename:@"icon_menu" withSelector:@selector(gotoMenu)];
 }
 
 - (void) loadsAds {
@@ -359,8 +359,8 @@ iCarouselDataSource, iCarouselDelegate>
     } else if (indexPath.row == 7) {
         [self showComingSoon];
         
-    } else if (indexPath.row == 8) {
-        [self showComingSoon];
+    } else if (indexPath.row == 8) { // Attendance
+        [self performSegueWithIdentifier:kAttendanceSegue sender:nil];
         
     } else if (indexPath.row == 9) { // File Upload
         if ([DataManager sharedManager].user.userType.length == 0) {

@@ -23,7 +23,7 @@
 
 - (void) configureCellWithModel:(FileNoteModel*) model
 {
-    _nickName.text = model.strFileName;
+    _nickName.text = model.clsMeetBy.strInitials;
     _date.text = [DIHelpers getDateInShortForm:model.dtDate];
     _note.text = model.strNote;
 }

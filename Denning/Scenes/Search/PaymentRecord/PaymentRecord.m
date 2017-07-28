@@ -98,6 +98,7 @@
     cell.firstValue.text = @"Date Paid";
     cell.secondValue.text = @"Paid to";
     cell.thirdValue.text = @"Amount (RM)";
+    cell.thirdValue.textAlignment = NSTextAlignmentCenter;
     return cell;
 }
 

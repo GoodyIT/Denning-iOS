@@ -780,6 +780,7 @@
 		962083561EDE492200BB595C /* DashboardContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 962083541EDE492200BB595C /* DashboardContactCell.xib */; };
 		9635BB9E1F2A54FD00BE7CF0 /* SearchContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */; };
 		9635BB9F1F2A54FD00BE7CF0 /* SearchContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */; };
+		9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635BBA21F2AEDDC00BE7CF0 /* Attendance.m */; };
 		9636DC961F03A339008DDA41 /* AdsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9636DC951F03A339008DDA41 /* AdsModel.m */; };
 		9636DCBB1F03C6C8008DDA41 /* icon_db_attendance.png in Resources */ = {isa = PBXBuildFile; fileRef = 9636DC971F03C6C8008DDA41 /* icon_db_attendance.png */; };
 		9636DCBC1F03C6C8008DDA41 /* icon_db_attendance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9636DC981F03C6C8008DDA41 /* icon_db_attendance@2x.png */; };
@@ -2120,6 +2121,8 @@
 		9635BB9B1F2A54FD00BE7CF0 /* SearchContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchContactCell.h; sourceTree = "<group>"; };
 		9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchContactCell.m; sourceTree = "<group>"; };
 		9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchContactCell.xib; sourceTree = "<group>"; };
+		9635BBA11F2AEDDC00BE7CF0 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
+		9635BBA21F2AEDDC00BE7CF0 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
 		9636DC941F03A339008DDA41 /* AdsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdsModel.h; sourceTree = "<group>"; };
 		9636DC951F03A339008DDA41 /* AdsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdsModel.m; sourceTree = "<group>"; };
 		9636DC971F03C6C8008DDA41 /* icon_db_attendance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_db_attendance.png; sourceTree = "<group>"; };
@@ -4105,6 +4108,7 @@
 		79F9FC771E41838A0097CB23 /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
+				9635BBA01F2AEDC700BE7CF0 /* Attendance */,
 				960F03071F29511500B25BBC /* ClientFileFolder */,
 				96EAEBB01F22B3A1004F75FC /* ComingSoon */,
 				79734FC81EBABD3E00647215 /* ChangeBranch */,
@@ -6659,6 +6663,15 @@
 			path = SearchContactCell;
 			sourceTree = "<group>";
 		};
+		9635BBA01F2AEDC700BE7CF0 /* Attendance */ = {
+			isa = PBXGroup;
+			children = (
+				9635BBA11F2AEDDC00BE7CF0 /* Attendance.h */,
+				9635BBA21F2AEDDC00BE7CF0 /* Attendance.m */,
+			);
+			path = Attendance;
+			sourceTree = "<group>";
+		};
 		9636DC931F0371F0008DDA41 /* AdsModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -8481,6 +8494,7 @@
 				790DD47E1ECA7087009D5634 /* QuotationModel.m in Sources */,
 				7903CF711ECD303D0090206C /* PropertyContactCell.m in Sources */,
 				969A603D1EDE50EC00A5D961 /* TaxInvoceModel.m in Sources */,
+				9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */,
 				79A6AFAA1E9DBE12007AA24D /* ChatContactCell.m in Sources */,
 				79FBDFD21E30421A00448FE3 /* QMPhoto.m in Sources */,
 				79D59A311E955B6D00CD3821 /* FavoriteViewController.m in Sources */,

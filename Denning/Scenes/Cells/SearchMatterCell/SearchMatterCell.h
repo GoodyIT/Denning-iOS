@@ -28,7 +28,7 @@
 
 - (void) didTapPaymentRecord: (SearchMatterCell*) cell fileNo:(NSString*) fileNo;
 
-- (void) didTapUpload: (SearchMatterCell*) cell;
+- (void) didTapUpload: (SearchMatterCell*) cell fileNo:(NSString*) fileNo;
 
 - (void) didTapTemplate: (SearchMatterCell*) cell withModel:(SearchResultModel*) model;
 

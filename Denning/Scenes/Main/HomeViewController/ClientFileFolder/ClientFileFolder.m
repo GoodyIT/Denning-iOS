@@ -35,10 +35,6 @@
 - (IBAction)didTapSend:(id)sender {
     if (isLoading) return;
     isLoading = YES;
-    if (self.firmName.text.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the firm to upload" actionSuccess:NO inViewController:self];
-        return;
-    }
     
 //    if (self.uploadedFile.text.length == 0) {
 //        [QMAlert showAlertWithMessage:@"Please select the file to upload" actionSuccess:NO inViewController:self];
@@ -81,15 +77,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
-    } else if (section == 1) {
         return 2;
-    } else if (section == 2)
+    } else if (section == 1)
     {
         return 3;
     }
@@ -99,14 +93,12 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        [self changeBranch];
-    } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             [self uploadFile];
         } else {
             [self takePhoto];
         }
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             if (self.imagePreview.image == nil) {
                 return;

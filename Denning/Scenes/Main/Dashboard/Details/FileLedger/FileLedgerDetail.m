@@ -42,6 +42,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self parseUrl];
+    [self getSelectedIndex];
     [self displayTitleAndFooter];
     [self prepareUI];
     [self loadLedgersWithCompletion:^{
@@ -84,8 +85,8 @@
 }
 
 - (void) prepareUI {
-    _filterTitleArray = [@[@"Client", @"Disbursement", @"FD", @"Advance", @"Other", @"Receivable"] mutableCopy];
-    _arrayOfFilter = @[@"client", @"disb", @"fd", @"advance", @"other", @"recv"];
+    _filterTitleArray = [@[@"All", @"Client", @"Disbursement", @"FD", @"Advance", @"Other", @"Receivable"] mutableCopy];
+    
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 74, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
     self.selectionList.dataSource = self;
@@ -106,6 +107,18 @@
     self.selectionList.hidden = NO;
     self.selectionList.selectedButtonIndex = [_filterTitleArray indexOfObject:curBalanceFilter];
 }
+
+
+- (void) getSelectedIndex {
+    _arrayOfFilter = @[@"all", @"client", @"disb", @"fd", @"advance", @"other", @"recv"];
+    for (NSInteger i = 0; i < _arrayOfFilter.count; i++) {
+        
+        if ([curBalanceFilter isEqualToString:_arrayOfFilter[i]]) {
+            selectedIndex = i;
+        }
+    }
+}
+
 
 - (void)registerNibs {
     [NewLedgerDetailCell registerForReuseInTableView:self.tableView];
@@ -159,7 +172,8 @@
 {
     [SVProgressHUD showWithStatus:@"Loading"];
     @weakify(self);
-    [[QMNetworkManager sharedManager] loadLedgerWithCode:_fileNo.text completion:^(NewLedgerModel * _Nonnull newLedgerModel, NSError * _Nonnull error) {
+    NSString *balanceUrl = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, baseUrl];
+    [[QMNetworkManager sharedManager] loadLedgerWithUrl:balanceUrl completion:^(NewLedgerModel * _Nonnull newLedgerModel, NSError * _Nonnull error) {
         
         @strongify(self);
         self->isLoading = false;

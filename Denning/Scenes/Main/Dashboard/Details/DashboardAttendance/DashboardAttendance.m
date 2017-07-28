@@ -66,6 +66,7 @@
 
 - (void)registerNibs {
     [TwoColumnSecondCell registerForReuseInTableView:self.tableView];
+    [AttendanceHeaderCell registerForReuseInTableView:self.tableView];
 }
 
 - (void) resetState: (MIBadgeButton*) button {

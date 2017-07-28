@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -24,10 +25,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k73-Ja-1zR" userLabel="left">
-                        <rect key="frame" x="351" y="0.0" width="117" height="63.5"/>
+                        <rect key="frame" x="385.5" y="0.0" width="82.5" height="63.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_check.png" translatesAutoresizingMaskIntoConstraints="NO" id="CVW-7O-HAK">
-                                <rect key="frame" x="46.5" y="21.5" width="24" height="20"/>
+                                <rect key="frame" x="33.5" y="24.5" width="17" height="14"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -37,10 +38,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0F-3n-k0g" userLabel="left">
-                        <rect key="frame" x="116.5" y="0.0" width="117" height="63.5"/>
+                        <rect key="frame" x="93" y="0.0" width="146" height="63.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Debit" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAX-cX-lHN" userLabel="left">
-                                <rect key="frame" x="3" y="23.5" width="111" height="17"/>
+                                <rect key="frame" x="3" y="23.5" width="140" height="17"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -55,10 +56,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xci-8b-B7D" userLabel="left">
-                        <rect key="frame" x="233.5" y="0.0" width="117" height="63.5"/>
+                        <rect key="frame" x="239" y="0.0" width="146" height="63.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Credit" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPk-Xp-ycR" userLabel="left">
-                                <rect key="frame" x="3" y="23.5" width="111" height="17"/>
+                                <rect key="frame" x="3" y="23.5" width="140" height="17"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -73,10 +74,10 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5C5-Rc-PN0" userLabel="__left">
-                        <rect key="frame" x="0.0" y="0.0" width="117" height="63.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="93.5" height="63.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Client" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKW-QS-OR8" userLabel="left">
-                                <rect key="frame" x="12" y="23.5" width="100" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Client" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKW-QS-OR8" userLabel="left">
+                                <rect key="frame" x="12" y="23.5" width="76.5" height="17"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -96,18 +97,18 @@
                     <constraint firstItem="5C5-Rc-PN0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="EF6-aG-Tc3"/>
                     <constraint firstAttribute="bottom" secondItem="5C5-Rc-PN0" secondAttribute="bottom" id="FyK-0V-cRG"/>
                     <constraint firstItem="5C5-Rc-PN0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="HbY-MT-6Sx"/>
-                    <constraint firstItem="5C5-Rc-PN0" firstAttribute="width" secondItem="l0F-3n-k0g" secondAttribute="width" id="I7c-wf-uOo"/>
                     <constraint firstAttribute="bottom" secondItem="l0F-3n-k0g" secondAttribute="bottom" id="OSd-VM-VGP"/>
                     <constraint firstItem="l0F-3n-k0g" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="WS7-ap-Bjh"/>
                     <constraint firstAttribute="trailing" secondItem="k73-Ja-1zR" secondAttribute="trailing" id="b1y-9B-GA9"/>
+                    <constraint firstItem="l0F-3n-k0g" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:3" constant="-10" id="kRE-vm-okm"/>
                     <constraint firstAttribute="bottom" secondItem="Xci-8b-B7D" secondAttribute="bottom" id="nDd-9f-efU"/>
                     <constraint firstItem="k73-Ja-1zR" firstAttribute="leading" secondItem="Xci-8b-B7D" secondAttribute="trailing" id="nln-kU-31V"/>
-                    <constraint firstItem="5C5-Rc-PN0" firstAttribute="width" secondItem="k73-Ja-1zR" secondAttribute="width" id="noJ-PI-6gF"/>
                     <constraint firstItem="k73-Ja-1zR" firstAttribute="leading" secondItem="Xci-8b-B7D" secondAttribute="trailing" id="rfy-E4-GwG"/>
-                    <constraint firstItem="5C5-Rc-PN0" firstAttribute="width" secondItem="Xci-8b-B7D" secondAttribute="width" id="seZ-IA-vx3"/>
                     <constraint firstItem="k73-Ja-1zR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tTQ-d8-zYu"/>
                     <constraint firstItem="l0F-3n-k0g" firstAttribute="leading" secondItem="5C5-Rc-PN0" secondAttribute="trailing" id="wHE-zl-L6L"/>
+                    <constraint firstItem="l0F-3n-k0g" firstAttribute="width" secondItem="Xci-8b-B7D" secondAttribute="width" id="wjy-7a-cfY"/>
                     <constraint firstItem="Xci-8b-B7D" firstAttribute="leading" secondItem="l0F-3n-k0g" secondAttribute="trailing" id="xAv-xW-TRB"/>
+                    <constraint firstItem="5C5-Rc-PN0" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:5" id="xKS-fU-dHN"/>
                     <constraint firstAttribute="bottom" secondItem="k73-Ja-1zR" secondAttribute="bottom" id="zu9-5Z-F9Q"/>
                 </constraints>
             </tableViewCellContentView>
@@ -117,10 +118,10 @@
                 <outlet property="credit" destination="hPk-Xp-ycR" id="2tC-9N-7Ub"/>
                 <outlet property="debit" destination="zAX-cX-lHN" id="yCM-sn-pDZ"/>
             </connections>
-            <point key="canvasLocation" x="115" y="81"/>
+            <point key="canvasLocation" x="66" y="-10"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon_check.png" width="24" height="20"/>
+        <image name="icon_check.png" width="17" height="14"/>
     </resources>
 </document>

@@ -14,5 +14,4 @@
 
 @property (strong, nonatomic) BankReconModel *model;
 
-
 @end

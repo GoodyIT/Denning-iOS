@@ -26,6 +26,8 @@
 
 @property (strong, nonatomic) NSString* sortDate;
 
+@property (strong, nonatomic) NSDictionary * Json;
+
 @property (strong, nonatomic) NSDictionary * JsonDesc;
 
 @property (strong, nonatomic) NSString * key;

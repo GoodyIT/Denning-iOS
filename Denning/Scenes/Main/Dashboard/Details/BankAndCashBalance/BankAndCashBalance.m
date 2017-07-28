@@ -42,6 +42,7 @@
     [super viewDidLoad];
     
     [self parseUrl];
+    [self getSelectedIndex];
     [self prepareUI];
     [self registerNibs];
 //    [self configureSearch];
@@ -107,7 +108,7 @@
     self.selectionList.showsEdgeFadeEffect = YES;
     
     _topFilter = @[@"All", @"Client", @"Disbursement", @"FD", @"Advance", @"Other"];
-    _arrayOfFilterValues = @[@"bank-all", @"bank-client", @"bank-disb", @"bank-fd", @"bank-advance", @"bank-other"];
+    
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -117,8 +118,18 @@
     
     [self.view addSubview:self.selectionList];
     self.selectionList.backgroundColor = [UIColor blackColor];
-    self.selectionList.selectedButtonIndex = 1;
+    self.selectionList.selectedButtonIndex = selectedIndex;
     self.selectionList.hidden = NO;
+}
+
+- (void) getSelectedIndex {
+    _arrayOfFilterValues = @[@"bank-all", @"bank-client", @"bank-disb", @"bank-fd", @"bank-advance", @"bank-other"];
+    for (NSInteger i = 0; i < _arrayOfFilterValues.count; i++) {
+        
+        if ([curBalanceFilter isEqualToString:_arrayOfFilterValues[i]]) {
+            selectedIndex = i;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -316,7 +327,6 @@
         initCall = NO;
     }
 }
-
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:kBankLedgerDetailSegue]){

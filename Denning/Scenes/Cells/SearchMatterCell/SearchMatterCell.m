@@ -62,7 +62,7 @@
 }
 
 - (IBAction)uploadTapped:(id)sender {
-    [self.delegate didTapUpload:self];
+    [self.delegate didTapUpload:self fileNo:_model.title];
 }
 
 - (IBAction)paymentRecordTapped:(id)sender {

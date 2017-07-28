@@ -58,7 +58,17 @@
     _model = model;
     self.titleLabel.text = model.title;
     self.indexData.text = model.header;
-    self.descriptionLabel.text = model.description;
+    NSString* str = @"";
+    for (NSDictionary *obj in model.Json) {
+        if (str.length == 0) {
+           str = [NSString stringWithFormat:@"%@: %@", [obj valueForKeyNotNull:@"label"], [obj valueForKeyNotNull:@"value"]];
+        } else {
+            str = [NSString stringWithFormat:@"%@\n%@: %@", str, [obj valueForKeyNotNull:@"label"], [obj valueForKeyNotNull:@"value"]];
+        }
+        
+    }
+    
+    self.descriptionLabel.text = str;
 }
 
 @end

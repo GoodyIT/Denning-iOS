@@ -32,7 +32,7 @@ NYTPhotosViewControllerDelegate>
 
 
 - (void) prepareUI {
-    _url = MATTER_STAFF_TRANSIT_FOLDER;
+    _url = MATTER_STAFF_FILEFOLDER;
     
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
@@ -49,6 +49,8 @@ NYTPhotosViewControllerDelegate>
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    self.uploadedFile.placeholder = [@"IMG_" stringByAppendingString:[[[DIHelpers todayWithTime] stringByReplacingOccurrencesOfString:@":" withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@""]];
+    self.renameFile.text = self.uploadedFile.placeholder;
     self.imagePreview.image = [info valueForKey:UIImagePickerControllerOriginalImage];
     _imagePickerController = nil;
 }

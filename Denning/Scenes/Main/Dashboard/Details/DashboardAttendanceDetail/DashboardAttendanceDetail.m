@@ -53,7 +53,7 @@
 - (void) prepareUI
 {
     _name.text = _model.name;
-    _date.text = [DIHelpers today];
+    _date.text = [DIHelpers getDateInShortForm:[DIHelpers todayWithTime]];
     _totalHour.text = _model.totalHour;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -90,6 +90,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return self.listOfDetails.count;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 33;
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    BankReconHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconHeaderCell cellIdentifier]];
+    cell.firstValue.text = @"Time - In";
+    cell.secondValue.text = @"Time - Out";
+    cell.thirdValue.text = @"Hours";
+    
+    return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

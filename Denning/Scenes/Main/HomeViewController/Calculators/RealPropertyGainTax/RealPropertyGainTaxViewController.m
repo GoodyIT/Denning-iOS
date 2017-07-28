@@ -118,7 +118,7 @@
     [STPopupNavigationBar appearance].barTintColor = [UIColor blackColor];
     [STPopupNavigationBar appearance].tintColor = [UIColor whiteColor];
     [STPopupNavigationBar appearance].barStyle = UIBarStyleDefault;
-    [STPopupNavigationBar appearance].titleTextAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"Cochin" size:18], NSForegroundColorAttributeName: [UIColor whiteColor] };
+    [STPopupNavigationBar appearance].titleTextAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"SFUIText-Medium" size:18], NSForegroundColorAttributeName: [UIColor whiteColor] };
     popupController.transitionStyle = STPopupTransitionStyleFade;;
     popupController.containerView.layer.cornerRadius = 4;
     popupController.containerView.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
@@ -168,11 +168,11 @@
     } else if ([self.statusOfTaxPayerTF.text isEqualToString:@"Malaysian Individual / PR"]) {
         [self calculateTaxRateForLocalPerson];
         realpropertyTax =  gainsLoss * taxRate / 100;
-        [self applyTaxRestriction];
+//        [self applyTaxRestriction];
     } else if ([self.statusOfTaxPayerTF.text isEqualToString:@"Foreigner"]) {
         [self calculateTaxRateForForeignerAndCompany];
         realpropertyTax =  gainsLoss * taxRate / 100;
-        [self applyTaxRestriction];
+//        [self applyTaxRestriction];
     } else if ([self.statusOfTaxPayerTF.text isEqualToString:@"Foreign Company"]) {
         [self calculateTaxRateForForeignerAndCompany];
         realpropertyTax =  gainsLoss * taxRate / 100;
@@ -186,7 +186,7 @@
 
 - (void) applyTaxRestriction
 {
-    if ([acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-01-01"]]) {
+    if ([acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
         realpropertyTax = MAX(realpropertyTax, 5000);
     } else {
         realpropertyTax = MAX(realpropertyTax, 10000);
@@ -196,29 +196,43 @@
 - (void) calculateTaxRateForLocalCompany
 {
     taxRate = 0;
-    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2009-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-01-01"]]){
-        taxRate = 5;
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2011-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-01-01"]]) {
-        if (numberOfYears <= 2) {
-            taxRate = 10;
-        } else if (numberOfYears <= 5) {
-            taxRate = 5;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
-        if (numberOfYears <= 2) {
-            taxRate = 15;
-        } else if (numberOfYears <= 5) {
-            taxRate = 10;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-12-31"]]) {
-        if (numberOfYears <= 3) {
+//    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2009-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-01-01"]]){
+//        taxRate = 5;
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2011-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-01-01"]]) {
+//        if (numberOfYears <= 2) {
+//            taxRate = 10;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 5;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+//        if (numberOfYears <= 2) {
+//            taxRate = 15;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 10;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-12-31"]]) {
+//        if (numberOfYears <= 3) {
+//            taxRate = 30;
+//        } else if (numberOfYears <= 4) {
+//            taxRate = 20;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 15;
+//        } else if (numberOfYears <= 6) {
+//           taxRate = 5;
+//        }
+//    }
+    
+    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+        if (numberOfYears < 2) {
             taxRate = 30;
-        } else if (numberOfYears <= 4) {
+        } else if (numberOfYears < 3) {
+            taxRate = 30;
+        } else if (numberOfYears < 4) {
             taxRate = 20;
-        } else if (numberOfYears <= 5) {
+        } else if (numberOfYears < 5) {
             taxRate = 15;
-        } else if (numberOfYears <= 6) {
-           taxRate = 5;
+        } else {
+            taxRate = 5;
         }
     }
 }
@@ -226,65 +240,93 @@
 - (void) calculateTaxRateForLocalPerson
 {
     taxRate = 0;
-    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2009-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-01-01"]]){
-        taxRate = 5;
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2011-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-01-01"]]) {
-        if (numberOfYears <= 2) {
-            taxRate = 10;
-        } else if (numberOfYears <= 5) {
-            taxRate = 5;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
-        if (numberOfYears <= 2) {
-            taxRate = 15;
-        } else if (numberOfYears <= 5) {
-            taxRate = 10;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-12-31"]]) {
-        if (numberOfYears <= 3) {
+//    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2009-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-01-01"]]){
+//        taxRate = 5;
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2011-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-01-01"]]) {
+//        if (numberOfYears <= 2) {
+//            taxRate = 10;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 5;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+//        if (numberOfYears <= 2) {
+//            taxRate = 15;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 10;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-12-31"]]) {
+//        if (numberOfYears <= 3) {
+//            taxRate = 30;
+//        } else if (numberOfYears <= 4) {
+//            taxRate = 20;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 15;
+//        }
+//    }
+    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+        if (numberOfYears < 2) {
             taxRate = 30;
-        } else if (numberOfYears <= 4) {
+        } else if (numberOfYears < 3) {
+            taxRate = 30;
+        } else if (numberOfYears < 4) {
             taxRate = 20;
-        } else if (numberOfYears <= 5) {
+        } else if (numberOfYears < 5) {
             taxRate = 15;
+        } else {
+            taxRate = 0;
         }
     }
+
 }
 
 - (void) calculateTaxRateForForeignerAndCompany
 {
     taxRate = 0;
-    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"1997-10-16"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2007-04-01"]]){
-        if (numberOfYears <= 5) {
+//    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"1997-10-16"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2007-04-01"]]){
+//        if (numberOfYears <= 5) {
+//            taxRate = 30;
+//        } else {
+//            taxRate = 5;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2007-03-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2010-01-01"]]){
+//        taxRate = 0;
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2010-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-06-01"]]){
+//        if (numberOfYears <= 5) {
+//            taxRate = 5;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-06-01"]]){
+//        if (numberOfYears <= 2) {
+//            taxRate = 10;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 5;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-06-01"]]){
+//        if (numberOfYears <= 2) {
+//            taxRate = 15;
+//        } else if (numberOfYears <= 5) {
+//            taxRate = 10;
+//        }
+//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-05-31"]]){
+//        if (numberOfYears <= 5) {
+//            taxRate = 30;
+//        } else {
+//            taxRate = 5;
+//        }
+//    }
+    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+        if (numberOfYears < 2) {
             taxRate = 30;
-        } else {
-            taxRate = 5;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2007-03-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2010-01-01"]]){
-        taxRate = 0;
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2010-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-06-01"]]){
-        if (numberOfYears <= 5) {
-            taxRate = 5;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-06-01"]]){
-        if (numberOfYears <= 2) {
-            taxRate = 10;
-        } else if (numberOfYears <= 5) {
-            taxRate = 5;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-06-01"]]){
-        if (numberOfYears <= 2) {
-            taxRate = 15;
-        } else if (numberOfYears <= 5) {
-            taxRate = 10;
-        }
-    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-05-31"]]){
-        if (numberOfYears <= 5) {
+        } else if (numberOfYears < 3) {
+            taxRate = 30;
+        } else if (numberOfYears < 4) {
+            taxRate = 30;
+        } else if (numberOfYears < 5) {
             taxRate = 30;
         } else {
             taxRate = 5;
         }
     }
+
 }
 
 - (IBAction)didTapReset:(id)sender {
@@ -333,7 +375,7 @@
     CGFloat numberOfDays = [components day];
     numberOfYears += numberOfMonths / 12.0f + numberOfDays/365.0f;
     
-    self.numberOfYearHeldTF.text = [NSString stringWithFormat:@"%.2f", numberOfYears];
+    self.numberOfYearHeldTF.text = [NSString stringWithFormat:@"%.3f", numberOfYears];
 }
 
 - (void) updateDateOfDisposal: (NSString*) date
@@ -420,9 +462,9 @@
     } else if (section == 1) {
         return 5;
     } else if (section == 2) {
-        return 6;
+        return 5;
     } else if (section == 3) {
-        return 1;
+        return 2;
     } else if (section == 4) {
         return 1;
     }

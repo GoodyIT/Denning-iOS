@@ -22,6 +22,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* listOfMatters;
 @property (strong, nonatomic) UISearchController *searchController;
@@ -37,7 +38,7 @@
     
     [self prepareUI];
     [self registerNibs];
-    [self configureSearch];
+//    [self configureSearch];
     [self getList];
 }
 
@@ -68,7 +69,7 @@
 
 - (void) prepareUI
 {
-    self.title = @"Select Matter Type";
+    self.title = @"Select Matter";
     if (_titleOfView != nil) {
         self.title = _titleOfView;
     }
@@ -179,7 +180,8 @@
     //    CGFloat contentHeight = scrollView.contentSize.height;
     if (offsetY > 10) {
         
-        [self.searchController.searchBar endEditing:YES];
+        [self.searchBar endEditing:YES];
+        _searchBar.showsCancelButton = NO;
     }
 }
 
@@ -188,7 +190,7 @@
     CGFloat offsetY = scrollView.contentOffset.y;
     CGFloat contentHeight = scrollView.contentSize.height;
     
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading && !isLoading) {
+    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
         
         [self appendList];
     }
@@ -196,6 +198,29 @@
 
 #pragma mark - Search Delegate
 
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    _searchBar.showsCancelButton = YES;
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [_searchBar resignFirstResponder];
+}
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";
     searchController.searchBar.text = @"";

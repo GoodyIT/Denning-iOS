@@ -11,4 +11,6 @@
 
 @interface FileUpload : CustomFileUpload
 
+@property (strong, nonatomic) NSString *titleValue;
+
 @end

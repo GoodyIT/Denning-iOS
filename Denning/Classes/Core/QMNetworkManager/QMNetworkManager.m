@@ -812,13 +812,16 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }];
 }
 
-
-
 // Ledger
 - (void) loadLedgerWithCode: (NSString*) code completion: (void(^)(NewLedgerModel* newLedgerModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/%@/fileLedger", [DataManager sharedManager].user.serverAPI, code];
 
+    [self loadLedgerWithUrl:url completion:completion];
+}
+
+- (void) loadLedgerWithUrl: (NSString*) url completion: (void(^)(NewLedgerModel* newLedgerModel, NSError* error)) completion
+{
     [self setOtherForLoginHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -2179,7 +2182,8 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getResponseWithUrl:(NSString*) url withCompletion:(void(^)(id result, NSError* error)) completion
 {
-    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
+    NSString* _url = [NSString stringWithFormat:@"%@/denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     [self setAddContactLoginHTTPHeader];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)

@@ -30,6 +30,7 @@
 #import "PaymentRecord.h"
 #import "Template.h"
 #import "ClientFileFolder.h"
+#import "FileUpload.h"
 
 typedef NS_ENUM(NSInteger, DISearchCellType) {
     DIContactCell = 1,
@@ -399,9 +400,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [self performSegueWithIdentifier:kFileNoteListSegue sender:self.searchResultArray[cell.tag]];
 }
 
-- (void) didTapUpload:(SearchMatterCell *)cell
+- (void) didTapUpload:(SearchMatterCell *)cell fileNo:(NSString *)fileNo
 {
-    [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
+    [self performSegueWithIdentifier:kFileUploadSegue sender:fileNo];
 }
 
 - (void) didTapPaymentRecord: (SearchMatterCell*) cell fileNo:(NSString *)fileNo
@@ -961,8 +962,15 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     }
     
     if ([segue.identifier isEqualToString:kClientFileUploadSegue]){
-        ClientFileFolder* vc = segue.destinationViewController;
+        UINavigationController* navC = segue.destinationViewController;
+        ClientFileFolder* vc = navC.viewControllers.firstObject;
         vc.model = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:kFileUploadSegue]){
+        UINavigationController* navC = segue.destinationViewController;
+        FileUpload* vc = navC.viewControllers.firstObject;
+        vc.titleValue = sender;
     }
 }
 

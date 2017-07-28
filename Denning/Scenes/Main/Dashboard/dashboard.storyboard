@@ -265,6 +265,7 @@
                         <outlet property="searchBar" destination="IZM-nv-e1j" id="Tvb-Gb-RET"/>
                         <outlet property="searchContainer" destination="AbM-4e-bqE" id="d2R-fV-q2o"/>
                         <outlet property="tableView" destination="H1J-cq-wvj" id="oUT-ul-FWW"/>
+                        <segue destination="fjh-iz-yFO" kind="show" identifier="RelatedMatterSegue" id="yFb-m3-P8M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0PK-81-Kef" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -878,6 +879,14 @@
             </objects>
             <point key="canvasLocation" x="8262" y="9086"/>
         </scene>
+        <!--RelatedMatterViewController-->
+        <scene sceneID="W62-na-Ao3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="RelatedMatterViewController" id="fjh-iz-yFO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sTH-xO-iIm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8159" y="6963"/>
+        </scene>
         <!--TransactionDetail-->
         <scene sceneID="Hn6-sf-lft">
             <objects>
@@ -945,22 +954,22 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Ledger" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EQj-OK-l6G">
-                                        <rect key="frame" x="133.5" y="33" width="108.5" height="24"/>
+                                        <rect key="frame" x="138" y="33" width="99.5" height="23.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="20"/>
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="2cN-Qi-bsW">
-                                        <rect key="frame" x="125.5" y="57" width="124.5" height="17"/>
+                                        <rect key="frame" x="127" y="56.5" width="122" height="16.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3e-DG-bQC">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
                                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lWN-nv-fWh">
-                                                <rect key="frame" x="60" y="0.0" width="64.5" height="17"/>
+                                                <rect key="frame" x="59" y="0.0" width="63" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
                                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -988,8 +997,8 @@
                                         <rect key="frame" x="20" y="10.5" width="335" height="29"/>
                                         <segments>
                                             <segment title="All"/>
-                                            <segment title="Debit"/>
-                                            <segment title="Credit"/>
+                                            <segment title="Debit (-)"/>
+                                            <segment title="Credit (+)"/>
                                         </segments>
                                         <color key="tintColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
@@ -1028,13 +1037,13 @@
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ledger balance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-8Y-JpF">
-                                        <rect key="frame" x="12" y="12" width="116" height="18"/>
+                                        <rect key="frame" x="12" y="11.5" width="108.5" height="17.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGg-gQ-Lbf">
-                                        <rect key="frame" x="197.5" y="20.5" width="50" height="0.0"/>
+                                        <rect key="frame" x="183" y="20.5" width="50" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="5Ld-Zs-ZNx"/>
                                         </constraints>
@@ -1043,7 +1052,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Static)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ps-sw-RbX">
-                                        <rect key="frame" x="136" y="12" width="53.5" height="18"/>
+                                        <rect key="frame" x="128.5" y="11.5" width="46.5" height="17.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1119,22 +1128,22 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Ledger" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RKr-OK-SYw">
-                                        <rect key="frame" x="126.5" y="33" width="123" height="24"/>
+                                        <rect key="frame" x="131" y="33" width="114.5" height="23.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="20"/>
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Vud-h6-iNE">
-                                        <rect key="frame" x="125.5" y="57" width="124.5" height="17"/>
+                                        <rect key="frame" x="127" y="56.5" width="122" height="16.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l4d-GQ-Ybm">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
                                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5M4-LP-6Gv">
-                                                <rect key="frame" x="60" y="0.0" width="64.5" height="17"/>
+                                                <rect key="frame" x="59" y="0.0" width="63" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
                                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1162,8 +1171,8 @@
                                         <rect key="frame" x="20" y="10.5" width="335" height="29"/>
                                         <segments>
                                             <segment title="All"/>
-                                            <segment title="Debit"/>
-                                            <segment title="Credit"/>
+                                            <segment title="Debit (-)"/>
+                                            <segment title="Credit (+)"/>
                                         </segments>
                                         <color key="tintColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
@@ -1202,13 +1211,13 @@
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ledger balance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDN-Lc-O2J">
-                                        <rect key="frame" x="12" y="12" width="116" height="18"/>
+                                        <rect key="frame" x="12" y="11.5" width="108.5" height="17.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CcJ-Fi-BiV">
-                                        <rect key="frame" x="197.5" y="20.5" width="50" height="0.0"/>
+                                        <rect key="frame" x="183" y="20.5" width="50" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="8QV-B1-ZnJ"/>
                                         </constraints>
@@ -1217,7 +1226,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Static)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ji-qO-uwt">
-                                        <rect key="frame" x="136" y="12" width="53.5" height="18"/>
+                                        <rect key="frame" x="128.5" y="11.5" width="46.5" height="17.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1452,25 +1461,8 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ch-ZT-43f">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <subviews>
-                                    <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="09w-5I-fAz">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="aey-J2-PGp" id="hs2-XD-GWi"/>
-                                        </connections>
-                                    </searchBar>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="DE5-LF-PYE"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5IL-Bc-rBa">
-                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CodeDescCell" rowHeight="72" id="gDl-WA-jWR">
@@ -1490,12 +1482,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="4Ch-ZT-43f" secondAttribute="trailing" id="8TA-9U-Irz"/>
-                            <constraint firstItem="4Ch-ZT-43f" firstAttribute="leading" secondItem="H1O-Fe-0k4" secondAttribute="leading" id="AQ7-Sc-qu3"/>
-                            <constraint firstItem="5IL-Bc-rBa" firstAttribute="top" secondItem="4Ch-ZT-43f" secondAttribute="bottom" id="Fvq-e4-WAb"/>
                             <constraint firstAttribute="trailing" secondItem="5IL-Bc-rBa" secondAttribute="trailing" id="WRn-Wy-IjU"/>
                             <constraint firstItem="5LQ-8c-fYD" firstAttribute="top" secondItem="5IL-Bc-rBa" secondAttribute="bottom" id="hwv-cY-KfK"/>
-                            <constraint firstItem="4Ch-ZT-43f" firstAttribute="top" secondItem="atK-NY-wHy" secondAttribute="bottom" id="mQt-V0-VIA"/>
+                            <constraint firstItem="5IL-Bc-rBa" firstAttribute="top" secondItem="atK-NY-wHy" secondAttribute="bottom" id="upk-TI-3Ks"/>
                             <constraint firstItem="5IL-Bc-rBa" firstAttribute="leading" secondItem="H1O-Fe-0k4" secondAttribute="leading" id="xUQ-kd-DUT"/>
                         </constraints>
                     </view>
@@ -1508,15 +1497,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="09w-5I-fAz" id="k78-bm-YMc"/>
-                        <outlet property="searchContainer" destination="4Ch-ZT-43f" id="iJl-hX-FVk"/>
                         <outlet property="tableView" destination="5IL-Bc-rBa" id="uO4-1K-wMU"/>
                         <segue destination="29Y-k9-bHJ" kind="show" identifier="FileLedgerSegue" id="x5l-mZ-uXi"/>
+                        <segue destination="sLh-kr-Xle" kind="show" identifier="BankAndCashBalanceSegue" id="nzN-dH-s6n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bRI-eW-T0g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7481" y="11298"/>
+            <point key="canvasLocation" x="7497" y="11298"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mpj-Dn-3CC">
@@ -3194,8 +3182,9 @@
         <image name="icon_prev.png" width="13" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QC5-xE-JvY"/>
-        <segue reference="U92-Co-CHC"/>
         <segue reference="x5l-mZ-uXi"/>
+        <segue reference="nzN-dH-s6n"/>
+        <segue reference="5wM-MA-OIm"/>
+        <segue reference="QC5-xE-JvY"/>
     </inferredMetricsTieBreakers>
 </document>

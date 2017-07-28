@@ -26,26 +26,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" text="Staff" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9S-yX-fWH">
-                        <rect key="frame" x="16" y="13" width="159" height="21.5"/>
+                        <rect key="frame" x="16" y="11" width="159" height="25.5"/>
                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" text="Status" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cvt-9n-Dz0">
-                        <rect key="frame" x="310" y="13" width="44" height="17"/>
+                        <rect key="frame" x="310" y="11" width="44" height="17"/>
                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <color key="backgroundColor" red="0.10980392160000001" green="0.84705882349999995" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 <constraints>
                     <constraint firstItem="J9S-yX-fWH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="4X4-Et-lJH"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="J9S-yX-fWH" secondAttribute="bottom" constant="5" id="I6Z-gC-eYP"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="J9S-yX-fWH" secondAttribute="bottom" constant="3" id="I6Z-gC-eYP"/>
                     <constraint firstItem="Cvt-9n-Dz0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="J9S-yX-fWH" secondAttribute="trailing" constant="8" id="RVd-1r-j04"/>
                     <constraint firstItem="Cvt-9n-Dz0" firstAttribute="top" secondItem="J9S-yX-fWH" secondAttribute="top" id="eSn-z6-vXZ"/>
                     <constraint firstItem="J9S-yX-fWH" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:2.5" id="g3I-BG-zMS"/>
-                    <constraint firstItem="J9S-yX-fWH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="qbm-q1-W7S"/>
+                    <constraint firstItem="J9S-yX-fWH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="qbm-q1-W7S"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Cvt-9n-Dz0" secondAttribute="trailing" constant="35" id="seJ-PD-Y8r"/>
                 </constraints>
             </tableViewCellContentView>

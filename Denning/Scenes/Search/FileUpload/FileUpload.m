@@ -13,12 +13,14 @@
 #import "SimpleMatterViewController.h"
 
 @interface FileUpload ()< UIImagePickerControllerDelegate, UINavigationControllerDelegate,
-NYTPhotosViewControllerDelegate>
+NYTPhotosViewControllerDelegate, UITextFieldDelegate>
 {
     __block BOOL isLoading;
     NSString *systemNo;
 }
 @property (weak, nonatomic) IBOutlet UISegmentedControl *folderSegment;
+@property (weak, nonatomic) IBOutlet UILabel *fileNoLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *uploadTo;
 
 @end
@@ -27,6 +29,8 @@ NYTPhotosViewControllerDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.fileNoLabel.text = [_titleValue substringFromIndex:9];
+    systemNo = [DIHelpers separateFileNameAndNoFromTitle:_titleValue][0];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,23 +45,20 @@ NYTPhotosViewControllerDelegate>
 - (IBAction)didTapSend:(id)sender {
     if (isLoading) return;
     isLoading = YES;
-    if (self.firmName.text.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the firm to upload" actionSuccess:NO inViewController:self];
-        return;
-    }
 
-    if (self.uploadedFile.text.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the file to upload" actionSuccess:NO inViewController:self];
-        return;
-    }
+//    if (self.uploadedFile.text.length == 0) {
+//        [QMAlert showAlertWithMessage:@"Please select the file to upload" actionSuccess:NO inViewController:self];
+//        return;
+//    }
     if (self.renameFile.text.length == 0) {
         [QMAlert showAlertWithMessage:@"Please input the file name" actionSuccess:NO inViewController:self];
         return;
     }
-    NSData* imageData = UIImageJPEGRepresentation(self.imagePreview.image, 1);
+    NSData* imageData = UIImageJPEGRepresentation(self.imagePreview.image, 0.5);
     NSNumber* length = [NSNumber numberWithInteger:imageData.length];
+    NSString* fileName = [NSString stringWithFormat:@"IMG_%@.jpg", self.renameFile.text];
     NSDictionary* params = @{@"fileNo1":systemNo,
-                             @"FileName":[self.renameFile.text stringByAppendingString:@".jpg"],
+                             @"FileName":fileName,
                              @"MimeType":@"jpg",
                              @"dateCreate":[DIHelpers todayWithTime],
                              @"dateModify":[DIHelpers todayWithTime],
@@ -70,6 +71,9 @@ NYTPhotosViewControllerDelegate>
     @weakify(self);
     [[QMNetworkManager sharedManager] uploadFileWithUrl:self.url params:params WithCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        if (self == nil) {
+            return;
+        }
         self->isLoading = NO;
         if (error == nil && [result[0] isEqualToString:@"200"]) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:1.0];
@@ -83,18 +87,16 @@ NYTPhotosViewControllerDelegate>
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     if (section == 0) {
-        return 1;
+        return 2;
     } else if (section == 1) {
         return 2;
-    } else if (section == 2) {
-        return 2;
-    } else if (section == 3)
+    } else if (section == 2)
     {
         return 3;
     }
@@ -120,20 +122,19 @@ NYTPhotosViewControllerDelegate>
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        [self changeBranch];
-    } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             [self uploadFile];
         } else {
             [self takePhoto];
         }
+    } else if (indexPath.section ==1) {
+//        if (indexPath.row == 1) {
+//            [self performSegueWithIdentifier:kSimpleMatterSegue sender:nil];
+//        }
     } else if (indexPath.section == 2) {
-        if (indexPath.row == 1) {
-            [self performSegueWithIdentifier:kSimpleMatterSegue sender:nil];
-        }
-    } else if (indexPath.section == 3) {
         if (indexPath.row == 0) {
             if (self.imagePreview.image == nil) {
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 return;
             }
             QMPhoto *photo = [[QMPhoto alloc] init];
@@ -150,7 +151,7 @@ NYTPhotosViewControllerDelegate>
             
             [self presentViewController:photosViewController animated:YES completion:nil];
         } else if (indexPath.row == 1) {
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:SEARCH_UPLOAD_SUGGESTED_FILENAME];
+//            [self performSegueWithIdentifier:kListWithCodeSegue sender:SEARCH_UPLOAD_SUGGESTED_FILENAME];
         }
     }
     
