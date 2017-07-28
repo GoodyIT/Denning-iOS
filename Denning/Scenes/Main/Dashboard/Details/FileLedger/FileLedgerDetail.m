@@ -75,7 +75,6 @@
     } else {
         _fileNo.text = _model.accountNo;
     }
-    _fileNo.text = _model.accountNo;
     _fileName.text = _model.accountName;
     if ([_model.credit floatValue] == 0) {
         _ledgerBalanceLabel.text = _model.debit;
@@ -85,7 +84,7 @@
 }
 
 - (void) prepareUI {
-    _filterTitleArray = [@[@"Client", @"Disbursment", @"FD", @"Advance", @"Other", @"Receivable"] mutableCopy];
+    _filterTitleArray = [@[@"Client", @"Disbursement", @"FD", @"Advance", @"Other", @"Receivable"] mutableCopy];
     _arrayOfFilter = @[@"client", @"disb", @"fd", @"advance", @"other", @"recv"];
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 74, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
@@ -147,6 +146,32 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) updateLedgerBalance:(NewLedgerModel *) model {
+    for (LedgerModel* obj in model.ledgerModelArray) {
+        if ([obj.accountName isEqualToString:curTopFilter]) {
+            _ledgerBalanceLabel.text = obj.currentBalance;
+            break;
+        }
+    }
+}
+
+- (void) loadBalance
+{
+    [SVProgressHUD showWithStatus:@"Loading"];
+    @weakify(self);
+    [[QMNetworkManager sharedManager] loadLedgerWithCode:_fileNo.text completion:^(NewLedgerModel * _Nonnull newLedgerModel, NSError * _Nonnull error) {
+        
+        @strongify(self);
+        self->isLoading = false;
+        [SVProgressHUD dismiss];
+        if (error == nil) {
+            [self updateLedgerBalance:newLedgerModel];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
 - (void) loadLedgersWithCompletion:(void(^)(void)) completion{
     if (isLoading) return;
     isLoading = YES;
@@ -197,6 +222,8 @@
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index {
     // update the view for the corresponding index
     curBalanceFilter = _arrayOfFilter[index];
+    curTopFilter = _filterTitleArray[index];
+    [self loadBalance];
     [self loadLedgersWithCompletion:nil];
 }
 

@@ -106,7 +106,7 @@
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
-    _topFilter = @[@"All", @"Client", @"Disbursment", @"FD", @"Advance", @"Other"];
+    _topFilter = @[@"All", @"Client", @"Disbursement", @"FD", @"Advance", @"Other"];
     _arrayOfFilterValues = @[@"bank-all", @"bank-client", @"bank-disb", @"bank-fd", @"bank-advance", @"bank-other"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
