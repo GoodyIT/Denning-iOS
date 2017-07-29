@@ -19,8 +19,8 @@
 {
     self.label.text = model.label;
     self.RM.text = model.RM;
-    self.OR.text = model.OR;
-    self.deposited.text = model.deposited;
+//    self.OR.text = model.OR;
+    self.deposited.text = [NSString stringWithFormat:@"%@ (%@)", model.deposited, model.OR];
 }
 
 @end

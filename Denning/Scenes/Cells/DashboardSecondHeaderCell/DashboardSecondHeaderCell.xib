@@ -21,10 +21,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DashboardSecondHeaderCell">
-            <rect key="frame" x="0.0" y="0.0" width="404" height="62"/>
+            <rect key="frame" x="0.0" y="0.0" width="430" height="62"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="404" height="62"/>
+                <rect key="frame" x="0.0" y="0.0" width="430" height="62"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collections" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmw-VR-pbt">
@@ -34,25 +34,19 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAO-eC-zzT">
-                        <rect key="frame" x="143" y="37.5" width="97.5" height="14.5"/>
+                        <rect key="frame" x="186.5" y="37.5" width="101.5" height="14.5"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zg3-PV-0TP">
-                        <rect key="frame" x="243.5" y="37.5" width="67.5" height="14.5"/>
-                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deposited" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4WL-NS-zyK">
-                        <rect key="frame" x="314" y="37.5" width="87" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UnDeposited(today)" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4WL-NS-zyK">
+                        <rect key="frame" x="296" y="37.5" width="114" height="14.5"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HIDDEN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qct-cP-Afu">
-                        <rect key="frame" x="0.0" y="37.5" width="135" height="17"/>
+                        <rect key="frame" x="0.0" y="37.5" width="101.5" height="17"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -61,29 +55,25 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="zg3-PV-0TP" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="1:6" id="06Z-NP-ZZl"/>
-                <constraint firstItem="eAO-eC-zzT" firstAttribute="leading" secondItem="qct-cP-Afu" secondAttribute="trailing" constant="8" id="72x-Yk-6Un"/>
-                <constraint firstItem="eAO-eC-zzT" firstAttribute="width" secondItem="zg3-PV-0TP" secondAttribute="width" constant="30" id="9Te-uh-MSv"/>
-                <constraint firstAttribute="trailing" secondItem="4WL-NS-zyK" secondAttribute="trailing" constant="3" id="BlR-YH-zt0"/>
+                <constraint firstItem="eAO-eC-zzT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qct-cP-Afu" secondAttribute="trailing" constant="8" id="72x-Yk-6Un"/>
+                <constraint firstItem="qct-cP-Afu" firstAttribute="width" secondItem="eAO-eC-zzT" secondAttribute="width" id="Anu-VN-REL"/>
+                <constraint firstAttribute="trailing" secondItem="4WL-NS-zyK" secondAttribute="trailing" constant="20" id="BlR-YH-zt0"/>
                 <constraint firstItem="eAO-eC-zzT" firstAttribute="top" secondItem="Xmw-VR-pbt" secondAttribute="bottom" constant="8" id="DjR-fU-VQ3"/>
-                <constraint firstItem="zg3-PV-0TP" firstAttribute="leading" secondItem="eAO-eC-zzT" secondAttribute="trailing" constant="3" id="JIm-nA-f7V"/>
+                <constraint firstItem="eAO-eC-zzT" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="1:6" constant="30" id="KbU-4x-jfe"/>
                 <constraint firstItem="qct-cP-Afu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Mor-I6-q1O"/>
                 <constraint firstItem="Xmw-VR-pbt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="NEb-24-2cB"/>
                 <constraint firstItem="4WL-NS-zyK" firstAttribute="bottom" secondItem="eAO-eC-zzT" secondAttribute="bottom" id="NFd-9E-dYR"/>
                 <constraint firstItem="4WL-NS-zyK" firstAttribute="top" secondItem="eAO-eC-zzT" secondAttribute="top" id="Ulm-OJ-eDD"/>
-                <constraint firstItem="qct-cP-Afu" firstAttribute="width" secondItem="zg3-PV-0TP" secondAttribute="width" multiplier="2:1" id="Vb3-Qu-3N7"/>
-                <constraint firstItem="zg3-PV-0TP" firstAttribute="top" secondItem="eAO-eC-zzT" secondAttribute="top" id="bAa-Jh-T2I"/>
-                <constraint firstItem="zg3-PV-0TP" firstAttribute="bottom" secondItem="eAO-eC-zzT" secondAttribute="bottom" id="gGO-5E-PJ1"/>
-                <constraint firstItem="4WL-NS-zyK" firstAttribute="leading" secondItem="zg3-PV-0TP" secondAttribute="trailing" constant="3" id="iNq-zo-fLq"/>
+                <constraint firstItem="4WL-NS-zyK" firstAttribute="leading" secondItem="eAO-eC-zzT" secondAttribute="trailing" constant="8" id="bmI-FT-kiB"/>
                 <constraint firstItem="qct-cP-Afu" firstAttribute="top" secondItem="eAO-eC-zzT" secondAttribute="top" id="icd-hD-r1O"/>
                 <constraint firstAttribute="bottom" secondItem="eAO-eC-zzT" secondAttribute="bottom" constant="10" id="nsC-TX-cql"/>
                 <constraint firstItem="Xmw-VR-pbt" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="vhN-cz-4Lc"/>
             </constraints>
-            <size key="customSize" width="404" height="62"/>
+            <size key="customSize" width="430" height="62"/>
             <connections>
                 <outlet property="headerLabel" destination="Xmw-VR-pbt" id="uMl-co-Dqn"/>
             </connections>
-            <point key="canvasLocation" x="70" y="5"/>
+            <point key="canvasLocation" x="78" y="-76"/>
         </collectionViewCell>
     </objects>
 </document>

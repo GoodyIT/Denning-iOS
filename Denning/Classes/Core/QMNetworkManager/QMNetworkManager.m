@@ -2182,7 +2182,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getResponseWithUrl:(NSString*) url withCompletion:(void(^)(id result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@/denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     [self setAddContactLoginHTTPHeader];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

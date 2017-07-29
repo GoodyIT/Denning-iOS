@@ -606,7 +606,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 }
 
 - (void) openDocumentFromContact:(SearchResultModel*) model {
-    NSString* url = [NSString stringWithFormat:@"denningwcf/v1/app/contactFolder/%@", model.key];
+    NSString* url = [NSString stringWithFormat:@"v1/app/contactFolder/%@", model.key];
     @weakify(self);
     [SVProgressHUD showWithStatus:@"Loading"];
     [[QMNetworkManager sharedManager] getResponseWithUrl:url withCompletion:^(id  _Nonnull result, NSError * _Nonnull error) {

@@ -18,32 +18,26 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DashboardSecondCell">
-            <rect key="frame" x="0.0" y="0.0" width="447" height="26"/>
+            <rect key="frame" x="0.0" y="0.0" width="341" height="26"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="447" height="26"/>
+                <rect key="frame" x="0.0" y="0.0" width="341" height="26"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41Z-vc-ty9">
-                        <rect key="frame" x="273.5" y="3" width="74.5" height="20"/>
-                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
-                        <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJ3-Iv-coS">
-                        <rect key="frame" x="351" y="3" width="74.5" height="20"/>
+                        <rect key="frame" x="234.5" y="3" width="86.5" height="20"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDe-c2-EdT">
-                        <rect key="frame" x="19" y="3" width="139" height="20"/>
+                        <rect key="frame" x="19" y="3" width="87" height="20"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RM" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrB-al-bH3">
-                        <rect key="frame" x="166" y="3" width="104.5" height="20"/>
+                        <rect key="frame" x="143" y="3" width="86.5" height="20"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -53,32 +47,27 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="wDe-c2-EdT" secondAttribute="bottom" constant="3" id="4eY-RV-JBd"/>
-                <constraint firstItem="41Z-vc-ty9" firstAttribute="leading" secondItem="HrB-al-bH3" secondAttribute="trailing" constant="3" id="7yI-Xg-Sws"/>
-                <constraint firstItem="ZJ3-Iv-coS" firstAttribute="leading" secondItem="41Z-vc-ty9" secondAttribute="trailing" constant="3" id="Cc5-wI-1wG"/>
                 <constraint firstItem="HrB-al-bH3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="EOb-QE-kDj"/>
                 <constraint firstItem="ZJ3-Iv-coS" firstAttribute="top" secondItem="HrB-al-bH3" secondAttribute="top" id="FXt-5D-56M"/>
-                <constraint firstItem="ZJ3-Iv-coS" firstAttribute="width" secondItem="41Z-vc-ty9" secondAttribute="width" id="Kuc-Xw-RTE"/>
                 <constraint firstItem="wDe-c2-EdT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="19" id="OeR-TX-EZF"/>
-                <constraint firstItem="wDe-c2-EdT" firstAttribute="width" secondItem="41Z-vc-ty9" secondAttribute="width" multiplier="2:1" constant="-10" id="QQb-pQ-e2m"/>
-                <constraint firstItem="41Z-vc-ty9" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="1:6" id="RPy-f5-qdd"/>
-                <constraint firstItem="41Z-vc-ty9" firstAttribute="top" secondItem="HrB-al-bH3" secondAttribute="top" id="SV4-mR-JKo"/>
+                <constraint firstItem="HrB-al-bH3" firstAttribute="width" secondItem="ZJ3-Iv-coS" secondAttribute="width" id="SjY-T5-fMv"/>
+                <constraint firstItem="ZJ3-Iv-coS" firstAttribute="leading" secondItem="HrB-al-bH3" secondAttribute="trailing" constant="5" id="Xhk-3I-fbM"/>
                 <constraint firstItem="wDe-c2-EdT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="acG-HR-6g1"/>
-                <constraint firstItem="41Z-vc-ty9" firstAttribute="bottom" secondItem="HrB-al-bH3" secondAttribute="bottom" id="bK6-tw-qAi"/>
                 <constraint firstItem="ZJ3-Iv-coS" firstAttribute="bottom" secondItem="HrB-al-bH3" secondAttribute="bottom" id="bg5-n4-Rod"/>
-                <constraint firstItem="HrB-al-bH3" firstAttribute="width" secondItem="41Z-vc-ty9" secondAttribute="width" constant="30" id="cIx-hb-HWP"/>
-                <constraint firstItem="HrB-al-bH3" firstAttribute="leading" secondItem="wDe-c2-EdT" secondAttribute="trailing" constant="8" id="gaQ-2L-1Jc"/>
+                <constraint firstItem="wDe-c2-EdT" firstAttribute="width" secondItem="HrB-al-bH3" secondAttribute="width" id="ech-Ag-yPr"/>
+                <constraint firstItem="HrB-al-bH3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wDe-c2-EdT" secondAttribute="trailing" constant="8" id="gaQ-2L-1Jc"/>
                 <constraint firstAttribute="bottom" secondItem="HrB-al-bH3" secondAttribute="bottom" constant="3" id="kjs-dq-vcd"/>
+                <constraint firstItem="HrB-al-bH3" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" multiplier="1:6" constant="30" id="qlM-Zo-RvE"/>
                 <constraint firstItem="HrB-al-bH3" firstAttribute="top" secondItem="wDe-c2-EdT" secondAttribute="top" id="rzu-ca-xO9"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ZJ3-Iv-coS" secondAttribute="trailing" constant="8" id="xe6-tn-3Ld"/>
+                <constraint firstAttribute="trailing" secondItem="ZJ3-Iv-coS" secondAttribute="trailing" constant="20" id="xe6-tn-3Ld"/>
             </constraints>
-            <size key="customSize" width="447" height="26"/>
+            <size key="customSize" width="341" height="26"/>
             <connections>
-                <outlet property="OR" destination="41Z-vc-ty9" id="slp-c2-Je9"/>
                 <outlet property="RM" destination="HrB-al-bH3" id="YwL-NM-Xls"/>
                 <outlet property="deposited" destination="ZJ3-Iv-coS" id="GSq-xc-eLm"/>
                 <outlet property="label" destination="wDe-c2-EdT" id="Omg-vk-wmq"/>
             </connections>
-            <point key="canvasLocation" x="-37.5" y="-87"/>
+            <point key="canvasLocation" x="-101" y="-87"/>
         </collectionViewCell>
     </objects>
 </document>
