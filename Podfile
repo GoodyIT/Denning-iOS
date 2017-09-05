@@ -40,9 +40,12 @@ target ‘Denning’ do
 	pod 'PNChart'
 	pod ‘TOCropViewController’
 	pod 'DLRadioButton', '~> 1.4'
+	pod 'UITextView+Placeholder', '~> 1.2'
 
 	pod 'AFNetworking’
 	pod 'Bolts'
+
+	pod 'dyci', :git => 'https://github.com/DyCI/dyci-main.git'
 
 	pod 'Realm'
 

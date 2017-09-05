@@ -371,6 +371,16 @@
     return date;
 }
 
++ (NSString*) randomTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    [formatter setTimeZone:timeZone];
+    [formatter setDateFormat:@"HHmmss"];
+    
+    return [formatter stringFromDate:[NSDate date]];
+}
+
 + (NSString*) todayWithTime {
     NSString* date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

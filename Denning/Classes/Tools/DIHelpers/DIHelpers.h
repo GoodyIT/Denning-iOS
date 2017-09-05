@@ -77,6 +77,8 @@
 
 + (NSString*) today;
 
++ (NSString*) randomTime;
+
 + (NSString*) todayWithTime;
 
 + (NSString*) sevenDaysLater;

@@ -6,7 +6,7 @@
 //  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-@class ClientModel;
+@class StaffModel;
 #import <UIKit/UIKit.h>
 typedef void (^UpdatePropertyContactHandler)(StaffModel* model);
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class UserModel;
 @interface DataManager : NSObject
 
 @property (strong, nonatomic) NSString  *searchType;

@@ -7,6 +7,7 @@
 //
 
 #import "StaffModel.h"
+#import "AddressModel.h"
 
 @implementation StaffModel
 

@@ -852,6 +852,9 @@
 		96821F3A1F1DC4C400F28708 /* CompletionTrackingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821F391F1DC4C400F28708 /* CompletionTrackingModel.m */; };
 		96821F3F1F1DC84200F28708 /* CompletionTrackingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821F3D1F1DC84200F28708 /* CompletionTrackingCell.m */; };
 		96821F401F1DC84200F28708 /* CompletionTrackingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96821F3E1F1DC84200F28708 /* CompletionTrackingCell.xib */; };
+		9685EBE41F51F8E80006C0E0 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9685EBE21F51F8E80006C0E0 /* MainInterface.storyboard */; };
+		9685EBE81F51F8E80006C0E0 /* DenningShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9685EBDD1F51F8E80006C0E0 /* DenningShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9685EBF71F53D0610006C0E0 /* CustomShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9685EBF61F53D0610006C0E0 /* CustomShareViewController.m */; };
 		968E85E21EF19573001B442D /* IncreasingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E85E01EF19573001B442D /* IncreasingCell.m */; };
 		968E85E31EF19573001B442D /* IncreasingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968E85E11EF19573001B442D /* IncreasingCell.xib */; };
 		968E85EB1EF2DB00001B442D /* CountryAutoCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E85EA1EF2DB00001B442D /* CountryAutoCompleteViewController.m */; };
@@ -941,6 +944,7 @@
 		96D66EFF1EFCB0F3003E3A4A /* DashboardTodayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D66EFD1EFCB0F3003E3A4A /* DashboardTodayCell.xib */; };
 		96D66F031EFCB361003E3A4A /* DashboardFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D66F011EFCB361003E3A4A /* DashboardFirstCell.m */; };
 		96D66F041EFCB361003E3A4A /* DashboardFirstCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D66F021EFCB361003E3A4A /* DashboardFirstCell.xib */; };
+		96E704D11F5600C500FC6A5B /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E704D01F5600C500FC6A5B /* ContactListViewController.m */; };
 		96EAEB9D1F21B0CC004F75FC /* comming_soon.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EAEB9A1F21B0CC004F75FC /* comming_soon.png */; };
 		96EAEB9E1F21B0CC004F75FC /* comming_soon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EAEB9B1F21B0CC004F75FC /* comming_soon@2x.png */; };
 		96EAEB9F1F21B0CC004F75FC /* comming_soon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EAEB9C1F21B0CC004F75FC /* comming_soon@3x.png */; };
@@ -973,7 +977,28 @@
 			remoteGlobalIDString = 79FBDE6E1E302F6600448FE3;
 			remoteInfo = Denning;
 		};
+		9685EBE61F51F8E80006C0E0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79FBDE671E302F6600448FE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9685EBDC1F51F8E80006C0E0;
+			remoteInfo = DenningShare;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9685EBEC1F51F8E80006C0E0 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9685EBE81F51F8E80006C0E0 /* DenningShare.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		064FEAC551343F357D0017CC /* libPods-Denning.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Denning.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2217,6 +2242,12 @@
 		96821F3D1F1DC84200F28708 /* CompletionTrackingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompletionTrackingCell.m; sourceTree = "<group>"; };
 		96821F3E1F1DC84200F28708 /* CompletionTrackingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompletionTrackingCell.xib; sourceTree = "<group>"; };
 		96821F411F1E8FD700F28708 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Charts.framework; sourceTree = "<group>"; };
+		9685EBDD1F51F8E80006C0E0 /* DenningShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DenningShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9685EBE31F51F8E80006C0E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		9685EBE51F51F8E80006C0E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9685EBED1F51F9160006C0E0 /* DenningShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DenningShare.entitlements; sourceTree = "<group>"; };
+		9685EBF51F53D0610006C0E0 /* CustomShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomShareViewController.h; sourceTree = "<group>"; };
+		9685EBF61F53D0610006C0E0 /* CustomShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomShareViewController.m; sourceTree = "<group>"; };
 		968E85DF1EF19573001B442D /* IncreasingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncreasingCell.h; sourceTree = "<group>"; };
 		968E85E01EF19573001B442D /* IncreasingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncreasingCell.m; sourceTree = "<group>"; };
 		968E85E11EF19573001B442D /* IncreasingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncreasingCell.xib; sourceTree = "<group>"; };
@@ -2363,6 +2394,8 @@
 		96D66F001EFCB361003E3A4A /* DashboardFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardFirstCell.h; sourceTree = "<group>"; };
 		96D66F011EFCB361003E3A4A /* DashboardFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardFirstCell.m; sourceTree = "<group>"; };
 		96D66F021EFCB361003E3A4A /* DashboardFirstCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardFirstCell.xib; sourceTree = "<group>"; };
+		96E704CF1F5600C500FC6A5B /* ContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListViewController.h; sourceTree = "<group>"; };
+		96E704D01F5600C500FC6A5B /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
 		96EAEB9A1F21B0CC004F75FC /* comming_soon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comming_soon.png; sourceTree = "<group>"; };
 		96EAEB9B1F21B0CC004F75FC /* comming_soon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comming_soon@2x.png"; sourceTree = "<group>"; };
 		96EAEB9C1F21B0CC004F75FC /* comming_soon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comming_soon@3x.png"; sourceTree = "<group>"; };
@@ -2429,6 +2462,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		79FBDE901E302F6600448FE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9685EBDA1F51F8E80006C0E0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -4192,6 +4232,7 @@
 			children = (
 				79FC42841E588B3800D9DC64 /* Localizable.strings */,
 				79FBDE711E302F6600448FE3 /* Denning */,
+				9685EBDE1F51F8E80006C0E0 /* DenningShare */,
 				79FBDFE91E304A6200448FE3 /* Frameworks */,
 				79FBDE8B1E302F6600448FE3 /* DenningTests */,
 				79FBDE961E302F6600448FE3 /* DenningUITests */,
@@ -4207,6 +4248,7 @@
 				79FBDE6F1E302F6600448FE3 /* Denning.app */,
 				79FBDE881E302F6600448FE3 /* DenningTests.xctest */,
 				79FBDE931E302F6600448FE3 /* DenningUITests.xctest */,
+				9685EBDD1F51F8E80006C0E0 /* DenningShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6858,6 +6900,19 @@
 			path = CompletionTrackingCell;
 			sourceTree = "<group>";
 		};
+		9685EBDE1F51F8E80006C0E0 /* DenningShare */ = {
+			isa = PBXGroup;
+			children = (
+				96E704CE1F5600B000FC6A5B /* ContactList */,
+				9685EBED1F51F9160006C0E0 /* DenningShare.entitlements */,
+				9685EBE21F51F8E80006C0E0 /* MainInterface.storyboard */,
+				9685EBE51F51F8E80006C0E0 /* Info.plist */,
+				9685EBF51F53D0610006C0E0 /* CustomShareViewController.h */,
+				9685EBF61F53D0610006C0E0 /* CustomShareViewController.m */,
+			);
+			path = DenningShare;
+			sourceTree = "<group>";
+		};
 		968E85DE1EF194CA001B442D /* IncreasingCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -7374,6 +7429,15 @@
 			path = DashboardFirstCell;
 			sourceTree = "<group>";
 		};
+		96E704CE1F5600B000FC6A5B /* ContactList */ = {
+			isa = PBXGroup;
+			children = (
+				96E704CF1F5600C500FC6A5B /* ContactListViewController.h */,
+				96E704D01F5600C500FC6A5B /* ContactListViewController.m */,
+			);
+			path = ContactList;
+			sourceTree = "<group>";
+		};
 		96EAEBA01F21D4F4004F75FC /* PaymentRecord */ = {
 			isa = PBXGroup;
 			children = (
@@ -7454,10 +7518,12 @@
 				B2BEA1E67A9FDD4C7C86347E /* [CP] Embed Pods Frameworks */,
 				1B8936FE8357064D9CF0EE61 /* [CP] Copy Pods Resources */,
 				795DF2561E6EDAE7006D617D /* ShellScript */,
+				9685EBEC1F51F8E80006C0E0 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9685EBE71F51F8E80006C0E0 /* PBXTargetDependency */,
 			);
 			name = Denning;
 			productName = Denning;
@@ -7500,6 +7566,23 @@
 			productReference = 79FBDE931E302F6600448FE3 /* DenningUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		9685EBDC1F51F8E80006C0E0 /* DenningShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9685EBEB1F51F8E80006C0E0 /* Build configuration list for PBXNativeTarget "DenningShare" */;
+			buildPhases = (
+				9685EBD91F51F8E80006C0E0 /* Sources */,
+				9685EBDA1F51F8E80006C0E0 /* Frameworks */,
+				9685EBDB1F51F8E80006C0E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DenningShare;
+			productName = DenningShare;
+			productReference = 9685EBDD1F51F8E80006C0E0 /* DenningShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -7514,6 +7597,9 @@
 						DevelopmentTeam = 6ATV26A86Y;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -7537,6 +7623,16 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = 79FBDE6E1E302F6600448FE3;
 					};
+					9685EBDC1F51F8E80006C0E0 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 6ATV26A86Y;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = 79FBDE6A1E302F6600448FE3 /* Build configuration list for PBXProject "Denning" */;
@@ -7555,6 +7651,7 @@
 				79FBDE6E1E302F6600448FE3 /* Denning */,
 				79FBDE871E302F6600448FE3 /* DenningTests */,
 				79FBDE921E302F6600448FE3 /* DenningUITests */,
+				9685EBDC1F51F8E80006C0E0 /* DenningShare */,
 			);
 		};
 /* End PBXProject section */
@@ -8061,6 +8158,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9685EBDB1F51F8E80006C0E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9685EBE41F51F8E80006C0E0 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8589,6 +8694,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9685EBD91F51F8E80006C0E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9685EBF71F53D0610006C0E0 /* CustomShareViewController.m in Sources */,
+				96E704D11F5600C500FC6A5B /* ContactListViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -8602,6 +8716,11 @@
 			target = 79FBDE6E1E302F6600448FE3 /* Denning */;
 			targetProxy = 79FBDE941E302F6600448FE3 /* PBXContainerItemProxy */;
 		};
+		9685EBE71F51F8E80006C0E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9685EBDC1F51F8E80006C0E0 /* DenningShare */;
+			targetProxy = 9685EBE61F51F8E80006C0E0 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -8611,6 +8730,14 @@
 				79FBDE811E302F6600448FE3 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		9685EBE21F51F8E80006C0E0 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9685EBE31F51F8E80006C0E0 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -9397,6 +9524,40 @@
 			};
 			name = Release;
 		};
+		9685EBE91F51F8E80006C0E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = DenningShare/DenningShare.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thong Mee Ho (FR83CC98GQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
+				INFOPLIST_FILE = DenningShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning.DenningShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		9685EBEA1F51F8E80006C0E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = DenningShare/DenningShare.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Thong Mee Ho (6ATV26A86Y)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
+				INFOPLIST_FILE = DenningShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning.DenningShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -9432,6 +9593,15 @@
 			buildConfigurations = (
 				79FBDEA31E302F6600448FE3 /* Debug */,
 				79FBDEA41E302F6600448FE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9685EBEB1F51F8E80006C0E0 /* Build configuration list for PBXNativeTarget "DenningShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9685EBE91F51F8E80006C0E0 /* Debug */,
+				9685EBEA1F51F8E80006C0E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -8,6 +8,7 @@
 
 #import "DataManager.h"
 #import "FirmURLModel.h"
+#import "UserModel.h"
 
 @interface DataManager()
 
@@ -72,10 +73,11 @@
 {
     [self getFirmServerArrayFromResponse:response];
     
+    [self _setInfoWithValue:[response objectForKeyNotNull:@"email"] for:@"email"];
+    [self _setInfoWithValue:[self determineUserType] for:@"userType"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.email = [response objectForKeyNotNull:@"email"];
         user.phoneNumber = [response objectForKeyNotNull:@"hpNumber"];
-        user.userType = [response objectForKeyNotNull:@"userType"];
         user.sessionID = [response objectForKeyNotNull:@"sessionID"];
         user.status = [response objectForKeyNotNull:@"status"];
         user.username = [response objectForKeyNotNull:@"name"];
@@ -93,6 +95,7 @@
 - (void) setUserInfoFromNewDeviceLogin: (NSDictionary*) response
 {
     [self getFirmServerArrayFromResponse:response];
+    [self _setInfoWithValue:[self determineUserType] for:@"userType"];
     
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.status = [response objectForKeyNotNull:@"status"];
@@ -105,8 +108,16 @@
     [self setUserInfoFromNewDeviceLogin:response];
 }
 
+- (void) _setInfoWithValue:(NSString*) value for:(NSString*) key
+{
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+    [defaults setValue:value forKey:key];
+    [defaults synchronize];
+}
+
 - (void) setSessionID: (NSString*) sessionID
 {
+    [self _setInfoWithValue:sessionID for:@"sessionID"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.sessionID = sessionID;
     }];
@@ -115,6 +126,7 @@
 - (void) setServerAPI: (NSString*) serverAPI withFirmName:(NSString*) firmName withFirmCity:(NSString*)firmCity
 {
     self.searchType = @"General";
+    [self _setInfoWithValue:serverAPI for:@"api"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.serverAPI = serverAPI;
         user.firmName = firmName;

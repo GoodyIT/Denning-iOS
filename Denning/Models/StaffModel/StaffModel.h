@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class AddressModel;
 @interface StaffModel : NSObject
 
 @property (strong, nonatomic) NSString *IDNo;

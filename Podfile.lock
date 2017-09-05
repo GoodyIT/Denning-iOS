@@ -29,6 +29,9 @@ PODS:
   - Digits (1.15.3):
     - TwitterCore (= 1.15.3)
   - DLRadioButton (1.4.9)
+  - dyci (0.1.6):
+    - dyci/Injections (= 0.1.6)
+  - dyci/Injections (0.1.6)
   - DZNEmptyDataSet (1.8.1)
   - DZNPhotoPickerController/Editor (2.0)
   - Fabric (1.6.11)
@@ -140,6 +143,7 @@ PODS:
   - UIFloatLabelTextField (1.2.9)
   - UIFloatLabelTextView (1.0.10)
   - UILabel+Copyable (1.0.1)
+  - UITextView+Placeholder (1.2.0)
   - VBFPopFlatButton (0.0.7):
     - pop
 
@@ -151,6 +155,7 @@ DEPENDENCIES:
   - Crashlytics
   - Digits (= 1.15.3)
   - DLRadioButton (~> 1.4)
+  - dyci (from `https://github.com/DyCI/dyci-main.git`)
   - DZNEmptyDataSet
   - DZNPhotoPickerController/Editor
   - Fabric
@@ -192,7 +197,17 @@ DEPENDENCIES:
   - UIFloatLabelTextField
   - UIFloatLabelTextView
   - UILabel+Copyable (~> 1.0.0)
+  - UITextView+Placeholder (~> 1.2)
   - VBFPopFlatButton
+
+EXTERNAL SOURCES:
+  dyci:
+    :git: https://github.com/DyCI/dyci-main.git
+
+CHECKOUT OPTIONS:
+  dyci:
+    :commit: de33e13baba2a0bb274716ebc59daf8c14f8a388
+    :git: https://github.com/DyCI/dyci-main.git
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
@@ -202,6 +217,7 @@ SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Digits: 9823f8aad766c0aa824fac9b08938e22bc635fac
   DLRadioButton: 7bb8a6e3768b572469ace553391ab4d2af6f9c19
+  dyci: bf5f4caa4a855a3ca567e2306a4cbba6d9da75e8
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
   DZNPhotoPickerController: 1a9b83a53a2f35094e35c163417ab0aeb8653fd1
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
@@ -246,8 +262,9 @@ SPEC CHECKSUMS:
   UIFloatLabelTextField: c1df7d4e688a1bd52738513f961df16f94914367
   UIFloatLabelTextView: 96b7c5a18739fd1af8fd9480f7943d75a7547e4d
   UILabel+Copyable: 39749df0a0a7112db8091a2b15ac9140a64b45a8
+  UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
 
-PODFILE CHECKSUM: f5a9e0d33a6b9b0f960f7188a7b53029ff5c03e3
+PODFILE CHECKSUM: 8ebd640395106dfd4829147fa5a64d634b13335d
 
 COCOAPODS: 1.2.1

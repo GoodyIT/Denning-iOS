@@ -263,7 +263,7 @@ NSMutableDictionary* keyValue;
                                                                           appropriateForURL:nil
                                                                                      create:NO error:nil];
                 
-                NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:@"DenningIT/"];
+                NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
                 if (![FCFileManager isDirectoryItemAtPath:newPath]) {
                     [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
                 }
