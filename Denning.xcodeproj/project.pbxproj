@@ -855,6 +855,12 @@
 		9685EBE41F51F8E80006C0E0 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9685EBE21F51F8E80006C0E0 /* MainInterface.storyboard */; };
 		9685EBE81F51F8E80006C0E0 /* DenningShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9685EBDD1F51F8E80006C0E0 /* DenningShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		9685EBF71F53D0610006C0E0 /* CustomShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9685EBF61F53D0610006C0E0 /* CustomShareViewController.m */; };
+		96864A901F5EFD0500350E59 /* DemoDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 96864A841F5EFD0500350E59 /* DemoDownloadItem.m */; };
+		96864A911F5EFD0500350E59 /* DemoDownloadNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 96864A871F5EFD0500350E59 /* DemoDownloadNotifications.m */; };
+		96864A921F5EFD0500350E59 /* HWIFileDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 96864A8B1F5EFD0500350E59 /* HWIFileDownloader.m */; };
+		96864A931F5EFD0500350E59 /* HWIFileDownloadItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 96864A8D1F5EFD0500350E59 /* HWIFileDownloadItem.m */; };
+		96864A941F5EFD0500350E59 /* HWIFileDownloadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 96864A8F1F5EFD0500350E59 /* HWIFileDownloadProgress.m */; };
+		96864A971F5EFE0400350E59 /* DemoDownloadStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 96864A961F5EFE0400350E59 /* DemoDownloadStore.m */; };
 		968E85E21EF19573001B442D /* IncreasingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E85E01EF19573001B442D /* IncreasingCell.m */; };
 		968E85E31EF19573001B442D /* IncreasingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968E85E11EF19573001B442D /* IncreasingCell.xib */; };
 		968E85EB1EF2DB00001B442D /* CountryAutoCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E85EA1EF2DB00001B442D /* CountryAutoCompleteViewController.m */; };
@@ -2248,6 +2254,21 @@
 		9685EBED1F51F9160006C0E0 /* DenningShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DenningShare.entitlements; sourceTree = "<group>"; };
 		9685EBF51F53D0610006C0E0 /* CustomShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomShareViewController.h; sourceTree = "<group>"; };
 		9685EBF61F53D0610006C0E0 /* CustomShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomShareViewController.m; sourceTree = "<group>"; };
+		96864A831F5EFD0500350E59 /* DemoDownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoDownloadItem.h; sourceTree = "<group>"; };
+		96864A841F5EFD0500350E59 /* DemoDownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoDownloadItem.m; sourceTree = "<group>"; };
+		96864A851F5EFD0500350E59 /* DemoDownloadItemStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoDownloadItemStatus.h; sourceTree = "<group>"; };
+		96864A861F5EFD0500350E59 /* DemoDownloadNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoDownloadNotifications.h; sourceTree = "<group>"; };
+		96864A871F5EFD0500350E59 /* DemoDownloadNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoDownloadNotifications.m; sourceTree = "<group>"; };
+		96864A881F5EFD0500350E59 /* HWIBackgroundSessionCompletionHandlerBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWIBackgroundSessionCompletionHandlerBlock.h; sourceTree = "<group>"; };
+		96864A891F5EFD0500350E59 /* HWIFileDownloadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWIFileDownloadDelegate.h; sourceTree = "<group>"; };
+		96864A8A1F5EFD0500350E59 /* HWIFileDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWIFileDownloader.h; sourceTree = "<group>"; };
+		96864A8B1F5EFD0500350E59 /* HWIFileDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWIFileDownloader.m; sourceTree = "<group>"; };
+		96864A8C1F5EFD0500350E59 /* HWIFileDownloadItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWIFileDownloadItem.h; sourceTree = "<group>"; };
+		96864A8D1F5EFD0500350E59 /* HWIFileDownloadItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWIFileDownloadItem.m; sourceTree = "<group>"; };
+		96864A8E1F5EFD0500350E59 /* HWIFileDownloadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWIFileDownloadProgress.h; sourceTree = "<group>"; };
+		96864A8F1F5EFD0500350E59 /* HWIFileDownloadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWIFileDownloadProgress.m; sourceTree = "<group>"; };
+		96864A951F5EFE0400350E59 /* DemoDownloadStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoDownloadStore.h; sourceTree = "<group>"; };
+		96864A961F5EFE0400350E59 /* DemoDownloadStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoDownloadStore.m; sourceTree = "<group>"; };
 		968E85DF1EF19573001B442D /* IncreasingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncreasingCell.h; sourceTree = "<group>"; };
 		968E85E01EF19573001B442D /* IncreasingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncreasingCell.m; sourceTree = "<group>"; };
 		968E85E11EF19573001B442D /* IncreasingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncreasingCell.xib; sourceTree = "<group>"; };
@@ -4526,6 +4547,7 @@
 		79FBDEF41E30421A00448FE3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				96864A821F5EFD0500350E59 /* HWIFileDownload */,
 				79FBDEF51E30421A00448FE3 /* Core */,
 				79FBDF161E30421A00448FE3 /* CustomSegues */,
 				79FBDF191E30421A00448FE3 /* Factories */,
@@ -6913,6 +6935,28 @@
 			path = DenningShare;
 			sourceTree = "<group>";
 		};
+		96864A821F5EFD0500350E59 /* HWIFileDownload */ = {
+			isa = PBXGroup;
+			children = (
+				96864A951F5EFE0400350E59 /* DemoDownloadStore.h */,
+				96864A961F5EFE0400350E59 /* DemoDownloadStore.m */,
+				96864A831F5EFD0500350E59 /* DemoDownloadItem.h */,
+				96864A841F5EFD0500350E59 /* DemoDownloadItem.m */,
+				96864A851F5EFD0500350E59 /* DemoDownloadItemStatus.h */,
+				96864A861F5EFD0500350E59 /* DemoDownloadNotifications.h */,
+				96864A871F5EFD0500350E59 /* DemoDownloadNotifications.m */,
+				96864A881F5EFD0500350E59 /* HWIBackgroundSessionCompletionHandlerBlock.h */,
+				96864A891F5EFD0500350E59 /* HWIFileDownloadDelegate.h */,
+				96864A8A1F5EFD0500350E59 /* HWIFileDownloader.h */,
+				96864A8B1F5EFD0500350E59 /* HWIFileDownloader.m */,
+				96864A8C1F5EFD0500350E59 /* HWIFileDownloadItem.h */,
+				96864A8D1F5EFD0500350E59 /* HWIFileDownloadItem.m */,
+				96864A8E1F5EFD0500350E59 /* HWIFileDownloadProgress.h */,
+				96864A8F1F5EFD0500350E59 /* HWIFileDownloadProgress.m */,
+			);
+			path = HWIFileDownload;
+			sourceTree = "<group>";
+		};
 		968E85DE1EF194CA001B442D /* IncreasingCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -8292,6 +8336,7 @@
 				79FBDFA41E30421A00448FE3 /* QBUpdateUserParameters+CustomData.m in Sources */,
 				793FF21D1EC3C2A2001F83A5 /* AccordionHeaderView.m in Sources */,
 				960D91AB1F066B3900835B82 /* StaffHeaderCell.m in Sources */,
+				96864A921F5EFD0500350E59 /* HWIFileDownloader.m in Sources */,
 				79D599FE1E9473D500CD3821 /* QMDialogsSearchDataSource.m in Sources */,
 				79F7322C1E96A929004F88DF /* MLPAutoCompleteTextField.m in Sources */,
 				79EC0DD61E88013500320A28 /* ContactCell.m in Sources */,
@@ -8317,6 +8362,7 @@
 				79FBDFCE1E30421A00448FE3 /* QMFacebook.m in Sources */,
 				79FBDFA51E30421A00448FE3 /* UIButton+Badge.m in Sources */,
 				7903CF931ECD57D50090206C /* BankBranchCell.m in Sources */,
+				96864A941F5EFD0500350E59 /* HWIFileDownloadProgress.m in Sources */,
 				790DD49B1ECBC05E009D5634 /* PropertyContactListViewController.m in Sources */,
 				962083351EDD510100BB595C /* DashboardStyle4Cell.m in Sources */,
 				96821F251F1D1B8400F28708 /* DashboardAttendanceDetail.m in Sources */,
@@ -8381,6 +8427,7 @@
 				79FF5B5A1E6FBB4000A27907 /* RelatedMatterViewController.m in Sources */,
 				96821F2F1F1D7F4300F28708 /* FeeAndMatterGrowth.m in Sources */,
 				96A73AB31F1C9EA300B97156 /* FeesTranserDetail.m in Sources */,
+				96864A901F5EFD0500350E59 /* DemoDownloadItem.m in Sources */,
 				96FD653F1F21097300FB9009 /* UploadTo.m in Sources */,
 				7903CF541ECC00CE0090206C /* StaffViewController.m in Sources */,
 				79EC0E531E8AEF7D00320A28 /* CourtModel.m in Sources */,
@@ -8558,6 +8605,7 @@
 				96A73AAB1F1C9D2100B97156 /* StaffOnlineModel.m in Sources */,
 				962082F21ED7B9E200BB595C /* LineGraphCell.m in Sources */,
 				793C1A041EC4FFE600271B7F /* ListOfMatterViewController.m in Sources */,
+				96864A971F5EFE0400350E59 /* DemoDownloadStore.m in Sources */,
 				79FBDFB81E30421A00448FE3 /* QMCallButtonsFactory.m in Sources */,
 				79FBE0961E304EAB00448FE3 /* QMShadowView.m in Sources */,
 				79EC0E2D1E89E75E00320A28 /* FileModel.m in Sources */,
@@ -8673,8 +8721,10 @@
 				96D176791F1FE1D4008734DA /* FileNote.m in Sources */,
 				79FBDE771E302F6600448FE3 /* AppDelegate.m in Sources */,
 				969A60421EDE62DA00A5D961 /* FeeTransferCell.m in Sources */,
+				96864A911F5EFD0500350E59 /* DemoDownloadNotifications.m in Sources */,
 				79FBE1071E304F5000448FE3 /* QMLocationViewController.m in Sources */,
 				79D59A381E95690800CD3821 /* QMContactsSearchDataSource.m in Sources */,
+				96864A931F5EFD0500350E59 /* HWIFileDownloadItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

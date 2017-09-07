@@ -104,7 +104,7 @@
     [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
     
     if (![[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
-        if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]){
+        if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"] && ![[DataManager sharedManager].user.userType isEqualToString:@"personal"]){
             if ([[DataManager sharedManager].statusCode  isEqual: @(250)]) {
                 [self performSegueWithIdentifier:kPasswordConfirmSegue sender:nil];
             } else {

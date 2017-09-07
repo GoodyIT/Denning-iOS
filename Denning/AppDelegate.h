@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class DemoDownloadStore;
+@class HWIFileDownloader;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
+
+@property (nonnull, nonatomic, strong, readonly) DemoDownloadStore *demoDownloadStore;
+
+@property (nonnull, nonatomic, strong, readonly) HWIFileDownloader *fileDownloader;
 
 @end
 

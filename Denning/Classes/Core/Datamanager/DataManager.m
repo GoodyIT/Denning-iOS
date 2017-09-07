@@ -62,7 +62,7 @@
     if (self.denningArray.count > 0) {
         type = @"denning";
     } else if (self.personalArray.count > 0) {
-        type = @"personal";
+        type = @"client";
     } else {
         type = @"";
     }

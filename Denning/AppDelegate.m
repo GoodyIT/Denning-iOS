@@ -15,6 +15,8 @@
 #import "DataManager.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "HWIFileDownloader.h"
+#import "DemoDownloadStore.h"
 
 //#import <Flurry.h>
 
@@ -45,6 +47,9 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 #endif
 
 @interface AppDelegate ()<QMPushNotificationManagerDelegate>
+
+@property (nonnull, nonatomic, strong, readwrite) DemoDownloadStore *demoDownloadStore;
+@property (nonnull, nonatomic, strong, readwrite) HWIFileDownloader *fileDownloader;
 
 @end
 
@@ -90,12 +95,13 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     // Configuring external frameworks
     [Fabric with:@[CrashlyticsKit,  [Answers class]]];
     
-//    [Flurry startSession:@"S8MJ4SRBDZ3BDJRM6M39"
-//      withSessionBuilder:[[[FlurrySessionBuilder new]
-//                           withCrashReporting:YES]
-//                          withLogLevel:FlurryLogLevelDebug]];
+    // setup app download store
+    self.demoDownloadStore = [[DemoDownloadStore alloc] init];
     
-    // Map Autocomplete
+    // setup downloader
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+        self.fileDownloader = [[HWIFileDownloader alloc] initWithDelegate:self.demoDownloadStore];
+    [self.fileDownloader setupWithCompletion:nil];
 
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
@@ -175,6 +181,11 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [[QMCore instance] login];
 }
 
+// iOS 7
+- (void)application:(UIApplication *)anApplication handleEventsForBackgroundURLSession:(NSString *)aBackgroundURLSessionIdentifier completionHandler:(void (^)())aCompletionHandler
+{
+    [self.fileDownloader setBackgroundSessionCompletionHandlerBlock:aCompletionHandler];
+}
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.

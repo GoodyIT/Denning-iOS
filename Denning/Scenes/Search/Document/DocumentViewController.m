@@ -10,8 +10,19 @@
 #import "DocumentCell.h"
 #import "NewContactHeaderCell.h"
 
+#import "AppDelegate.h"
+#import "DemoDownloadStore.h"
+#import "DemoDownloadItem.h"
+#import "DemoDownloadNotifications.h"
+#import "HWIFileDownloader.h"
+
 @interface DocumentViewController () <
 UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate>
+{
+    NSString* email, *sessionID;
+    NSMutableArray* downloadedURLs;
+    NSInteger totalSelectedDocs;
+}
 
 @property (strong, nonatomic) UIImageView *postView;
 @property (strong, nonatomic) DocumentModel* originalDocumentModel;
@@ -23,6 +34,12 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
 
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, weak) UIProgressView *totalProgressView;
+@property (nonatomic, weak) UILabel *totalProgressLocalizedDescriptionLabel;
+
+@property (nonatomic, strong, nullable) NSDate *lastProgressChangedUpdate;
+
 @end
 
 @implementation DocumentViewController
@@ -30,6 +47,7 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self initMultipleDownloader];
     [self registerNibs];
     [self configureSearch];
     if (self.previousScreen.length != 0) {
@@ -44,6 +62,30 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;
+}
+
+- (void) initMultipleDownloader {
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDownloadDidComplete:) name:downloadDidCompleteNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onProgressDidChange:) name:downloadProgressChangedNotification object:nil];
+//    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+//    {
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTotalProgressDidChange:) name:totalDownloadProgressChangedNotification object:nil];
+//    }
+    
+    email = [DataManager sharedManager].user.email;
+    sessionID = [DataManager sharedManager].user.sessionID;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDownloadDidComplete:) name:downloadDidCompleteNotification object:nil];
+    downloadedURLs = [NSMutableArray new];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:downloadDidCompleteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:downloadProgressChangedNotification object:nil];
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:totalDownloadProgressChangedNotification object:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,27 +155,27 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
         }
     }
     
-    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-    queue.maxConcurrentOperationCount = 4;
-    
-    NSBlockOperation *completionOperation = [NSBlockOperation blockOperationWithBlock:^{
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            // share
+    NSMutableArray* localURLArray = [NSMutableArray new];
+    for (NSURL* url in urlArray) {
+        // Add a task to the group
+        [self downloadDocumentForURL:url withCompletion:^(NSURL *filePath, NSError *error) {
+            NSLog(@"%@ -----", url);
+            [localURLArray addObject:filePath];
+            if (localURLArray.count == urlArray.count) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self shareDocument:localURLArray];
+                });
+            }
         }];
-    }];
-    
-    for (NSURL* url in urlArray)
-    {
-        NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
-            NSData *data = [NSData dataWithContentsOfURL:url];
-           
-        }];
-        [completionOperation addDependency:operation];
     }
     
-    [queue addOperations:completionOperation.dependencies waitUntilFinished:NO];
-    [queue addOperation:completionOperation];
-//    UIImage *image = [UIImage imageWithData:[chart getImage]];
+    //    AppDelegate *theAppDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    [theAppDelegate.demoDownloadStore setupDownloadItems:urlArray];
+//    for (DemoDownloadItem *aDownloadItem in [theAppDelegate demoDownloadStore].downloadItemsArray) {
+//        [theAppDelegate.demoDownloadStore startDownloadWithDownloadItem:aDownloadItem];
+//    }
+
+    //    UIImage *image = [UIImage imageWithData:[chart getImage]];
 //    NSArray *activityItems = @[image];
 //    UIActivityViewController *activityViewControntroller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
 //    activityViewControntroller.excludedActivityTypes = @[];
@@ -144,6 +186,108 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 //    [self presentViewController:activityViewControntroller animated:true completion:nil];
 }
 
+- (void) shareDocument:(NSArray*) urls {
+    NSMutableArray* activityItems = [NSMutableArray new];
+    for (NSString* url in urls) {
+        [activityItems addObject:[NSData dataWithContentsOfURL:url]];
+    }
+    
+        UIActivityViewController *activityViewControntroller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+        activityViewControntroller.excludedActivityTypes = @[];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            activityViewControntroller.popoverPresentationController.sourceView = self.view;
+            activityViewControntroller.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/4, 0, 0);
+        }
+        activityViewControntroller.completionWithItemsHandler = ^(NSString *activityType,
+                                    BOOL completed,
+                                    NSArray *returnedItems,
+                                    NSError *error){
+        // react to the completion
+        if (completed) {
+            
+            // user shared an item
+            NSLog(@"We used activity type%@", activityType);
+            
+        } else {
+            
+            // user cancelled
+            NSLog(@"We didn't want to share anything after all.");
+        }
+        
+        if (error) {
+            NSLog(@"An Error occured: %@, %@", error.localizedDescription, error.localizedFailureReason);
+        }
+        };
+        [self presentViewController:activityViewControntroller animated:true completion:nil];
+}
+
+#pragma mark - Download notification
+
+- (void)onProgressDidChange:(NSNotification *)aNotification
+{
+    NSTimeInterval aLastProgressChangedUpdateDelta = 0.0;
+    if (self.lastProgressChangedUpdate)
+    {
+        aLastProgressChangedUpdateDelta = [[NSDate date] timeIntervalSinceDate:self.lastProgressChangedUpdate];
+    }
+    // refresh progress display about four times per second
+    if ((aLastProgressChangedUpdateDelta == 0.0) || (aLastProgressChangedUpdateDelta > 0.25))
+    {
+        [self.tableView reloadData];
+        self.lastProgressChangedUpdate = [NSDate date];
+    }
+}
+
+- (void)onDownloadDidComplete:(NSNotification *)aNotification
+{
+    
+//    DemoDownloadItem *aDownloadedDownloadItem = (DemoDownloadItem *)aNotification.object;
+//    
+//    AppDelegate *theAppDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    
+//    NSUInteger aFoundDownloadItemIndex = [[theAppDelegate demoDownloadStore].downloadItemsArray indexOfObjectPassingTest:^BOOL(DemoDownloadItem *aDemoDownloadItem, NSUInteger anIndex, BOOL *aStopFlag) {
+//        if ([aDemoDownloadItem.downloadIdentifier isEqualToString:aDownloadedDownloadItem.downloadIdentifier])
+//        {
+//            return YES;
+//        }
+//        return NO;
+//    }];
+//    if (aFoundDownloadItemIndex != NSNotFound)
+//    {
+////        NSData* aData = [NSData dataWithContentsOfURL:aDownloadedDownloadItem.localURL];
+//        [self displayDocument:aDownloadedDownloadItem.localURL];
+//    }
+//    else
+//    {
+//        NSLog(@"WARN: Completed download item not found (%@, %d)", [NSString stringWithUTF8String:__FILE__].lastPathComponent, __LINE__);
+//    }
+}
+
+
+- (void)onTotalProgressDidChange:(NSNotification *)aNotification
+{
+    NSProgress *aProgress = aNotification.object;
+    self.totalProgressView.progress = (float)aProgress.fractionCompleted;
+    if (aProgress.completedUnitCount != aProgress.totalUnitCount)
+    {
+        self.totalProgressLocalizedDescriptionLabel.text = aProgress.localizedDescription;
+    }
+    else
+    {
+        self.totalProgressLocalizedDescriptionLabel.text = @"";
+    }
+}
+
+#pragma mark - Utilities
++ (nonnull NSString *)displayStringForRemainingTime:(NSTimeInterval)aRemainingTime
+{
+    NSNumberFormatter *aNumberFormatter = [[NSNumberFormatter alloc] init];
+    [aNumberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [aNumberFormatter setMinimumFractionDigits:1];
+    [aNumberFormatter setMaximumFractionDigits:1];
+    [aNumberFormatter setDecimalSeparator:@"."];
+    return [NSString stringWithFormat:@"Estimated remaining time: %@ seconds", [aNumberFormatter stringFromNumber:@(aRemainingTime)]];
+}
 
 #pragma mark - Updating button state
 
@@ -310,7 +454,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 0;
+        return 10.0;
     }
     return 30;
 }
@@ -355,6 +499,31 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     return cell;
 }
 
+- (void) downloadDocumentForURL:(NSURL*)url withCompletion:(void(^)(NSURL *filePath, NSError *error)) completion{
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:email  forHTTPHeaderField:@"webuser-id"];
+    [request setValue:sessionID  forHTTPHeaderField:@"webuser-sessionid"];
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
+                                                                           inDomain:NSUserDomainMask
+                                                                  appropriateForURL:nil
+                                                                             create:NO error:nil];
+        
+        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
+        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
+            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        
+        return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        completion(filePath, error);
+    }];
+    [downloadTask resume];
+}
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.isEditing) {
@@ -372,28 +541,9 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     }
     NSURL *url = [self getFileURL:file];
     
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
-    [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                           inDomain:NSUserDomainMask
-                                                                  appropriateForURL:nil
-                                                                             create:NO error:nil];
-        
-        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        
-        return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+    [self downloadDocumentForURL:url withCompletion:^(NSURL *filePath, NSError *error) {
         [self displayDocument:filePath];
     }];
-    [downloadTask resume];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

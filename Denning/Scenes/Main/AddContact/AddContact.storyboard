@@ -1215,7 +1215,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="39u-48-Agx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5801" y="3095"/>
+            <point key="canvasLocation" x="5890" y="3156"/>
         </scene>
         <!--Office Diary-->
         <scene sceneID="j9D-aZ-jT6">
@@ -2406,15 +2406,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Select Matter" id="4CV-wI-qyd">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="vSX-oq-znb">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nZB-TI-XNm">
-                                <rect key="frame" x="16" y="11" width="11" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Back.png"/>
-                                <connections>
-                                    <action selector="dismissScreen:" destination="29x-mC-F8j" eventType="touchUpInside" id="j3g-8y-CsK"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="WoA-8c-uZI">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="dismissScreen:" destination="29x-mC-F8j" id="FVW-3B-aBF"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
@@ -4971,10 +4967,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="SD9-Ky-y2s"/>
-        <segue reference="el7-sh-f31"/>
-        <segue reference="1pX-FB-xJw"/>
         <segue reference="Q4S-Mm-Vgk"/>
+        <segue reference="1pX-FB-xJw"/>
         <segue reference="ba6-u1-Tlf"/>
+        <segue reference="el7-sh-f31"/>
         <segue reference="FAv-J7-C6b"/>
         <segue reference="zwU-Xr-jfc"/>
     </inferredMetricsTieBreakers>

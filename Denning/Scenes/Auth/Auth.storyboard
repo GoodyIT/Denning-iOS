@@ -73,7 +73,7 @@
                                 <rect key="frame" x="64" y="289" width="192" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Sign in" backgroundImage="button_background.png">
+                                <state key="normal" title="Sign in">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -96,7 +96,7 @@
                                 <rect key="frame" x="64" y="369" width="192" height="44"/>
                                 <color key="backgroundColor" red="0.25882352939999997" green="0.52156862749999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Sign up" backgroundImage="button_background_other.png">
+                                <state key="normal" title="Sign up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -195,7 +195,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gED-F4-FOC">
-                                <rect key="frame" x="64" y="238.5" width="192" height="44"/>
+                                <rect key="frame" x="64" y="240" width="192" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
@@ -205,15 +205,15 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forget Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3D-Wz-P0P">
-                                <rect key="frame" x="76.5" y="30" width="167" height="26"/>
+                                <rect key="frame" x="68" y="30" width="185.5" height="26"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="22"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LL3-IC-tdX">
-                                <rect key="frame" x="64" y="294.5" width="192" height="44"/>
+                                <rect key="frame" x="64" y="296" width="192" height="44"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Request SMS" backgroundImage="button_background_other.png">
+                                <state key="normal" title="Request SMS">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -227,7 +227,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please click 'Request TAC'. Once you have received your TAC on SMS, enter and click 'Verify' to proceed." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sj5-7K-V29">
-                                <rect key="frame" x="20" y="111" width="280" height="45.5"/>
+                                <rect key="frame" x="20" y="111" width="280" height="47"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -240,7 +240,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5i-Jn-Ulh">
-                                <rect key="frame" x="64" y="186.5" width="60" height="44"/>
+                                <rect key="frame" x="64" y="188" width="60" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="1Lw-TB-Akl"/>
@@ -254,7 +254,7 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="TAC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LHF-xQ-5rO">
-                                <rect key="frame" x="64" y="358.5" width="86" height="44"/>
+                                <rect key="frame" x="64" y="360" width="86" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
@@ -264,10 +264,10 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="44y-y0-UT0">
-                                <rect key="frame" x="170" y="358.5" width="86" height="44"/>
+                                <rect key="frame" x="170" y="360" width="86" height="44"/>
                                 <color key="backgroundColor" red="0.25882352941176467" green="0.52156862745098043" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Continue" backgroundImage="button_background.png">
+                                <state key="normal" title="Continue">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -281,14 +281,14 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="03e-XI-jKl">
-                                <rect key="frame" x="150" y="358.5" width="20" height="44"/>
+                                <rect key="frame" x="150" y="360" width="20" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="aoK-eS-KMN"/>
                                 </constraints>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nLo-iB-ZcR">
-                                <rect key="frame" x="124" y="186.5" width="132" height="44"/>
+                                <rect key="frame" x="124" y="188" width="132" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="b1Y-sr-rXJ"/>
@@ -385,7 +385,7 @@
                                 <rect key="frame" x="64" y="333" width="192" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Continue" backgroundImage="button_background.png">
+                                <state key="normal" title="Continue">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -485,7 +485,7 @@
                                 <rect key="frame" x="64" y="374" width="192" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Continue" backgroundImage="button_background.png">
+                                <state key="normal" title="Continue">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -505,7 +505,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKv-ig-OYz">
-                                <rect key="frame" x="122.5" y="30" width="75.5" height="26"/>
+                                <rect key="frame" x="119.5" y="30" width="83" height="26"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="22"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -518,7 +518,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you a lawyer?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oy-FC-GnV">
-                                <rect key="frame" x="64" y="270" width="127.5" height="32"/>
+                                <rect key="frame" x="64" y="270" width="136" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -661,7 +661,7 @@
                                 <rect key="frame" x="64" y="252.5" width="192" height="44"/>
                                 <color key="backgroundColor" red="0.25882352939999997" green="0.52156862749999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Continue" backgroundImage="button_background.png">
+                                <state key="normal" title="Continue">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -777,7 +777,7 @@
                                 <rect key="frame" x="36" y="269" width="248" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Continue" backgroundImage="button_background.png">
+                                <state key="normal" title="Continue">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -974,8 +974,9 @@
                                     <subviews>
                                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dcy-B8-mZC">
                                             <rect key="frame" x="30" y="8" width="260" height="55"/>
+                                            <color key="backgroundColor" red="0.25882352939999997" green="0.52156862749999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                            <state key="normal" title="Button" backgroundImage="button_background_other.png">
+                                            <state key="normal" title="Button">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <userDefinedRuntimeAttributes>
@@ -1079,15 +1080,13 @@
     </scenes>
     <resources>
         <image name="Back_gray.png" width="18" height="18"/>
-        <image name="button_background.png" width="294" height="44"/>
-        <image name="button_background_other.png" width="294" height="44"/>
         <image name="icon_home.png" width="20" height="20"/>
         <image name="splash_logo.png" width="119" height="94"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="79l-80-WBG"/>
-        <segue reference="T5P-mp-1U6"/>
-        <segue reference="QgY-oX-Ext"/>
+        <segue reference="cqB-uN-mxx"/>
+        <segue reference="dc0-qL-bzh"/>
         <segue reference="tuM-u7-NJ9"/>
+        <segue reference="mPD-Un-Pzu"/>
     </inferredMetricsTieBreakers>
 </document>

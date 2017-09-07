@@ -277,7 +277,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="a6Z-6h-gxM" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="ddh-Ml-OcV">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="ddh-Ml-OcV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -378,7 +378,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Srh-0F-Bbf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="wQ4-zx-dEN">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="wQ4-zx-dEN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -527,7 +527,7 @@
                 <navigationController storyboardIdentifier="ContactViewNavigation" automaticallyAdjustsScrollViewInsets="NO" id="otr-bn-xcJ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="9SO-TB-UM3">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="9SO-TB-UM3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -556,7 +556,7 @@
                 <navigationController storyboardIdentifier="FileUploadNavigation" automaticallyAdjustsScrollViewInsets="NO" id="y98-Lz-7ph" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="0g2-8D-KOz" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="0g2-8D-KOz" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -585,7 +585,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="I9t-RB-7G3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="a0u-9X-P4Z">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="a0u-9X-P4Z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -610,7 +610,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lib-hj-uPp" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="3ka-xi-Bu2">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="3ka-xi-Bu2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -675,7 +675,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lD9-2J-l1i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="YuN-Ot-afy">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="YuN-Ot-afy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -740,7 +740,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G93-68-FfG" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="tkd-Nn-DhZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tkd-Nn-DhZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1140,7 +1140,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JeE-0C-4Q9" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="Xlv-AL-x6H">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Xlv-AL-x6H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1212,7 +1212,7 @@
                         <action selector="didTapSelect:" destination="Siy-4G-Oqb" id="of5-pB-iHL"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem title="Share" id="SQX-4r-Omq">
+                <barButtonItem systemItem="action" id="SQX-4r-Omq">
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="didTapShare:" destination="Siy-4G-Oqb" id="48Z-5P-9uT"/>
@@ -1266,7 +1266,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gea-U5-wLg" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="J8S-rc-ciR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="J8S-rc-ciR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -2502,22 +2502,22 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YsW-r4-oVT">
-                                        <rect key="frame" x="144.5" y="33" width="87" height="24"/>
+                                        <rect key="frame" x="148" y="33" width="80" height="23.5"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="20"/>
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Bli-ne-sxW">
-                                        <rect key="frame" x="126" y="57" width="124.5" height="17"/>
+                                        <rect key="frame" x="127.5" y="56.5" width="122" height="16.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrc-n4-qpt">
-                                                <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
                                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mIG-wi-tM3">
-                                                <rect key="frame" x="60" y="0.0" width="64.5" height="17"/>
+                                                <rect key="frame" x="59" y="0.0" width="63" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
                                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -3175,7 +3175,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="td9-Aq-MdE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="ox9-kt-bI1" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ox9-kt-bI1" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -3241,7 +3241,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yRj-sJ-mhX" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="FVt-WD-xer" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="FVt-WD-xer" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
