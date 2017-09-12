@@ -36,7 +36,7 @@
 #import "EventViewController.h"
 
 @interface DashboardViewController ()
-<UIDocumentInteractionControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, SWTableViewCellDelegate>
+<UIDocumentInteractionControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, SWTableViewCellDelegate, UITabBarControllerDelegate>
 {
     NSString *titleOfList;
     NSString* nameOfField;
@@ -143,6 +143,12 @@ NSMutableDictionary* keyValue;
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if ([DataManager sharedManager].user.userType.length == 0) {
+        self.tabBarController.selectedIndex = 0;
+
+        [QMAlert showAlertWithMessage:@"You cannot access this folder. please subscribe dening user" actionSuccess:NO inViewController:self];
+                return;
+    }
     [self hideTabBar];
     [self configureBackBtnWithImageName:@"Back" withSelector:@selector(popupScreen:)];
     [self changeTitle];

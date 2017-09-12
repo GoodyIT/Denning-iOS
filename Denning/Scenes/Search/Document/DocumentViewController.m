@@ -188,7 +188,7 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 
 - (void) shareDocument:(NSArray*) urls {
     NSMutableArray* activityItems = [NSMutableArray new];
-    for (NSString* url in urls) {
+    for (NSURL* url in urls) {
         [activityItems addObject:[NSData dataWithContentsOfURL:url]];
     }
     

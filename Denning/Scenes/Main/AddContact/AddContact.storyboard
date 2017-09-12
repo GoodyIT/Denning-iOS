@@ -2498,7 +2498,7 @@
             <objects>
                 <navigationController storyboardIdentifier="BranchNavigation" automaticallyAdjustsScrollViewInsets="NO" id="2j6-7L-U23" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="w3a-q4-WgT" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="w3a-q4-WgT" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -2910,7 +2910,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="plj-Bm-6di" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6810" y="9091"/>
+            <point key="canvasLocation" x="6874" y="9104"/>
         </scene>
         <!--Select Contact-->
         <scene sceneID="bfm-hZ-3SV">
@@ -3130,7 +3130,7 @@
             <objects>
                 <navigationController storyboardIdentifier="DescriptionNavigation" automaticallyAdjustsScrollViewInsets="NO" id="rWw-an-bh5" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="oyd-w0-EO1" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="oyd-w0-EO1" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -3735,7 +3735,7 @@
                     <tabBarItem key="tabBarItem" title="Add" image="icon_add.png" id="CUm-Rg-eO0"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="OQA-8d-Lzm">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="OQA-8d-Lzm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -4057,7 +4057,7 @@
             <objects>
                 <navigationController storyboardIdentifier="AddCourtNavigation" automaticallyAdjustsScrollViewInsets="NO" id="P3B-I7-qos" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="W1i-ZY-u8y" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="W1i-ZY-u8y" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4081,7 +4081,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="v5Z-u7-jxk" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tkq-Zp-WzX" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="tkq-Zp-WzX" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4105,7 +4105,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ldh-Es-brC" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Hgj-hR-EZc" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Hgj-hR-EZc" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4129,7 +4129,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="y72-Gm-5dF" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="6bd-we-bkg" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="6bd-we-bkg" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4153,7 +4153,7 @@
             <objects>
                 <navigationController storyboardIdentifier="EditCourtDiary" automaticallyAdjustsScrollViewInsets="NO" id="g2m-0x-bdM" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="BoW-TC-nY8" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="BoW-TC-nY8" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4177,7 +4177,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Cj-sM-7of" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="nDU-DV-Ce9" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="nDU-DV-Ce9" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4575,7 +4575,7 @@
             <objects>
                 <navigationController storyboardIdentifier="AddPropertyNavigation" automaticallyAdjustsScrollViewInsets="NO" id="GVo-4I-17X" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Lgh-J3-2ZN" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Lgh-J3-2ZN" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4599,7 +4599,7 @@
             <objects>
                 <navigationController storyboardIdentifier="AddReceiptNavigation" automaticallyAdjustsScrollViewInsets="NO" id="vdM-gB-Vsr" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="00h-nv-OZ8" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="00h-nv-OZ8" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4689,7 +4689,7 @@
             <objects>
                 <navigationController storyboardIdentifier="AddContactNavigation" automaticallyAdjustsScrollViewInsets="NO" id="6wU-p3-8z1" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="LB7-dn-VOG" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="LB7-dn-VOG" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4713,7 +4713,7 @@
             <objects>
                 <navigationController storyboardIdentifier="StaffNavigation" automaticallyAdjustsScrollViewInsets="NO" id="oOq-iO-97U" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Ydl-eA-g8M" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Ydl-eA-g8M" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4737,7 +4737,7 @@
             <objects>
                 <navigationController storyboardIdentifier="EditCourtnavigation" automaticallyAdjustsScrollViewInsets="NO" id="ZBm-36-jk8" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="biJ-bo-yx4" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="biJ-bo-yx4" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -4934,7 +4934,7 @@
             <objects>
                 <navigationController storyboardIdentifier="CodeDescriptionNavigation" automaticallyAdjustsScrollViewInsets="NO" id="egu-bc-7xa" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Sbb-dI-UDq" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Sbb-dI-UDq" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

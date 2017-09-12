@@ -53,13 +53,17 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     NSString* searchKeywordURL;
     NSArray* generalKeyArray;
     NSMutableArray* generalValueArray;
-    __block BOOL isLoading;
     NSString* _matterCode;
     NSString* searchType;
     NSString* gotoMatter;
     NSString* _email;
     NSString* _sessionID;
     BOOL isDenningUser;
+    
+    __block BOOL isFirstLoading;
+    __block BOOL isLoading;
+    __block BOOL isAppending;
+    BOOL initCall;
 }
 
 @property (weak, nonatomic) IBOutlet MLPAutoCompleteTextField *searchTextField;
@@ -76,6 +80,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 @property (weak, nonatomic) IBOutlet UIView *searchContainerView;
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+
+@property (strong, nonatomic) NSNumber* page;
 
 @end
 
@@ -156,9 +162,16 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 
 - (void) prepareUI
 {
+    self.page = @(1);
+    _searchResultArray = [NSMutableArray new];
     isDenningUser = [[DataManager sharedManager].user.userType isEqualToString:@"denning"];
     _email = [DataManager sharedManager].user.email;
     _sessionID = [DataManager sharedManager].user.sessionID;
+    if (isDenningUser) {
+        [DataManager sharedManager].searchType = @"Denning";
+    } else {
+        [DataManager sharedManager].searchType = @"Public";
+    }
     CGFloat customRefreshControlHeight = 50.0f;
     CGFloat customRefreshControlWidth = 320.0f;
     CGRect customRefreshControlFrame = CGRectMake(0.0f,
@@ -245,7 +258,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 
 - (void) buildSearchURL
 {
-    if (isDenningUser){
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
         searchURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString: GENERAL_SEARCH_URL];
     } else {
         searchURL = PUBLIC_SEARCH_URL;
@@ -254,14 +267,14 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 
 - (void) buildSearchKeywordURL
 {
-    if (isDenningUser){
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
         searchKeywordURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString: GENERAL_KEYWORD_SEARCH_URL];
         category = 0;
-        self.searchTextField.placeholder = @"General Search";
+        self.searchTextField.placeholder = @"Denning Search";
     } else {
         category = -1;
         searchKeywordURL = PUBLIC_KEYWORD_SEARCH_URL;
-        self.searchTextField.placeholder = @"Denning Search";
+        self.searchTextField.placeholder = @"Public Search";
     }
 }
 
@@ -306,16 +319,18 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 }
 
 - (IBAction)toggleSearchType:(UIButton*)sender {
-    if (!isDenningUser) {
-        return;
-    }
+//    if (!isDenningUser) {
+//        return;
+//    }
     
-    if (isDenningUser){
-        self.searchTextField.placeholder = @"Denning Search";
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
+        self.searchTextField.placeholder = @"Public Search";
+        [DataManager sharedManager].searchType = @"Public";
         category = -1;
        searchKeywordURL = PUBLIC_KEYWORD_SEARCH_URL;
     } else {
-        self.searchTextField.placeholder = @"General Search";
+        self.searchTextField.placeholder = @"Denning Search";
+        [DataManager sharedManager].searchType = @"Denning";
         category = 0;
          searchKeywordURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString: GENERAL_KEYWORD_SEARCH_URL];
     }
@@ -327,18 +342,26 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [self dismissView:sender];
 }
 
+- (void) appendList
+{
+    isAppending = YES;
+    [self displaySearchResult];
+}
+
 - (void) displaySearchResult
 {
 //    self.selectionList.hidden = NO;
     [self.selectionList reloadData];
     self.selectionList.selectedButtonIndex = selectedIndexOfFilter;
+    if (isLoading) return;
+    isLoading = YES;
     
     @weakify(self)
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:@(1) withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
+    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
         
         [SVProgressHUD dismiss];
-        
+        self->isLoading = NO;
         if (self.refreshControl.isRefreshing) {
             CGPoint offset = self.tableView.contentOffset;
             self.refreshControl.attributedTitle = [DIHelpers getLastRefreshingTime];
@@ -349,7 +372,16 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         @strongify(self);
         if (error == nil)
         {
-            self.searchResultArray = [resultArray mutableCopy];
+            if (isAppending) {
+                _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
+                
+            } else {
+                self.searchResultArray = [resultArray mutableCopy];
+            }
+            if (resultArray.count > 0) {
+                _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
+            }
+
             [self.tableView reloadData];
             
         } else {
@@ -418,14 +450,15 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 #pragma mark - HTHorizontalSelectionListDataSource Protocol Methods
 
 - (NSInteger)numberOfItemsInSelectionList:(HTHorizontalSelectionList *)selectionList {
-    if (isDenningUser){
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
         return self.generalSearchFilters.count;
     }
     return self.publicSearchFilters.count;
 }
 
 - (NSString *)selectionList:(HTHorizontalSelectionList *)selectionList titleForItemWithIndex:(NSInteger)index {
-    if (isDenningUser){
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
+
         return generalKeyArray[index];
     }
     return self.publicSearchFilters.allKeys[index];
@@ -436,7 +469,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index {
     // update the view for the corresponding index
     selectedIndexOfFilter = index;
-    if (isDenningUser){
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
+
         category = [generalValueArray[index] integerValue];
         
     } else {
@@ -449,6 +483,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         [self.searchResultArray removeAllObjects];
     }
     
+    _page = @(1);
+    isAppending = NO;
     [self.tableView reloadData];
     [self.searchTextField resignFirstResponder];
     
@@ -541,6 +577,12 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     
     if (cellType == 0  || cellType == DIBankCell || cellType == DIGovernmentPTGOfficesCell || cellType == DIGovernmentLandOfficesCell || cellType == DILegalFirmCell || cellType == DIPropertyCell) {
         SearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchResultCell cellIdentifier] forIndexPath:indexPath];
+        
+        if (![[DataManager sharedManager].searchType isEqualToString:@"Denning"]) {
+            cell.matterBtn.hidden = YES;
+        } else {
+            cell.matterBtn.hidden = NO;
+        }
         
         cell.tag = indexPath.section;
         cell.delegate = self;
@@ -787,7 +829,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [self performSearchCellSelect:model];
 }
 
-
 #pragma mark - MLPAutoCompleteTextField DataSource
 
 - (NSArray*) parseResponse: (id) response
@@ -809,7 +850,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     
-    if (isDenningUser){
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
         [[QMNetworkManager sharedManager].manager.requestSerializer setValue:_sessionID forHTTPHeaderField:@"webuser-sessionid"];
         [[QMNetworkManager sharedManager].manager.requestSerializer setValue:_email forHTTPHeaderField:@"webuser-id"];
         
@@ -834,6 +875,37 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
                                                                       }];
     [[NSOperationQueue mainQueue] addOperation:operation];
     
+}
+
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    //    CGFloat contentHeight = scrollView.contentSize.height;
+    if (offsetY > 10) {
+        
+        [self.view endEditing:YES];
+    }
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    CGFloat contentHeight = scrollView.contentSize.height;
+    
+    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading && !isLoading) {
+        [self appendList];
+    }
+}
+
+// Search
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
+    if (indexPath.row == self.searchResultArray.count-1 && initCall) {
+        isFirstLoading = NO;
+        initCall = NO;
+    }
 }
 
 #pragma mark - MLPAutoCompleteTextField Delegate
@@ -861,6 +933,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         
         searchType = @"Normal";
         keyword = selectedString;
+        _page = @(1);
+        isAppending = NO;
         [self displaySearchResult];
     }
 }

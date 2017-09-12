@@ -15,6 +15,7 @@
 @interface SearchResultCell : DIGeneralCell
 
 @property (weak, nonatomic) id<SearchDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIButton *matterBtn;
 
 - (void) configureCellWithSearchModel: (SearchResultModel*) searchResult;
 

@@ -86,6 +86,11 @@
     return self.manager;
 }
 
+- (void) setPublicHTTPHeader {
+    [self.manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}"  forHTTPHeaderField:@"webuser-sessionid"];
+    [self.manager.requestSerializer setValue:@"SkySea@denning.com.my" forHTTPHeaderField:@"webuser-id"];
+}
+
 - (void) setChangePasswordHTTPHeader {
     [self.manager.requestSerializer setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     [self.manager.requestSerializer setValue:[DataManager sharedManager].user.email forHTTPHeaderField:@"webuser-id"];
@@ -325,7 +330,15 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if  (completion != nil)
         {
-            completion(NO, error.localizedDescription);
+            NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
+            
+            NSLog(@"%@, %@", test.allHeaderFields, [NSHTTPURLResponse localizedStringForStatusCode:test.statusCode]);
+            if (test.statusCode == 406) {
+                completion(NO, @"Email or phone number is already registered.");
+            } else {
+                completion(NO, error.localizedDescription);
+            }
+            
         }
     }];
 }
@@ -337,13 +350,13 @@
     if ([NSOperationQueue mainQueue].operationCount > 0) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
-    NSString* urlString;
-    if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]){
+    NSString* urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%@", searchURL, [keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], (long)category, page];
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
         [self setLoginHTTPHeader];
-        urlString = [NSString stringWithFormat:@"%@%@&category=%ld", searchURL, [keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], (long)category];
+        
     } else {
-        [self setOtherForLoginHTTPHeader];
-        urlString = [NSString stringWithFormat:@"%@%@&category=%ld", searchURL, [keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], (long)category];
+        [self setPublicHTTPHeader];
+//        urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%@", searchURL, [keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], (long)category, page];
     }
     
     if ([searchType isEqualToString:@"Normal"]) { // Direct Tap on the search button

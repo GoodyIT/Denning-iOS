@@ -8,6 +8,9 @@
 
 #import "ContactListViewController.h"
 #import "StaffModel.h"
+#import "ClientModel.h"
+//#import "PropertyContactCell.h"
+//#import "SecondContactCell.h"
 
 @interface ContactListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate, NSURLSessionDataDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -22,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self registerNib];
     [self prepareUI];
     [self getList];
 }
@@ -29,6 +33,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) registerNib {
+//    [PropertyContactCell registerForReuseInTableView:self.tableView];
+//    [SecondContactCell registerForReuseInTableView:self.tableView];
 }
 
 - (IBAction)dismissScreen:(id)sender {
@@ -41,7 +50,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
 }
- 
+
 + (NSURLSession *)dataSession {
     static NSURLSession *session = nil;
     static dispatch_once_t onceToken;
@@ -113,10 +122,21 @@ didCompleteWithError:(NSError *)error{
     return 33;
 }
 
+//-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
+//    return cell;
+//}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CodeDescCell" forIndexPath:indexPath];
-    cell.textLabel.numberOfLines = 0;
-    cell.textLabel.text = _listOfContact[indexPath.row].name;
+    StaffModel *model = self.listOfContact[indexPath.row];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
+//    UILabel* firstValue = (UILabel*)[cell viewWithTag:1];
+//    UILabel* secondValue = (UILabel*)[cell viewWithTag:2];
+//    firstValue.text = model.name;
+//    secondValue.text = model.IDNo;
+    
+    cell.textLabel.text = model.name;
     
     return cell;
 }

@@ -37,7 +37,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sxV-Ij-arO">
-                        <rect key="frame" x="257.5" y="25.5" width="38.5" height="18"/>
+                        <rect key="frame" x="206" y="25.5" width="90" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="VrB-wB-Gv5"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                         <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -49,9 +52,9 @@
                     <constraint firstItem="P1i-0f-cFM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="D0a-ON-5G5"/>
                     <constraint firstItem="P1i-0f-cFM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="ERI-Xz-SPZ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="zNX-GR-dI2" secondAttribute="bottom" constant="5" id="WNQ-e3-PuO"/>
-                    <constraint firstItem="sxV-Ij-arO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zNX-GR-dI2" secondAttribute="trailing" constant="20" id="awP-61-WT4"/>
+                    <constraint firstItem="sxV-Ij-arO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zNX-GR-dI2" secondAttribute="trailing" constant="18" id="awP-61-WT4"/>
                     <constraint firstItem="zNX-GR-dI2" firstAttribute="leading" secondItem="P1i-0f-cFM" secondAttribute="leading" id="qs0-fh-wzz"/>
-                    <constraint firstItem="sxV-Ij-arO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="P1i-0f-cFM" secondAttribute="trailing" constant="50" id="tmD-o1-gb4"/>
+                    <constraint firstItem="sxV-Ij-arO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="P1i-0f-cFM" secondAttribute="trailing" constant="8" id="tmD-o1-gb4"/>
                     <constraint firstAttribute="trailingMargin" secondItem="sxV-Ij-arO" secondAttribute="trailing" id="vTc-NY-yXm"/>
                 </constraints>
             </tableViewCellContentView>

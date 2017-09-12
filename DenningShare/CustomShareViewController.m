@@ -14,6 +14,10 @@
 //#import "UIImage+Base64.h"
 
 @interface CustomShareViewController ()<NSURLSessionDelegate>
+{
+    NSString* selectedContactCode;
+}
+
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITextField *fileName;
 @property (weak, nonatomic) IBOutlet UITextView *remarks;
@@ -39,31 +43,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.activity.hidden = YES;
-    self.sendBtn.enabled = YES;
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
-//    if (![[defaults valueForKey:@"userType"] isEqualToString:@"denning"]) {
-//        self.uploadToLabel.hidden = YES;
-//        self.segmented.hidden = YES;
-//        self.topConstraint.constant = 0;
-//        self.bottomConstraint.constant = 0;
-//    } else if (![[defaults valueForKey:@"userType"] isEqualToString:@""]) {
-//        self.uploadToLabel.hidden = NO;
-//        self.segmented.hidden = NO;
-//        self.topConstraint.constant = 16;
-//        self.bottomConstraint.constant = 21;
-//    } else {
-//        [self showAlertWithMessage:@"You cannot upload file. please login" actionSuccess:NO inViewController:self];
-//        self.sendBtn.enabled = NO;
-//    }
-    
     for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments) {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
-//                self.imageView.image = (UIImage*)item;
+          //      self.imageView.image = (UIImage*)item;
             }];
         }
     }
+
+    selectedContactCode = @"";
+    self.activity.hidden = YES;
+    self.sendBtn.enabled = YES;
+    self.segmented.hidden = YES;
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+    NSString* userType = [defaults valueForKey:@"userType"];
+    if (userType == nil) {
+        [self showAlertWithMessage:@"You cannot upload file. please login into Denning." actionSuccess:NO inViewController:self];
+        self.sendBtn.enabled = NO;
+        return;
+    }
+    if (![[defaults valueForKey:@"userType"] isEqualToString:@"denning"]) {
+        self.uploadToLabel.hidden = YES;
+        self.segmented.hidden = YES;
+        self.topConstraint.constant = 0;
+        self.bottomConstraint.constant = 0;
+    } else {
+        self.uploadToLabel.hidden = NO;
+        self.segmented.hidden = NO;
+        self.topConstraint.constant = 16;
+        self.bottomConstraint.constant = 21;
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,11 +84,14 @@
 - (IBAction)didTapUploadTo:(UISegmentedControl*)sender {
     
     if (sender.selectedSegmentIndex == 0) {
+        self.uploadToLabel.text = @"Transit Folder";
         self.url = MATTER_STAFF_TRANSIT_FOLDER;
     } else if (sender.selectedSegmentIndex == 1) {
+        self.uploadToLabel.text = @"File Folder";
         self.url = MATTER_STAFF_FILEFOLDER;
     } else {
-        self.url = @"denningwcf/v1/City";//MATTER_STAFF_CONTACT_FOLDER;
+        self.uploadToLabel.text = @"Contact Folder";
+        self.url = MATTER_STAFF_CONTACT_FOLDER;
         [self performSegueWithIdentifier:@"ContactGetlistSegue" sender:nil];
     }
 }
@@ -97,6 +111,14 @@
     } else {
         self.url = MATTER_STAFF_TRANSIT_FOLDER;
     }
+    
+    if (self.segmented.selectedSegmentIndex == 2 && selectedContactCode.length == 0) {
+        [self showAlertWithMessage:@"Please slect the correct contact." actionSuccess:NO inViewController:self];
+        self.segmented.selectedSegmentIndex = 0;
+        return;
+    }
+    
+    
     
     [self.view endEditing:YES];
     self.activity.hidden = NO;
@@ -230,8 +252,9 @@ didCompleteWithError:(NSError *)error{
 {
     if ([segue.identifier isEqualToString:@"ContactGetlistSegue"]) {
         ContactListViewController* contactVC = segue.destinationViewController;
-        contactVC.url = @"denningwcf/v1/City";// CONTACT_GETLIST_URL;
+        contactVC.url = CONTACT_GETLIST_URL;
         contactVC.updateHandler = ^(StaffModel *model) {
+            self.uploadToLabel.text = model.name;
         };
     }
 }

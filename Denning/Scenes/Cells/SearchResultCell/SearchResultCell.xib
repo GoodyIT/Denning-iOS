@@ -93,6 +93,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="GL8-NT-Xqf" id="2y5-0S-N5n"/>
                 <outlet property="indexData" destination="hDP-m6-ta2" id="bUt-Nl-Lwi"/>
+                <outlet property="matterBtn" destination="TJ9-mg-BhY" id="T1J-Wr-kG0"/>
                 <outlet property="titleLabel" destination="avY-CP-Yhs" id="aXy-L5-lFw"/>
             </connections>
             <point key="canvasLocation" x="-375" y="-449"/>

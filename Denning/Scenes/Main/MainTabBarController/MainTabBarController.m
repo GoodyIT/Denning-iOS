@@ -86,6 +86,15 @@ QMChatConnectionDelegate>
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL) checkPublicUser {
+    if ([DataManager sharedManager].user.userType.length == 0) {
+        [QMAlert showAlertWithMessage:@"You are not allow for this. Please subscribe the denning." actionSuccess:NO inViewController:self];
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (NSArray *)menuItems
 {
     if (!_menuItems)
@@ -106,15 +115,21 @@ QMChatConnectionDelegate>
           }],
           
           [RWDropdownMenuItem itemWithText:@"Add" image:[UIImage imageNamed:@"menu_add"] action:^{
-              self.selectedViewController = self.viewControllers[1];
+              if ([self checkPublicUser] != YES) {
+                  self.selectedViewController = self.viewControllers[1];
+              }
           }],
           
           [RWDropdownMenuItem itemWithText:@"Overview" image:[UIImage imageNamed:@"menu_overview"] action:^{
-              self.selectedViewController = self.viewControllers[2];
+              if (![self checkPublicUser]) {
+                  self.selectedViewController = self.viewControllers[2];
+              }
           }],
           
           [RWDropdownMenuItem itemWithText:@"Chat" image:[UIImage imageNamed:@"icon_message"] action:^{
-              self.selectedViewController = self.viewControllers[3];
+              if (![self checkPublicUser]) {
+                  self.selectedViewController = self.viewControllers[3];
+              }
           }],
           
           [RWDropdownMenuItem itemWithText:@"Our Products" image:[UIImage imageNamed:@"menu_our_product"] action:^{
