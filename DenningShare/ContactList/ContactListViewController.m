@@ -13,6 +13,9 @@
 //#import "SecondContactCell.h"
 
 @interface ContactListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate, NSURLSessionDataDelegate>
+{
+    NSURLSession* mySession;
+}
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -73,16 +76,24 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:[defaults valueForKey:@"sessionID"]  forHTTPHeaderField:@"webuser-sessionid"];
     [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
-    
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"group.denningshare.extension"];
-//    configuration.sharedContainerIdentifier = @"group.denningshare.extension";
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+
+    NSURLSession *session = [self configureMySession];
     
     dispatch_async(dispatch_get_main_queue(), ^(void){
         NSURLSessionDataTask *task = [session
                                       dataTaskWithRequest: request];
         [task resume];
     });
+}
+
+- (NSURLSession *) configureMySession {
+    if (!mySession) {
+        NSURLSessionConfiguration* config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"group.denningshare.extension"];
+        // To access the shared container you set up, use the sharedContainerIdentifier property on your configuration object.
+        config.sharedContainerIdentifier = @"group.denningshare.extension";
+        mySession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    }
+    return mySession;
 }
 
 - (void)URLSession:(NSURLSession *)session

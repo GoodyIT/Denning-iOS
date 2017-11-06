@@ -16,6 +16,7 @@
 @interface CustomShareViewController ()<NSURLSessionDelegate>
 {
     NSString* selectedContactCode;
+    NSURLSession* mySession;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -154,6 +155,16 @@
     return date;
 }
 
+- (NSURLSession *) configureMySession {
+    if (!mySession) {
+        NSURLSessionConfiguration* config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"group.denningshare.extension"];
+        // To access the shared container you set up, use the sharedContainerIdentifier property on your configuration object.
+        config.sharedContainerIdentifier = @"group.denningshare.extension";
+        mySession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    }
+    return mySession;
+}
+
 - (void)didSelectPost {
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
     
@@ -211,9 +222,7 @@
                                                                           options:0 error:&error];
                 //                NSString* bodyStr = [[NSString alloc] initWithData:requestBodyData encoding:NSUTF8StringEncoding];
                 request.HTTPBody = requestBodyData;
-                NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"group.denningshare.extension"];
-                configuration.sharedContainerIdentifier = @"group.denningshare.extension";
-                NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+                NSURLSession* session = [self configureMySession];
                 
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     NSURLSessionDataTask *task = [session
@@ -223,9 +232,6 @@
             }];
         }
     }
-    
-    // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
-    //    [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
 }
 
 - (void)URLSession:(NSURLSession *)session
