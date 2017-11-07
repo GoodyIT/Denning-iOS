@@ -16,6 +16,7 @@
 #import "DIHelpers.h"
 #import "ClientModel.h"
 #import "AFHTTPSessionOperation.h"
+#import "LocationManager.h"
 
 @interface QMNetworkManager ()
 
@@ -352,7 +353,7 @@
     }
     NSString* urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%@", searchURL, [keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], (long)category, page];
     if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
-        [self setLoginHTTPHeader];
+        [self setOtherForLoginHTTPHeader];
         
     } else {
         [self setPublicHTTPHeader];
@@ -377,6 +378,83 @@
                                                                               }
                                                                           }];
     [[NSOperationQueue mainQueue] addOperation:operation];
+}
+
+- (void) attendanceClockIn:(void(^)(AttendanceModel* result, NSError* error)) completion
+{
+    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_CLOCK_IN];
+    [self setOtherForLoginHTTPHeader];
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    [self.manager POST:_url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if  (completion != nil)
+        {
+            completion([AttendanceModel getAttendanceModelFromResponse:responseObject], nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if  (completion != nil)
+        {
+            completion(nil, error);
+        }
+    }];
+}
+
+- (void) attendanceClockOut:(void(^)(AttendanceModel* result, NSError* error)) completion{
+    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_CLOCK_IN];
+    [self setOtherForLoginHTTPHeader];
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    [self.manager PUT:_url parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if  (completion != nil)
+        {
+            completion([AttendanceModel getAttendanceModelFromResponse:responseObject], nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if  (completion != nil)
+        {
+            completion(nil, error);
+        }
+    }];
+
+}
+
+- (void) attendanceStartBreak:(void(^)(AttendanceModel* result, NSError* error)) completion
+{
+    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_BREAK];
+    [self setOtherForLoginHTTPHeader];
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    [self.manager POST:_url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if  (completion != nil)
+        {
+            completion([AttendanceModel getAttendanceModelFromResponse:responseObject], nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if  (completion != nil)
+        {
+            completion(nil, error);
+        }
+    }];
+}
+
+- (void) attendanceEndBreak:(void(^)(AttendanceModel* result, NSError* error)) completion
+{
+    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_BREAK];
+    [self setOtherForLoginHTTPHeader];
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    [self.manager PUT:_url parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if  (completion != nil)
+        {
+            completion([AttendanceModel getAttendanceModelFromResponse:responseObject], nil);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if  (completion != nil)
+        {
+            completion(nil, error);
+        }
+    }];
+
 }
 
 // Updates
@@ -483,6 +561,31 @@
         
         // Error Message
     }];
+}
+
+// Attendnace
+- (void) getAttendanceListWithCompletion:(void(^)(AttendanceModel* result, NSError* error)) completion
+{
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
+    NSString* _url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, ATTENDANCE_GET_URL];
+    [self setAddContactLoginHTTPHeader];
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:@"GET"
+                                                                URLString:_url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {
+                                                                          completion([AttendanceModel getAttendanceModelFromResponse:responseObject], nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                              if  (completion != nil)
+                                                                              {
+                                                                                  completion(nil, error);
+                                                                              }
+                                                                          }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
 /*

@@ -17,6 +17,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "HWIFileDownloader.h"
 #import "DemoDownloadStore.h"
+#import "LocationManager.h"
 
 //#import <Flurry.h>
 
@@ -46,7 +47,9 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 
 #endif
 
-@interface AppDelegate ()<QMPushNotificationManagerDelegate>
+@interface AppDelegate ()<QMPushNotificationManagerDelegate, CLLocationManagerDelegate>
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @property (nonnull, nonatomic, strong, readwrite) DemoDownloadStore *demoDownloadStore;
 @property (nonnull, nonatomic, strong, readwrite) HWIFileDownloader *fileDownloader;
@@ -57,6 +60,8 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [self startUpdatingCurrentLocation];
     
     // Quickblox settings
     [QBSettings setApplicationID:kQMApplicationID];
@@ -143,6 +148,78 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     
     [QMCore instance].pushNotificationManager.deviceToken = deviceToken;
 }
+
+
+- (void)startUpdatingCurrentLocation
+{
+    if ([CLLocationManager locationServicesEnabled] == NO) {
+        [self showDeniedLocation];
+        return;
+    }
+    
+    // if location services are restricted do nothing
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied ||
+        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusRestricted)
+    {
+        return;
+    }
+    
+    // if locationManager does not currently exist, create it
+    if (self.locationManager == nil)
+    {
+        _locationManager = [[CLLocationManager alloc] init];
+        (self.locationManager).delegate = self;
+        self.locationManager.distanceFilter = 10.0f; // we don't need to be any more accurate than 10m
+    }
+    
+    // for iOS 8 and later, specific user level permission is required,
+    // "when-in-use" authorization grants access to the user's location
+    //
+    // important: be sure to include NSLocationWhenInUseUsageDescription along with its
+    // explanation string in your Info.plist or startUpdatingLocation will not work.
+    //
+    [self.locationManager requestWhenInUseAuthorization];
+    
+    [self.locationManager startUpdatingLocation];
+}
+
+- (void) showDeniedLocation {
+    
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    
+    NSString *title;
+    title = (status == kCLAuthorizationStatusDenied) ? @"Location services are off" : @"Location is not enabled";
+    NSString *message = @"To use location you must turn on 'While Using the App' in the Location Services Settings";
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* Ok = [UIAlertAction
+                         actionWithTitle:@"Continue"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * __unused action)
+                         {
+                             if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+                                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]  options:@{}
+                                                          completionHandler:nil];
+                             } else {
+                                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                             }
+                             
+                         }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * __unused action)
+                             {
+                                 
+                             }];
+    
+    [alert addAction:Ok];
+    [alert addAction:cancel];
+    [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alert animated:YES completion:nil];
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 
@@ -284,6 +361,61 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     }
     
     [dialogsVC performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
+}
+
+
+#pragma mark LocationManager Delegate
+- (void)locationManager:(CLLocationManager *) __unused manager
+       didFailWithError:(NSError *)error
+{
+    NSLog(@"location error %@", error.localizedDescription);
+}
+
+-(void)locationManager:(CLLocationManager *)__unused manager didUpdateLocations:(NSArray *)locations{
+    
+    
+    if([DataManager sharedManager].user.userType.length == 0) return;
+    
+    CLLocation* location = [locations lastObject];
+    
+    NSDate* eventDate = location.timestamp;
+    
+    float defaultTolerate = 1.0;
+    if (![[LocationManager sharedManager].cityName isEqualToString:@""]) {
+        defaultTolerate = 30.0;
+    }
+    
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[LocationManager sharedManager].lastLoggedDateTime];
+    if (fabs(howRecent) > defaultTolerate || [[LocationManager sharedManager].cityName isEqualToString:@""]) {
+        //    {
+        [LocationManager sharedManager].lastLoggedDateTime = eventDate;
+        [LocationManager sharedManager].oldLocation = location.coordinate;
+        
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
+         {
+             CLPlacemark *placemark = [placemarks objectAtIndex:0];
+             if([placemark.country length] != 0) {
+                 [LocationManager sharedManager].countryName = placemark.country;
+             } else {
+                 [LocationManager sharedManager].countryName = @"";
+             }
+             if([placemark.locality length] != 0) {
+                 [LocationManager sharedManager].cityName = placemark.locality;
+             } if([placemark.administrativeArea length] != 0) {
+                 [LocationManager sharedManager].stateName = placemark.administrativeArea;
+             }
+             else {
+                 [LocationManager sharedManager].cityName = @"";
+             }
+             
+             [LocationManager sharedManager].streetName = @"";
+             if ([placemark.thoroughfare length] != 0) {
+                 [LocationManager sharedManager].streetName = [NSString stringWithFormat:@"%@ %@", placemark.thoroughfare, placemark.subThoroughfare];
+             }
+             
+         }];
+    }
 }
 
 @end

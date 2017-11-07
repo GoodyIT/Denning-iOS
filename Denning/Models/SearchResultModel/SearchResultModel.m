@@ -7,6 +7,7 @@
 //
 
 #import "SearchResultModel.h"
+#import "NSDictionary+NotNull.h"
 
 @implementation SearchResultModel
 @synthesize description;

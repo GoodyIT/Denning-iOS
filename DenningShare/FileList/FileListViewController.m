@@ -1,31 +1,28 @@
 //
-//  ContactListViewController.m
+//  FileListViewController.m
 //  Denning
 //
-//  Created by Ho Thong Mee on 29/08/2017.
+//  Created by Ho Thong Mee on 06/11/2017.
 //  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-#import "ContactListViewController.h"
-#import "StaffModel.h"
-#import "ClientModel.h"
+#import "FileListViewController.h"
 #import "SearchResultModel.h"
-//#import "PropertyContactCell.h"
-//#import "SecondContactCell.h"
 
-@interface ContactListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate, NSURLSessionDataDelegate>
+@interface FileListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate, NSURLSessionDataDelegate>
 {
     NSURLSession* mySession;
     NSMutableData *receivedData;
 }
+
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSString* filter;
-@property (strong, nonatomic) NSArray* listOfContact;
+@property (strong, nonatomic) NSArray* listOfFile;
 @end
 
-@implementation ContactListViewController
+@implementation FileListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,8 +43,8 @@
 }
 
 - (void) registerNib {
-//    [PropertyContactCell registerForReuseInTableView:self.tableView];
-//    [SecondContactCell registerForReuseInTableView:self.tableView];
+    //    [PropertyContactCell registerForReuseInTableView:self.tableView];
+    //    [SecondContactCell registerForReuseInTableView:self.tableView];
 }
 
 - (IBAction)dismissScreen:(id)sender {
@@ -56,6 +53,7 @@
 
 - (void) prepareUI {
     _filter = @"";
+    receivedData = [NSMutableData new];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 150;
@@ -75,11 +73,9 @@
     [request setValue:[defaults valueForKey:@"sessionID"]  forHTTPHeaderField:@"webuser-sessionid"];
     [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
     
-    dispatch_async(dispatch_get_main_queue(), ^(void){
-        NSURLSessionDataTask *task = [[self  configureMySession]
-                                      dataTaskWithRequest: request];
-        [task resume];
-    });
+    NSURLSessionDataTask *task = [[self  configureMySession]
+                                  dataTaskWithRequest: request];
+    [task resume];
 }
 
 - (NSURLSession *) configureMySession {
@@ -91,6 +87,7 @@
     }
     return mySession;
 }
+
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
 didReceiveResponse:(nonnull NSURLResponse *)response completionHandler:(nonnull void (^)(NSURLSessionResponseDisposition))completionHandler
 {
@@ -108,7 +105,7 @@ didReceiveResponse:(nonnull NSURLResponse *)response completionHandler:(nonnull 
 didCompleteWithError:(NSError *)error
 {
     NSError *errorJson=nil;
-    _listOfContact = [SearchResultModel getSearchResultArrayFromResponse: [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&errorJson]];
+    _listOfFile = [SearchResultModel getSearchResultArrayFromResponse: [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&errorJson]];
     dispatch_async(dispatch_get_main_queue(), ^{
         // code here
         [self.tableView reloadData];
@@ -130,7 +127,7 @@ didCompleteWithError:(NSError *)error
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return _listOfContact.count;
+    return _listOfFile.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -143,21 +140,58 @@ didCompleteWithError:(NSError *)error
 //    return cell;
 //}
 
+
+- (NSArray*) separateNameIntoTwo:(NSString*) title
+{
+    NSMutableArray *items = [[title componentsSeparatedByString:@"("] mutableCopy];
+    if ([items count] > 1) {
+        items[1] = [items[1] substringToIndex:((NSString*)items[1]).length-1];
+    } else {
+        [items addObject:@""];
+    }
+    
+    
+    return items;
+}
+
+- (NSString*) getDateInShortForm: (NSString*) date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    [formatter setTimeZone:timeZone];
+    
+    NSDate *creationDate = [formatter dateFromString:date];
+    [newFormatter setTimeZone:timeZone];
+    [newFormatter setDateFormat:@"d MMM yyyy"];
+    
+    return [newFormatter stringFromDate:creationDate];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SearchResultModel *model = self.listOfContact[indexPath.row];
+    SearchResultModel *model = self.listOfFile[indexPath.row];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     UILabel* firstValue = (UILabel*)[cell viewWithTag:1];
     UILabel* secondValue = (UILabel*)[cell viewWithTag:2];
-    firstValue.text = [model.JsonDesc valueForKey:@"IDNo"];
-    secondValue.text = [model.JsonDesc valueForKey:@"name"];
+    UILabel* thirdValue = (UILabel*)[cell viewWithTag:3];
+    firstValue.text = model.key;
+    if ([model.title containsString:@"File No."]) {
+        thirdValue.text = [self separateNameIntoTwo:[model.title substringFromIndex:10]][1];
+    } else {
+        thirdValue.text = [self separateNameIntoTwo:model.title][1];
+    }
+    
+    secondValue.text = [self getDateInShortForm:model.sortDate];
     
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.updateHandler(_listOfContact[indexPath.row]);
+    self.updateHandler(_listOfFile[indexPath.row]);
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -179,7 +213,7 @@ didCompleteWithError:(NSError *)error
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     self.filter = searchBar.text;
-
+    
     [self getList];
     [_searchBar resignFirstResponder];
 }
@@ -187,7 +221,7 @@ didCompleteWithError:(NSError *)error
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";
     searchController.searchBar.text = @"";
-
+    
     [self getList];
 }
 
@@ -196,16 +230,5 @@ didCompleteWithError:(NSError *)error
     self.filter = searchText;
     [self getList];
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

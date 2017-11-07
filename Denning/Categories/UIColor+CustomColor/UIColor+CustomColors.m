@@ -51,4 +51,8 @@
     return [UIColor colorWithHexString:@"#1CD85E"];
 }
 
++ (UIColor*) babyOrange {
+    return [UIColor colorWithHexString:@"#FBBC05"];
+}
+
 @end

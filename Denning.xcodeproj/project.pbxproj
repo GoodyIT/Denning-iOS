@@ -700,6 +700,21 @@
 		79FF353B1E9CB1DC001BECFB /* LastTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF35391E9CB1DC001BECFB /* LastTableCell.m */; };
 		79FF353C1E9CB1DC001BECFB /* LastTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FF353A1E9CB1DC001BECFB /* LastTableCell.xib */; };
 		79FF5B5A1E6FBB4000A27907 /* RelatedMatterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FF5B591E6FBB4000A27907 /* RelatedMatterViewController.m */; };
+		9600176B1FB0C7DF001EAB51 /* AttendanceItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9600176A1FB0C7DF001EAB51 /* AttendanceItem.m */; };
+		960017711FB0C7F7001EAB51 /* AttendanceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 960017701FB0C7F7001EAB51 /* AttendanceModel.m */; };
+		960017761FB0CD2A001EAB51 /* AttendanceItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960017741FB0CD2A001EAB51 /* AttendanceItemCell.m */; };
+		960017771FB0CD2A001EAB51 /* AttendanceItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 960017751FB0CD2A001EAB51 /* AttendanceItemCell.xib */; };
+		960017811FB0CE0D001EAB51 /* blue_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 960017781FB0CE0D001EAB51 /* blue_circle.png */; };
+		960017821FB0CE0D001EAB51 /* blue_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960017791FB0CE0D001EAB51 /* blue_circle@2x.png */; };
+		960017831FB0CE0D001EAB51 /* blue_circle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9600177A1FB0CE0D001EAB51 /* blue_circle@3x.png */; };
+		960017841FB0CE0D001EAB51 /* red_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9600177B1FB0CE0D001EAB51 /* red_circle.png */; };
+		960017851FB0CE0D001EAB51 /* red_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9600177C1FB0CE0D001EAB51 /* red_circle@2x.png */; };
+		960017861FB0CE0D001EAB51 /* red_circle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9600177D1FB0CE0D001EAB51 /* red_circle@3x.png */; };
+		960017871FB0CE0D001EAB51 /* yellow_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 9600177E1FB0CE0D001EAB51 /* yellow_circle.png */; };
+		960017881FB0CE0D001EAB51 /* yellow_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9600177F1FB0CE0D001EAB51 /* yellow_circle@2x.png */; };
+		960017891FB0CE0D001EAB51 /* yellow_circle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 960017801FB0CE0D001EAB51 /* yellow_circle@3x.png */; };
+		9600178C1FB0D373001EAB51 /* AttendanceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9600178B1FB0D373001EAB51 /* AttendanceInfo.m */; };
+		9600178F1FB0DAEF001EAB51 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9600178E1FB0DAEF001EAB51 /* LocationManager.m */; };
 		96046F571EFDA0180048A58D /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96046F561EFDA0180048A58D /* iCarousel.m */; };
 		9607588B1F00D412008F9C69 /* SecondMatterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960758891F00D412008F9C69 /* SecondMatterCell.m */; };
 		9607588C1F00D412008F9C69 /* SecondMatterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9607588A1F00D412008F9C69 /* SecondMatterCell.xib */; };
@@ -778,6 +793,9 @@
 		9620834C1EDE236D00BB595C /* BankCashSecondCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9620834A1EDE236D00BB595C /* BankCashSecondCell.xib */; };
 		962083551EDE492200BB595C /* DashboardContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 962083531EDE492200BB595C /* DashboardContactCell.m */; };
 		962083561EDE492200BB595C /* DashboardContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 962083541EDE492200BB595C /* DashboardContactCell.xib */; };
+		963154AE1FB107480055A388 /* SearchResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 963154AD1FB107480055A388 /* SearchResultModel.m */; };
+		963154B21FB107DA0055A388 /* NSDictionary+NotNull.m in Sources */ = {isa = PBXBuildFile; fileRef = 963154B11FB107DA0055A388 /* NSDictionary+NotNull.m */; };
+		963154B61FB143E60055A388 /* FileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 963154B51FB143E60055A388 /* FileListViewController.m */; };
 		9635BB9E1F2A54FD00BE7CF0 /* SearchContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */; };
 		9635BB9F1F2A54FD00BE7CF0 /* SearchContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */; };
 		9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635BBA21F2AEDDC00BE7CF0 /* Attendance.m */; };
@@ -2022,6 +2040,26 @@
 		79FF353A1E9CB1DC001BECFB /* LastTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LastTableCell.xib; sourceTree = "<group>"; };
 		79FF5B581E6FBB4000A27907 /* RelatedMatterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelatedMatterViewController.h; sourceTree = "<group>"; };
 		79FF5B591E6FBB4000A27907 /* RelatedMatterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelatedMatterViewController.m; sourceTree = "<group>"; };
+		960017691FB0C7DF001EAB51 /* AttendanceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceItem.h; sourceTree = "<group>"; };
+		9600176A1FB0C7DF001EAB51 /* AttendanceItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceItem.m; sourceTree = "<group>"; };
+		9600176F1FB0C7F7001EAB51 /* AttendanceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceModel.h; sourceTree = "<group>"; };
+		960017701FB0C7F7001EAB51 /* AttendanceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceModel.m; sourceTree = "<group>"; };
+		960017731FB0CD2A001EAB51 /* AttendanceItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceItemCell.h; sourceTree = "<group>"; };
+		960017741FB0CD2A001EAB51 /* AttendanceItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceItemCell.m; sourceTree = "<group>"; };
+		960017751FB0CD2A001EAB51 /* AttendanceItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttendanceItemCell.xib; sourceTree = "<group>"; };
+		960017781FB0CE0D001EAB51 /* blue_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_circle.png; sourceTree = "<group>"; };
+		960017791FB0CE0D001EAB51 /* blue_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue_circle@2x.png"; sourceTree = "<group>"; };
+		9600177A1FB0CE0D001EAB51 /* blue_circle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blue_circle@3x.png"; sourceTree = "<group>"; };
+		9600177B1FB0CE0D001EAB51 /* red_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_circle.png; sourceTree = "<group>"; };
+		9600177C1FB0CE0D001EAB51 /* red_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_circle@2x.png"; sourceTree = "<group>"; };
+		9600177D1FB0CE0D001EAB51 /* red_circle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_circle@3x.png"; sourceTree = "<group>"; };
+		9600177E1FB0CE0D001EAB51 /* yellow_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellow_circle.png; sourceTree = "<group>"; };
+		9600177F1FB0CE0D001EAB51 /* yellow_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow_circle@2x.png"; sourceTree = "<group>"; };
+		960017801FB0CE0D001EAB51 /* yellow_circle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow_circle@3x.png"; sourceTree = "<group>"; };
+		9600178A1FB0D373001EAB51 /* AttendanceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendanceInfo.h; sourceTree = "<group>"; };
+		9600178B1FB0D373001EAB51 /* AttendanceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendanceInfo.m; sourceTree = "<group>"; };
+		9600178D1FB0DAEF001EAB51 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		9600178E1FB0DAEF001EAB51 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		96046F551EFDA0180048A58D /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		96046F561EFDA0180048A58D /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		960758881F00D412008F9C69 /* SecondMatterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondMatterCell.h; sourceTree = "<group>"; };
@@ -2149,6 +2187,12 @@
 		962083521EDE492200BB595C /* DashboardContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardContactCell.h; sourceTree = "<group>"; };
 		962083531EDE492200BB595C /* DashboardContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardContactCell.m; sourceTree = "<group>"; };
 		962083541EDE492200BB595C /* DashboardContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardContactCell.xib; sourceTree = "<group>"; };
+		963154AC1FB107480055A388 /* SearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultModel.h; sourceTree = "<group>"; };
+		963154AD1FB107480055A388 /* SearchResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultModel.m; sourceTree = "<group>"; };
+		963154B01FB107DA0055A388 /* NSDictionary+NotNull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NotNull.h"; sourceTree = "<group>"; };
+		963154B11FB107DA0055A388 /* NSDictionary+NotNull.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NotNull.m"; sourceTree = "<group>"; };
+		963154B41FB143E60055A388 /* FileListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListViewController.h; sourceTree = "<group>"; };
+		963154B51FB143E60055A388 /* FileListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListViewController.m; sourceTree = "<group>"; };
 		9635BB9B1F2A54FD00BE7CF0 /* SearchContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchContactCell.h; sourceTree = "<group>"; };
 		9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchContactCell.m; sourceTree = "<group>"; };
 		9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchContactCell.xib; sourceTree = "<group>"; };
@@ -4642,6 +4686,8 @@
 		79FBDF0E1E30421A00448FE3 /* QMNetworkManager */ = {
 			isa = PBXGroup;
 			children = (
+				9600178D1FB0DAEF001EAB51 /* LocationManager.h */,
+				9600178E1FB0DAEF001EAB51 /* LocationManager.m */,
 				79FBDF0F1E30421A00448FE3 /* NetworkErrors.h */,
 				79FBDF101E30421A00448FE3 /* NetworkManagerConstants.h */,
 				79FBDF111E30421A00448FE3 /* QMNetworkManager.h */,
@@ -4993,6 +5039,9 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				960017671FB0C7D1001EAB51 /* AttendanceInfo */,
+				960017681FB0C7D1001EAB51 /* AttendanceItem */,
+				960017651FB0C785001EAB51 /* AttendanceModel */,
 				964206371F286C91008AC798 /* FeeUntransferModel */,
 				9642062C1F26B37E008AC798 /* TemplateModel */,
 				96D176871F1FE990008734DA /* FileNoteSubModel */,
@@ -5390,6 +5439,7 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				960017721FB0CD10001EAB51 /* AttendanceItemCell */,
 				964206261F26ACAA008AC798 /* TemplateCell */,
 				96EAEBAA1F21EC22004F75FC /* PaymentRecordFirstCell */,
 				96EAEBA41F21DACB004F75FC /* PaymentRecordCell */,
@@ -5752,6 +5802,15 @@
 		79FBE14B1E30F7F500448FE3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				960017781FB0CE0D001EAB51 /* blue_circle.png */,
+				960017791FB0CE0D001EAB51 /* blue_circle@2x.png */,
+				9600177A1FB0CE0D001EAB51 /* blue_circle@3x.png */,
+				9600177B1FB0CE0D001EAB51 /* red_circle.png */,
+				9600177C1FB0CE0D001EAB51 /* red_circle@2x.png */,
+				9600177D1FB0CE0D001EAB51 /* red_circle@3x.png */,
+				9600177E1FB0CE0D001EAB51 /* yellow_circle.png */,
+				9600177F1FB0CE0D001EAB51 /* yellow_circle@2x.png */,
+				960017801FB0CE0D001EAB51 /* yellow_circle@3x.png */,
 				9642061C1F269B8B008AC798 /* icon_down.png */,
 				9642061D1F269B8B008AC798 /* icon_down@2x.png */,
 				9642061E1F269B8B008AC798 /* icon_down@3x.png */,
@@ -6218,6 +6277,43 @@
 				79FF353A1E9CB1DC001BECFB /* LastTableCell.xib */,
 			);
 			path = LastTableCell;
+			sourceTree = "<group>";
+		};
+		960017651FB0C785001EAB51 /* AttendanceModel */ = {
+			isa = PBXGroup;
+			children = (
+				9600176F1FB0C7F7001EAB51 /* AttendanceModel.h */,
+				960017701FB0C7F7001EAB51 /* AttendanceModel.m */,
+			);
+			path = AttendanceModel;
+			sourceTree = "<group>";
+		};
+		960017671FB0C7D1001EAB51 /* AttendanceInfo */ = {
+			isa = PBXGroup;
+			children = (
+				9600178A1FB0D373001EAB51 /* AttendanceInfo.h */,
+				9600178B1FB0D373001EAB51 /* AttendanceInfo.m */,
+			);
+			path = AttendanceInfo;
+			sourceTree = "<group>";
+		};
+		960017681FB0C7D1001EAB51 /* AttendanceItem */ = {
+			isa = PBXGroup;
+			children = (
+				960017691FB0C7DF001EAB51 /* AttendanceItem.h */,
+				9600176A1FB0C7DF001EAB51 /* AttendanceItem.m */,
+			);
+			path = AttendanceItem;
+			sourceTree = "<group>";
+		};
+		960017721FB0CD10001EAB51 /* AttendanceItemCell */ = {
+			isa = PBXGroup;
+			children = (
+				960017731FB0CD2A001EAB51 /* AttendanceItemCell.h */,
+				960017741FB0CD2A001EAB51 /* AttendanceItemCell.m */,
+				960017751FB0CD2A001EAB51 /* AttendanceItemCell.xib */,
+			);
+			path = AttendanceItemCell;
 			sourceTree = "<group>";
 		};
 		96046F541EFDA0180048A58D /* iCarousel */ = {
@@ -6717,6 +6813,35 @@
 			path = DashboardContactCell;
 			sourceTree = "<group>";
 		};
+		963154AB1FB107480055A388 /* SearchResultModel */ = {
+			isa = PBXGroup;
+			children = (
+				963154AC1FB107480055A388 /* SearchResultModel.h */,
+				963154AD1FB107480055A388 /* SearchResultModel.m */,
+			);
+			name = SearchResultModel;
+			path = Denning/Models/SearchResultModel;
+			sourceTree = SOURCE_ROOT;
+		};
+		963154AF1FB107DA0055A388 /* NSDictionary+NotNull */ = {
+			isa = PBXGroup;
+			children = (
+				963154B01FB107DA0055A388 /* NSDictionary+NotNull.h */,
+				963154B11FB107DA0055A388 /* NSDictionary+NotNull.m */,
+			);
+			name = "NSDictionary+NotNull";
+			path = "Denning/Categories/NSDictionary+NotNull";
+			sourceTree = SOURCE_ROOT;
+		};
+		963154B31FB143420055A388 /* FileList */ = {
+			isa = PBXGroup;
+			children = (
+				963154B41FB143E60055A388 /* FileListViewController.h */,
+				963154B51FB143E60055A388 /* FileListViewController.m */,
+			);
+			path = FileList;
+			sourceTree = "<group>";
+		};
 		9635BB9A1F2A545F00BE7CF0 /* SearchContactCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -6925,6 +7050,9 @@
 		9685EBDE1F51F8E80006C0E0 /* DenningShare */ = {
 			isa = PBXGroup;
 			children = (
+				963154B31FB143420055A388 /* FileList */,
+				963154AF1FB107DA0055A388 /* NSDictionary+NotNull */,
+				963154AB1FB107480055A388 /* SearchResultModel */,
 				96E704CE1F5600B000FC6A5B /* ContactList */,
 				9685EBED1F51F9160006C0E0 /* DenningShare.entitlements */,
 				9685EBE21F51F8E80006C0E0 /* MainInterface.storyboard */,
@@ -7766,7 +7894,9 @@
 				793FF16A1EBBFEA3001F83A5 /* denning_logo.png in Resources */,
 				797ED50F1EAEDA86009C20C4 /* icon_email_red@2x.png in Resources */,
 				9636DCCC1F03C6C8008DDA41 /* icon_db_fees_transfer@3x.png in Resources */,
+				960017841FB0CE0D001EAB51 /* red_circle.png in Resources */,
 				7931B5061EA9B1C50090BDE0 /* icon_market@3x.png in Resources */,
+				960017821FB0CE0D001EAB51 /* blue_circle@2x.png in Resources */,
 				79D59A3E1E958AC300CD3821 /* phone-icon@2x.png in Resources */,
 				96A73A6D1F1A6CB600B97156 /* icon_close@2x.png in Resources */,
 				7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */,
@@ -7786,6 +7916,7 @@
 				79734FB51EBAACB800647215 /* icon_upload@3x.png in Resources */,
 				79F9FC991E42177E0097CB23 /* EventCell.xib in Resources */,
 				960A66241F0200D20063AB6C /* DashboardSecondHeaderCell.xib in Resources */,
+				960017771FB0CD2A001EAB51 /* AttendanceItemCell.xib in Resources */,
 				797ED5101EAEDA86009C20C4 /* icon_email_red@3x.png in Resources */,
 				797ED5151EAEDA86009C20C4 /* icon_phone_red@2x.png in Resources */,
 				79EC0E6D1E8B0E8300320A28 /* icon_png@2x.png in Resources */,
@@ -7872,6 +8003,7 @@
 				961D46361F22CF0900B8714D /* splash_logo_white.png in Resources */,
 				79A6AFA21E9D611D007AA24D /* icon_favorite@3x.png in Resources */,
 				793FF2271EC3F75B001F83A5 /* expandableImage_reverse.png in Resources */,
+				960017851FB0CE0D001EAB51 /* red_circle@2x.png in Resources */,
 				7931B5181EAADFA60090BDE0 /* MatterPropertyCell.xib in Resources */,
 				96BDA6181F02B96200084606 /* DashboardThirdHeaderCell.xib in Resources */,
 				7931B4BC1EA851B00090BDE0 /* menu_add.png in Resources */,
@@ -7887,6 +8019,7 @@
 				96D66EFF1EFCB0F3003E3A4A /* DashboardTodayCell.xib in Resources */,
 				79EC0DC61E874ED700320A28 /* shutterstock.jpg in Resources */,
 				9636DCDA1F03C6C8008DDA41 /* icon_db_tax_invoice@2x.png in Resources */,
+				960017891FB0CE0D001EAB51 /* yellow_circle@3x.png in Resources */,
 				96EAEBB81F22CBC7004F75FC /* Back_gray@2x.png in Resources */,
 				96A73A351F19C89600B97156 /* BankReconCell.xib in Resources */,
 				79EC0DBF1E874ED700320A28 /* iStock_Medium@3x.jpg in Resources */,
@@ -7925,6 +8058,7 @@
 				9636DCF31F0406E9008DDA41 /* FileListingHeaderCell.xib in Resources */,
 				96EAEBB91F22CBC7004F75FC /* Back_gray@3x.png in Resources */,
 				79FF35001E97D95B001BECFB /* icon_share.png in Resources */,
+				960017811FB0CE0D001EAB51 /* blue_circle.png in Resources */,
 				795DF2551E6E6FD0006D617D /* close@3x.png in Resources */,
 				79734FA21EBAA11500647215 /* icon_topup@2x.png in Resources */,
 				9636DCD11F03C6C8008DDA41 /* icon_db_profit_loss@2x.png in Resources */,
@@ -8030,6 +8164,7 @@
 				7903CF721ECD303D0090206C /* PropertyContactCell.xib in Resources */,
 				7903D07B1ECE7EFF0090206C /* AddMatterCell.xib in Resources */,
 				7931B4C11EA851B00090BDE0 /* menu_contact_us@3x.png in Resources */,
+				960017871FB0CE0D001EAB51 /* yellow_circle.png in Resources */,
 				7931B4C21EA851B00090BDE0 /* menu_help.png in Resources */,
 				7920E7A11E9FA747002FEFF3 /* icon_favorite_selected@2x.png in Resources */,
 				79FC42851E588B3900D9DC64 /* Localizable.strings in Resources */,
@@ -8099,6 +8234,7 @@
 				79EC0E6C1E8B0E8300320A28 /* icon_png.png in Resources */,
 				795DF2471E6E4C3F006D617D /* Lato-Light.ttf in Resources */,
 				9636DCBC1F03C6C8008DDA41 /* icon_db_attendance@2x.png in Resources */,
+				960017861FB0CE0D001EAB51 /* red_circle@3x.png in Resources */,
 				96C7AFC81EE99CF500EF0A37 /* FloatingTextTwoColumnReversedCell.xib in Resources */,
 				962083091ED9305600BB595C /* DashboardMatterCell.xib in Resources */,
 				7931B5071EA9B1C50090BDE0 /* icon_search_gray.png in Resources */,
@@ -8122,6 +8258,7 @@
 				79A6AF9F1E9D611D007AA24D /* icon_client@3x.png in Resources */,
 				793FF2121EC3A626001F83A5 /* expandableImage.png in Resources */,
 				793FF14B1EBB7D67001F83A5 /* icon_chat_selected.png in Resources */,
+				960017831FB0CE0D001EAB51 /* blue_circle@3x.png in Resources */,
 				79734F9E1EBAA11500647215 /* icon_shared.png in Resources */,
 				793FF1951EBD4BDF001F83A5 /* icon_quotation.png in Resources */,
 				9636DCD01F03C6C8008DDA41 /* icon_db_profit_loss.png in Resources */,
@@ -8143,6 +8280,7 @@
 				7903CF7E1ECD37510090206C /* PropertyCodeCell.xib in Resources */,
 				796BBFA01EA7B3CE001DA47F /* NewLedgerDetailCell.xib in Resources */,
 				79FBE0F91E304F5000448FE3 /* QMDialogCell.xib in Resources */,
+				960017881FB0CE0D001EAB51 /* yellow_circle@2x.png in Resources */,
 				962083461EDE151300BB595C /* BankCashCell.xib in Resources */,
 				7931B4BF1EA851B00090BDE0 /* menu_contact_us.png in Resources */,
 				96A73A691F1A6CB600B97156 /* icon_check.png in Resources */,
@@ -8319,6 +8457,7 @@
 				9636DD001F047C77008DDA41 /* DashboarMyDueTask.m in Sources */,
 				96A73A5B1F1A621600B97156 /* TrialBalanceHeaderCell.m in Sources */,
 				79FBDFBA1E30421A00448FE3 /* QMErrorsFactory.m in Sources */,
+				9600178F1FB0DAEF001EAB51 /* LocationManager.m in Sources */,
 				79FBE0811E304EAA00448FE3 /* QMSearchResultsController.m in Sources */,
 				79FF35191E97FC1B001BECFB /* DenningLabelCell.m in Sources */,
 				793FF2171EC3A9A7001F83A5 /* FloatingTextCell.m in Sources */,
@@ -8327,6 +8466,7 @@
 				79FBE07E1E304EAA00448FE3 /* QMLinkViewController.m in Sources */,
 				960F03061F2908BE00B25BBC /* CustomDocumentViewController.m in Sources */,
 				79FBDFD01E30421A00448FE3 /* QMMessageNotification.m in Sources */,
+				9600178C1FB0D373001EAB51 /* AttendanceInfo.m in Sources */,
 				96C7AFBC1EE82E6D00EF0A37 /* MukimValueList.m in Sources */,
 				79FBDFB01E30421A00448FE3 /* PushManager.m in Sources */,
 				96821F2A1F1D65D900F28708 /* AttendanceHeaderCell.m in Sources */,
@@ -8336,6 +8476,7 @@
 				79FBDFA41E30421A00448FE3 /* QBUpdateUserParameters+CustomData.m in Sources */,
 				793FF21D1EC3C2A2001F83A5 /* AccordionHeaderView.m in Sources */,
 				960D91AB1F066B3900835B82 /* StaffHeaderCell.m in Sources */,
+				9600176B1FB0C7DF001EAB51 /* AttendanceItem.m in Sources */,
 				96864A921F5EFD0500350E59 /* HWIFileDownloader.m in Sources */,
 				79D599FE1E9473D500CD3821 /* QMDialogsSearchDataSource.m in Sources */,
 				79F7322C1E96A929004F88DF /* MLPAutoCompleteTextField.m in Sources */,
@@ -8466,6 +8607,7 @@
 				79D59A271E95245E00CD3821 /* QMNewMessageViewController.m in Sources */,
 				79FBE08E1E304EAB00448FE3 /* QMLocationPinView.m in Sources */,
 				96C7AFC71EE99CF500EF0A37 /* FloatingTextTwoColumnReversedCell.m in Sources */,
+				960017711FB0C7F7001EAB51 /* AttendanceModel.m in Sources */,
 				96A73A8F1F1B0F2200B97156 /* ProfitAndLoss.m in Sources */,
 				960A662D1F02A6D80063AB6C /* SearchLastCell.m in Sources */,
 				960758A41F015B61008F9C69 /* MasterTitleModel.m in Sources */,
@@ -8715,6 +8857,7 @@
 				79D59A1B1E94762B00CD3821 /* DenningContactViewController.m in Sources */,
 				79FBDF9B1E30421A00448FE3 /* CustomTaBBarController.m in Sources */,
 				962082AE1ED3C7D800BB595C /* OfficeDiaryViewController.m in Sources */,
+				960017761FB0CD2A001EAB51 /* AttendanceItemCell.m in Sources */,
 				79EC0E291E89E45D00320A28 /* DocumentModel.m in Sources */,
 				79FBE10A1E304F5000448FE3 /* QMGroupInfoViewController.m in Sources */,
 				79FBDFB61E30421A00448FE3 /* QMPushNotificationManager.m in Sources */,
@@ -8749,7 +8892,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9685EBF71F53D0610006C0E0 /* CustomShareViewController.m in Sources */,
+				963154AE1FB107480055A388 /* SearchResultModel.m in Sources */,
+				963154B61FB143E60055A388 /* FileListViewController.m in Sources */,
 				96E704D11F5600C500FC6A5B /* ContactListViewController.m in Sources */,
+				963154B21FB107DA0055A388 /* NSDictionary+NotNull.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

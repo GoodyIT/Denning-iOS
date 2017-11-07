@@ -23,4 +23,7 @@
 
 + (UIColor*) babyGreen;
 
++ (UIColor*) babyOrange;
+
+
 @end

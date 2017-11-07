@@ -166,6 +166,9 @@
 #import "FileNoteModel.h"
 #import "TemplateModel.h"
 #import "FeeUntransferModel.h"
+#import "AttendanceItem.h"
+#import "AttendanceInfo.h"
+#import "AttendanceModel.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

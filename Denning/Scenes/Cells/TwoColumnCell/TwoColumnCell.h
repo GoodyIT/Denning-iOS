@@ -12,8 +12,6 @@
 @interface TwoColumnCell : DIGeneralCell
 @property (weak, nonatomic) IBOutlet UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
-@property (weak, nonatomic) IBOutlet UILabel *codeValue;
-@property (weak, nonatomic) IBOutlet UILabel *descValue;
 
-- (void) configureCellWithCodeLabel:(NSString*)codeLabel codeValue:(NSString*)codeValue descLabel:(NSString*)discLabel descValue:(NSString*) descValue;
+- (void) configureCellWithCodeValue:(NSString*)codeValue  descValue:(NSString*) descValue;
 @end

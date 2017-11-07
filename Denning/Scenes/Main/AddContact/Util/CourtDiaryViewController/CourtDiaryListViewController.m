@@ -139,6 +139,18 @@
 
 #pragma mark - Table view data source
 
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier]];
+    [cell configureCellWithCodeValue:@"Place" descValue:@"TypeE"];
+    cell.backgroundColor = [UIColor grayColor];
+    return cell;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 1;
@@ -152,7 +164,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier] forIndexPath:indexPath];
     CourtDiaryModel *model = self.listOfMatters[indexPath.row];
-    [cell configureCellWithCodeLabel:@"Place" codeValue:model.place descLabel:@"TypeE" descValue:model.typeE];
+    [cell configureCellWithCodeValue:model.place descValue:model.typeE];
     return cell;
 }
 

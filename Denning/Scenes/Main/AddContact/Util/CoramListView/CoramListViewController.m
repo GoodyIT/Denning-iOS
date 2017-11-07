@@ -139,6 +139,18 @@
 
 #pragma mark - Table view data source
 
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier]];
+    [cell configureCellWithCodeValue:@"Name" descValue:@"Position"];
+    cell.backgroundColor = [UIColor lightGrayColor];
+    return cell;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 1;
@@ -152,7 +164,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier] forIndexPath:indexPath];
     CoramModel *model = self.listOfCorams[indexPath.row];
-    [cell configureCellWithCodeLabel:@"Name" codeValue:model.name descLabel:@"Position" descValue:model.position];
+    [cell configureCellWithCodeValue:model.name descValue:model.position];
     return cell;
 }
 

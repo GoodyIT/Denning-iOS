@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@class StaffModel;
-typedef void (^UpdateContactHandler)(StaffModel* model);
+@class SearchResultModel;
+
+typedef void (^UpdateContactHandler)(SearchResultModel* model);
 
 @interface ContactListViewController : UIViewController
 

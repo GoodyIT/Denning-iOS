@@ -13,8 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.codeValue.copyingEnabled = YES;
-    self.descValue.copyingEnabled = YES;
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -23,12 +22,10 @@
     // Configure the view for the selected state
 }
 
-- (void) configureCellWithCodeLabel:(NSString*)codeLabel codeValue:(NSString*)codeValue descLabel:(NSString*)descLabel descValue:(NSString*) descValue
+- (void) configureCellWithCodeValue:(NSString*)codeValue  descValue:(NSString*) descValue
 {
-    self.codeLabel.text = codeLabel;
-    self.codeValue.text = codeValue;
-    self.descLabel.text = descLabel;
-    self.descValue.text = descValue;
+    self.codeLabel.text = codeValue;
+    self.descLabel.text = descValue;
 }
 
 @end

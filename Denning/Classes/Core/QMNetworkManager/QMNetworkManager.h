@@ -35,6 +35,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 @class ProfitLossDetailModel;
 @class S3Model;
 @class FileNoteModel;
+@class AttendanceModel;
 
 @interface QMNetworkManager : NSObject
 
@@ -174,6 +175,15 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 // Ads
 
 - (void) getAdsWithCompletion:(void(^)(NSArray* result, NSError* error)) completion;
+
+// Attendance
+
+- (void) getAttendanceListWithCompletion:(void(^)(AttendanceModel* result, NSError* error)) completion;
+
+- (void) attendanceClockIn:(void(^)(AttendanceModel* result, NSError* error)) completion;
+- (void) attendanceClockOut:(void(^)(AttendanceModel* result, NSError* error)) completion;
+- (void) attendanceStartBreak:(void(^)(AttendanceModel* result, NSError* error)) completion;
+- (void) attendanceEndBreak:(void(^)(AttendanceModel* result, NSError* error)) completion;
 
 /*
  * Search

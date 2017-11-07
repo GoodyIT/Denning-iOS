@@ -85,6 +85,10 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define SEARCH_UPLOAD_SUGGESTED_FILENAME    @"denningwcf/v1/table/cboDocumentName?search="
 
+#define GENERAL_CONTACT_URL @"denningwcf/v1/generalSearch/cust?search="
+
+#define GENERAL_MATTER_LISTING_URL    @"denningwcf/v1/generalSearch/file?search="
+
 #define SEARCH_TEMPLATE_MAIN_GET @"denningwcf/v1/Table/cbotemplatecategory"
 
 #define SEARCH_TEMPLATE_CATEGORY_GET    @"denningwcf/v1/Table/cbotemplatecategory/only?search="
@@ -104,6 +108,12 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 #define CALENDAR_MONTHLY_SUMMARY_URL    @"denningwcf/v1/DenningCalendar/MonthlySummary"
 
 #define HOME_ADS_GET_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/advertisement"
+
+#define ATTENDANCE_GET_URL  @"denningwcf/v1/app/StaffAttendance/101"
+
+#define ATTENDANCE_CLOCK_IN @"denningwcf/v1/app/StaffAttendance/CheckIn"
+
+#define ATTENDANCE_BREAK    @"denningwcf/v1/app/StaffAttendance/Break"
 
 #define GET_CHAT_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v2/chat/contact?userid="
 
@@ -139,6 +149,8 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define CONTACT_GETLIST_URL @"denningwcf/v1/party?search="
 
+
+
 #define CONTACT_SOLICITOR_GET_LIST_URL   @"denningwcf/v1/Solicitor?search="
 
 #define CONTACT_UPDATE_URL    @"/denningwcf/v1/contact?search="
@@ -150,7 +162,7 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define MATTER_STAFF_TRANSIT_FOLDER @"denningwcf/v1/app/matter/fileFolder"
 
-#define MATTER_STAFF_CONTACT_FOLDER @"denningwcf/v1/app/matter/fileFolder"
+#define MATTER_STAFF_CONTACT_FOLDER @"denningwcf/v1/app/contactFolder"
 
 #define MATTER_CLIENT_FILEFOLDER @"denningwcf/v1/app/userClientFolder"
 

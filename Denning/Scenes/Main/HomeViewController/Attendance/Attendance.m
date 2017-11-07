@@ -7,8 +7,12 @@
 //
 
 #import "Attendance.h"
+#import "AttendanceItemCell.h"
 
-@interface Attendance ()
+@interface Attendance ()<UITableViewDelegate, UITableViewDataSource>
+{
+   __block BOOL isAttended, isBreaking;
+}
 @property (weak, nonatomic) IBOutlet UILabel *spentTime;
 @property (weak, nonatomic) IBOutlet UILabel *today;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
@@ -17,7 +21,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *btnClock;
 @property (weak, nonatomic) IBOutlet UIButton *btnBreak;
+@property (weak, nonatomic) IBOutlet UIView *headerBackground;
 
+@property (strong, nonatomic) AttendanceModel* attendanceModel;
 
 @end
 
@@ -27,6 +33,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self prepareUI];
+    [self registerNibs];
+    [self getAttendanceModel];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,10 +45,28 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void) updateHeader {
+    NSArray *array = [_attendanceModel.dtDate componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    array = [array filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+    self.today.text = [DIHelpers getDateInShortForm: _attendanceModel.dtDate];
+    _spentTime.text = array[1];
+    self.userName.text = _attendanceModel.clsStaff.strName;
+    _userRole.text = _attendanceModel.clsStaff.strPositionTitle;
+    _totalHour.text = _attendanceModel.totalWorkingHours;
+    
+    [_btnClock setTitle:_attendanceModel.btnLeft forState:UIControlStateNormal];
+    if (_attendanceModel.btnRight.length != 0) {
+        [_btnBreak setTitle:_attendanceModel.btnRight forState:UIControlStateNormal];
+        [_btnClock setBackgroundColor:[UIColor redColor]];
+        _headerBackground.backgroundColor = [UIColor babyBule];
+    } else {
+        [_btnClock setBackgroundColor:[UIColor babyBule]];
+        _headerBackground.backgroundColor = [UIColor redColor];
+    }
+}
+
 - (void) prepareUI {
-    self.today.text = [DIHelpers getDateInShortForm:[DIHelpers todayWithTime]];
-    self.userName.text = [DataManager sharedManager].user.username;
-//    _userRole.text = [DataManager sharedManager].user.className;
+    isAttended = NO;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
@@ -48,10 +74,84 @@
     self.tableView.tableFooterView = [UIView new];
 }
 
+- (void)registerNibs {
+    
+    [AttendanceItemCell registerForReuseInTableView:self.tableView];
+}
+
+- (void) handleResponse:(AttendanceModel*) result error:(NSError*) error {
+    if (!error) {
+        _attendanceModel = result;
+        [self updateHeader];
+        [self.tableView reloadData];
+    } else {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription maskType:SVProgressHUDMaskTypeClear];
+    }
+}
+
+- (void) getAttendanceModel {
+    [SVProgressHUD show];
+    
+    [[QMNetworkManager sharedManager] getAttendanceListWithCompletion:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        [self handleResponse:result error:error];
+    }];
+}
+
 - (IBAction)didTapClock:(id)sender {
+    [SVProgressHUD show];
+    if (!isAttended) {
+        [[QMNetworkManager sharedManager] attendanceClockIn:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
+            [SVProgressHUD dismiss];
+            [self handleResponse:result error:error];
+            isAttended = YES;
+        }];
+    } else {
+        [[QMNetworkManager sharedManager] attendanceClockOut:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
+            [SVProgressHUD dismiss];
+            [self handleResponse:result error:error];
+            isAttended = NO;
+        }];
+    }
 }
 
 - (IBAction)didTapBreak:(id)sender {
+    if (_attendanceModel && _attendanceModel.btnRight.length != 0 && !isBreaking) {
+        [SVProgressHUD show];
+        [[QMNetworkManager sharedManager] attendanceStartBreak:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
+            [SVProgressHUD dismiss];
+            [self handleResponse:result error:error];
+            isBreaking = YES;
+        }];
+    } else if (_attendanceModel && isBreaking) {
+        [SVProgressHUD show];
+        [[QMNetworkManager sharedManager] attendanceEndBreak:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
+            [SVProgressHUD dismiss];
+            [self handleResponse:result error:error];
+            isBreaking = NO;
+        }];
+    }
+}
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)__unused tableView {
+    
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)__unused tableView numberOfRowsInSection:(NSInteger)__unused section {
+    
+    return [_attendanceModel.theListing count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AttendanceItemCell *cell = [tableView dequeueReusableCellWithIdentifier:[AttendanceItemCell cellIdentifier] forIndexPath:indexPath];
+    
+    [cell configureCellWithModel:_attendanceModel.theListing[indexPath.row]];
+    
+    return cell;
 }
 
 /*

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="KGk-i7-Jjw" customClass="AttendanceItemCell">
+            <rect key="frame" x="0.0" y="0.0" width="309" height="55"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="309" height="54.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_circle.png" translatesAutoresizingMaskIntoConstraints="NO" id="xUi-aS-G6G">
+                        <rect key="frame" x="8" y="23" width="9" height="9"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyO-Ni-Qx8">
+                        <rect key="frame" x="31" y="18.5" width="80" height="17.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="iJO-4y-6Hc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkP-hr-u6F">
+                        <rect key="frame" x="123" y="18.5" width="37" height="17.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JHN-FA-gVe">
+                        <rect key="frame" x="233" y="18.5" width="60" height="17.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="P1t-DO-HBZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="jyO-Ni-Qx8" firstAttribute="leading" secondItem="xUi-aS-G6G" secondAttribute="trailing" constant="14" id="0vR-V3-yBg"/>
+                    <constraint firstItem="qkP-hr-u6F" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PsO-ao-cNu"/>
+                    <constraint firstItem="qkP-hr-u6F" firstAttribute="leading" secondItem="jyO-Ni-Qx8" secondAttribute="trailing" constant="12" id="bfj-48-9fg"/>
+                    <constraint firstItem="jyO-Ni-Qx8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cYu-SZ-f34"/>
+                    <constraint firstItem="JHN-FA-gVe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qkP-hr-u6F" secondAttribute="trailing" constant="12" id="eym-aZ-Lk8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="JHN-FA-gVe" secondAttribute="trailing" constant="8" id="fxE-1P-Xpc"/>
+                    <constraint firstItem="xUi-aS-G6G" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="i9v-fX-RAX"/>
+                    <constraint firstItem="JHN-FA-gVe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="n5T-nU-q0e"/>
+                    <constraint firstItem="xUi-aS-G6G" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="vXO-xO-vpM"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="imageView" destination="xUi-aS-G6G" id="T6F-GZ-hfy"/>
+                <outlet property="location" destination="qkP-hr-u6F" id="ngk-bn-VwA"/>
+                <outlet property="time" destination="JHN-FA-gVe" id="fL0-XZ-Mv8"/>
+                <outlet property="type" destination="jyO-Ni-Qx8" id="4l7-ad-Iyi"/>
+            </connections>
+            <point key="canvasLocation" x="15.5" y="-59.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="red_circle.png" width="9" height="9"/>
+    </resources>
+</document>
