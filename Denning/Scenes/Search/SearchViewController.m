@@ -190,6 +190,20 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EBEBF1"];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendSearchResult];
+    }];
+
+    
 //    self.tableView.refreshControl = [[UIRefreshControl alloc] init];
 //    self.tableView.refreshControl.backgroundColor = [UIColor clearColor];
 //    self.tableView.refreshControl.tintColor = [UIColor blackColor];
@@ -348,6 +362,39 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [self displaySearchResult];
 }
 
+- (void) appendSearchResult {
+    [self.selectionList reloadData];
+    self.selectionList.selectedButtonIndex = selectedIndexOfFilter;
+    if (isLoading) return;
+    isLoading = YES;
+    
+    @weakify(self)
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
+        
+        [SVProgressHUD dismiss];
+        self->isLoading = NO;
+        
+        @strongify(self);
+        if (error == nil)
+        {
+            
+            _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
+            
+            if (resultArray.count > 0) {
+                _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
+                // update table view
+                [self.tableView reloadData];
+            }
+            
+            [self.tableView finishInfiniteScroll];
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
 - (void) displaySearchResult
 {
 //    self.selectionList.hidden = NO;
@@ -372,17 +419,12 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         @strongify(self);
         if (error == nil)
         {
-            if (isAppending) {
-                _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
-                
-            } else {
-                self.searchResultArray = [resultArray mutableCopy];
-            }
+            self.searchResultArray = [resultArray mutableCopy];
+            [self.tableView reloadData];
+
             if (resultArray.count > 0) {
                 _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
             }
-
-            [self.tableView reloadData];
             
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -895,7 +937,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     CGFloat contentHeight = scrollView.contentSize.height;
     
     if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading && !isLoading) {
-        [self appendList];
+//        [self appendList];
     }
 }
 

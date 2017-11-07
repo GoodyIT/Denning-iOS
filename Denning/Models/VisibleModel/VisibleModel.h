@@ -10,10 +10,10 @@
 
 @interface VisibleModel : NSObject
 
-@property (strong, nonatomic) NSNumber* iStyle;
-@property (strong, nonatomic) NSNumber* isVisible;
+@property (strong, nonatomic) NSString* iStyle;
+@property (strong, nonatomic) NSString* isVisible;
 @property (strong, nonatomic) NSString* sessionAPI;
-@property (strong, nonatomic) NSNumber* sessionID;
+@property (strong, nonatomic) NSString* sessionID;
 @property (strong, nonatomic) NSString* sessionName;
 
 + (VisibleModel*) getVisibleFromReponse:(NSDictionary*) response;

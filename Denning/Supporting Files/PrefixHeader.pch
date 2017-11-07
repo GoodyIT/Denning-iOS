@@ -86,6 +86,7 @@
 #import "MIBadgeButton.h"
 #import "PNChart.h"
 #import <UITextView+Placeholder/UITextView+Placeholder.h>
+#import <UIScrollView+InfiniteScroll.h>
 
 #import "UserModel.h"
 #import "SearchResultModel.h"

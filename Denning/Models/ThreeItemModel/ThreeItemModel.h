@@ -11,7 +11,7 @@
 @class GraphModel;
 @interface ThreeItemModel : NSObject
 
-@property (strong, nonatomic) NSNumber* iStyle;
+@property (strong, nonatomic) NSString* iStyle;
 @property (strong, nonatomic) NSArray<GraphModel*>* graphs;
 @property (strong, nonatomic) NSArray* main;
 @property (strong, nonatomic) NSArray<ItemModel*>* items;

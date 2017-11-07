@@ -143,6 +143,7 @@ PODS:
   - UIFloatLabelTextField (1.2.9)
   - UIFloatLabelTextView (1.0.10)
   - UILabel+Copyable (1.0.1)
+  - UIScrollView-InfiniteScroll (1.0.1)
   - UITextView+Placeholder (1.2.0)
   - VBFPopFlatButton (0.0.7):
     - pop
@@ -197,6 +198,7 @@ DEPENDENCIES:
   - UIFloatLabelTextField
   - UIFloatLabelTextView
   - UILabel+Copyable (~> 1.0.0)
+  - UIScrollView-InfiniteScroll (~> 1.0.0)
   - UITextView+Placeholder (~> 1.2)
   - VBFPopFlatButton
 
@@ -262,9 +264,10 @@ SPEC CHECKSUMS:
   UIFloatLabelTextField: c1df7d4e688a1bd52738513f961df16f94914367
   UIFloatLabelTextView: 96b7c5a18739fd1af8fd9480f7943d75a7547e4d
   UILabel+Copyable: 39749df0a0a7112db8091a2b15ac9140a64b45a8
+  UIScrollView-InfiniteScroll: a90df4ba4a7ca1926128ade34a850ddbdf74c564
   UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
 
-PODFILE CHECKSUM: 8ebd640395106dfd4829147fa5a64d634b13335d
+PODFILE CHECKSUM: 2f3a3e2b8c3922dabea60d4827af44d050c17028
 
 COCOAPODS: 1.2.1
