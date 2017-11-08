@@ -21,6 +21,7 @@
     BOOL isAppending;
     NSInteger selectedIndex;
     NSString* curBalanceFilter, *baseUrl;
+    NSURL* selectedDocument;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
@@ -266,8 +267,10 @@
         return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
-        if (filePath != nil)
+        if (filePath != nil) {
+            selectedDocument = filePath;
             [self displayDocument:filePath];
+        }
     }];
     [downloadTask resume];
 }
@@ -281,6 +284,12 @@
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
 {
     return self;
+}
+
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
+{
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
 
 #pragma mark - ScrollView Delegate

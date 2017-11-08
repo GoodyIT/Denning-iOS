@@ -23,11 +23,19 @@
 
 - (void) didTapPaymentRecord: (MatterLastCell*) cell;
 
+
+- (void) didTapUpload: (MatterLastCell*) cell fileNo:(NSString*) fileNo;
+
+- (void) didTapTemplate: (MatterLastCell*) cell withModel:(RelatedMatterModel*) model;
+
 @end
 
 @interface MatterLastCell : DIGeneralCell
 @property (weak, nonatomic) IBOutlet UIButton *paymentRecordBtn;
 
 @property (weak, nonatomic) id<MatterLastCellDelegate> matterLastCellDelegate;
+
+@property (strong, nonatomic) RelatedMatterModel *model;
+- (void) configureCellWithModfel: (RelatedMatterModel*) model;
 
 @end

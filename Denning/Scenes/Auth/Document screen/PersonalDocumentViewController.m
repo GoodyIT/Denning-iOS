@@ -11,6 +11,9 @@
 #import "DocumentCell.h"
 
 @interface PersonalDocumentViewController ()<BranchHeaderDelegate, UIDocumentInteractionControllerDelegate>
+{
+    NSURL* selectedDocument;
+}
 
 @end
 
@@ -151,6 +154,7 @@
         
         return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        selectedDocument = filePath;
         [self displayDocument:filePath];
     }];
     [downloadTask resume];
@@ -168,6 +172,12 @@
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
 {
     return self;
+}
+
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
+{
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
 
 /*

@@ -8,6 +8,7 @@
 
 #import "MatterLastCell.h"
 
+
 @implementation MatterLastCell
 
 - (void)awakeFromNib {
@@ -40,4 +41,17 @@
     [self.matterLastCellDelegate didTapPaymentRecord:self];
 }
 
+
+- (IBAction)tempateTapped:(id)sender {
+    [self.matterLastCellDelegate didTapTemplate:self withModel:_model];
+}
+
+- (IBAction)uploadTapped:(id)sender {
+    [self.matterLastCellDelegate didTapUpload:self fileNo:_model.systemNo];
+}
+
+- (void) configureCellWithModfel: (RelatedMatterModel*) model
+{
+    _model = model;
+}
 @end

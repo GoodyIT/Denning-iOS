@@ -51,6 +51,7 @@
 - (void) prepareUI {
     _fileNoLabel.text = _fileNo;
     _fileNameLabel.text = _fileName;
+    curDate = [DIHelpers todayWithTime];
     [_date setTitle:[DIHelpers getDateInShortForm:[DIHelpers todayWithTime]] forState:UIControlStateNormal];
     
     if (_noteModel != nil) {

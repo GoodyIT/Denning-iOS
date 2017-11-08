@@ -20,6 +20,7 @@
 {
     NSString *titleOfList;
     NSString* nameOfField;
+    NSURL *selectedDocument;
     __block NSString *isRental;
     __block NSNumber* issueToFirstCode;
     NSString* selectedMatterCode, *selectedPresetCode;
@@ -195,6 +196,12 @@ NSMutableDictionary* keyValue;
     return self;
 }
 
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
+{
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0 && indexPath.row == 10) {
@@ -270,8 +277,10 @@ NSMutableDictionary* keyValue;
                 
                 return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
             } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-                if (filePath != nil)
+                if (filePath != nil) {
+                    selectedDocument = filePath;
                     [self displayDocument:filePath];
+                }
             }];
             [downloadTask resume];
         };

@@ -210,6 +210,8 @@
                         <segue destination="mJH-pp-8j5" kind="show" identifier="LedgerSearchSegue" id="S6L-bO-c4D"/>
                         <segue destination="2gU-zn-HPh" kind="show" identifier="DocumentSearchSegue" id="Evf-a7-3Ma"/>
                         <segue destination="UlI-OD-Hcj" kind="show" identifier="MatterCodeSegue" id="zBe-ze-5FD"/>
+                        <segue destination="gGq-vG-mdk" kind="show" identifier="FileUploadSegue" id="T1L-uB-PM5"/>
+                        <segue destination="djy-sB-h0Y" kind="show" identifier="TemplateSegue" id="OgK-5T-j2K"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qj5-7H-mOg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -223,6 +225,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IqP-EF-HbY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7712" y="-670"/>
+        </scene>
+        <!--Template-->
+        <scene sceneID="Xly-j1-bHM">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="Template" id="djy-sB-h0Y" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AXb-HV-gJ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7661" y="-847"/>
+        </scene>
+        <!--FileUpload-->
+        <scene sceneID="VKu-2g-PPM">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="FileUpload" id="gGq-vG-mdk" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0VI-zz-6am" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7603" y="-909"/>
         </scene>
         <!--AddPropertyNavigation-->
         <scene sceneID="fg3-9w-bI8">
@@ -789,7 +807,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="vxM-5a-pfB">
-                                        <rect key="frame" x="126" y="57" width="124.5" height="17"/>
+                                        <rect key="frame" x="125.5" y="57" width="124.5" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZC-tx-25w">
                                                 <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
@@ -866,7 +884,7 @@
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ledger balance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WV9-t8-H7Z">
-                                        <rect key="frame" x="20" y="11.5" width="116" height="18"/>
+                                        <rect key="frame" x="20" y="12" width="116" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -929,7 +947,7 @@
         <!--Template-->
         <scene sceneID="v9m-m8-Lj7">
             <objects>
-                <viewController id="WVQ-dH-D6J" customClass="Template" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Template" id="WVQ-dH-D6J" customClass="Template" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eWf-XD-lh5"/>
                         <viewControllerLayoutGuide type="bottom" id="y5E-Oq-65I"/>
@@ -950,13 +968,13 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Template" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gbs-4t-DwV">
-                                        <rect key="frame" x="142.5" y="33" width="91" height="24"/>
+                                        <rect key="frame" x="142" y="33" width="91" height="24"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="20"/>
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="b8I-1x-LQd">
-                                        <rect key="frame" x="126" y="57" width="124.5" height="17"/>
+                                        <rect key="frame" x="125.5" y="57" width="124.5" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajf-OG-APi">
                                                 <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
@@ -2508,7 +2526,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Bli-ne-sxW">
-                                        <rect key="frame" x="125.5" y="57" width="124.5" height="17"/>
+                                        <rect key="frame" x="126" y="57" width="124.5" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrc-n4-qpt">
                                                 <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
@@ -2691,7 +2709,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Gfn-Dg-XuF">
-                                        <rect key="frame" x="126" y="57" width="124.5" height="17"/>
+                                        <rect key="frame" x="125.5" y="57" width="124.5" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3HE-wt-iqx">
                                                 <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
@@ -2828,7 +2846,7 @@
         <!--Business User Upload-->
         <scene sceneID="Jhr-MQ-fmx">
             <objects>
-                <tableViewController id="840-7F-mOA" customClass="FileUpload" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FileUpload" id="840-7F-mOA" customClass="FileUpload" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="oz2-X2-gw4">
                         <rect key="frame" x="0.0" y="64" width="375" height="703"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

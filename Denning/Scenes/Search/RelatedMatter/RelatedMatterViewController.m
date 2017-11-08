@@ -22,6 +22,8 @@
 #import "SearchMatterCodeDetail.h"
 #import "AddPropertyViewController.h"
 #import "CommonTextCell.h"
+#import "Template.h"
+#import "FileUpload.h"
 
 @interface RelatedMatterViewController ()<MatterLastCellDelegate>
 {
@@ -181,7 +183,7 @@
     if (indexPath.section == 2) {
         NSDictionary* partySectionInfo = [self getPartySectionInfo:(int)indexPath.row];
         PartyGroupModel* partyGroup = relatedMatterModel.partyGroupArray[[[partySectionInfo objectForKey:@"group"] integerValue]];
-        PartyModel* party = partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
+        PartyModel* party = (PartyModel*)partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
         if (isLoading) return;
         isLoading = YES;
         [SVProgressHUD showWithStatus:@"Loading"];
@@ -416,6 +418,8 @@
         
         MatterLastCell *cell = [tableView dequeueReusableCellWithIdentifier:[MatterLastCell cellIdentifier] forIndexPath:indexPath];
         
+        [cell configureCellWithModfel:relatedMatterModel];
+        
         cell.matterLastCellDelegate = self;
         cell.accessoryType = UITableViewCellAccessoryNone;
         return cell;
@@ -425,6 +429,17 @@
 }
 
 #pragma mark - LastTableCellDelegate
+
+- (void) didTapUpload:(MatterLastCell *)cell fileNo:(NSString *)fileNo
+{
+    [self performSegueWithIdentifier:kFileUploadSegue sender:fileNo];
+}
+
+- (void) didTapTemplate:(MatterLastCell *)cell withModel:(SearchResultModel *)model
+{
+    [self performSegueWithIdentifier:kTemplateSegue sender:model];
+}
+
 - (void) didTapFileFolder:(MatterLastCell *)cell
 {
     if (isLoading) return;
@@ -508,6 +523,17 @@
     if ([segue.identifier isEqualToString:kMatterCodeSegue]){
         SearchMatterCodeDetail* vc = segue.destinationViewController;
         vc.model = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:kTemplateSegue]){
+        Template* vc = segue.destinationViewController;
+        vc.model = sender;
+    }
+    
+    if ([segue.identifier isEqualToString:kFileUploadSegue]){
+        UINavigationController* navC = segue.destinationViewController;
+        FileUpload* vc = navC.viewControllers.firstObject;
+        vc.titleValue = sender;
     }
 }
 

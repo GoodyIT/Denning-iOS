@@ -22,6 +22,7 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
     NSString* email, *sessionID;
     NSMutableArray* downloadedURLs;
     NSInteger totalSelectedDocs;
+    NSURL* selectedDocument;
 }
 
 @property (strong, nonatomic) UIImageView *postView;
@@ -542,6 +543,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     NSURL *url = [self getFileURL:file];
     
     [self downloadDocumentForURL:url withCompletion:^(NSURL *filePath, NSError *error) {
+        selectedDocument = filePath;
         [self displayDocument:filePath];
     }];
     
@@ -557,6 +559,12 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
 {
     return self;
+}
+
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
+{
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
 
 #pragma mark - Navigation
