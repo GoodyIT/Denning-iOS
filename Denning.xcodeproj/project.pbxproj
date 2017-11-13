@@ -748,6 +748,7 @@
 		961D46361F22CF0900B8714D /* splash_logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 961D46331F22CF0900B8714D /* splash_logo_white.png */; };
 		961D46371F22CF0900B8714D /* splash_logo_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 961D46341F22CF0900B8714D /* splash_logo_white@2x.png */; };
 		961D46381F22CF0900B8714D /* splash_logo_white@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 961D46351F22CF0900B8714D /* splash_logo_white@3x.png */; };
+		961F37161FB396BB0006B775 /* FileNameAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 961F37151FB396BB0006B775 /* FileNameAutoComplete.m */; };
 		962082A01ED2C6DA00BB595C /* PropertyAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 9620829F1ED2C6DA00BB595C /* PropertyAutoComplete.m */; };
 		962082AB1ED3C76E00BB595C /* CourtDiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 962082AA1ED3C76E00BB595C /* CourtDiaryViewController.m */; };
 		962082AE1ED3C7D800BB595C /* OfficeDiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 962082AD1ED3C7D800BB595C /* OfficeDiaryViewController.m */; };
@@ -796,6 +797,9 @@
 		963154AE1FB107480055A388 /* SearchResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 963154AD1FB107480055A388 /* SearchResultModel.m */; };
 		963154B21FB107DA0055A388 /* NSDictionary+NotNull.m in Sources */ = {isa = PBXBuildFile; fileRef = 963154B11FB107DA0055A388 /* NSDictionary+NotNull.m */; };
 		963154B61FB143E60055A388 /* FileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 963154B51FB143E60055A388 /* FileListViewController.m */; };
+		96334EAB1FB5DEE6005151AB /* ic_new.png in Resources */ = {isa = PBXBuildFile; fileRef = 96334EA81FB5DEE6005151AB /* ic_new.png */; };
+		96334EAC1FB5DEE6005151AB /* ic_new@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96334EA91FB5DEE6005151AB /* ic_new@2x.png */; };
+		96334EAD1FB5DEE6005151AB /* ic_new@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96334EAA1FB5DEE6005151AB /* ic_new@3x.png */; };
 		9635BB9E1F2A54FD00BE7CF0 /* SearchContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */; };
 		9635BB9F1F2A54FD00BE7CF0 /* SearchContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */; };
 		9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9635BBA21F2AEDDC00BE7CF0 /* Attendance.m */; };
@@ -1028,6 +1032,7 @@
 		064FEAC551343F357D0017CC /* libPods-Denning.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Denning.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1996F974161488BB17036EF8 /* Pods-Denning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Denning.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Denning/Pods-Denning.debug.xcconfig"; sourceTree = "<group>"; };
 		1E17F995330526CFB53C3FA3 /* Pods-Denning.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Denning.release.xcconfig"; path = "Pods/Target Support Files/Pods-Denning/Pods-Denning.release.xcconfig"; sourceTree = "<group>"; };
+		462F68DC8B1A45744F5E8C03 /* libPods-DenningShare.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DenningShare.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7903CF371ECC00BB0090206C /* BirthdayCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BirthdayCalendarViewController.h; sourceTree = "<group>"; };
 		7903CF381ECC00BB0090206C /* BirthdayCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BirthdayCalendarViewController.m; sourceTree = "<group>"; };
 		7903CF3A1ECC00BB0090206C /* DetailWithAutocomplete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailWithAutocomplete.h; sourceTree = "<group>"; };
@@ -2112,6 +2117,8 @@
 		961D46331F22CF0900B8714D /* splash_logo_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_logo_white.png; sourceTree = "<group>"; };
 		961D46341F22CF0900B8714D /* splash_logo_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash_logo_white@2x.png"; sourceTree = "<group>"; };
 		961D46351F22CF0900B8714D /* splash_logo_white@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash_logo_white@3x.png"; sourceTree = "<group>"; };
+		961F37141FB396BB0006B775 /* FileNameAutoComplete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileNameAutoComplete.h; sourceTree = "<group>"; };
+		961F37151FB396BB0006B775 /* FileNameAutoComplete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileNameAutoComplete.m; sourceTree = "<group>"; };
 		9620829E1ED2C6DA00BB595C /* PropertyAutoComplete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyAutoComplete.h; sourceTree = "<group>"; };
 		9620829F1ED2C6DA00BB595C /* PropertyAutoComplete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyAutoComplete.m; sourceTree = "<group>"; };
 		962082A91ED3C76E00BB595C /* CourtDiaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourtDiaryViewController.h; sourceTree = "<group>"; };
@@ -2193,6 +2200,9 @@
 		963154B11FB107DA0055A388 /* NSDictionary+NotNull.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NotNull.m"; sourceTree = "<group>"; };
 		963154B41FB143E60055A388 /* FileListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListViewController.h; sourceTree = "<group>"; };
 		963154B51FB143E60055A388 /* FileListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListViewController.m; sourceTree = "<group>"; };
+		96334EA81FB5DEE6005151AB /* ic_new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_new.png; sourceTree = "<group>"; };
+		96334EA91FB5DEE6005151AB /* ic_new@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_new@2x.png"; sourceTree = "<group>"; };
+		96334EAA1FB5DEE6005151AB /* ic_new@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_new@3x.png"; sourceTree = "<group>"; };
 		9635BB9B1F2A54FD00BE7CF0 /* SearchContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchContactCell.h; sourceTree = "<group>"; };
 		9635BB9C1F2A54FD00BE7CF0 /* SearchContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchContactCell.m; sourceTree = "<group>"; };
 		9635BB9D1F2A54FD00BE7CF0 /* SearchContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchContactCell.xib; sourceTree = "<group>"; };
@@ -5032,6 +5042,7 @@
 				79FBDFF01E304AAC00448FE3 /* libstdc++.tbd */,
 				79FBDFEE1E304AA000448FE3 /* libsqlite3.tbd */,
 				B5B204D56B08DD5FA20D4C0F /* libPods-Denning.a */,
+				462F68DC8B1A45744F5E8C03 /* libPods-DenningShare.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -5802,6 +5813,9 @@
 		79FBE14B1E30F7F500448FE3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				96334EA81FB5DEE6005151AB /* ic_new.png */,
+				96334EA91FB5DEE6005151AB /* ic_new@2x.png */,
+				96334EAA1FB5DEE6005151AB /* ic_new@3x.png */,
 				960017781FB0CE0D001EAB51 /* blue_circle.png */,
 				960017791FB0CE0D001EAB51 /* blue_circle@2x.png */,
 				9600177A1FB0CE0D001EAB51 /* blue_circle@3x.png */,
@@ -7514,6 +7528,8 @@
 			children = (
 				96D176931F2065DB008734DA /* FileUpload.h */,
 				96D176941F2065DB008734DA /* FileUpload.m */,
+				961F37141FB396BB0006B775 /* FileNameAutoComplete.h */,
+				961F37151FB396BB0006B775 /* FileNameAutoComplete.m */,
 			);
 			path = FileUpload;
 			sourceTree = "<group>";
@@ -7924,6 +7940,7 @@
 				79734FA31EBAA11500647215 /* icon_topup@3x.png in Resources */,
 				79EC0DAA1E8745A600320A28 /* home_background@3x.png in Resources */,
 				79EC0E631E8B0E8300320A28 /* icon_doc.png in Resources */,
+				96334EAC1FB5DEE6005151AB /* ic_new@2x.png in Resources */,
 				7920E7A71E9FA747002FEFF3 /* icon_search_black@2x.png in Resources */,
 				96EAEBAF1F21EC36004F75FC /* PaymentRecordFirstCell.xib in Resources */,
 				79D599E71E93ED0200CD3821 /* countries.json in Resources */,
@@ -8008,6 +8025,7 @@
 				96BDA6181F02B96200084606 /* DashboardThirdHeaderCell.xib in Resources */,
 				7931B4BC1EA851B00090BDE0 /* menu_add.png in Resources */,
 				96A73A621F1A6B4900B97156 /* TrialBalanceCell.xib in Resources */,
+				96334EAD1FB5DEE6005151AB /* ic_new@3x.png in Resources */,
 				9636DCCF1F03C6C8008DDA41 /* icon_db_file_ledgers@3x.png in Resources */,
 				79FBE1021E304F5000448FE3 /* QMSelectableContactCell.xib in Resources */,
 				96821F401F1DC84200F28708 /* CompletionTrackingCell.xib in Resources */,
@@ -8295,6 +8313,7 @@
 				96A73A971F1B240900B97156 /* icon_prev.png in Resources */,
 				793FF1311EBB78C9001F83A5 /* icon_edit_red@2x.png in Resources */,
 				9636DCD61F03C6C8008DDA41 /* icon_db_task_checklist.png in Resources */,
+				96334EAB1FB5DEE6005151AB /* ic_new.png in Resources */,
 				79FBE1F81E31600F00448FE3 /* Auth.storyboard in Resources */,
 				7931B4C61EA851B00090BDE0 /* menu_home@2x.png in Resources */,
 				9636DCED1F04059D008DDA41 /* FileListingCell.xib in Resources */,
@@ -8857,6 +8876,7 @@
 				79D59A1B1E94762B00CD3821 /* DenningContactViewController.m in Sources */,
 				79FBDF9B1E30421A00448FE3 /* CustomTaBBarController.m in Sources */,
 				962082AE1ED3C7D800BB595C /* OfficeDiaryViewController.m in Sources */,
+				961F37161FB396BB0006B775 /* FileNameAutoComplete.m in Sources */,
 				960017761FB0CD2A001EAB51 /* AttendanceItemCell.m in Sources */,
 				79EC0E291E89E45D00320A28 /* DocumentModel.m in Sources */,
 				79FBE10A1E304F5000448FE3 /* QMGroupInfoViewController.m in Sources */,

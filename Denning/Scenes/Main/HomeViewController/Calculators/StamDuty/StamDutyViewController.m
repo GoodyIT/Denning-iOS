@@ -18,6 +18,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *stampTypesView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *innerView;
+
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
 @property (nonatomic, strong) NSArray* stamdutyTypesArray;
 
@@ -77,7 +79,7 @@
 - (void) addView: (UIViewController*) viewController
 {
     [self addChildViewController:viewController];
-    [self.containerView addSubview:viewController.view];
+    [self.innerView addSubview:viewController.view];
     viewController.view.frame = CGRectMake(0, 0, self.containerView.frame.size.width, self.containerView.frame.size.height);
     viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [viewController didMoveToParentViewController:self];
@@ -99,7 +101,7 @@
 
 - (void) prepareStamDutyTypes {
     self.stamdutyTypesArray = @[@"SPA", @"Loan", @"Tenancy/Lease"];
-    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
+    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
     self.selectionList.dataSource = self;
     

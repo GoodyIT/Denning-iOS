@@ -51,7 +51,7 @@
 - (void) prepareUI {
     _fileNoLabel.text = _fileNo;
     _fileNameLabel.text = _fileName;
-    curDate = [DIHelpers todayWithTime];
+    
     [_date setTitle:[DIHelpers getDateInShortForm:[DIHelpers todayWithTime]] forState:UIControlStateNormal];
     
     if (_noteModel != nil) {
@@ -88,7 +88,7 @@
     DateTimeView *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         [_date setTitle:date forState:UIControlStateNormal];
-        curDate = date;
+        curDate = [DIHelpers convertDateToMySQLFormat:date];
     };
     STPopupController *popupController = [[STPopupController alloc] initWithRootViewController:calendarViewController];
     [STPopupNavigationBar appearance].barTintColor = [UIColor flatBlackColorDark];
@@ -111,9 +111,11 @@
 - (IBAction)didTapSave:(id)sender {
     if (isLoading) return;
     isLoading = YES;
-    
+    if (!curDate) {
+        curDate = [DIHelpers todayWithTime];
+    }
     NSMutableDictionary *param = [@{
-                                    @"dtDate":[DIHelpers convertDateToMySQLFormat:curDate],
+                                    @"dtDate":curDate,
                                     @"strFileNo":[DIHelpers trim:_fileNo],
                                     @"strNote":_note.text} mutableCopy];
     

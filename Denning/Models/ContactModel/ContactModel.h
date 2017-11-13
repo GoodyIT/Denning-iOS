@@ -31,7 +31,7 @@
 
 @property (strong, nonatomic) NSString *contactTitle;
 
-@property (strong, nonatomic) NSString *InviteDennig;
+@property (strong, nonatomic) NSString *InviteToDenning;
 
 @property (strong, nonatomic) NSString *website;
 

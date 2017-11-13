@@ -46,12 +46,13 @@
 @property (strong, nonatomic) EventModel* latestEvent;
 @property (weak, nonatomic) IBOutlet UIView *topView;
 
-@property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (copy, nonatomic) NSString *search;
 
 @property (strong, nonatomic) NSArray* topFilters;
 @property (strong, nonatomic) NSArray* bottomFilters;
 
+@property (strong, nonatomic) NSNumber* page;
 @end
 
 @implementation EventViewController
@@ -65,7 +66,7 @@
     [self setupTopBottomFilters];
     [self getMonthlySummaryWithCompletion:nil];
     [self registerNibs];
-    [self configureSearch];
+//    [self configureSearch];
     [self presetDateRange];
    
 }
@@ -92,19 +93,6 @@
     self.currentRange.editable = YES;
 }
 
-- (void) configureSearch
-{
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
-    self.searchController.searchBar.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.definesPresentationContext = YES;
-    [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    [self.topView addSubview: self.searchController.searchBar];
-}
-
 - (void) viewWillDisappear:(BOOL)animated
 {
     [SVProgressHUD dismiss];
@@ -126,6 +114,7 @@
 
 - (void) prepareUI
 {
+    self.page = @(2);
     _search = @"";
     self.eventsArray = self.originalArray;
     startDate = [DIHelpers today];
@@ -140,6 +129,19 @@
     self.dateFormatter2 = [[NSDateFormatter alloc] init];
     self.dateFormatter2.dateFormat = @"yyyy-MM-dd";
     _datesWithEvent = [NSMutableArray new];
+    
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 300;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendEvent];
+    }];
 }
 
 - (NSString*) getTwoMonthWords:(NSString*) month {
@@ -179,14 +181,54 @@
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] getLatestEventWithStartDate:startDate endDate:endDate filter:currentBottomFilter search:_search withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] getLatestEventWithStartDate:startDate endDate:endDate filter:currentBottomFilter search:_search page:_page withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
         
         @strongify(self);
         self->isLoading = NO;
         [navigationController dismissNotificationPanel];
         if (error == nil) {
             self.originalArray = eventsArray;
-            [self updateEvents];
+            self.eventsArray = _originalArray;
+            if (eventsArray.count > 0) {
+                _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
+                // update table view
+                
+            }
+            [self.tableView reloadData];
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
+
+- (void) appendEvent {
+    
+    if (isLoading) return;
+    isLoading = YES;
+    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] getLatestEventWithStartDate:startDate endDate:endDate filter:currentBottomFilter search:_search page:_page withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
+        
+        @strongify(self);
+        self->isLoading = NO;
+        [navigationController dismissNotificationPanel];
+        if (error == nil) {
+            
+            _originalArray = [[_originalArray arrayByAddingObjectsFromArray:eventsArray] mutableCopy];
+            
+            self.eventsArray = _originalArray;
+            
+            if (eventsArray.count > 0) {
+                _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
+                // update table view
+                
+                [self.tableView reloadData];
+            }
+            
+            [self.tableView finishInfiniteScroll];
             
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -244,6 +286,7 @@
 }
 
 - (void) resetTopFilterButtons {
+    self.page = @(1);
     [self resetState:self.todayBtn];
     [self resetState:self.thisWeekBtn];
     [self resetState:self.futureBtn];
@@ -349,9 +392,34 @@
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)__unused scrollView {
-    
-    [self.searchController.searchBar endEditing:YES];
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    CGFloat offsetY = scrollView.contentOffset.y;
+    //    CGFloat contentHeight = scrollView.contentSize.height;
+    if (offsetY > 10) {
+        
+        [self.searchBar endEditing:YES];
+        _searchBar.showsCancelButton = NO;
+    }
+}
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    _searchBar.showsCancelButton = YES;
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
+{
+    [self updateEvents];
 }
 
 #pragma mark - UISearchControllerDelegate
@@ -362,11 +430,6 @@
 }
 
 #pragma mark - searchbar delegate
-
-- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
-{
-    
-}
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     self.search = searchBar.text;
@@ -390,10 +453,10 @@
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 5;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 5;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      EventCell *cell = [tableView dequeueReusableCellWithIdentifier:[EventCell cellIdentifier] forIndexPath:indexPath];

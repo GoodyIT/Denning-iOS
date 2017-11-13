@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAO-eC-zzT">
-                        <rect key="frame" x="184.5" y="37.5" width="101.5" height="14.5"/>
+                        <rect key="frame" x="192.5" y="37.5" width="101.5" height="14.5"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -64,7 +64,7 @@
                 <constraint firstItem="Xmw-VR-pbt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="NEb-24-2cB"/>
                 <constraint firstItem="4WL-NS-zyK" firstAttribute="bottom" secondItem="eAO-eC-zzT" secondAttribute="bottom" id="NFd-9E-dYR"/>
                 <constraint firstItem="4WL-NS-zyK" firstAttribute="top" secondItem="eAO-eC-zzT" secondAttribute="top" id="Ulm-OJ-eDD"/>
-                <constraint firstItem="4WL-NS-zyK" firstAttribute="leading" secondItem="eAO-eC-zzT" secondAttribute="trailing" constant="8" id="bmI-FT-kiB"/>
+                <constraint firstItem="4WL-NS-zyK" firstAttribute="leading" secondItem="eAO-eC-zzT" secondAttribute="trailing" id="bmI-FT-kiB"/>
                 <constraint firstItem="qct-cP-Afu" firstAttribute="top" secondItem="eAO-eC-zzT" secondAttribute="top" id="icd-hD-r1O"/>
                 <constraint firstAttribute="bottom" secondItem="eAO-eC-zzT" secondAttribute="bottom" constant="10" id="nsC-TX-cql"/>
                 <constraint firstItem="Xmw-VR-pbt" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="vhN-cz-4Lc"/>

@@ -3,6 +3,8 @@ platform :ios, ’10.2’
 project ‘Denning.xcodeproj’
 source 'https://github.com/CocoaPods/Specs.git'
 
+
+
 target ‘Denning’ do
     
     	pod 'UIDevice-Hardware', '~> 0.1.3'

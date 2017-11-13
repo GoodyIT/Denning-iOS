@@ -194,7 +194,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     self.tableView.infiniteScrollIndicatorMargin = 40;
     
     // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 500;
+    self.tableView.infiniteScrollTriggerOffset = 100;
     
     // Add infinite scroll handler
     @weakify(self)
@@ -589,10 +589,10 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     return 30;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 10;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 10;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchResultModel* model = self.searchResultArray[indexPath.section];

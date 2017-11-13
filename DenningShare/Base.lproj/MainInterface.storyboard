@@ -11,6 +11,11 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="ErG-mV-j3i">
@@ -72,6 +77,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="qRX-Vl-ADl" id="V44-RG-ab5"/>
+                                </connections>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="q88-1R-321">
                                 <rect key="frame" x="121" y="346" width="218" height="80"/>
@@ -163,6 +171,7 @@
                         <outlet property="uploadToValue" destination="nHi-Ua-c7y" id="ari-ZK-Tyf"/>
                         <segue destination="7wf-zI-bRD" kind="show" identifier="ContactGetlistSegue" id="KLI-77-lgb"/>
                         <segue destination="GjN-9z-jwU" kind="show" identifier="FileListGetSegue" id="WaU-Yl-hBo"/>
+                        <segue destination="Bfp-31-hUc" kind="show" identifier="FileNameSegue" id="6DX-f5-9eh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VCI-gJ-hqI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -355,6 +364,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F2p-Yp-P7w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2097" y="1505"/>
+        </scene>
+        <!--File Name Auto Complete-->
+        <scene sceneID="9tK-8x-zDZ">
+            <objects>
+                <viewController storyboardIdentifier="FileNameAutoComplete" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Bfp-31-hUc" customClass="FileNameAutoComplete" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lfv-0B-mER"/>
+                        <viewControllerLayoutGuide type="bottom" id="I5p-t8-ZeK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="j7E-ne-SW7">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="350"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search / Input" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tME-V2-Z3n" customClass="MLPAutoCompleteTextField">
+                                <rect key="frame" x="24" y="10" width="252" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tME-V2-Z3n" firstAttribute="top" secondItem="j7E-ne-SW7" secondAttribute="topMargin" constant="10" id="gLz-vA-bgj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tME-V2-Z3n" secondAttribute="trailing" constant="8" id="lEq-2y-aS2"/>
+                            <constraint firstItem="tME-V2-Z3n" firstAttribute="leading" secondItem="j7E-ne-SW7" secondAttribute="leadingMargin" constant="8" id="zTe-hz-bow"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="350"/>
+                    <connections>
+                        <outlet property="autocompleteTF" destination="tME-V2-Z3n" id="efl-3a-yLw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DbW-BS-kod" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1221" y="1362"/>
         </scene>
     </scenes>
 </document>

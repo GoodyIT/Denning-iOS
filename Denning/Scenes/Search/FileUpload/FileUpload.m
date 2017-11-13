@@ -11,6 +11,7 @@
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
 #import "QMPhoto.h"
 #import "SimpleMatterViewController.h"
+#import "FileNameAutoComplete.h"
 
 @interface FileUpload ()< UIImagePickerControllerDelegate, UINavigationControllerDelegate,
 NYTPhotosViewControllerDelegate, UITextFieldDelegate>
@@ -42,14 +43,48 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void) showPopup: (UIViewController*) vc {
+    STPopupController *popupController = [[STPopupController alloc] initWithRootViewController:vc];
+    [STPopupNavigationBar appearance].barTintColor = [UIColor blackColor];
+    [STPopupNavigationBar appearance].tintColor = [UIColor whiteColor];
+    [STPopupNavigationBar appearance].barStyle = UIBarStyleDefault;
+    [STPopupNavigationBar appearance].titleTextAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"Cochin" size:18], NSForegroundColorAttributeName: [UIColor whiteColor] };
+    popupController.transitionStyle = STPopupTransitionStyleFade;;
+    popupController.containerView.layer.cornerRadius = 4;
+    popupController.containerView.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
+    popupController.containerView.layer.shadowOffset = CGSizeMake(4, 4);
+    popupController.containerView.layer.shadowOpacity = 1;
+    popupController.containerView.layer.shadowRadius = 1.0;
+    
+    [popupController presentInViewController:self];
+}
+
+- (void) showAutocomplete:(NSString*) url {
+    [self.view endEditing:YES];
+    
+    FileNameAutoComplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FileNameAutoComplete"];
+    vc.url = url;
+    vc.title = @"";
+    vc.updateHandler =  ^(NSString* selectedString) {
+        self.renameFile.text = selectedString;
+    };
+    
+    [self showPopup:vc];
+}
+
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search=letter&pagesize=5"];
+}
+
 - (IBAction)didTapSend:(id)sender {
     if (isLoading) return;
     isLoading = YES;
 
-//    if (self.uploadedFile.text.length == 0) {
-//        [QMAlert showAlertWithMessage:@"Please select the file to upload" actionSuccess:NO inViewController:self];
-//        return;
-//    }
+    if (self.imagePreview.image == nil) {
+        [QMAlert showAlertWithMessage:@"Please select the file to upload" actionSuccess:NO inViewController:self];
+        return;
+    }
     if (self.renameFile.text.length == 0) {
         [QMAlert showAlertWithMessage:@"Please input the file name" actionSuccess:NO inViewController:self];
         return;

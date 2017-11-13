@@ -77,7 +77,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     
     NSDate *creationDate = [formatter dateFromString:date];
@@ -91,7 +91,7 @@
     NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
     
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     
     NSDate *creationDate = [formatter dateFromString:date];
@@ -121,7 +121,7 @@
     NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
     
     [formatter setDateFormat:@"d MMM yyyy"];
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [newFormatter setTimeZone:timeZone];
     [newFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -140,7 +140,7 @@
     NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
     
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [newFormatter setTimeZone:timeZone];
     [newFormatter setDateFormat:@"d MMM yyyy"];
@@ -159,7 +159,7 @@
     NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
     
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [newFormatter setTimeZone:timeZone];
     [newFormatter setDateFormat:@"HH:mm a"];
@@ -313,7 +313,7 @@
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
@@ -363,7 +363,7 @@
     NSString* date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     
@@ -374,7 +374,7 @@
 + (NSString*) randomTime {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"HHmmss"];
     
@@ -385,7 +385,7 @@
     NSString* date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
@@ -400,7 +400,7 @@
 + (NSString*) sevenDaysLaterFromDate: (NSString*) date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     
@@ -411,7 +411,7 @@
     NSString* date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     
@@ -422,7 +422,7 @@
 + (NSString*) currentSunday {
     NSDate *currentDate  = [NSDate date];
     NSCalendar *gregorianCalendar = [[NSCalendar alloc]  initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    [gregorianCalendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+    [gregorianCalendar setTimeZone:[NSTimeZone localTimeZone]];
     
     NSDateComponents *components = [gregorianCalendar components:(NSCalendarUnitYear| NSCalendarUnitMonth
                                                                   | NSCalendarUnitDay| NSCalendarUnitWeekday|NSCalendarUnitWeekOfMonth)  fromDate:currentDate];
@@ -444,7 +444,7 @@
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     

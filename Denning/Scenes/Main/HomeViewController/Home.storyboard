@@ -584,16 +584,26 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="TQL-VD-gNv">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="fA8-E9-YXd" id="EJO-47-I5c"/>
+                                        </connections>
+                                    </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="W8A-oB-CDt" firstAttribute="leading" secondItem="NPb-Ga-QAZ" secondAttribute="leading" id="09m-GC-IcD"/>
+                                    <constraint firstItem="TQL-VD-gNv" firstAttribute="top" secondItem="NPb-Ga-QAZ" secondAttribute="top" id="D7Q-Qu-L9t"/>
+                                    <constraint firstAttribute="trailing" secondItem="TQL-VD-gNv" secondAttribute="trailing" id="HTT-va-KOY"/>
+                                    <constraint firstItem="AZs-xM-sY9" firstAttribute="top" secondItem="TQL-VD-gNv" secondAttribute="bottom" id="NiB-fg-cWB"/>
                                     <constraint firstItem="AZs-xM-sY9" firstAttribute="leading" secondItem="NPb-Ga-QAZ" secondAttribute="leading" id="ZLn-Hk-dxX"/>
                                     <constraint firstAttribute="trailing" secondItem="AZs-xM-sY9" secondAttribute="trailing" id="fSp-f0-sJI"/>
                                     <constraint firstAttribute="trailing" secondItem="W8A-oB-CDt" secondAttribute="trailing" id="qCk-ut-nvB"/>
-                                    <constraint firstItem="AZs-xM-sY9" firstAttribute="top" secondItem="NPb-Ga-QAZ" secondAttribute="top" constant="50" id="qsm-BG-AzP"/>
                                     <constraint firstAttribute="height" constant="270" id="rMO-2s-e1Y"/>
                                     <constraint firstItem="W8A-oB-CDt" firstAttribute="top" secondItem="AZs-xM-sY9" secondAttribute="bottom" id="tXf-dv-kKl"/>
+                                    <constraint firstItem="TQL-VD-gNv" firstAttribute="leading" secondItem="NPb-Ga-QAZ" secondAttribute="leading" id="wqS-nB-2Bf"/>
                                     <constraint firstAttribute="bottom" secondItem="W8A-oB-CDt" secondAttribute="bottom" id="znz-cM-XJR"/>
                                 </constraints>
                             </view>
@@ -724,6 +734,7 @@
                         <outlet property="officeBtn" destination="opm-ZO-sNR" id="1nU-q1-ie2"/>
                         <outlet property="personalBtn" destination="lDq-sD-pWk" id="atP-Uf-rG1"/>
                         <outlet property="previousBtn" destination="QB0-4J-Z51" id="Ild-zs-1QD"/>
+                        <outlet property="searchBar" destination="TQL-VD-gNv" id="o2x-dA-HJY"/>
                         <outlet property="tabbarIndicatorLeading" destination="J4k-z3-020" id="CLS-gn-pMq"/>
                         <outlet property="tableView" destination="lVI-8d-vBp" id="HFf-Eu-Yge"/>
                         <outlet property="thisWeekBtn" destination="yuc-pi-JhW" id="epS-1Q-NkA"/>
@@ -1170,6 +1181,9 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="4ae-oA-4zd" id="xUv-6F-1BU"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>

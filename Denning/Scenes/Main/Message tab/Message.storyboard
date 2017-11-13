@@ -135,14 +135,14 @@ out here.</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zxe-wM-uTY" userLabel="Group chat">
-                                        <rect key="frame" x="160.5" y="0.0" width="23" height="24"/>
-                                        <state key="normal" image="ic_new"/>
+                                        <rect key="frame" x="161" y="0.0" width="22" height="24"/>
+                                        <state key="normal" image="ic_new.png"/>
                                         <connections>
                                             <action selector="groupTabClicked:" destination="3AG-Pj-wD8" eventType="touchUpInside" id="z4I-Vk-nu3"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXn-Ky-6sF" userLabel="Staff">
-                                        <rect key="frame" x="240.5" y="0.0" width="29" height="24"/>
+                                        <rect key="frame" x="240" y="0.0" width="29" height="24"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                         <state key="normal" image="icon_staff.png">
                                             <color key="titleColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
@@ -305,7 +305,7 @@ out here.</string>
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="t5g-eL-0FL" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Le5-X1-1ff" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Le5-X1-1ff" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -504,7 +504,7 @@ out here.</string>
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eGm-Je-XuH" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="DxX-ze-oWW" customClass="QMNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DxX-ze-oWW" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -525,7 +525,7 @@ out here.</string>
         </scene>
     </scenes>
     <resources>
-        <image name="ic_new" width="23" height="23"/>
+        <image name="ic_new.png" width="22" height="22"/>
         <image name="icon_client.png" width="17" height="22"/>
         <image name="icon_favorite.png" width="26" height="24"/>
         <image name="icon_favorite_selected.png" width="26" height="24"/>

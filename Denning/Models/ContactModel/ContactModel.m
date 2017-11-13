@@ -33,7 +33,7 @@
     contactModel.contactTitle = [response valueForKeyNotNull:@"title"];
     contactModel.contactPerson = [response valueForKeyNotNull:@"contactPerson"];
     contactModel.website = [response valueForKeyNotNull:@"website"];
-    contactModel.InviteDennig = [response valueForKeyNotNull:@"InviteDennig"];
+    contactModel.InviteToDenning = [response valueForKeyNotNull:@"InviteToDenning"];
     contactModel.registeredOffice = [response valueForKeyNotNull:@"registeredOffice"];
     contactModel.occupation = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"occupation"]];
     

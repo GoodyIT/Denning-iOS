@@ -161,24 +161,37 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bg9-t7-xES" userLabel="MainView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zw5-Pv-0M3">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="zw5-Pv-0M3" secondAttribute="trailing" id="Fog-HK-yMX"/>
+                                    <constraint firstAttribute="bottom" secondItem="zw5-Pv-0M3" secondAttribute="bottom" id="GMN-bS-PJJ"/>
+                                    <constraint firstItem="zw5-Pv-0M3" firstAttribute="top" secondItem="Bg9-t7-xES" secondAttribute="top" constant="44" id="fo8-4n-uAE"/>
+                                    <constraint firstItem="zw5-Pv-0M3" firstAttribute="leading" secondItem="Bg9-t7-xES" secondAttribute="leading" id="raI-mz-re4"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Bg9-t7-xES" firstAttribute="top" secondItem="KWS-s4-8Iu" secondAttribute="bottom" id="2rb-VO-3ut"/>
                             <constraint firstAttribute="trailing" secondItem="Bg9-t7-xES" secondAttribute="trailing" id="Xg7-3s-EJq"/>
                             <constraint firstItem="Bg9-t7-xES" firstAttribute="leading" secondItem="ZuK-a6-z0K" secondAttribute="leading" id="cMY-wz-DFv"/>
                             <constraint firstItem="urG-qn-CJB" firstAttribute="top" secondItem="Bg9-t7-xES" secondAttribute="bottom" id="dnZ-s9-S8l"/>
-                            <constraint firstItem="Bg9-t7-xES" firstAttribute="top" secondItem="ZuK-a6-z0K" secondAttribute="top" id="kaB-nc-L1e"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="containerView" destination="Bg9-t7-xES" id="WcW-Lp-beO"/>
+                        <outlet property="innerView" destination="zw5-Pv-0M3" id="iAY-Ci-FEc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sq4-FW-lx5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6490" y="1248"/>
+            <point key="canvasLocation" x="6488.8000000000002" y="1247.2263868065968"/>
         </scene>
         <!--Income Tax-->
         <scene sceneID="S4f-wT-BsO">

@@ -357,7 +357,7 @@ NSMutableDictionary* keyValue;
     isLoading = YES;
     [SVProgressHUD showWithStatus:@"Loading"];
     @weakify(self)
-    [[QMNetworkManager sharedManager] getLatestEventWithStartDate:[DIHelpers today] endDate:[DIHelpers today] filter:@"1court" search:@"" withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] getLatestEventWithStartDate:[DIHelpers today] endDate:[DIHelpers today] filter:@"1court" search:@"" page:@(1) withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
         @strongify(self)
         self->isLoading = NO;

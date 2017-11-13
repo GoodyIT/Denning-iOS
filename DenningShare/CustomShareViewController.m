@@ -13,8 +13,9 @@
 #import "SearchResultModel.h"
 @import MobileCoreServices;
 #import "DIGlobal.h"
+#import "FileNameAutoComplete.h"
 
-@interface CustomShareViewController ()<NSURLSessionDelegate>
+@interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate>
 {
     NSString* fileNo1, *contactKey, *fileKey;
     NSURLSession* mySession;
@@ -82,6 +83,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) showAutocomplete:(NSString*) url {
+    [self.view endEditing:YES];
+    [self performSegueWithIdentifier:@"FileNameSegue" sender:url];
+}
+
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search=letter&pagesize=5"];
 }
 
 - (IBAction)didTapUploadTo:(UISegmentedControl*)sender {
@@ -308,8 +319,13 @@ didCompleteWithError:(NSError *)error{
             
             fileNo1 = model.key;
         };
+    } else if ([segue.identifier isEqualToString:@"FileNameSegue"]) {
+        FileNameAutoComplete *vc = (FileNameAutoComplete*)segue.destinationViewController;
+        vc.url = sender;
+        vc.title = @"";
+        vc.updateHandler =  ^(NSString* selectedString) {
+            self.fileName.text = selectedString;
+        };
     }
-
 }
-
 @end
