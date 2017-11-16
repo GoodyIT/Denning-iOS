@@ -382,6 +382,11 @@
     return YES;
 }
 
+- (NSString*) removeSpecial:(NSString*) string {
+    NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"-;(;)"];
+    return [[string componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
+}
+
 - (NSString*) getNotNull: (NSString*) value {
     if (value == nil) {
         return @"";
@@ -514,20 +519,24 @@
         [data addEntriesFromDictionary:@{@"emailAddress": [self getNotNull:_email.text]}];
     }
     
-    if (_phoneMobile.text.length > 0 && ![_phoneMobile.text isEqualToString:_contactModel.mobilePhone]) {
-        [data addEntriesFromDictionary:@{@"phoneMobile": [mobileCountryCallingCode stringByAppendingString: [self getNotNull:_phoneMobile.text]]}];
+    NSString *_phone = [mobileCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneMobile.text]]];
+    if (_phoneMobile.text.length > 0 && ![_phone isEqualToString:[self removeSpecial:_contactModel.mobilePhone]]) {
+        [data addEntriesFromDictionary:@{@"phoneMobile": _phone}];
     }
     
-    if (_phoneHome.text.length > 0 && ![_phoneHome.text isEqualToString:_contactModel.homePhone]) {
-        [data addEntriesFromDictionary:@{@"phoneHome": [homeCountryCallingCode stringByAppendingString:[self getNotNull:_phoneHome.text]]}];
+    _phone = [homeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneHome.text]]];
+    if (_phoneHome.text.length > 0 && ![_phone isEqualToString:[self removeSpecial:_contactModel.homePhone]]) {
+        [data addEntriesFromDictionary:@{@"phoneHome": _phone}];
     }
     
-    if (_phoneOffice.text.length > 0 && ![_phoneOffice.text isEqualToString:_contactModel.officePhone]) {
-        [data addEntriesFromDictionary:@{@"phoneOffice":[officeCountryCallingCode stringByAppendingString:[self getNotNull:_phoneOffice.text]]}];
+    _phone = [officeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneOffice.text]]];
+    if (_phoneOffice.text.length > 0 && ![_phoneOffice.text isEqualToString:[self removeSpecial:_contactModel.officePhone]]) {
+        [data addEntriesFromDictionary:@{@"phoneOffice":_phone}];
     }
     
-    if (_fax.text.length > 0 && ![_fax.text isEqualToString:_contactModel.fax]) {
-        [data addEntriesFromDictionary:@{@"phoneFax": [faxCountryCallingCode stringByAppendingString:[self getNotNull:_fax.text]]}];
+    _phone = [faxCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_fax.text]]];
+    if (_fax.text.length > 0 && ![_fax.text isEqualToString:[self removeSpecial:_contactModel.fax]]) {
+        [data addEntriesFromDictionary:@{@"phoneFax":_phone}];
     }
     
     if (_dateOfBirth.text.length > 0 && ![[DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text] isEqualToString:_contactModel.dateOfBirth]) {
@@ -575,7 +584,7 @@
     if (self.inviteDenning.isOn) {
         inviteToDenning = @(1);
     }
-    if (inviteToDenning && ![inviteToDenning isEqual:_contactModel.InviteDennig]) {
+    if (inviteToDenning && ![inviteToDenning isEqual:_contactModel.InviteToDenning]) {
         [data addEntriesFromDictionary:@{@"inviteToDenning": inviteToDenning}];
     }
 
@@ -623,6 +632,24 @@
     }];
 }
 
+- (NSString*) adjustPhone: (NSString*) phone btn:(UIButton*) countryBtn
+{
+    if (phone.length == 0) {
+        return @"";
+    }
+    NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"-"];
+   phone = [[phone componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
+
+    NSArray* obj = [phone componentsSeparatedByString:@")"];
+    NSString* countryCallingCode = [obj[0] substringFromIndex:1];
+    
+    NSString *buttonTitle = [NSString stringWithFormat:@"(%@)",countryCallingCode];
+    
+    [countryBtn setTitle:buttonTitle forState:UIControlStateNormal];
+    
+    return obj[1];
+}
+
 - (void) prepareUI {
     headers = @[@"Personal Info.", @"Contact Info", @"Other Info.", @"Company Info", @"Invitation"];
     
@@ -642,14 +669,14 @@
         self.address2.text = self.contactModel.address.line2;
         self.address3.text = self.contactModel.address.line3;
         self.town.text = self.contactModel.address.city;
-        self.state.text = self.contactModel.address.state;
+        self.state.text =  self.contactModel.address.state;
         self.country.text = self.contactModel.address.country;
         self.postcode.text = self.contactModel.address.postCode;
         self.email.text = self.contactModel.email;
-        self.phoneHome.text = self.contactModel.homePhone;
-        self.phoneMobile.text = self.contactModel.mobilePhone;
-        self.phoneOffice.text = self.contactModel.officePhone;
-        self.fax.text = self.contactModel.fax;
+        _phoneHome.text = [self adjustPhone:self.contactModel.homePhone btn:_phoneHomeBtn];
+        self.phoneMobile.text = [self adjustPhone:self.contactModel.mobilePhone btn:_phoneMobileBtn];
+        self.phoneOffice.text = [self adjustPhone:self.contactModel.officePhone btn:_phoneOfficeBtn];
+        self.fax.text = [self adjustPhone:self.contactModel.fax btn:_faxBtn];
         self.contactPerson.text = self.contactModel.contactPerson;
         self.citizenship.text = self.contactModel.citizenShip;
         self.dateOfBirth.text = [DIHelpers convertDateToCustomFormat:self.contactModel.dateOfBirth];
@@ -657,7 +684,7 @@
         self.taxFileNo.text = self.contactModel.tax;
         self.IRDBranch.text = self.contactModel.IRDBranch.descriptionValue;
         self.website.text = self.contactModel.website;
-        if ([self.contactModel.InviteDennig isEqualToString:@"1"]) {
+        if ([self.contactModel.InviteToDenning isEqualToString:@"1"]) {
             [self.inviteDenning setOn:YES];
         } else {
             [self.inviteDenning setOn:NO];

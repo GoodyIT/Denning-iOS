@@ -937,6 +937,12 @@
 		96A73AC31F1CD92400B97156 /* icon_status.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A73AC01F1CD92400B97156 /* icon_status.png */; };
 		96A73AC41F1CD92400B97156 /* icon_status@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A73AC11F1CD92400B97156 /* icon_status@2x.png */; };
 		96A73AC51F1CD92400B97156 /* icon_status@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A73AC21F1CD92400B97156 /* icon_status@3x.png */; };
+		96AA36471FBCB05B003D9A2C /* LeaveAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AA36461FBCB05B003D9A2C /* LeaveAppViewController.m */; };
+		96AA364C1FBCC343003D9A2C /* LeaveRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AA364A1FBCC343003D9A2C /* LeaveRecordCell.m */; };
+		96AA364D1FBCC343003D9A2C /* LeaveRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96AA364B1FBCC343003D9A2C /* LeaveRecordCell.xib */; };
+		96AA36521FBCC572003D9A2C /* LeaveRecordHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AA36501FBCC572003D9A2C /* LeaveRecordHeaderCell.m */; };
+		96AA36531FBCC572003D9A2C /* LeaveRecordHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96AA36511FBCC572003D9A2C /* LeaveRecordHeaderCell.xib */; };
+		96AA36571FBCC7AB003D9A2C /* LeaveRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AA36561FBCC7AB003D9A2C /* LeaveRecordModel.m */; };
 		96BDA6171F02B96100084606 /* DashboardThirdHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BDA6151F02B96100084606 /* DashboardThirdHeaderCell.m */; };
 		96BDA6181F02B96200084606 /* DashboardThirdHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96BDA6161F02B96100084606 /* DashboardThirdHeaderCell.xib */; };
 		96BDA61C1F02B9D400084606 /* DashboardThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BDA61A1F02B9D400084606 /* DashboardThirdCell.m */; };
@@ -2407,6 +2413,16 @@
 		96A73AC01F1CD92400B97156 /* icon_status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_status.png; sourceTree = "<group>"; };
 		96A73AC11F1CD92400B97156 /* icon_status@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_status@2x.png"; sourceTree = "<group>"; };
 		96A73AC21F1CD92400B97156 /* icon_status@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_status@3x.png"; sourceTree = "<group>"; };
+		96AA36451FBCB05B003D9A2C /* LeaveAppViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveAppViewController.h; sourceTree = "<group>"; };
+		96AA36461FBCB05B003D9A2C /* LeaveAppViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveAppViewController.m; sourceTree = "<group>"; };
+		96AA36491FBCC343003D9A2C /* LeaveRecordCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveRecordCell.h; sourceTree = "<group>"; };
+		96AA364A1FBCC343003D9A2C /* LeaveRecordCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveRecordCell.m; sourceTree = "<group>"; };
+		96AA364B1FBCC343003D9A2C /* LeaveRecordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveRecordCell.xib; sourceTree = "<group>"; };
+		96AA364F1FBCC572003D9A2C /* LeaveRecordHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveRecordHeaderCell.h; sourceTree = "<group>"; };
+		96AA36501FBCC572003D9A2C /* LeaveRecordHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveRecordHeaderCell.m; sourceTree = "<group>"; };
+		96AA36511FBCC572003D9A2C /* LeaveRecordHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaveRecordHeaderCell.xib; sourceTree = "<group>"; };
+		96AA36551FBCC7AB003D9A2C /* LeaveRecordModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeaveRecordModel.h; sourceTree = "<group>"; };
+		96AA36561FBCC7AB003D9A2C /* LeaveRecordModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeaveRecordModel.m; sourceTree = "<group>"; };
 		96BDA6141F02B96100084606 /* DashboardThirdHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardThirdHeaderCell.h; sourceTree = "<group>"; };
 		96BDA6151F02B96100084606 /* DashboardThirdHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardThirdHeaderCell.m; sourceTree = "<group>"; };
 		96BDA6161F02B96100084606 /* DashboardThirdHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardThirdHeaderCell.xib; sourceTree = "<group>"; };
@@ -2990,6 +3006,7 @@
 		7931B4EA1EA901DB0090BDE0 /* AddContact */ = {
 			isa = PBXGroup;
 			children = (
+				96AA36441FBCB038003D9A2C /* Leave Application */,
 				7903CFA81ECDCB140090206C /* Add Receipt */,
 				793FF1DC1EC388E7001F83A5 /* Add Property */,
 				793FF1D81EC382E9001F83A5 /* Add Bill */,
@@ -5050,6 +5067,7 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				96AA36541FBCC79B003D9A2C /* LeaveRecordModel */,
 				960017671FB0C7D1001EAB51 /* AttendanceInfo */,
 				960017681FB0C7D1001EAB51 /* AttendanceItem */,
 				960017651FB0C785001EAB51 /* AttendanceModel */,
@@ -5450,6 +5468,8 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				96AA364E1FBCC564003D9A2C /* LeaveRecordHeaderCell */,
+				96AA36481FBCC332003D9A2C /* LeaveRecordCell */,
 				960017721FB0CD10001EAB51 /* AttendanceItemCell */,
 				964206261F26ACAA008AC798 /* TemplateCell */,
 				96EAEBAA1F21EC22004F75FC /* PaymentRecordFirstCell */,
@@ -7371,6 +7391,44 @@
 			path = StaffOnlineHeaderCell;
 			sourceTree = "<group>";
 		};
+		96AA36441FBCB038003D9A2C /* Leave Application */ = {
+			isa = PBXGroup;
+			children = (
+				96AA36451FBCB05B003D9A2C /* LeaveAppViewController.h */,
+				96AA36461FBCB05B003D9A2C /* LeaveAppViewController.m */,
+			);
+			path = "Leave Application";
+			sourceTree = "<group>";
+		};
+		96AA36481FBCC332003D9A2C /* LeaveRecordCell */ = {
+			isa = PBXGroup;
+			children = (
+				96AA36491FBCC343003D9A2C /* LeaveRecordCell.h */,
+				96AA364A1FBCC343003D9A2C /* LeaveRecordCell.m */,
+				96AA364B1FBCC343003D9A2C /* LeaveRecordCell.xib */,
+			);
+			path = LeaveRecordCell;
+			sourceTree = "<group>";
+		};
+		96AA364E1FBCC564003D9A2C /* LeaveRecordHeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				96AA364F1FBCC572003D9A2C /* LeaveRecordHeaderCell.h */,
+				96AA36501FBCC572003D9A2C /* LeaveRecordHeaderCell.m */,
+				96AA36511FBCC572003D9A2C /* LeaveRecordHeaderCell.xib */,
+			);
+			path = LeaveRecordHeaderCell;
+			sourceTree = "<group>";
+		};
+		96AA36541FBCC79B003D9A2C /* LeaveRecordModel */ = {
+			isa = PBXGroup;
+			children = (
+				96AA36551FBCC7AB003D9A2C /* LeaveRecordModel.h */,
+				96AA36561FBCC7AB003D9A2C /* LeaveRecordModel.m */,
+			);
+			path = LeaveRecordModel;
+			sourceTree = "<group>";
+		};
 		96BDA6131F02B94A00084606 /* DashboardThirdHeaderCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -8004,6 +8062,7 @@
 				79A6AF931E9D1963007AA24D /* icon_user@2x.png in Resources */,
 				79EC0D5E1E85520700320A28 /* splash_background@3x.png in Resources */,
 				964206211F269B8B008AC798 /* icon_down@3x.png in Resources */,
+				96AA36531FBCC572003D9A2C /* LeaveRecordHeaderCell.xib in Resources */,
 				7931B4D71EA851B00090BDE0 /* menu_user.png in Resources */,
 				793FF18E1EBD4BDF001F83A5 /* icon_leave@3x.png in Resources */,
 				7931B4D41EA851B00090BDE0 /* menu_terms_of_uses.png in Resources */,
@@ -8244,6 +8303,7 @@
 				79EC0DC71E874ED700320A28 /* shutterstock@2x.jpg in Resources */,
 				7931B5091EA9B1C50090BDE0 /* icon_search_gray@3x.png in Resources */,
 				96A73A5C1F1A621600B97156 /* TrialBalanceHeaderCell.xib in Resources */,
+				96AA364D1FBCC343003D9A2C /* LeaveRecordCell.xib in Resources */,
 				79734F6B1EB98C5100647215 /* AddContact.storyboard in Resources */,
 				79EC0D211E77013A00320A28 /* SF-UI-Text-Light.otf in Resources */,
 				79FBE0F71E304F5000448FE3 /* QMContactCell.xib in Resources */,
@@ -8526,6 +8586,7 @@
 				790DD49B1ECBC05E009D5634 /* PropertyContactListViewController.m in Sources */,
 				962083351EDD510100BB595C /* DashboardStyle4Cell.m in Sources */,
 				96821F251F1D1B8400F28708 /* DashboardAttendanceDetail.m in Sources */,
+				96AA364C1FBCC343003D9A2C /* LeaveRecordCell.m in Sources */,
 				79FBDFDF1E30421A00448FE3 /* QMSoundManager.m in Sources */,
 				79FBE1041E304F5000448FE3 /* QMUserInfoCell.m in Sources */,
 				96D176951F2065DB008734DA /* FileUpload.m in Sources */,
@@ -8737,6 +8798,7 @@
 				7903CFA01ECD5BE50090206C /* CACModel.m in Sources */,
 				79F732271E96A929004F88DF /* AFURLSessionOperation.m in Sources */,
 				960F03031F28E43D00B25BBC /* FeeTransferDetail.m in Sources */,
+				96AA36521FBCC572003D9A2C /* LeaveRecordHeaderCell.m in Sources */,
 				962082AB1ED3C76E00BB595C /* CourtDiaryViewController.m in Sources */,
 				79EC0E011E89617A00320A28 /* BankViewController.m in Sources */,
 				9620833B1EDDF89100BB595C /* DashboardMatterSecondCell.m in Sources */,
@@ -8787,6 +8849,7 @@
 				790B23B11E381FF50037A187 /* FirmListViewController.m in Sources */,
 				96A73A721F1A6D9E00B97156 /* TrialBalanceModel.m in Sources */,
 				79FBDFA01E30421A00448FE3 /* NSError+Network.m in Sources */,
+				96AA36471FBCB05B003D9A2C /* LeaveAppViewController.m in Sources */,
 				96EAEBAE1F21EC36004F75FC /* PaymentRecordFirstCell.m in Sources */,
 				79D59A2B1E953B0400CD3821 /* ChatContactModel.m in Sources */,
 				79EC0EB41E8BE7F700320A28 /* EventViewController.m in Sources */,
@@ -8831,6 +8894,7 @@
 				796BBF9F1EA7B3CE001DA47F /* NewLedgerDetailCell.m in Sources */,
 				7903CFAB1ECDCB240090206C /* AddReceiptViewController.m in Sources */,
 				79734FA91EBAA53C00647215 /* CustomeSearchCollectionLayout.m in Sources */,
+				96AA36571FBCC7AB003D9A2C /* LeaveRecordModel.m in Sources */,
 				79EC0DE01E88077900320A28 /* RelatedMatterModel.m in Sources */,
 				96821F3A1F1DC4C400F28708 /* CompletionTrackingModel.m in Sources */,
 				79FBDFB31E30421A00448FE3 /* QMContactManager.m in Sources */,

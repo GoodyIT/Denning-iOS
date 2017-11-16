@@ -67,7 +67,7 @@ NSMutableDictionary* keyValue;
                  @"", @"Title Details (if issued)", @"More Strata Title Details (if issued)", @"Unit / Parcel Details (Per Principal SPA)", @"Project"
                  ];
     
-    if ([self.viewType isEqualToString:@"view"] || [self.viewType isEqualToString:@"update"]) {
+    if ([self.viewType isEqualToString:@"view"]) {
         selectedRestrictionCode = _propertyModel.restrictionInInterest.codeValue;
         selectedPropertyType = _propertyModel.propertyType.codeValue;
         selectedAreaTypeCode = _propertyModel.area.type;
@@ -83,8 +83,6 @@ NSMutableDictionary* keyValue;
         _contents = [temp mutableCopy];
         if ([_viewType isEqualToString:@"view"]) {
             self.title = @"View Property";
-        } else {
-            self.title = @"Update Property";
         }
         [self.saveBtn setTitle:@"Update" forState:UIControlStateNormal];
     } else {
@@ -283,8 +281,8 @@ NSMutableDictionary* keyValue;
         [data addEntriesFromDictionary:@{@"restrictionInInterest": @{@"code":selectedRestrictionCode}}];
     }
     
-    if (((NSString*)_contents[2][0][1]).length > 0 && ![_contents[2][0][1] isEqualToString:_propertyModel.spaAccParcelNo]) {
-        [data addEntriesFromDictionary:@{@"spaAccParcelNo":_contents[2][0][1]}];
+    if (((NSString*)_contents[2][4][1]).length > 0 && ![_contents[2][4][1] isEqualToString:_propertyModel.spaAccParcelNo]) {
+        [data addEntriesFromDictionary:@{@"spaAccParcelNo":_contents[2][4][1]}];
     }
     
     NSMutableDictionary* spaArea = [NSMutableDictionary new];
@@ -338,13 +336,13 @@ NSMutableDictionary* keyValue;
     return data;
 }
 
-- (void) _save {
+- (void) _save:(NSDictionary*) params {
     if (isLoading) return;
     isLoading = YES;
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] savePropertyWithParams:[self buildParams] inURL:PROPERTY_SAVE_URL WithCompletion:^(AddPropertyModel * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] savePropertyWithParams:params inURL:PROPERTY_SAVE_URL WithCompletion:^(AddPropertyModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -361,13 +359,13 @@ NSMutableDictionary* keyValue;
     }];
 }
 
-- (void) _update {
+- (void) _update:(NSDictionary*) params {
     if (isLoading) return;
     isLoading = YES;
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] updatePropertyWithParams:[self buildParams] inURL:PROPERTY_SAVE_URL WithCompletion:^(AddPropertyModel * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] updatePropertyWithParams:params inURL:PROPERTY_SAVE_URL WithCompletion:^(AddPropertyModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -385,14 +383,12 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)saveProperty:(id)sender {
+    NSMutableDictionary* params = [self buildParams];
     if ([_viewType isEqualToString:@"view"]) {
-        _viewType = @"update";
-        [self.tableView reloadData];
-        return;
-    } else if([_viewType isEqualToString:@"update"]) {
-        [self _update];
+        [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
+        [self _update:params];
     } else {
-        [self _save];
+        [self _save:params];
     }
 }
 

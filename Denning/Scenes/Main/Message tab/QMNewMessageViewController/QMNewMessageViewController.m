@@ -61,7 +61,7 @@ QMTagFieldViewDelegate
 }
 
 - (void) prepareUI {
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popupScreen::)];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popupScreen:)];
     [backButtonItem setTintColor:[UIColor whiteColor]];
     
     [self.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];

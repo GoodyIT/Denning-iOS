@@ -41,7 +41,6 @@
 
 @property (strong, nonatomic) UIToolbar *accessoryView;
 
-
 @property (weak, nonatomic) IBOutlet SWTableViewCell *detailsCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *startDateCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *endDateCell;
@@ -106,8 +105,8 @@
 }
 
 - (void) saveDiary {
-    NSString* endDate = [NSString stringWithFormat:@"%@ %@", self.endDate, self.endTime];
-    NSString* startDate = [NSString stringWithFormat:@"%@ %@", self.startDate, self.startTime];
+    NSString* endDate = [NSString stringWithFormat:@"%@ %@", self.endDate.text, self.endTime.text];
+    NSString* startDate = [NSString stringWithFormat:@"%@ %@", self.startDate.text, self.startTime];
     NSDictionary* data = @{
                            @"appointmentDetails":self.details.text,
                            @"attendedStatus": @{
@@ -115,9 +114,10 @@
                             },
                            @"endDate":endDate,
                            @"startDate": startDate,
-                           @"staffAttended": @"",
-                           @"place": @"",
-                           @"courtDecision": @"",
+                           @"staffAssigned": @{
+                                   @"code":_staffAssigned.text
+                                   },
+                           @"place": _place.text,
                            @"enclosureDetails": self.details.text,
                            
                            @"remark": self.Remarks.text

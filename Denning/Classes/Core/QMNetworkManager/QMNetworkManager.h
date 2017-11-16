@@ -353,7 +353,17 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 - (void) saveReceiptWithParams: (NSDictionary*) data WithCompletion: (void(^)(NSDictionary* result, NSError* error)) completion;
 
+/*
+ Leave Application
+ */
 
+- (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+
+- (void) sendGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+
+- (void) sendPostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+
+- (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error)) completion;
 /*
  * Dashbard
  */

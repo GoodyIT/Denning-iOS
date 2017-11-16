@@ -79,33 +79,13 @@
     return self.manager;
 }
 
-- (AFHTTPSessionManager*) setOtherForLoginHTTPHeader
-{
-    [self.manager.requestSerializer setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    [self.manager.requestSerializer setValue:[DataManager sharedManager].user.email forHTTPHeaderField:@"webuser-id"];
-    
-    return self.manager;
-}
-
 - (void) setPublicHTTPHeader {
     [self.manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}"  forHTTPHeaderField:@"webuser-sessionid"];
     [self.manager.requestSerializer setValue:@"SkySea@denning.com.my" forHTTPHeaderField:@"webuser-id"];
 }
 
-- (void) setChangePasswordHTTPHeader {
+- (void) setPrivateHTTPHeader {
     [self.manager.requestSerializer setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    [self.manager.requestSerializer setValue:[DataManager sharedManager].user.email forHTTPHeaderField:@"webuser-id"];
-}
-
-- (void) setAddContactLoginHTTPHeader
-{
-    [self.manager.requestSerializer setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    [self.manager.requestSerializer setValue:[DataManager sharedManager].user.email forHTTPHeaderField:@"webuser-id"];
-}
-
-- (void) setDashboardLoginHTTPHeader
-{
-    [self.manager.requestSerializer setValue:[DataManager sharedManager].user.sessionID forHTTPHeaderField:@"webuser-sessionid"];
     [self.manager.requestSerializer setValue:[DataManager sharedManager].user.email forHTTPHeaderField:@"webuser-id"];
 }
 
@@ -235,7 +215,7 @@
 {
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": email, @"password": password}];
     
-    [self setChangePasswordHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager POST:CHANGE_PASSWORD_URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -353,7 +333,7 @@
     }
     NSString* urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%@", searchURL, [keyword stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], (long)category, page];
     if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
-        [self setOtherForLoginHTTPHeader];
+        [self setPrivateHTTPHeader];
         
     } else {
         [self setPublicHTTPHeader];
@@ -383,7 +363,7 @@
 - (void) attendanceClockIn:(void(^)(AttendanceModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_CLOCK_IN];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
     NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
     [self.manager POST:_url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -401,7 +381,7 @@
 
 - (void) attendanceClockOut:(void(^)(AttendanceModel* result, NSError* error)) completion{
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_CLOCK_IN];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
     NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
     [self.manager PUT:_url parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -421,7 +401,7 @@
 - (void) attendanceStartBreak:(void(^)(AttendanceModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_BREAK];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
     NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
     [self.manager POST:_url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -440,7 +420,7 @@
 - (void) attendanceEndBreak:(void(^)(AttendanceModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_BREAK];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
     NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
     [self.manager PUT:_url parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -501,7 +481,7 @@
 
 - (void) getLatestEventWithStartDate: (NSString*) startDate endDate:(NSString*) endDate filter:(NSString*) filter search:(NSString*)search page:(NSNumber*) page  withCompletion: (void(^)(NSArray* eventsArray, NSError* error)) completion
 {
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     NSString *url = [NSString stringWithFormat:@"%@%@?dateStart=%@&dateEnd=%@&filterBy=%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, EVENT_LATEST_URL, startDate, endDate, filter, search, page];
     
@@ -522,7 +502,7 @@
 
 - (void) getCalenarMonthlySummaryWithYear:(NSString*) year month:(NSString*) month filter:(NSString*)filter withCompletion: (void(^)(NSArray* eventsArray, NSError* error)) completion
 {
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     NSString *url = [NSString stringWithFormat:@"%@%@?year=%@&month=%@&filterBy=%@", [DataManager sharedManager].user.serverAPI, CALENDAR_MONTHLY_SUMMARY_URL, year, month, filter];
     
@@ -570,7 +550,7 @@
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, ATTENDANCE_GET_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -597,7 +577,7 @@
 - (void) loadPropertyfromSearchWithCode: (NSString*) code completion: (void(^)(AddPropertyModel* propertyModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/Property/%@", [DataManager sharedManager].user.serverAPI, code];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -620,7 +600,7 @@
 - (void) loadContactFromSearchWithCode: (NSString*) code completion: (void(^)(ContactModel* contactModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/Contact/%@", [DataManager sharedManager].user.serverAPI, code];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -644,7 +624,7 @@
 - (void) loadRelatedMatterWithCode: (NSString*) code completion: (void(^)(RelatedMatterModel* contactModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@", [DataManager sharedManager].user.serverAPI, code];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -667,7 +647,7 @@
 completion: (void(^)(NSArray *result, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/table/Note?fileNo=%@&page=%@", [DataManager sharedManager].user.serverAPI, code, page];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -689,7 +669,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveFileNoteWithParams: (NSDictionary*) params completion: (void(^)(FileNoteModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: @"denningwcf/v1/table/Note"];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -706,7 +686,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) updateFileNoteWithParams: (NSDictionary*) params completion: (void(^)(FileNoteModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: @"denningwcf/v1/table/Note"];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager PUT:_url parameters:params  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -727,7 +707,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, url,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -748,7 +728,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) uploadFileWithUrl:(NSString*) url params:(NSDictionary*) params WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -766,7 +746,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) getPaymentRecordWithFileNo:(NSString*) fileNo completion:(void(^)(NSDictionary* result, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/PaymentRecord/%@", [DataManager sharedManager].user.serverAPI, fileNo];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
@@ -792,7 +772,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cboTemplate?fileno=%@&Online=%@&category=%@&Type=%@&page=%@&search=%@", [DataManager sharedManager].user.serverAPI, fileNo, online, category, type, page, search];
     url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:url
@@ -813,7 +793,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) getTemplateCategoryWithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cbotemplatecategory/only", [DataManager sharedManager].user.serverAPI];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         if (completion != nil) {
@@ -836,7 +816,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cbotemplatecategory?filter=%@", [DataManager sharedManager].user.serverAPI, [filter stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:url
@@ -858,7 +838,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) loadBankFromSearchWithCode: (NSString*) code completion: (void(^)(BankModel* bankModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/bank/branch/%@", [DataManager sharedManager].user.serverAPI, code];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -887,7 +867,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         point = @"PTG";
     }
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/GovOffice/%@/%@", [DataManager sharedManager].user.serverAPI, point, code];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -910,7 +890,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) loadLegalFirmWithCode: (NSString*) code completion: (void(^)(LegalFirmModel* legalFirmModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/Solicitor/%@", [DataManager sharedManager].user.serverAPI, code];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -939,7 +919,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) loadLedgerWithUrl: (NSString*) url completion: (void(^)(NewLedgerModel* newLedgerModel, NSError* error)) completion
 {
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -966,7 +946,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
 
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -989,7 +969,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) loadDocumentWithCode: (NSString*) code completion: (void(^)(DocumentModel* doumentModel, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, code];
-    [self setOtherForLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -1139,7 +1119,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, url,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1163,7 +1143,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, url,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1187,7 +1167,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, CONTACT_POSTCODE_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:url
@@ -1212,7 +1192,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, BANK_BRANCH_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:url
@@ -1238,7 +1218,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI,CONTACT_SOLICITOR_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1264,7 +1244,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI,url, [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1285,7 +1265,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveContactWithData:(NSDictionary*) data withCompletion:(void(^)(ContactModel* addContact, NSError* error)) completion
 {
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:CONTACT_SAVE_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1303,7 +1283,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) updateContactWithData:(NSDictionary*) data withCompletion:(void(^)(ContactModel* addContact, NSError* error)) completion
 {
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:CONTACT_SAVE_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager PUT:url parameters:data success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1328,7 +1308,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTERSIMPLE_GET_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:url
@@ -1354,7 +1334,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI,url, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1377,7 +1357,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 {
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/v1/courtDiary/%@", [DataManager sharedManager].user.serverAPI,code];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1399,7 +1379,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, COURTDIARY_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1425,7 +1405,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, COURT_CORAM_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1448,7 +1428,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) updateCourtDiaryWithData: (NSDictionary*) data WithCompletion:(void(^)(EditCourtModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:COURT_SAVE_UPATE_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager PUT:_url parameters:data success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1466,7 +1446,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveCourtDiaryWithData: (NSDictionary*) data WithCompletion:(void(^)(EditCourtModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:COURT_SAVE_UPATE_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1483,7 +1463,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) savePersonalDiaryWithData: (NSDictionary*) data WithCompletion:(void(^)(EditCourtModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:PERSONAL_DIARY_SAVE_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1500,7 +1480,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveOfficeDiaryWithData: (NSDictionary*) data WithCompletion:(void(^)(EditCourtModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:OFFICE_DIARY_SAVE_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1526,7 +1506,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_TYPE_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1553,7 +1533,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1579,7 +1559,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_MUKIM_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1605,7 +1585,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_MASTER_TITLE_GETLIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1627,7 +1607,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) savePropertyWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(AddPropertyModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1644,7 +1624,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) updatePropertyWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(AddPropertyModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager PUT:_url parameters:data success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1668,7 +1648,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTER_LITIGATION_GET_LIST_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1694,7 +1674,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTER_LIST_GET_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1716,7 +1696,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveMatterWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(RelatedMatterModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1733,7 +1713,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) updateMatterWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(RelatedMatterModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager PUT:_url parameters:data success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1758,7 +1738,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_PROJECT_HOUSING_GET_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1784,7 +1764,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, CONTACT_GETLIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1813,7 +1793,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PRESET_BILL_GET_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1835,7 +1815,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) calculateTaxInvoiceWithParams: (NSDictionary*) data withCompletion: (void(^)(NSDictionary* result, NSError* error)) completion
 {
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:TAXINVOICE_CALCULATION_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1852,7 +1832,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveBillorQuotationWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(NSDictionary* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1880,7 +1860,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1910,7 +1890,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, ACCOUNT_TYPE_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -1932,7 +1912,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveReceiptWithParams: (NSDictionary*) data WithCompletion: (void(^)(NSDictionary* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:RECEIPT_SAVE_URL];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -1947,12 +1927,61 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 }
 
 /*
+ Leave Application
+ */
+- (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:requestType
+                                                                URLString:url
+                                                               parameters:nil
+                                                           uploadProgress:nil
+                                                         downloadProgress:nil
+                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {                                 completion(responseObject, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                          if  (completion != nil)
+                                                                          {
+                                                                              completion(nil, error);
+                                                                          }
+                                                                      }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
+}
+
+- (void) sendGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    [self sendRequestWithType:@"Get" URL:url params:nil completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        completion(result, error);
+    }];
+}
+
+- (void) sendPostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    [self sendRequestWithType:@"POST" URL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        completion(result, error);
+    }];
+}
+
+- (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@?page=%@", [DataManager sharedManager].user.serverAPI, LEAVE_RECORD_GET_URL, page];
+    [self setPrivateHTTPHeader];
+    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        completion(result, error);
+    }];
+}
+
+/*
  * Dashbard
  */
 
 - (void) getDashboardMainWithCompletion: (void(^)(DashboardMainModel* result, NSError* error)) completion
 {
-    [self setDashboardLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DASHBOARD_MAIN_GET_URL];
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
@@ -1971,7 +2000,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardThreeItmesInURL:(NSString*)url withCompletion: (void(^)(ThreeItemModel* result, NSError* error)) completion
 {
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSString* _url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, url];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
@@ -1989,7 +2018,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardCompletionHeaderInURL:(NSString*)url withCompletion: (void(^)(S3Model* result, NSError* error)) completion
 {
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSString* _url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, url];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
@@ -2013,7 +2042,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2040,7 +2069,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2067,7 +2096,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2095,7 +2124,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2122,7 +2151,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2147,7 +2176,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2175,7 +2204,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2203,7 +2232,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2224,7 +2253,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) getProfitLossDetailWithURL:(NSString*) url withCompletion:(void(^)(ProfitLossDetailModel* result, NSError* error)) completion {
     
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {
@@ -2247,7 +2276,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2277,7 +2306,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:@"GET"
                                                                 URLString:_url
@@ -2301,7 +2330,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 {
     NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
     _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
-    [self setAddContactLoginHTTPHeader];
+    [self setPrivateHTTPHeader];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
         {

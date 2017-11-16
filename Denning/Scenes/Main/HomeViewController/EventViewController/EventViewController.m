@@ -469,24 +469,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    EventModel* event = self.eventsArray[indexPath.section];
-//    if (isLoading) return;
-//    isLoading = YES;
-//    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-//    __weak UINavigationController *navigationController = self.navigationController;
-//    @weakify(self);
-//    [[QMNetworkManager sharedManager] getCourtWithCode:event.eventCode WithCompletion:^(EditCourtModel * _Nonnull model, NSError * _Nonnull error) {
-//        
-//        @strongify(self)
-//        self->isLoading = NO;
-//        if (error == nil) {
-//            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Loaded" duration:1.0];
-//            [self performSegueWithIdentifier:kEditCourtSegue sender:model];
-//            
-//        } else {
-//            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
-//        }
-//    }];
+    EventModel* event = self.eventsArray[indexPath.section];
+    if (isLoading) return;
+    isLoading = YES;
+    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] getCourtWithCode:event.eventCode WithCompletion:^(EditCourtModel * _Nonnull model, NSError * _Nonnull error) {
+        
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Loaded" duration:1.0];
+            [self performSegueWithIdentifier:kEditCourtSegue sender:model];
+            
+        } else {
+            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -498,9 +498,7 @@
     if ([segue.identifier isEqualToString:kCalendarRangeSegue]) {
         CalendarRangeView* calendarRangeViewVC = segue.destinationViewController;
         calendarRangeViewVC.currentRange = self.currentRange;
-    }
-    
-    if ([segue.identifier isEqualToString:kEditCourtSegue]) {
+    }else if ([segue.identifier isEqualToString:kEditCourtSegue]) {
         UINavigationController *navVC = segue.destinationViewController;
         EditCourtDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;
         editCourtVC.courtModel = sender;

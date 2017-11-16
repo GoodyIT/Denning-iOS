@@ -83,7 +83,7 @@
 }
 
 - (void) prepareUI {
-    autocompleteCellHeight = 58;
+    selectedCourtDiaryCode = @"";    autocompleteCellHeight = 58;
     serverAPI = [DataManager sharedManager].user.serverAPI;
     
     self.fileNo.floatLabelActiveColor = self.fileNo.floatLabelPassiveColor = [UIColor redColor];
@@ -100,7 +100,6 @@
     self.details.floatLabelActiveColor = self.details.floatLabelPassiveColor = [UIColor redColor];
     self.Remarks.floatLabelActiveColor = self.Remarks.floatLabelPassiveColor = [UIColor redColor];
     
-
     self.startDate.delegate = self;
     self.startTime.delegate = self;
     self.endDate.delegate = self;
@@ -130,16 +129,15 @@
 
 - (void) saveDiary {
     NSDictionary* data = @{
+                           @"caseName":_caseName.text,
+                           @"caseNo":_caseNo.text,
                            @"attendedStatus": @{
-                                   @"code": @"",
-                                   @"description": @"Postponed"
-                                   },
+                                   @"code": @""},
                            @"coram":
                                @{
                                    @"code": @""},
                            @"counselAssigned": self.councilAssigned.text,
-                           @"counselAttended": @"",
-                           @"court": @"",
+                           @"court": @{@"code":selectedCourtDiaryCode},
                            @"courtDecision": @"",
                            @"enclosureDetails": self.details.text,
                            @"enclosureNo": self.enclosureNo.text,
@@ -148,9 +146,9 @@
                            @"hearingType": selectedNatureOfHearing,
                            @"nextDate": [NSString stringWithFormat:@"%@ %@", self.endDate.text, self.endTime.text],
                            @"nextDateType": @{
-                                   @"code": @"0",
-                                   @"description":@"Yes, set next appointment"
+                                   @"code": @"0"
                                    },
+                           @"opponentCounsel":@"tm ho",
                            @"previousDate": @"2016-12-09 00:00:00",
                            @"remark": self.Remarks.text
                            };

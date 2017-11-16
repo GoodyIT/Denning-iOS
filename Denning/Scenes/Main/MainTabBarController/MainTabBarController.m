@@ -13,6 +13,9 @@
 #import "QMSoundManager.h"
 #import "QBChatDialog+OpponentID.h"
 #import "QMHelpers.h"
+#import "MessageViewController.h"
+#import "DashboardViewController.h"
+#import "MainContactViewController.h"
 
 static const NSInteger kQMUnAuthorizedErrorCode = -1011;
 
@@ -29,6 +32,7 @@ QMChatConnectionDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
+    self.delegate = self;
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -84,6 +88,22 @@ QMChatConnectionDelegate>
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UITabbarControllerDelegate
+- (BOOL)tabBarController:(UITabBarController *)tabBarController
+shouldSelectViewController:(UIViewController *)viewController
+{
+    if ([viewController.childViewControllers[0] isKindOfClass:[MessageViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[DashboardViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[MainContactViewController class]]) {
+        if ([DataManager sharedManager].user.username.length == 0 || [QBSession currentSession].currentUser.email.length == 0) {
+            [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
+            self.tabBarController.selectedIndex = 0;
+            return NO;
+        }
+    }
+    
+    
+    return YES;
 }
 
 - (BOOL) checkPublicUser {

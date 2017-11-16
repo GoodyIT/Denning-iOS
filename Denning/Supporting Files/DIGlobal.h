@@ -281,6 +281,8 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define RECEIPT_SAVE_URL @"denningwcf/v1/ClientReceipt"
 
+#define LEAVE_RECORD_GET_URL @"denningwcf/v1/Table/StaffLeave"
+
 #define DASHBOARD_MAIN_GET_URL  @"denningwcf/v1/app/dashboard/main"
 
 #define DASHBOARD_S1_MATTERLISTING_GET_URL @"denningwcf/v1/app/dashboard/S1"

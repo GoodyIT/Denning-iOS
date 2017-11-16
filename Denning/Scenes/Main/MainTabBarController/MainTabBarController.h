@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MainTabBarController : UITabBarController
-
+<UITabBarControllerDelegate>
 - (IBAction)tapMenu:(id)sender;
 
 - (IBAction)tapLogin:(id)sender;

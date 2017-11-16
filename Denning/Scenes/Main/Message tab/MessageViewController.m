@@ -57,11 +57,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
    
     [self configureBackBtnWithImageName:@"Back" withSelector:@selector(popupScreen:)];
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
-    if ([DataManager sharedManager].user.username.length == 0 || [QBSession currentSession].currentUser.email.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please login first to use chat" actionSuccess:NO inViewController:self];
-        self.tabBarController.selectedIndex = 0;
-        return;
-    }
+    
     [self addView:self.viewControllers[0]];
     [self hideTabBar];
 }

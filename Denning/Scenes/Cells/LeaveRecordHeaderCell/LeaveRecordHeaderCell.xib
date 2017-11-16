@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="KGk-i7-Jjw" customClass="LeaveRecordHeaderCell">
+            <rect key="frame" x="0.0" y="0.0" width="262" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="262" height="49.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Period" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rJ-z3-3J0">
+                        <rect key="frame" x="16" y="16" width="87" height="17.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGr-6U-qsm">
+                        <rect key="frame" x="111" y="16" width="43.5" height="17.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iaf-gk-Uvt">
+                        <rect key="frame" x="208" y="16" width="43.5" height="18"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyZ-wS-fzn">
+                        <rect key="frame" x="159.5" y="16" width="43.5" height="17.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                <constraints>
+                    <constraint firstItem="qGr-6U-qsm" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Aic-gI-GLx"/>
+                    <constraint firstItem="5rJ-z3-3J0" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:3" id="ESF-18-tpM"/>
+                    <constraint firstItem="Iaf-gk-Uvt" firstAttribute="width" secondItem="qGr-6U-qsm" secondAttribute="width" id="EoY-b8-mHw"/>
+                    <constraint firstAttribute="trailing" secondItem="Iaf-gk-Uvt" secondAttribute="trailing" constant="5" id="Ig3-gi-dfa"/>
+                    <constraint firstItem="Iaf-gk-Uvt" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Itf-6w-yay"/>
+                    <constraint firstItem="pyZ-wS-fzn" firstAttribute="width" secondItem="qGr-6U-qsm" secondAttribute="width" id="bO2-xR-j41"/>
+                    <constraint firstItem="5rJ-z3-3J0" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="caO-cT-BUe"/>
+                    <constraint firstItem="pyZ-wS-fzn" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nay-PI-Uq0"/>
+                    <constraint firstItem="pyZ-wS-fzn" firstAttribute="leading" secondItem="qGr-6U-qsm" secondAttribute="trailing" constant="5" id="ouH-zs-4YK"/>
+                    <constraint firstItem="Iaf-gk-Uvt" firstAttribute="leading" secondItem="pyZ-wS-fzn" secondAttribute="trailing" constant="5" id="q0j-DH-t6e"/>
+                    <constraint firstItem="qGr-6U-qsm" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:6" id="tTN-5H-1XE"/>
+                    <constraint firstItem="qGr-6U-qsm" firstAttribute="leading" secondItem="5rJ-z3-3J0" secondAttribute="trailing" constant="8" id="xsO-KV-b2t"/>
+                    <constraint firstItem="5rJ-z3-3J0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="yRV-Rx-trd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <point key="canvasLocation" x="-95" y="56"/>
+        </tableViewCell>
+    </objects>
+</document>

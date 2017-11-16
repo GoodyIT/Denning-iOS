@@ -44,11 +44,7 @@
     [super viewWillAppear:animated];
     [self configureBackBtnWithImageName:@"Back" withSelector:@selector(popupScreen:)];
     [self changeTitle];
-    if ([DataManager sharedManager].user.username.length == 0 || [QBSession currentSession].currentUser.email.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please login first to use chat" actionSuccess:NO inViewController:self];
-        self.tabBarController.selectedIndex = 0;
-        return;
-    }
+    
     [self performSelector:@selector(hideTabBar) withObject:nil afterDelay:1.0];
 }
 

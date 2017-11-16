@@ -23,12 +23,12 @@ target ‘Denning’ do
 	pod 'DZNEmptyDataSet'
 	pod 'HTHorizontalSelectionList', '~> 0.7.4'
 	pod 'RWDropdownMenu', '~> 1.0.0'
-	pod 'SystemServices', '~> 1.1.1'
 	pod 'libPhoneNumber-iOS', '~> 0.8'
 	pod 'MBProgressHUD', '~> 1.0.0'
 	pod 'SWTableViewCell', '~> 0.3.7'
 	pod 'VBFPopFlatButton'
 	pod 'Masonry'
+	pod 'SystemServices', '~> 2.0.1'
 	pod "GLCalendarView", "~> 1.0.0"
 	pod 'FSCalendar'
 	pod 'UIFloatLabelTextField'
