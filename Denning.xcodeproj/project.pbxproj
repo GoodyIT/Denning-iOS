@@ -978,6 +978,8 @@
 		96D66EFF1EFCB0F3003E3A4A /* DashboardTodayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D66EFD1EFCB0F3003E3A4A /* DashboardTodayCell.xib */; };
 		96D66F031EFCB361003E3A4A /* DashboardFirstCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96D66F011EFCB361003E3A4A /* DashboardFirstCell.m */; };
 		96D66F041EFCB361003E3A4A /* DashboardFirstCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96D66F021EFCB361003E3A4A /* DashboardFirstCell.xib */; };
+		96E094911FBDBE9800E5FA58 /* OfficeDiaryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E094901FBDBE9800E5FA58 /* OfficeDiaryModel.m */; };
+		96E094951FBDCB0100E5FA58 /* CustomInfiniteIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E094941FBDCB0100E5FA58 /* CustomInfiniteIndicator.m */; };
 		96E704D11F5600C500FC6A5B /* ContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E704D01F5600C500FC6A5B /* ContactListViewController.m */; };
 		96EAEB9D1F21B0CC004F75FC /* comming_soon.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EAEB9A1F21B0CC004F75FC /* comming_soon.png */; };
 		96EAEB9E1F21B0CC004F75FC /* comming_soon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96EAEB9B1F21B0CC004F75FC /* comming_soon@2x.png */; };
@@ -2485,6 +2487,10 @@
 		96D66F001EFCB361003E3A4A /* DashboardFirstCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashboardFirstCell.h; sourceTree = "<group>"; };
 		96D66F011EFCB361003E3A4A /* DashboardFirstCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashboardFirstCell.m; sourceTree = "<group>"; };
 		96D66F021EFCB361003E3A4A /* DashboardFirstCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DashboardFirstCell.xib; sourceTree = "<group>"; };
+		96E0948F1FBDBE9800E5FA58 /* OfficeDiaryModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfficeDiaryModel.h; sourceTree = "<group>"; };
+		96E094901FBDBE9800E5FA58 /* OfficeDiaryModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfficeDiaryModel.m; sourceTree = "<group>"; };
+		96E094931FBDCB0100E5FA58 /* CustomInfiniteIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomInfiniteIndicator.h; sourceTree = "<group>"; };
+		96E094941FBDCB0100E5FA58 /* CustomInfiniteIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomInfiniteIndicator.m; sourceTree = "<group>"; };
 		96E704CF1F5600C500FC6A5B /* ContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactListViewController.h; sourceTree = "<group>"; };
 		96E704D01F5600C500FC6A5B /* ContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactListViewController.m; sourceTree = "<group>"; };
 		96EAEB9A1F21B0CC004F75FC /* comming_soon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comming_soon.png; sourceTree = "<group>"; };
@@ -4427,6 +4433,7 @@
 		79FBDEB81E30421A00448FE3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				96E094921FBDCB0100E5FA58 /* CustomIndicator */,
 				96046F541EFDA0180048A58D /* iCarousel */,
 				962082EA1ED7AA8800BB595C /* BadgeLabel */,
 				7931B4DA1EA8E8E10090BDE0 /* UITextField+LeftView */,
@@ -5067,6 +5074,7 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				96E0948E1FBDBE8900E5FA58 /* OfficeDiaryModel */,
 				96AA36541FBCC79B003D9A2C /* LeaveRecordModel */,
 				960017671FB0C7D1001EAB51 /* AttendanceInfo */,
 				960017681FB0C7D1001EAB51 /* AttendanceItem */,
@@ -7675,6 +7683,24 @@
 			path = DashboardFirstCell;
 			sourceTree = "<group>";
 		};
+		96E0948E1FBDBE8900E5FA58 /* OfficeDiaryModel */ = {
+			isa = PBXGroup;
+			children = (
+				96E0948F1FBDBE9800E5FA58 /* OfficeDiaryModel.h */,
+				96E094901FBDBE9800E5FA58 /* OfficeDiaryModel.m */,
+			);
+			path = OfficeDiaryModel;
+			sourceTree = "<group>";
+		};
+		96E094921FBDCB0100E5FA58 /* CustomIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				96E094931FBDCB0100E5FA58 /* CustomInfiniteIndicator.h */,
+				96E094941FBDCB0100E5FA58 /* CustomInfiniteIndicator.m */,
+			);
+			path = CustomIndicator;
+			sourceTree = "<group>";
+		};
 		96E704CE1F5600B000FC6A5B /* ContactList */ = {
 			isa = PBXGroup;
 			children = (
@@ -8633,6 +8659,7 @@
 				79FBDFCF1E30421A00448FE3 /* QMStatusStringBuilder.m in Sources */,
 				79734F781EB99ED300647215 /* CityModel.m in Sources */,
 				79FD2D021E428526005978E3 /* MainTabBarController.m in Sources */,
+				96E094911FBDBE9800E5FA58 /* OfficeDiaryModel.m in Sources */,
 				962083451EDE151300BB595C /* BankCashCell.m in Sources */,
 				9636DCFC1F046A04008DDA41 /* DashboardDueTask.m in Sources */,
 				79FBE09A1E304EAB00448FE3 /* QMTextField.m in Sources */,
@@ -8811,6 +8838,7 @@
 				79FBE1151E304F5000448FE3 /* QMSettingsViewController.m in Sources */,
 				79FBE0921E304EAB00448FE3 /* QMNotificationPanelUtils.m in Sources */,
 				79FBE0941E304EAB00448FE3 /* QMOnlineTitleView.m in Sources */,
+				96E094951FBDCB0100E5FA58 /* CustomInfiniteIndicator.m in Sources */,
 				79D59A391E95690800CD3821 /* QMGlobalSearchDataSource.m in Sources */,
 				79F9A8211E6D4CD500E17629 /* NewDeviceLoginViewController.m in Sources */,
 				960F030E1F2960BC00B25BBC /* CustomFileUpload.m in Sources */,

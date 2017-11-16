@@ -87,6 +87,7 @@
 #import "PNChart.h"
 #import <UITextView+Placeholder/UITextView+Placeholder.h>
 #import <UIScrollView+InfiniteScroll.h>
+#import "CustomInfiniteIndicator.h"
 
 #import "UserModel.h"
 #import "SearchResultModel.h"
@@ -171,6 +172,7 @@
 #import "AttendanceInfo.h"
 #import "AttendanceModel.h"
 #import "LeaveRecordModel.h"
+#import "OfficeDiaryModel.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

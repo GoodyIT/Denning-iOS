@@ -69,6 +69,8 @@
 
 + (NSArray*) removeFileNoAndSeparateFromMatterTitle: (NSString*) title;
 
++ (NSString*) toMySQLDateFormatWithoutTime: (NSString*)date;
+
 + (NSString*) convertDateToMySQLFormat: (NSString*)date;
 
 + (NSString*) convertDateToCustomFormat: (NSString*) date;

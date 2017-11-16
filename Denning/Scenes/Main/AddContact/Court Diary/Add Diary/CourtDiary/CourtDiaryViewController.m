@@ -129,27 +129,26 @@
 
 - (void) saveDiary {
     NSDictionary* data = @{
-                           @"caseName":_caseName.text,
-                           @"caseNo":_caseNo.text,
+                           @"chkDone":@"0",
                            @"attendedStatus": @{
-                                   @"code": @""},
+                                   @"code": @"0"},
                            @"coram":
                                @{
-                                   @"code": @""},
+                                   @"code": @"0"},
                            @"counselAssigned": self.councilAssigned.text,
                            @"court": @{@"code":selectedCourtDiaryCode},
                            @"courtDecision": @"",
                            @"enclosureDetails": self.details.text,
                            @"enclosureNo": self.enclosureNo.text,
                            @"fileNo1": self.fileNo.text,
-                           @"hearingDate": [NSString stringWithFormat:@"%@ %@", self.startDate.text, self.startTime.text],
+                           @"hearingStartDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _startTime.text],
                            @"hearingType": selectedNatureOfHearing,
-                           @"nextDate": [NSString stringWithFormat:@"%@ %@", self.endDate.text, self.endTime.text],
+                           @"hearingEndDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text],
                            @"nextDateType": @{
                                    @"code": @"0"
                                    },
-                           @"opponentCounsel":@"tm ho",
-                           @"previousDate": @"2016-12-09 00:00:00",
+                           @"opponentCounsel":@"",
+                           @"previousDate": @"2000-01-01 00:00:00",
                            @"remark": self.Remarks.text
                            };
     if (isLoading) return;
@@ -397,8 +396,8 @@
         MatterLitigationViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterLitigationModel *model) {
             self.fileNo.text = model.systemNo;
-            self.caseNo.text = model.primaryClient.IDNo;
-            self.caseName.text = model.primaryClient.name;
+            self.caseNo.text = model.courtInfo.caseNumber;
+            self.caseName.text = model.courtInfo.caseName;
         };
     }
     

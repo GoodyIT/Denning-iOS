@@ -211,7 +211,7 @@
                                                     <rect key="frame" x="51" y="43.5" width="28" height="20"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZM-b5-G8X">
-                                                    <rect key="frame" x="42.5" y="68.5" width="46.5" height="16"/>
+                                                    <rect key="frame" x="42" y="68.5" width="46.5" height="16"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="13"/>
                                                     <color key="textColor" red="0.65490196079999996" green="0.66274509800000003" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -740,19 +740,38 @@
                         <outlet property="thisWeekBtn" destination="yuc-pi-JhW" id="epS-1Q-NkA"/>
                         <outlet property="todayBtn" destination="nbR-gh-vqF" id="K4h-0u-J4N"/>
                         <outlet property="topView" destination="NPb-Ga-QAZ" id="ugI-f2-cJZ"/>
+                        <segue destination="LO5-2X-lTb" kind="show" identifier="EditPersonalDiarySegue" id="IhY-f6-jRf"/>
+                        <segue destination="KKN-rj-zQg" kind="show" identifier="EditCourtSegue" id="2DA-NS-jdo"/>
+                        <segue destination="dU2-UJ-zTQ" kind="show" identifier="EditOfficeDiarySegue" id="Tua-sh-MAe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c0X-3U-F70" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5538" y="734"/>
         </scene>
-        <!--EditCourtnavigation-->
+        <!--EditPersonalDiaryNav-->
         <scene sceneID="7Q8-Rn-rkV">
             <objects>
-                <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="EditCourtnavigation" id="LO5-2X-lTb" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="EditPersonalDiaryNav" id="LO5-2X-lTb" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V9M-ZJ-weF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6502" y="548"/>
+            <point key="canvasLocation" x="6174" y="584"/>
+        </scene>
+        <!--EditOfficeDiaryNav-->
+        <scene sceneID="StE-Bh-bmg">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="EditOfficeDiaryNav" id="dU2-UJ-zTQ" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UZI-Uc-aJt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6190" y="864"/>
+        </scene>
+        <!--EditCourtNav-->
+        <scene sceneID="cnq-MH-QuN">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="EditCourtNav" id="KKN-rj-zQg" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Utb-jx-hub" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6355" y="733"/>
         </scene>
         <!--Auth-->
         <scene sceneID="wxF-7q-xne">

@@ -69,8 +69,8 @@
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
-    _topFilter = @[@"Leave Application", @"Leave Record"];
-  self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
+    _topFilter = @[@"12", @"sdfs", @"sdf"];
+    self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.selectionList setTitleFont:[UIFont fontWithName:@"SFUIText-Regular" size:17] forState:UIControlStateNormal];

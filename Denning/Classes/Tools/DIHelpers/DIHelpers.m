@@ -112,6 +112,25 @@
     return [NSDateFormatter localizedStringFromDate:creationDate dateStyle:NSDateFormatterLongStyle timeStyle:NSDateFormatterNoStyle];
 }
 
++ (NSString*) toMySQLDateFormatWithoutTime: (NSString*)date
+{
+    if (date.length == 0) {
+        return @"";
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"d MMM yyyy"];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
+    [formatter setTimeZone:timeZone];
+    [newFormatter setTimeZone:timeZone];
+    [newFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDate *creationDate = [formatter dateFromString:date];
+    
+    return [newFormatter stringFromDate:creationDate];
+}
+
 + (NSString*) convertDateToMySQLFormat: (NSString*)date
 {
     if (date.length == 0) {
@@ -151,6 +170,29 @@
 
 }
 
++ (NSArray*) getDateTimeSeprately:(NSString*) input {
+    NSString* time, *date;
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
+    [formatter setTimeZone:timeZone];
+    [timeFormatter setTimeZone:timeZone];
+    [timeFormatter setDateFormat:@"HH:mm ss"];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat:@"d MMM yyyy"];
+    
+    NSDate *creationDate = [formatter dateFromString:date];
+    
+    time = [timeFormatter stringFromDate:creationDate];
+    date = [dateFormatter stringFromDate:creationDate];
+    
+    return @[date, time];
+}
+
 + (NSString*) getTimeFromDate: (NSString*) date
 {
     NSString* time;
@@ -162,7 +204,7 @@
     NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [newFormatter setTimeZone:timeZone];
-    [newFormatter setDateFormat:@"HH:mm a"];
+    [newFormatter setDateFormat:@"HH:mm ss"];
     
     NSDate *creationDate = [formatter dateFromString:date];
     

@@ -22,6 +22,9 @@
         <array key="SF-UI-Text-Regular.otf">
             <string>SFUIText-Regular</string>
         </array>
+        <array key="SF-UI-Text-Semibold.otf">
+            <string>SFUIText-Semibold</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Add Contact-->
@@ -853,7 +856,7 @@
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEW-g5-qAc">
-                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="510"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -902,7 +905,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="OfficeDiaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dId-X0-rkg" customClass="OfficeDiaryViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="y5m-0r-JOt">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -1166,7 +1169,7 @@
                     <navigationItem key="navigationItem" title="Office Diary" id="bCH-Ha-3Ao">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="Ckz-bq-kLS">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qyt-cI-prK">
-                                <rect key="frame" x="16" y="11" width="11" height="22"/>
+                                <rect key="frame" x="16" y="11" width="18" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Back.png"/>
                                 <connections>
@@ -1176,7 +1179,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="wkX-EM-wKb">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Mcx-jI-pBq">
-                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Save">
@@ -1218,14 +1221,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="39u-48-Agx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5825" y="3353"/>
+            <point key="canvasLocation" x="6490" y="3428"/>
         </scene>
-        <!--Office Diary-->
+        <!--Personal Diary-->
         <scene sceneID="j9D-aZ-jT6">
             <objects>
                 <tableViewController storyboardIdentifier="PersonalDiaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nlR-3h-Hbi" customClass="PersonalDiaryViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="xXj-vm-KvF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -1417,10 +1420,10 @@
                             <outlet property="delegate" destination="nlR-3h-Hbi" id="dPU-gx-6cK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Office Diary" id="7p2-du-5K1">
+                    <navigationItem key="navigationItem" title="Personal Diary" id="7p2-du-5K1">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="TPQ-aZ-5kg">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="li3-41-R0C">
-                                <rect key="frame" x="16" y="11" width="11" height="22"/>
+                                <rect key="frame" x="16" y="11" width="18" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Back.png"/>
                                 <connections>
@@ -1430,7 +1433,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="NTK-G7-EnR">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P1e-ot-5dZ">
-                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Save">
@@ -1465,14 +1468,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iaz-x9-brl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5606" y="2717"/>
+            <point key="canvasLocation" x="6508" y="2718"/>
         </scene>
         <!--Add Court Diary-->
         <scene sceneID="322-ue-JUe">
             <objects>
                 <tableViewController storyboardIdentifier="CourtDiaryViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SWb-w0-p3d" customClass="CourtDiaryViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="2S3-tp-F5a">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -1782,7 +1785,7 @@
                     <navigationItem key="navigationItem" title="Add Court Diary" id="4Lh-ZO-cHu">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="MSJ-vC-8n2">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="QOS-NC-qWq">
-                                <rect key="frame" x="16" y="11" width="11" height="22"/>
+                                <rect key="frame" x="16" y="11" width="18" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Back.png"/>
                                 <connections>
@@ -1792,7 +1795,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="W8S-Da-alg">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5ZW-RM-fx6">
-                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Save">
@@ -1840,7 +1843,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7RI-MI-JB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6641" y="3501"/>
+            <point key="canvasLocation" x="6506" y="4147"/>
         </scene>
         <!--Add Receipt-->
         <scene sceneID="GCc-IH-olY">
@@ -2304,7 +2307,7 @@
                 <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="CodeDescriptionNavigation" id="Ne0-00-YOC" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8SE-p6-BHa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5605" y="3851"/>
+            <point key="canvasLocation" x="6507" y="4599"/>
         </scene>
         <!--DashboardContactNavigation-->
         <scene sceneID="Cno-kc-1B0">
@@ -2336,7 +2339,7 @@
                 <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="CodeDescriptionNavigation" id="jy5-0t-Cmd" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="daP-Cy-XIE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6669" y="5216"/>
+            <point key="canvasLocation" x="6880" y="5721"/>
         </scene>
         <!--CodeDescriptionNavigation-->
         <scene sceneID="OG4-uY-ao7">
@@ -2352,7 +2355,7 @@
                 <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="StaffNavigation" id="M9O-1k-HiG" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pqZ-ZM-djb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5580" y="5216"/>
+            <point key="canvasLocation" x="5791" y="5721"/>
         </scene>
         <!--StaffNavigation-->
         <scene sceneID="RTg-bj-W4D">
@@ -2368,7 +2371,7 @@
                 <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="BranchNavigation" id="RPk-Nb-7aU" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IRB-ad-Ekd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5323" y="5188"/>
+            <point key="canvasLocation" x="5533" y="5693"/>
         </scene>
         <!--ListOfMatterViewController-->
         <scene sceneID="L2Z-vh-Iqr">
@@ -2376,7 +2379,7 @@
                 <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="ListOfMatterViewController" id="1pk-YK-6OO" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="suy-Yz-Er7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6296" y="5216"/>
+            <point key="canvasLocation" x="6507" y="5721"/>
         </scene>
         <!--PropertyContactListViewController-->
         <scene sceneID="tcJ-Z6-m3n">
@@ -2384,7 +2387,7 @@
                 <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="PropertyContactListViewController" id="7h5-gh-EsP" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wCG-LZ-cXz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5928" y="5216"/>
+            <point key="canvasLocation" x="6139" y="5721"/>
         </scene>
         <!--DescriptionNavigation-->
         <scene sceneID="O6S-Ts-mny">
@@ -2399,7 +2402,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="MatterLitigationViewController" id="29x-mC-F8j" customClass="MatterLitigationViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" id="KJF-Ul-7vT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -2435,7 +2438,7 @@
             <objects>
                 <tableViewController id="UHm-Lu-fJJ" customClass="CourtDiaryListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" id="zH4-Lq-qP6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -2464,7 +2467,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m3U-GJ-yyR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7609" y="3765"/>
+            <point key="canvasLocation" x="7766" y="4082"/>
         </scene>
         <!--Select Property-->
         <scene sceneID="V7N-nf-HdR">
@@ -2499,7 +2502,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NNO-mg-icF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7460" y="4366"/>
+            <point key="canvasLocation" x="7671" y="4872"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hsc-eQ-9PI">
@@ -2588,7 +2591,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uj5-5H-5MP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8414" y="2431"/>
+            <point key="canvasLocation" x="8314" y="1800"/>
         </scene>
         <!--Select Matter Type-->
         <scene sceneID="iTx-Hv-1pg">
@@ -2720,7 +2723,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ohf-mR-Mfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8233" y="5031"/>
+            <point key="canvasLocation" x="8444" y="5536"/>
         </scene>
         <!--Select Preset Bill-->
         <scene sceneID="rcZ-pd-j5A">
@@ -3629,7 +3632,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="z9B-N3-sY1" kind="presentation" id="8EN-mN-dmp"/>
+                                            <segue destination="DsC-l8-a48" kind="presentation" id="XM8-SL-VYL"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -3731,6 +3734,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ADD" id="yBf-tX-I6m"/>
+                    <connections>
+                        <segue destination="P3B-I7-qos" kind="show" identifier="DiarySegue" id="emG-CU-Ic5"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TyY-Nj-W6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3911,7 +3917,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qLa-sg-xC0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6079" y="4684"/>
+            <point key="canvasLocation" x="6289" y="5189"/>
         </scene>
         <!--Edit Court Diary-->
         <scene sceneID="hPK-FN-sn5">
@@ -4085,6 +4091,78 @@
             <point key="canvasLocation" x="5263" y="2033"/>
         </scene>
         <!--Navigation Controller-->
+        <scene sceneID="VBV-VQ-XfB">
+            <objects>
+                <navigationController storyboardIdentifier="EditPersonalDiaryNav" automaticallyAdjustsScrollViewInsets="NO" id="uOK-TP-5t9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Evs-QJ-RF1" customClass="QMNavigationBar">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nlR-3h-Hbi" kind="relationship" relationship="rootViewController" id="phN-bz-iI5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GNH-hW-rLR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5756" y="2730"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1kw-Sj-rnH">
+            <objects>
+                <navigationController storyboardIdentifier="EditOfficeDiaryNav" automaticallyAdjustsScrollViewInsets="NO" id="KFB-hk-aQY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="7QT-7I-XCe" customClass="QMNavigationBar">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dId-X0-rkg" kind="relationship" relationship="rootViewController" id="NzJ-NJ-CxW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0ln-Pi-rx2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5756" y="3428"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="g4w-dV-giY">
+            <objects>
+                <navigationController storyboardIdentifier="EditCourtNav" automaticallyAdjustsScrollViewInsets="NO" id="61s-cu-b2S" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="y3j-ZM-Ttg" customClass="QMNavigationBar">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.200823158" green="0.24376520509999999" blue="0.31830331680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="SWb-w0-p3d" kind="relationship" relationship="rootViewController" id="BX8-sF-jKd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SDX-46-MDB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5778" y="4148"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="0NQ-iA-eSg">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="v5Z-u7-jxk" sceneMemberID="viewController">
@@ -4130,7 +4208,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RFt-YO-WGX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5324" y="4713"/>
+            <point key="canvasLocation" x="5535" y="5218"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9e2-KE-BMJ">
@@ -4154,7 +4232,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gsP-Br-1b9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7508" y="5009"/>
+            <point key="canvasLocation" x="7719" y="5514"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dXl-Nl-vdP">
@@ -4845,7 +4923,7 @@
                 <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="ContactViewController" id="ilT-at-Fn9" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0d-i3-Kp1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6760" y="4276"/>
+            <point key="canvasLocation" x="6971" y="4781"/>
         </scene>
         <!--ContactViewController-->
         <scene sceneID="nyM-Wp-E9K">
@@ -4853,7 +4931,7 @@
                 <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="ContactViewController" id="caG-32-gpU" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Sn-5N-tb0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6805" y="4668"/>
+            <point key="canvasLocation" x="7016" y="5173"/>
         </scene>
         <!--PropertyViewController-->
         <scene sceneID="yVM-di-pNO">
@@ -4861,7 +4939,7 @@
                 <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="PropertyViewController" id="dTv-eZ-F3g" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cg2-sZ-9va" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6875" y="4339"/>
+            <point key="canvasLocation" x="7085" y="4844"/>
         </scene>
         <!--BankViewController-->
         <scene sceneID="Jv7-ux-sJN">
@@ -4869,7 +4947,7 @@
                 <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="BankViewController" id="EmY-Uv-Xjc" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ugQ-qV-ucK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6992" y="4427"/>
+            <point key="canvasLocation" x="7203" y="4932"/>
         </scene>
         <!--Select Description-->
         <scene sceneID="jZP-Yw-mZO">
@@ -5050,6 +5128,100 @@
             </objects>
             <point key="canvasLocation" x="4742" y="27"/>
         </scene>
+        <!--Leave App View Controller-->
+        <scene sceneID="bhD-N8-rmU">
+            <objects>
+                <viewController id="DsC-l8-a48" customClass="LeaveAppViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aKJ-Rn-qcL"/>
+                        <viewControllerLayoutGuide type="bottom" id="zFo-NY-qEz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X9e-ao-kEF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GDC-ZH-lT0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SlG-Py-4nD">
+                                        <rect key="frame" x="15" y="30" width="38" height="32"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                        <state key="normal" image="Back.png"/>
+                                        <connections>
+                                            <action selector="dismissScreen:" destination="DsC-l8-a48" eventType="touchUpInside" id="4Vw-7l-uaq"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank Ledger" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9eZ-tX-7ot">
+                                        <rect key="frame" x="126.5" y="33" width="123" height="24"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="20"/>
+                                        <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-1d-8dX">
+                                        <rect key="frame" x="165" y="57" width="45" height="17"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICh-0G-P8b">
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="17"/>
+                                                <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="14"/>
+                                                <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="A2T-1d-8dX" firstAttribute="top" secondItem="9eZ-tX-7ot" secondAttribute="bottom" id="32R-YV-GMC"/>
+                                    <constraint firstItem="SlG-Py-4nD" firstAttribute="leading" secondItem="GDC-ZH-lT0" secondAttribute="leading" constant="15" id="7cT-lv-ESe"/>
+                                    <constraint firstItem="9eZ-tX-7ot" firstAttribute="centerX" secondItem="GDC-ZH-lT0" secondAttribute="centerX" id="COv-jQ-4uQ"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="A2T-1d-8dX" secondAttribute="trailing" constant="12" id="FfG-Xf-GcW"/>
+                                    <constraint firstItem="A2T-1d-8dX" firstAttribute="centerX" secondItem="GDC-ZH-lT0" secondAttribute="centerX" id="XVj-0R-4L8"/>
+                                    <constraint firstItem="A2T-1d-8dX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GDC-ZH-lT0" secondAttribute="leading" constant="12" id="YDC-ko-dDJ"/>
+                                    <constraint firstAttribute="height" constant="120" id="hVK-gF-Isf"/>
+                                    <constraint firstItem="SlG-Py-4nD" firstAttribute="top" secondItem="GDC-ZH-lT0" secondAttribute="top" constant="30" id="rGm-Xw-Ivv"/>
+                                    <constraint firstItem="9eZ-tX-7ot" firstAttribute="top" secondItem="GDC-ZH-lT0" secondAttribute="top" constant="33" id="t3K-N4-OH3"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MOP-Km-rMX">
+                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CodeDescCell" id="Sz9-1h-atl">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sz9-1h-atl" id="jLh-hB-oUd">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="DsC-l8-a48" id="jgD-Ds-LBr"/>
+                                    <outlet property="delegate" destination="DsC-l8-a48" id="y1T-pT-DeX"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="GDC-ZH-lT0" secondAttribute="trailing" id="4i2-tU-4o6"/>
+                            <constraint firstItem="MOP-Km-rMX" firstAttribute="top" secondItem="GDC-ZH-lT0" secondAttribute="bottom" id="6iH-he-7pW"/>
+                            <constraint firstItem="GDC-ZH-lT0" firstAttribute="leading" secondItem="X9e-ao-kEF" secondAttribute="leading" id="HbR-fz-ibx"/>
+                            <constraint firstAttribute="trailing" secondItem="MOP-Km-rMX" secondAttribute="trailing" id="I2C-fX-aJT"/>
+                            <constraint firstItem="MOP-Km-rMX" firstAttribute="leading" secondItem="X9e-ao-kEF" secondAttribute="leading" id="aJQ-rQ-evf"/>
+                            <constraint firstItem="zFo-NY-qEz" firstAttribute="top" secondItem="MOP-Km-rMX" secondAttribute="bottom" id="dqO-3T-ogY"/>
+                            <constraint firstItem="GDC-ZH-lT0" firstAttribute="top" secondItem="X9e-ao-kEF" secondAttribute="top" id="yKd-4h-5dc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="8cq-PK-PJp"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="MOP-Km-rMX" id="2dO-yu-Uhk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O0J-ut-qe3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4054" y="-273"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Back.png" width="18" height="18"/>
@@ -5064,10 +5236,11 @@
         <image name="icon_taxinvoice.png" width="14" height="13"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="oDe-4J-8tc"/>
+        <segue reference="FAv-J7-C6b"/>
+        <segue reference="emG-CU-Ic5"/>
         <segue reference="ba6-u1-Tlf"/>
         <segue reference="Q4S-Mm-Vgk"/>
-        <segue reference="eaK-g7-mHc"/>
+        <segue reference="zwU-Xr-jfc"/>
         <segue reference="el7-sh-f31"/>
         <segue reference="1pX-FB-xJw"/>
     </inferredMetricsTieBreakers>

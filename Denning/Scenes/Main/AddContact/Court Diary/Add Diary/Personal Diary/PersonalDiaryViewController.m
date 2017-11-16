@@ -56,6 +56,9 @@
     [super viewDidLoad];
     
     [self prepareUI];
+    if  (_personalDiary != nil) {
+        [self displayDiary];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,6 +68,14 @@
 
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) displayDiary
+{
+    _place.text = _personalDiary.place;
+    _staffAssigned.text = _personalDiary.staffAssigned;
+    _details.text = _personalDiary.appointmentDetails;
+    _Remarks.text = _personalDiary.remarks;
 }
 
 - (void) prepareUI {
@@ -105,12 +116,12 @@
 }
 
 - (void) saveDiary {
-    NSString* endDate = [NSString stringWithFormat:@"%@ %@", self.endDate.text, self.endTime.text];
-    NSString* startDate = [NSString stringWithFormat:@"%@ %@", self.startDate.text, self.startTime];
+    NSString* endDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_endTime.text]];
+    NSString* startDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_startTime.text]];
     NSDictionary* data = @{
                            @"appointmentDetails":self.details.text,
                            @"attendedStatus": @{
-                                   @"code": @"",
+                                   @"code": @"0",
                             },
                            @"endDate":endDate,
                            @"startDate": startDate,

@@ -30,6 +30,7 @@
     __block BOOL isLoading;
     NSString* serverAPI;
 }
+
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *appointment;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *fileNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *caseNo;
@@ -63,6 +64,10 @@
     [super viewDidLoad];
     
     [self prepareUI];
+    
+    if  (_officeDiary != nil) {
+        [self displayDiary];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,6 +79,16 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void) displayDiary
+{
+    _place.text = _officeDiary.place;
+    _staffAssigned.text = _officeDiary.staffAssigned;
+    _appointment.text = _officeDiary.appointmentDetails;
+    _Remarks.text = _officeDiary.remarks;
+    _caseNo.text = _officeDiary.caseNo;
+    _caseName.text = _officeDiary.caseName;
+    _fileNo.text = _officeDiary.fileNo1;
+}
 
 - (void) prepareUI {
     autocompleteCellHeight = 58;
@@ -123,7 +138,7 @@
     NSDictionary* data = @{
                            @"appointmentDetails": self.appointment.text,
                            @"attendedStatus": @{
-                                   @"code": @""
+                                   @"code": @"0"
                                    },
                            
                            @"staffAssigned": self.staffAssigned.text,
@@ -131,8 +146,8 @@
                            @"courtDecision": @"",
                            @"fileNo1": self.fileNo.text,
                            @"place": self.place.text,
-                           @"startDate": [NSString stringWithFormat:@"%@ %@", self.startDate.text, self.startTime.text],
-                           @"endDate": [NSString stringWithFormat:@"%@ %@", self.endDate.text, self.endTime.text],
+                           @"startDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _endTime.text],
+                           @"endDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text],
                            
                            @"remark": self.Remarks.text
                            };
@@ -141,7 +156,7 @@
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] saveCourtDiaryWithData:data WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] saveOfficeDiaryWithData:data WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -363,8 +378,8 @@
         MatterLitigationViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterLitigationModel *model) {
             self.fileNo.text = model.systemNo;
-            self.caseNo.text = model.primaryClient.IDNo;
-            self.caseName.text = model.primaryClient.name;
+            self.caseNo.text = model.courtInfo.caseNumber;
+            self.caseName.text = model.courtInfo.caseName;
         };
     }
     

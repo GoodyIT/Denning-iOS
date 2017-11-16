@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface PersonalDiaryViewController : UITableViewController
+
+@property(strong, nonatomic) OfficeDiaryModel* personalDiary;
+
 - (void) saveDiary;
+
 @end

@@ -1966,6 +1966,19 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }];
 }
 
+- (void) sendPrivateGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    [self setPrivateHTTPHeader];
+    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        completion(result, error);
+    }];
+}
+
+- (void) sendPrivatePostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    
+}
+
 - (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error)) completion
 {
     NSString *url = [NSString stringWithFormat:@"%@%@?page=%@", [DataManager sharedManager].user.serverAPI, LEAVE_RECORD_GET_URL, page];

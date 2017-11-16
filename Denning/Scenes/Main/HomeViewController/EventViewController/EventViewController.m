@@ -12,6 +12,8 @@
 #import <GLDateUtils.h>
 #import "CalendarRangeView.h"
 #import "EditCourtDiaryViewController.h"
+#import "PersonalDiaryViewController.h"
+#import "OfficeDiaryViewController.h"
 
 @interface EventViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate,FSCalendarDataSource,FSCalendarDelegate,FSCalendarDelegateAppearance>
 {
@@ -68,7 +70,6 @@
     [self registerNibs];
 //    [self configureSearch];
     [self presetDateRange];
-   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -130,11 +131,16 @@
     self.dateFormatter2.dateFormat = @"yyyy-MM-dd";
     _datesWithEvent = [NSMutableArray new];
     
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    
     // Set custom indicator margin
     self.tableView.infiniteScrollIndicatorMargin = 40;
     
     // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 300;
+    self.tableView.infiniteScrollTriggerOffset = 500;
     
     // Add infinite scroll handler
     @weakify(self)
@@ -250,24 +256,28 @@
 
 - (IBAction) courtFilter: (id) sender  {
     currentBottomFilter = self.bottomFilters[0];
+    _page = @(1);
     [self loadEventFromFilters];
     [self updateBottomTabStateWithAnimate:0];
 }
 
 - (IBAction) officeFilter: (id) sender  {
     currentBottomFilter = self.bottomFilters[1];
+    _page = @(1);
     [self loadEventFromFilters];
     [self updateBottomTabStateWithAnimate:1];
 }
 
 - (IBAction) personalFilter: (id) sender  {
     currentBottomFilter = self.bottomFilters[2];
+    _page = @(1);
     [self loadEventFromFilters];
     [self updateBottomTabStateWithAnimate:2];
 }
 
 - (IBAction) allFilter: (id) sender {
     currentBottomFilter = self.bottomFilters[3];
+    _page = @(1);
     [self loadEventFromFilters];
     [self updateBottomTabStateWithAnimate:3];
 }
@@ -306,7 +316,7 @@
 }
 
 - (void) updateTabStateWithAnimate:(NSInteger)index {
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [UIView animateWithDuration:0.3f animations:^{
@@ -453,11 +463,6 @@
     return 1;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 5;
-//}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      EventCell *cell = [tableView dequeueReusableCellWithIdentifier:[EventCell cellIdentifier] forIndexPath:indexPath];
     
@@ -470,19 +475,37 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     EventModel* event = self.eventsArray[indexPath.section];
+    NSString *courtString;
+    if ([event.eventType isEqualToString:@"1court"]) {
+        courtString = @"courtDiary";
+    } else if ([event.eventType isEqualToString:@"2office"]) {
+        courtString = @"OfficeDiary";
+    } else {
+        courtString = @"PersonalDiary";
+    }
+    
+    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/%@/%@", [DataManager sharedManager].user.serverAPI,courtString,  event.eventCode];
     if (isLoading) return;
     isLoading = YES;
     [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] getCourtWithCode:event.eventCode WithCompletion:^(EditCourtModel * _Nonnull model, NSError * _Nonnull error) {
-        
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         self->isLoading = NO;
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Loaded" duration:1.0];
-            [self performSegueWithIdentifier:kEditCourtSegue sender:model];
-            
+            id model;
+            if ([event.eventType isEqualToString:@"1court"]) {
+                model = [EditCourtModel getEditCourtFromResponse:result];
+                 [self performSegueWithIdentifier:kEditCourtSegue sender:model];
+            } else if ([event.eventType isEqualToString:@"2office"]) {
+                model = [OfficeDiaryModel getOfficeDiaryFromResponse:result];
+                 [self performSegueWithIdentifier:kEditOfficeDiarySegue sender:model];
+            } else {
+                model = [OfficeDiaryModel getOfficeDiaryFromResponse:result];
+                [self performSegueWithIdentifier:kEditPersonalDiarySegue sender:model];
+            }
         } else {
             [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
@@ -498,10 +521,18 @@
     if ([segue.identifier isEqualToString:kCalendarRangeSegue]) {
         CalendarRangeView* calendarRangeViewVC = segue.destinationViewController;
         calendarRangeViewVC.currentRange = self.currentRange;
-    }else if ([segue.identifier isEqualToString:kEditCourtSegue]) {
+    } else if ([segue.identifier isEqualToString:kEditCourtSegue]) {
         UINavigationController *navVC = segue.destinationViewController;
         EditCourtDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;
         editCourtVC.courtModel = sender;
+    } else if ([segue.identifier isEqualToString:kEditPersonalDiarySegue]) {
+        UINavigationController *navVC = segue.destinationViewController;
+        PersonalDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;
+        editCourtVC.personalDiary = sender;
+    } else if ([segue.identifier isEqualToString:kEditOfficeDiarySegue]) {
+        UINavigationController *navVC = segue.destinationViewController;
+        OfficeDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;
+        editCourtVC.officeDiary = sender;
     }
 }
 
