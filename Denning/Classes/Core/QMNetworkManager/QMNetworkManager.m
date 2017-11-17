@@ -63,12 +63,12 @@
     self.session = [NSURLSession sharedSession];
     
     // Get the default params
-    self.ipWAN = [DIHelpers getWANIP];
-    self.ipLan = [DIHelpers getLANIP];
+    self.ipWAN = [DIHelpers getWANIP] != nil ? [DIHelpers getWANIP] : @"";
+    self.ipLan = [DIHelpers getLANIP] != nil ? [DIHelpers getLANIP] : @"";
     self.os = [DIHelpers getOSName];
     self.device = [DIHelpers getDevice];
     self.deviceName = [DIHelpers getDeviceName];
-    self.MAC = [DIHelpers getMAC];
+    self.MAC = [DIHelpers getMAC] != nil ? [DIHelpers getMAC] : @"";
 }
 
 - (AFHTTPSessionManager*) setLoginHTTPHeader

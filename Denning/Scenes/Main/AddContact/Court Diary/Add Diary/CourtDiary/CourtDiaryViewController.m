@@ -68,6 +68,14 @@
 @property (weak, nonatomic) IBOutlet SWTableViewCell *natureOfHearingCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *councilAssignedCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *detailsCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *attendedStatusCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *counselAttendedCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *counselAttended;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *coramCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *opponentCounselCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *courtDecisionCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *nextDateTypeCell;
+
 @property (weak, nonatomic) IBOutlet SWTableViewCell *remarksCell;
 
 @property (weak, nonatomic) IBOutlet SWTableViewCell *nextDateTimeCell;
