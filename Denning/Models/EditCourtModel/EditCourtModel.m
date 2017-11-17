@@ -15,6 +15,8 @@
     EditCourtModel* model = [EditCourtModel new];
     model.attendedStatus = [CodeDescription getCodeDescriptionFromResponse: [response objectForKeyNotNull:@"attendedStatus"]];
     model.courtCode = [response valueForKeyNotNull:@"code"];
+    model.caseNo = [response valueForKeyNotNull:@"caseNo"];
+    model.caseName = [response valueForKeyNotNull:@"caseName"];
     model.coram = [CoramModel getCoramFromResponse:[response objectForKeyNotNull:@"coram"]];
     model.counselAssigned = [response valueForKeyNotNull:@"counselAssigned"];
     model.counselAttended = [response valueForKeyNotNull:@"counselAttended"];
@@ -31,7 +33,7 @@
     model.nextDateType = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"nextDateType"]];
     model.opponentCounsel = [response valueForKeyNotNull:@"opponentCounsel"];
     model.previousDate = [response valueForKeyNotNull:@"previousDate"];
-    model.remark = [response valueForKeyNotNull:@"remark"];
+    model.remarks = [response valueForKeyNotNull:@"remarks"];
     
     return model;
 }

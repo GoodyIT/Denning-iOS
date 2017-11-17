@@ -34,6 +34,7 @@
     NSString* serverAPI;
 }
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSave;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *fileNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *caseNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *caseName;
@@ -42,11 +43,20 @@
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *endDate;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *endTime;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *place;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *placeType;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *councilAssigned;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *details;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *Remarks;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *natureOfHearing;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *enclosureNo;
+
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextDate;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextTime;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextEnclosureNo;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextNatureOfHearing;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextDetails;
+
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextRemarks;
 
 @property (weak, nonatomic) IBOutlet SWTableViewCell *fileNoCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *caseNoCell;
@@ -60,6 +70,13 @@
 @property (weak, nonatomic) IBOutlet SWTableViewCell *detailsCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *remarksCell;
 
+@property (weak, nonatomic) IBOutlet SWTableViewCell *nextDateTimeCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *nextEnclosureNoCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *nextNatureOfhearingCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *nextDetailCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *nextRemarksCell;
+
+
 
 @property (strong, nonatomic) UIToolbar *accessoryView;
 
@@ -71,11 +88,24 @@
     [super viewDidLoad];
     
     [self prepareUI];
+    if (_courtDiary != nil) {
+        [self.btnSave setTitle:@"Update" forState:UIControlStateNormal];
+        [self displayDiary];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) displayDiary {
+    _place.text = _courtDiary.court.place;
+    _enclosureNo.text = _courtDiary.enclosureNo;
+    _Remarks.text = _courtDiary.remarks;
+    _caseNo.text = _courtDiary.caseNo;
+    _caseName.text = _courtDiary.caseName;
+    _fileNo.text = _courtDiary.fileNo1;
 }
 
 - (IBAction)dismissScreen:(id)sender {

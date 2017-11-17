@@ -77,6 +77,8 @@
 
 + (NSString*) getDayFromDate: (NSString*) date;
 
++ (NSArray*) getDateTimeSeprately:(NSString*) input;
+
 + (NSString*) today;
 
 + (NSString*) randomTime;

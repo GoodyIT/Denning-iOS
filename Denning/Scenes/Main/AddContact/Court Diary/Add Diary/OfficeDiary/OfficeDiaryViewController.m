@@ -17,7 +17,7 @@
 #import "MatterLitigationViewController.h"
 
 @interface OfficeDiaryViewController ()
-<UITextFieldDelegate, SWTableViewCellDelegate>
+<UITextFieldDelegate, SWTableViewCellDelegate, ContactListWithCodeSelectionDelegate>
 {
     NSString* titleOfList;
     NSString* nameOfField;
@@ -25,12 +25,15 @@
     NSString* selectedNatureOfHearing;
     NSString* selectedDetails;
     
+    NSString* selectedAttendantStatus, *selectedStaffAssigned, *selectedStaffAttended;
+    
     CGFloat autocompleteCellHeight;
     
     __block BOOL isLoading;
     NSString* serverAPI;
 }
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSave;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *appointment;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *fileNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *caseNo;
@@ -42,6 +45,7 @@
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *place;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *staffAssigned;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *Remarks;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *attendantStatus;
 
 @property (weak, nonatomic) IBOutlet SWTableViewCell *appointmentCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *fileNoCell;
@@ -51,6 +55,7 @@
 @property (weak, nonatomic) IBOutlet SWTableViewCell *endDateCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *placeCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *staffAssignedCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *attendantStatusCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *remarksCell;
 
 
@@ -66,6 +71,7 @@
     [self prepareUI];
     
     if  (_officeDiary != nil) {
+        [_btnSave setTitle:@"Update" forState:UIControlStateNormal];
         [self displayDiary];
     }
 }
@@ -82,15 +88,19 @@
 - (void) displayDiary
 {
     _place.text = _officeDiary.place;
-    _staffAssigned.text = _officeDiary.staffAssigned;
+    _staffAssigned.text = _officeDiary.staffAssigned.descriptionValue;
     _appointment.text = _officeDiary.appointmentDetails;
     _Remarks.text = _officeDiary.remarks;
     _caseNo.text = _officeDiary.caseNo;
     _caseName.text = _officeDiary.caseName;
     _fileNo.text = _officeDiary.fileNo1;
+    _attendantStatus.text = _officeDiary.attendedStatus.descriptionValue;
+    selectedAttendantStatus = _officeDiary.attendedStatus.codeValue;
 }
 
 - (void) prepareUI {
+    selectedStaffAssigned = selectedAttendantStatus = selectedDetails = selectedStaffAttended = selectedNatureOfHearing = @"";
+    
     autocompleteCellHeight = 58;
     serverAPI = [DataManager sharedManager].user.serverAPI;
     
@@ -134,6 +144,78 @@
     [self.view endEditing:YES];
 }
 
+- (NSString*) getStartDate {
+    return  [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _endTime.text];
+}
+
+- (NSString*) getEndDate {
+    return [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text];
+}
+
+- (IBAction)updateDiary:(id)sender {
+    NSMutableDictionary* data = [NSMutableDictionary new];
+    [data addEntriesFromDictionary:@{@"code":_officeDiary.diaryCode}];
+    
+    if (![_appointment.text isEqualToString:_officeDiary.appointmentDetails]) {
+        [data addEntriesFromDictionary:@{@"appointmentDetails":_appointment.text}];
+    }
+    
+    if (![_attendantStatus.text isEqualToString:_officeDiary.attendedStatus.descriptionValue]) {
+        [data addEntriesFromDictionary:@{@"attendedStatus":@{@"code":selectedAttendantStatus}}];
+    }
+    
+    NSArray* startDateTime = [DIHelpers getDateTimeSeprately:_officeDiary.startDate];
+    if (![_startDate.text isEqualToString:startDateTime[0]]) {
+        [data addEntriesFromDictionary:@{@"startdate":[self getStartDate]}];
+    }
+    
+    if (![_startTime.text isEqualToString:startDateTime[1]]) {
+        [data addEntriesFromDictionary:@{@"startdate":[self getStartDate]}];
+    }
+    
+    NSArray* endDateTime = [DIHelpers getDateTimeSeprately:_officeDiary.endDate];
+    if (![_endDate.text isEqualToString:endDateTime[0]]) {
+        [data addEntriesFromDictionary:@{@"endDate":[self getEndDate]}];
+    }
+    
+    if (![_endTime.text isEqualToString:endDateTime[1]]) {
+        [data addEntriesFromDictionary:@{@"endDate":[self getEndDate]}];
+    }
+    
+    if (![_place.text isEqualToString:_officeDiary.place]) {
+        [data addEntriesFromDictionary:@{@"place":_place.text}];
+    }
+    
+    if (![_fileNo.text isEqualToString:_officeDiary.fileNo1]) {
+        [data addEntriesFromDictionary:@{@"fileNo1":_fileNo.text}];
+    }
+    
+    if (![_staffAssigned.text isEqualToString:_officeDiary.staffAssigned.descriptionValue]) {
+        [data addEntriesFromDictionary:@{@"staffAssigned":@{@"code":selectedStaffAssigned}}];
+    }
+    
+    if (![_Remarks.text isEqualToString:_officeDiary.remarks]) {
+        [data addEntriesFromDictionary:@{@"remarks":_Remarks.text}];
+    }
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:OFFICE_DIARY_SAVE_URL];
+    if (isLoading) return;
+    isLoading = YES;
+    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        [navigationController dismissNotificationPanel];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully updated" duration:1.0];
+            
+        } else {
+            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+}
+
 - (void) saveDiary {
     NSDictionary* data = @{
                            @"appointmentDetails": self.appointment.text,
@@ -141,13 +223,13 @@
                                    @"code": @"0"
                                    },
                            
-                           @"staffAssigned": self.staffAssigned.text,
+                           @"staffAssigned": @{@"code":selectedStaffAssigned},
                            
                            @"courtDecision": @"",
                            @"fileNo1": self.fileNo.text,
                            @"place": self.place.text,
-                           @"startDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _endTime.text],
-                           @"endDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text],
+                           @"startDate": [self getStartDate],
+                           @"endDate": [self endDate],
                            
                            @"remark": self.Remarks.text
                            };
@@ -214,10 +296,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+    if  (_officeDiary != nil) {
+        return 10;
+    }
     return 9;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -250,9 +333,22 @@
         self.staffAssignedCell.delegate = self;
         return self.staffAssignedCell;
     } else if (indexPath.row == 8) {
-        self.remarksCell.leftUtilityButtons = [self leftButtons];
-        self.remarksCell.delegate = self;
-        return self.remarksCell;
+        if  (_officeDiary == nil) {
+            self.remarksCell.leftUtilityButtons = [self leftButtons];
+            self.remarksCell.delegate = self;
+            return self.remarksCell;
+        } else {
+            self.attendantStatusCell.leftUtilityButtons = [self leftButtons];
+            self.attendantStatusCell.delegate = self;
+            return self.attendantStatusCell;
+        }
+        
+    }else if (indexPath.row == 9) {
+        if  (_officeDiary != nil) {
+            self.remarksCell.leftUtilityButtons = [self leftButtons];
+            self.remarksCell.delegate = self;
+            return self.remarksCell;
+        }
     }
     
     return nil;
@@ -365,9 +461,24 @@
         [self performSegueWithIdentifier:kMatterLitigationSegue sender:nil];
     } else if (indexPath.row == 7) {
         [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+    } else if (indexPath.row == 8) {
+        if (_officeDiary != nil) {
+            titleOfList = @"Attendant Type";
+            nameOfField = @"Attendant Status";
+            [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_ATTENDED_STATUS_GET_URL];
+        }
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - ContactListWithCodeSelectionDelegate
+- (void) didSelectList:(UIViewController *)listVC name:(NSString*) name withModel:(CodeDescription *)model
+{
+    if ([name isEqualToString:@"Attendant Status"]) {
+        self.attendantStatus.text = model.descriptionValue;
+        selectedAttendantStatus = model.codeValue;
+    }
 }
 
 #pragma mark - Navigation
@@ -381,15 +492,22 @@
             self.caseNo.text = model.courtInfo.caseNumber;
             self.caseName.text = model.courtInfo.caseName;
         };
-    }
-    
-    if ([segue.identifier isEqualToString:kStaffSegue]) {
+    } else if ([segue.identifier isEqualToString:kStaffSegue]) {
         UINavigationController *navVC =segue.destinationViewController;
         StaffViewController* staffVC = navVC.viewControllers.firstObject;
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
-            self.staffAssigned.text = model.name;
+                selectedStaffAssigned = model.staffCode;
+                self.staffAssigned.text = model.name;
         };
+    } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {
+        UINavigationController *navVC =segue.destinationViewController;
+        
+        ListWithCodeTableViewController *listCodeVC = navVC.viewControllers.firstObject;
+        listCodeVC.delegate = self;
+        listCodeVC.titleOfList = titleOfList;
+        listCodeVC.name = nameOfField;
+        listCodeVC.url = sender;
     }
 }
 

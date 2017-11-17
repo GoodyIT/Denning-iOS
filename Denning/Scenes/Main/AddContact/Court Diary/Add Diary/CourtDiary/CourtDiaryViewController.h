@@ -10,6 +10,8 @@
 
 @interface CourtDiaryViewController : UITableViewController
 
+@property (nonatomic, strong) EditCourtModel* courtDiary;
+
 - (void) saveDiary;
 
 @end

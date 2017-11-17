@@ -23,6 +23,7 @@
     
     NSString* selectedNatureOfHearing;
     NSString* selectedDetails;
+    NSString* selectedStaffAssigned;
     
     CGFloat autocompleteCellHeight;
     
@@ -30,6 +31,7 @@
     NSString* serverAPI;
 }
 
+@property (weak, nonatomic) IBOutlet UIButton *btnSave;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *startDate;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *startTime;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *endDate;
@@ -57,6 +59,7 @@
     
     [self prepareUI];
     if  (_personalDiary != nil) {
+        [_btnSave setTitle:@"Update" forState:UIControlStateNormal];
         [self displayDiary];
     }
 }
@@ -73,7 +76,7 @@
 - (void) displayDiary
 {
     _place.text = _personalDiary.place;
-    _staffAssigned.text = _personalDiary.staffAssigned;
+    _staffAssigned.text = _personalDiary.staffAssigned.descriptionValue;
     _details.text = _personalDiary.appointmentDetails;
     _Remarks.text = _personalDiary.remarks;
 }
@@ -115,6 +118,70 @@
     [self.view endEditing:YES];
 }
 
+- (NSString*) getStartDate {
+    return  [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _endTime.text];
+}
+
+- (NSString*) getEndDate {
+    return [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text];
+}
+
+- (IBAction)updateDiary:(id)sender {
+    NSMutableDictionary* data = [NSMutableDictionary new];
+    [data addEntriesFromDictionary:@{@"code":_personalDiary.diaryCode}];
+    
+    if (![_details.text isEqualToString:_personalDiary.appointmentDetails]) {
+        [data addEntriesFromDictionary:@{@"appointmentDetails":_details.text}];
+    }
+    
+    NSArray* startDateTime = [DIHelpers getDateTimeSeprately:_personalDiary.startDate];
+    if (![_startDate.text isEqualToString:startDateTime[0]]) {
+        [data addEntriesFromDictionary:@{@"startdate":[self getStartDate]}];
+    }
+    
+    if (![_startTime.text isEqualToString:startDateTime[1]]) {
+        [data addEntriesFromDictionary:@{@"startdate":[self getStartDate]}];
+    }
+    
+    NSArray* endDateTime = [DIHelpers getDateTimeSeprately:_personalDiary.endDate];
+    if (![_endDate.text isEqualToString:endDateTime[0]]) {
+        [data addEntriesFromDictionary:@{@"endDate":[self getEndDate]}];
+    }
+    
+    if (![_endTime.text isEqualToString:endDateTime[1]]) {
+        [data addEntriesFromDictionary:@{@"endDate":[self getEndDate]}];
+    }
+    
+    if (![_place.text isEqualToString:_personalDiary.place]) {
+        [data addEntriesFromDictionary:@{@"place":_place.text}];
+    }
+    
+    if (![_staffAssigned.text isEqualToString:_personalDiary.staffAssigned.descriptionValue]) {
+        [data addEntriesFromDictionary:@{@"staffAssigned":@{@"code":selectedStaffAssigned}}];
+    }
+    
+    if (![_Remarks.text isEqualToString:_personalDiary.remarks]) {
+        [data addEntriesFromDictionary:@{@"remarks":_Remarks.text}];
+    }
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:PERSONAL_DIARY_SAVE_URL];
+    if (isLoading) return;
+    isLoading = YES;
+    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        [navigationController dismissNotificationPanel];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully updated" duration:1.0];
+            
+        } else {
+            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+}
+
 - (void) saveDiary {
     NSString* endDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_endTime.text]];
     NSString* startDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_startTime.text]];
@@ -126,7 +193,7 @@
                            @"endDate":endDate,
                            @"startDate": startDate,
                            @"staffAssigned": @{
-                                   @"code":_staffAssigned.text
+                                   @"code":selectedStaffAssigned
                                    },
                            @"place": _place.text,
                            @"enclosureDetails": self.details.text,
@@ -146,9 +213,8 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             
         } else {
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:2.0];
         }
-        
     }];
 }
 
@@ -355,6 +421,7 @@
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
             self.staffAssigned.text = model.name;
+            selectedStaffAssigned = model.staffCode;
         };
     }
 }

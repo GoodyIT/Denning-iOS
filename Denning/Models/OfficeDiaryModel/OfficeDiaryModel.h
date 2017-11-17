@@ -19,8 +19,8 @@
 @property (strong, nonatomic) NSString* fileNo1;
 @property (strong, nonatomic) NSString* place;
 @property (strong, nonatomic) NSString* remarks;
-@property (strong, nonatomic) NSString* staffAssigned;
-@property (strong, nonatomic) NSString* staffAttended;
+@property (strong, nonatomic) CodeDescription* staffAssigned;
+@property (strong, nonatomic) CodeDescription* staffAttended;
 @property (strong, nonatomic) NSString* startDate;
 
 + (instancetype) getOfficeDiaryFromResponse:(NSDictionary*) response;

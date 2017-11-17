@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) CodeDescription* attendedStatus;
 @property (strong, nonatomic) NSString* courtCode;
+@property (strong, nonatomic) NSString* caseNo;
+@property (strong, nonatomic) NSString* caseName;
 @property (strong, nonatomic) CoramModel* coram;
 @property (strong, nonatomic) NSString* counselAssigned;
 @property (strong, nonatomic) NSString* counselAttended;
@@ -29,7 +31,7 @@
 @property (strong, nonatomic) CodeDescription* nextDateType;
 @property (strong, nonatomic) NSString* opponentCounsel;
 @property (strong, nonatomic) NSString* previousDate;
-@property (strong, nonatomic) NSString* remark;
+@property (strong, nonatomic) NSString* remarks;
 
 
 + (EditCourtModel*) getEditCourtFromResponse: (NSDictionary*) response;

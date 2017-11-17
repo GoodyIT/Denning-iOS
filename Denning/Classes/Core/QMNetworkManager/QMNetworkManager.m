@@ -1966,6 +1966,13 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }];
 }
 
+- (void) sendPutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    [self sendRequestWithType:@"PUT" URL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        completion(result, error);
+    }];
+}
+
 - (void) sendPrivateGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion
 {
     [self setPrivateHTTPHeader];
@@ -1976,7 +1983,18 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) sendPrivatePostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
 {
-    
+    [self setPrivateHTTPHeader];
+    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        completion(result, error);
+    }];
+}
+
+- (void) sendPrivatePutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+{
+    [self setPrivateHTTPHeader];
+    [self sendPutWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        completion(result, error);
+    }];
 }
 
 - (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error)) completion

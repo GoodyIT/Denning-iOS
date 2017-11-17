@@ -543,6 +543,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     keyword = self.searchTextField.text;
     [self.searchTextField resignFirstResponder];
     searchType = @"Special";
+    _page = @(1);
     [self displaySearchResult];
     return YES;
 }

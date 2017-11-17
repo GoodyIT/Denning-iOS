@@ -212,7 +212,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)updateCourtDiary:(id)sender {
-    NSString* nextDate = @"", *enclosureDetails = @"", *remark = courtModel.remark;
+    NSString* nextDate = @"", *enclosureDetails = @"", *remark = courtModel.remarks;
     if ([_contents[0][12][1] isEqualToString:@"0"]) {
         nextDate = [DIHelpers convertDateToMySQLFormat:[NSString stringWithFormat:@"%@ %@", _contents[1][0][1], _contents[1][1][1]]];
         enclosureDetails = _contents[1][3][1];

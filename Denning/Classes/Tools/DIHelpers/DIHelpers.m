@@ -171,6 +171,9 @@
 }
 
 + (NSArray*) getDateTimeSeprately:(NSString*) input {
+    if (input.length == 0) {
+        return @[@"", @""];
+    }
     NSString* time, *date;
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -181,11 +184,11 @@
     NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [timeFormatter setTimeZone:timeZone];
-    [timeFormatter setDateFormat:@"HH:mm ss"];
+    [timeFormatter setDateFormat:@"HH:mm"];
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"d MMM yyyy"];
     
-    NSDate *creationDate = [formatter dateFromString:date];
+    NSDate *creationDate = [formatter dateFromString:input];
     
     time = [timeFormatter stringFromDate:creationDate];
     date = [dateFormatter stringFromDate:creationDate];
