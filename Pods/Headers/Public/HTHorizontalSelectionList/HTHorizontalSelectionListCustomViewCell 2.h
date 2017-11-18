@@ -1,0 +1,1 @@
+../../../HTHorizontalSelectionList/Source/Cells/HTHorizontalSelectionListCustomViewCell.h

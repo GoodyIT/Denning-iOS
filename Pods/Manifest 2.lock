@@ -1,0 +1,273 @@
+PODS:
+  - ActionSheetPicker-3.0 (2.2.0)
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - ChameleonFramework (2.1.0):
+    - ChameleonFramework/Default (= 2.1.0)
+  - ChameleonFramework/Default (2.1.0)
+  - Crashlytics (3.8.4):
+    - Fabric (~> 1.6.3)
+  - Digits (1.15.3):
+    - TwitterCore (= 1.15.3)
+  - DLRadioButton (1.4.9)
+  - dyci (0.1.6):
+    - dyci/Injections (= 0.1.6)
+  - dyci/Injections (0.1.6)
+  - DZNEmptyDataSet (1.8.1)
+  - DZNPhotoPickerController/Editor (2.0)
+  - Fabric (1.6.11)
+  - FBSDKCoreKit (4.11.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.11.0):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.11.0):
+    - FBSDKCoreKit
+  - FLAnimatedImage (1.0.12)
+  - FSCalendar (2.7.8)
+  - FZAccordionTableView (0.2.3)
+  - GLCalendarView (1.0.3)
+  - HTHorizontalSelectionList (0.7.4):
+    - M13BadgeView (~> 1.0.4)
+  - JVFloatLabeledTextField (1.1.1)
+  - libextobjc/EXTKeyPathCoding (0.4.1):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/EXTScope (0.4.1):
+    - libextobjc/RuntimeExtensions
+  - libextobjc/RuntimeExtensions (0.4.1)
+  - libPhoneNumber-iOS (0.9.10)
+  - M13BadgeView (1.0.4)
+  - Masonry (1.0.2)
+  - MaterialComponents/ShadowElevations (23.4.1)
+  - MBProgressHUD (1.0.0)
+  - MIBadgeButton (0.0.7)
+  - MPGNotification (1.2.4)
+  - NYTPhotoViewer (1.1.0):
+    - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
+    - NYTPhotoViewer/Core (= 1.1.0)
+  - NYTPhotoViewer/AnimatedGifSupport (1.1.0):
+    - FLAnimatedImage (~> 1.0.8)
+    - NYTPhotoViewer/Core
+  - NYTPhotoViewer/Core (1.1.0)
+  - PNChart (0.8.9):
+    - UICountingLabel (~> 1.2.0)
+  - pop (1.0.9)
+  - QMChatViewController (0.4):
+    - QMChatViewController/Categories (= 0.4)
+    - QMChatViewController/Protocols (= 0.4)
+    - QMChatViewController/QMChatDataSource (= 0.4)
+    - QMChatViewController/QMChatLocationSnapshotter (= 0.4)
+    - QMChatViewController/Sections (= 0.4)
+    - QMChatViewController/Utils (= 0.4)
+    - QMChatViewController/Views (= 0.4)
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Categories (0.4):
+    - QMChatViewController/QMChatLocationSnapshotter
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Protocols (0.4):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/QMChatDataSource (0.4):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/QMChatLocationSnapshotter (0.4):
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Sections (0.4):
+    - QMChatViewController/QMChatDataSource
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Utils (0.4):
+    - QMChatViewController/Categories
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMChatViewController/Views (0.4):
+    - QMChatViewController/Categories
+    - QMChatViewController/Protocols
+    - QMChatViewController/Utils
+    - QuickBlox (>= 2.0)
+    - SDWebImage (~> 3.6)
+    - TTTAttributedLabel (> 1.13)
+  - QMServices (0.4.5):
+    - Bolts (>= 1.5.0)
+    - QuickBlox (>= 2.6.5)
+  - QuickBlox (2.9.2)
+  - Quickblox-WebRTC (2.5):
+    - QuickBlox (>= 2.7)
+  - Reachability (3.2)
+  - Realm (2.7.0):
+    - Realm/Headers (= 2.7.0)
+  - Realm/Headers (2.7.0)
+  - RWDropdownMenu (1.0.3)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SSKeychain (1.2.3)
+  - STPopup (1.8.2)
+  - SVProgressHUD (1.1.3)
+  - SWTableViewCell (0.3.7)
+  - SystemServices (2.0.1)
+  - TOCropViewController (2.0.12)
+  - TTTAttributedLabel (2.0.0)
+  - TwitterCore (1.15.3):
+    - Fabric
+  - UICountingLabel (1.2.0)
+  - UIDevice-Hardware (0.1.10)
+  - UIFloatLabelTextField (1.2.9)
+  - UIFloatLabelTextView (1.0.10)
+  - UILabel+Copyable (1.0.1)
+  - UIScrollView-InfiniteScroll (1.0.1)
+  - UITextView+Placeholder (1.2.0)
+  - VBFPopFlatButton (0.0.7):
+    - pop
+
+DEPENDENCIES:
+  - ActionSheetPicker-3.0
+  - AFNetworking
+  - Bolts
+  - ChameleonFramework
+  - Crashlytics
+  - Digits (= 1.15.3)
+  - DLRadioButton (~> 1.4)
+  - dyci (from `https://github.com/DyCI/dyci-main.git`)
+  - DZNEmptyDataSet
+  - DZNPhotoPickerController/Editor
+  - Fabric
+  - FBSDKCoreKit (~> 4.11.0)
+  - FBSDKLoginKit (~> 4.11.0)
+  - FBSDKShareKit (~> 4.11.0)
+  - FSCalendar
+  - FZAccordionTableView (~> 0.2.3)
+  - GLCalendarView (~> 1.0.0)
+  - HTHorizontalSelectionList (~> 0.7.4)
+  - JVFloatLabeledTextField
+  - libextobjc/EXTKeyPathCoding (~> 0.4.1)
+  - libextobjc/EXTScope (~> 0.4.1)
+  - libPhoneNumber-iOS (~> 0.8)
+  - Masonry
+  - MaterialComponents/ShadowElevations
+  - MBProgressHUD (~> 1.0.0)
+  - MIBadgeButton
+  - MPGNotification (~> 1.2)
+  - NYTPhotoViewer (~> 1.1.0)
+  - PNChart
+  - QMChatViewController (= 0.4.0)
+  - QMServices
+  - QuickBlox
+  - Quickblox-WebRTC (= 2.5)
+  - Reachability (~> 3.2)
+  - Realm
+  - RWDropdownMenu (~> 1.0.0)
+  - SDWebImage (~> 3.6)
+  - SSKeychain (~> 1.2.2)
+  - STPopup
+  - SVProgressHUD (~> 1.0)
+  - SWTableViewCell (~> 0.3.7)
+  - SystemServices (~> 2.0.1)
+  - TOCropViewController
+  - TTTAttributedLabel (~> 2.0)
+  - TwitterCore (~> 1.15)
+  - UIDevice-Hardware (~> 0.1.3)
+  - UIFloatLabelTextField
+  - UIFloatLabelTextView
+  - UILabel+Copyable (~> 1.0.0)
+  - UIScrollView-InfiniteScroll (~> 1.0.0)
+  - UITextView+Placeholder (~> 1.2)
+  - VBFPopFlatButton
+
+EXTERNAL SOURCES:
+  dyci:
+    :git: https://github.com/DyCI/dyci-main.git
+
+CHECKOUT OPTIONS:
+  dyci:
+    :commit: de33e13baba2a0bb274716ebc59daf8c14f8a388
+    :git: https://github.com/DyCI/dyci-main.git
+
+SPEC CHECKSUMS:
+  ActionSheetPicker-3.0: d11a4c12c6aaf704b8a3f56d179198c99f3e41e6
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Digits: 9823f8aad766c0aa824fac9b08938e22bc635fac
+  DLRadioButton: 7bb8a6e3768b572469ace553391ab4d2af6f9c19
+  dyci: bf5f4caa4a855a3ca567e2306a4cbba6d9da75e8
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  DZNPhotoPickerController: 1a9b83a53a2f35094e35c163417ab0aeb8653fd1
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FBSDKCoreKit: 686ac982723a14ec9ddb85e2f81235d7706c891b
+  FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
+  FBSDKShareKit: 2d1746144cfc8a9dbbd24997c34ee0471be51b6a
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FSCalendar: 09369a2bf554ba71cd8e8cfb627e2df22a2c2af4
+  FZAccordionTableView: e64f49c71c32d750feda14025b088bcd25d1a71f
+  GLCalendarView: f3a71aca59f456b81abad9667dc5985c46810996
+  HTHorizontalSelectionList: c38792f4bc87f941ab6c07b02a40abf111c68249
+  JVFloatLabeledTextField: 0e5524b097f102036214dd8279edc8ecf08b5e18
+  libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
+  libPhoneNumber-iOS: f721ae4d5854bce60934f9fb9b0b28e8e68913cb
+  M13BadgeView: 700dd0714fdc837c0cf1c8c004454963ec22441f
+  Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MaterialComponents: baaab2cdd2d4a4f75eb40beae6df360e5fedd3a2
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  MIBadgeButton: 7c34f180a194d152bb3817c05443eab3a01433cd
+  MPGNotification: f0e3924087afa9b3eccd5ce624e03965ae31ae61
+  NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
+  PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  QMChatViewController: 6fe589c26396ce2ece7549b34835cf0a2551ec32
+  QMServices: 617057b228eb5e41341e50216fc4af2fce3cfa46
+  QuickBlox: 67cafa5d7b237db7344c506ca5dc38365180cacb
+  Quickblox-WebRTC: 79a88793ce090d2516963fe207f4d8eeecdb8b4f
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  Realm: 07e5d3a9e0e41d65fd5f9f05150ed6295d0f093b
+  RWDropdownMenu: c7fda4b7adf4f3f63a46d96359c2f490a7713795
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
+  STPopup: b69b3e7484ef7d2baec5f9ab2939f8a7bcdfe218
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
+  SystemServices: 7af348493ece8951449b476c41532df72569b181
+  TOCropViewController: e6e31b38d785a901e5651a1e7fff71bcda6c5214
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  TwitterCore: cce24b3c798993ccde72787ea79ea9a478b284e4
+  UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
+  UIDevice-Hardware: 4bb15b9bd9878762ab879ac86185baad17b6c3ff
+  UIFloatLabelTextField: c1df7d4e688a1bd52738513f961df16f94914367
+  UIFloatLabelTextView: 96b7c5a18739fd1af8fd9480f7943d75a7547e4d
+  UILabel+Copyable: 39749df0a0a7112db8091a2b15ac9140a64b45a8
+  UIScrollView-InfiniteScroll: a90df4ba4a7ca1926128ade34a850ddbdf74c564
+  UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
+  VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
+
+PODFILE CHECKSUM: c6d06d7dc49b93c7d9fbd9aadf513069d7a7f69f
+
+COCOAPODS: 1.2.1

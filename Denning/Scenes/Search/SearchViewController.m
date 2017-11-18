@@ -190,6 +190,10 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EBEBF1"];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
     // Set custom indicator margin
     self.tableView.infiniteScrollIndicatorMargin = 40;
     

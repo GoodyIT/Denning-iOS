@@ -267,6 +267,8 @@
 		79734FB41EBAACB800647215 /* icon_upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79734FB11EBAACB800647215 /* icon_upload@2x.png */; };
 		79734FB51EBAACB800647215 /* icon_upload@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79734FB21EBAACB800647215 /* icon_upload@3x.png */; };
 		79734FCB1EBABD3E00647215 /* ChangeBranchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79734FCA1EBABD3E00647215 /* ChangeBranchViewController.m */; };
+		797556F91FC0AA06001CCD46 /* AddMatter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797556F81FC0AA06001CCD46 /* AddMatter.storyboard */; };
+		797556FB1FC0AD22001CCD46 /* AddCourt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797556FA1FC0AD22001CCD46 /* AddCourt.storyboard */; };
 		797ED5031EAED9F2009C20C4 /* NewContactHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 797ED5011EAED9F2009C20C4 /* NewContactHeaderCell.m */; };
 		797ED5041EAED9F2009C20C4 /* NewContactHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797ED5021EAED9F2009C20C4 /* NewContactHeaderCell.xib */; };
 		797ED50E1EAEDA86009C20C4 /* icon_email_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 797ED5051EAEDA86009C20C4 /* icon_email_red.png */; };
@@ -308,6 +310,9 @@
 		79A6AFA51E9D611D007AA24D /* icon_staff@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79A6AF9C1E9D611D007AA24D /* icon_staff@3x.png */; };
 		79A6AFAA1E9DBE12007AA24D /* ChatContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A6AFA81E9DBE12007AA24D /* ChatContactCell.m */; };
 		79A6AFAB1E9DBE12007AA24D /* ChatContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79A6AFA91E9DBE12007AA24D /* ChatContactCell.xib */; };
+		79AC729E1FC0AF26005F7199 /* AddRealContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79AC729D1FC0AF26005F7199 /* AddRealContact.storyboard */; };
+		79AC72A01FC0B00F005F7199 /* AddProperty.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79AC729F1FC0B00F005F7199 /* AddProperty.storyboard */; };
+		79AC72A21FC0B169005F7199 /* AddReceipt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79AC72A11FC0B169005F7199 /* AddReceipt.storyboard */; };
 		79CE7C821EA78E20001A8101 /* NewLedgerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE7C811EA78E20001A8101 /* NewLedgerModel.m */; };
 		79CE7C851EA79B95001A8101 /* NewLedgerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE7C841EA79B95001A8101 /* NewLedgerViewController.m */; };
 		79D599E71E93ED0200CD3821 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 79D599E61E93ED0200CD3821 /* countries.json */; };
@@ -1386,6 +1391,8 @@
 		79734FB21EBAACB800647215 /* icon_upload@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_upload@3x.png"; sourceTree = "<group>"; };
 		79734FC91EBABD3E00647215 /* ChangeBranchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeBranchViewController.h; sourceTree = "<group>"; };
 		79734FCA1EBABD3E00647215 /* ChangeBranchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeBranchViewController.m; sourceTree = "<group>"; };
+		797556F81FC0AA06001CCD46 /* AddMatter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddMatter.storyboard; sourceTree = "<group>"; };
+		797556FA1FC0AD22001CCD46 /* AddCourt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddCourt.storyboard; sourceTree = "<group>"; };
 		797ED5001EAED9F2009C20C4 /* NewContactHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewContactHeaderCell.h; sourceTree = "<group>"; };
 		797ED5011EAED9F2009C20C4 /* NewContactHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewContactHeaderCell.m; sourceTree = "<group>"; };
 		797ED5021EAED9F2009C20C4 /* NewContactHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewContactHeaderCell.xib; sourceTree = "<group>"; };
@@ -1431,6 +1438,9 @@
 		79A6AFA71E9DBE12007AA24D /* ChatContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContactCell.h; sourceTree = "<group>"; };
 		79A6AFA81E9DBE12007AA24D /* ChatContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactCell.m; sourceTree = "<group>"; };
 		79A6AFA91E9DBE12007AA24D /* ChatContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatContactCell.xib; sourceTree = "<group>"; };
+		79AC729D1FC0AF26005F7199 /* AddRealContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddRealContact.storyboard; sourceTree = "<group>"; };
+		79AC729F1FC0B00F005F7199 /* AddProperty.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddProperty.storyboard; sourceTree = "<group>"; };
+		79AC72A11FC0B169005F7199 /* AddReceipt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddReceipt.storyboard; sourceTree = "<group>"; };
 		79CE7C801EA78E20001A8101 /* NewLedgerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLedgerModel.h; sourceTree = "<group>"; };
 		79CE7C811EA78E20001A8101 /* NewLedgerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLedgerModel.m; sourceTree = "<group>"; };
 		79CE7C831EA79B95001A8101 /* NewLedgerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLedgerViewController.h; sourceTree = "<group>"; };
@@ -3024,6 +3034,11 @@
 				79734F5D1EB95BA700647215 /* MainContactViewController.h */,
 				79734F5E1EB95BA700647215 /* MainContactViewController.m */,
 				79734F6A1EB98C5100647215 /* AddContact.storyboard */,
+				797556F81FC0AA06001CCD46 /* AddMatter.storyboard */,
+				797556FA1FC0AD22001CCD46 /* AddCourt.storyboard */,
+				79AC729D1FC0AF26005F7199 /* AddRealContact.storyboard */,
+				79AC729F1FC0B00F005F7199 /* AddProperty.storyboard */,
+				79AC72A11FC0B169005F7199 /* AddReceipt.storyboard */,
 			);
 			path = AddContact;
 			sourceTree = "<group>";
@@ -8110,6 +8125,7 @@
 				96BDA6181F02B96200084606 /* DashboardThirdHeaderCell.xib in Resources */,
 				7931B4BC1EA851B00090BDE0 /* menu_add.png in Resources */,
 				96A73A621F1A6B4900B97156 /* TrialBalanceCell.xib in Resources */,
+				79AC72A01FC0B00F005F7199 /* AddProperty.storyboard in Resources */,
 				96334EAD1FB5DEE6005151AB /* ic_new@3x.png in Resources */,
 				9636DCCF1F03C6C8008DDA41 /* icon_db_file_ledgers@3x.png in Resources */,
 				79FBE1021E304F5000448FE3 /* QMSelectableContactCell.xib in Resources */,
@@ -8132,6 +8148,7 @@
 				7931B4D51EA851B00090BDE0 /* menu_terms_of_uses@2x.png in Resources */,
 				96A73A6B1F1A6CB600B97156 /* icon_check@3x.png in Resources */,
 				793FF12C1EBB78C9001F83A5 /* icon_calendar@3x.png in Resources */,
+				797556F91FC0AA06001CCD46 /* AddMatter.storyboard in Resources */,
 				79EC0ED41E8C85F100320A28 /* icon_help@2x.png in Resources */,
 				79734F981EBAA11500647215 /* icon_attendance.png in Resources */,
 				7920E79D1E9FA747002FEFF3 /* icon_client_selected.png in Resources */,
@@ -8357,6 +8374,7 @@
 				795DF2531E6E6FD0006D617D /* close.png in Resources */,
 				96A73A6E1F1A6CB600B97156 /* icon_close@3x.png in Resources */,
 				79FF353C1E9CB1DC001BECFB /* LastTableCell.xib in Resources */,
+				79AC729E1FC0AF26005F7199 /* AddRealContact.storyboard in Resources */,
 				79FF34FF1E97D95B001BECFB /* icon_home@3x.png in Resources */,
 				79734FAE1EBAABA900647215 /* icon_calculator@2x.png in Resources */,
 				79A6AF9F1E9D611D007AA24D /* icon_client@3x.png in Resources */,
@@ -8395,7 +8413,9 @@
 				793FF1871EBD4BDF001F83A5 /* icon_contact_blue@2x.png in Resources */,
 				795DF2421E6E4C3F006D617D /* Lato-Bold.ttf in Resources */,
 				795DF22D1E6E3A81006D617D /* Contact.png in Resources */,
+				79AC72A21FC0B169005F7199 /* AddReceipt.storyboard in Resources */,
 				9635BB9F1F2A54FD00BE7CF0 /* SearchContactCell.xib in Resources */,
+				797556FB1FC0AD22001CCD46 /* AddCourt.storyboard in Resources */,
 				96A73A971F1B240900B97156 /* icon_prev.png in Resources */,
 				793FF1311EBB78C9001F83A5 /* icon_edit_red@2x.png in Resources */,
 				9636DCD61F03C6C8008DDA41 /* icon_db_task_checklist.png in Resources */,
@@ -8474,13 +8494,13 @@
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-shadow@3x.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarDayCell/GLCalendarDayCell.xib",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarView.xib",
-				"$PODS_CONFIGURATION_BUILD_DIR/NYTPhotoViewer/NYTPhotoViewer.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMChatViewController/QMChatViewController.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMChatCacheModel.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMContactListCacheModel.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMUsersCacheModel.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/NYTPhotoViewer/NYTPhotoViewer.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMChatViewController/QMChatViewController.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMChatCacheModel.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMContactListCacheModel.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMUsersCacheModel.bundle,
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (

@@ -27,6 +27,20 @@
 #import "IncreasingCell.h"
 #import "AddMatterPropertyCell.h"
 
+enum SECTIONS {
+    MAIN_SECTION,
+    REMARKS_SECTION,
+    CASEDETAIL_SECTION,
+    PROPERTIES_SECTION,
+    PARTYGROUP_SECTION,
+    SOLICITORS_SECTION,
+    BANKS_SECTION,
+    IMPORTANT_RM_SECTION,
+    IMPORTANT_DATE_SECTION
+};
+
+
+
 @interface AddMatterViewController ()
 <UITableViewDelegate,
 UITableViewDataSource,
@@ -107,6 +121,8 @@ NSMutableDictionary* keyValue;
     partyCustomerGroup4CodeList = [NSMutableArray new];
     partyCustomerGroup4NameList = [NSMutableArray new];
     propertyCodeList = [NSMutableArray new];
+    propertyFullTitleList = [NSMutableArray new];
+    propertyAdressList = [NSMutableArray new];
 
     bankCodeList = [NSMutableArray new];
     for (int i = 0; i < 3; i++) {
@@ -161,12 +177,16 @@ NSMutableDictionary* keyValue;
         [partyCustomerGroup4NameList addObject:name];
     }
     
+    [self addContentsAndRefresh:PARTYGROUP_SECTION index:index value1:name value2:code];
+}
+
+- (void) addContentsAndRefresh:(NSUInteger) section index:(NSInteger) index value1:(NSString*) value1 value2:(NSString*) value2 {
     BOOL isAdded  = NO;
     NSMutableArray *newArray = [NSMutableArray new];
     for (int i = 0; i < self.tableView.numberOfSections; i++) {
         newArray[i] = [NSMutableArray new];
         int yMax = (int)[_contents[i] count];
-        if (i == 5) {
+        if (i == section) {
             yMax += 1;
         } else {
             isAdded = NO;
@@ -177,9 +197,9 @@ NSMutableDictionary* keyValue;
             if (isAdded) {
                 yIdx = j - 1;
             }
-            if (j == index && i == 5) {
-                [newArray[i][j] addObject:name];
-                [newArray[i][j] addObject:code];
+            if (j == index && i == section) {
+                [newArray[i][j] addObject:value1];
+                [newArray[i][j] addObject:value2];
                 isAdded = YES;
             } else {
                 [newArray[i][j] addObject:_contents[i][yIdx][0]];
@@ -197,35 +217,7 @@ NSMutableDictionary* keyValue;
     [propertyFullTitleList addObject:model.fullTitle];
     [propertyAdressList addObject:model.address.fullAddress];
     
-    BOOL isAdded  = NO;
-    NSMutableArray *newArray = [NSMutableArray new];
-    for (int i = 0; i < self.tableView.numberOfSections; i++) {
-        newArray[i] = [NSMutableArray new];
-        int yMax = (int)[_contents[i] count];
-        if (i == 4) {
-            yMax += 1;
-        } else {
-            isAdded = NO;
-        }
-        for (int j = 0; j < yMax; j++) {
-            newArray[i][j] = [NSMutableArray new];
-            NSInteger yIdx = j;
-            if (isAdded) {
-                yIdx = j - 1;
-            }
-            if (j > 0 && i == 4) {
-                [newArray[i][j] addObject:model.fullTitle];
-                [newArray[i][j] addObject:model.propertyCode];
-                isAdded = YES;
-            } else {
-                [newArray[i][j] addObject:_contents[i][yIdx][0]];
-                [newArray[i][j] addObject:_contents[i][yIdx][1]];
-            }
-        }
-    }
-    
-    self.contents = [newArray copy];
-    [self.tableView reloadData];
+    [self addContentsAndRefresh:PROPERTIES_SECTION index:1 value1:model.fullTitle value2:model.propertyCode];
 }
 
 - (void) removePartyFromContent {
@@ -252,11 +244,15 @@ NSMutableDictionary* keyValue;
         [partyCustomerGroup4NameList removeObjectAtIndex:index];
     }
     
+    [self updateContentsAndRefresh:PARTYGROUP_SECTION];
+}
+
+- (void) updateContentsAndRefresh:(NSUInteger) section {
     NSMutableArray *newArray = [NSMutableArray new];
     for (int i = 0; i < self.tableView.numberOfSections; i++) {
         newArray[i] = [NSMutableArray new];
         int yMax = (int)[_contents[i] count];
-        if (i == 5) {
+        if (i == section) {
             yMax -= 1;
         }
         
@@ -264,7 +260,7 @@ NSMutableDictionary* keyValue;
             newArray[i][j] = [NSMutableArray new];
             NSInteger yIdx = j;
             
-            if (i == 5 && j >= selectedContactRow) {
+            if (i == section && j >= selectedContactRow) {
                 yIdx = j + 1;
             }
             [newArray[i][j] addObject:_contents[i][yIdx][0]];
@@ -276,6 +272,15 @@ NSMutableDictionary* keyValue;
     [self.tableView reloadData];
 }
 
+- (void) removePropertyFromContents {
+    selectedContactRow--;
+    propertyCodeList[selectedContactRow] = @"";
+    propertyAdressList[selectedContactRow] = @"";
+    propertyFullTitleList[selectedContactRow] = @"";
+    
+    selectedContactRow++;
+    [self updateContentsAndRefresh:PROPERTIES_SECTION];
+}
 
 - (void) replaceContentForSection:(NSInteger) section InRow:(NSInteger) row withValue:(NSString*) value{
     NSMutableArray *newArray = [NSMutableArray new];
@@ -372,11 +377,6 @@ NSMutableDictionary* keyValue;
 
 #pragma mark - Table view data source
 
-//- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 10;
-//}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.headers.count;
 }
@@ -426,18 +426,18 @@ NSMutableDictionary* keyValue;
     
     // Case Detail
     newArray[index] = [NSMutableArray new];
-    [newArray[index] addObject:@[@"Case no", @""]];
+    [newArray[index] addObject:@[@"Case NO.", @""]];
     [newArray[index] addObject:@[@"Court", @""]];
+    [newArray[index] addObject:@[@"Judge", @""]];
+    [newArray[index] addObject:@[@"Party Type", @""]];
     [newArray[index] addObject:@[@"Place", @""]];
+    [newArray[index] addObject:@[@"SAR", @""]];
+    [newArray[index] addObject:@[@"Type Case", @""]];
     index += 1;
     [_headers addObject:@"Case Detail"];
     
     // Price
-    newArray[index] = [NSMutableArray new];
-    [newArray[index] addObject:@[@"Balance Dep", @""]];
-    [newArray[index] addObject:@[@"Balance P.Price", @""]];
-    index += 1;
-    [_headers addObject:@"Price"];
+    // Nothing
     
     // Properties
     newArray[index] = [NSMutableArray new];
@@ -751,7 +751,6 @@ NSMutableDictionary* keyValue;
         if (error == nil) {
             _matterModel = result;
             [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:1.0];
-            
         } else {
 //            _matterModel = [RelatedMatterModel new];
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
@@ -795,7 +794,7 @@ NSMutableDictionary* keyValue;
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSInteger section = [[self calcSectionNumber:textField.tag][0] integerValue];
-    if (section == 5) {
+    if (section == IMPORTANT_RM_SECTION) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         
         textField.text = [DIHelpers formatDecimal:text];
@@ -805,10 +804,9 @@ NSMutableDictionary* keyValue;
     }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == 0 && indexPath.row == [_contents[indexPath.section] count] -1) {
+    if (indexPath.section == MAIN_SECTION && indexPath.row == [_contents[indexPath.section] count] -1) {
         AddLastOneButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastOneButtonCell cellIdentifier] forIndexPath:indexPath];
         if(isSaveMode) {
             cell.calculateHandler = ^{
@@ -825,9 +823,9 @@ NSMutableDictionary* keyValue;
         return cell;
     }
     
-    if (indexPath.section == 4 || indexPath.section == 5 || indexPath.section == 6 || indexPath.section == 7) {
+    if (indexPath.section == PROPERTIES_SECTION || indexPath.section == PARTYGROUP_SECTION || indexPath.section == SOLICITORS_SECTION || indexPath.section == BANKS_SECTION) {
       
-        if (indexPath.section == 5) {
+        if (indexPath.section == PARTYGROUP_SECTION) { // Party Group
             if (indexPath.row == 0 || indexPath.row == partyVendorCodeList.count+1 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+2 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + 3 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4 ) {
                 AddMatterCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddMatterCell cellIdentifier] forIndexPath:indexPath];
                 
@@ -849,39 +847,34 @@ NSMutableDictionary* keyValue;
                 return cell;
             }
         } else {
-            if (indexPath.section == 6) {
+            if (indexPath.section == SOLICITORS_SECTION) { // Solicitor
                 AddMatterCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddMatterCell cellIdentifier] forIndexPath:indexPath];
                 cell.label.text = _contents[indexPath.section][indexPath.row][0];
-                if (solicitorCodeList[indexPath.row].length != 0) {
-                    
-                    cell.subLabel.text = ((NSString*)solicitorNameList[indexPath.row]).uppercaseString;
-                    if (cell.subLabel.text.length > 0) {
-                        cell.subLabel.hidden = NO;
-                    }
-                    cell.lastLabel.text = ((NSString*)solicitorRefList[indexPath.row]).uppercaseString;
-                    if (cell.lastLabel.text.length > 0) {
-                        cell.lastLabel.hidden = NO;
-                    }
+                cell.subLabel.text = ((NSString*)solicitorNameList[indexPath.row]).uppercaseString;
+                if (cell.subLabel.text.length > 0) {
+                    cell.subLabel.hidden = NO;
+                }
+                cell.lastLabel.text = ((NSString*)solicitorRefList[indexPath.row]).uppercaseString;
+                if (cell.lastLabel.text.length > 0) {
+                    cell.lastLabel.hidden = NO;
                 }
                 
                 cell.rightUtilityButtons = [self rightButtons];
                 cell.leftUtilityButtons = [self leftButtons];
                 cell.delegate = self;
-                cell.tag = 2;
                 
                 cell.addNew = ^{
                     
                 };
                 
                 return cell;
-            } else if (indexPath.section == 4) {
+            } else if (indexPath.section == PROPERTIES_SECTION) { // Property
                 
                 if (indexPath.row == 0) {
                     AddMatterCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddMatterCell cellIdentifier] forIndexPath:indexPath];
                     cell.label.text = _contents[indexPath.section][indexPath.row][0];
                     cell.subLabel.hidden = YES;
                     cell.lastLabel.hidden = YES;
-                    cell.tag = 3;
                     
                     cell.addNew = ^{
                     };
@@ -898,21 +891,18 @@ NSMutableDictionary* keyValue;
                     cell.delegate = self;
                     return cell;
                 }
-            } else if (indexPath.section == 7) {
+            } else if (indexPath.section == BANKS_SECTION) { // Bank
                 AddMatterCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddMatterCell cellIdentifier] forIndexPath:indexPath];
                 cell.label.text = _contents[indexPath.section][indexPath.row][0];
                 cell.subLabel.hidden = YES;
                 cell.lastLabel.hidden = YES;
-                if (bankCodeList[indexPath.row].length != 0) {
-                    cell.subLabel.text = ((NSString*)bankNameList[indexPath.row]).uppercaseString;
-                    if (cell.subLabel.text.length > 0) {
-                        cell.subLabel.hidden = NO;
-                    }
+                cell.subLabel.text = ((NSString*)bankNameList[indexPath.row]).uppercaseString;
+                if (cell.subLabel.text.length > 0) {
+                    cell.subLabel.hidden = NO;
                 }
                 cell.rightUtilityButtons = [self rightButtons];
                 cell.delegate = self;
                 cell.leftUtilityButtons = [self leftButtons];
-                cell.tag = 4;
                 
                 cell.addNew = ^{
                     
@@ -934,7 +924,7 @@ NSMutableDictionary* keyValue;
     
     int rows = (int)indexPath.row;
     
-    if (indexPath.section == 1) {
+    if (indexPath.section == REMARKS_SECTION) { // Remarks
         IncreasingCell* cell = [tableView dequeueReusableCellWithIdentifier:[IncreasingCell cellIdentifier] forIndexPath:indexPath];
         cell.increaseTextView.placeholder = self.contents[indexPath.section][rows][0];
         cell.increaseTextView.text = self.contents[indexPath.section][rows][1];
@@ -963,7 +953,7 @@ NSMutableDictionary* keyValue;
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.floatingTextField.userInteractionEnabled = YES;
-    if (indexPath.section == 0) {
+    if (indexPath.section == MAIN_SECTION) {
         if (indexPath.row > 1 && indexPath.row <= 7) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.floatingTextField.userInteractionEnabled = NO;
@@ -971,12 +961,17 @@ NSMutableDictionary* keyValue;
         if (indexPath.row == 0) {
             cell.floatingTextField.userInteractionEnabled = NO;
         }
-    } else if (indexPath.section == 8) {
+    } else if (indexPath.section == IMPORTANT_RM_SECTION) { // Important RM
         if (indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 12) {
-            cell.floatingTextField.userInteractionEnabled = NO;
+            if (_matterModel.RMGroupArray[rows].formula.length == 0) {
+                cell.floatingTextField.userInteractionEnabled = YES;
+            } else {
+                cell.floatingTextField.userInteractionEnabled =  NO;
+            }
         }
+        cell.tag = indexPath.section;
         cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
-    } else if (indexPath.section == 9) {
+    } else if (indexPath.section == IMPORTANT_DATE_SECTION) { // Date Group
         cell.floatingTextField.userInteractionEnabled = NO;
     }
     
@@ -1007,20 +1002,22 @@ NSMutableDictionary* keyValue;
 }
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     [cell hideUtilityButtonsAnimated:YES];
     switch (index) {
         case 0:
         {
             // detail button was pressed
             NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-            switch (cell.tag) {
-                case 6:
-                    [self loadSolicitor:cellIndexPath.row];
-                    break;
-                case 4:
+            switch (indexPath.section) {
+                case PROPERTIES_SECTION:
                     [self loadProperty:cellIndexPath.row];
                     break;
-                case 7:
+                case SOLICITORS_SECTION:
+                    [self loadSolicitor:cellIndexPath.row];
+                    break;
+               
+                case BANKS_SECTION:
                     [self loadBank:cellIndexPath.row];
                     break;
                     
@@ -1053,17 +1050,15 @@ NSMutableDictionary* keyValue;
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     selectedContactRow = indexPath.row;
     [cell hideUtilityButtonsAnimated:YES];
-    if (indexPath.section == 5) {
+    if (indexPath.section == PARTYGROUP_SECTION) {
         selectedContactRow = indexPath.row;
         [self removePartyFromContent];
-    } else if (indexPath.section == 6) {
+    } else if (indexPath.section == SOLICITORS_SECTION) {
         solicitorCodeList[selectedContactRow] = @"";
         solicitorNameList[selectedContactRow] = @"";
-    } else if (indexPath.section == 4) {
-        propertyCodeList[selectedContactRow] = @"";
-        propertyAdressList[selectedContactRow] = @"";
-        propertyFullTitleList[selectedContactRow] = @"";
-    } else if (indexPath.section == 7) {
+    } else if (indexPath.section == PROPERTIES_SECTION) {
+        [self removePropertyFromContents];
+    } else if (indexPath.section == BANKS_SECTION) {
         bankCodeList[selectedContactRow] = @"";
         bankNameList[selectedContactRow] = @"";
     } else {
@@ -1078,15 +1073,59 @@ NSMutableDictionary* keyValue;
 }
 
 #pragma mark - UITextField Delegate
+    
+- (NSString*) replaceFormulaWithActualValue:(NSString*) formula fieldName:(NSString*)fieldName section:(NSInteger)section matchString:(NSString*) matchString
+{
+    NSString* newFormula;
+    for (int i = 0; i < _matterModel.RMGroupArray.count; i++) {
+        GeneralGroup* group = _matterModel.RMGroupArray[i];
+        if ([group.fieldName isEqualToString:fieldName]) {
+            NSString* value = _contents[section][i][1];
+            if (value.length == 0) {
+                value = @"0";
+            } else {
+                value = [self removeComma:value];
+            }
+            newFormula = [formula stringByReplacingOccurrencesOfString:matchString withString:value];
+            break;
+        }
+    }
+    
+    return newFormula;
+}
+
+- (void) parseRMGroupFormula: (NSString*) formula position:(NSInteger) position
+{
+    NSString* pattern = @"\\[\\$\\d+\\]";
+    NSError * error;
+    NSRegularExpression *regex =  [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
+
+    NSRange searchRange = NSMakeRange(0, formula.length);
+    NSArray *matches = [regex matchesInString:formula options:0 range:searchRange];
+
+    // 6: Iterate through the matches and highlight them
+    NSString* _formula = formula;
+    for (NSTextCheckingResult *match in matches)
+        {
+            NSString* matchString = [_formula substringWithRange:match.range];
+            NSString* fieldName = [matchString substringWithRange:NSMakeRange(1, matchString.length-2)];
+            formula = [self replaceFormulaWithActualValue:formula fieldName:fieldName section:IMPORTANT_RM_SECTION matchString:matchString];
+           }
+
+    NSExpression *expression = [NSExpression expressionWithFormat:formula];
+    NSNumber *result = [expression expressionValueWithObject:nil context:nil];
+    _contents[IMPORTANT_RM_SECTION][position][1] = [DIHelpers addThousandsSeparator:[result stringValue]];
+}
 
 - (void) calculateImportantRM {
-    CGFloat totalDeposit = [[self removeComma:_contents[5][1][1]] floatValue]  + [[self removeComma:_contents[5][2][1]] floatValue];
-    [self replaceContentForSection:5 InRow:3 withValue:[DIHelpers formatDecimal:[NSString stringWithFormat:@"%.2lf", totalDeposit]]];
-    
-    CGFloat balancePurchase = [[self removeComma:_contents[5][0][1]] floatValue] - totalDeposit;
-    [self replaceContentForSection:5 InRow:4 withValue:[DIHelpers formatDecimal:[NSString stringWithFormat:@"%.2lf", balancePurchase]]];
-    CGFloat totalLoan = 0;
-    
+    for (int i = 0; i < _matterModel.RMGroupArray.count; i++) {
+            GeneralGroup* field = _matterModel.RMGroupArray[i];
+            if (field.formula.length > 0) {
+                    [self parseRMGroupFormula:field.formula position:i];
+                }
+        }
+
+    [self.tableView reloadData];
 }
 
 - (NSInteger) calcTag: (NSIndexPath*) indexPath {
@@ -1119,7 +1158,7 @@ NSMutableDictionary* keyValue;
 - (void) updateTableAfterDidEndEditing:(NSString*) string tag:(NSInteger) tag {
     string = [[DIHelpers capitalizedString:string] mutableCopy];
     NSArray* info = [self calcSectionNumber:tag];
-    if ([info[0] integerValue] == 0 && ([info[1] integerValue] >= 8 || [info[1] integerValue] <= 10)) {
+    if ([info[0] integerValue] == MAIN_SECTION && ([info[1] integerValue] >= 8 || [info[1] integerValue] <= 10)) {
         string = [[string localizedUppercaseString] mutableCopy];
     }
     [self replaceContentForSection:[info[0] integerValue] InRow:[info[1] integerValue] withValue:string];
@@ -1134,7 +1173,7 @@ NSMutableDictionary* keyValue;
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     [self updateTableAfterDidEndEditing:textField.text tag:textField.tag];
-//    [self calculateImportantRM];   
+    [self calculateImportantRM];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1191,8 +1230,25 @@ NSMutableDictionary* keyValue;
     return [self updateCustomSectionHeaderInSection:section withTableView:tableView];
 }
 
-- (void) loadContact: (NSInteger) number {
-    NSString* code = [NSString stringWithFormat:@"%@", _contents[1][number][1]];
+- (void) loadContact:(NSInteger)section number: (NSInteger) number {
+    NSString* code;
+    if  (number < partyVendorCodeList.count+1) {
+        number--;
+        code = partyVendorCodeList[number];
+    } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+2) {
+        number -= partyVendorCodeList.count - 2;
+        code = partyPurchaserCodeList[number];
+    } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + 3) {
+        number -= partyVendorCodeList.count+partyPurchaserCodeList.count - 3;
+        code = partyCustomerGroup3CodeList[number];
+    } else if (partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4) {
+        number -= partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4;
+        code = partyCustomerGroup4CodeList[number];
+    }
+    if (code.length == 0) {
+        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
+        return;
+    }
     if (isLoading) return;
     isLoading = YES;
     
@@ -1213,7 +1269,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) loadSolicitor: (NSInteger) number {
-    if (solicitorCodeList.count == 0) {
+    if (solicitorCodeList[number].length == 0) {
         [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
     } else {
@@ -1237,18 +1293,17 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) loadProperty: (NSInteger) number {
-    if (propertyCodeList.count == 0) {
+    if (propertyCodeList[number].length == 0) {
         [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
     } else {
         if (isLoading) return;
         isLoading = YES;
         
-        NSString* code = [NSString stringWithFormat:@"%@", propertyCodeList[number]];
         [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
         __weak UINavigationController *navigationController = self.navigationController;
         @weakify(self);
-        [[QMNetworkManager sharedManager] loadPropertyfromSearchWithCode:code completion:^(AddPropertyModel * _Nonnull propertyModel, NSError * _Nonnull error) {
+        [[QMNetworkManager sharedManager] loadPropertyfromSearchWithCode:propertyCodeList[number] completion:^(AddPropertyModel * _Nonnull propertyModel, NSError * _Nonnull error) {
             
             @strongify(self);
             self->isLoading = false;
@@ -1260,12 +1315,10 @@ NSMutableDictionary* keyValue;
             }
         }];
     }
-    
 }
 
-
 - (void) loadBank: (NSInteger) number {
-    if (bankCodeList.count == 0) {
+    if (bankCodeList[number].length == 0) {
         [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
     } else {
@@ -1296,8 +1349,6 @@ NSMutableDictionary* keyValue;
         selectedContactRow = indexPath.row;
         selectedSection = indexPath.section;
         [self performSegueWithIdentifier:kContactGetListSegue sender:CONTACT_GETLIST_URL];
-    } else {
-        [self loadContact:indexPath.row];
     }
 }
 
@@ -1305,7 +1356,7 @@ NSMutableDictionary* keyValue;
 {
     selectedContactRow = -1;
     selectedSection = indexPath.section;
-    if (indexPath.section == 0) {
+    if (indexPath.section == MAIN_SECTION) {
         isAddNew = NO;
         if (indexPath.row == 2) {
             selectedContactRow = indexPath.row;
@@ -1326,13 +1377,17 @@ NSMutableDictionary* keyValue;
         } else if (indexPath.row == 7)  {
             [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
         }
-    } else if (indexPath.section == 5) {
-        [self addParty:indexPath];
-    } else if (indexPath.section == 6) {
+    } else if (indexPath.section == PARTYGROUP_SECTION) { // Party Group
+        if (indexPath.row == 0) {
+            [self addParty:indexPath];
+        } else {
+            [self loadContact:indexPath.section number:indexPath.row];
+        }
+    } else if (indexPath.section == SOLICITORS_SECTION) { // Solicitor
         isAddNew = NO;
         selectedContactRow = indexPath.row;
         [self performSegueWithIdentifier:kSolicitorListSegue sender:nil];
-    } else if (indexPath.section == 4) {
+    } else if (indexPath.section == PROPERTIES_SECTION) { // Property Group
         if (indexPath.row == 0) {
             isAddNew = YES;
             selectedContactRow = indexPath.row;
@@ -1340,13 +1395,13 @@ NSMutableDictionary* keyValue;
         } else {
             [self loadProperty:indexPath.row-1];
         }
-    } else if (indexPath.section == 7) {
+    } else if (indexPath.section == BANKS_SECTION) { // Bank Group
         isAddNew = NO;
         selectedContactRow = indexPath.row;
         [self performSegueWithIdentifier:kBankBranchSegue sender:nil];
-    } else if (indexPath.section == 8) {
+    } else if (indexPath.section == IMPORTANT_RM_SECTION) { // Important RM
         
-    } else if (indexPath.section == 9) {
+    } else if (indexPath.section == IMPORTANT_DATE_SECTION) { // Date Group
         isAddNew = NO;
         selectedContactRow = indexPath.row;
         [self showCalendar];
@@ -1382,19 +1437,16 @@ NSMutableDictionary* keyValue;
 }
 
 - (void)tableView:(FZAccordionTableView *)tableView didCloseSection:(NSInteger)section withHeader:(UITableViewHeaderFooterView *)header {
-    
 }
-
 
 #pragma mark - ContactListWithCodeSelectionDelegate
 - (void) didSelectList:(UIViewController *)listVC name:(NSString*) name withModel:(CodeDescription *)model
 {
     if ([name isEqualToString:@"File Status"]) {
-        [self replaceContentForSection:0 InRow:3 withValue:model.descriptionValue];
+        [self replaceContentForSection:MAIN_SECTION InRow:3 withValue:model.descriptionValue];
         selectedFileStatusCode = model.codeValue;
     } 
 }
-
 
 #pragma mark - Navigation
 
@@ -1405,7 +1457,7 @@ NSMutableDictionary* keyValue;
         contactVC.updateHandler = ^(StaffModel *model) {
             newLabel = @"Name";
             
-            if (selectedSection == 0) {
+            if (selectedSection == MAIN_SECTION) {
                 selectedPrimaryClientCode = model.staffCode;
                 [self replaceContentForSection:selectedSection InRow:selectedContactRow withValue:model.name];
             } else {
@@ -1428,7 +1480,7 @@ NSMutableDictionary* keyValue;
         ListOfMatterViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterCodeModel *model) {
             selectedMatterCode = model.matterCode;
-            [self replaceContentForSection:0 InRow:7 withValue:[NSString stringWithFormat:@"%@ %@", model.matterCode, model.matterDescription]];
+            [self replaceContentForSection:MAIN_SECTION InRow:7 withValue:[NSString stringWithFormat:@"%@ %@", model.matterCode, model.matterDescription]];
         };
     }
     
@@ -1439,13 +1491,13 @@ NSMutableDictionary* keyValue;
         staffVC.title = titleOfList;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
             if ([typeOfStaff isEqualToString:@"partner"]) {
-                [self replaceContentForSection:0 InRow:4 withValue:model.name];
+                [self replaceContentForSection:MAIN_SECTION InRow:4 withValue:model.name];
                 selectedPartnerCode = model.staffCode;
             } else if ([typeOfStaff isEqualToString:@"la"]) {
-                [self replaceContentForSection:0 InRow:5 withValue:model.name];
+                [self replaceContentForSection:MAIN_SECTION InRow:5 withValue:model.name];
                 selectedLACode = model.staffCode;
             } else if ([typeOfStaff isEqualToString:@"clerk"]) {
-                [self replaceContentForSection:0 InRow:6 withValue:model.name];
+                [self replaceContentForSection:MAIN_SECTION InRow:6 withValue:model.name];
                 selectedClerkCode = model.staffCode;
             }
         };

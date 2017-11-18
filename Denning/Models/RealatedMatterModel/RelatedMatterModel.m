@@ -64,7 +64,7 @@
     
     for (id group in response) {
          PartyGroupModel* partyGroupModel = [PartyGroupModel new];
-        partyGroupModel.partyGroupName = [group objectForKeyNotNull:@"PartyName"];
+        partyGroupModel.partyGroupName = [group valueForKeyNotNull:@"PartyName"];
         partyGroupModel.partyArray = [ClientModel getClientArrayFromReponse:[group objectForKeyNotNull:@"party"]];
         [partyGroupArray addObject:partyGroupModel];
     }
@@ -100,9 +100,10 @@
     NSMutableArray<GeneralGroup*>* RMGroupArray = [NSMutableArray new];
     for (id group in response) {
         GeneralGroup *model = [GeneralGroup new];
-        model.fieldName = [group objectForKey:@"fieldName"];
-        model.value = [group objectForKey:@"value"];
-        model.label = [group objectForKey:@"label"];
+        model.fieldName = [group valueForKeyNotNull:@"fieldName"];
+        model.formula = [group valueForKeyNotNull:@"formula"];
+        model.value = [group valueForKeyNotNull:@"value"];
+        model.label = [group valueForKeyNotNull:@"label"];
         [RMGroupArray addObject:model];
     }
     return [RMGroupArray copy];

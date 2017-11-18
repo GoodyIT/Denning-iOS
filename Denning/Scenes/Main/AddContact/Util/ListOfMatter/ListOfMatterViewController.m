@@ -89,6 +89,14 @@
     [self getListWithCompletion:nil];
 }
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    self.filter = _searchController.searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getListWithCompletion:nil];
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -108,11 +116,11 @@
         
         @strongify(self)
         if (error == nil) {
+            if (result.count != 0) {
+                self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
+            }
             if (isAppending) {
                 self.listOfMatters = [[self.listOfMatters arrayByAddingObjectsFromArray:result] mutableCopy];
-                if (result.count != 0) {
-                    self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
-                }
             } else {
                 self.listOfMatters = [result mutableCopy];
             }

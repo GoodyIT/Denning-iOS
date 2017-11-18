@@ -84,9 +84,11 @@
     [self.manager.requestSerializer setValue:@"SkySea@denning.com.my" forHTTPHeaderField:@"webuser-id"];
 }
 
-- (void) setPrivateHTTPHeader {
+- (AFHTTPSessionManager*) setPrivateHTTPHeader {
     [self.manager.requestSerializer setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     [self.manager.requestSerializer setValue:[DataManager sharedManager].user.email forHTTPHeaderField:@"webuser-id"];
+    
+    return _manager;
 }
 
 - (NSDictionary*) buildRquestParamsFromDictionary: (NSDictionary*) dict
@@ -112,7 +114,7 @@
  ******** Auth *********
  */
 
--(void) userSignInWithEmail: (NSString*)email password:(NSString*) password withCompletion:(void(^)(BOOL success, NSString* error, NSInteger statusCode, NSDictionary* responseObject)) completion
+-(void) userSignInWithEmail: (NSString*)email password:(NSString*) password withCompletion:(void(^)(BOOL success, NSError* error, NSInteger statusCode, NSDictionary* responseObject)) completion
 {
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{
                                                             @"email": email,
@@ -120,23 +122,12 @@
     
     [self setLoginHTTPHeader];
     
-    [self.manager POST:SIGNIN_URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            completion(YES, nil, [[responseObject objectForKey:@"statusCode"] integerValue], responseObject);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
+    [self sendPostWithURL:SIGNIN_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * error,  NSURLSessionDataTask * _Nonnull task) {
+            if (error == nil) {
+                    completion(YES, error, [[result objectForKey:@"statusCode"] integerValue], result);
+                } else {
             NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
-            
-            NSLog(@"%@, %@", test.allHeaderFields, [NSHTTPURLResponse localizedStringForStatusCode:test.statusCode]);
-
-            if (test.statusCode == 401){
-                completion(NO, @"Invalid username and password", 401, nil);
-            } else {
-                completion(NO, error.localizedDescription, test.statusCode, nil);
-            }
+            completion(NO, error, test.statusCode, nil);
         }
     }];
 }
@@ -175,18 +166,14 @@
 
     [self setLoginHTTPHeader];
     
-    [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
-            completion(YES, test.statusCode, nil, responseObject);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
-            completion(NO, test.statusCode, error.localizedDescription, nil);
-        }
+    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * error,  NSURLSessionDataTask * _Nonnull task) {
+                NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
+                if (error == nil) {
+                        completion(YES, test.statusCode, error.localizedDescription, result);
+                    } else {
+                
+                completion(NO, test.statusCode, error.localizedDescription, nil);
+            }
     }];
 }
 
@@ -1669,28 +1656,14 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getMatterCode:(NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    if ([NSOperationQueue mainQueue].operationCount > 0) {
-        [[NSOperationQueue mainQueue] cancelAllOperations];
-    }
-    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTER_LIST_GET_URL, [search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, MATTER_LIST_GET_URL, search, page];
+    
     
     [self setPrivateHTTPHeader];
-    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
-                                                               HTTPMethod:@"GET"
-                                                                URLString:_url
-                                                               parameters:nil
-                                                           uploadProgress:nil
-                                                         downloadProgress:nil
-                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      if (completion != nil) {
-                                                                          NSArray *result = [MatterCodeModel getMatterCodeArrayFromResponse:responseObject];
-                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                              if  (completion != nil)
-                                                                              {
-                                                                                  completion(nil, error);
-                                                                              }
-                                                                          }];
-    [[NSOperationQueue mainQueue] addOperation:operation];
+    [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        NSArray *array = [MatterCodeModel getMatterCodeArrayFromResponse:result];
+        completion(array, error);
+    }];
 }
 
 - (void) saveMatterWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(RelatedMatterModel* result, NSError* error)) completion
@@ -1929,7 +1902,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 /*
  Leave Application
  */
-- (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+- (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
     if ([NSOperationQueue mainQueue].operationCount > 0) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
@@ -1939,70 +1912,70 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
                                                                HTTPMethod:requestType
                                                                 URLString:url
-                                                               parameters:nil
+                                                               parameters:params
                                                            uploadProgress:nil
                                                          downloadProgress:nil
                                                                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      if (completion != nil) {                                 completion(responseObject, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                      if (completion != nil) {                                 completion(responseObject, nil, task);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
                                                                           if  (completion != nil)
                                                                           {
-                                                                              completion(nil, error);
+                                                                              completion(nil, error, task);
                                                                           }
                                                                       }];
     [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
-- (void) sendGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion
+- (void) sendGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
-    [self sendRequestWithType:@"Get" URL:url params:nil completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-        completion(result, error);
+    [self sendRequestWithType:@"Get" URL:url params:nil completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error, task);
     }];
 }
 
-- (void) sendPostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+- (void) sendPostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
-    [self sendRequestWithType:@"POST" URL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-        completion(result, error);
+    [self sendRequestWithType:@"POST" URL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error, task);
     }];
 }
 
-- (void) sendPutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+- (void) sendPutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
-    [self sendRequestWithType:@"PUT" URL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-        completion(result, error);
+    [self sendRequestWithType:@"PUT" URL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error,  NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error, task);
     }];
 }
 
-- (void) sendPrivateGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion
-{
-    [self setPrivateHTTPHeader];
-    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-        completion(result, error);
-    }];
-}
-
-- (void) sendPrivatePostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+- (void) sendPrivateGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
     [self setPrivateHTTPHeader];
-    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-        completion(result, error);
+    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error, task);
     }];
 }
 
-- (void) sendPrivatePutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion
+- (void) sendPrivatePostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
     [self setPrivateHTTPHeader];
-    [self sendPutWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-        completion(result, error);
+    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error, task);
     }];
 }
 
-- (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error)) completion
+- (void) sendPrivatePutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
+{
+    [self setPrivateHTTPHeader];
+    [self sendPutWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error, task);
+    }];
+}
+
+- (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
     NSString *url = [NSString stringWithFormat:@"%@%@?page=%@", [DataManager sharedManager].user.serverAPI, LEAVE_RECORD_GET_URL, page];
     [self setPrivateHTTPHeader];
-    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-        completion(result, error);
+    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error, task);
     }];
 }
 

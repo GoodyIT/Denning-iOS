@@ -167,7 +167,7 @@ iCarouselDataSource, iCarouselDelegate>
     
     [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
 
-    [[QMNetworkManager sharedManager] userSignInWithEmail:[DataManager sharedManager].user.email password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSString * _Nonnull error, NSInteger statusCode, NSDictionary* responseObject) {
+    [[QMNetworkManager sharedManager] userSignInWithEmail:[DataManager sharedManager].user.email password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary* responseObject) {
         [SVProgressHUD dismiss];
         if (success){
            [[DataManager sharedManager] setUserInfoFromLogin:responseObject];
@@ -424,7 +424,7 @@ iCarouselDataSource, iCarouselDelegate>
         [DataManager sharedManager].documentView = @"shared";
         [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
         @weakify(self);
-        [[QMNetworkManager sharedManager] userSignInWithEmail:[DataManager sharedManager].user.email password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSString * _Nonnull error, NSInteger statusCode, NSDictionary* responseObject) {
+        [[QMNetworkManager sharedManager] userSignInWithEmail:[DataManager sharedManager].user.email password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary* responseObject) {
             
             @strongify(self)
             self->isLoading = NO;
@@ -474,17 +474,20 @@ iCarouselDataSource, iCarouselDelegate>
     }
 }
 
-- (void) manageErrorResult: (NSInteger) statusCode error: (NSString*) error {
+- (void) manageErrorResult: (NSInteger) statusCode error: (NSError*) error {
+    NSString* errorString;
     if (statusCode == 401) {
         int value = [[QMNetworkManager sharedManager].invalidTry intValue];
         [QMNetworkManager sharedManager].invalidTry = [NSNumber numberWithInt:value+1];
         
         if (value >= 10){
-            error = @"Locked for 1 minutes. invalid username and password more than 10 times...";
+            errorString = @"Locked for 1 minutes. invalid username and password more than 10 times...";
             [QMNetworkManager sharedManager].startTrackTimeForLogin = [[NSDate alloc] init];
+        } else {
+            errorString = @"Invalid username and password";
         }
     }
-    [QMAlert showAlertWithMessage:error actionSuccess:NO inViewController:self];
+    [QMAlert showAlertWithMessage:errorString actionSuccess:NO inViewController:self];
 }
 
 - (void) getLatestUpdatesWithCompletion: (void (^)(NSArray* array))completion

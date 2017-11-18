@@ -65,7 +65,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 + (QMNetworkManager *)sharedManager;
 
 - (AFHTTPSessionManager*) setLoginHTTPHeader;
-- (AFHTTPSessionManager*) setOtherForLoginHTTPHeader;
+- (AFHTTPSessionManager*) setPrivateHTTPHeader;
 
 /*
  ******** Auth *********
@@ -78,7 +78,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
  *  @param: email
  */
 
--(void) userSignInWithEmail: (NSString*)email password:(NSString*) password withCompletion:(void(^)(BOOL success, NSString* error , NSInteger statusCode, NSDictionary* responseObject)) completion;
+-(void) userSignInWithEmail: (NSString*)email password:(NSString*) password withCompletion:(void(^)(BOOL success, NSError* error , NSInteger statusCode, NSDictionary* responseObject)) completion;
 
 /*
  *  Request SMS for New Device
@@ -357,21 +357,21 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
  Leave Application
  */
 
-- (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
-- (void) sendGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) sendGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
-- (void) sendPostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) sendPostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
-- (void) sendPutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) sendPutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
-- (void) sendPrivateGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) sendPrivateGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
-- (void) sendPrivatePostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) sendPrivatePostWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
-- (void) sendPrivatePutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) sendPrivatePutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
-- (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error)) completion;
+- (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 /*
  * Dashbard
  */
