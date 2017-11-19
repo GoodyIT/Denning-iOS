@@ -49,9 +49,22 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rdJ-4x-jw1">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="pfX-LO-REM">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gpA-Pq-PQZ" id="EPU-WM-1uj"/>
+                                        </connections>
+                                    </searchBar>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="OKY-vs-Wed"/>
+                                    <constraint firstItem="pfX-LO-REM" firstAttribute="top" secondItem="rdJ-4x-jw1" secondAttribute="top" id="YYr-mT-14W"/>
+                                    <constraint firstAttribute="trailing" secondItem="pfX-LO-REM" secondAttribute="trailing" id="bLl-1Q-ADe"/>
+                                    <constraint firstItem="pfX-LO-REM" firstAttribute="leading" secondItem="rdJ-4x-jw1" secondAttribute="leading" id="cR3-tO-KLk"/>
+                                    <constraint firstAttribute="bottom" secondItem="pfX-LO-REM" secondAttribute="bottom" id="nJi-MC-yfX"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="deF-h5-tkH">
@@ -94,13 +107,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="pfX-LO-REM" id="eie-fR-nqf"/>
                         <outlet property="searchContainer" destination="rdJ-4x-jw1" id="1eA-h1-eZh"/>
                         <outlet property="tableView" destination="deF-h5-tkH" id="b48-C7-1oO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R6L-ZV-PXi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7865" y="9029"/>
+            <point key="canvasLocation" x="8065" y="8990"/>
         </scene>
         <!--Select Contact-->
         <scene sceneID="32s-Fm-Ia9">
@@ -167,7 +181,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o9S-GG-rJY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8646" y="8510"/>
+            <point key="canvasLocation" x="8441" y="8306"/>
         </scene>
         <!--Select Property Type-->
         <scene sceneID="ycK-vn-h8V">
@@ -242,7 +256,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j13-ba-HXc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7705" y="9794"/>
+            <point key="canvasLocation" x="7366" y="10060"/>
         </scene>
         <!--Select Mukim Value-->
         <scene sceneID="nET-9u-3I1">
@@ -282,7 +296,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gLw-Dn-jx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8758" y="9349"/>
+            <point key="canvasLocation" x="8521" y="9891"/>
         </scene>
         <!--Select Project Housing-->
         <scene sceneID="3yz-cY-WLo">
@@ -357,7 +371,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QZt-Mt-UZZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7806" y="8205"/>
+            <point key="canvasLocation" x="7562" y="8206"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oUf-hL-XkG">

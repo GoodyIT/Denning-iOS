@@ -382,7 +382,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         @strongify(self);
         if (error == nil)
         {
-            
             _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
             
             if (resultArray.count > 0) {
@@ -933,16 +932,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     if (offsetY > 10) {
         
         [self.view endEditing:YES];
-    }
-}
-
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading && !isLoading) {
-//        [self appendList];
     }
 }
 

@@ -79,6 +79,11 @@
     _staffAssigned.text = _personalDiary.staffAssigned.descriptionValue;
     _details.text = _personalDiary.appointmentDetails;
     _Remarks.text = _personalDiary.remarks;
+    
+    _startDate.text = [DIHelpers getDateTimeSeprately:_personalDiary.startDate][0];
+    _startTime.text = [DIHelpers getDateTimeSeprately:_personalDiary.startDate][1];
+    _endDate.text = [DIHelpers getDateTimeSeprately:_personalDiary.endDate][0];
+    _endTime.text = [DIHelpers getDateTimeSeprately:_personalDiary.endDate][1];
 }
 
 - (void) prepareUI {
@@ -355,7 +360,7 @@
 - (void) showCalendar {
     [self.view endEditing:YES];
     
-    BirthdayCalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startDate"]) {
             self.startDate.text = date;

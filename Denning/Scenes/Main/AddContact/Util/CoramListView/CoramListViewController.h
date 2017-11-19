@@ -10,7 +10,7 @@
 
 typedef void (^UpdateCoramHandler)(CoramModel* model);
 
-@interface CoramListViewController : UITableViewController
+@interface CoramListViewController : UIViewController
 
 @property (strong, nonatomic) UpdateCoramHandler  updateHandler;
 

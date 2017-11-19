@@ -193,6 +193,8 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define COURT_CORAM_GET_LIST_URL @"denningwcf/v1/courtDiary/coram?search="
 
+#define CASE_TYPE_GET_LIST_URL	@"denningwcf/v1/table/CaseType?search="
+
 #define COURT_DECISION_GET_URL  @"denningwcf/v1/courtDiary/decision?search="
 
 #define COURT_NEXTDATE_TYPE_GET_URL @"denningwcf/v1/generalSelection/frmCourtDiary/nextDateType?search="
@@ -204,6 +206,8 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 #define PERSONAL_DIARY_SAVE_URL @"denningwcf/v1/PersonalDiary"
 
 #define COURT_COUNSEL_GET_URL   @"denningwcf/v1/Staff?type=attest"
+
+#define COURT_PARTY_TYPE_GET_URL    @"denningwcf/v1/courtDiary/PartyType?search="
 
 #define STAFF_GET_URL @"denningwcf/v1/Staff?type="
 

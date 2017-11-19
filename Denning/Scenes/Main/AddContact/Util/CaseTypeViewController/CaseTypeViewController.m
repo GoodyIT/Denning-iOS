@@ -1,50 +1,51 @@
 //
-//  StaffViewController.m
+//  CaseTypeViewController.m
 //  Denning
 //
-//  Created by DenningIT on 09/05/2017.
+//  Created by Denning IT on 2017-11-19.
 //  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-#import "StaffViewController.h"
-#import "StaffHeaderCell.h"
-#import "SecondMatterTypeCell.h"
-#import "TwoColumnCell.h"
+#import "CaseTypeViewController.h"
+#import "PropertyContactCell.h"
+#import "SecondContactCell.h"
 
-@interface StaffViewController ()
-<UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface CaseTypeViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
-    BOOL initCall;
     BOOL isAppending;
 }
-
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray* listOfStaff;
+@property (strong, nonatomic) NSMutableArray* listOfCaseTypes;
 @property (strong, nonatomic) NSArray* copyedList;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 
 @end
 
-@implementation StaffViewController
+
+@implementation CaseTypeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self prepareUI];
-    [self registerNibs];
 //    [self configureSearch];
+    [self registerNib];
     [self getList];
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) registerNib {
+    [PropertyContactCell registerForReuseInTableView:self.tableView];
+    [SecondContactCell registerForReuseInTableView:self.tableView];
 }
 
 - (void) configureSearch
@@ -60,23 +61,18 @@
     [self.searchContainer addSubview:self.searchController.searchBar];
 }
 
-- (void)registerNibs {
-    [StaffHeaderCell registerForReuseInTableView:self.tableView];
-    [SecondMatterTypeCell registerForReuseInTableView:self.tableView];
-    [TwoColumnCell registerForReuseInTableView:self.tableView];
-    
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
-}
-
 - (void) prepareUI
 {
     self.copyedList = [NSMutableArray new];
-    self.page = @(1);
-    isFirstLoading = YES;
+    self.page = @(0);
     self.filter = @"";
-    initCall = YES;
-    isAppending = NO;
+    
+    self.tableView.delegate = self;
+    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.tableFooterView = [UIView new];
     
     CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
     
@@ -94,13 +90,7 @@
         @strongify(self)
         [self appendList];
     }];
-    
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.tableFooterView = [UIView new];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -112,46 +102,33 @@
     [self getList];
 }
 
-- (void) getList{
-    
-    NSString* url = [[STAFF_GET_URL stringByAppendingString:self.typeOfStaff] stringByAppendingString:@"&search="];
-    
+- (void) getList {
+    NSString* url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, CASE_TYPE_GET_LIST_URL, _filter, _page];
     if (isLoading) return;
     isLoading = YES;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self)
-    [[QMNetworkManager sharedManager] getStaffArray:self.page withSearch:(NSString*)self.filter WithURL:url WithCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
-        
-        
+        self->isLoading = NO;
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
             }
+            NSArray* array = [CaseTypeModel getCaseTypeArrayFromResponse:(NSArray*)result];
             if (isAppending) {
-                self.listOfStaff = [[self.listOfStaff arrayByAddingObjectsFromArray:result] mutableCopy];
-                
+                self.listOfCaseTypes = [[self.listOfCaseTypes arrayByAddingObjectsFromArray:array] mutableCopy];
             } else {
-                self.listOfStaff = [result mutableCopy];
+                self.listOfCaseTypes = [array mutableCopy];
             }
             
             [self.tableView reloadData];
-            
-        }
-        else {
+        } else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
-        
-        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];
-        
     }];
-}
-
-- (void) clean {
-    isLoading = NO;
-    isFirstLoading = NO;
 }
 
 #pragma mark - Table view data source
@@ -163,34 +140,35 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.listOfStaff.count;
+    return self.listOfCaseTypes.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return 33;
 }
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    StaffHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[StaffHeaderCell cellIdentifier]];
+    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
+    cell.ID.text = @"Bahasa";
+    cell.name.text = @"English";
     return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    StaffModel *model = self.listOfStaff[indexPath.row];
+    CaseTypeModel *model = self.listOfCaseTypes[indexPath.row];
     
-    TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier] forIndexPath:indexPath];
-    cell.codeLabel.text = model.nickName;
-    cell.descLabel.text = model.name;
+    SecondContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SecondContactCell cellIdentifier] forIndexPath:indexPath];
+    cell.firstValue.text = model.strBahasa;
+    cell.secondValue.text = model.strEnglish;
     
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    StaffModel *model = self.listOfStaff[indexPath.row];
-    self.updateHandler(self.typeOfStaff, model);
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    self.updateHandler(self.listOfCaseTypes[indexPath.row]);
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - ScrollView Delegate
@@ -246,12 +224,7 @@
     [self getList];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfStaff.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
-}
+
 /*
 #pragma mark - Navigation
 

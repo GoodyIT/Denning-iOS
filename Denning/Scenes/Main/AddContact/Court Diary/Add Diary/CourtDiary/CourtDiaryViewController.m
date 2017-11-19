@@ -14,6 +14,7 @@
 #import "SimpleMatterViewController.h"
 #import "MatterLitigationViewController.h"
 #import "CourtDiaryListViewController.h"
+#import "CoramListViewController.h"
 #import "ClientModel.h"
 
 
@@ -26,7 +27,13 @@
     
     NSString* selectedNatureOfHearing;
     NSString* selectedDetails;
-    NSString* selectedCourtDiaryCode;
+    NSString* selectedCourtCode;
+    NSString* selectedCoramCode;
+    NSString* selectedAttendedStatus;
+    NSString* selectedDecisionCode;
+    NSString* selectedNextDateTypeCode;
+    
+    NSString* selectedStaff;
     
     CGFloat autocompleteCellHeight;
     
@@ -49,6 +56,12 @@
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *Remarks;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *natureOfHearing;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *enclosureNo;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *attendedStatus;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *counselAttended;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *coram;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *opponentCounsel;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *courtDecision;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextDateType;
 
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextDate;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *nextTime;
@@ -70,7 +83,6 @@
 @property (weak, nonatomic) IBOutlet SWTableViewCell *detailsCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *attendedStatusCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *counselAttendedCell;
-@property (weak, nonatomic) IBOutlet SWTableViewCell *counselAttended;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *coramCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *opponentCounselCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *courtDecisionCell;
@@ -83,8 +95,6 @@
 @property (weak, nonatomic) IBOutlet SWTableViewCell *nextNatureOfhearingCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *nextDetailCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *nextRemarksCell;
-
-
 
 @property (strong, nonatomic) UIToolbar *accessoryView;
 
@@ -114,6 +124,29 @@
     _caseNo.text = _courtDiary.caseNo;
     _caseName.text = _courtDiary.caseName;
     _fileNo.text = _courtDiary.fileNo1;
+    _enclosureNo.text = _courtDiary.enclosureNo;
+    _natureOfHearing.text = _courtDiary.hearingType;
+    _councilAssigned.text = _courtDiary.counselAssigned;
+    _details.text = _courtDiary.enclosureDetails;
+    _Remarks.text =  _nextRemarks.text = _courtDiary.remarks;
+    _place.text = _courtDiary.court.court;
+    _coram.text = _courtDiary.coram.name;
+    selectedCoramCode = _courtDiary.coram.coramCode;
+    _opponentCounsel.text = _courtDiary.opponentCounsel;
+    _attendedStatus.text = _courtDiary.attendedStatus.descriptionValue;
+    selectedAttendedStatus = _courtDiary.attendedStatus.codeValue;
+    _counselAttended.text = _courtDiary.counselAttended;
+    _courtDecision.text = _courtDiary.courtDecision;
+    _nextDateType.text = _courtDiary.nextDateType.descriptionValue;
+    selectedNextDateTypeCode = _courtDiary.nextDateType.codeValue;
+    
+    _startDate.text = [DIHelpers getDateTimeSeprately:_courtDiary.hearingStartDate][0];
+    _startTime.text = [DIHelpers getDateTimeSeprately:_courtDiary.hearingStartDate][1];
+    _endDate.text = [DIHelpers getDateTimeSeprately:_courtDiary.hearingEndDate][0];
+    _endTime.text = [DIHelpers getDateTimeSeprately:_courtDiary.hearingEndDate][1];
+    
+    _nextDate.text = [DIHelpers getDateTimeSeprately:_courtDiary.nextStartDate][0];
+    _nextTime.text = [DIHelpers getDateTimeSeprately:_courtDiary.nextStartDate][1];
 }
 
 - (IBAction)dismissScreen:(id)sender {
@@ -121,7 +154,8 @@
 }
 
 - (void) prepareUI {
-    selectedCourtDiaryCode = @"";    autocompleteCellHeight = 58;
+   selectedDecisionCode = selectedNextDateTypeCode = selectedDetails = selectedNatureOfHearing = selectedCourtCode = selectedAttendedStatus = selectedCoramCode = @"";
+    autocompleteCellHeight = 58;
     serverAPI = [DataManager sharedManager].user.serverAPI;
     
     self.fileNo.floatLabelActiveColor = self.fileNo.floatLabelPassiveColor = [UIColor redColor];
@@ -165,6 +199,113 @@
     [self.view endEditing:YES];
 }
 
+- (NSString*) getStartDate {
+    return  [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _endTime.text];
+}
+
+- (NSString*) getEndDate {
+    return [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text];
+}
+
+- (IBAction)updateDiary:(id)sender {
+    NSMutableDictionary* data = [NSMutableDictionary new];
+    [data addEntriesFromDictionary:@{@"code":_courtDiary.courtCode}];
+    
+    if (![_attendedStatus.text isEqualToString:_courtDiary.attendedStatus.descriptionValue]) {
+        [data addEntriesFromDictionary:@{@"attendedStatus":@{@"code":selectedAttendedStatus}}];
+    }
+    
+    NSArray* startDateTime = [DIHelpers getDateTimeSeprately:_courtDiary.hearingStartDate];
+    if (![_startDate.text isEqualToString:startDateTime[0]]) {
+        [data addEntriesFromDictionary:@{@"hearingStartDate":[self getStartDate]}];
+    }
+    
+    if (![_startTime.text isEqualToString:startDateTime[1]]) {
+        [data addEntriesFromDictionary:@{@"hearingStartDate":[self getStartDate]}];
+    }
+    
+    NSArray* endDateTime = [DIHelpers getDateTimeSeprately:_courtDiary.hearingEndDate];
+    if (![_endDate.text isEqualToString:endDateTime[0]]) {
+        [data addEntriesFromDictionary:@{@"hearingEndDate":[self getEndDate]}];
+    }
+    
+    if (![_endTime.text isEqualToString:endDateTime[1]]) {
+        [data addEntriesFromDictionary:@{@"hearingEndDate":[self getEndDate]}];
+    }
+    
+    if (![_fileNo.text isEqualToString:_courtDiary.fileNo1]) {
+        [data addEntriesFromDictionary:@{@"fileNo1":_fileNo.text}];
+    }
+    
+    if (![_councilAssigned.text isEqualToString:_courtDiary.counselAssigned]) {
+        [data addEntriesFromDictionary:@{@"counselAssigned":_councilAssigned.text}];
+    }
+    
+    if (![_counselAttended.text isEqualToString:_courtDiary.counselAttended]) {
+        [data addEntriesFromDictionary:@{@"counselAttended":_counselAttended.text}];
+    }
+    
+    if (![selectedCoramCode isEqualToString:_courtDiary.coram.coramCode]) {
+        [data addEntriesFromDictionary:@{@"coram":@{@"code":selectedCoramCode}}];
+    }
+    
+    if (![_place.text isEqualToString:_courtDiary.court.court]) {
+        [data addEntriesFromDictionary:@{@"court":@{@"code":selectedCourtCode}}];
+    }
+    
+    if (![_courtDecision.text isEqualToString:_courtDiary.courtDecision]) {
+        [data addEntriesFromDictionary:@{@"courtDecision":_courtDecision.text}];
+    }
+    
+    if (![_details.text isEqualToString:_courtDiary.enclosureDetails]) {
+        [data addEntriesFromDictionary:@{@"enclosureDetails":_details.text}];
+    }
+    
+    if (![_enclosureNo.text isEqualToString:_courtDiary.enclosureNo]) {
+        [data addEntriesFromDictionary:@{@"enclosureNo":_enclosureNo.text}];
+    }
+    
+    if (![selectedNextDateTypeCode isEqualToString:_courtDiary.nextDateType.codeValue]) {
+        [data addEntriesFromDictionary:@{@"nextDateType":@{@"code":selectedNextDateTypeCode}}];
+    }
+    
+    if (![_opponentCounsel.text isEqualToString:_courtDiary.opponentCounsel]) {
+        [data addEntriesFromDictionary:@{@"opponentCounsel":_opponentCounsel.text}];
+    }
+    
+    NSArray* nextStartDateTime = [DIHelpers getDateTimeSeprately:_courtDiary.nextStartDate];
+    if (![_nextDate.text isEqualToString:nextStartDateTime[0]]) {
+        [data addEntriesFromDictionary:@{@"nextStartDate":[self getStartDate]}];
+    }
+    
+    if (![_nextTime.text isEqualToString:nextStartDateTime[1]]) {
+        [data addEntriesFromDictionary:@{@"nextStartDate":[self getStartDate]}];
+    }
+ 
+    if (![_Remarks.text isEqualToString:_courtDiary.remarks]) {
+        [data addEntriesFromDictionary:@{@"remarks":_Remarks.text}];
+    }
+    
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:COURT_SAVE_UPATE_URL];
+    if (isLoading) return;
+    isLoading = YES;
+    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak UINavigationController *navigationController = self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        [navigationController dismissNotificationPanel];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully updated" duration:1.0];
+            
+        } else {
+            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+}
+
+
 - (void) saveDiary {
     NSDictionary* data = @{
                            @"chkDone":@"0",
@@ -174,7 +315,7 @@
                                @{
                                    @"code": @"0"},
                            @"counselAssigned": self.councilAssigned.text,
-                           @"court": @{@"code":selectedCourtDiaryCode},
+                           @"court": @{@"code":selectedCourtCode},
                            @"courtDecision": @"",
                            @"enclosureDetails": self.details.text,
                            @"enclosureNo": self.enclosureNo.text,
@@ -251,53 +392,127 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+    if (_courtDiary != nil) {
+        if (section == 0) {
+            return 16;
+        } else {
+            if ([_courtDiary.nextDateType.codeValue isEqualToString:@"0"]) {
+                return 5;
+            } else if ([_courtDiary.nextDateType.codeValue isEqualToString:@"2"]) {
+                return 3;
+            } else {
+                return 1;
+            }
+        }
+    }
     return 11;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.row == 0) {
-        self.fileNoCell.leftUtilityButtons = [self leftButtons];
-        self.fileNoCell.delegate = self;
-        return self.fileNoCell;
-    } else if (indexPath.row == 1) {
-        self.caseNoCell.leftUtilityButtons = [self leftButtons];
-        self.caseNoCell.delegate = self;
-        return self.caseNoCell;
-    } else if (indexPath.row == 2) {
-        self.caseNameCell.leftUtilityButtons = [self leftButtons];
-        self.caseNameCell.delegate = self;
-        return self.caseNameCell;
-    } else if (indexPath.row == 3) {
-        return self.startDateCell;;
-    } else if (indexPath.row == 4) {
-        return self.endDateCell;
-    } else if (indexPath.row == 5) {
-        self.placeCell.leftUtilityButtons = [self leftButtons];
-        self.placeCell.delegate = self;
-        return self.placeCell;
-    } else if (indexPath.row == 6) {
-        self.enclosureCell.leftUtilityButtons = [self leftButtons];
-        self.enclosureCell.delegate = self;
-        return self.enclosureCell;;
-    } else if (indexPath.row == 7) {
-        self.natureOfHearingCell.leftUtilityButtons = [self leftButtons];
-        self.natureOfHearingCell.delegate = self;
-        return self.natureOfHearingCell;
-    } else if (indexPath.row == 8) {
-        self.councilAssignedCell.leftUtilityButtons = [self leftButtons];
-        self.councilAssignedCell.delegate = self;
-        return self.councilAssignedCell;
-    } else if (indexPath.row == 9) {
-        self.detailsCell.leftUtilityButtons = [self leftButtons];
-        self.detailsCell.delegate = self;
-        return self.detailsCell;
-    } else if (indexPath.row == 10) {
-        self.remarksCell.leftUtilityButtons = [self leftButtons];
-        self.remarksCell.delegate = self;
-        return self.remarksCell;
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            self.fileNoCell.leftUtilityButtons = [self leftButtons];
+            self.fileNoCell.delegate = self;
+            return self.fileNoCell;
+        } else if (indexPath.row == 1) {
+            self.caseNoCell.leftUtilityButtons = [self leftButtons];
+            self.caseNoCell.delegate = self;
+            return self.caseNoCell;
+        } else if (indexPath.row == 2) {
+            self.caseNameCell.leftUtilityButtons = [self leftButtons];
+            self.caseNameCell.delegate = self;
+            return self.caseNameCell;
+        } else if (indexPath.row == 3) {
+            return self.startDateCell;;
+        } else if (indexPath.row == 4) {
+            return self.endDateCell;
+        } else if (indexPath.row == 5) {
+            self.placeCell.leftUtilityButtons = [self leftButtons];
+            self.placeCell.delegate = self;
+            return self.placeCell;
+        } else if (indexPath.row == 6) {
+            self.enclosureCell.leftUtilityButtons = [self leftButtons];
+            self.enclosureCell.delegate = self;
+            return self.enclosureCell;;
+        } else if (indexPath.row == 7) {
+            self.natureOfHearingCell.leftUtilityButtons = [self leftButtons];
+            self.natureOfHearingCell.delegate = self;
+            return self.natureOfHearingCell;
+        } else if (indexPath.row == 8) {
+            self.councilAssignedCell.leftUtilityButtons = [self leftButtons];
+            self.councilAssignedCell.delegate = self;
+            return self.councilAssignedCell;
+        } else if (indexPath.row == 9) {
+            self.detailsCell.leftUtilityButtons = [self leftButtons];
+            self.detailsCell.delegate = self;
+            return self.detailsCell;
+        } else if (indexPath.row == 10) {
+            if (_courtDiary != nil) {
+                self.attendedStatusCell.leftUtilityButtons = [self leftButtons];
+                self.attendedStatusCell.delegate = self;
+                return self.attendedStatusCell;
+            } else {
+                self.remarksCell.leftUtilityButtons = [self leftButtons];
+                self.remarksCell.delegate = self;
+                return self.remarksCell;
+            }
+        } else if (indexPath.row == 11) {
+            if (_courtDiary != nil) {
+                self.counselAttendedCell.leftUtilityButtons = [self leftButtons];
+                self.counselAttendedCell.delegate = self;
+                return self.counselAttendedCell;
+            } else {
+                self.remarksCell.leftUtilityButtons = [self leftButtons];
+                self.remarksCell.delegate = self;
+                return self.remarksCell;
+            }
+        } else if (indexPath.row == 12) {
+            self.coramCell.leftUtilityButtons = [self leftButtons];
+            self.coramCell.delegate = self;
+            return self.coramCell;
+        } else if (indexPath.row == 13) {
+            self.opponentCounselCell.leftUtilityButtons = [self leftButtons];
+            self.opponentCounselCell.delegate = self;
+            return self.opponentCounselCell;
+        } else if (indexPath.row == 14) {
+            self.courtDecisionCell.leftUtilityButtons = [self leftButtons];
+            self.courtDecisionCell.delegate = self;
+            return self.courtDecisionCell;
+        }  else if (indexPath.row == 15) {
+            self.nextDateTypeCell.leftUtilityButtons = [self leftButtons];
+            self.nextDateTypeCell.delegate = self;
+            return self.nextDateTypeCell;
+        }
+    } else {
+        if ([_courtDiary.nextDateType.codeValue isEqualToString:@"0"]) {
+            if (indexPath.row == 0) {
+                self.nextDateTimeCell.leftUtilityButtons = [self leftButtons];
+                self.nextDateTimeCell.delegate = self;
+                return self.nextDateTimeCell;
+            } else if (indexPath.row == 1) {
+                self.nextEnclosureNoCell.leftUtilityButtons = [self leftButtons];
+                self.nextEnclosureNoCell.delegate = self;
+                return self.nextEnclosureNoCell;
+            } else if (indexPath.row == 2) {
+                self.nextNatureOfhearingCell.leftUtilityButtons = [self leftButtons];
+                self.nextNatureOfhearingCell.delegate = self;
+                return self.nextNatureOfhearingCell;
+            } else if (indexPath.row == 3) {
+                self.nextDetailCell.leftUtilityButtons = [self leftButtons];
+                self.nextDetailCell.delegate = self;
+                return self.nextDetailCell;
+            } else if (indexPath.row == 4) {
+                self.nextRemarksCell.leftUtilityButtons = [self leftButtons];
+                self.nextRemarksCell.delegate = self;
+                return self.nextRemarksCell;
+            }
+        } else {
+            if (indexPath.row == 0) {
+                self.nextDateTimeCell.leftUtilityButtons = [self leftButtons];
+                self.nextDateTimeCell.delegate = self;
+                return self.nextDateTimeCell;
+            }
+        }
     }
     
     return nil;
@@ -375,7 +590,7 @@
 - (void) showCalendar {
     [self.view endEditing:YES];
     
-    BirthdayCalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startDate"]) {
             self.startDate.text = date;
@@ -404,25 +619,60 @@
     if ([name isEqualToString:@"natureOfHearing"]) {
         self.natureOfHearing.text = model.descriptionValue;
         selectedNatureOfHearing = model.codeValue;
+    } else if ([name isEqualToString:@"Attendant Status"]) {
+        self.attendedStatus.text = model.descriptionValue;
+        selectedAttendedStatus = model.codeValue;
+    } else if ([name isEqualToString:@"Court Decision"]) {
+        self.courtDecision.text = model.descriptionValue;
+        selectedDecisionCode = model.codeValue;
+    } else if ([name isEqualToString:@"Next Date Type"]) {
+        self.nextDateType.text = model.descriptionValue;
+        selectedNextDateTypeCode = model.codeValue;
     }
 }
 
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.row == 0) {
-        [self performSegueWithIdentifier:kMatterLitigationSegue sender:nil];
-    } else if (indexPath.row == 5) {
-        [self performSegueWithIdentifier:kCourtDiarySegue sender:nil];
-    } else if (indexPath.row == 7) {
-        titleOfList = @"List of Hearing Type";
-        nameOfField = @"natureOfHearing";
-        [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_HEARINGTYPE_GET_URL];
-    } else if (indexPath.row == 8) {
-        [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
-    } if (indexPath.row == 9) {
-        [self showDetailAutocomplete];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            [self performSegueWithIdentifier:kMatterLitigationSegue sender:nil];
+        } else if (indexPath.row == 5) {
+            [self performSegueWithIdentifier:kCourtDiarySegue sender:nil];
+        } else if (indexPath.row == 7) {
+            titleOfList = @"List of Hearing Type";
+            nameOfField = @"natureOfHearing";
+            [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_HEARINGTYPE_GET_URL];
+        } else if (indexPath.row == 8) {
+            selectedStaff = @"Counsel Assigned";
+            [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+        }
+        if (_courtDiary != nil) {
+            if (indexPath.row == 10) { // Attendant Type
+                titleOfList = @"Attendant Type";
+                nameOfField = @"Attendant Status";
+                [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_ATTENDED_STATUS_GET_URL];
+            } else if (indexPath.row == 11) { // Counsel Attended
+                selectedStaff = @"Counsel Attended";
+                [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+            } else if (indexPath.row == 12) { // Coram
+                [self performSegueWithIdentifier:kCoramListSegue sender:nil];
+            } else if (indexPath.row == 14) { // Decision
+                titleOfList = @"Court Decision";
+                nameOfField = @"Court Decision";
+                [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_DECISION_GET_URL];
+            } else if (indexPath.row == 15) { // Decision
+                titleOfList = @"Next Date Type";
+                nameOfField = @"Next Date Type";
+                [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_NEXTDATE_TYPE_GET_URL];
+            }
+        } else if (indexPath.row == 9) { // Details
+            [self showDetailAutocomplete];
+        }
+        
+    } else {
+        
     }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -437,26 +687,24 @@
             self.caseNo.text = model.courtInfo.caseNumber;
             self.caseName.text = model.courtInfo.caseName;
         };
-    }
-    
-    if ([segue.identifier isEqualToString:kCourtDiarySegue]) {
+    } else if ([segue.identifier isEqualToString:kCourtDiarySegue]) {
         CourtDiaryListViewController* courtVC = segue.destinationViewController;
         courtVC.updateHandler = ^(CourtDiaryModel *model) {
             self.place.text = model.typeE;
-            selectedCourtDiaryCode = model.courtDiaryCode;
+            selectedCourtCode = model.courtDiaryCode;
         };
-    }
-    
-    if ([segue.identifier isEqualToString:kStaffSegue]) {
+    } else if ([segue.identifier isEqualToString:kStaffSegue]) {
         UINavigationController *navVC =segue.destinationViewController;
         StaffViewController* staffVC = navVC.viewControllers.firstObject;
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
-            self.councilAssigned.text = model.name;
+            if ([selectedStaff isEqualToString:@"Counsel  Assignedl"]) {
+                 self.councilAssigned.text = model.name;
+            } else {
+                _counselAttended.text = model.name;
+            }
         };
-    }
-    
-    if ([segue.identifier isEqualToString:kListWithCodeSegue]) {
+    } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {
         UINavigationController *navVC =segue.destinationViewController;
         
         ListWithCodeTableViewController *listCodeVC = navVC.viewControllers.firstObject;
@@ -464,6 +712,12 @@
         listCodeVC.titleOfList = titleOfList;
         listCodeVC.name = nameOfField;
         listCodeVC.url = sender;
+    } else if ([segue.identifier isEqualToString:kCoramListSegue]) {
+        CoramListViewController* coramVC = segue.destinationViewController;
+        coramVC.updateHandler = ^(CoramModel *model) {
+            _coram.text = model.name;
+            selectedCoramCode = model.coramCode;
+        };
     }
 }
 

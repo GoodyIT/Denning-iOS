@@ -77,7 +77,7 @@
 @property (strong, nonatomic) NSArray<GeneralGroup*> * dateGroupArray;
 
 // Other information
-@property (strong, nonatomic) NSArray * textGroupArray ;
+@property (strong, nonatomic) NSArray<GeneralGroup*> * textGroupArray ;
 
 @property (strong, nonatomic) NSArray * relatedMatter;
 

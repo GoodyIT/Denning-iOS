@@ -96,6 +96,11 @@
     _fileNo.text = _officeDiary.fileNo1;
     _attendantStatus.text = _officeDiary.attendedStatus.descriptionValue;
     selectedAttendantStatus = _officeDiary.attendedStatus.codeValue;
+    
+    _startDate.text = [DIHelpers getDateTimeSeprately:_officeDiary.startDate][0];
+    _startTime.text = [DIHelpers getDateTimeSeprately:_officeDiary.startDate][1];
+    _endDate.text = [DIHelpers getDateTimeSeprately:_officeDiary.endDate][0];
+    _endTime.text = [DIHelpers getDateTimeSeprately:_officeDiary.endDate][1];
 }
 
 - (void) prepareUI {
@@ -438,7 +443,7 @@
 
 - (void) showCalendar {
     [self.view endEditing:YES];
-    BirthdayCalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startDate"]) {
             self.startDate.text = date;

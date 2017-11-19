@@ -11,7 +11,7 @@
 #import <GLCalendarView.h>
 #import <GLDateUtils.h>
 #import "CalendarRangeView.h"
-#import "EditCourtDiaryViewController.h"
+#import "CourtDiaryViewController.h"
 #import "PersonalDiaryViewController.h"
 #import "OfficeDiaryViewController.h"
 
@@ -523,8 +523,8 @@
         calendarRangeViewVC.currentRange = self.currentRange;
     } else if ([segue.identifier isEqualToString:kEditCourtSegue]) {
         UINavigationController *navVC = segue.destinationViewController;
-        EditCourtDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;
-        editCourtVC.courtModel = sender;
+        CourtDiaryViewController* vc = navVC.viewControllers.firstObject;
+        vc.courtDiary = sender;
     } else if ([segue.identifier isEqualToString:kEditPersonalDiarySegue]) {
         UINavigationController *navVC = segue.destinationViewController;
         PersonalDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;

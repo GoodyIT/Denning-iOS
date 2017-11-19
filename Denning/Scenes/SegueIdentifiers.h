@@ -158,6 +158,8 @@ static NSString* const kEditPersonalDiarySegue = @"EditPersonalDiarySegue";
 
 static NSString* const kCoramListSegue = @"CoramListSegue";
 
+static NSString* const kCaseTypeSegue = @"CaseTypeSegue";
+
 static NSString* const kDashboardMatterSegue = @"DashboardMatterSegue";
 
 static NSString* const kBankCashSegue = @"BankCashSegue";

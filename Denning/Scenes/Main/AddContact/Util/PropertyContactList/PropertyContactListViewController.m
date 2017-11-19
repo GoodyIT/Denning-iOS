@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* listOfContacts;
 @property (strong, nonatomic) NSArray* copyedList;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
@@ -127,6 +128,8 @@
     isLoading = NO;
     isFirstLoading = NO;
 }
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

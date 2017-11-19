@@ -294,6 +294,8 @@
 		797ED52E1EAF73C1009C20C4 /* icon_calendar_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 797ED52B1EAF73C1009C20C4 /* icon_calendar_red@3x.png */; };
 		797ED5321EAFDC31009C20C4 /* CalendarRangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797ED5311EAFDC31009C20C4 /* CalendarRangeView.m */; };
 		799109A31E6FA31F0028C24B /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 799109A21E6FA31F0028C24B /* ContactViewController.m */; };
+		7993767A1FC0D3DE007E35CE /* CaseTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 799376791FC0D3DE007E35CE /* CaseTypeModel.m */; };
+		7993767E1FC0D5C5007E35CE /* CaseTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7993767D1FC0D5C5007E35CE /* CaseTypeViewController.m */; };
 		79A6AF8D1E9D1922007AA24D /* icon_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 79A6AF8A1E9D1922007AA24D /* icon_menu.png */; };
 		79A6AF8E1E9D1922007AA24D /* icon_menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79A6AF8B1E9D1922007AA24D /* icon_menu@2x.png */; };
 		79A6AF8F1E9D1922007AA24D /* icon_menu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79A6AF8C1E9D1922007AA24D /* icon_menu@3x.png */; };
@@ -1421,6 +1423,10 @@
 		797ED5311EAFDC31009C20C4 /* CalendarRangeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarRangeView.m; sourceTree = "<group>"; };
 		799109A11E6FA31F0028C24B /* ContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactViewController.h; sourceTree = "<group>"; };
 		799109A21E6FA31F0028C24B /* ContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactViewController.m; sourceTree = "<group>"; };
+		799376781FC0D3DE007E35CE /* CaseTypeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaseTypeModel.h; sourceTree = "<group>"; };
+		799376791FC0D3DE007E35CE /* CaseTypeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaseTypeModel.m; sourceTree = "<group>"; };
+		7993767C1FC0D5C5007E35CE /* CaseTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CaseTypeViewController.h; sourceTree = "<group>"; };
+		7993767D1FC0D5C5007E35CE /* CaseTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaseTypeViewController.m; sourceTree = "<group>"; };
 		79A6AF8A1E9D1922007AA24D /* icon_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_menu.png; sourceTree = "<group>"; };
 		79A6AF8B1E9D1922007AA24D /* icon_menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_menu@2x.png"; sourceTree = "<group>"; };
 		79A6AF8C1E9D1922007AA24D /* icon_menu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_menu@3x.png"; sourceTree = "<group>"; };
@@ -3231,6 +3237,7 @@
 		793FF2291EC48E22001F83A5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				7993767B1FC0D5B5007E35CE /* CaseTypeViewController */,
 				960758A51F015C52008F9C69 /* MasterTitleView */,
 				968E85EC1EF2E72A001B442D /* PhonNumberAutoComplete */,
 				968E85E81EF2DAF1001B442D /* CountryAutoComplete */,
@@ -3475,6 +3482,24 @@
 				79FF5B591E6FBB4000A27907 /* RelatedMatterViewController.m */,
 			);
 			path = RelatedMatter;
+			sourceTree = "<group>";
+		};
+		799376771FC0D3D3007E35CE /* CaseTypeModel */ = {
+			isa = PBXGroup;
+			children = (
+				799376781FC0D3DE007E35CE /* CaseTypeModel.h */,
+				799376791FC0D3DE007E35CE /* CaseTypeModel.m */,
+			);
+			path = CaseTypeModel;
+			sourceTree = "<group>";
+		};
+		7993767B1FC0D5B5007E35CE /* CaseTypeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7993767C1FC0D5C5007E35CE /* CaseTypeViewController.h */,
+				7993767D1FC0D5C5007E35CE /* CaseTypeViewController.m */,
+			);
+			path = CaseTypeViewController;
 			sourceTree = "<group>";
 		};
 		79A6AFA61E9DBDFA007AA24D /* ChatContactCell */ = {
@@ -5089,6 +5114,7 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				799376771FC0D3D3007E35CE /* CaseTypeModel */,
 				96E0948E1FBDBE8900E5FA58 /* OfficeDiaryModel */,
 				96AA36541FBCC79B003D9A2C /* LeaveRecordModel */,
 				960017671FB0C7D1001EAB51 /* AttendanceInfo */,
@@ -8705,6 +8731,7 @@
 				79734F781EB99ED300647215 /* CityModel.m in Sources */,
 				79FD2D021E428526005978E3 /* MainTabBarController.m in Sources */,
 				96E094911FBDBE9800E5FA58 /* OfficeDiaryModel.m in Sources */,
+				7993767E1FC0D5C5007E35CE /* CaseTypeViewController.m in Sources */,
 				962083451EDE151300BB595C /* BankCashCell.m in Sources */,
 				9636DCFC1F046A04008DDA41 /* DashboardDueTask.m in Sources */,
 				79FBE09A1E304EAB00448FE3 /* QMTextField.m in Sources */,
@@ -8767,6 +8794,7 @@
 				79FBDF9F1E30421A00448FE3 /* NSArray+Intersection.m in Sources */,
 				962082B71ED3D03800BB595C /* AddDiaryViewController.m in Sources */,
 				79FBDFE61E30421A00448FE3 /* REMessageUI.m in Sources */,
+				7993767A1FC0D3DE007E35CE /* CaseTypeModel.m in Sources */,
 				790B23AD1E37B0130037A187 /* DISignupViewController.m in Sources */,
 				79FBE0FF1E304F5000448FE3 /* QMSearchCell.m in Sources */,
 				79EC0E191E89C99B00320A28 /* LedgerDetailModel.m in Sources */,

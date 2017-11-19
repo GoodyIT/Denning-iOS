@@ -173,6 +173,7 @@
 #import "AttendanceModel.h"
 #import "LeaveRecordModel.h"
 #import "OfficeDiaryModel.h"
+#import "CaseTypeModel.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 
