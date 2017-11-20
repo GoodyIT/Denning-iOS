@@ -185,7 +185,7 @@
 - (void) showCalendar {
     [self.view endEditing:YES];
     
-    BirthdayCalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startDate"]) {
             startDate = date;

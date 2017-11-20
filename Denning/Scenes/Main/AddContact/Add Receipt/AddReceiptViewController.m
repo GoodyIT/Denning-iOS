@@ -272,7 +272,8 @@
 - (void) showAutocomplete {
     [self.view endEditing:YES];
     
-    SimpleAutocomplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
+    SimpleAutocomplete *vc = [[UIStoryboard storyboardWithName:@
+                                                        "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
     vc.url = RECEIPT_TRANS_DESC_GET_LIST_URL;
     vc.title = @"";
     vc.updateHandler =  ^(NSString* selectedString) {

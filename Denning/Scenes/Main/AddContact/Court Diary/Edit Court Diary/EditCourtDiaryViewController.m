@@ -177,7 +177,8 @@ NSMutableDictionary* keyValue;
 - (void) showTimePicker {
     [self.view endEditing:YES];
     
-    TimePickerViewController *timeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimePickerView"];
+    TimePickerViewController *timeViewController = [[UIStoryboard storyboardWithName:@
+                                                     "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"TimePickerView"];
     timeViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"nextTime"]) {
             [self replaceContentForSection:1 InRow:1 withValue:date];
@@ -190,7 +191,8 @@ NSMutableDictionary* keyValue;
 - (void) showCalendar {
     [self.view endEditing:YES];
     
-    BirthdayCalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@
+                                                               "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"nextDate"]) {
             [self replaceContentForSection:1 InRow:0 withValue:date];

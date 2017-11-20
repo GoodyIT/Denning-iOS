@@ -575,7 +575,8 @@
 - (void) showTimePicker {
     [self.view endEditing:YES];
     
-    TimePickerViewController *timeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimePickerView"];
+    TimePickerViewController *timeViewController = [[UIStoryboard storyboardWithName:@
+                                                     "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"TimePickerView"];
     timeViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startTime"]) {
             self.startTime.text = date;
@@ -604,7 +605,8 @@
 - (void) showDetailAutocomplete {
     [self.view endEditing:YES];
     
-    DetailWithAutocomplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
+    DetailWithAutocomplete *vc = [[UIStoryboard storyboardWithName:@
+                                   "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
     vc.url = COURT_HEARINGDETAIL_GET_URL;
     vc.updateHandler =  ^(CodeDescription* model) {
         self.details.text = model.descriptionValue;

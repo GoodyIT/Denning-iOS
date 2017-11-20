@@ -184,7 +184,8 @@
 }
 
 - (void) showCountryCodeList:(UIButton*) countryBtn {
-    PhoneNumberAutoComplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PhoneNumberAutoComplete"];
+    PhoneNumberAutoComplete *vc = [[UIStoryboard storyboardWithName:@
+                                    "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"PhoneNumberAutoComplete"];
     
     vc.updateHandler =  ^(NSString* countryCode, NSString* countryCallingCode) {
         switch (phoneTag) {
@@ -273,7 +274,7 @@
 - (void) showCountryAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
-    CountryAutoCompleteViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"CountryAutoCompleteViewController"];
+    CountryAutoCompleteViewController *vc = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CountryAutoCompleteViewController"];
 
     vc.updateHandler =  ^(NSString* model) {
         self.country.text = model;
@@ -284,7 +285,7 @@
 - (void) showDetailAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
-    DetailWithAutocomplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
+    DetailWithAutocomplete *vc = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
     vc.url = url;
     vc.updateHandler =  ^(CodeDescription* model) {
         if ([nameOfField isEqualToString:@"Occupation"]) {
@@ -301,7 +302,7 @@
 - (void) showSimpleAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
-    SimpleAutocomplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
+    SimpleAutocomplete *vc = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
     vc.url = url;
     vc.title = titleOfList;
     vc.updateHandler =  ^(NSString* selectedString) {
@@ -314,7 +315,7 @@
 - (void) showPostcodeAutocomplete: (NSString*) url {
     [self.view endEditing:YES];
     
-    PostCodeAutoComplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PostCodeAutoComplete"];
+    PostCodeAutoComplete *vc = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"PostCodeAutoComplete"];
     vc.url = url;
     vc.title = @"Postcode";
     vc.updateHandler =  ^(CityModel* city) {

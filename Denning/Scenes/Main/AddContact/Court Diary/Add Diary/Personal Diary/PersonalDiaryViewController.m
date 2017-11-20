@@ -345,7 +345,8 @@
 - (void) showTimePicker {
     [self.view endEditing:YES];
     
-    TimePickerViewController *timeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TimePickerView"];
+    TimePickerViewController *timeViewController = [[UIStoryboard storyboardWithName:@
+                                                     "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"TimePickerView"];
     timeViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startTime"]) {
             self.startTime.text = date;
@@ -374,7 +375,8 @@
 - (void) showDetailAutocomplete {
     [self.view endEditing:YES];
     
-    DetailWithAutocomplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
+    DetailWithAutocomplete *vc = [[UIStoryboard storyboardWithName:@
+                                   "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
     vc.url = COURT_PERSONAL_DETAIL_GET_LIST_URL;
     vc.updateHandler =  ^(CodeDescription* model) {
         self.details.text = model.descriptionValue;
@@ -385,7 +387,8 @@
 - (void) showAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
-    SimpleAutocomplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
+    SimpleAutocomplete *vc = [[UIStoryboard storyboardWithName:@
+                               "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
     vc.url = url;
     vc.title = @"";
     vc.updateHandler =  ^(NSString* selectedString) {

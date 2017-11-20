@@ -160,7 +160,8 @@ NSMutableDictionary* keyValue;
 - (void) showPropertyAutocomplete: (NSString*) url {
     [self.view endEditing:YES];
     
-    PropertyAutoComplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PropertyAutoComplete"];
+    PropertyAutoComplete *vc = [[UIStoryboard storyboardWithName:@
+                                 "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"PropertyAutoComplete"];
     vc.url = url;
     vc.title = @"";
     vc.updateHandler =  ^(ProjectHousingModel* model) {
@@ -179,7 +180,8 @@ NSMutableDictionary* keyValue;
 - (void) showAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
-    SimpleAutocomplete *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
+    SimpleAutocomplete *vc = [[UIStoryboard storyboardWithName:@
+                               "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
     vc.url = url;
     vc.title = @"";
     vc.updateHandler =  ^(NSString* selectedString) {
@@ -765,7 +767,8 @@ NSMutableDictionary* keyValue;
 - (void) showCalendar {
     [self.view endEditing:YES];
     
-    BirthdayCalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@
+                                                               "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         [self replaceContentForSection:1 InRow:12 withValue:date];
     };
