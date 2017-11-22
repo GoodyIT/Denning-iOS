@@ -601,19 +601,20 @@ NSMutableDictionary* keyValue;
     if ([segue.identifier isEqualToString:kSimpleMatterSegue]) {
         SimpleMatterViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterSimple *model) {
-            PartyGroupModel* partyGroup = model.partyGroupArray[0];
-            issueToFirstCode = [NSNumber numberWithInteger: [((ClientModel*)partyGroup.partyArray[0]).clientCode integerValue]];
-            
-            NSString *issueToName = @"";
-            
-            for(ClientModel* party in partyGroup.partyArray) {
-                issueToName = [NSString stringWithFormat:@"%@ %@ ", issueToName, party.name];
-            }
-            
             [self replaceContentForSection:0 InRow:1 withValue:model.systemNo];
             
-            
-            [self replaceContentForSection:0 InRow:3 withValue:issueToName];
+            if (model.partyGroupArray.count > 0) {
+                PartyGroupModel* partyGroup = model.partyGroupArray[0];
+                issueToFirstCode = [NSNumber numberWithInteger: [((ClientModel*)partyGroup.partyArray[0]).clientCode integerValue]];
+                
+                NSString *issueToName = @"";
+                
+                for(ClientModel* party in partyGroup.partyArray) {
+                    issueToName = [NSString stringWithFormat:@"%@ %@ ", issueToName, party.name];
+                }
+                
+                [self replaceContentForSection:0 InRow:3 withValue:issueToName];
+            }
         };
     }
     

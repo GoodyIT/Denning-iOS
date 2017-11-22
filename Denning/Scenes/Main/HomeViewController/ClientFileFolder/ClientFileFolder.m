@@ -64,7 +64,7 @@
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search=letter&pagesize=5"];
+    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search="];
 }
 
 - (IBAction)didTapSend:(id)sender {
@@ -151,8 +151,6 @@
             [photosViewController updateImageForPhoto:photo];
             
             [self presentViewController:photosViewController animated:YES completion:nil];
-        } else if (indexPath.row == 1) {
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:SEARCH_UPLOAD_SUGGESTED_FILENAME];
         }
     }
     

@@ -23,8 +23,8 @@
     model.fileNo1 = [response valueForKeyNotNull:@"fileNo1"];
     model.place = [response valueForKeyNotNull:@"place"];
     model.remarks = [response valueForKeyNotNull:@"remarks"];
-    model.staffAssigned = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"staffAssigned"]];
-    model.staffAttended = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"staffAttended"]];
+    model.staffAssigned = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"staffAssigned"]];
+    model.staffAttended = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"staffAttended"]];
     model.startDate = [response valueForKeyNotNull:@"startDate"];
     
     return model;

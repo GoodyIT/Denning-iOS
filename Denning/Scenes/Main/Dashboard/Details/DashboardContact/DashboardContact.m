@@ -81,6 +81,23 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,6 +119,7 @@
     [[QMNetworkManager sharedManager] getDashboardContactInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
             if (isAppending) {
                 self.listOfContacts = [[self.listOfContacts arrayByAddingObjectsFromArray:result] mutableCopy];
@@ -195,17 +213,6 @@
         
         [self.searchBar endEditing:YES];
         _searchBar.showsCancelButton = NO;
-    }
-}
-
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-        [self appendList];
     }
 }
 

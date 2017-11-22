@@ -26,5 +26,7 @@
 
 @property (strong, nonatomic) NSString * SAR;
 
+@property (strong, nonatomic) NSString* typeE;
+
 + (CourtModel*) getCourtFromResponse: (NSDictionary*) response;
 @end

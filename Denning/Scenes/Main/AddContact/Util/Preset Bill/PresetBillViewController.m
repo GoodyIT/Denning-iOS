@@ -21,7 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray* listOfPresetBills;
 @property (strong, nonatomic) NSArray* copyedList;
 
@@ -37,7 +37,7 @@
     [super viewDidLoad];
     
     [self prepareUI];
-    [self configureSearch];
+//    [self configureSearch];
     [self registerNib];
     [self getListWithCompletion:nil];
 }
@@ -118,9 +118,6 @@
             }
             
             [self.tableView reloadData];
-            if (completion != nil) {
-                [self performSelector:@selector(searchBarResponder) withObject:nil afterDelay:1];
-            }
         }
         else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
@@ -204,14 +201,18 @@
 
 #pragma mark - Search Delegate
 
-- (void)didPresentSearchController:(UISearchController *)searchController
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    [self.tableView reloadData];
-    [self performSelector:@selector(searchBarResponder) withObject:nil afterDelay:1];
+    _searchBar.showsCancelButton = YES;
+    return YES;
 }
 
-- (void) searchBarResponder {
-    [self.searchController.searchBar becomeFirstResponder];
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
 }
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {

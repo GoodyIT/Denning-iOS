@@ -16,7 +16,8 @@
     NSString* basicUrl;
     NSInteger selectedIndex;
     NSString* curBalanceFilter, *curTopFilter;
-    __block BOOL isLoading;
+    __block BOOL isLoading, isAppending;
+    NSInteger page;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *collectionTitle;
@@ -27,7 +28,6 @@
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
 @property (nonatomic, strong) NSMutableArray* filterTitleArray;
 @property (nonatomic, strong) NSArray* arrayOfFilters;
-@property (nonatomic, strong) NSArray<LedgerDetailModel*>* listOfLedgers;
 @property (strong, nonatomic) NSArray<LedgerDetailModel*>* listOfSelectedLedgers;
 @end
 
@@ -78,6 +78,7 @@
 - (void) prepareUI {
     _filterTitleArray = [@[@"All", @"Client", @"Disbursement", @"FD", @"Advance", @"Office"] mutableCopy];
     _arrayOfFilters = @[@"all", @"client", @"disb", @"fdeposit", @"advance", @"office"];
+    page = 1;
     
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 74, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
@@ -97,6 +98,23 @@
     self.selectionList.backgroundColor = [UIColor clearColor];
     self.selectionList.selectedButtonIndex = selectedIndex;
     self.selectionList.hidden = NO;
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)registerNibs {
@@ -117,6 +135,8 @@
     } else {
         curTopFilter = @"Deposited";
     }
+    page = 1;
+    isAppending = NO;
     [self loadLedgersWithCompletion:nil];
 }
 
@@ -125,11 +145,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) appendList {
+    isAppending = YES;
+    [self loadLedgersWithCompletion:nil];
+}
+
 - (void) loadLedgersWithCompletion:(void(^)(void)) completion{
     if (isLoading) return;
     isLoading = YES;
     
-    _url = [NSString stringWithFormat:@"%@/%@/%@", basicUrl, curBalanceFilter, curTopFilter];
+    _url = [NSString stringWithFormat:@"%@/%@/%@?page=%ld", basicUrl, curBalanceFilter, curTopFilter, page];
 
     [SVProgressHUD showWithStatus:@"Loading"];
     @weakify(self);
@@ -137,20 +162,27 @@
         
         @strongify(self);
         self->isLoading = false;
+        [self.tableView finishInfiniteScroll];
         [SVProgressHUD dismiss];
         if (error == nil) {
-            self.listOfSelectedLedgers = ledgerDetailModelArray;
-            self.listOfLedgers = ledgerDetailModelArray;
+            
             if (completion != nil) {
                 completion();
             }
+            if (isAppending) {
+                self.listOfSelectedLedgers = [[_listOfSelectedLedgers arrayByAddingObjectsFromArray:ledgerDetailModelArray] mutableCopy];
+            } else {
+                self.listOfSelectedLedgers = ledgerDetailModelArray;
+            }
+            
             [self.tableView reloadData];
             if ([ledgerDetailModelArray count] > 0) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                    
-                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-                });
+                page++;
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//
+//                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//                });
             }
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];

@@ -19,29 +19,21 @@
 + (PropertyModel*) getPropertyFromResponse: (NSDictionary*) response
 {
     PropertyModel* propertyModel = [PropertyModel new];
-    propertyModel.key = [response objectForKey:@"code"];
-    if ([[response objectForKey:@"code"] isKindOfClass:[NSNull class]]) {
-        propertyModel.key = @"";
-    }
-
-    propertyModel.fullTitle = [response objectForKey:@"fullTitle"];
-    if ([[response objectForKey:@"fullTitle"] isKindOfClass:[NSNull class]]) {
-        propertyModel.fullTitle = @"";
-    }
-    NSDictionary* lotptObject = [response objectForKey:@"lotPT"];
-    propertyModel.lotptType = [lotptObject objectForKey:@"type"];
-    if ([lotptObject isKindOfClass:[NSNull class]]) {
+    propertyModel.key = [response valueForKeyNotNull:@"code"];
+    propertyModel.fullTitle = [response valueForKeyNotNull:@"fullTitle"];
+    NSDictionary* lotptObject = [response objectForKeyNotNull:@"lotPT"];
+    
+    if (lotptObject == nil) {
         propertyModel.lotptType = @"";
         propertyModel.lotptValue = @"";
+    } else {
+        propertyModel.lotptType = [lotptObject valueForKeyNotNull:@"type"];
+        propertyModel.lotptValue = [lotptObject objectForKey:@"value"];
     }
-    propertyModel.lotptValue = [lotptObject objectForKey:@"value"];
-
+    
     NSDictionary* areaObject = [response objectForKey:@"area"];
-    propertyModel.area = [NSString stringWithFormat:@"%@(%@)", [areaObject objectForKey:@"type"], [areaObject objectForKey:@"value"]];
-    propertyModel.address = [response objectForKey:@"address"];
-    if ([[response objectForKey:@"address"] isKindOfClass:[NSNull class]]) {
-        propertyModel.address = @"";
-    }
+    propertyModel.area = [NSString stringWithFormat:@"%@(%@)", [areaObject valueForKeyNotNull:@"type"], [areaObject valueForKeyNotNull:@"value"]];
+    propertyModel.address = [response valueForKeyNotNull:@"address"];
     propertyModel.relatedMatter = [SearchResultModel getSearchResultArrayFromResponse:[response objectForKey:@"relatedMatter"]];
     propertyModel.matterDescription = @"";
     for(SearchResultModel* model in propertyModel.relatedMatter) {

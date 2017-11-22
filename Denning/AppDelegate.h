@@ -13,7 +13,7 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow * _Nullable window;
 
 
 @property (nonnull, nonatomic, strong, readonly) DemoDownloadStore *demoDownloadStore;

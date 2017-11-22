@@ -644,7 +644,7 @@
     NSArray* obj = [phone componentsSeparatedByString:@")"];
     NSString* countryCallingCode = [obj[0] substringFromIndex:1];
     
-    NSString *buttonTitle = [NSString stringWithFormat:@"(%@)",countryCallingCode];
+    NSString *buttonTitle = [NSString stringWithFormat:@"(+%@)",countryCallingCode];
     
     [countryBtn setTitle:buttonTitle forState:UIControlStateNormal];
     
@@ -1063,7 +1063,7 @@
 - (void) showCalendar {
     [self.view endEditing:YES];
     
-    BirthdayCalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
         self.dateOfBirth.text = date;
     };

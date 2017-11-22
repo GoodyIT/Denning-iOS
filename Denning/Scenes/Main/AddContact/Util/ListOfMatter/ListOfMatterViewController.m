@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* listOfMatters;
 @property (strong, nonatomic) NSArray* copyedList;
-
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
@@ -36,7 +36,7 @@
     
     [self prepareUI];
     [self registerNib];
-    [self configureSearch];
+  //  [self configureSearch];
     [self getListWithCompletion:nil];
 }
 
@@ -205,6 +205,28 @@
 }
 
 #pragma mark - Search Delegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    _searchBar.showsCancelButton = YES;
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getListWithCompletion:nil];
+    [_searchBar resignFirstResponder];
+}
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";

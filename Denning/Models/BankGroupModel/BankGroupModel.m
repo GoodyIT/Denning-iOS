@@ -13,15 +13,14 @@
 +(BankGroupModel*) getBankGroupFromResponse: (NSDictionary*) response
 {
     BankGroupModel* bankGroupModel = [BankGroupModel new];
-    bankGroupModel.bankGroupName = [response objectForKey:@"groupName"];
-    if ([[response objectForKey:@"bank"] isKindOfClass:[NSNull class]]) {
-        return bankGroupModel;
+    bankGroupModel.bankGroupName = [response valueForKeyNotNull:@"groupName"];
+    id bank = [response objectForKeyNotNull:@"bank"];
+    if (bank == nil) {
+        bankGroupModel.bankCode = @"";
+        bankGroupModel.bankName = @"";
     } else {
-        bankGroupModel.bankCode = [[response objectForKey:@"bank"] objectForKey:@"code"];
-        if ([bankGroupModel.bankCode isKindOfClass:[NSNull class]]) {
-            bankGroupModel.bankCode = @"";
-        }
-        bankGroupModel.bankName = [[response objectForKey:@"bank"] objectForKey:@"name"];
+        bankGroupModel.bankCode = [bank valueForKeyNotNull:@"code"];
+        bankGroupModel.bankName = [bank valueForKeyNotNull:@"name"];
     }
     
     return bankGroupModel;

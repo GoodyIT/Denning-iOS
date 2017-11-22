@@ -341,7 +341,7 @@
         } else if (indexPath.row == 1) {
             titleOfList = @"Select Issuer";
             nameOfField = @"issuer";
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];;
+            [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];
         } else if (indexPath.row == 2) {
             titleOfList = @"Select Issuer";
             nameOfField = @"issuer";

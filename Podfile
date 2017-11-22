@@ -3,8 +3,6 @@ platform :ios, ’10.2’
 project ‘Denning.xcodeproj’
 source 'https://github.com/CocoaPods/Specs.git'
 
-
-
 target ‘Denning’ do
     
     	pod 'UIDevice-Hardware', '~> 0.1.3'
@@ -22,6 +20,7 @@ target ‘Denning’ do
 	pod 'DZNPhotoPickerController/Editor'
 	pod 'DZNEmptyDataSet'
 	pod 'HTHorizontalSelectionList', '~> 0.7.4'
+	pod 'HMSegmentedControl'
 	pod 'RWDropdownMenu', '~> 1.0.0'
 	pod 'libPhoneNumber-iOS', '~> 0.8'
 	pod 'MBProgressHUD', '~> 1.0.0'

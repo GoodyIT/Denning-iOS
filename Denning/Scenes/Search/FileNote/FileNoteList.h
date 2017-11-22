@@ -10,7 +10,8 @@
 
 @interface FileNoteList : UIViewController
 
-@property (strong, nonatomic) SearchResultModel* resultModel;
+@property (strong, nonatomic) NSString* clientName;
+@property (strong, nonatomic) NSString* key;
 
 @property (strong, nonatomic) NSArray<FileNoteModel*>* listOfFileNotes;
 @end

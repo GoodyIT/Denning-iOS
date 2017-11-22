@@ -13,6 +13,7 @@
 @interface PersonalDocumentViewController ()<BranchHeaderDelegate, UIDocumentInteractionControllerDelegate>
 {
     NSURL* selectedDocument;
+    NSString* email, *sessionID;
 }
 
 @end
@@ -33,7 +34,8 @@
 }
 
 - (void) prepareUI {
-
+    email = [DataManager sharedManager].user.email;
+    sessionID = [DataManager sharedManager].user.sessionID;
 }
 
 - (void)registerNibs {
@@ -54,10 +56,10 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 140;
+        return 100;
     }
     
-    return 94;
+    return 84;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -131,6 +133,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [SVProgressHUD show];
     FileModel* file = folderModel.documents[indexPath.row];
 
     NSURL *url = [NSURL URLWithString: file.URL];
@@ -140,7 +143,10 @@
     }
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:email  forHTTPHeaderField:@"webuser-id"];
+    [request setValue:sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
                                                                            inDomain:NSUserDomainMask
@@ -154,6 +160,7 @@
         
         return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        [SVProgressHUD dismiss];
         selectedDocument = filePath;
         [self displayDocument:filePath];
     }];
@@ -179,41 +186,6 @@
     NSError *error;
     [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Navigation
 

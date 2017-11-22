@@ -367,7 +367,8 @@
 - (IBAction)didTapPrevious:(id)sender {
     [self resetTopFilterButtons];
     [self.previousBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    startDate = [DIHelpers sevenDaysBefore];
+  //  startDate = [DIHelpers sevenDaysBefore];
+    startDate = @"1000-01-01";
     endDate = [DIHelpers today];
     [self loadEventFromFilters];
     [self updateTabStateWithAnimate:3];
@@ -398,6 +399,11 @@
     curMonth = [DIHelpers currentMonthFromDate:calendar.currentPage];
     curYear = [DIHelpers currentYearFromDate:calendar.currentPage];
     [self getMonthlySummaryWithCompletion:nil];
+}
+
+- (void)calendar:(FSCalendar *)calendar didDeselectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition
+{
+    
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -493,6 +499,7 @@
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Loaded" duration:1.0];
             id model;

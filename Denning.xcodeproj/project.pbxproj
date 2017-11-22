@@ -195,7 +195,6 @@
 		793FF1AE1EBF893C001F83A5 /* ClientModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1AD1EBF893C001F83A5 /* ClientModel.m */; };
 		793FF1B21EBF8D46001F83A5 /* StaffModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1B11EBF8D46001F83A5 /* StaffModel.m */; };
 		793FF1B61EBF9079001F83A5 /* CoramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1B51EBF9079001F83A5 /* CoramModel.m */; };
-		793FF1C11EC04EB0001F83A5 /* EditCourtDiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1C01EC04EB0001F83A5 /* EditCourtDiaryViewController.m */; };
 		793FF1C41EC04EBF001F83A5 /* AddMatterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1C31EC04EBF001F83A5 /* AddMatterViewController.m */; };
 		793FF1D71EC382DA001F83A5 /* AddQuotationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1D61EC382DA001F83A5 /* AddQuotationViewController.m */; };
 		793FF1DB1EC382F8001F83A5 /* AddBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1DA1EC382F8001F83A5 /* AddBillViewController.m */; };
@@ -214,6 +213,9 @@
 		793FF23D1EC4D117001F83A5 /* AddLastOneButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793FF23B1EC4D117001F83A5 /* AddLastOneButtonCell.xib */; };
 		793FF2411EC4D12A001F83A5 /* AddLastTwoButtonsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF23F1EC4D12A001F83A5 /* AddLastTwoButtonsCell.m */; };
 		793FF2421EC4D12A001F83A5 /* AddLastTwoButtonsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793FF2401EC4D12A001F83A5 /* AddLastTwoButtonsCell.xib */; };
+		795432451FC537E000FF9E57 /* ListOfCodeStrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432441FC537E000FF9E57 /* ListOfCodeStrViewController.m */; };
+		795432491FC5386300FF9E57 /* CodeStrModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432481FC5386200FF9E57 /* CodeStrModel.m */; };
+		7954324D1FC53D5900FF9E57 /* MatterBranchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954324C1FC53D5900FF9E57 /* MatterBranchModel.m */; };
 		79556DBF1E9323D000A16CB8 /* Message.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79556DBE1E9323D000A16CB8 /* Message.storyboard */; };
 		79556DC21E932F7700A16CB8 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79556DC11E932F7700A16CB8 /* MessageViewController.m */; };
 		795DF1FF1E6DE540006D617D /* NSDictionary+NotNull.m in Sources */ = {isa = PBXBuildFile; fileRef = 795DF1FE1E6DE540006D617D /* NSDictionary+NotNull.m */; };
@@ -315,6 +317,7 @@
 		79AC729E1FC0AF26005F7199 /* AddRealContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79AC729D1FC0AF26005F7199 /* AddRealContact.storyboard */; };
 		79AC72A01FC0B00F005F7199 /* AddProperty.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79AC729F1FC0B00F005F7199 /* AddProperty.storyboard */; };
 		79AC72A21FC0B169005F7199 /* AddReceipt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79AC72A11FC0B169005F7199 /* AddReceipt.storyboard */; };
+		79B1341F1FC3168B0011F77B /* DateTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B1341E1FC3168B0011F77B /* DateTimeViewController.m */; };
 		79CE7C821EA78E20001A8101 /* NewLedgerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE7C811EA78E20001A8101 /* NewLedgerModel.m */; };
 		79CE7C851EA79B95001A8101 /* NewLedgerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CE7C841EA79B95001A8101 /* NewLedgerViewController.m */; };
 		79D599E71E93ED0200CD3821 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 79D599E61E93ED0200CD3821 /* countries.json */; };
@@ -1298,8 +1301,6 @@
 		793FF1B11EBF8D46001F83A5 /* StaffModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffModel.m; sourceTree = "<group>"; };
 		793FF1B41EBF9079001F83A5 /* CoramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoramModel.h; sourceTree = "<group>"; };
 		793FF1B51EBF9079001F83A5 /* CoramModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoramModel.m; sourceTree = "<group>"; };
-		793FF1BF1EC04EB0001F83A5 /* EditCourtDiaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditCourtDiaryViewController.h; sourceTree = "<group>"; };
-		793FF1C01EC04EB0001F83A5 /* EditCourtDiaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditCourtDiaryViewController.m; sourceTree = "<group>"; };
 		793FF1C21EC04EBF001F83A5 /* AddMatterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMatterViewController.h; sourceTree = "<group>"; };
 		793FF1C31EC04EBF001F83A5 /* AddMatterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMatterViewController.m; sourceTree = "<group>"; };
 		793FF1D51EC382DA001F83A5 /* AddQuotationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddQuotationViewController.h; sourceTree = "<group>"; };
@@ -1327,6 +1328,12 @@
 		793FF23E1EC4D12A001F83A5 /* AddLastTwoButtonsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLastTwoButtonsCell.h; sourceTree = "<group>"; };
 		793FF23F1EC4D12A001F83A5 /* AddLastTwoButtonsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLastTwoButtonsCell.m; sourceTree = "<group>"; };
 		793FF2401EC4D12A001F83A5 /* AddLastTwoButtonsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddLastTwoButtonsCell.xib; sourceTree = "<group>"; };
+		795432431FC537E000FF9E57 /* ListOfCodeStrViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListOfCodeStrViewController.h; sourceTree = "<group>"; };
+		795432441FC537E000FF9E57 /* ListOfCodeStrViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListOfCodeStrViewController.m; sourceTree = "<group>"; };
+		795432471FC5386200FF9E57 /* CodeStrModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeStrModel.h; sourceTree = "<group>"; };
+		795432481FC5386200FF9E57 /* CodeStrModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeStrModel.m; sourceTree = "<group>"; };
+		7954324B1FC53D5900FF9E57 /* MatterBranchModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatterBranchModel.h; sourceTree = "<group>"; };
+		7954324C1FC53D5900FF9E57 /* MatterBranchModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatterBranchModel.m; sourceTree = "<group>"; };
 		79556DBE1E9323D000A16CB8 /* Message.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Message.storyboard; sourceTree = "<group>"; };
 		79556DC01E932F7700A16CB8 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		79556DC11E932F7700A16CB8 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
@@ -1447,6 +1454,8 @@
 		79AC729D1FC0AF26005F7199 /* AddRealContact.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddRealContact.storyboard; sourceTree = "<group>"; };
 		79AC729F1FC0B00F005F7199 /* AddProperty.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddProperty.storyboard; sourceTree = "<group>"; };
 		79AC72A11FC0B169005F7199 /* AddReceipt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddReceipt.storyboard; sourceTree = "<group>"; };
+		79B1341D1FC3168B0011F77B /* DateTimeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateTimeViewController.h; sourceTree = "<group>"; };
+		79B1341E1FC3168B0011F77B /* DateTimeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateTimeViewController.m; sourceTree = "<group>"; };
 		79CE7C801EA78E20001A8101 /* NewLedgerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLedgerModel.h; sourceTree = "<group>"; };
 		79CE7C811EA78E20001A8101 /* NewLedgerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLedgerModel.m; sourceTree = "<group>"; };
 		79CE7C831EA79B95001A8101 /* NewLedgerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLedgerViewController.h; sourceTree = "<group>"; };
@@ -3156,18 +3165,8 @@
 			isa = PBXGroup;
 			children = (
 				962082A21ED3C6A100BB595C /* Add Diary */,
-				793FF1BB1EC04E74001F83A5 /* Edit Court Diary */,
 			);
 			path = "Court Diary";
-			sourceTree = "<group>";
-		};
-		793FF1BB1EC04E74001F83A5 /* Edit Court Diary */ = {
-			isa = PBXGroup;
-			children = (
-				793FF1BF1EC04EB0001F83A5 /* EditCourtDiaryViewController.h */,
-				793FF1C01EC04EB0001F83A5 /* EditCourtDiaryViewController.m */,
-			);
-			path = "Edit Court Diary";
 			sourceTree = "<group>";
 		};
 		793FF1BD1EC04E7B001F83A5 /* Matter */ = {
@@ -3237,6 +3236,7 @@
 		793FF2291EC48E22001F83A5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				795432421FC537D100FF9E57 /* ListOfCodeStrViewController */,
 				7993767B1FC0D5B5007E35CE /* CaseTypeViewController */,
 				960758A51F015C52008F9C69 /* MasterTitleView */,
 				968E85EC1EF2E72A001B442D /* PhonNumberAutoComplete */,
@@ -3256,6 +3256,7 @@
 				7903CF951ECD58960090206C /* BranchListViewController */,
 				7903CF561ECC00E20090206C /* SimpleMatterView */,
 				7903CF4E1ECC00CE0090206C /* Staff View */,
+				79B1341C1FC3167F0011F77B /* DateTimeViewController */,
 				7903CF511ECC00CE0090206C /* Time Picker */,
 				7903CF361ECC00BB0090206C /* Birthday Calendar */,
 				7903CF391ECC00BB0090206C /* DetailWithAutocomplete */,
@@ -3298,6 +3299,33 @@
 				793FF2401EC4D12A001F83A5 /* AddLastTwoButtonsCell.xib */,
 			);
 			path = AddLastTwoButtonsCell;
+			sourceTree = "<group>";
+		};
+		795432421FC537D100FF9E57 /* ListOfCodeStrViewController */ = {
+			isa = PBXGroup;
+			children = (
+				795432431FC537E000FF9E57 /* ListOfCodeStrViewController.h */,
+				795432441FC537E000FF9E57 /* ListOfCodeStrViewController.m */,
+			);
+			path = ListOfCodeStrViewController;
+			sourceTree = "<group>";
+		};
+		795432461FC5386200FF9E57 /* CodeStrModel */ = {
+			isa = PBXGroup;
+			children = (
+				795432471FC5386200FF9E57 /* CodeStrModel.h */,
+				795432481FC5386200FF9E57 /* CodeStrModel.m */,
+			);
+			path = CodeStrModel;
+			sourceTree = "<group>";
+		};
+		7954324A1FC53D5000FF9E57 /* MatterBranchModel */ = {
+			isa = PBXGroup;
+			children = (
+				7954324B1FC53D5900FF9E57 /* MatterBranchModel.h */,
+				7954324C1FC53D5900FF9E57 /* MatterBranchModel.m */,
+			);
+			path = MatterBranchModel;
 			sourceTree = "<group>";
 		};
 		79556DBD1E9323B700A16CB8 /* Message tab */ = {
@@ -3510,6 +3538,15 @@
 				79A6AFA91E9DBE12007AA24D /* ChatContactCell.xib */,
 			);
 			path = ChatContactCell;
+			sourceTree = "<group>";
+		};
+		79B1341C1FC3167F0011F77B /* DateTimeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				79B1341D1FC3168B0011F77B /* DateTimeViewController.h */,
+				79B1341E1FC3168B0011F77B /* DateTimeViewController.m */,
+			);
+			path = DateTimeViewController;
 			sourceTree = "<group>";
 		};
 		79CE7C7F1EA78E07001A8101 /* NewLedgerModel */ = {
@@ -4312,13 +4349,6 @@
 			path = NewsCell;
 			sourceTree = "<group>";
 		};
-		79F9FC7C1E4184600097CB23 /* UpdatesCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UpdatesCell;
-			sourceTree = "<group>";
-		};
 		79F9FC821E41873C0097CB23 /* DIGeneralCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -5114,6 +5144,8 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7954324A1FC53D5000FF9E57 /* MatterBranchModel */,
+				795432461FC5386200FF9E57 /* CodeStrModel */,
 				799376771FC0D3D3007E35CE /* CaseTypeModel */,
 				96E0948E1FBDBE8900E5FA58 /* OfficeDiaryModel */,
 				96AA36541FBCC79B003D9A2C /* LeaveRecordModel */,
@@ -5606,7 +5638,6 @@
 				79F9FC8F1E420BC20097CB23 /* EventCell */,
 				79F9FC821E41873C0097CB23 /* DIGeneralCell */,
 				79F9FC7B1E4184600097CB23 /* NewsCell */,
-				79F9FC7C1E4184600097CB23 /* UpdatesCell */,
 				79FBE2121E3197AD00448FE3 /* SearchResultCell */,
 				79FBE09C1E304F5000448FE3 /* QMAddMemberCell */,
 				79A6AFA61E9DBDFA007AA24D /* ChatContactCell */,
@@ -8646,6 +8677,7 @@
 				96C7AFBC1EE82E6D00EF0A37 /* MukimValueList.m in Sources */,
 				79FBDFB01E30421A00448FE3 /* PushManager.m in Sources */,
 				96821F2A1F1D65D900F28708 /* AttendanceHeaderCell.m in Sources */,
+				79B1341F1FC3168B0011F77B /* DateTimeViewController.m in Sources */,
 				96FD65451F212A4000FB9009 /* SimpleFileLedgerCell.m in Sources */,
 				96EAEBA81F21DADC004F75FC /* PaymentRecordCell.m in Sources */,
 				79EC0E081E89661800320A28 /* GovOfficeModel.m in Sources */,
@@ -8744,6 +8776,7 @@
 				962082ED1ED7AA8800BB595C /* BadgeLabel.m in Sources */,
 				79FBDFB91E30421A00448FE3 /* QMDigitsConfigurationFactory.m in Sources */,
 				79D59A181E94762B00CD3821 /* QMContactsDataSource.m in Sources */,
+				795432491FC5386300FF9E57 /* CodeStrModel.m in Sources */,
 				79FF5B5A1E6FBB4000A27907 /* RelatedMatterViewController.m in Sources */,
 				96821F2F1F1D7F4300F28708 /* FeeAndMatterGrowth.m in Sources */,
 				96A73AB31F1C9EA300B97156 /* FeesTranserDetail.m in Sources */,
@@ -9003,7 +9036,6 @@
 				7903CF4C1ECC00BB0090206C /* ListWithDescriptionViewController.m in Sources */,
 				79FBDFC91E30421A00448FE3 /* QMAlphabetizer.m in Sources */,
 				79FBDFCD1E30421A00448FE3 /* QMContent.m in Sources */,
-				793FF1C11EC04EB0001F83A5 /* EditCourtDiaryViewController.m in Sources */,
 				9636DD121F05E30F008DDA41 /* ViewDepositCollection.m in Sources */,
 				79FBE0891E304EAB00448FE3 /* QMLocalVideoView.m in Sources */,
 				79D599FF1E9473D500CD3821 /* QMPlaceholderDataSource.m in Sources */,
@@ -9018,6 +9050,7 @@
 				79FBDFBB1E30421A00448FE3 /* QMMessagesHelper.m in Sources */,
 				7903CFAF1ECE3D1F0090206C /* TaxInvoiceListViewController.m in Sources */,
 				793FF1DB1EC382F8001F83A5 /* AddBillViewController.m in Sources */,
+				7954324D1FC53D5900FF9E57 /* MatterBranchModel.m in Sources */,
 				7903D0841ECECBA10090206C /* PropertyListViewController.m in Sources */,
 				960A66231F0200D20063AB6C /* DashboardSecondHeaderCell.m in Sources */,
 				7903D0961ECF9B520090206C /* TypeValueModel.m in Sources */,
@@ -9034,6 +9067,7 @@
 				79FBDFD11E30421A00448FE3 /* QMNotification.m in Sources */,
 				79FBDFCC1E30421A00448FE3 /* QMChatButtonsFactory.m in Sources */,
 				79FBE0931E304EAB00448FE3 /* QMNotificationPanelView.m in Sources */,
+				795432451FC537E000FF9E57 /* ListOfCodeStrViewController.m in Sources */,
 				964206361F27BA89008AC798 /* TemplateType.m in Sources */,
 				79734F5F1EB95BA700647215 /* MainContactViewController.m in Sources */,
 				96A73A7B1F1A8C4100B97156 /* TaxInvoiceCell.m in Sources */,
@@ -9227,7 +9261,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Thong Mee Ho (FR83CC98GQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9547,7 +9581,7 @@
 				CODE_SIGN_ENTITLEMENTS = Denning/Denning.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Thong Mee Ho (6ATV26A86Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

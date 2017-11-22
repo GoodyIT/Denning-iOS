@@ -198,7 +198,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     self.tableView.infiniteScrollIndicatorMargin = 40;
     
     // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 100;
+    self.tableView.infiniteScrollTriggerOffset = 500;
     
     // Add infinite scroll handler
     @weakify(self)
@@ -378,7 +378,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         
         [SVProgressHUD dismiss];
         self->isLoading = NO;
-        
+        [self.tableView finishInfiniteScroll];
         @strongify(self);
         if (error == nil)
         {
@@ -1014,9 +1014,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         UINavigationController* navC = segue.destinationViewController;
         RelatedMatterViewController* relatedMatterVC = [navC viewControllers].firstObject;
         relatedMatterVC.relatedMatterModel = sender;
-    }
-    
-    if ([segue.identifier isEqualToString:kAddPropertySegue]){
+    } else if ([segue.identifier isEqualToString:kAddPropertySegue]){
         UINavigationController* navC = segue.destinationViewController;
         AddPropertyViewController* propertyVC = [navC viewControllers].firstObject;
         propertyVC.propertyModel = sender;
@@ -1057,7 +1055,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     
     if ([segue.identifier isEqualToString:kFileNoteListSegue]){
         FileNoteList* vc = segue.destinationViewController;
-        vc.resultModel = sender;
+        vc.clientName = ((SearchResultModel*)sender).title;
+        vc.key =((SearchResultModel*)sender).key;
     }
     
     if ([segue.identifier isEqualToString:kPaymentSegue]){

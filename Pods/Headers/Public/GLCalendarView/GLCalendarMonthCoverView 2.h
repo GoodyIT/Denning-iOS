@@ -1,1 +1,0 @@
-../../../GLCalendarView/GLCalendarView/Sources/GLCalendarMonthCoverView.h

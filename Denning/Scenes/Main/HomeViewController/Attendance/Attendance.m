@@ -57,11 +57,26 @@
     [_btnClock setTitle:_attendanceModel.btnLeft forState:UIControlStateNormal];
     if (_attendanceModel.btnRight.length != 0) {
         [_btnBreak setTitle:_attendanceModel.btnRight forState:UIControlStateNormal];
+    }
+    
+    if ([_attendanceModel.btnRight isEqualToString:@"END BREAK"]) {
+        isBreaking = YES;
+    } else {
+        isBreaking = NO;
+    }
+    
+    if ([_attendanceModel.btnLeft isEqualToString:@"CLOCK-OUT"]) {
+        isAttended = YES;
         [_btnClock setBackgroundColor:[UIColor redColor]];
         _headerBackground.backgroundColor = [UIColor babyBule];
     } else {
+        isAttended = NO;
         [_btnClock setBackgroundColor:[UIColor babyBule]];
         _headerBackground.backgroundColor = [UIColor redColor];
+    }
+    
+    if (!isBreaking) {
+        [_btnBreak setTitle:@"Start Break" forState:UIControlStateNormal];
     }
 }
 
@@ -109,8 +124,9 @@
     } else {
         [[QMNetworkManager sharedManager] attendanceClockOut:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
             [SVProgressHUD dismiss];
-            [self handleResponse:result error:error];
+            isBreaking = NO;
             isAttended = NO;
+            [self handleResponse:result error:error];
         }];
     }
 }

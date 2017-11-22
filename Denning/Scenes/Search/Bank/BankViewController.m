@@ -23,10 +23,7 @@
     [super viewDidLoad];
     
     [self registerNibs];
-    if (self.previousScreen.length != 0) {
-        [self prepareUI];
-    }
-    
+
     [self gotoRelatedMatterSection];
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -56,20 +53,13 @@
     }
 }
 
-- (void) prepareUI {
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(onBackAction:)];
-    [backButtonItem setTintColor:[UIColor whiteColor]];
-    
-    [self.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
-}
-
 - (void) popupScreen:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)registerNibs {
@@ -80,7 +70,6 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
 }
-
 
 #pragma mark - Table view data source
 

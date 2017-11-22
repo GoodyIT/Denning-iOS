@@ -35,12 +35,7 @@
 - (void) configureCellWithContact:(NSString*) title text:(NSString*) text
 {
     self.titleLabel.text = title;
-    
-    if ([title isEqualToString:@"Client"]) {
-        self.contentLabel.text = text.uppercaseString;
-    } else {
-        self.contentLabel.text = text;
-    }
+    self.contentLabel.text = text.uppercaseString;
     
     self.value = text;
 }

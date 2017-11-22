@@ -12,7 +12,7 @@
 
 #define kNotificationDelay          4
 
-static int THE_CELL_HEIGHT = 150;
+static int THE_CELL_HEIGHT = 250;
 #define kEndTransition             @"EndTransition"
 #define kBeginTransition           @"BeginTransition"
 

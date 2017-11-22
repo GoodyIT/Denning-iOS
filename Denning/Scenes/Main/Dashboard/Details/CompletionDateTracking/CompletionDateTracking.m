@@ -10,9 +10,7 @@
 #import "CompletionTrackingCell.h"
 
 @interface CompletionDateTracking ()<UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate,UITableViewDelegate, UITableViewDataSource>{
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
-    BOOL initCall;
     BOOL isAppending;
     NSArray* btnArray;
 }
@@ -143,6 +141,23 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)registerNibs {
@@ -186,6 +201,7 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getCompletionTrackingWithURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        [self.tableView finishInfiniteScroll];
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [SVProgressHUD dismiss];
         if (error == nil) {
@@ -212,7 +228,6 @@
 
 - (void) clean {
     isLoading = NO;
-    isFirstLoading = NO;
 }
 
 - (void) appendList {
@@ -261,17 +276,6 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-        [self appendList];
-    }
-}
-
 #pragma mark - Search Delegate
 
 
@@ -304,13 +308,6 @@
     isAppending = NO;
     self.page = @(1);
     [self getList];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfCompletion.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
 }
 
 /*

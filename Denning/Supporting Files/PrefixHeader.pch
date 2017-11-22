@@ -50,6 +50,7 @@
 #import "PushManager.h"
 #import "MBProgressHUD.h"
 #import "SWTableViewCell.h"
+#import "HMSegmentedControl.h"
 
 #import "QMCore.h"
 #import "QMNetworkManager.h"
@@ -100,7 +101,7 @@
 #import "ContactModel.h"
 #import "BankGroupModel.h"
 #import "RelatedMatterModel.h"
-#import "PartyModel.h"
+//#import "PartyModel.h"
 #import "PartyGroupModel.h"
 #import "SolicitorGroup.h"
 #import "GeneralGroup.h"
@@ -174,6 +175,8 @@
 #import "LeaveRecordModel.h"
 #import "OfficeDiaryModel.h"
 #import "CaseTypeModel.h"
+#import "CodeStrModel.h"
+#import "MatterBranchModel.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

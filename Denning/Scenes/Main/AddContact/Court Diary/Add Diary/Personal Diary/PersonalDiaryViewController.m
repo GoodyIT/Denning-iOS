@@ -16,14 +16,15 @@
 #import "SimpleAutocomplete.h"
 
 @interface PersonalDiaryViewController ()
-<UITextFieldDelegate, SWTableViewCellDelegate>
+<UITextFieldDelegate, SWTableViewCellDelegate, ContactListWithCodeSelectionDelegate>
 {
     NSString* titleOfList;
     NSString* nameOfField;
     
-    NSString* selectedNatureOfHearing;
     NSString* selectedDetails;
-    NSString* selectedStaffAssigned;
+    NSString* selectedAttendantStatus, *selectedStaffAssigned, *selectedStaffAttended;
+    
+    NSString* selectedStaff;
     
     CGFloat autocompleteCellHeight;
     
@@ -40,6 +41,8 @@
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *staffAssigned;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *details;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *Remarks;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *staffAttended;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *attendantStatus;
 
 @property (strong, nonatomic) UIToolbar *accessoryView;
 
@@ -49,6 +52,8 @@
 @property (weak, nonatomic) IBOutlet SWTableViewCell *placeCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *staffAssignedCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *remarksCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *staffAttendedCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *attendantStatusCell;
 
 @end
 
@@ -76,8 +81,12 @@
 - (void) displayDiary
 {
     _place.text = _personalDiary.place;
-    _staffAssigned.text = _personalDiary.staffAssigned.descriptionValue;
     _details.text = _personalDiary.appointmentDetails;
+    selectedStaffAttended = _personalDiary.staffAttended.clientCode;
+    _staffAssigned.text = _personalDiary.staffAssigned.name;
+    selectedStaffAssigned = _personalDiary.staffAssigned.clientCode;
+    _attendantStatus.text = _personalDiary.attendedStatus.descriptionValue;
+    selectedAttendantStatus = _personalDiary.attendedStatus.codeValue;
     _Remarks.text = _personalDiary.remarks;
     
     _startDate.text = [DIHelpers getDateTimeSeprately:_personalDiary.startDate][0];
@@ -161,7 +170,7 @@
         [data addEntriesFromDictionary:@{@"place":_place.text}];
     }
     
-    if (![_staffAssigned.text isEqualToString:_personalDiary.staffAssigned.descriptionValue]) {
+    if (![_staffAssigned.text isEqualToString:_personalDiary.staffAssigned.name]) {
         [data addEntriesFromDictionary:@{@"staffAssigned":@{@"code":selectedStaffAssigned}}];
     }
     
@@ -267,8 +276,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return 6;
+    if (_personalDiary != nil) {
+        return 8;
+    }
+    return 7;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -282,14 +293,29 @@
         self.placeCell.delegate = self;
         return self.placeCell;
     } else if (indexPath.row == 3) {
-        self.staffAssignedCell.leftUtilityButtons = [self leftButtons];
-        self.staffAssignedCell.delegate = self;
-        return self.staffAssignedCell;
-    } else if (indexPath.row == 4) {
         self.detailsCell.leftUtilityButtons = [self leftButtons];
         self.detailsCell.delegate = self;
         return self.detailsCell;
+    }  else if (indexPath.row == 4) {
+        self.staffAssignedCell.leftUtilityButtons = [self leftButtons];
+        self.staffAssignedCell.delegate = self;
+        return self.staffAssignedCell;
     } else if (indexPath.row == 5) {
+        self.staffAttendedCell.leftUtilityButtons = [self leftButtons];
+        self.staffAttendedCell.delegate = self;
+        return self.staffAttendedCell;
+    } else if (indexPath.row == 6) {
+        if (_personalDiary != nil) {
+            self.attendantStatusCell.leftUtilityButtons = [self leftButtons];
+            self.attendantStatusCell.delegate = self;
+            return self.attendantStatusCell;
+        } else {
+            self.remarksCell.leftUtilityButtons = [self leftButtons];
+            self.remarksCell.delegate = self;
+            return self.remarksCell;
+        }
+        
+    } else if (indexPath.row == 7) {
         self.remarksCell.leftUtilityButtons = [self leftButtons];
         self.remarksCell.delegate = self;
         return self.remarksCell;
@@ -318,10 +344,21 @@
     if (indexPath.row == 2) {
         self.place.text = @"";
     } else if (indexPath.row == 3) {
-        self.staffAssigned.text = @"";
-    } else if (indexPath.row == 4) {
         self.details.text = @"";
+    } else if (indexPath.row == 4) {
+        self.staffAssigned.text = @"";
+        selectedStaffAssigned = @"";
     } else if (indexPath.row == 5) {
+        self.staffAttended.text = @"";
+        selectedStaffAttended = @"";
+    } else if (indexPath.row == 6) {
+        if (_personalDiary != nil) {
+            self.attendantStatus.text = @"";
+            selectedAttendantStatus = @"";
+        } else {
+            self.Remarks.text = @"";
+        }
+    } else if (indexPath.row == 7) {
         self.Remarks.text = @"";
     }
 }
@@ -365,8 +402,20 @@
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startDate"]) {
             self.startDate.text = date;
+            if (self.startTime.text.length == 0) {
+                self.startTime.text = @"09:00";
+            }
+            if (_endDate.text.length == 0) {
+                _endDate.text = date;
+            }
+            if (self.endTime.text.length == 0) {
+                self.endTime.text = @"17:00";
+            }
         } else {
             self.endDate.text = date;
+            if (self.endTime.text.length == 0) {
+                self.endTime.text = @"17:00";
+            }
         }
     };
     [self showPopup:calendarViewController];
@@ -410,12 +459,31 @@
         nameOfField = @"Place";
         [self showAutocomplete:COURT_PERSONAL_PLACE_GET_LIST_URL];
     } else if (indexPath.row == 3) {
-        [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
-    } if (indexPath.row == 4) {
         nameOfField = @"Details";
         [self showAutocomplete:COURT_PERSONAL_DETAIL_GET_LIST_URL];
+    } else if (indexPath.row == 4) {
+         selectedStaff = @"Staff Assigned";
+        [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+    } else if (indexPath.row == 5) {
+        selectedStaff = @"Staff Attended";
+        [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+    } else if (indexPath.row == 6) {
+        if (_personalDiary != nil) {
+            titleOfList = @"Attendant Type";
+            nameOfField = @"Attendant Status";
+            [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_ATTENDED_STATUS_GET_URL];
+        }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - ContactListWithCodeSelectionDelegate
+- (void) didSelectList:(UIViewController *)listVC name:(NSString*) name withModel:(CodeDescription *)model
+{
+    if ([name isEqualToString:@"Attendant Status"]) {
+        self.attendantStatus.text = model.descriptionValue;
+        selectedAttendantStatus = model.codeValue;
+    }
 }
 
 #pragma mark - Navigation
@@ -428,9 +496,22 @@
         StaffViewController* staffVC = navVC.viewControllers.firstObject;
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
-            self.staffAssigned.text = model.name;
-            selectedStaffAssigned = model.staffCode;
+            if ([selectedStaff isEqualToString:@"Staff Assigned"]) {
+                self.staffAssigned.text = model.name;
+                selectedStaffAssigned = model.staffCode;
+            } else {
+                _staffAttended.text = model.name;
+                selectedStaffAttended = model.staffCode;
+            }
         };
+    } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {
+        UINavigationController *navVC =segue.destinationViewController;
+        
+        ListWithCodeTableViewController *listCodeVC = navVC.viewControllers.firstObject;
+        listCodeVC.delegate = self;
+        listCodeVC.titleOfList = titleOfList;
+        listCodeVC.name = nameOfField;
+        listCodeVC.url = sender;
     }
 }
 

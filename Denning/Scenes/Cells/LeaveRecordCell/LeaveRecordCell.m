@@ -22,7 +22,7 @@
 
 - (void) configureCellWithModel:(LeaveRecordModel*) model
 {
-    _startDate.text = model.dtStartDate;
+    _startDate.text =model.dtStartDate;
     _endDate.text = model.dtEndDate;
     _no.text = model.strLeaveLength;
     _type.text = model.clsTypeOfLeave.descriptionValue;

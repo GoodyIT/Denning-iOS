@@ -14,8 +14,9 @@
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     __block BOOL isFirstLoading;
-    __block BOOL isLoading;
+    __block BOOL isLoading, isAppending;
     BOOL initCall;
+    NSInteger page;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
@@ -67,16 +68,38 @@
     isFirstLoading = YES;
     self.filter = @"";
     initCall = YES;
+    page = 1;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) appendList {
+    isAppending = YES;
+    [self getList];
 }
 
 - (void) getList{
@@ -86,11 +109,19 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self)
-    [[QMNetworkManager sharedManager] getDashboardItemModelWithURL:DASHBOARD_DUE_TASK_GET_URL withPage:@(1) withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] getDashboardItemModelWithURL:DASHBOARD_DUE_TASK_GET_URL withPage:[NSNumber numberWithInteger:page] withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         [SVProgressHUD dismiss];
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
-            self.listOfTasks = [result mutableCopy];
+            if  (result.count > 0) {
+                page++;
+            }
+            if (isAppending) {
+                self.listOfTasks = [[_listOfTasks arrayByAddingObjectsFromArray:result] mutableCopy];
+            } else {
+                self.listOfTasks = [result mutableCopy];
+            }
             
             [self.tableView reloadData];
         }
@@ -150,16 +181,6 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-    }
-}
-
 #pragma mark - Search Delegate
 
 
@@ -180,19 +201,25 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     self.filter = searchBar.text;
+    isAppending = NO;
     [self getList];
+    page = 1;
     [_searchBar resignFirstResponder];
 }
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";
     searchController.searchBar.text = @"";
+    isAppending = NO;
+    page = 1;
     [self getList];
 }
 
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
 {
     self.filter = searchText;
+    isAppending = NO;
+    page = 1;
     [self getList];
 }
 

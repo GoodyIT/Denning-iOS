@@ -45,6 +45,7 @@ PODS:
   - FSCalendar (2.7.8)
   - FZAccordionTableView (0.2.3)
   - GLCalendarView (1.0.3)
+  - HMSegmentedControl (1.5.4)
   - HTHorizontalSelectionList (0.7.4):
     - M13BadgeView (~> 1.0.4)
   - JVFloatLabeledTextField (1.1.1)
@@ -166,6 +167,7 @@ DEPENDENCIES:
   - FSCalendar
   - FZAccordionTableView (~> 0.2.3)
   - GLCalendarView (~> 1.0.0)
+  - HMSegmentedControl
   - HTHorizontalSelectionList (~> 0.7.4)
   - JVFloatLabeledTextField
   - libextobjc/EXTKeyPathCoding (~> 0.4.1)
@@ -230,6 +232,7 @@ SPEC CHECKSUMS:
   FSCalendar: 09369a2bf554ba71cd8e8cfb627e2df22a2c2af4
   FZAccordionTableView: e64f49c71c32d750feda14025b088bcd25d1a71f
   GLCalendarView: f3a71aca59f456b81abad9667dc5985c46810996
+  HMSegmentedControl: b25bc4ec44766e073d62c473188fb354ee244b76
   HTHorizontalSelectionList: c38792f4bc87f941ab6c07b02a40abf111c68249
   JVFloatLabeledTextField: 0e5524b097f102036214dd8279edc8ecf08b5e18
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
@@ -268,6 +271,6 @@ SPEC CHECKSUMS:
   UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
 
-PODFILE CHECKSUM: c6d06d7dc49b93c7d9fbd9aadf513069d7a7f69f
+PODFILE CHECKSUM: 076c33813c289cad29a818406dbdddd8e390f66b
 
 COCOAPODS: 1.3.1

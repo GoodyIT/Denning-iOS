@@ -102,6 +102,8 @@ static NSString* const kCalendarRangeSegue = @"CalendarRangeSegue";
 
 static NSString* const kAddContactSegue = @"AddContactSegue";
 
+static NSString* const kAddMatterSegue = @"AddMatterSegue";
+
 static NSString* const kListWithCodeSegue = @"ListWithCodeSegue";
 
 static NSString* const kListWithDescriptionSegue = @"ListWithDescriptionSegue";
@@ -143,6 +145,8 @@ static NSString* const kAccountTypeSegue = @"AccountTypeSegue";
 static NSString* const kPropertyListSegue = @"PropertyListSegue";
 
 static NSString* const kSolicitorListSegue = @"SolicitorListSegue";
+
+static NSString* const kMatterBranchSegue = @"MatterBranchSegue";
 
 static NSString* const kCourtDiarySegue = @"CourtDiarySegue";
 

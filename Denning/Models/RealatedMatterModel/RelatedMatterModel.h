@@ -11,11 +11,11 @@
 @class GeneralGroup;
 @class PartyGroupModel;
 @class SolicitorGroup;
-@class PartyModel;
 @class CourtModel;
 @class StaffModel;
 @class MatterCodeModel;
 @class ClientModel;
+@class MatterBranchModel;
 
 @interface RelatedMatterModel : NSObject
 
@@ -43,6 +43,8 @@
 @property (strong, nonatomic) NSString* dateClose;
 
 @property (strong, nonatomic) MatterCodeModel * matter;
+
+@property (strong, nonatomic) MatterBranchModel* branch;
 
 @property (strong, nonatomic) CodeDescription* fileStatus;
 

@@ -18,8 +18,8 @@
     model.caseNo = [response valueForKeyNotNull:@"caseNo"];
     model.caseName = [response valueForKeyNotNull:@"caseName"];
     model.coram = [CoramModel getCoramFromResponse:[response objectForKeyNotNull:@"coram"]];
-    model.counselAssigned = [response valueForKeyNotNull:@"counselAssigned"];
-    model.counselAttended = [response valueForKeyNotNull:@"counselAttended"];
+    model.counselAssigned = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"counselAssigned"]];
+    model.counselAttended = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"counselAttended"]];
     model.court = [CourtModel getCourtFromResponse: [response objectForKeyNotNull:@"court"]];
     model.courtDecision = [response valueForKeyNotNull:@"courtDecision"];
     model.enclosureDetails = [response valueForKeyNotNull:@"enclosureDetails"];

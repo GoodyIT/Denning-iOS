@@ -31,6 +31,8 @@
     
     relatedMatter.matter = [MatterCodeModel getMatterCodeFromResponse:[response objectForKeyNotNull:@"matter"]];
     
+    relatedMatter.branch = [MatterBranchModel getMatterBranchFromResponse:[response objectForKeyNotNull:@"branch"]];
+    
     relatedMatter.partner = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"partner"]];
     
     relatedMatter.partyGroupArray = [RelatedMatterModel getPartyGroupArrayFromResponse: [response objectForKeyNotNull:@"partyGroup"]];

@@ -11,16 +11,14 @@
 
 @interface ListWithDescriptionViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
     BOOL isAppending;
-    BOOL initCall;
 }
 
 @property (strong, nonatomic) NSArray* listOfDesc;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
-
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSMutableArray* copyedList;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
@@ -36,7 +34,7 @@
     [super viewDidLoad];
     
     [self prepareUI];
-    [self configureSearch];
+ //   [self configureSearch];
     [self getList];
 }
 
@@ -63,9 +61,7 @@
     self.title = self.titleOfList;
     self.copyedList = [NSMutableArray new];
     self.page = @(1);
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     
     self.tableView.delegate = self;
     
@@ -73,6 +69,23 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 100;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -110,8 +123,7 @@
     [[QMNetworkManager sharedManager] getDescriptionWithUrl:self.url withPage:self.page withSearch:(NSString*)self.filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
-       
-        
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
@@ -137,7 +149,6 @@
 
 - (void) clean {
     isLoading = NO;
-    isFirstLoading = NO;
 }
 
 #pragma mark - Table view data source
@@ -183,18 +194,30 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+#pragma mark - Search Delegate
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading && !isLoading) {
-        
-        [self appendList];
-    }
+    _searchBar.showsCancelButton = YES;
+    return YES;
 }
 
-#pragma mark - Search Delegate
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [_searchBar resignFirstResponder];
+}
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";
@@ -212,13 +235,4 @@
     self.page = @(1);
     [self getList];
 }
-
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfDesc.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
-}
-
 @end

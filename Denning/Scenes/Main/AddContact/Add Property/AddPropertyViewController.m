@@ -21,6 +21,15 @@
 #import "MukimValueList.h"
 #import "MasterTitleView.h"
 
+enum  {
+    HEADER_SECTION,
+    MAIN_SECTION,
+    TITLE_DETAILS_SECTION,
+    MORE_STRATA_SECTION,
+    UNITE_PARCEL_SECTION,
+    PROJECT_SECTION
+};
+
 @interface AddPropertyViewController ()<UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate,ContactListWithCodeSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
 {
     NSString *titleOfList;

@@ -10,4 +10,6 @@
 
 @interface AddMatterViewController : UIViewController
 
+@property (nonatomic, strong) RelatedMatterModel* matterModel;
+
 @end

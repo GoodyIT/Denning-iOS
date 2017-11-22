@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -32,8 +32,8 @@
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZT-JH-tvX">
-                        <rect key="frame" x="8" y="8" width="31" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PZT-JH-tvX">
+                        <rect key="frame" x="8" y="8" width="197" height="14.5"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -45,9 +45,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ck-Uz-Y7d" customClass="BadgeLabel">
-                        <rect key="frame" x="195" y="118.5" width="6" height="14.5"/>
+                        <rect key="frame" x="199" y="119.5" width="6" height="13.5"/>
                         <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="12"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -59,7 +59,8 @@
                 <constraint firstItem="zEP-X7-8gQ" firstAttribute="bottom" secondItem="5ck-Uz-Y7d" secondAttribute="bottom" id="3GD-ab-mgo"/>
                 <constraint firstItem="PZT-JH-tvX" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="6qE-BU-41v"/>
                 <constraint firstItem="zEP-X7-8gQ" firstAttribute="leading" secondItem="PZT-JH-tvX" secondAttribute="leading" id="DmW-1R-X0N"/>
-                <constraint firstAttribute="trailing" secondItem="5ck-Uz-Y7d" secondAttribute="trailing" constant="12" id="V9P-G8-kVr"/>
+                <constraint firstAttribute="trailing" secondItem="5ck-Uz-Y7d" secondAttribute="trailing" constant="8" id="V9P-G8-kVr"/>
+                <constraint firstAttribute="trailing" secondItem="PZT-JH-tvX" secondAttribute="trailing" constant="8" id="bZq-6n-mXu"/>
                 <constraint firstAttribute="bottom" secondItem="5ck-Uz-Y7d" secondAttribute="bottom" constant="8" id="gaB-Ut-1It"/>
                 <constraint firstItem="7bN-LS-hA1" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="x4v-YH-5aG"/>
                 <constraint firstItem="7bN-LS-hA1" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="yvb-lm-Rgx"/>

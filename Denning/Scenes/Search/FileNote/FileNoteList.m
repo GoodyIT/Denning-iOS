@@ -13,8 +13,6 @@
 @interface FileNoteList ()<UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate>
 {
     __block BOOL isLoading;
-    __block BOOL isFirstLoading;
-    BOOL initCall;
     BOOL isAppending;
     NSNumber* _page;
 }
@@ -29,10 +27,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self prepareUI];
     [self updateHeaderInfo];
     [self registerNibs];
 }
 
+- (void) prepareUI {
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 200;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
+}
 
 - (void) viewWillDisappear:(BOOL)animated
 {
@@ -43,6 +60,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
+    _page = @(1);
     [self openFileNote];
     [super viewWillAppear:animated];
 }
@@ -61,7 +79,7 @@
 }
 
 - (void) updateHeaderInfo {
-    NSArray* item = [DIHelpers separateFileNameAndNoFromTitle:_resultModel.title];
+    NSArray* item = [DIHelpers separateFileNameAndNoFromTitle:_clientName];
     _fileNo.text = item[0];
     _fileName.text = item[1];
 
@@ -72,18 +90,18 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (void) openFileNote {
     if (isLoading) return;
     isLoading = YES;
     
     [SVProgressHUD showWithStatus:@"Loading"];
     @weakify(self);
-    [[QMNetworkManager sharedManager] loadFileNoteListWithCode:_resultModel.key withPage:_page completion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] loadFileNoteListWithCode:_key withPage:_page completion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         
         @strongify(self);
         self->isLoading = NO;
         [SVProgressHUD dismiss];
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
             if (result.count != 0) {
                 _page = [NSNumber numberWithInteger:[_page integerValue] + 1];
@@ -98,14 +116,7 @@
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
-        
-        [self performSelector:@selector(clean) withObject:nil afterDelay:0.5];
     }];
-}
-
-- (void) clean {
-    isLoading = NO;
-    isFirstLoading = NO;
 }
 
 - (void) appendList {
@@ -115,20 +126,6 @@
 
 - (IBAction)addNewNote:(id)sender {
     [self performSegueWithIdentifier:kFileNoteSegue sender:nil];
-}
-
-
-#pragma mark - ScrollView Delegate
-
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading && !isLoading) {
-        
-        [self appendList];
-    }
 }
 
 #pragma mark - Table view data source

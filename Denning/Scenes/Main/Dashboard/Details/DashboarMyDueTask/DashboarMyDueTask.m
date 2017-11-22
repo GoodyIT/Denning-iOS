@@ -13,9 +13,7 @@
 @interface DashboarMyDueTask ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,  HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
-    BOOL initCall;
     BOOL isAppending;
     NSInteger selectedIndex;
     NSString* baseUrl;
@@ -95,9 +93,7 @@
 - (void) prepareUI
 {
     self.page = @(1);
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     isAppending = NO;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -125,6 +121,23 @@
     self.selectionList.backgroundColor = [UIColor blackColor];
     self.selectionList.selectedButtonIndex = 0;
     self.selectionList.hidden = NO;
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -174,6 +187,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak UINavigationController *navigationController = self.navigationController;
     @weakify(self)
+    [self.tableView finishInfiniteScroll];
     [[QMNetworkManager sharedManager] getDashboardMyDueTaskWithURL:newUrl withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         [SVProgressHUD dismiss];
@@ -200,7 +214,6 @@
 
 - (void) clean {
     isLoading = NO;
-    isFirstLoading = NO;
 }
 
 #pragma mark - Table view data source
@@ -244,17 +257,6 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-        [self appendList];
-    }
-}
-
 #pragma mark - Search Delegate
 
 
@@ -294,13 +296,6 @@
     isAppending = NO;
     self.page = @(1);
     [self getList];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfTasks.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
 }
 
 /*

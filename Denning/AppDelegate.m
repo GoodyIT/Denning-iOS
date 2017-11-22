@@ -15,12 +15,9 @@
 #import "DataManager.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "HWIFileDownloader.h"
-#import "DemoDownloadStore.h"
 #import "LocationManager.h"
 
 //#import <Flurry.h>
-
 
 static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
@@ -29,7 +26,6 @@ static NSString * const kQMAppGroupIdentifier = @"group.com.quickblox.qmunicate"
 #define DEVELOPMENT 0
 
 #if DEVELOPMENT == 1
-
 
 // Production
 static const NSUInteger kQMApplicationID = 55869;
@@ -101,12 +97,12 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [Fabric with:@[CrashlyticsKit,  [Answers class]]];
     
     // setup app download store
-    self.demoDownloadStore = [[DemoDownloadStore alloc] init];
-    
-    // setup downloader
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
-        self.fileDownloader = [[HWIFileDownloader alloc] initWithDelegate:self.demoDownloadStore];
-    [self.fileDownloader setupWithCompletion:nil];
+//    self.demoDownloadStore = [[DemoDownloadStore alloc] init];
+//
+//    // setup downloader
+//    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+//        self.fileDownloader = [[HWIFileDownloader alloc] initWithDelegate:self.demoDownloadStore];
+//    [self.fileDownloader setupWithCompletion:nil];
 
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
@@ -148,7 +144,6 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     
     [QMCore instance].pushNotificationManager.deviceToken = deviceToken;
 }
-
 
 - (void)startUpdatingCurrentLocation
 {
@@ -256,12 +251,6 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     [[QMCore instance] login];
-}
-
-// iOS 7
-- (void)application:(UIApplication *)anApplication handleEventsForBackgroundURLSession:(NSString *)aBackgroundURLSessionIdentifier completionHandler:(void (^)())aCompletionHandler
-{
-    [self.fileDownloader setBackgroundSessionCompletionHandlerBlock:aCompletionHandler];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

@@ -27,6 +27,8 @@
     
     NSString* selectedAttendantStatus, *selectedStaffAssigned, *selectedStaffAttended;
     
+    NSString* selectedStaff;
+    
     CGFloat autocompleteCellHeight;
     
     __block BOOL isLoading;
@@ -45,6 +47,7 @@
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *place;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *staffAssigned;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *Remarks;
+@property (weak, nonatomic) IBOutlet UIFloatLabelTextField *staffAttended;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *attendantStatus;
 
 @property (weak, nonatomic) IBOutlet SWTableViewCell *appointmentCell;
@@ -55,6 +58,7 @@
 @property (weak, nonatomic) IBOutlet SWTableViewCell *endDateCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *placeCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *staffAssignedCell;
+@property (weak, nonatomic) IBOutlet SWTableViewCell *staffAttendedCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *attendantStatusCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *remarksCell;
 
@@ -88,12 +92,16 @@
 - (void) displayDiary
 {
     _place.text = _officeDiary.place;
-    _staffAssigned.text = _officeDiary.staffAssigned.descriptionValue;
+    
     _appointment.text = _officeDiary.appointmentDetails;
     _Remarks.text = _officeDiary.remarks;
     _caseNo.text = _officeDiary.caseNo;
     _caseName.text = _officeDiary.caseName;
     _fileNo.text = _officeDiary.fileNo1;
+    _staffAttended.text = _officeDiary.staffAttended.name;
+    selectedStaffAttended = _officeDiary.staffAttended.clientCode;
+    _staffAssigned.text = _officeDiary.staffAssigned.name;
+    selectedStaffAssigned = _officeDiary.staffAssigned.clientCode;
     _attendantStatus.text = _officeDiary.attendedStatus.descriptionValue;
     selectedAttendantStatus = _officeDiary.attendedStatus.codeValue;
     
@@ -165,7 +173,7 @@
         [data addEntriesFromDictionary:@{@"appointmentDetails":_appointment.text}];
     }
     
-    if (![_attendantStatus.text isEqualToString:_officeDiary.attendedStatus.descriptionValue]) {
+    if (![selectedAttendantStatus isEqualToString:_officeDiary.attendedStatus.codeValue]) {
         [data addEntriesFromDictionary:@{@"attendedStatus":@{@"code":selectedAttendantStatus}}];
     }
     
@@ -195,7 +203,11 @@
         [data addEntriesFromDictionary:@{@"fileNo1":_fileNo.text}];
     }
     
-    if (![_staffAssigned.text isEqualToString:_officeDiary.staffAssigned.descriptionValue]) {
+    if (![selectedStaffAttended isEqualToString:_officeDiary.staffAttended.clientCode]) {
+        [data addEntriesFromDictionary:@{@"staffAttended":@{@"code":selectedStaffAttended}}];
+    }
+    
+    if (![selectedStaffAssigned isEqualToString:_officeDiary.staffAssigned.clientCode]) {
         [data addEntriesFromDictionary:@{@"staffAssigned":@{@"code":selectedStaffAssigned}}];
     }
     
@@ -302,9 +314,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if  (_officeDiary != nil) {
-        return 10;
+        return 11;
     }
-    return 9;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -338,6 +350,10 @@
         self.staffAssignedCell.delegate = self;
         return self.staffAssignedCell;
     } else if (indexPath.row == 8) {
+        self.staffAttendedCell.leftUtilityButtons = [self leftButtons];
+        self.staffAttendedCell.delegate = self;
+        return self.staffAttendedCell;
+    }  else if (indexPath.row == 9) {
         if  (_officeDiary == nil) {
             self.remarksCell.leftUtilityButtons = [self leftButtons];
             self.remarksCell.delegate = self;
@@ -348,7 +364,7 @@
             return self.attendantStatusCell;
         }
         
-    }else if (indexPath.row == 9) {
+    } else if (indexPath.row == 10) {
         if  (_officeDiary != nil) {
             self.remarksCell.leftUtilityButtons = [self leftButtons];
             self.remarksCell.delegate = self;
@@ -382,13 +398,26 @@
         self.place.text = @"";
     } else if (indexPath.row == 4) {
         self.fileNo.text = @"";
+        self.caseNo.text = @"";
+        self.caseName.text = @"";
     } else if (indexPath.row == 5) {
         self.caseNo.text = @"";
     } else if (indexPath.row == 6) {
         self.caseName.text = @"";
     } else if (indexPath.row == 7) {
         self.staffAssigned.text = @"";
+        selectedStaffAssigned = @"";
     } else if (indexPath.row == 8) {
+        self.staffAttended.text = @"";
+        selectedStaffAttended = @"";
+    } else if (indexPath.row == 9) {
+        if (_officeDiary != nil) {
+            self.attendantStatus.text = @"";
+            selectedAttendantStatus = @"";
+        } else {
+            self.Remarks.text = @"";
+        }
+    } else if (indexPath.row == 10) {
         self.Remarks.text = @"";
     }
 }
@@ -449,8 +478,20 @@
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startDate"]) {
             self.startDate.text = date;
+            if (self.startTime.text.length == 0) {
+                self.startTime.text = @"09:00";
+            }
+            if (_endDate.text.length == 0) {
+                _endDate.text = date;
+            }
+            if (self.endTime.text.length == 0) {
+                self.endTime.text = @"17:00";
+            }
         } else {
             self.endDate.text = date;
+            if (self.endTime.text.length == 0) {
+                self.endTime.text = @"17:00";
+            }
         }
     };
     [self showPopup:calendarViewController];
@@ -466,9 +507,13 @@
         [self showAutocomplete:COURT_OFFICE_PLACE_GET_LIST_URL];
     } else if (indexPath.row == 4) {
         [self performSegueWithIdentifier:kMatterLitigationSegue sender:nil];
-    } else if (indexPath.row == 7) {
+    } else if (indexPath.row == 7) { // Counsel Attended
+        selectedStaff = @"Staff Assigned";
         [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
-    } else if (indexPath.row == 8) {
+    }  else if (indexPath.row == 8) {
+        selectedStaff = @"Staff Attended";
+        [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+    } else if (indexPath.row == 9) {
         if (_officeDiary != nil) {
             titleOfList = @"Attendant Type";
             nameOfField = @"Attendant Status";
@@ -504,8 +549,13 @@
         StaffViewController* staffVC = navVC.viewControllers.firstObject;
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
-                selectedStaffAssigned = model.staffCode;
+            if ([selectedStaff isEqualToString:@"Staff Assigned"]) {
                 self.staffAssigned.text = model.name;
+                selectedStaffAssigned = model.staffCode;
+            } else {
+                _staffAttended.text = model.name;
+                selectedStaffAttended = model.staffCode;
+            }
         };
     } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {
         UINavigationController *navVC =segue.destinationViewController;

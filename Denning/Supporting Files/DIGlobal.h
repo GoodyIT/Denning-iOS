@@ -149,12 +149,9 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define CONTACT_GETLIST_URL @"denningwcf/v1/party?search="
 
-
-
 #define CONTACT_SOLICITOR_GET_LIST_URL   @"denningwcf/v1/Solicitor?search="
 
 #define CONTACT_UPDATE_URL    @"/denningwcf/v1/contact?search="
-
 
 #define MATTERSIMPLE_GET_URL @"denningwcf/v1/matter/simpleList?search="
 
@@ -172,12 +169,13 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define MATTER_LITIGATION_GET_LIST_URL @"denningwcf/v1/matter/litigationCase?search="
 
+#define MATTER_BRANCH_GET_URL   @"denningwcf/v1/table/ProgramOwner?search="
+
 #define MATTER_SAVE_URL @"denningwcf/v1/app/matter"
 
 #define COURT_HEARINGTYPE_GET_URL @"denningwcf/v1/courtDiary/hearingType?search="
 
 #define COURTDIARY_GET_LIST_URL @"denningwcf/v1/courtDiary/court?search="
-
 
 #define COURT_HEARINGDETAIL_GET_URL @"denningwcf/v1/courtDiary/hearingDetails?search="
 
@@ -286,6 +284,14 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 #define RECEIPT_SAVE_URL @"denningwcf/v1/ClientReceipt"
 
 #define LEAVE_RECORD_GET_URL @"denningwcf/v1/Table/StaffLeave"
+
+#define STAFF_LEAVE_SAVE_URL @"denningwcf/v1/Table/StaffLeave"
+
+#define LEAVE_TYPE_GET_URL  @"denningwcf/v1/generalSelection/frmStaffLeave/leaveType?search="
+
+#define LEAVE_NUMBER_OF_DAYS_URL    @"denningwcf/v1/generalSelection/frmStaffLeave/leaveLength?search="
+
+#define LEAVE_SUBMITTED_BY_URL  @"denningwcf/v1/WhoAmI?search="
 
 #define DASHBOARD_MAIN_GET_URL  @"denningwcf/v1/app/dashboard/main"
 

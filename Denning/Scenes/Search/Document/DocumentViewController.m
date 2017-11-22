@@ -329,11 +329,11 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 }
 
 - (void) popupScreen:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController  dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)registerNibs {
@@ -501,6 +501,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 - (void) downloadDocumentForURL:(NSURL*)url withCompletion:(void(^)(NSURL *filePath, NSError *error)) completion{
+    [SVProgressHUD show];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -520,6 +521,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         
         return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        [SVProgressHUD dismiss];
         completion(filePath, error);
     }];
     [downloadTask resume];

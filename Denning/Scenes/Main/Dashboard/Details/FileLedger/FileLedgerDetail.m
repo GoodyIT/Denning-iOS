@@ -16,7 +16,8 @@
     NSString* _url;
     NSInteger selectedIndex;
     NSString *curTopFilter, *curBalanceFilter, *baseUrl;
-    __block BOOL isLoading;
+    __block BOOL isLoading, isAppending;
+    NSInteger page;
 }
 @property (weak, nonatomic) IBOutlet UILabel *ledgerBalanceLabel;
 
@@ -85,6 +86,7 @@
 }
 
 - (void) prepareUI {
+    page = 1;
     _filterTitleArray = [@[@"All", @"Client", @"Disbursement", @"FD", @"Advance", @"Other", @"Receivable"] mutableCopy];
     
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 74, self.view.frame.size.width, 44)];
@@ -106,6 +108,23 @@
     self.selectionList.selectedButtonIndex = selectedIndex;
     self.selectionList.hidden = NO;
     self.selectionList.selectedButtonIndex = [_filterTitleArray indexOfObject:curBalanceFilter];
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 
@@ -168,6 +187,11 @@
     }
 }
 
+- (void) appendList {
+    isAppending = YES;
+    [self loadLedgersWithCompletion:nil];
+}
+
 - (void) loadBalance
 {
     [SVProgressHUD showWithStatus:@"Loading"];
@@ -190,7 +214,7 @@
     if (isLoading) return;
     isLoading = YES;
     
-    _url = [NSString stringWithFormat:@"%@/%@", baseUrl, curBalanceFilter];
+    _url = [NSString stringWithFormat:@"%@/%@?page=%ld", baseUrl, curBalanceFilter, page];
     
     [SVProgressHUD showWithStatus:@"Loading"];
     @weakify(self);
@@ -200,18 +224,24 @@
         self->isLoading = false;
         [SVProgressHUD dismiss];
         if (error == nil) {
-            self.listOfSelectedLedgers = ledgerDetailModelArray;
-            self.listOfLedgers = ledgerDetailModelArray;
+            if (isAppending) {
+                _listOfSelectedLedgers = [[_listOfSelectedLedgers arrayByAddingObjectsFromArray:ledgerDetailModelArray] mutableCopy];
+                _listOfLedgers = [[_listOfLedgers arrayByAddingObjectsFromArray:ledgerDetailModelArray] mutableCopy];
+            } else {
+                self.listOfSelectedLedgers = ledgerDetailModelArray;
+                self.listOfLedgers = ledgerDetailModelArray;
+            }
             if (completion != nil) {
                 completion();
             }
             [self.tableView reloadData];
             if ([ledgerDetailModelArray count] > 0) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                    
-                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-                });
+                page++;
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//
+//                    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//                });
             }
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
@@ -237,6 +267,7 @@
     // update the view for the corresponding index
     curBalanceFilter = _arrayOfFilter[index];
     curTopFilter = _filterTitleArray[index];
+    page = 1;
     [self loadBalance];
     [self loadLedgersWithCompletion:nil];
 }

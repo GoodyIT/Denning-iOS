@@ -20,6 +20,7 @@
 }
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (strong, nonatomic) NSMutableArray* listOfProperties;
 
@@ -36,7 +37,7 @@
     
     [self prepareUI];
     [self registerNibs];
-    [self configureSearch];
+//    [self configureSearch];
     [self getList];
 }
 
@@ -188,6 +189,29 @@
 }
 
 #pragma mark - Search Delegate
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    _searchBar.showsCancelButton = YES;
+    return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [_searchBar resignFirstResponder];
+    _searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [_searchBar resignFirstResponder];
+}
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";

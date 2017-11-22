@@ -198,7 +198,6 @@
 
 #pragma mark - Search Delegate
 
-
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     _searchBar.showsCancelButton = YES;

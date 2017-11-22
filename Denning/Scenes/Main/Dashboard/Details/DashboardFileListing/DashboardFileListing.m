@@ -14,9 +14,7 @@
 @interface DashboardFileListing ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
-    BOOL initCall;
     BOOL isAppending;
     
     NSInteger _idx;
@@ -83,9 +81,7 @@
 {
     btnArray = @[_btnAll, _btnToday, _btnThisweek];
     self.page = @(1);
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     isAppending = NO;
 
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -93,8 +89,23 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 500;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
-
 
 - (void) resetState: (MIBadgeButton*) button {
     [button setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
@@ -178,6 +189,7 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getNewMatterInURL:_url withPage:self.page withFilter:self.filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        [self.tableView finishInfiniteScroll];
         [SVProgressHUD dismiss];
         if (error == nil) {
             if (result.count != 0) {
@@ -202,7 +214,6 @@
 
 - (void) clean {
     isLoading = NO;
-    isFirstLoading = NO;
 }
 
 #pragma mark - Table view data source
@@ -277,17 +288,6 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-        [self appendList];
-    }
-}
-
 #pragma mark - Search Delegate
 
 
@@ -330,14 +330,6 @@
     [self getList];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfFiles.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
-}
-
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -349,6 +341,5 @@
     }
 
 }
-
 
 @end
