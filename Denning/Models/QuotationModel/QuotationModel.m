@@ -14,7 +14,7 @@
 {
     QuotationModel* model = [QuotationModel new];
     
-    model.analysis = [response valueForKeyNotNull:@"analysis"];
+    model.analysis = [TaxInvoiceCalcModel getTaxInvoiceCalcFromResponse:[response objectForKeyNotNull:@"analysis"]];
     model.documentNo = [response valueForKeyNotNull:@"documentNo"];
     model.fileNo = [response valueForKeyNotNull:@"fileNo"];
     model.isRental = [response valueForKeyNotNull:@"isRental"];

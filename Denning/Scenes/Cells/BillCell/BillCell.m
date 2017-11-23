@@ -35,11 +35,11 @@
     self.issueBy.text = model.issueBy;
     self.primaryClient.text = model.primaryClient;
     self.titleLabel.text = model.propertyTitle;
-    self.fees.text = @"";
-    self.disb.text = @"";
-    self.disbGST.text = @"";
-    self.GST.text = @"";
-    self.total.text = @"";
+    self.fees.text = model.analysis.decFees;
+    self.disb.text = model.analysis.decDisb;
+    self.disbGST.text = model.analysis.decDisbGST;
+    self.GST.text = model.analysis.decGST;
+    self.total.text = model.analysis.decTotal;
 }
 
 - (void) configureCellWithModel:(TaxModel*) model

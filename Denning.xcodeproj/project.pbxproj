@@ -60,6 +60,7 @@
 		790DD4931ECBBCEF009D5634 /* ProjectHousingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD4921ECBBCEF009D5634 /* ProjectHousingViewController.m */; };
 		790DD4971ECBBD38009D5634 /* ProjectHousingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD4961ECBBD38009D5634 /* ProjectHousingModel.m */; };
 		790DD49B1ECBC05E009D5634 /* PropertyContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */; };
+		79161CA31FC709FC0025BCB8 /* StaffLeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CA21FC709FC0025BCB8 /* StaffLeaveViewController.m */; };
 		7920E7841E9E5D0C002FEFF3 /* icon_searchswitch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */; };
 		7920E7851E9E5D0C002FEFF3 /* icon_searchswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */; };
 		7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */; };
@@ -1163,6 +1164,8 @@
 		790DD4961ECBBD38009D5634 /* ProjectHousingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectHousingModel.m; sourceTree = "<group>"; };
 		790DD4991ECBC05E009D5634 /* PropertyContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyContactListViewController.h; sourceTree = "<group>"; };
 		790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyContactListViewController.m; sourceTree = "<group>"; };
+		79161CA11FC709FC0025BCB8 /* StaffLeaveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaffLeaveViewController.h; sourceTree = "<group>"; };
+		79161CA21FC709FC0025BCB8 /* StaffLeaveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaffLeaveViewController.m; sourceTree = "<group>"; };
 		7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_searchswitch.png; sourceTree = "<group>"; };
 		7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@2x.png"; sourceTree = "<group>"; };
 		7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@3x.png"; sourceTree = "<group>"; };
@@ -3055,6 +3058,15 @@
 				790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */,
 			);
 			path = PropertyContactList;
+			sourceTree = "<group>";
+		};
+		79161CA01FC709EF0025BCB8 /* StaffLeave */ = {
+			isa = PBXGroup;
+			children = (
+				79161CA11FC709FC0025BCB8 /* StaffLeaveViewController.h */,
+				79161CA21FC709FC0025BCB8 /* StaffLeaveViewController.m */,
+			);
+			path = StaffLeave;
 			sourceTree = "<group>";
 		};
 		7920E7871E9F2B9D002FEFF3 /* Common */ = {
@@ -6996,6 +7008,7 @@
 		9620830A1ED9314D00BB595C /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				79161CA01FC709EF0025BCB8 /* StaffLeave */,
 				960F03001F28E42B00B25BBC /* FeeTransferDetail */,
 				96821F331F1DB49000F28708 /* CompletionDateTracking */,
 				96821F2C1F1D7F3200F28708 /* FeeAndMatterGrowth */,
@@ -8887,6 +8900,7 @@
 				96A73A761F1A878200B97156 /* TaxInvoice.m in Sources */,
 				79FBE1FA1E31600F00448FE3 /* QMLicenseAgreementViewController.m in Sources */,
 				7903CF821ECD3B1C0090206C /* FullPropertyModel.m in Sources */,
+				79161CA31FC709FC0025BCB8 /* StaffLeaveViewController.m in Sources */,
 				79FBE1491E30EF0B00448FE3 /* SearchKeywordModel.m in Sources */,
 				790DD4931ECBBCEF009D5634 /* ProjectHousingViewController.m in Sources */,
 				96C7AF461EE590F100EF0A37 /* PostCodeAutoComplete.m in Sources */,

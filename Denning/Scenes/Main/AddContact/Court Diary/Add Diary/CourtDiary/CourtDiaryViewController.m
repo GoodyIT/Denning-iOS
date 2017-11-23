@@ -539,6 +539,8 @@
             self.caseName.text = @"";
         } else if (indexPath.row == 5) {
             self.place.text = @"";
+            self.placeType.text = @"";
+            selectedCourtCode = @"";
         } else if (indexPath.row == 6) {
             self.enclosureNo.text = @"";
         } else if (indexPath.row == 7) {
@@ -696,8 +698,8 @@
             nameOfField = @"natureOfHearing";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_HEARINGTYPE_GET_URL];
         } else if (indexPath.row == 8) {
-            selectedStaff = @"Counsel Assigned";
-            [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+            selectedDetails = @"First Details";
+            [self showDetailAutocomplete];
         }
         if (_courtDiary != nil) {
             if (indexPath.row == 10) { // Attendant Type
@@ -719,8 +721,8 @@
                 [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_NEXTDATE_TYPE_GET_URL];
             }
         } else if (indexPath.row == 9) { // Details
-            selectedDetails = @"First Details";
-            [self showDetailAutocomplete];
+            selectedStaff = @"Counsel Assigned";
+            [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
         }
         
     } else {
@@ -751,7 +753,8 @@
     } else if ([segue.identifier isEqualToString:kCourtDiarySegue]) {
         CourtDiaryListViewController* courtVC = segue.destinationViewController;
         courtVC.updateHandler = ^(CourtDiaryModel *model) {
-            self.place.text = model.typeE;
+            self.placeType.text = model.typeE;
+            self.place.text = model.place;
             selectedCourtCode = model.courtDiaryCode;
         };
     } else if ([segue.identifier isEqualToString:kStaffSegue]) {
@@ -759,7 +762,7 @@
         StaffViewController* staffVC = navVC.viewControllers.firstObject;
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
-            if ([selectedStaff isEqualToString:@"Counsel  Assigned"]) {
+            if ([selectedStaff isEqualToString:@"Counsel Assigned"]) {
                  self.councilAssigned.text = model.name;
                 selectedAssignedCode = model.staffCode;
             } else {

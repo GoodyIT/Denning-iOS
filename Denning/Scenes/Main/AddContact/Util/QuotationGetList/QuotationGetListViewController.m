@@ -110,11 +110,11 @@
         }
         
         if (error == nil) {
+            if (result.count != 0) {
+                self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
+            }
             if (isAppending) {
                 self.listOfAccountTypes = [[self.listOfAccountTypes arrayByAddingObjectsFromArray:result] mutableCopy];
-                if (result.count != 0) {
-                    self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
-                }
             } else {
                 self.listOfAccountTypes = [result mutableCopy];
             }
@@ -135,7 +135,6 @@
     isFirstLoading = NO;
 }
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 1;

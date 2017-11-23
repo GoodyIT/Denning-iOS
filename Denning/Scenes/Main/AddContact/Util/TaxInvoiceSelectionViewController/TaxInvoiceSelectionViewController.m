@@ -47,7 +47,7 @@
     self.tableView.tableFooterView = [UIView new];
     
     // Tying up the segmented control to a scroll view
-    HMSegmentedControl *selectionList = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 86, self.view.frame.size.width, 34)];
+    HMSegmentedControl *selectionList = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 110, self.view.frame.size.width, 34)];
     selectionList.sectionTitles = @[@"Fees",  @"Disb GST", @"Disb", @"GST"];
     selectionList.selectedSegmentIndex = [self.selectedPage integerValue];
     selectionList.backgroundColor = [UIColor blackColor];

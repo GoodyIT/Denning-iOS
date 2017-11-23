@@ -114,8 +114,8 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) prepareUI {
-    selectedCourtDiaryCode = selectedSARCode = selectedJudgeCode= selectedCaseTypeCode = selectedBranchCode = @"";
-    selectedBranchCode = @"1";
+    selectedCourtDiaryCode = selectedSARCode = selectedJudgeCode= selectedCaseTypeCode = @"";
+    
     
     self.keyValue = [@{
                        @(0): @(1)
@@ -126,6 +126,10 @@ NSMutableDictionary* keyValue;
                         ]
                       ];
     _contents = [temp mutableCopy];
+    
+    // Set the default value @"1" for branch
+    selectedBranchCode = @"1";
+//    [self replaceContentForSection:MAIN_SECTION InRow:8 withValue:@"Kuala Lumpur"];
     
     _headers = [@[
                  @"Matter Information"
@@ -1237,6 +1241,7 @@ NSMutableDictionary* keyValue;
     } else if (indexPath.section == SOLICITORS_SECTION) {
         solicitorCodeList[selectedContactRow] = @"";
         solicitorNameList[selectedContactRow] = @"";
+        solicitorRefList[selectedContactRow] = @"";
     } else if (indexPath.section == PROPERTIES_SECTION) {
         [self removePropertyFromContents];
     } else if (indexPath.section == BANKS_SECTION) {
@@ -1244,6 +1249,24 @@ NSMutableDictionary* keyValue;
         bankNameList[selectedContactRow] = @"";
     } else {
         [self replaceContentForSection:indexPath.section InRow:indexPath.row withValue:@""];
+        if  (indexPath.section == MAIN_SECTION) {
+            if (indexPath.row == 2) {
+                selectedPrimaryClientCode = @"";
+            } else if (indexPath.row == 3) {
+                selectedFileStatusCode = @"";
+            } else if (indexPath.row == 4) {
+                selectedPartnerCode = @"";
+            } else if (indexPath.row == 5) {
+                selectedLACode = @"";
+            } else if (indexPath.row == 6) {
+                selectedClerkCode = @"";
+            } else if (indexPath.row == 7) {
+                selectedMatterCode = @"";
+            } else if (indexPath.row == 8) {
+                selectedBranchCode = @"";
+            }
+                
+        }
     }
     
     [self.tableView reloadData];

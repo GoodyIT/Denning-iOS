@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class TaxInvoiceCalcModel;
+
 @interface QuotationModel : NSObject
 
-@property (strong, nonatomic) NSString* analysis;
+@property (strong, nonatomic) TaxInvoiceCalcModel* analysis;
 @property (strong, nonatomic) NSString* documentNo;
 @property (strong, nonatomic) NSString* fileNo;
 @property (strong, nonatomic) NSString* isRental;

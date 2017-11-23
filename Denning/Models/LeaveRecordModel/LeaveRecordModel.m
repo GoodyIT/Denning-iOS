@@ -18,6 +18,9 @@
     model.dtEndDate = [DIHelpers getDateInShortForm:[response valueForKeyNotNull:@"dtEndDate"]];
     model.dtStartDate = [DIHelpers getDateInShortForm:[response valueForKeyNotNull:@"dtStartDate"]];
     model.strLeaveLength = [response valueForKeyNotNull:@"strLeaveLenght"];
+    model.intAL = [response valueForKeyNotNull:@"intAL"];
+    model.intPYL = [response valueForKeyNotNull:@"intPYL"];
+    model.intTaken = [response valueForKeyNotNull:@"intTaken"];
     model.clsLeaveStatus = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"clsLeaveStatus"]];
     model.clsStaff = [AttendanceInfo getAttendanceInfoFromResonse:[response objectForKeyNotNull:@"clsStaff"]];
     model.clsTypeOfLeave = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"clsTypeOfLeave"]];

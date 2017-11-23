@@ -1429,9 +1429,9 @@
                         <outlet property="nextTime" destination="nDr-qG-0OO" id="q1e-nn-cae"/>
                         <outlet property="opponentCounsel" destination="VWN-D2-rNg" id="smy-jq-5M2"/>
                         <outlet property="opponentCounselCell" destination="Jyk-I2-cRK" id="dVo-Pl-9xv"/>
-                        <outlet property="place" destination="qpY-Lf-TXu" id="Daq-VN-Bfx"/>
+                        <outlet property="place" destination="Cw2-Ua-Bqq" id="3gS-S9-rmK"/>
                         <outlet property="placeCell" destination="bOs-2m-H5Z" id="yus-q8-TLN"/>
-                        <outlet property="placeType" destination="Cw2-Ua-Bqq" id="4Hq-Fe-LTp"/>
+                        <outlet property="placeType" destination="qpY-Lf-TXu" id="dKJ-Xh-KIk"/>
                         <outlet property="remarksCell" destination="LWH-qg-36O" id="8Rk-Bg-Yma"/>
                         <outlet property="startDate" destination="TAb-PM-uxh" id="9lp-H2-bBa"/>
                         <outlet property="startDateCell" destination="lXf-yD-asw" id="LwV-ex-zap"/>
@@ -1693,7 +1693,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jt9-mP-vWL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7609" y="4971"/>
+            <point key="canvasLocation" x="7718" y="4924"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="69G-XB-dgb">
