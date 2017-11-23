@@ -14,7 +14,7 @@
 
 @dynamic delegate;
 
-#pragma mark - Construction
+//MARK: - Construction
 
 - (id)initWithFrame:(CGRect)frame {
     
@@ -40,7 +40,7 @@
     self.textAlignment = NSTextAlignmentLeft;
 }
 
-#pragma mark - Methods
+//MARK: - Methods
 
 - (void)setShowPlaceholder:(BOOL)showPlaceholder animated:(BOOL)animated {
     
@@ -61,7 +61,7 @@
     }
 }
 
-#pragma mark - Setters
+//MARK: - Setters
 
 - (void)setText:(NSString *)text {
     [super setText:text];
@@ -69,16 +69,11 @@
     self.placeholderLabel.hidden = text.length != 0;
 }
 
-#pragma mark - UIKeyInput
+//MARK: - UIKeyInput
 
 - (void)deleteBackward {
-    
+    [super deleteBackward];
     [self.delegate textFieldWillDeleteBackwards:self];
-    
-    if (iosMajorVersion() > 8) {
-        
-        [super deleteBackward];
-    }
 }
 
 - (BOOL)keyboardInputShouldDelete:(UITextField *)textField {
@@ -110,7 +105,7 @@
     return shouldDelete;
 }
 
-#pragma mark - UIResponder
+//MARK: - UIResponder
 
 - (BOOL)becomeFirstResponder {
     

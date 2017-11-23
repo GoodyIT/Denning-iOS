@@ -26,7 +26,7 @@ static const NSUInteger kQMNumberOfSections = 1;
 
 @implementation QMGroupOccupantsDataSource
 
-#pragma mark - Getters
+//MARK: - Getters
 
 - (NSInteger)addMemberCellIndex {
     
@@ -43,14 +43,22 @@ static const NSUInteger kQMNumberOfSections = 1;
     return self.separatorCellIndex + 1;
 }
 
-#pragma mark - Methods
+//MARK: - Methods
 
 - (NSUInteger)userIndexForIndexPath:(NSIndexPath *)indexPath {
     
     return indexPath.row - kQMNumberOfStaticCellsBeforeOccupantsList;
 }
 
-#pragma mark - UITableViewDataSource
+- (NSIndexPath *)indexPathForObject:(id)object {
+    NSUInteger idx = [self.items indexOfObject:object];
+    if (idx == NSNotFound) {
+        return nil;
+    }
+    return [NSIndexPath indexPathForItem:idx+kQMNumberOfStaticCellsBeforeOccupantsList inSection:0];
+}
+
+//MARK: - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -74,19 +82,18 @@ static const NSUInteger kQMNumberOfSections = 1;
         QMContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMContactCell cellIdentifier] forIndexPath:indexPath];
         
         QBUUser *user = self.items[indexPath.row - kQMNumberOfStaticCellsBeforeOccupantsList];
-        [cell setTitle:user.fullName placeholderID:user.ID avatarUrl:user.avatarUrl];
+        [cell setTitle:user.fullName avatarUrl:user.avatarUrl];
         
-        BOOL isRequestRequired = ![[QMCore instance].contactManager isContactListItemExistentForUserWithID:user.ID];
+        BOOL isRequestRequired = ![QMCore.instance.contactManager isContactListItemExistentForUserWithID:user.ID];
         
-        if ([QMCore instance].currentProfile.userData.ID == user.ID) {
+        if (QMCore.instance.currentProfile.userData.ID == user.ID) {
             
             isRequestRequired = NO;
         }
         
         [cell setAddButtonVisible:isRequestRequired];
         
-        NSString *onlineStatus = [[QMCore instance].contactManager onlineStatusForUser:user];
-        [cell setBody:onlineStatus];
+        [cell setBody:[QMCore.instance.contactManager onlineStatusForUser:user]];
         
         cell.didAddUserBlock = self.didAddUserBlock;
         

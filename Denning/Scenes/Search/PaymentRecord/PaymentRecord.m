@@ -47,7 +47,7 @@
 
 - (void) getList {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Loading" duration:0.0];
     @weakify(self)
     [[QMNetworkManager sharedManager] getPaymentRecordWithFileNo:(NSString*)_fileNo completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {

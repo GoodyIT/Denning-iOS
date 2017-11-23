@@ -26,6 +26,10 @@
     return nil;
 }
 
+- (NSIndexPath *)indexPathForObject:(id)__unused object {
+    return nil;
+}
+
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)__unused indexPath {
     
     return 0.0f;

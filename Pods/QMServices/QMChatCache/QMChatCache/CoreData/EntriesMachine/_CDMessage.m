@@ -3,34 +3,12 @@
 
 #import "_CDMessage.h"
 
-const struct CDMessageAttributes CDMessageAttributes = {
-	.createAt = @"createAt",
-	.customParameters = @"customParameters",
-	.dateSend = @"dateSend",
-	.delayed = @"delayed",
-	.deliveredIDs = @"deliveredIDs",
-	.dialogID = @"dialogID",
-	.isRead = @"isRead",
-	.messageID = @"messageID",
-	.readIDs = @"readIDs",
-	.recipientID = @"recipientID",
-	.senderID = @"senderID",
-	.senderNick = @"senderNick",
-	.text = @"text",
-	.updateAt = @"updateAt",
-};
-
-const struct CDMessageRelationships CDMessageRelationships = {
-	.attachments = @"attachments",
-	.dialog = @"dialog",
-};
-
 @implementation CDMessageID
 @end
 
 @implementation _CDMessage
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"CDMessage" inManagedObjectContext:moc_];
 }
@@ -53,11 +31,6 @@ const struct CDMessageRelationships CDMessageRelationships = {
 
 	if ([key isEqualToString:@"delayedValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"delayed"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-		return keyPaths;
-	}
-	if ([key isEqualToString:@"isReadValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"isRead"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -89,7 +62,7 @@ const struct CDMessageRelationships CDMessageRelationships = {
 }
 
 - (void)setDelayedValue:(BOOL)value_ {
-	[self setDelayed:[NSNumber numberWithBool:value_]];
+	[self setDelayed:@(value_)];
 }
 
 - (BOOL)primitiveDelayedValue {
@@ -98,32 +71,12 @@ const struct CDMessageRelationships CDMessageRelationships = {
 }
 
 - (void)setPrimitiveDelayedValue:(BOOL)value_ {
-	[self setPrimitiveDelayed:[NSNumber numberWithBool:value_]];
+	[self setPrimitiveDelayed:@(value_)];
 }
 
 @dynamic deliveredIDs;
 
 @dynamic dialogID;
-
-@dynamic isRead;
-
-- (BOOL)isReadValue {
-	NSNumber *result = [self isRead];
-	return [result boolValue];
-}
-
-- (void)setIsReadValue:(BOOL)value_ {
-	[self setIsRead:[NSNumber numberWithBool:value_]];
-}
-
-- (BOOL)primitiveIsReadValue {
-	NSNumber *result = [self primitiveIsRead];
-	return [result boolValue];
-}
-
-- (void)setPrimitiveIsReadValue:(BOOL)value_ {
-	[self setPrimitiveIsRead:[NSNumber numberWithBool:value_]];
-}
 
 @dynamic messageID;
 
@@ -137,7 +90,7 @@ const struct CDMessageRelationships CDMessageRelationships = {
 }
 
 - (void)setRecipientIDValue:(int32_t)value_ {
-	[self setRecipientID:[NSNumber numberWithInt:value_]];
+	[self setRecipientID:@(value_)];
 }
 
 - (int32_t)primitiveRecipientIDValue {
@@ -146,7 +99,7 @@ const struct CDMessageRelationships CDMessageRelationships = {
 }
 
 - (void)setPrimitiveRecipientIDValue:(int32_t)value_ {
-	[self setPrimitiveRecipientID:[NSNumber numberWithInt:value_]];
+	[self setPrimitiveRecipientID:@(value_)];
 }
 
 @dynamic senderID;
@@ -157,7 +110,7 @@ const struct CDMessageRelationships CDMessageRelationships = {
 }
 
 - (void)setSenderIDValue:(int32_t)value_ {
-	[self setSenderID:[NSNumber numberWithInt:value_]];
+	[self setSenderID:@(value_)];
 }
 
 - (int32_t)primitiveSenderIDValue {
@@ -166,7 +119,7 @@ const struct CDMessageRelationships CDMessageRelationships = {
 }
 
 - (void)setPrimitiveSenderIDValue:(int32_t)value_ {
-	[self setPrimitiveSenderID:[NSNumber numberWithInt:value_]];
+	[self setPrimitiveSenderID:@(value_)];
 }
 
 @dynamic senderNick;
@@ -177,10 +130,10 @@ const struct CDMessageRelationships CDMessageRelationships = {
 
 @dynamic attachments;
 
-- (NSMutableSet*)attachmentsSet {
+- (NSMutableSet<CDAttachment*>*)attachmentsSet {
 	[self willAccessValueForKey:@"attachments"];
 
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"attachments"];
+	NSMutableSet<CDAttachment*> *result = (NSMutableSet<CDAttachment*>*)[self mutableSetValueForKey:@"attachments"];
 
 	[self didAccessValueForKey:@"attachments"];
 	return result;
@@ -188,5 +141,56 @@ const struct CDMessageRelationships CDMessageRelationships = {
 
 @dynamic dialog;
 
+@end
+
+@implementation CDMessageAttributes 
++ (NSString *)createAt {
+	return @"createAt";
+}
++ (NSString *)customParameters {
+	return @"customParameters";
+}
++ (NSString *)dateSend {
+	return @"dateSend";
+}
++ (NSString *)delayed {
+	return @"delayed";
+}
++ (NSString *)deliveredIDs {
+	return @"deliveredIDs";
+}
++ (NSString *)dialogID {
+	return @"dialogID";
+}
++ (NSString *)messageID {
+	return @"messageID";
+}
++ (NSString *)readIDs {
+	return @"readIDs";
+}
++ (NSString *)recipientID {
+	return @"recipientID";
+}
++ (NSString *)senderID {
+	return @"senderID";
+}
++ (NSString *)senderNick {
+	return @"senderNick";
+}
++ (NSString *)text {
+	return @"text";
+}
++ (NSString *)updateAt {
+	return @"updateAt";
+}
+@end
+
+@implementation CDMessageRelationships 
++ (NSString *)attachments {
+	return @"attachments";
+}
++ (NSString *)dialog {
+	return @"dialog";
+}
 @end
 

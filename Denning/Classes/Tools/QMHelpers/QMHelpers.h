@@ -12,10 +12,6 @@ CGRect CGRectOfSize(CGSize size);
 
 NSString *QMStringForTimeInterval(NSTimeInterval timeInterval);
 
-NSInteger iosMajorVersion();
-
-NSString* getTimeLog(NSString* date);
-
-CGFloat getLabelHeight(UILabel* label);
+NSInteger iosMajorVersion(void);
 
 extern void removeControllerFromNavigationStack(UINavigationController *navC, UIViewController *vc);

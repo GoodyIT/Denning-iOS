@@ -29,7 +29,6 @@
     contactModel.fax = [response valueForKeyNotNull:@"phoneFax"];
     contactModel.tax = [response valueForKeyNotNull:@"taxFileNo"];
     contactModel.IRDBranch = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"irdBranch"]];
-    contactModel.idType = [response valueForKeyNotNull:@"idType"];
     contactModel.contactTitle = [response valueForKeyNotNull:@"title"];
     contactModel.contactPerson = [response valueForKeyNotNull:@"contactPerson"];
     contactModel.website = [response valueForKeyNotNull:@"website"];

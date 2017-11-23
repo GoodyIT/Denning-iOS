@@ -141,9 +141,9 @@
                            @"receivedForm": self.receivedFrom,
                            @"remarks": self.remarks.text
                            };
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     [[QMNetworkManager sharedManager] saveReceiptWithParams:data WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Saved" duration:1.0];

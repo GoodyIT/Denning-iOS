@@ -8,7 +8,33 @@
 
 #import "QMColors.h"
 
-#pragma mark - Table view
+//MARK: Application Colors
+
+UIColor *QMMainApplicationColor() {
+    static UIColor *color = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        color = [UIColor colorWithRed:23.0f/255.0f green:208.0f/255.0f blue:75.f/255.0f alpha:1.0f];
+    });
+    
+    return color;
+}
+
+UIColor *QMSecondaryApplicationColor() {
+    static UIColor *color = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        color = [UIColor colorWithRed:74.0f/255.0f green:74.0f/255.0f blue:74.0f/255.0f alpha:1.0f];
+    });
+    
+    return color;
+}
+
+//MARK: - Table view
 
 UIColor *QMTableViewBackgroundColor() {
     
@@ -36,7 +62,7 @@ UIColor *QMVideoCallBackgroundColor() {
     return color;
 }
 
-#pragma mark - Chat colors
+//MARK: - Chat colors
 
 UIColor *QMChatBackgroundColor() {
     
@@ -45,8 +71,7 @@ UIColor *QMChatBackgroundColor() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-       color = [UIColor colorWithRed:237.0f/255.0f green:230.0f/255.0f blue:211.0f/255.0f alpha:1.0f];
-        
+        color = [UIColor whiteColor];
     });
     
     return color;
@@ -104,6 +129,64 @@ UIColor *QMChatCellHighlightedColor() {
     return color;
 }
 
+UIColor *QMChatCellOutgoingHighlightedColor() {
+    
+    static UIColor *color = nil;
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        CGFloat h, s, b, a;
+        UIColor *outgoingCellColor = QMChatOutgoingCellColor();
+        
+        if ([outgoingCellColor getHue:&h saturation:&s brightness:&b alpha:&a]) {
+            color = [UIColor colorWithHue:h
+                               saturation:s
+                               brightness:b * (float)0.75
+                                    alpha:a];
+        }
+    });
+    
+    return color;
+}
+
+
+UIColor *QMChatCellIncomingHighlightedColor() {
+    
+    static UIColor *color = nil;
+    
+    static dispatch_once_t onceToken;
+    
+    dispatch_once(&onceToken, ^{
+        
+        CGFloat h, s, b, a;
+        UIColor *incomingCellColor = QMChatIncomingCellColor();
+        
+        if ([incomingCellColor getHue:&h saturation:&s brightness:&b alpha:&a]) {
+            color = [UIColor colorWithHue:h
+                               saturation:s
+                               brightness:b * (float)0.75
+                                    alpha:a];
+        }
+    });
+    
+    return color;
+}
+
+UIColor *QMChatIncomingCellColor() {
+    
+    static UIColor *color = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        color = [UIColor colorWithRed:223.0f/255.0f green:227.0f/255.0f blue:229.0f/255.0f alpha:1.0f];
+    });
+    
+    return color;
+}
+
 UIColor *QMChatOutgoingCellColor() {
     
     static UIColor *color = nil;
@@ -111,8 +194,7 @@ UIColor *QMChatOutgoingCellColor() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-      //  color = [UIColor colorWithRed:23.0f/255.0f green:208.0f/255.0f blue:75.0f/255.0f alpha:1.0f];
-        color = [UIColor colorWithHexString:@"00b8ff" withAlpha:0.9f];
+        color = [UIColor colorWithRed:23.0f/255.0f green:208.0f/255.0f blue:75.0f/255.0f alpha:1.0f];
     });
     
     return color;
@@ -125,8 +207,7 @@ UIColor *QMChatOutgoingCellSendingColor() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-//        color = [UIColor colorWithRed:0.761f green:0.772f blue:0.746f alpha:1.0f];
-         color = [UIColor colorWithHexString:@"00b8ff" withAlpha:0.9f];
+        color = [UIColor colorWithRed:0.761f green:0.772f blue:0.746f alpha:1.0f];
     });
     
     return color;
@@ -152,7 +233,7 @@ UIColor *QMChatNotificationCellColor() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        color = [UIColor colorWithRed:188.0f/255.0f green:185.0f/255.0f blue:168.0f/255.0f alpha:1.0f];
+        color = [UIColor colorWithRed:242.0f/255.0f green:244.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
     });
     
     return color;

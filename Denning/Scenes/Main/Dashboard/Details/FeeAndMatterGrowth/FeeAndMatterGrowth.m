@@ -60,7 +60,7 @@
     if (isLoading) return;
     isLoading = YES;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     _url = [@"denningwcf/" stringByAppendingString:_url];
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardThreeItmesInURL:_url withCompletion:^(ThreeItemModel * _Nonnull result, NSError * _Nonnull error) {

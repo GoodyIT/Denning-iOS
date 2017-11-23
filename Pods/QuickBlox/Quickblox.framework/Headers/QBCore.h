@@ -14,10 +14,11 @@
 #import <Quickblox/QBResponsePage.h>
 #import <Quickblox/QBGeneralResponsePage.h>
 #import <Quickblox/QBLogger.h>
-
+#import <Quickblox/QBDarwinNotificationCenter.h>
 #import <Quickblox/QBConnection.h>
 #import <Quickblox/QBRequest.h>
 #import <Quickblox/QBRequestStatus.h>
+#import <Quickblox/QBHTTPClient.h>
 #import <Quickblox/QBResponse.h>
 #import <Quickblox/QBRequestStatus.h>
 #import <Quickblox/QBError.h>

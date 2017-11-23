@@ -27,12 +27,9 @@
 
 #import "ActionSheetStringPicker.h"
 
-@interface ActionSheetStringPicker()<UISearchBarDelegate, UISearchControllerDelegate>
+@interface ActionSheetStringPicker()
 @property (nonatomic,strong) NSArray *data;
 @property (nonatomic,assign) NSInteger selectedIndex;
-
-@property (strong, nonatomic) UISearchController *searchController;
-@property (copy, nonatomic) NSString *filter;
 @end
 
 @implementation ActionSheetStringPicker
@@ -68,24 +65,11 @@
     return self;
 }
 
-- (UISearchBar*) configureSearchView
-{
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchBar.frame = CGRectMake(15, 7, 240, 31);
-    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
-    self.searchController.searchBar.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-//    self.definesPresentationContext = YES;
-    [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    return self.searchController.searchBar;
-}
 
 - (UIView *)configuredPickerView {
     if (!self.data)
         return nil;
-    CGRect pickerFrame = CGRectMake(0, 80, self.viewSize.width, 216);
+    CGRect pickerFrame = CGRectMake(0, 40, self.viewSize.width, 216);
     UIPickerView *stringPicker = [[UIPickerView alloc] initWithFrame:pickerFrame];
     stringPicker.delegate = self;
     stringPicker.dataSource = self;
@@ -99,7 +83,7 @@
     }
 
     //need to keep a reference to the picker so we can clear the DataSource / Delegate when dismissing
-    [self.pickerView addSubview: stringPicker];
+    self.pickerView = stringPicker;
 
     return stringPicker;
 }

@@ -21,7 +21,9 @@ static const NSUInteger kQMUsersPageLimit = 50;
 
 @property (strong, nonatomic) QBGeneralResponsePage *responsePage;
 @property (assign, nonatomic) BOOL shouldLoadMore;
+
 @property (copy, nonatomic) NSString *cachedSearchText;
+@property (assign, nonatomic) NSUInteger cachedSearchPage;
 
 @end
 
@@ -35,7 +37,7 @@ static const NSUInteger kQMUsersPageLimit = 50;
         
         _responsePage = [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:kQMUsersPageLimit];
         
-        [[QMCore instance].contactListService addDelegate:self];
+        [QMCore.instance.contactListService addDelegate:self];
     }
     
     return self;
@@ -65,6 +67,13 @@ static const NSUInteger kQMUsersPageLimit = 50;
         self.cachedSearchText = [searchText copy];
         self.responsePage.currentPage = 1;
     }
+    else {
+        
+        //There is no need to perform the search for the same page and text
+        if (self.cachedSearchPage == self.responsePage.currentPage) {
+            return;
+        }
+    }
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kQMGlobalSearchTimeInterval
                                                   target:self
@@ -80,20 +89,22 @@ static const NSUInteger kQMUsersPageLimit = 50;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
     @weakify(self);
-    [[[QMCore instance].usersService searchUsersWithFullName:self.cachedSearchText page:self.responsePage] continueWithBlock:^id _Nullable(BFTask<NSArray<QBUUser *> *> * _Nonnull task) {
+    [[QMCore.instance.usersService searchUsersWithFullName:self.cachedSearchText page:self.responsePage] continueWithBlock:^id _Nullable(BFTask<NSArray<QBUUser *> *> * _Nonnull task) {
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         @strongify(self);
         if (task.isCompleted) {
             
+            self.cachedSearchPage = self.responsePage.currentPage;
+            
             self.globalSearchCancellationTokenSource = nil;
             
             self.shouldLoadMore = task.result.count >= kQMUsersPageLimit;
             
             NSMutableArray *sortedUsers = [[self sortUsersByFullname:task.result] mutableCopy];
-            [sortedUsers removeObject:[QMCore instance].currentProfile.userData];
-            
+            [sortedUsers removeObject:QMCore.instance.currentProfile.userData];
+    
             if (self.responsePage.currentPage > 1) {
                 
                 [self.dataSource addItems:[sortedUsers copy]];
@@ -111,7 +122,7 @@ static const NSUInteger kQMUsersPageLimit = 50;
     } cancellationToken:self.globalSearchCancellationTokenSource.token];
 }
 
-#pragma mark - Methods
+//MARK: - Methods
 
 - (void)nextPage {
     
@@ -131,7 +142,7 @@ static const NSUInteger kQMUsersPageLimit = 50;
     }
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 - (NSArray *)sortUsersByFullname:(NSArray *)users {
     
@@ -144,7 +155,7 @@ static const NSUInteger kQMUsersPageLimit = 50;
     return sortedUsers;
 }
 
-#pragma mark - QMContactListServiceDelegate
+//MARK: - QMContactListServiceDelegate
 
 - (void)contactListService:(QMContactListService *)__unused contactListService contactListDidChange:(QBContactList *)__unused contactList {
     

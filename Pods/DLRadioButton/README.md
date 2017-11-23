@@ -7,7 +7,7 @@
 
 `DLRadioButton` is an easy to use and highly customizable radio buttons control for iOS. It's a subclass of `UIButton`, and works smoothly with both `Objective-C` and `Swift`.
 
-Since release, it has became the most popular radio buttons control for iOS🎉. Thank you for great feedbacks and making it better for all of us👏.
+Since its release, DLRadioButton has become the most popular radio buttons control for iOS 🎉. Thank you for all the great feedback and making it better for all of us 👏.
 
 ## Preview
 
@@ -15,12 +15,12 @@ Since release, it has became the most popular radio buttons control for iOS🎉.
 
 ## Usage
 
-####To install:
+#### To install:
 *	Option 1: simply put `DLRadioButton.h` and `DLRadiobutton.m` in your project.
 *	Option 2: add `pod 'DLRadioButton', '~> 1.4'` to your `Podfile`.
 *	Option 3: add `github "DavydLiu/DLRadioButton" ~> 1.4` to your `Cartfile`.
 
-####To add radio buttons in interface builder:
+#### To add radio buttons in interface builder:
 
 1.  Put some UIButtons onto a View and change the UIButtons' type to "custom".
 
@@ -34,7 +34,7 @@ Since release, it has became the most popular radio buttons control for iOS🎉.
 
 	![set otherButtons outlet](Images/set_otherButtons_outlet.png)
 
-####To customize DLRadiobutton:
+#### To customize DLRadiobutton:
 
 *	Simply set properties directly in Interface Builder.
 
@@ -44,7 +44,7 @@ Since release, it has became the most popular radio buttons control for iOS🎉.
 	
 	![DLRadioButton](Images/DLRadioButton.png)
 	
-####To add raido buttons programmatically, please refer to example project.
+#### To add radio buttons programmatically, please refer to the example project.
 
 ## Requirements
 

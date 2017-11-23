@@ -25,17 +25,15 @@
     NSString* nameOfField;
     NSString* url;
     
-    NSString* selectedNatureOfHearing;
+    NSString* selectedNatureOfHearing, *selectedNextNatureOfHearing;
     NSString* selectedDetails;
     NSString* selectedCourtCode;
     NSString* selectedCoramCode;
-    NSString* selectedAttendedStatus, *selectedAssignedCode, *selectedAttendedCode;
+    NSString* selectedAttendedStatus, *selectedAssignedCode;
     NSString* selectedDecisionCode;
     NSString* selectedNextDateTypeCode;
     
-    
-    
-    NSString* selectedStaff;
+    NSString* selectedStaff, *selecteDetail;
     
     CGFloat autocompleteCellHeight;
     
@@ -124,7 +122,6 @@
     _caseNo.text = _courtDiary.caseNo;
     _caseName.text = _courtDiary.caseName;
     _fileNo.text = _courtDiary.fileNo1;
-    _enclosureNo.text = _courtDiary.enclosureNo;
     _natureOfHearing.text = _courtDiary.hearingType;
     _councilAssigned.text = _courtDiary.counselAssigned.name;
     selectedAssignedCode = _courtDiary.counselAssigned.clientCode;
@@ -135,8 +132,7 @@
     _opponentCounsel.text = _courtDiary.opponentCounsel;
     _attendedStatus.text = _courtDiary.attendedStatus.descriptionValue;
     selectedAttendedStatus = _courtDiary.attendedStatus.codeValue;
-    _counselAttended.text = _courtDiary.counselAttended.name;
-    selectedAttendedCode = _courtDiary.counselAttended.clientCode;
+    _counselAttended.text = _courtDiary.counselAttended;
     _courtDecision.text = _courtDiary.courtDecision;
     _nextDateType.text = _courtDiary.nextDateType.descriptionValue;
     selectedNextDateTypeCode = _courtDiary.nextDateType.codeValue;
@@ -171,6 +167,10 @@
     self.councilAssigned.floatLabelActiveColor = self.councilAssigned.floatLabelPassiveColor = [UIColor redColor];
     self.enclosureNo.floatLabelActiveColor = self.enclosureNo.floatLabelPassiveColor = [UIColor redColor];
     self.details.floatLabelActiveColor = self.details.floatLabelPassiveColor = [UIColor redColor];
+    self.nextDetails.floatLabelActiveColor = self.nextDetails.floatLabelPassiveColor = [UIColor redColor];
+    self.nextEnclosureNo.floatLabelActiveColor = self.nextEnclosureNo.floatLabelPassiveColor = [UIColor redColor];
+    self.nextNatureOfHearing.floatLabelActiveColor = self.nextNatureOfHearing.floatLabelPassiveColor = [UIColor redColor];
+    self.nextDetails.floatLabelActiveColor = self.nextDetails.floatLabelPassiveColor = [UIColor redColor];
     self.Remarks.floatLabelActiveColor = self.Remarks.floatLabelPassiveColor = [UIColor redColor];
     
     self.startDate.delegate = self;
@@ -242,8 +242,8 @@
         [data addEntriesFromDictionary:@{@"counselAssigned":@{@"code":selectedAssignedCode}}];
     }
     
-    if (![selectedAttendedCode isEqualToString:_courtDiary.counselAttended.clientCode]) {
-        [data addEntriesFromDictionary:@{@"counselAttended":@{@"code":selectedAttendedCode}}];
+    if (![_counselAttended.text isEqualToString:_courtDiary.counselAttended]) {
+        [data addEntriesFromDictionary:@{@"counselAttended":_counselAttended.text}];
     }
     
     if (![selectedCoramCode isEqualToString:_courtDiary.coram.coramCode]) {
@@ -290,8 +290,8 @@
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:COURT_SAVE_UPATE_URL];
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         [navigationController dismissNotificationPanel];
@@ -301,7 +301,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully updated" duration:1.0];
             
         } else {
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
     }];
 }
@@ -333,8 +333,8 @@
                            };
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] saveCourtDiaryWithData:data WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
@@ -344,7 +344,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             
         } else {
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
         
     }];
@@ -368,6 +368,14 @@
             break;
         case 4:
             nameOfField = @"endTime";
+            [self showTimePicker];
+            break;
+        case 11:
+            nameOfField = @"nextStartDate";
+            [self showCalendar];
+            break;
+        case 12:
+            nameOfField = @"nextStartTime";
             [self showTimePicker];
             break;
             
@@ -483,8 +491,6 @@
     } else {
         if ([selectedNextDateTypeCode isEqualToString:@"0"]) {
             if (indexPath.row == 0) {
-                self.nextDateTimeCell.leftUtilityButtons = [self leftButtons];
-                self.nextDateTimeCell.delegate = self;
                 return self.nextDateTimeCell;
             } else if (indexPath.row == 1) {
                 self.nextEnclosureNoCell.leftUtilityButtons = [self leftButtons];
@@ -552,7 +558,6 @@
             }
         } else if (indexPath.row == 11) {
             _counselAttended.text = @"";
-            selectedAttendedCode = @"";
         } else if (indexPath.row == 12) {
             _coram.text = @"";
             selectedCoramCode = @"";
@@ -601,8 +606,10 @@
     timeViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startTime"]) {
             self.startTime.text = date;
-        } else {
+        } else if ([nameOfField isEqualToString:@"endTime"]) {
             self.endTime.text = date;
+        } else if ([nameOfField isEqualToString:@"nextStartTime"]) {
+            self.nextTime.text = date;
         }
     };
     
@@ -625,10 +632,14 @@
             if (self.endTime.text.length == 0) {
                 self.endTime.text = @"17:00";
             }
-        } else {
-            self.endDate.text = date;
-            if (self.endTime.text.length == 0) {
-                self.endTime.text = @"17:00";
+        } else if ([nameOfField isEqualToString:@"nextStartDate"]){
+            self.nextDate.text = date;
+            if (self.nextTime.text.length == 0) {
+                self.nextTime.text = @"17:00";
+            }
+        } else if ([nameOfField isEqualToString:@"nextStartDate"]) {
+            if (self.nextTime.text.length == 0) {
+                self.nextTime.text = @"09:00";
             }
         }
     };
@@ -642,7 +653,11 @@
                                    "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
     vc.url = COURT_HEARINGDETAIL_GET_URL;
     vc.updateHandler =  ^(CodeDescription* model) {
-        self.details.text = model.descriptionValue;
+        if  ([selectedDetails isEqualToString:@"First Details"]) {
+             self.details.text = model.descriptionValue;
+        } else {
+             self.nextDetails.text = model.descriptionValue;
+        }
     };
     [self showPopup:vc];
 }
@@ -652,6 +667,9 @@
 {
     if ([name isEqualToString:@"natureOfHearing"]) {
         self.natureOfHearing.text = model.descriptionValue;
+        selectedNatureOfHearing = model.codeValue;
+    } else if ([name isEqualToString:@"nextNatureOfHearing"]) {
+        self.nextNatureOfHearing.text = model.descriptionValue;
         selectedNatureOfHearing = model.codeValue;
     } else if ([name isEqualToString:@"Attendant Status"]) {
         self.attendedStatus.text = model.descriptionValue;
@@ -701,11 +719,19 @@
                 [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_NEXTDATE_TYPE_GET_URL];
             }
         } else if (indexPath.row == 9) { // Details
+            selectedDetails = @"First Details";
             [self showDetailAutocomplete];
         }
         
     } else {
-        
+        if (indexPath.row == 2) {
+            titleOfList = @"List of Hearing Type";
+            nameOfField = @"nextNatureOfHearing";
+            [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_HEARINGTYPE_GET_URL];
+        } else if (indexPath.row == 3) { // Details
+            selectedDetails = @"Next Details";
+            [self showDetailAutocomplete];
+        }
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -738,7 +764,6 @@
                 selectedAssignedCode = model.staffCode;
             } else {
                 _counselAttended.text = model.name;
-                selectedAttendedCode = model.staffCode;
             }
         };
     } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {

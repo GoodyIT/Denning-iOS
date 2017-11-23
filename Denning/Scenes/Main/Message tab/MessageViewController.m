@@ -105,11 +105,11 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 
 - (IBAction)recentTabClicked:(id)sender {
     if (selectedIndex == DIChatRecentTab) return;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_CONNECTING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_CONNECTING", nil) duration:0];
     
     [self addView:self.viewControllers[DIChatRecentTab]];
     [self removeView:self.viewControllers[selectedIndex]];
-    [self.navigationController dismissNotificationPanel];
+    [(QMNavigationController*)self.navigationController dismissNotificationPanel];
     selectedIndex = DIChatRecentTab;
     [self setDefaultImageForButtons];
     [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"] forState:UIControlStateNormal];

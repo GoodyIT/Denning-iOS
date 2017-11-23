@@ -22,6 +22,7 @@
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull __unused action) {
         
     }]];
+    [alertController.view layoutIfNeeded];
     
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
@@ -36,6 +37,29 @@
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull __unused action) {
         
     }]];
+    [alertController.view layoutIfNeeded];
+    
+    [viewController presentViewController:alertController animated:YES completion:nil];
+}
+
++(void)showConfirmDialog:(NSString*) message inViewController:(UIViewController *)viewController completion:(void(^)(UIAlertAction * _Nonnull action))completion
+{
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Information"
+                                          message:message
+                                          preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* okAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        completion(action);
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alertController addAction:okAction];
+    [alertController addAction:cancelAction];
+    
+    [alertController.view layoutIfNeeded];
     
     [viewController presentViewController:alertController animated:YES completion:nil];
 }

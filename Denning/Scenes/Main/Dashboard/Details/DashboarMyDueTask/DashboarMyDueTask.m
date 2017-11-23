@@ -185,7 +185,7 @@
     
     NSString* newUrl = [self buildURL:selectedIndex];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
     [self.tableView finishInfiniteScroll];
     [[QMNetworkManager sharedManager] getDashboardMyDueTaskWithURL:newUrl withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {

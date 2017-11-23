@@ -9,18 +9,26 @@
 #import "QMNotification.h"
 #import "QMCore.h"
 #import <SDWebImageManager.h>
-#import "QMPlaceholder.h"
 #import "QMStatusStringBuilder.h"
 #import "QMMessageNotification.h"
 
 @implementation QMNotification
 
-#pragma mark - Message notification
+//MARK: - Message notification
 
-+ (void)showMessageNotificationWithMessage:(QBChatMessage *)chatMessage buttonHandler:(MPGNotificationButtonHandler)buttonHandler hostViewController:(UIViewController *)hvc {
++ (void)showMessageNotificationWithMessage:(QBChatMessage *)chatMessage
+                             buttonHandler:(MPGNotificationButtonHandler)buttonHandler
+                        hostViewController:(UIViewController *)hvc {
+    
     NSParameterAssert(chatMessage.dialogID);
     
-    QBChatDialog *chatDialog = [[QMCore instance].chatService.dialogsMemoryStorage chatDialogWithID:chatMessage.dialogID];
+    if ([QMCore instance].callManager.hasActiveCall) {
+        // do not show message notifications while call is active
+        return;
+    }
+    
+    QBChatDialog *chatDialog =
+    [QMCore.instance.chatService.dialogsMemoryStorage chatDialogWithID:chatMessage.dialogID];
     
     if (chatDialog == nil) {
         // for some reason chat dialog was not find
@@ -29,16 +37,13 @@
     }
     
     NSString *title = nil;
-    NSUInteger placeholderID = 0;
     NSString *imageURLString = nil;
     
     switch (chatDialog.type) {
             
         case QBChatDialogTypePrivate: {
             
-            QBUUser *user = [[QMCore instance].usersService.usersMemoryStorage userWithID:chatMessage.senderID];
-            
-            placeholderID = user.ID;
+            QBUUser *user = [QMCore.instance.usersService.usersMemoryStorage userWithID:chatMessage.senderID];
             imageURLString = user.avatarUrl;
             
             title = user.fullName ?: [NSString stringWithFormat:@"%tu", user.ID];
@@ -49,20 +54,15 @@
         case QBChatDialogTypeGroup:
         case QBChatDialogTypePublicGroup: {
             
-            
-            placeholderID = chatDialog.ID.hash;
             imageURLString = chatDialog.photo;
-            
             title = chatDialog.name;
             
             break;
         }
     }
-    
-    UIImage *placeholderImage = [QMPlaceholder placeholderWithFrame:QMMessageNotificationIconRect title:title ID:placeholderID];
     NSString *messageText = chatMessage.text;
     
-    if ([chatMessage isNotificatonMessage]) {
+    if ([chatMessage isNotificationMessage]) {
         
         QMStatusStringBuilder *stringBuilder = [QMStatusStringBuilder new];
         messageText = [stringBuilder messageTextForNotification:chatMessage];
@@ -72,22 +72,20 @@
     [messageNotification() showNotificationWithTitle:title
                                             subTitle:messageText
                                         iconImageURL:[NSURL URLWithString:imageURLString]
-                                    placeholderImage:placeholderImage
                                        buttonHandler:buttonHandler];
 }
 
 + (void) showMessageNotificationWithTitle:(NSString*)title message: (NSString*) messageText avatarURL:(NSString*)avatarURL buttonHandler:(MPGNotificationButtonHandler)buttonHandler hostViewController:(UIViewController *)hvc
 {
-    UIImage *placeholderImage = [UIImage imageNamed:@"default"];
+//    UIImage *placeholderImage = [UIImage imageNamed:@"default"];
     messageNotification().hostViewController = hvc;
     [messageNotification() showNotificationWithTitle:title
                                             subTitle:messageText
                                         iconImageURL:[NSURL URLWithString:avatarURL]
-                                    placeholderImage:placeholderImage
                                        buttonHandler:buttonHandler];
 }
 
-#pragma mark - Push notification
+//MARK: - Push notification
 
 + (BFTask *)sendPushNotificationToUser:(QBUUser *)user withText:(NSString *)text {
     
@@ -98,7 +96,6 @@
     event.notificationType = QBMNotificationTypePush;
     event.usersIDs = [NSString stringWithFormat:@"%zd", user.ID];
     event.type = QBMEventTypeOneShot;
-    
     // custom params
     NSDictionary  *dictPush = @{@"message" : message,
                                 @"ios_badge": @"1",
@@ -123,43 +120,7 @@
     return source.task;
 }
 
-+ (BFTask *)sendPushMessageToUser:(NSUInteger) userID withUserName:(NSString*)username withMessage:(QBChatMessage *)message
-{
-    BFTaskCompletionSource* source = [BFTaskCompletionSource taskCompletionSource];
-    
-    QBMEvent *event = [QBMEvent event];
-    event.notificationType = QBMNotificationTypePush;
-    event.usersIDs = [NSString stringWithFormat:@"%zd", userID];
-    event.type = QBMEventTypeOneShot;
-    
-    // custom params
-    NSDictionary  *dictPush = @{@"message" : [NSString stringWithFormat:@"%@: %@", username, message.text ],
-                                @"ios_badge": @"1",
-                                @"ios_sound": @"default",
-                                @"dialog_id": message.dialogID, // custom params
-                                @"user_id":  event.usersIDs // custom params
-                                };
-
-    
-    NSError *error = nil;
-    NSData *sendData = [NSJSONSerialization dataWithJSONObject:dictPush options:NSJSONWritingPrettyPrinted error:&error];
-    NSString *jsonString = [[NSString alloc] initWithData:sendData encoding:NSUTF8StringEncoding];
-    
-    event.message = jsonString;
-    
-    [QBRequest createEvent:event successBlock:^(QBResponse *__unused response, NSArray *__unused events) {
-        
-        [source setResult:nil];
-        
-    } errorBlock:^(QBResponse *response) {
-        
-        [source setError:response.error.error];
-    }];
-    
-    return source.task;
-}
-
-#pragma mark - Static notifications
+//MARK: - Static notifications
 
 QMMessageNotification *messageNotification() {
     

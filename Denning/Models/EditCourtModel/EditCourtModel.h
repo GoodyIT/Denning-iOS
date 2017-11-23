@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSString* caseName;
 @property (strong, nonatomic) CoramModel* coram;
 @property (strong, nonatomic) ClientModel* counselAssigned;
-@property (strong, nonatomic) ClientModel* counselAttended;
+@property (strong, nonatomic) NSString* counselAttended;
 @property (strong, nonatomic) CourtModel* court;
 @property (strong, nonatomic) NSString* courtDecision;
 @property (strong, nonatomic) NSString* enclosureDetails;

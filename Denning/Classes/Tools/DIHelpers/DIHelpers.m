@@ -76,7 +76,7 @@
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
     NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     

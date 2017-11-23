@@ -14,9 +14,12 @@
 #import "MessageViewController.h"
 
 #import "QMUserInfoViewController.h"
+#import "QMSearchResultsController.h"
 
 #import "QMCore.h"
 #import "QMTasks.h"
+#import "QMAlert.h"
+#import "QMHelpers.h"
 
 #import "QMContactCell.h"
 #import "QMNoContactsCell.h"
@@ -68,10 +71,13 @@ SWTableViewCellDelegate
     // search implementation
     [self configureSearch];
     
-    // filling data source
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    // setting up data source
+    [self configureDataSources];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    // filling data source
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateItemsFromContactListWithCompletion:^{
             [navigationController dismissNotificationPanel];
@@ -127,15 +133,29 @@ SWTableViewCellDelegate
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.definesPresentationContext = YES;
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
+    
+    
+#ifdef __IPHONE_11_0
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = NO;
+    }
+    else {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
+#else
     self.tableView.tableHeaderView = self.searchController.searchBar;
+#endif
+    
+    self.definesPresentationContext = YES;
 }
 
 - (void)configureDataSources {
     
     self.dataSource = [[QMContactsDataSource alloc] initWithKeyPath:@keypath(QBUUser.new, fullName)];
-    self.dataSource.didAddUserBlock = ^{
-        
-    };
+//    self.dataSource.didAddUserBlock = ^{
+//
+//    };
     self.tableView.dataSource = self.dataSource;
 }
 
@@ -251,21 +271,25 @@ SWTableViewCellDelegate
 
 - (BOOL)connectionExists {
     
-    if (![[QMCore instance] isInternetConnected]) {
+    if (![QMCore.instance isInternetConnected]) {
         
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil)];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning
+                                                                              message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil)
+                                                                             duration:kQMDefaultNotificationDismissTime];
         return NO;
     }
     
     if (![QBChat instance].isConnected) {
         
-        if ([QMCore instance].chatService.chatConnectionState == QMChatConnectionStateConnecting) {
+        if (QBChat.instance.isConnecting) {
             
-            [self.navigationController shake];
+            [(QMNavigationController *)self.navigationController shake];
         }
         else {
             
-            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) actionSuccess:NO inViewController:self];
+            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil)
+                            actionSuccess:NO
+                         inViewController:self];
         }
         
         return NO;
@@ -275,9 +299,9 @@ SWTableViewCellDelegate
 }
 
 - (void) addContactToFavoriteList:(QBUUser*) user {
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     [[QMNetworkManager sharedManager] addFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
         
         [navigationController dismissNotificationPanel];
@@ -291,9 +315,9 @@ SWTableViewCellDelegate
 }
 
 - (void) removeContactFromFavoriteList:(QBUUser*) user {
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     [[QMNetworkManager sharedManager] removeFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
         
         [navigationController dismissNotificationPanel];
@@ -402,9 +426,9 @@ SWTableViewCellDelegate
             return;
         }
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
         
-        __weak UINavigationController *navigationController = self.navigationController;
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         
         @weakify(self);
         self.task = [[[QMCore instance].chatService createPrivateChatDialogWithOpponentID:user.ID] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
@@ -456,7 +480,7 @@ SWTableViewCellDelegate
         UINavigationController *navigationController = segue.destinationViewController;
         QMChatVC *chatViewController = [navigationController viewControllers].firstObject;
         chatViewController.chatDialog = sender;
-        chatViewController.firmCode = selectedFirmCode;
+//        chatViewController.firmCode = selectedFirmCode;
     }
 }
 
@@ -512,5 +536,18 @@ SWTableViewCellDelegate
     [QMNoContactsCell registerForReuseInTableView:self.tableView];
 }
 
+#ifdef __IPHONE_11_0
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull __unused context) {
+        if (@available(iOS 11.0, *)) {
+            self.searchController.active = NO;
+        }
+    } completion:nil];
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+}
+#endif
 
 @end

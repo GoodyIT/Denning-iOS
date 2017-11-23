@@ -12,22 +12,23 @@
 #import "QMNotification.h"
 #import "QMTasks.h"
 #import <SVProgressHUD.h>
-#import <SDWebImageManager.h>
-#import "QMCallManager.h"
+#import "QMImageLoader.h"
 #import "QMCallManager.h"
 #import <Intents/Intents.h>
 #import "NSString+QMTransliterating.h"
-#import "QMHelpers.h"
+
+#import <FirebaseCore/FirebaseCore.h>
+#import <FirebaseAuth/FirebaseAuth.h>
 
 static NSString *const kQMLastActivityDateKey = @"last_activity_date";
 static NSString *const kQMErrorKey = @"errors";
 static NSString *const kQMBaseErrorKey = @"base";
 
 static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
+static NSString *const kQMOpenGraphCacheNameKey = @"q-municate-open-graph";
 
-@interface QMCore ()
+@interface QMCore () <QMAuthServiceDelegate>
 
-@property (strong, nonatomic) BFTask *restLoginTask;
 @property (strong, nonatomic) NSMutableOrderedSet *cachedVocabularyStrings;
 
 @end
@@ -46,21 +47,31 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     return core;
 }
 
++ (QMContactListService *)contactListService {
+    return QMCore.instance.contactListService;
+}
+
 - (instancetype)init {
     self = [super init];
     
     if (self) {
         // Contact list service init
-        [QMContactListCache setupDBWithStoreNamed:kQMContactListCacheNameKey];
-        _contactListService = [[QMContactListService alloc] initWithServiceManager:self cacheDataSource:self];
+        [QMContactListCache setupDBWithStoreNamed:kQMContactListCacheNameKey
+                       applicationGroupIdentifier:[self appGroupIdentifier]];
+        
+        _contactListService = [[QMContactListService alloc] initWithServiceManager:self
+                                                                   cacheDataSource:self];
         [_contactListService addDelegate:self];
+        //Open Graph Service init
+        [QMOpenGraphCache setupDBWithStoreNamed:kQMOpenGraphCacheNameKey
+                     applicationGroupIdentifier:[self appGroupIdentifier]];
+        
+        _openGraphService = [[QMOpenGraphService alloc] initWithServiceManager:self
+                                                               cacheDataSource:self];
+        [_openGraphService addDelegate:self];
         
         // Profile init
         _currentProfile = [QMProfile currentProfile];
-        
-        // Users cache init
-        [self.usersService loadFromCache];
-        
         // Vocabulary string cache init
         _cachedVocabularyStrings = [NSMutableOrderedSet orderedSet];
         
@@ -70,6 +81,7 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
         _pushNotificationManager = [[QMPushNotificationManager alloc] initWithServiceManager:self];
         _callManager = [[QMCallManager alloc] initWithServiceManager:self];
         
+        [self.authService addDelegate:self];
         // Reachability init
         [self configureReachability];
         [self.chatService addDelegate:self];
@@ -105,7 +117,7 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     [_internetConnection startNotifier];
 }
 
-#pragma mark - Error handling
+//MARK: - Error handling
 
 - (NSString *)errorStringFromResponseStatus:(QBResponseStatusCode)statusCode {
     
@@ -136,6 +148,10 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     }
     
     [mutableString deleteCharactersInRange:NSMakeRange(mutableString.length - 2, 2)];
+}
+
+- (NSString *)appGroupIdentifier {
+    return @"group.com.quickblox.qmunicate";
 }
 
 - (void)handleErrorResponse:(QBResponse *)response {
@@ -181,74 +197,18 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
         }
     }
     
-    [SVProgressHUD showErrorWithStatus:errorMessage];
+    if (errorMessage.length > 0) {
+        [SVProgressHUD showErrorWithStatus:errorMessage];
+    }
 }
 
-#pragma mark - Auth methods
+//MARK: - Auth methods
 
 - (BFTask *)login {
     
-    BOOL needUpdateSessionToken = NO;
-    
-    if (self.currentProfile.accountType != QMAccountTypeEmail) {
-        // due to chat requiring token as a password for any account types
-        // but email, wee need to update session token first if it has been expired
-        // just perform any request first
-        needUpdateSessionToken = [self sessionTokenHasExpiredOrNeedCreate];
-    }
-    
-    if ([self isAuthorized]
-        && ![QBChat instance].isConnected) {
-        
-        if (needUpdateSessionToken) {
-            
-            @weakify(self);
-            return [[QMTasks taskFetchAllData] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
-                
-                @strongify(self);
-                // updating password with new token
-                [QBSession currentSession].currentUser.password = [QBSession currentSession].sessionDetails.token;
-                return [self.chatService connect];
-            }];
-        }
-        
-        return [self.chatService connect];
-    }
-    else if (![QBChat instance].isConnected) {
-        
-        if (needUpdateSessionToken) {
-            
-            @weakify(self);
-            return [[QMTasks taskAutoLogin] continueWithSuccessBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull __unused task) {
-                
-                @strongify(self);
-                // updating password with new token
-                [QBSession currentSession].currentUser.password = [QBSession currentSession].sessionDetails.token;
-                return [self.chatService connect];
-            }];
-        }
-        
-        // doing a parallel login
-        
-        // setting password to current session user
-        if (self.currentProfile.accountType == QMAccountTypeEmail) {
-            
-            [QBSession currentSession].currentUser.password = self.currentProfile.userData.password;
-        }
-        else {
-            
-            [QBSession currentSession].currentUser.password = [QBSession currentSession].sessionDetails.token;
-        }
-        
-        // saving rest login task cause we need to login in REST
-        // only once per app living
-        BFTask *restLoginTask = [QMTasks taskAutoLogin];
-        BFTask *chatConnectTask = [self.chatService connect];
-        
-        return [BFTask taskForCompletionOfAllTasks:@[restLoginTask, chatConnectTask]];
-    }
-    
-    return nil;
+    return [[QMTasks taskAutoLogin] continueWithSuccessBlock:^id(BFTask<QBUUser *> *__unused task) {
+        return [self.chatService connectWithUserID:task.result.ID password:task.result.password];
+    }];
 }
 
 - (BFTask *)logout {
@@ -256,29 +216,44 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     BFTaskCompletionSource *source = [BFTaskCompletionSource taskCompletionSource];
     
     @weakify(self);
-    [[self.pushNotificationManager unSubscribeFromPushNotifications] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused t) {
-        
+    
+    [[self.pushNotificationManager unregisterFromPushNotificationsAndUnsubscribe:YES] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused t) {
+    
         [super logoutWithCompletion:^{
             
             @strongify(self);
-//            if (self.currentProfile.accountType == QMAccountTypeFacebook) {
-//                
-//                [QMFacebook logout];
-//            }
-//            else if (self.currentProfile.accountType == QMAccountTypeDigits) {
-//                
-//                [[Digits sharedInstance] logOut];
-//            }
-            
-            [[SDWebImageManager sharedManager].imageCache clearMemory];
-            [[SDWebImageManager sharedManager].imageCache clearDisk];
-            
+            if (self.currentProfile.accountType == QMAccountTypeFacebook) {
+                
+                [QMFacebook logout];
+            }
+            else if (self.currentProfile.accountType == QMAccountTypePhone) {
+                
+                [[FIRAuth auth] signOut:nil];
+            }
             // clearing contact list cache and memory storage
             [[QMContactListCache instance] deleteContactList:nil];
             [self.contactListService.contactListMemoryStorage free];
+            [self.openGraphService.memoryStorage free];
             
-            [self.currentProfile clearProfile];
-            [source setResult:nil];
+            dispatch_group_t logoutGroup = dispatch_group_create();
+            
+            dispatch_group_enter(logoutGroup);
+            [[QMImageLoader instance].imageCache clearDiskOnCompletion:^{
+                [[QMImageLoader instance].imageCache clearMemory];
+                dispatch_group_leave(logoutGroup);
+            }];
+            
+            [self.chatService.chatAttachmentService removeAllMediaFiles];
+            
+            dispatch_group_enter(logoutGroup);
+            [QMOpenGraphCache.instance deleteAllOpenGraphItemsWithCompletion:^{
+                dispatch_group_leave(logoutGroup);
+            }];
+            
+            dispatch_group_notify(logoutGroup, dispatch_get_main_queue(), ^{
+                [self.currentProfile clearProfile];
+                [source setResult:nil];
+            });
         }];
         
         return nil;
@@ -287,43 +262,174 @@ static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
     return source.task;
 }
 
-#pragma mark QMContactListServiceCacheDelegate delegate
+//MARK: QMContactListServiceCacheDelegate delegate
 
 - (void)cachedContactListItems:(QMCacheCollection)block {
     
     [[QMContactListCache instance] contactListItems:block];
 }
 
-#pragma mark - QMContactListServiceDelegate
+//MARK: - QMChatServiceDelegate
 
-- (void)contactListService:(QMContactListService *)__unused contactListService contactListDidChange:(QBContactList *)contactList {
+- (void)chatService:(QMChatService *)__unused chatService didAddChatDialogsToMemoryStorage:(NSArray *)chatDialogs {
+    
+    [super chatService:chatService didAddChatDialogsToMemoryStorage:chatDialogs];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(QBChatDialog *_Nullable dialog, NSDictionary<NSString *,id> *__unused _Nullable bindings) {
+        return dialog.type == QBChatDialogTypeGroup && dialog.name.length;
+    }];
+    
+    NSArray *filteredDialogs = [chatDialogs filteredArrayUsingPredicate:predicate];
+    if (filteredDialogs.count > 0) {
+        [self.cachedVocabularyStrings addObjectsFromArray:[filteredDialogs valueForKey:@"name"]];
+        [self updateVocabulary];
+    }
+}
+
+- (void)chatService:(QMChatService *)chatService didAddChatDialogToMemoryStorage:(QBChatDialog *)chatDialog {
+    
+    [super chatService:chatService didAddChatDialogToMemoryStorage:chatDialog];
+    
+    if (chatDialog.type == QBChatDialogTypeGroup && chatDialog.name.length) {
+        [self.cachedVocabularyStrings addObject:chatDialog.name];
+        [self updateVocabulary];
+    }
+}
+
+- (void)chatService:(QMChatService *)chatService didDeleteChatDialogWithIDFromMemoryStorage:(NSString *)chatDialogID {
+    
+    [super chatService:chatService didDeleteChatDialogWithIDFromMemoryStorage:chatDialogID];
+    
+    QBChatDialog *chatDialog = [self.chatService.dialogsMemoryStorage chatDialogWithID:chatDialogID];
+    
+    if (chatDialog.type == QBChatDialogTypeGroup && chatDialog.name.length) {
+        [self.cachedVocabularyStrings removeObject:chatDialog.name];
+        [self updateVocabulary];
+    }
+}
+
+//MARK: - QMContactListServiceDelegate
+
+- (void)contactListService:(QMContactListService *)__unused contactListService
+      contactListDidChange:(QBContactList *)contactList {
     
     [[QMContactListCache instance] insertOrUpdateContactListItemsWithContactList:contactList completion:nil];
     
     // load users if needed
     [self.usersService getUsersWithIDs:[self.contactListService.contactListMemoryStorage userIDsFromContactList]];
+    
+    NSPredicate *predicate =
+    [NSPredicate predicateWithBlock:^BOOL(QBUUser *user, NSDictionary<NSString *,id> *__unused bindings) {
+        return user.fullName.length > 0;
+    }];
+    
+    NSArray *friendNames = [[self.contactManager.friends filteredArrayUsingPredicate:predicate] valueForKey:@"fullName"];
+    
+    if (friendNames.count) {
+        [self.cachedVocabularyStrings addObjectsFromArray:friendNames];
+        [self updateVocabulary];
+    }
 }
 
-#pragma mark - Helpers
+//MARK: QMOpenGraphCacheDataSource
+
+- (nullable QMOpenGraphItem *)cachedOpenGraphItemWithID:(NSString *)ID {
+    
+    return [QMOpenGraphCache.instance openGrapItemWithID:ID];
+}
+
+//MARK:QMOpenGraphServiceDelegate
+
+- (void)openGraphSerivce:(QMOpenGraphService *) __unused openGraphSerivce
+didAddOpenGraphItemToMemoryStorage:(QMOpenGraphItem *)openGraphItem {
+    
+    [QMOpenGraphCache.instance insertOrUpdateOpenGraphItem:openGraphItem
+                                                completion:nil];
+}
+
+- (void)openGraphSerivce:(QMOpenGraphService *) __unused openGraphSerivce
+           hasFaviconURL:(NSURL *)url
+              completion:(dispatch_block_t)completion {
+    
+    [QMImageLoader.instance downloadImageWithURL:url
+                                       transform:nil
+                                         options:SDWebImageHighPriority
+                                        progress:nil
+                                       completed:^(UIImage * __unused image,
+                                                   UIImage * __unused transfomedImage,
+                                                   NSError * __unused error,
+                                                   SDImageCacheType __unused cacheType,
+                                                   BOOL __unused finished,
+                                                   NSURL * __unused imageURL) {
+                                           completion();
+                                       }];
+}
+
+- (void)openGraphSerivce:(QMOpenGraphService *)__unused openGraphSerivce
+             hasImageURL:(NSURL *)url
+              completion:(dispatch_block_t)completion {
+    
+    [QMImageLoader.instance downloadImageWithURL:url
+                                       transform:nil
+                                         options:SDWebImageHighPriority
+                                        progress:nil
+                                       completed:^(UIImage * __unused image,
+                                                   UIImage * __unused transfomedImage,
+                                                   NSError * __unused error,
+                                                   SDImageCacheType __unused cacheType,
+                                                   BOOL __unused finished,
+                                                   NSURL * __unused imageURL) {
+                                           completion();
+                                       }];
+}
+
+//MARK: - Helpers
 
 - (BOOL)isInternetConnected {
     
     return [self.internetConnection isReachable];
 }
 
-- (BOOL)sessionTokenHasExpiredOrNeedCreate {
+- (void)updateVocabulary {
     
-    NSDate *date = [QBSession currentSession].sessionExpirationDate;
-    
-    if (date != nil) {
-        
-        NSDate *currentDate = [NSDate date];
-        NSTimeInterval interval = [currentDate timeIntervalSinceDate:date];
-        
-        return interval > 0;
+    // INVocabulary(Siri) is supported in ios 10 +
+    if (!(iosMajorVersion() < 10)) {
+        return;
     }
     
-    return YES;
+    if (self.cachedVocabularyStrings.count > 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *  _Nullable string, NSDictionary<NSString *,id> *__unused _Nullable bindings) {
+            return ![string canBeConvertedToEncoding:NSISOLatin1StringEncoding];
+        }];
+        
+        //Searching names, that have non-latin characters
+        NSOrderedSet *nonLatinNames = [self.cachedVocabularyStrings.copy filteredOrderedSetUsingPredicate:predicate];
+        
+        for (NSString *string in nonLatinNames) {
+            
+            NSString *transliteratedString = [string qm_transliteratedString];
+            //Adding transliterated names to vocabulary strings
+            [self.cachedVocabularyStrings addObject:transliteratedString];
+        }
+        
+        [[INVocabulary sharedVocabulary] setVocabularyStrings:self.cachedVocabularyStrings
+                                                       ofType:INVocabularyStringTypeContactName];
+    }
+}
+
+- (void)authServiceDidLogOut:(QMAuthService *)__unused authService {
+
+}
+
+- (void)authService:(QMAuthService *)__unused authService
+   didLoginWithUser:(QBUUser *)__unused user {
+    
+    if (iosMajorVersion() > 9) {
+//        [INPreferences requestSiriAuthorization:^(INSiriAuthorizationStatus __unused status) {
+//            
+//        }];
+    }
 }
 
 @end

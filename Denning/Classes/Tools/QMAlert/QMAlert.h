@@ -14,4 +14,6 @@
 
 + (void)showInformationWithMessage:(NSString *)message inViewController:(UIViewController *)viewController;
 
++(void)showConfirmDialog:(NSString*) message inViewController:(UIViewController *)viewController completion:(void(^)(UIAlertAction * _Nonnull action))completion;
+
 @end

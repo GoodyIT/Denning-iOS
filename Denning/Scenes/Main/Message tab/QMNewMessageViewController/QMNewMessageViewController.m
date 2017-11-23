@@ -11,7 +11,7 @@
 
 #import "QMTagFieldView.h"
 #import "QMCore.h"
-#import "UINavigationController+QMNotification.h"
+//#import "UINavigationController+QMNotification.h"
 #import "QMChatVC.h"
 #import "QMHelpers.h"
 
@@ -89,8 +89,8 @@ QMTagFieldViewDelegate
         NSString *name = [fullNames componentsJoinedByString:@", "];
         NSArray *occupantsIDs = [[QMCore instance].contactManager idsOfUsers:tagIDs];
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-        __weak UINavigationController *navigationController = self.navigationController;
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         
         __block QBChatDialog *chatDialog = nil;
         
@@ -129,8 +129,8 @@ QMTagFieldViewDelegate
         }
         else {
             
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-            __weak UINavigationController *navigationController = self.navigationController;
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+            __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
             
             @weakify(self);
             self.dialogCreationTask = [[[QMCore instance].chatService createPrivateChatDialogWithOpponent:user] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {

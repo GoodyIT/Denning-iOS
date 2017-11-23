@@ -1,67 +1,79 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
 // Make changes to CDAttachment.h instead.
 
-#import <CoreData/CoreData.h>
+#if __has_feature(modules)
+    @import Foundation;
+    @import CoreData;
+#else
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
 
-extern const struct CDAttachmentAttributes {
-	__unsafe_unretained NSString *data;
-	__unsafe_unretained NSString *id;
-	__unsafe_unretained NSString *mimeType;
-	__unsafe_unretained NSString *url;
-} CDAttachmentAttributes;
-
-extern const struct CDAttachmentRelationships {
-	__unsafe_unretained NSString *message;
-} CDAttachmentRelationships;
+NS_ASSUME_NONNULL_BEGIN
 
 @class CDMessage;
 
 @interface CDAttachmentID : NSManagedObjectID {}
 @end
 
-@interface _CDAttachment : NSManagedObject {}
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@interface _CDAttachment : NSManagedObject
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_;
 + (NSString*)entityName;
-+ (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-@property (nonatomic, readonly, strong) CDAttachmentID* objectID;
++ (nullable NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
+@property (nonatomic, readonly, strong) CDAttachmentID *objectID;
 
-@property (nonatomic, strong) NSString* data;
+@property (nonatomic, strong, nullable) NSData* customParameters;
 
-//- (BOOL)validateData:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, strong, nullable) NSString* data;
 
-@property (nonatomic, strong) NSString* id;
+@property (nonatomic, strong, nullable) NSString* id;
 
-//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, strong, nullable) NSString* mimeType;
 
-@property (nonatomic, strong) NSString* mimeType;
+@property (nonatomic, strong, nullable) NSString* name;
 
-//- (BOOL)validateMimeType:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, strong, nullable) NSString* url;
 
-@property (nonatomic, strong) NSString* url;
-
-//- (BOOL)validateUrl:(id*)value_ error:(NSError**)error_;
-
-@property (nonatomic, strong) CDMessage *message;
-
-//- (BOOL)validateMessage:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, strong, nullable) CDMessage *message;
 
 @end
 
 @interface _CDAttachment (CoreDataGeneratedPrimitiveAccessors)
 
-- (NSString*)primitiveData;
-- (void)setPrimitiveData:(NSString*)value;
+- (nullable NSData*)primitiveCustomParameters;
+- (void)setPrimitiveCustomParameters:(nullable NSData*)value;
 
-- (NSString*)primitiveId;
-- (void)setPrimitiveId:(NSString*)value;
+- (nullable NSString*)primitiveData;
+- (void)setPrimitiveData:(nullable NSString*)value;
 
-- (NSString*)primitiveMimeType;
-- (void)setPrimitiveMimeType:(NSString*)value;
+- (nullable NSString*)primitiveId;
+- (void)setPrimitiveId:(nullable NSString*)value;
 
-- (NSString*)primitiveUrl;
-- (void)setPrimitiveUrl:(NSString*)value;
+- (nullable NSString*)primitiveMimeType;
+- (void)setPrimitiveMimeType:(nullable NSString*)value;
+
+- (nullable NSString*)primitiveName;
+- (void)setPrimitiveName:(nullable NSString*)value;
+
+- (nullable NSString*)primitiveUrl;
+- (void)setPrimitiveUrl:(nullable NSString*)value;
 
 - (CDMessage*)primitiveMessage;
 - (void)setPrimitiveMessage:(CDMessage*)value;
 
 @end
+
+@interface CDAttachmentAttributes: NSObject 
++ (NSString *)customParameters;
++ (NSString *)data;
++ (NSString *)id;
++ (NSString *)mimeType;
++ (NSString *)name;
++ (NSString *)url;
+@end
+
+@interface CDAttachmentRelationships: NSObject
++ (NSString *)message;
+@end
+
+NS_ASSUME_NONNULL_END

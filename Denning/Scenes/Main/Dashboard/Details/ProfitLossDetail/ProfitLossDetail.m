@@ -70,8 +70,8 @@
 - (void) getList{
     if (isLoading) return;
     isLoading = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     _url = [baseUrl stringByAppendingString:curYear];
     @weakify(self)
     [[QMNetworkManager sharedManager] getProfitLossDetailWithURL:_url withCompletion:^(ProfitLossDetailModel * _Nonnull result, NSError * _Nonnull error) {

@@ -216,6 +216,26 @@
 		795432451FC537E000FF9E57 /* ListOfCodeStrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432441FC537E000FF9E57 /* ListOfCodeStrViewController.m */; };
 		795432491FC5386300FF9E57 /* CodeStrModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432481FC5386200FF9E57 /* CodeStrModel.m */; };
 		7954324D1FC53D5900FF9E57 /* MatterBranchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954324C1FC53D5900FF9E57 /* MatterBranchModel.m */; };
+		795432501FC5CD4200FF9E57 /* TodayEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954324F1FC5CD4200FF9E57 /* TodayEventViewController.m */; };
+		795432551FC5EDBE00FF9E57 /* TaxInvoiceItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432541FC5EDBE00FF9E57 /* TaxInvoiceItemModel.m */; };
+		7954325B1FC5EEC100FF9E57 /* TaxInvoiceCalcModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954325A1FC5EEC100FF9E57 /* TaxInvoiceCalcModel.m */; };
+		7954325F1FC5F66100FF9E57 /* TaxInvoiceSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954325E1FC5F66100FF9E57 /* TaxInvoiceSelectionViewController.m */; };
+		795432621FC62D7400FF9E57 /* QMLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432611FC62D7300FF9E57 /* QMLog.m */; };
+		795432661FC62DD800FF9E57 /* QMImageLoader+QBChatAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432651FC62DD800FF9E57 /* QMImageLoader+QBChatAttachment.m */; };
+		7954326A1FC631DE00FF9E57 /* QMTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432681FC631DD00FF9E57 /* QMTableViewController.m */; };
+		7954326E1FC6392B00FF9E57 /* UIScreen+QMLock.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954326D1FC6392A00FF9E57 /* UIScreen+QMLock.m */; };
+		795432721FC63A2C00FF9E57 /* QMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432701FC63A2B00FF9E57 /* QMNavigationController.m */; };
+		795432761FC63A5500FF9E57 /* QMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432741FC63A5500FF9E57 /* QMViewController.m */; };
+		7954327A1FC6559B00FF9E57 /* QMExpandableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432781FC6559B00FF9E57 /* QMExpandableTableViewController.m */; };
+		7954327E1FC655BB00FF9E57 /* NSString+QMValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954327D1FC655BB00FF9E57 /* NSString+QMValidation.m */; };
+		795432831FC6560300FF9E57 /* QMValidationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432801FC6560300FF9E57 /* QMValidationCell.m */; };
+		795432841FC6560300FF9E57 /* QMValidationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 795432811FC6560300FF9E57 /* QMValidationCell.xib */; };
+		7954329B1FC65B8100FF9E57 /* QMAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432931FC65B8000FF9E57 /* QMAudioRecorder.m */; };
+		7954329C1FC65B8100FF9E57 /* QMMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432941FC65B8100FF9E57 /* QMMediaController.m */; };
+		7954329D1FC65B8100FF9E57 /* QMAttachmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432951FC65B8100FF9E57 /* QMAttachmentController.m */; };
+		7954329E1FC65B8100FF9E57 /* QMAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954329A1FC65B8100FF9E57 /* QMAudioPlayer.m */; };
+		795432A21FC65BF600FF9E57 /* QMImageBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 795432A11FC65BF600FF9E57 /* QMImageBarButtonItem.m */; };
+		795432A41FC6626B00FF9E57 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 795432A31FC6626B00FF9E57 /* GoogleService-Info.plist */; };
 		79556DBF1E9323D000A16CB8 /* Message.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79556DBE1E9323D000A16CB8 /* Message.storyboard */; };
 		79556DC21E932F7700A16CB8 /* MessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79556DC11E932F7700A16CB8 /* MessageViewController.m */; };
 		795DF1FF1E6DE540006D617D /* NSDictionary+NotNull.m in Sources */ = {isa = PBXBuildFile; fileRef = 795DF1FE1E6DE540006D617D /* NSDictionary+NotNull.m */; };
@@ -533,7 +553,6 @@
 		79FBDE8D1E302F6600448FE3 /* DenningTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDE8C1E302F6600448FE3 /* DenningTests.m */; };
 		79FBDE981E302F6600448FE3 /* DenningUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDE971E302F6600448FE3 /* DenningUITests.m */; };
 		79FBDEB41E30410000448FE3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEB01E30410000448FE3 /* main.m */; };
-		79FBDF991E30421A00448FE3 /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEBB1E30421A00448FE3 /* BaseNavigationController.m */; };
 		79FBDF9A1E30421A00448FE3 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEBD1E30421A00448FE3 /* BaseViewController.m */; };
 		79FBDF9B1E30421A00448FE3 /* CustomTaBBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEBF1E30421A00448FE3 /* CustomTaBBarController.m */; };
 		79FBDF9C1E30421A00448FE3 /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEC11E30421A00448FE3 /* CustomViewController.m */; };
@@ -549,7 +568,6 @@
 		79FBDFA61E30421A00448FE3 /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEE11E30421A00448FE3 /* UIColor+CustomColors.m */; };
 		79FBDFA71E30421A00448FE3 /* UIImage+fixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEE41E30421A00448FE3 /* UIImage+fixOrientation.m */; };
 		79FBDFA81E30421A00448FE3 /* UIImage+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEE71E30421A00448FE3 /* UIImage+Base64.m */; };
-		79FBDFA91E30421A00448FE3 /* UINavigationController+QMNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEEA1E30421A00448FE3 /* UINavigationController+QMNotification.m */; };
 		79FBDFAA1E30421A00448FE3 /* UIPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEED1E30421A00448FE3 /* UIPlaceholderTextView.m */; };
 		79FBDFAB1E30421A00448FE3 /* UIView+Borders.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEF01E30421A00448FE3 /* UIView+Borders.m */; };
 		79FBDFAC1E30421A00448FE3 /* UIViewController+SmartDeselection.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FBDEF31E30421A00448FE3 /* UIViewController+SmartDeselection.m */; };
@@ -1334,6 +1352,44 @@
 		795432481FC5386200FF9E57 /* CodeStrModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeStrModel.m; sourceTree = "<group>"; };
 		7954324B1FC53D5900FF9E57 /* MatterBranchModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatterBranchModel.h; sourceTree = "<group>"; };
 		7954324C1FC53D5900FF9E57 /* MatterBranchModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatterBranchModel.m; sourceTree = "<group>"; };
+		7954324E1FC5CD4200FF9E57 /* TodayEventViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayEventViewController.h; sourceTree = "<group>"; };
+		7954324F1FC5CD4200FF9E57 /* TodayEventViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayEventViewController.m; sourceTree = "<group>"; };
+		795432531FC5EDBE00FF9E57 /* TaxInvoiceItemModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxInvoiceItemModel.h; sourceTree = "<group>"; };
+		795432541FC5EDBE00FF9E57 /* TaxInvoiceItemModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxInvoiceItemModel.m; sourceTree = "<group>"; };
+		795432591FC5EEC100FF9E57 /* TaxInvoiceCalcModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxInvoiceCalcModel.h; sourceTree = "<group>"; };
+		7954325A1FC5EEC100FF9E57 /* TaxInvoiceCalcModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxInvoiceCalcModel.m; sourceTree = "<group>"; };
+		7954325D1FC5F66100FF9E57 /* TaxInvoiceSelectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxInvoiceSelectionViewController.h; sourceTree = "<group>"; };
+		7954325E1FC5F66100FF9E57 /* TaxInvoiceSelectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxInvoiceSelectionViewController.m; sourceTree = "<group>"; };
+		795432601FC62D7300FF9E57 /* QMLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLog.h; sourceTree = "<group>"; };
+		795432611FC62D7300FF9E57 /* QMLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLog.m; sourceTree = "<group>"; };
+		795432641FC62DD800FF9E57 /* QMImageLoader+QBChatAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QMImageLoader+QBChatAttachment.h"; sourceTree = "<group>"; };
+		795432651FC62DD800FF9E57 /* QMImageLoader+QBChatAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QMImageLoader+QBChatAttachment.m"; sourceTree = "<group>"; };
+		795432681FC631DD00FF9E57 /* QMTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMTableViewController.m; sourceTree = "<group>"; };
+		795432691FC631DD00FF9E57 /* QMTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMTableViewController.h; sourceTree = "<group>"; };
+		7954326C1FC6392A00FF9E57 /* UIScreen+QMLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+QMLock.h"; sourceTree = "<group>"; };
+		7954326D1FC6392A00FF9E57 /* UIScreen+QMLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+QMLock.m"; sourceTree = "<group>"; };
+		795432701FC63A2B00FF9E57 /* QMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNavigationController.m; sourceTree = "<group>"; };
+		795432711FC63A2B00FF9E57 /* QMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMNavigationController.h; sourceTree = "<group>"; };
+		795432741FC63A5500FF9E57 /* QMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMViewController.m; sourceTree = "<group>"; };
+		795432751FC63A5500FF9E57 /* QMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMViewController.h; sourceTree = "<group>"; };
+		795432781FC6559B00FF9E57 /* QMExpandableTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMExpandableTableViewController.m; sourceTree = "<group>"; };
+		795432791FC6559B00FF9E57 /* QMExpandableTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMExpandableTableViewController.h; sourceTree = "<group>"; };
+		7954327C1FC655BB00FF9E57 /* NSString+QMValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+QMValidation.h"; sourceTree = "<group>"; };
+		7954327D1FC655BB00FF9E57 /* NSString+QMValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QMValidation.m"; sourceTree = "<group>"; };
+		795432801FC6560300FF9E57 /* QMValidationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMValidationCell.m; sourceTree = "<group>"; };
+		795432811FC6560300FF9E57 /* QMValidationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QMValidationCell.xib; sourceTree = "<group>"; };
+		795432821FC6560300FF9E57 /* QMValidationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMValidationCell.h; sourceTree = "<group>"; };
+		795432931FC65B8000FF9E57 /* QMAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMAudioRecorder.m; sourceTree = "<group>"; };
+		795432941FC65B8100FF9E57 /* QMMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMMediaController.m; sourceTree = "<group>"; };
+		795432951FC65B8100FF9E57 /* QMAttachmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMAttachmentController.m; sourceTree = "<group>"; };
+		795432961FC65B8100FF9E57 /* QMAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMAudioPlayer.h; sourceTree = "<group>"; };
+		795432971FC65B8100FF9E57 /* QMAudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMAudioRecorder.h; sourceTree = "<group>"; };
+		795432981FC65B8100FF9E57 /* QMAttachmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMAttachmentController.h; sourceTree = "<group>"; };
+		795432991FC65B8100FF9E57 /* QMMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMMediaController.h; sourceTree = "<group>"; };
+		7954329A1FC65B8100FF9E57 /* QMAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMAudioPlayer.m; sourceTree = "<group>"; };
+		795432A01FC65BF600FF9E57 /* QMImageBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMImageBarButtonItem.h; sourceTree = "<group>"; };
+		795432A11FC65BF600FF9E57 /* QMImageBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMImageBarButtonItem.m; sourceTree = "<group>"; };
+		795432A31FC6626B00FF9E57 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Denning/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		79556DBE1E9323D000A16CB8 /* Message.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Message.storyboard; sourceTree = "<group>"; };
 		79556DC01E932F7700A16CB8 /* MessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewController.h; sourceTree = "<group>"; };
 		79556DC11E932F7700A16CB8 /* MessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewController.m; sourceTree = "<group>"; };
@@ -1770,8 +1826,6 @@
 		79FBDE991E302F6600448FE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79FBDEAF1E30410000448FE3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79FBDEB01E30410000448FE3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		79FBDEBA1E30421A00448FE3 /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
-		79FBDEBB1E30421A00448FE3 /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
 		79FBDEBC1E30421A00448FE3 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		79FBDEBD1E30421A00448FE3 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		79FBDEBE1E30421A00448FE3 /* CustomTaBBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTaBBarController.h; sourceTree = "<group>"; };
@@ -1802,8 +1856,6 @@
 		79FBDEE41E30421A00448FE3 /* UIImage+fixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+fixOrientation.m"; sourceTree = "<group>"; };
 		79FBDEE61E30421A00448FE3 /* UIImage+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Base64.h"; sourceTree = "<group>"; };
 		79FBDEE71E30421A00448FE3 /* UIImage+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Base64.m"; sourceTree = "<group>"; };
-		79FBDEE91E30421A00448FE3 /* UINavigationController+QMNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+QMNotification.h"; sourceTree = "<group>"; };
-		79FBDEEA1E30421A00448FE3 /* UINavigationController+QMNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+QMNotification.m"; sourceTree = "<group>"; };
 		79FBDEEC1E30421A00448FE3 /* UIPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceholderTextView.h; sourceTree = "<group>"; };
 		79FBDEED1E30421A00448FE3 /* UIPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceholderTextView.m; sourceTree = "<group>"; };
 		79FBDEEF1E30421A00448FE3 /* UIView+Borders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Borders.h"; sourceTree = "<group>"; };
@@ -3236,6 +3288,7 @@
 		793FF2291EC48E22001F83A5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				7954325C1FC5F65100FF9E57 /* TaxInvoiceSelectionViewController */,
 				795432421FC537D100FF9E57 /* ListOfCodeStrViewController */,
 				7993767B1FC0D5B5007E35CE /* CaseTypeViewController */,
 				960758A51F015C52008F9C69 /* MasterTitleView */,
@@ -3326,6 +3379,130 @@
 				7954324C1FC53D5900FF9E57 /* MatterBranchModel.m */,
 			);
 			path = MatterBranchModel;
+			sourceTree = "<group>";
+		};
+		795432511FC5EDA300FF9E57 /* TaxInvoiceCalcModel */ = {
+			isa = PBXGroup;
+			children = (
+				795432591FC5EEC100FF9E57 /* TaxInvoiceCalcModel.h */,
+				7954325A1FC5EEC100FF9E57 /* TaxInvoiceCalcModel.m */,
+			);
+			path = TaxInvoiceCalcModel;
+			sourceTree = "<group>";
+		};
+		795432521FC5EDB300FF9E57 /* TaxInvoiceItemModel */ = {
+			isa = PBXGroup;
+			children = (
+				795432531FC5EDBE00FF9E57 /* TaxInvoiceItemModel.h */,
+				795432541FC5EDBE00FF9E57 /* TaxInvoiceItemModel.m */,
+			);
+			path = TaxInvoiceItemModel;
+			sourceTree = "<group>";
+		};
+		7954325C1FC5F65100FF9E57 /* TaxInvoiceSelectionViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7954325D1FC5F66100FF9E57 /* TaxInvoiceSelectionViewController.h */,
+				7954325E1FC5F66100FF9E57 /* TaxInvoiceSelectionViewController.m */,
+			);
+			path = TaxInvoiceSelectionViewController;
+			sourceTree = "<group>";
+		};
+		795432631FC62DD800FF9E57 /* QMImageLoader */ = {
+			isa = PBXGroup;
+			children = (
+				795432641FC62DD800FF9E57 /* QMImageLoader+QBChatAttachment.h */,
+				795432651FC62DD800FF9E57 /* QMImageLoader+QBChatAttachment.m */,
+			);
+			path = QMImageLoader;
+			sourceTree = "<group>";
+		};
+		795432671FC631DD00FF9E57 /* QMTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				795432681FC631DD00FF9E57 /* QMTableViewController.m */,
+				795432691FC631DD00FF9E57 /* QMTableViewController.h */,
+			);
+			path = QMTableViewController;
+			sourceTree = "<group>";
+		};
+		7954326B1FC6392A00FF9E57 /* UIScreen */ = {
+			isa = PBXGroup;
+			children = (
+				7954326C1FC6392A00FF9E57 /* UIScreen+QMLock.h */,
+				7954326D1FC6392A00FF9E57 /* UIScreen+QMLock.m */,
+			);
+			path = UIScreen;
+			sourceTree = "<group>";
+		};
+		7954326F1FC63A2B00FF9E57 /* QMNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				795432701FC63A2B00FF9E57 /* QMNavigationController.m */,
+				795432711FC63A2B00FF9E57 /* QMNavigationController.h */,
+			);
+			path = QMNavigationController;
+			sourceTree = "<group>";
+		};
+		795432731FC63A5500FF9E57 /* QMViewController */ = {
+			isa = PBXGroup;
+			children = (
+				795432741FC63A5500FF9E57 /* QMViewController.m */,
+				795432751FC63A5500FF9E57 /* QMViewController.h */,
+			);
+			path = QMViewController;
+			sourceTree = "<group>";
+		};
+		795432771FC6559B00FF9E57 /* QMExpandableTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				795432781FC6559B00FF9E57 /* QMExpandableTableViewController.m */,
+				795432791FC6559B00FF9E57 /* QMExpandableTableViewController.h */,
+			);
+			path = QMExpandableTableViewController;
+			sourceTree = "<group>";
+		};
+		7954327B1FC655BB00FF9E57 /* NSString */ = {
+			isa = PBXGroup;
+			children = (
+				7954327C1FC655BB00FF9E57 /* NSString+QMValidation.h */,
+				7954327D1FC655BB00FF9E57 /* NSString+QMValidation.m */,
+			);
+			path = NSString;
+			sourceTree = "<group>";
+		};
+		7954327F1FC6560300FF9E57 /* QMValidationCell */ = {
+			isa = PBXGroup;
+			children = (
+				795432801FC6560300FF9E57 /* QMValidationCell.m */,
+				795432811FC6560300FF9E57 /* QMValidationCell.xib */,
+				795432821FC6560300FF9E57 /* QMValidationCell.h */,
+			);
+			path = QMValidationCell;
+			sourceTree = "<group>";
+		};
+		795432921FC65B8000FF9E57 /* QMMediaController */ = {
+			isa = PBXGroup;
+			children = (
+				795432931FC65B8000FF9E57 /* QMAudioRecorder.m */,
+				795432941FC65B8100FF9E57 /* QMMediaController.m */,
+				795432951FC65B8100FF9E57 /* QMAttachmentController.m */,
+				795432961FC65B8100FF9E57 /* QMAudioPlayer.h */,
+				795432971FC65B8100FF9E57 /* QMAudioRecorder.h */,
+				795432981FC65B8100FF9E57 /* QMAttachmentController.h */,
+				795432991FC65B8100FF9E57 /* QMMediaController.h */,
+				7954329A1FC65B8100FF9E57 /* QMAudioPlayer.m */,
+			);
+			path = QMMediaController;
+			sourceTree = "<group>";
+		};
+		7954329F1FC65BF600FF9E57 /* QMImageBarButtonItem */ = {
+			isa = PBXGroup;
+			children = (
+				795432A01FC65BF600FF9E57 /* QMImageBarButtonItem.h */,
+				795432A11FC65BF600FF9E57 /* QMImageBarButtonItem.m */,
+			);
+			path = QMImageBarButtonItem;
 			sourceTree = "<group>";
 		};
 		79556DBD1E9323B700A16CB8 /* Message tab */ = {
@@ -4170,6 +4347,8 @@
 			children = (
 				79EC0EA31E8BE7F700320A28 /* EventViewController.h */,
 				79EC0EA41E8BE7F700320A28 /* EventViewController.m */,
+				7954324E1FC5CD4200FF9E57 /* TodayEventViewController.h */,
+				7954324F1FC5CD4200FF9E57 /* TodayEventViewController.m */,
 			);
 			path = EventViewController;
 			sourceTree = "<group>";
@@ -4490,6 +4669,7 @@
 		79FBDEAE1E30410000448FE3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				795432A31FC6626B00FF9E57 /* GoogleService-Info.plist */,
 				79D599E61E93ED0200CD3821 /* countries.json */,
 				79FBE01B1E304DB600448FE3 /* QMConstants.h */,
 				79FBDEAF1E30410000448FE3 /* Info.plist */,
@@ -4503,6 +4683,9 @@
 		79FBDEB81E30421A00448FE3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				7954327B1FC655BB00FF9E57 /* NSString */,
+				7954326B1FC6392A00FF9E57 /* UIScreen */,
+				795432631FC62DD800FF9E57 /* QMImageLoader */,
 				96E094921FBDCB0100E5FA58 /* CustomIndicator */,
 				96046F541EFDA0180048A58D /* iCarousel */,
 				962082EA1ED7AA8800BB595C /* BadgeLabel */,
@@ -4525,7 +4708,6 @@
 				79FBDEDF1E30421A00448FE3 /* UIColor+CustomColor */,
 				79FBDEE21E30421A00448FE3 /* UIImage */,
 				79FBDEE51E30421A00448FE3 /* UIImage+Base64 */,
-				79FBDEE81E30421A00448FE3 /* UINavigationController */,
 				79FBDEEB1E30421A00448FE3 /* UIPlaceholderTextView */,
 				79FBDEEE1E30421A00448FE3 /* UIView+Borders */,
 				79FBDEF11E30421A00448FE3 /* UIViewController */,
@@ -4536,8 +4718,6 @@
 		79FBDEB91E30421A00448FE3 /* BaseControllers */ = {
 			isa = PBXGroup;
 			children = (
-				79FBDEBA1E30421A00448FE3 /* BaseNavigationController.h */,
-				79FBDEBB1E30421A00448FE3 /* BaseNavigationController.m */,
 				79FBDEBC1E30421A00448FE3 /* BaseViewController.h */,
 				79FBDEBD1E30421A00448FE3 /* BaseViewController.m */,
 				79FBDEBE1E30421A00448FE3 /* CustomTaBBarController.h */,
@@ -4656,15 +4836,6 @@
 			path = "UIImage+Base64";
 			sourceTree = "<group>";
 		};
-		79FBDEE81E30421A00448FE3 /* UINavigationController */ = {
-			isa = PBXGroup;
-			children = (
-				79FBDEE91E30421A00448FE3 /* UINavigationController+QMNotification.h */,
-				79FBDEEA1E30421A00448FE3 /* UINavigationController+QMNotification.m */,
-			);
-			path = UINavigationController;
-			sourceTree = "<group>";
-		};
 		79FBDEEB1E30421A00448FE3 /* UIPlaceholderTextView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4695,6 +4866,8 @@
 		79FBDEF41E30421A00448FE3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7954329F1FC65BF600FF9E57 /* QMImageBarButtonItem */,
+				795432771FC6559B00FF9E57 /* QMExpandableTableViewController */,
 				96864A821F5EFD0500350E59 /* HWIFileDownload */,
 				79FBDEF51E30421A00448FE3 /* Core */,
 				79FBDF161E30421A00448FE3 /* CustomSegues */,
@@ -4781,6 +4954,8 @@
 		79FBDF0B1E30421A00448FE3 /* QMCore */ = {
 			isa = PBXGroup;
 			children = (
+				795432601FC62D7300FF9E57 /* QMLog.h */,
+				795432611FC62D7300FF9E57 /* QMLog.m */,
 				79FBDF0C1E30421A00448FE3 /* QMCore.h */,
 				79FBDF0D1E30421A00448FE3 /* QMCore.m */,
 			);
@@ -4998,6 +5173,7 @@
 		79FBDF731E30421A00448FE3 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				795432921FC65B8000FF9E57 /* QMMediaController */,
 				790B23B51E384BDC0037A187 /* DIHelpers */,
 				79FBDF741E30421A00448FE3 /* QMAlert */,
 				79FBDF771E30421A00448FE3 /* QMColors */,
@@ -5144,6 +5320,8 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				795432521FC5EDB300FF9E57 /* TaxInvoiceItemModel */,
+				795432511FC5EDA300FF9E57 /* TaxInvoiceCalcModel */,
 				7954324A1FC53D5000FF9E57 /* MatterBranchModel */,
 				795432461FC5386200FF9E57 /* CodeStrModel */,
 				799376771FC0D3D3007E35CE /* CaseTypeModel */,
@@ -5243,6 +5421,9 @@
 		79FBE0211E304EAA00448FE3 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				795432731FC63A5500FF9E57 /* QMViewController */,
+				7954326F1FC63A2B00FF9E57 /* QMNavigationController */,
+				795432671FC631DD00FF9E57 /* QMTableViewController */,
 				79FBE0221E304EAA00448FE3 /* QMAlphabetizedDataSource */,
 				79FBE0251E304EAA00448FE3 /* QMBaseTitleView */,
 				79FBE0281E304EAA00448FE3 /* QMLinkViewController */,
@@ -5549,6 +5730,7 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				7954327F1FC6560300FF9E57 /* QMValidationCell */,
 				96AA364E1FBCC564003D9A2C /* LeaveRecordHeaderCell */,
 				96AA36481FBCC332003D9A2C /* LeaveRecordCell */,
 				960017721FB0CD10001EAB51 /* AttendanceItemCell */,
@@ -8163,6 +8345,7 @@
 				96AA36531FBCC572003D9A2C /* LeaveRecordHeaderCell.xib in Resources */,
 				7931B4D71EA851B00090BDE0 /* menu_user.png in Resources */,
 				793FF18E1EBD4BDF001F83A5 /* icon_leave@3x.png in Resources */,
+				795432841FC6560300FF9E57 /* QMValidationCell.xib in Resources */,
 				7931B4D41EA851B00090BDE0 /* menu_terms_of_uses.png in Resources */,
 				793FF18F1EBD4BDF001F83A5 /* icon_matter.png in Resources */,
 				7920E79F1E9FA747002FEFF3 /* icon_client_selected@3x.png in Resources */,
@@ -8286,6 +8469,7 @@
 				793FF14F1EBB7D67001F83A5 /* icon_chat@2x.png in Resources */,
 				797ED5161EAEDA86009C20C4 /* icon_phone_red@3x.png in Resources */,
 				79D929E91E8DCF9A000A53D2 /* LedgerCell.xib in Resources */,
+				795432A41FC6626B00FF9E57 /* GoogleService-Info.plist in Resources */,
 				96A73AC51F1CD92400B97156 /* icon_status@3x.png in Resources */,
 				79EC0E3F1E8A196400320A28 /* icon_search@2x.png in Resources */,
 				7931B5041EA9B1C50090BDE0 /* icon_market.png in Resources */,
@@ -8544,6 +8728,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Denning/Pods-Denning-resources.sh",
 				"${PODS_ROOT}/Digits/iOS/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle,
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-magnify-glass.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-magnify-glass@2x.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-shadow.png",
@@ -8552,10 +8738,12 @@
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarDayCell/GLCalendarDayCell.xib",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarView.xib",
 				$PODS_CONFIGURATION_BUILD_DIR/NYTPhotoViewer/NYTPhotoViewer.bundle,
+				"${PODS_ROOT}/QMChatViewController/QMChatViewController/Icons/Media.xcassets",
 				$PODS_CONFIGURATION_BUILD_DIR/QMChatViewController/QMChatViewController.bundle,
 				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMChatCacheModel.bundle,
 				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMContactListCacheModel.bundle,
 				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMUsersCacheModel.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMOpenGraphCacheModel.bundle,
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 				$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle,
 			);
@@ -8626,9 +8814,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7954325F1FC5F66100FF9E57 /* TaxInvoiceSelectionViewController.m in Sources */,
 				79EC0EAF1E8BE7F700320A28 /* RealPropertyGainTaxViewController.m in Sources */,
 				79F9FC7A1E4183B30097CB23 /* HomeViewController.m in Sources */,
-				79FBDFA91E30421A00448FE3 /* UINavigationController+QMNotification.m in Sources */,
 				962082C91ED48D2E00BB595C /* CourtDiaryModel.m in Sources */,
 				96A73A421F19EAAA00B97156 /* FileLedger.m in Sources */,
 				79EC0EB61E8BE7F700320A28 /* UpdateViewController.m in Sources */,
@@ -8643,6 +8831,7 @@
 				79FBDF9E1E30421A00448FE3 /* KeychainWrapper.m in Sources */,
 				79FBE08C1E304EAB00448FE3 /* QMGroupHeaderView.m in Sources */,
 				966A62F81EF4A85E008A25FE /* TransactionDetail.m in Sources */,
+				795432831FC6560300FF9E57 /* QMValidationCell.m in Sources */,
 				962082DD1ED7733D00BB595C /* ThreeColumWithDotCell.m in Sources */,
 				9636DCEC1F04059D008DDA41 /* FileListingCell.m in Sources */,
 				96EAEBB31F22B3B3004F75FC /* ComingSoon.m in Sources */,
@@ -8682,6 +8871,7 @@
 				96EAEBA81F21DADC004F75FC /* PaymentRecordCell.m in Sources */,
 				79EC0E081E89661800320A28 /* GovOfficeModel.m in Sources */,
 				79FBDFA41E30421A00448FE3 /* QBUpdateUserParameters+CustomData.m in Sources */,
+				795432761FC63A5500FF9E57 /* QMViewController.m in Sources */,
 				793FF21D1EC3C2A2001F83A5 /* AccordionHeaderView.m in Sources */,
 				960D91AB1F066B3900835B82 /* StaffHeaderCell.m in Sources */,
 				9600176B1FB0C7DF001EAB51 /* AttendanceItem.m in Sources */,
@@ -8690,6 +8880,7 @@
 				79F7322C1E96A929004F88DF /* MLPAutoCompleteTextField.m in Sources */,
 				79EC0DD61E88013500320A28 /* ContactCell.m in Sources */,
 				96D1768A1F1FE9AB008734DA /* FileNoteSubModel.m in Sources */,
+				7954329D1FC65B8100FF9E57 /* QMAttachmentController.m in Sources */,
 				79E5FF061E71B22700E32AF8 /* PropertyModel.m in Sources */,
 				79FBE08B1E304EAB00448FE3 /* QMCornerButton.m in Sources */,
 				79F9FC961E420C040097CB23 /* EventCell.m in Sources */,
@@ -8707,7 +8898,6 @@
 				79FBE0841E304EAA00448FE3 /* QMTableViewDataSource.m in Sources */,
 				79734F631EB97CAC00647215 /* AddContactViewController.m in Sources */,
 				79FBDFD41E30421A00448FE3 /* QMProfile.m in Sources */,
-				79FBDF991E30421A00448FE3 /* BaseNavigationController.m in Sources */,
 				79FBDFCE1E30421A00448FE3 /* QMFacebook.m in Sources */,
 				79FBDFA51E30421A00448FE3 /* UIButton+Badge.m in Sources */,
 				7903CF931ECD57D50090206C /* BankBranchCell.m in Sources */,
@@ -8828,7 +9018,9 @@
 				962082B71ED3D03800BB595C /* AddDiaryViewController.m in Sources */,
 				79FBDFE61E30421A00448FE3 /* REMessageUI.m in Sources */,
 				7993767A1FC0D3DE007E35CE /* CaseTypeModel.m in Sources */,
+				7954329B1FC65B8100FF9E57 /* QMAudioRecorder.m in Sources */,
 				790B23AD1E37B0130037A187 /* DISignupViewController.m in Sources */,
+				795432621FC62D7400FF9E57 /* QMLog.m in Sources */,
 				79FBE0FF1E304F5000448FE3 /* QMSearchCell.m in Sources */,
 				79EC0E191E89C99B00320A28 /* LedgerDetailModel.m in Sources */,
 				79FBE08D1E304EAB00448FE3 /* QMLocationButton.m in Sources */,
@@ -8843,12 +9035,15 @@
 				7903CF481ECC00BB0090206C /* BirthdayCalendarViewController.m in Sources */,
 				793C19FB1EC4E8A900271B7F /* MatterCodeModel.m in Sources */,
 				9607F97B1F06E2D20012ABCD /* AddMatterPropertyCell.m in Sources */,
+				7954326E1FC6392B00FF9E57 /* UIScreen+QMLock.m in Sources */,
 				79FBDFB11E30421A00448FE3 /* QMCallManager.m in Sources */,
 				9607F9751F06C2750012ABCD /* SolicitorHeaderCell.m in Sources */,
+				795432501FC5CD4200FF9E57 /* TodayEventViewController.m in Sources */,
 				79FBDFD81E30421A00448FE3 /* QMColors.m in Sources */,
 				96A73ABE1F1CD77900B97156 /* StaffOnlineHeaderCell.m in Sources */,
 				793FF1D71EC382DA001F83A5 /* AddQuotationViewController.m in Sources */,
 				79FBDFA21E30421A00448FE3 /* QBChatDialog+OpponentID.m in Sources */,
+				795432721FC63A2C00FF9E57 /* QMNavigationController.m in Sources */,
 				79FBE10C1E304F5000448FE3 /* QMGroupOccupantsViewController.m in Sources */,
 				7931B4E61EA8EA570090BDE0 /* UITextField+LeftView.m in Sources */,
 				96821F3F1F1DC84200F28708 /* CompletionTrackingCell.m in Sources */,
@@ -8865,6 +9060,7 @@
 				79FBDFAA1E30421A00448FE3 /* UIPlaceholderTextView.m in Sources */,
 				9636DCE71F03E196008DDA41 /* DashboardFileListing.m in Sources */,
 				79FBDFDB1E30421A00448FE3 /* QMImagePreview.m in Sources */,
+				7954327A1FC6559B00FF9E57 /* QMExpandableTableViewController.m in Sources */,
 				79EC0CF61E7645D400320A28 /* LegalFirmModel.m in Sources */,
 				79FBE0991E304EAB00448FE3 /* QMTagView.m in Sources */,
 				960758AD1F0198A9008F9C69 /* EmptyHeaderCell.m in Sources */,
@@ -8887,7 +9083,9 @@
 				79FBE1031E304F5000448FE3 /* QMSeparatorCell.m in Sources */,
 				79FBE0801E304EAA00448FE3 /* QMSearchDataSource.m in Sources */,
 				79EC0EAD1E8BE7F700320A28 /* IncomeTaxViewController.m in Sources */,
+				795432A21FC65BF600FF9E57 /* QMImageBarButtonItem.m in Sources */,
 				962083181EDB32DA00BB595C /* DashboardTaxInvoiceCell.m in Sources */,
+				795432551FC5EDBE00FF9E57 /* TaxInvoiceItemModel.m in Sources */,
 				7920E7B51EA0512C002FEFF3 /* DIFileBrowser.m in Sources */,
 				793FF1B61EBF9079001F83A5 /* CoramModel.m in Sources */,
 				79FBDFB51E30421A00448FE3 /* QMNetworkManager.m in Sources */,
@@ -8947,6 +9145,7 @@
 				96E094951FBDCB0100E5FA58 /* CustomInfiniteIndicator.m in Sources */,
 				79D59A391E95690800CD3821 /* QMGlobalSearchDataSource.m in Sources */,
 				79F9A8211E6D4CD500E17629 /* NewDeviceLoginViewController.m in Sources */,
+				795432661FC62DD800FF9E57 /* QMImageLoader+QBChatAttachment.m in Sources */,
 				960F030E1F2960BC00B25BBC /* CustomFileUpload.m in Sources */,
 				7903CF491ECC00BB0090206C /* DetailWithAutocomplete.m in Sources */,
 				96A73A451F19F3A200B97156 /* FileLedgerDetail.m in Sources */,
@@ -8974,6 +9173,7 @@
 				79EC0EC61E8C745D00320A28 /* FirmPasswordViewController.m in Sources */,
 				9642062A1F26ACD9008AC798 /* TemplateCell.m in Sources */,
 				79E5FEFC1E71819F00E32AF8 /* PropertyViewController.m in Sources */,
+				7954325B1FC5EEC100FF9E57 /* TaxInvoiceCalcModel.m in Sources */,
 				79FBE08A1E304EAB00448FE3 /* QMBadgeView.m in Sources */,
 				96A73A4D1F1A4DAC00B97156 /* BankAndCashBalance.m in Sources */,
 				79FBE0851E304EAB00448FE3 /* QMCallInfoView.m in Sources */,
@@ -8990,7 +9190,9 @@
 				799109A31E6FA31F0028C24B /* ContactViewController.m in Sources */,
 				79F9FC761E41834A0097CB23 /* SearchViewController.m in Sources */,
 				79FBDFD71E30421A00448FE3 /* QMAlert.m in Sources */,
+				7954329E1FC65B8100FF9E57 /* QMAudioPlayer.m in Sources */,
 				79FBDFAB1E30421A00448FE3 /* UIView+Borders.m in Sources */,
+				7954327E1FC655BB00FF9E57 /* NSString+QMValidation.m in Sources */,
 				96BDA6211F02C72400084606 /* ThirdItemModel.m in Sources */,
 				7903CF9D1ECD5BD60090206C /* HQModel.m in Sources */,
 				79FBE1111E304F5000448FE3 /* QMFeedbackViewController.m in Sources */,
@@ -9066,11 +9268,13 @@
 				79EC0E491E8A90C800320A28 /* SearchMatterCell.m in Sources */,
 				79FBDFD11E30421A00448FE3 /* QMNotification.m in Sources */,
 				79FBDFCC1E30421A00448FE3 /* QMChatButtonsFactory.m in Sources */,
+				7954329C1FC65B8100FF9E57 /* QMMediaController.m in Sources */,
 				79FBE0931E304EAB00448FE3 /* QMNotificationPanelView.m in Sources */,
 				795432451FC537E000FF9E57 /* ListOfCodeStrViewController.m in Sources */,
 				964206361F27BA89008AC798 /* TemplateType.m in Sources */,
 				79734F5F1EB95BA700647215 /* MainContactViewController.m in Sources */,
 				96A73A7B1F1A8C4100B97156 /* TaxInvoiceCell.m in Sources */,
+				7954326A1FC631DE00FF9E57 /* QMTableViewController.m in Sources */,
 				79D599FD1E9473D500CD3821 /* QMDialogsDataSource.m in Sources */,
 				79D59A1B1E94762B00CD3821 /* DenningContactViewController.m in Sources */,
 				79FBDF9B1E30421A00448FE3 /* CustomTaBBarController.m in Sources */,

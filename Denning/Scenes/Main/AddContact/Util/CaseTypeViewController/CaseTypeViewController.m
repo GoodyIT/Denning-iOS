@@ -107,7 +107,7 @@
     if (isLoading) return;
     isLoading = YES;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

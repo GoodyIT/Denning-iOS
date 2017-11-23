@@ -15,7 +15,6 @@
 @property (weak, nonatomic) IBOutlet QMBadgeView *badgeView;
 
 @property (copy, nonatomic) NSString *time;
-@property (assign, nonatomic) NSUInteger badgeNumber;
 
 @end
 
@@ -32,7 +31,7 @@
     _timeLabel.text = nil;
 }
 
-#pragma mark - Setters
+//MARK: - Setters
 
 - (void)setTime:(NSString *)time {
     
@@ -45,11 +44,7 @@
 
 - (void)setBadgeNumber:(NSUInteger)badgeNumber {
     
-    if (_badgeNumber != badgeNumber) {
-        
-        _badgeNumber = badgeNumber;
-        self.badgeView.badgeNumber = badgeNumber;
-    }
+    self.badgeView.badgeNumber = badgeNumber;
 }
 
 @end

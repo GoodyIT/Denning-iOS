@@ -142,7 +142,7 @@
     isLoading = YES;
     _url = [NSString stringWithFormat:@"%@%@", baseUrl, curFeeFilter];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardFeeTransferInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)

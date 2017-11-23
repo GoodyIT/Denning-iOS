@@ -4,13 +4,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Quickblox/QBNullability.h>
-#import <Quickblox/QBGeneric.h>
 
 @class QBUUser;
 @class QBASession;
 
 NS_ASSUME_NONNULL_BEGIN
+
+//Posted immediately after logout from quickblox and session destruction;
+FOUNDATION_EXPORT NSNotificationName const kQBLogoutNotification;
 
 /**
  *  QBSession class interface.
@@ -20,10 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  Current session instance.
- *
- *  @return QBSession instance.
  */
-+ (QBSession *)currentSession;
+@property (nonatomic, strong, readonly, class) QBSession *currentSession;
+
+
+/**
+ Returns YES if token has expired
+ */
+@property (assign, nonatomic, readonly) BOOL tokenHasExpired;
 
 /**
  *  Start session with details
@@ -36,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Session user
  */
-@property (nonatomic, readonly, nullable) QBUUser *currentUser;
+@property (nonatomic, readonly, copy, nullable) QBUUser *currentUser;
 
 /**
  *  Session details

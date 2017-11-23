@@ -81,7 +81,7 @@
     isLoading = YES;
     _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:_url];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;

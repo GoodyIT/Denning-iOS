@@ -6,7 +6,8 @@
 //  Copyright © 2016 Quickblox. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "QMExpandableTableViewController.h"
+
 
 typedef NS_ENUM(NSUInteger, QMUpdateUserField) {
     
@@ -16,7 +17,7 @@ typedef NS_ENUM(NSUInteger, QMUpdateUserField) {
     QMUpdateUserFieldStatus
 };
 
-@interface QMUpdateUserViewController : UITableViewController
+@interface QMUpdateUserViewController : QMExpandableTableViewController
 
 @property (assign, nonatomic) QMUpdateUserField updateUserField;
 

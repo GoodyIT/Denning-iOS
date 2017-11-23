@@ -12,7 +12,9 @@
 
 + (void)requestPermissionToMicrophoneWithCompletion:(PermissionBlock)completion {
     
-    [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
+    AVAudioSessionRecordPermission recordPermission = [[AVAudioSession sharedInstance] recordPermission];
+    
+    PermissionBlock comletionBlock = ^(BOOL granted) {
         
         if (completion) {
             
@@ -21,49 +23,43 @@
                 completion(granted);
             });
         }
-    }];
+    };
+    
+    if (recordPermission == AVAudioSessionRecordPermissionUndetermined) {
+        
+        [[AVAudioSession sharedInstance] requestRecordPermission:comletionBlock];
+    }
+    else {
+        
+        comletionBlock(recordPermission == AVAudioSessionRecordPermissionGranted);
+    }
 }
 
 + (void)requestPermissionToCameraWithCompletion:(PermissionBlock)completion {
     
     NSString *mediaType = AVMediaTypeVideo;
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
-    switch (authStatus) {
+    
+    PermissionBlock comletionBlock = ^(BOOL granted) {
+        
+        if (completion) {
             
-        case AVAuthorizationStatusNotDetermined: {
-            
-            [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
+            dispatch_async(dispatch_get_main_queue(), ^{
                 
-                if (completion) {
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        completion(granted);
-                    });
-                }
-            }];
-            
-            break;
+                completion(granted);
+            });
         }
-            
-        case AVAuthorizationStatusRestricted:
-        case AVAuthorizationStatusDenied:
-            
-            if (completion) {
-                
-                completion(NO);
-            }
-            
-            break;
-            
-        case AVAuthorizationStatusAuthorized:
-            
-            if (completion) {
-                
-                completion(YES);
-            }
-            
-            break;
+    };
+    
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    
+    
+    if (authStatus == AVAuthorizationStatusNotDetermined) {
+        
+        [AVCaptureDevice requestAccessForMediaType:mediaType
+                                 completionHandler:comletionBlock];
+    }
+    else {
+        comletionBlock(authStatus == AVAuthorizationStatusAuthorized);
     }
 }
 

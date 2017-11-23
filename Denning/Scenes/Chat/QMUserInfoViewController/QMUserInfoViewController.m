@@ -8,8 +8,7 @@
 
 #import "QMUserInfoViewController.h"
 #import "QMCore.h"
-#import "UINavigationController+QMNotification.h"
-#import "QMPlaceholder.h"
+#import "QMNavigationController.h"
 #import "QMChatVC.h"
 #import <QMDateUtils.h>
 #import <QMImageView.h>
@@ -17,8 +16,14 @@
 #import <SVProgressHUD.h>
 #import "QMSplitViewController.h"
 
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
+
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
+
 #import "QMImagePreview.h"
+#import "QMCallManager.h"
+#import "REMessageUI.h"
 
 static const CGFloat kQMStatusCellMinHeight = 65.0f;
 
@@ -43,6 +48,7 @@ typedef NS_ENUM(NSUInteger, QMContactInteractions) {
 
 <
 QMContactListServiceDelegate,
+QMUsersServiceListenerProtocol,
 
 QMImageViewDelegate,
 NYTPhotosViewControllerDelegate
@@ -60,6 +66,8 @@ NYTPhotosViewControllerDelegate
 
 @property (strong, nonatomic) NSMutableIndexSet *hiddenSections;
 
+@property (strong, nonatomic) NSIndexPath *selectedIndexPathForMenu;
+
 @end
 
 @implementation QMUserInfoViewController
@@ -72,6 +80,13 @@ NYTPhotosViewControllerDelegate
     // display mode managing. Not removing it will cause item update
     // for deallocated navigation item
     self.navigationItem.leftBarButtonItem = nil;
+    
+    [NSNotificationCenter.defaultCenter removeObserver:self
+                                                  name:UIMenuControllerWillShowMenuNotification
+                                                object:nil];
+    [NSNotificationCenter.defaultCenter removeObserver:self
+                                                  name:UIMenuControllerWillHideMenuNotification
+                                                object:nil];
 }
 
 - (void)viewDidLoad {
@@ -80,22 +95,41 @@ NYTPhotosViewControllerDelegate
     
     [super viewDidLoad];
     
+    
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(didReceiveMenuWillShowNotification:)
+                                               name:UIMenuControllerWillShowMenuNotification
+                                             object:nil];
+    
+    [NSNotificationCenter.defaultCenter  addObserver:self
+                                            selector:@selector(didReceiveMenuWillHideNotification:)
+                                                name:UIMenuControllerWillHideMenuNotification
+                                              object:nil];
+    
+    if (self.navigationController.viewControllers.count == 1) {
+        
+        // showing split view display mode buttons
+        // only if controller is first in stack
+        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+        self.navigationItem.leftItemsSupplementBackButton = YES;
+    }
+    
     self.hiddenSections = [NSMutableIndexSet indexSet];
     self.avatarImageView.imageViewType = QMImageViewTypeCircle;
     self.avatarImageView.delegate = self;
     
     // Hide empty separators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
     // automatic self-sizing cells (used for status cell, due to status label could be multiline)
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = kQMStatusCellMinHeight;
     
     // subscribing to delegates
     [[QMCore instance].contactListService addDelegate:self];
-    
+    [[QMCore instance].usersService addListener:self forUser:self.user];
     // update info table
-    [self performUpdate];
+    [self performDataUpdate];
+    [self performLastSeenUpdate];
     
     if (self.user.lastRequestAt == nil) {
         
@@ -105,7 +139,7 @@ NYTPhotosViewControllerDelegate
     // adding refresh control task
     if (self.refreshControl) {
         
-        self.refreshControl.backgroundColor = [UIColor whiteColor];
+        self.refreshControl.backgroundColor = [UIColor clearColor];
         [self.refreshControl addTarget:self
                                 action:@selector(loadUser)
                       forControlEvents:UIControlEventValueChanged];
@@ -119,26 +153,21 @@ NYTPhotosViewControllerDelegate
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
 
-- (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-#pragma mark - Methods
+//MARK: - Methods
 
 - (void)loadUser {
     
     // get user from server
-    @weakify(self);
-    [[[QMCore instance].usersService getUserWithID:self.user.ID forceLoad:YES] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
+    
+    [[QMCore.instance.usersService getUserWithID:self.user.ID forceLoad:YES] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
         
-        @strongify(self);
         [self.refreshControl endRefreshing];
         
         if (!task.isFaulted) {
             
             self.user = task.result;
-            [self performUpdate];
+            [self performDataUpdate];
+            [self performLastSeenUpdate];
             [self.tableView reloadData];
         }
         
@@ -146,16 +175,20 @@ NYTPhotosViewControllerDelegate
     }];
 }
 
-- (void)performUpdate {
+- (void)performDataUpdate {
     
     [self.hiddenSections removeAllIndexes];
     
     [self updateFullName];
     [self updateAvatarImage];
     [self updateUserIteractions];
-    [self updateLastSeen];
     [self updateStatus];
     [self updateInfo];
+}
+
+- (void)performLastSeenUpdate {
+    
+    self.lastSeenLabel.text = [[QMCore instance].contactManager onlineStatusForUser:self.user];
 }
 
 - (void)updateFullName {
@@ -165,19 +198,15 @@ NYTPhotosViewControllerDelegate
 }
 
 - (void)updateAvatarImage {
-    
     // Avatar
-    UIImage *placeholder = [QMPlaceholder placeholderWithFrame:self.avatarImageView.bounds title:self.user.fullName ID:self.user.ID];
     [self.avatarImageView setImageWithURL:[NSURL URLWithString:self.user.avatarUrl]
-                              placeholder:placeholder
-                                  options:SDWebImageHighPriority
-                                 progress:nil
+                                    title:self.user.fullName
                            completedBlock:nil];
 }
 
 - (void)updateUserIteractions {
     
-    BOOL isFriend = [[QMCore instance].contactManager isFriendWithUserID:self.user.ID];
+    BOOL isFriend = [QMCore.instance.contactManager isFriendWithUserID:self.user.ID];
     if (isFriend) {
         
         [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
@@ -186,7 +215,7 @@ NYTPhotosViewControllerDelegate
         
         [self.hiddenSections addIndex:QMUserInfoSectionContactInteractions];
         
-        BOOL isAwaitingForApproval = [[QMCore instance].contactManager isContactListItemExistentForUserWithID:self.user.ID];
+        BOOL isAwaitingForApproval = [QMCore.instance.contactManager isContactListItemExistentForUserWithID:self.user.ID];
         if (isAwaitingForApproval) {
             
             [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
@@ -198,26 +227,7 @@ NYTPhotosViewControllerDelegate
     }
 }
 
-- (void)updateLastSeen {
-    
-    // Last seen
-    BOOL isOnline = [[QMCore instance].contactManager isUserOnlineWithID:self.user.ID];
-    if (isOnline) {
-        
-        self.lastSeenLabel.text = NSLocalizedString(@"QM_STR_ONLINE", nil);
-    }
-    else if (self.user.lastRequestAt) {
-        
-        self.lastSeenLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"QM_STR_LAST_SEEN", nil), [QMDateUtils formattedLastSeenString:self.user.lastRequestAt withTimePrefix:NSLocalizedString(@"QM_STR_TIME_PREFIX", nil)]];
-    }
-    else {
-        
-        self.lastSeenLabel.text = NSLocalizedString(@"QM_STR_OFFLINE", nil);
-    }
-}
-
 - (void)updateStatus {
-    
     // Status
     NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
     if ([self.user.status stringByTrimmingCharactersInSet:whiteSpaceSet].length > 0) {
@@ -231,11 +241,10 @@ NYTPhotosViewControllerDelegate
 }
 
 - (void)updateInfo {
-    
     // Phone
     if (self.user.phone.length > 0) {
         
-        self.phoneLabel.text = self.user.phone.length > 0 ? self.user.phone : NSLocalizedString(@"QM_STR_NONE", nil);
+        self.phoneLabel.text = self.user.phone;
     }
     else {
         
@@ -245,7 +254,7 @@ NYTPhotosViewControllerDelegate
     // Email
     if (self.user.email.length > 0) {
         
-        self.emailLabel.text = self.user.email.length > 0 ? self.user.email : NSLocalizedString(@"QM_STR_NONE", nil);
+        self.emailLabel.text = self.user.email;
     }
     else {
         
@@ -253,7 +262,7 @@ NYTPhotosViewControllerDelegate
     }
 }
 
-#pragma mark - Actions
+//MARK: - Actions
 
 - (void)sendMessageAction {
     
@@ -281,7 +290,7 @@ NYTPhotosViewControllerDelegate
         return;
     }
     
-    QBChatDialog *privateChatDialog = [[QMCore instance].chatService.dialogsMemoryStorage privateChatDialogWithOpponentID:self.user.ID];
+    QBChatDialog *privateChatDialog = [QMCore.instance.chatService.dialogsMemoryStorage privateChatDialogWithOpponentID:self.user.ID];
     
     if (privateChatDialog) {
         
@@ -294,14 +303,14 @@ NYTPhotosViewControllerDelegate
             return;
         }
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
         
-        __weak UINavigationController *navigationController = self.navigationController;
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         
-        self.task = [[[QMCore instance].chatService createPrivateChatDialogWithOpponentID:self.user.ID] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
+        self.task = [[QMCore.instance.chatService createPrivateChatDialogWithOpponentID:self.user.ID] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
             
             @strongify(self);
-            [navigationController dismissNotificationPanel];
+            [(QMNavigationController *)navigationController dismissNotificationPanel];
             
             if (!task.isFaulted) {
                 
@@ -315,39 +324,75 @@ NYTPhotosViewControllerDelegate
 
 - (BOOL)callAllowed {
     
-    if (![[QMCore instance] isInternetConnected]) {
+    if (![QMCore.instance isInternetConnected]) {
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
         return NO;
     }
     
     if (![QBChat instance].isConnected) {
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeFailed message:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) duration:kQMDefaultNotificationDismissTime];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeFailed message:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) duration:kQMDefaultNotificationDismissTime];
         return NO;
     }
     
     return YES;
 }
 
-- (void)audioCallAction {
+- (void)callActionWithConferenceType:(QBRTCConferenceType)conferenceType {
     
     if (![self callAllowed]) {
-        
         return;
     }
     
-    [[QMCore instance].callManager callToUserWithID:self.user.ID conferenceType:QBRTCConferenceTypeAudio];
+    [QMCore.instance.callManager callToUserWithID:self.user.ID conferenceType:conferenceType];
+}
+
+- (void)audioCallAction {
+    
+    [self callActionWithConferenceType:QBRTCConferenceTypeAudio];
 }
 
 - (void)videoCallAction {
     
-    if (![self callAllowed]) {
-        
-        return;
-    }
+    [self callActionWithConferenceType:QBRTCConferenceTypeVideo];
+}
+
+- (void)cellularCallAction {
     
-    [[QMCore instance].callManager callToUserWithID:self.user.ID conferenceType:QBRTCConferenceTypeVideo];
+    NSParameterAssert(self.user.phone.length > 0);
+    
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:nil
+                                          message:self.user.phone
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:nil]];
+    
+    void (^makeCallAction)(UIAlertAction *action) = ^void(UIAlertAction * __unused action) {
+        
+        NSError *error = nil;
+        
+        if (![self canMakeAPhoneCall:&error]) {
+            
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning
+                                                                                  message:error.localizedDescription
+                                                                                 duration:kQMDefaultNotificationDismissTime];
+        }
+        else {
+            NSString *cleanedPhoneNumber = [self formatPhoneUrl:self.user.phone];
+            NSURL *telURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", cleanedPhoneNumber]];
+            [UIApplication.sharedApplication openURL:telURL];
+        }
+    };
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CALL", nil)
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:makeCallAction]];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
 }
 
 - (void)removeContactAction {
@@ -357,9 +402,9 @@ NYTPhotosViewControllerDelegate
         return;
     }
     
-    if (![[QMCore instance] isInternetConnected]) {
+    if (![QMCore.instance isInternetConnected]) {
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
         return;
     }
     
@@ -376,20 +421,19 @@ NYTPhotosViewControllerDelegate
         
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         
-        self.task = [[[QMCore instance].contactManager removeUserFromContactList:self.user] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
-            
-            if (self.splitViewController.isCollapsed) {
-                
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-            else {
-                
-                [(QMSplitViewController *)self.splitViewController showPlaceholderDetailViewController];
-            }
-            [SVProgressHUD dismiss];
-            
-            return nil;
-        }];
+        self.task = [[QMCore.instance.contactManager removeUserFromContactList:self.user]
+                     continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task)
+                     {
+                         if (self.splitViewController.isCollapsed) {
+                             [self.navigationController popViewControllerAnimated:YES];
+                         }
+                         else {
+                             [(QMSplitViewController *)self.splitViewController showPlaceholderDetailViewController];
+                         }
+                         [SVProgressHUD dismiss];
+                         
+                         return nil;
+                     }];
     };
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_DELETE", nil)
@@ -406,17 +450,17 @@ NYTPhotosViewControllerDelegate
         return;
     }
     
-    if (![[QMCore instance] isInternetConnected]) {
+    if (![QMCore.instance isInternetConnected]) {
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
         return;
     }
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
-    self.task = [[[QMCore instance].contactManager addUserToContactList:self.user] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
+    self.task = [[QMCore.instance.contactManager addUserToContactList:self.user] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
         
         [navigationController dismissNotificationPanel];
         return nil;
@@ -432,7 +476,7 @@ NYTPhotosViewControllerDelegate
     }
 }
 
-#pragma mark - UITableViewDataSource
+//MARK: - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -444,11 +488,19 @@ NYTPhotosViewControllerDelegate
     return [super tableView:tableView numberOfRowsInSection:section];
 }
 
-#pragma mark - UITableViewDelegate
+//MARK: - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (indexPath.section == QMUserInfoSectionContactInteractions) {
+    if (indexPath.section == QMUserInfoSectionInfoPhone) {
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self cellularCallAction];
+    }
+    else if (indexPath.section == QMUserInfoSectionInfoEmail) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    else if (indexPath.section == QMUserInfoSectionContactInteractions) {
         
         switch (indexPath.row) {
                 
@@ -513,21 +565,69 @@ NYTPhotosViewControllerDelegate
     return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
-#pragma mark - QMContactListServiceDelegate
+
+- (void)tableView:(UITableView *)__unused tableView
+    performAction:(SEL)action
+forRowAtIndexPath:(NSIndexPath *)indexPath
+       withSender:(id)__unused sender{
+    
+    if (action == @selector(copy:)) {
+        
+        NSString *textToCopy = nil;
+        if (indexPath.section == QMUserInfoSectionInfoEmail) {
+            textToCopy = self.user.email;
+        }
+        else if (indexPath.section == QMUserInfoSectionInfoPhone) {
+            textToCopy = self.user.phone;
+        }
+        else if (indexPath.section == QMUserInfoSectionStatus) {
+            textToCopy = self.user.status;
+        }
+        
+        if (textToCopy) {
+            UIPasteboard.generalPasteboard.string = textToCopy;
+        }
+    }
+}
+
+- (BOOL)tableView:(UITableView *)__unused tableView
+shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    self.selectedIndexPathForMenu = indexPath;
+    
+    return indexPath.section == QMUserInfoSectionInfoEmail
+    || indexPath.section == QMUserInfoSectionInfoPhone
+    || indexPath.section == QMUserInfoSectionStatus;
+    
+}
+
+- (BOOL) tableView:(UITableView *)__unused tableView
+  canPerformAction:(SEL)action
+ forRowAtIndexPath:(NSIndexPath *)__unused indexPath
+        withSender:(id)__unused sender{
+    
+    return action == @selector(copy:);
+}
+
+
+
+//MARK: - QMContactListServiceDelegate
 
 - (void)contactListServiceDidLoadCache {
     
-    [self performUpdate];
+    [self performDataUpdate];
+    [self performLastSeenUpdate];
     [self.tableView reloadData];
 }
 
 - (void)contactListService:(QMContactListService *)__unused contactListService contactListDidChange:(QBContactList *)__unused contactList {
     
-    [self performUpdate];
+    [self performDataUpdate];
+    [self performLastSeenUpdate];
     [self.tableView reloadData];
 }
 
-#pragma mark - QMImageViewDelegate
+//MARK: - QMImageViewDelegate
 
 - (void)imageViewDidTap:(QMImageView *)__unused imageView {
     
@@ -538,14 +638,22 @@ NYTPhotosViewControllerDelegate
     }
 }
 
-#pragma mark - NYTPhotosViewControllerDelegate
+//MARK: - NYTPhotosViewControllerDelegate
 
 - (UIView *)photosViewController:(NYTPhotosViewController *)__unused photosViewController referenceViewForPhoto:(id<NYTPhoto>)__unused photo {
     
     return self.avatarImageView;
 }
 
-#pragma mark - Helpers
+// MARK: - QMUsersServiceListenerProtocol
+
+- (void)usersService:(QMUsersService *)__unused usersService didUpdateUser:(QBUUser *)user {
+    self.user = user;
+    [self performDataUpdate];
+    [self.tableView reloadData];
+}
+
+//MARK: - Helpers
 
 - (BOOL)shouldHaveHeaderForSection:(NSInteger)section {
     
@@ -567,6 +675,104 @@ NYTPhotosViewControllerDelegate
     }
     
     return YES;
+}
+
+- (BOOL)canMakeAPhoneCall:(NSError **)error {
+    
+    // Check if the device can place a phone call
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]]) {
+        // Device supports phone calls
+        CTTelephonyNetworkInfo *netInfo = [[CTTelephonyNetworkInfo alloc] init];
+        CTCarrier *carrier = [netInfo subscriberCellularProvider];
+        NSString *mnc = [carrier mobileNetworkCode];
+        
+        if (([mnc length] == 0) || ([mnc isEqualToString:@"65535"])) {
+            // The device can't place a call at this time.  SIM might be removed.
+            *error =
+            [self errorWithLocalizedDescription:NSLocalizedString(@"QM_STR_CELLULAR_ERROR_CAN_NOT_MAKE_CALL", nil)];
+            
+            return NO;
+        }
+        else {
+            // Device can place a phone call
+            return YES;
+        }
+    } else {
+        // Device does not support phone calls
+        *error =
+        [self errorWithLocalizedDescription:NSLocalizedString(@"QM_STR_CELLULAR_ERROR_NOT_SUPPORTED",nil)];
+        
+        return  NO;
+    }
+}
+
+- (NSString *)formatPhoneUrl:(NSString *)phone {
+    
+    unichar cleanPhone[phone.length];
+    int cleanPhoneLength = 0;
+    
+    int length = (int)phone.length;
+    for (int i = 0; i < length; i++) {
+        unichar c = [phone characterAtIndex:i];
+        if (!(c == ' ' || c == '(' || c == ')' || c == '-'))
+            cleanPhone[cleanPhoneLength++] = c;
+    }
+    
+    return [[NSString alloc] initWithCharacters:cleanPhone length:cleanPhoneLength];
+}
+
+- (NSError *)errorWithLocalizedDescription:(NSString *)localizedDescription {
+    
+    return [NSError errorWithDomain:@""
+                               code:0
+                           userInfo:@{NSLocalizedDescriptionKey : localizedDescription}];
+}
+
+//MARK:- Notifications
+
+- (void)didReceiveMenuWillShowNotification:(NSNotification *)notification {
+    
+    if (!self.selectedIndexPathForMenu) {
+        return;
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIMenuControllerWillShowMenuNotification
+                                                  object:nil];
+    
+    UIMenuController *menu = [notification object];
+    [menu setMenuVisible:NO animated:NO];
+    
+    NSInteger section = self.selectedIndexPathForMenu.section;
+    
+    UILabel *targetLabel;
+    
+    if (section == QMUserInfoSectionStatus) {
+        targetLabel = self.statusLabel;
+    }
+    else if (section == QMUserInfoSectionInfoEmail) {
+        targetLabel = self.emailLabel;
+    }
+    else if (section == QMUserInfoSectionInfoPhone) {
+        targetLabel = self.phoneLabel;
+    }
+    
+    NSParameterAssert(targetLabel);
+    
+    CGRect selectedCellFrame = CGRectZero;
+    selectedCellFrame.origin.x = targetLabel.intrinsicContentSize.width/2;
+    
+    [menu setTargetRect:selectedCellFrame inView:targetLabel];
+    [menu setMenuVisible:YES animated:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveMenuWillShowNotification:)
+                                                 name:UIMenuControllerWillShowMenuNotification
+                                               object:nil];
+}
+
+- (void)didReceiveMenuWillHideNotification:(NSNotification *)__unused notification {
+    self.selectedIndexPathForMenu = nil;
 }
 
 @end

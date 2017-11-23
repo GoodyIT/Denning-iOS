@@ -22,7 +22,7 @@
     NSString* nameOfField;
     
     NSString* selectedDetails;
-    NSString* selectedAttendantStatus, *selectedStaffAssigned, *selectedStaffAttended;
+    NSString* selectedAttendantStatus, *selectedStaffAssigned;
     
     NSString* selectedStaff;
     
@@ -82,7 +82,7 @@
 {
     _place.text = _personalDiary.place;
     _details.text = _personalDiary.appointmentDetails;
-    selectedStaffAttended = _personalDiary.staffAttended.clientCode;
+    _staffAttended.text = _personalDiary.staffAttended;
     _staffAssigned.text = _personalDiary.staffAssigned.name;
     selectedStaffAssigned = _personalDiary.staffAssigned.clientCode;
     _attendantStatus.text = _personalDiary.attendedStatus.descriptionValue;
@@ -170,8 +170,12 @@
         [data addEntriesFromDictionary:@{@"place":_place.text}];
     }
     
-    if (![_staffAssigned.text isEqualToString:_personalDiary.staffAssigned.name]) {
+    if (![selectedStaffAssigned isEqualToString:_personalDiary.staffAssigned.clientCode]) {
         [data addEntriesFromDictionary:@{@"staffAssigned":@{@"code":selectedStaffAssigned}}];
+    }
+    
+    if (![_staffAttended.text isEqualToString:_personalDiary.staffAttended]) {
+        [data addEntriesFromDictionary:@{@"staffAttended":_staffAttended.text}];
     }
     
     if (![_Remarks.text isEqualToString:_personalDiary.remarks]) {
@@ -180,8 +184,10 @@
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:PERSONAL_DIARY_SAVE_URL];
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
+                                                                          message:NSLocalizedString(@"QM_STR_LOADING", nil)
+                                                                         duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionTask* _Nonnull task) {
         [navigationController dismissNotificationPanel];
@@ -191,7 +197,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully updated" duration:1.0];
             
         } else {
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
     }];
 }
@@ -216,8 +222,10 @@
                            };
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
+                                                                          message:NSLocalizedString(@"QM_STR_LOADING", nil)
+                                                                         duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] savePersonalDiaryWithData:data WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
@@ -227,7 +235,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             
         } else {
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:2.0];
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:2.0];
         }
     }];
 }
@@ -350,7 +358,6 @@
         selectedStaffAssigned = @"";
     } else if (indexPath.row == 5) {
         self.staffAttended.text = @"";
-        selectedStaffAttended = @"";
     } else if (indexPath.row == 6) {
         if (_personalDiary != nil) {
             self.attendantStatus.text = @"";
@@ -501,7 +508,6 @@
                 selectedStaffAssigned = model.staffCode;
             } else {
                 _staffAttended.text = model.name;
-                selectedStaffAttended = model.staffCode;
             }
         };
     } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {

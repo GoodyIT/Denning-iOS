@@ -11,7 +11,7 @@
 #import "QMGroupAddUsersSearchDataProvider.h"
 #import "QMCore.h"
 #import "NSArray+Intersection.h"
-#import "UINavigationController+QMNotification.h"
+#import "QMNavigationController.h"
 
 #import "QMSelectableContactCell.h"
 #import "QMNoResultsCell.h"
@@ -45,11 +45,8 @@ UISearchResultsUpdating
     
     [self registerNibs];
     
-    // Hide empty separators
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
     // subscribe for delegates
-    [[QMCore instance].chatService addDelegate:self];
+    [QMCore.instance.chatService addDelegate:self];
     
     // caching occupant IDs
     self.cachedOccupantIDs = self.chatDialog.occupantIDs;
@@ -81,7 +78,17 @@ UISearchResultsUpdating
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.definesPresentationContext = YES;
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
+    
+#ifdef __IPHONE_11_0
+    if (@available(iOS 11.0, *)) {
+        self.navigationItem.searchController = self.searchController;
+        self.navigationItem.hidesSearchBarWhenScrolling = NO;
+    } else {
+        self.tableView.tableHeaderView = self.searchController.searchBar;
+    }
+#else
     self.tableView.tableHeaderView = self.searchController.searchBar;
+#endif
 }
 
 - (void)updateUsers {
@@ -106,7 +113,7 @@ UISearchResultsUpdating
     [self.searchController.view removeFromSuperview];
 }
 
-#pragma mark - Actions
+//MARK: - Actions
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)__unused sender {
     
@@ -115,15 +122,15 @@ UISearchResultsUpdating
         return;
     }
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     @weakify(self);
-    self.task = [[[QMCore instance].chatManager addUsers:self.dataSource.selectedUsers.allObjects toGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+    self.task = [[QMCore.instance.chatManager addUsers:self.dataSource.selectedUsers.allObjects toGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
         
         @strongify(self);
-        [navigationController dismissNotificationPanel];
+        [(QMNavigationController *)navigationController dismissNotificationPanel];
         
         if (!task.isFaulted) {
             
@@ -134,14 +141,14 @@ UISearchResultsUpdating
     }];
 }
 
-#pragma mark - UISearchResultsUpdating
+//MARK: - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     
     [self.dataSource.searchDataProvider performSearch:searchController.searchBar.text];
 }
 
-#pragma mark - UITableViewDelegate
+//MARK: - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -163,7 +170,7 @@ UISearchResultsUpdating
     return [self.dataSource heightForRowAtIndexPath:indexPath];
 }
 
-#pragma mark - QMSearchDataProviderDelegate
+//MARK: - QMSearchDataProviderDelegate
 
 - (void)searchDataProviderDidFinishDataFetching:(QMSearchDataProvider *)__unused searchDataProvider {
     
@@ -187,7 +194,7 @@ UISearchResultsUpdating
     [self.tableView reloadData];
 }
 
-#pragma mark - QMChatServiceDelegate
+//MARK: - QMChatServiceDelegate
 
 - (void)chatService:(QMChatService *)__unused chatService didUpdateChatDialogInMemoryStorage:(QBChatDialog *)chatDialog {
     
@@ -207,7 +214,7 @@ UISearchResultsUpdating
     }
 }
 
-#pragma mark - register nibs
+//MARK: - register nibs
 
 - (void)registerNibs {
     

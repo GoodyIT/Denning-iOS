@@ -6,9 +6,7 @@
 //  Copyright (c) 2016 QuickBlox. All rights reserved.
 //
 
-#import <Quickblox/QBNullability.h>
-#import <Quickblox/QBGeneric.h>
-#import "ChatEnums.h"
+#import "QBChatTypes.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,25 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  Your requests which pending approval.
  */
 @property (nonatomic, readonly, nullable) NSArray<QBContactListItem *> *pendingApproval;
-
-/**
- *  Get last activity
- *
- *  @param item     QBContactListItem
- *  @param completion completion block with last activity in seconds and error
- */
-- (void)lastActivityForContactListItem:(QBContactListItem *)item
-                        withCompletion:(QBUserLastActivityCompletionBlock)completion;
-/**
- *  Get last activity
- *
- *  @param item       QBContactListItem
- *  @param timeout    timeout
- *  @param completion completion block with last activity in seconds and error
- */
-- (void)lastActivityForContactListItem:(QBContactListItem *)item
-                           withTimeout:(NSTimeInterval)timeOut
-                            completion:(QBUserLastActivityCompletionBlock)completion;
 
 @end
 

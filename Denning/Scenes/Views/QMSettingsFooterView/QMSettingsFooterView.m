@@ -9,7 +9,7 @@
 #import "QMSettingsFooterView.h"
 #import "QMColors.h"
 
-static UIColor *labelTextColor() {
+static UIColor *labelTextColor(void) {
     
     static UIColor *color = nil;
     
@@ -22,7 +22,7 @@ static UIColor *labelTextColor() {
     return color;
 }
 
-static UIFont *labelFont() {
+static UIFont *labelFont(void) {
     
     static UIFont *font = nil;
     
@@ -39,6 +39,7 @@ static const CGFloat kQMVersionLabelPosiitonY = 33.0f;
 static const CGFloat kQMSpaceBetweenLabels = 16.0f;
 
 static NSString *const kQMBundleShortVersionString = @"CFBundleShortVersionString";
+static NSString *const KQMBundleVersion = @"CFBundleVersion";
 
 @interface QMSettingsFooterView ()
 
@@ -54,7 +55,7 @@ static NSString *const kQMBundleShortVersionString = @"CFBundleShortVersionStrin
     return 100.0f;
 }
 
-#pragma mark - Construction
+//MARK: - Construction
 
 - (instancetype)initWithFrame:(CGRect)frame {
     
@@ -71,7 +72,7 @@ static NSString *const kQMBundleShortVersionString = @"CFBundleShortVersionStrin
     return self;
 }
 
-#pragma mark - Getters
+//MARK: - Getters
 
 - (UILabel *)versionLabel {
     
@@ -80,9 +81,13 @@ static NSString *const kQMBundleShortVersionString = @"CFBundleShortVersionStrin
         // configuring label
         _versionLabel = [[UILabel alloc] init];
         [self configureLabel:_versionLabel];
-        
+        NSDictionary *info = NSBundle.mainBundle.infoDictionary;
         // setting custom text
-        NSString *versionString = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"QM_STR_VERSION", nil), [NSBundle mainBundle].infoDictionary[kQMBundleShortVersionString]];
+        NSString *versionString = [NSString stringWithFormat:@"%@ %@ (%@)",
+                                   NSLocalizedString(@"QM_STR_VERSION", nil),
+                                   info[kQMBundleShortVersionString],
+                                   info[KQMBundleVersion]];
+        
         _versionLabel.text = versionString;
         [_versionLabel sizeToFit];
         
@@ -116,7 +121,7 @@ static NSString *const kQMBundleShortVersionString = @"CFBundleShortVersionStrin
     return _copyrightLabel;
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 - (void)configureLabel:(UILabel *)label {
     

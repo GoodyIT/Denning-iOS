@@ -7,7 +7,7 @@
 //
 
 #import "QMChangePasswordViewController.h"
-#import "UINavigationController+QMNotification.h"
+#import "QMNavigationController.h"
 #import "QMCore.h"
 #import "QMTasks.h"
 
@@ -33,7 +33,7 @@ static const NSUInteger kQMPasswordMinChar = 8;
     self.navigationItem.leftBarButtonItem = nil;
 }
 
-#pragma mark - Life cycle
+//MARK: - Life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,20 +54,20 @@ static const NSUInteger kQMPasswordMinChar = 8;
     [self.passwordOldField becomeFirstResponder];
 }
 
-#pragma mark - Actions
+//MARK: - Actions
 
 - (IBAction)changeButtonPressed:(UIBarButtonItem *)__unused sender {
     
-    if (![self.passwordOldField.text isEqualToString:[QMCore instance].currentProfile.userData.password]) {
+    if (![self.passwordOldField.text isEqualToString:QMCore.instance.currentProfile.userData.password]) {
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_WRONG_OLD_PASSWORD", nil) duration:kQMDefaultNotificationDismissTime];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_WRONG_OLD_PASSWORD", nil) duration:kQMDefaultNotificationDismissTime];
         
         return;
     }
     
     if (![self.passwordNewField.text isEqualToString:self.passwordConfirmField.text]) {
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_PASSWORD_DONT_MATCH", nil) duration:kQMDefaultNotificationDismissTime];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_PASSWORD_DONT_MATCH", nil) duration:kQMDefaultNotificationDismissTime];
         
         return;
     }
@@ -76,9 +76,9 @@ static const NSUInteger kQMPasswordMinChar = 8;
     params.oldPassword = self.passwordOldField.text;
     params.password = self.passwordNewField.text;
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     @weakify(self);
     [[QMTasks taskUpdateCurrentUser:params] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
@@ -95,7 +95,7 @@ static const NSUInteger kQMPasswordMinChar = 8;
     }];
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 - (IBAction)passwordOldFieldChanged {
     
@@ -126,7 +126,7 @@ static const NSUInteger kQMPasswordMinChar = 8;
     }
 }
 
-#pragma mark - UITextFieldDelegate
+//MARK: - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
@@ -157,7 +157,7 @@ static const NSUInteger kQMPasswordMinChar = 8;
     return YES;
 }
 
-#pragma mark - UITableViewDataSource
+//MARK: - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)__unused tableView titleForFooterInSection:(NSInteger)__unused section {
     

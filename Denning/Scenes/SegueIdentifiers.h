@@ -134,6 +134,8 @@ static NSString* const kMatterCodeSegue = @"MatterCodeSegue";
 
 static NSString* const kPresetBillSegue = @"PresetBillSegue";
 
+static NSString* const kTaxSelectionSegue = @"TaxSelectionSegue";
+
 static NSString* const kQuotationSegue = @"QuotationSegue";
 
 static NSString* const kBankBranchSegue = @"BankBranchSegue";

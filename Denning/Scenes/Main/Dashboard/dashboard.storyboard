@@ -74,7 +74,7 @@
                         <segue destination="js5-e4-9oO" kind="show" identifier="TrialBalanceSegue" id="3eK-fd-YZH"/>
                         <segue destination="edj-de-mkX" kind="show" identifier="TaxInvoiceSegue" id="zER-DN-tv6"/>
                         <segue destination="bUC-AL-QLv" kind="show" identifier="FeesTransferSegue" id="h5Z-pi-6bY"/>
-                        <segue destination="iE8-pn-bW2" kind="show" identifier="ContactGetListSegue" id="WAl-Ls-jwK"/>
+                        <segue destination="iE8-pn-bW2" kind="presentation" identifier="ContactGetListSegue" id="WAl-Ls-jwK"/>
                         <segue destination="7w2-rk-Q6g" kind="show" identifier="ProfitLossSegue" id="y7f-B3-zAG"/>
                         <segue destination="HZd-vv-hve" kind="show" identifier="StaffOnlineSegue" id="3Ab-Nd-eMo"/>
                         <segue destination="aeY-z5-J8a" kind="show" identifier="AttendanceSegue" id="jtk-Ic-deL"/>
@@ -90,7 +90,7 @@
         <!--Dashboard-->
         <scene sceneID="lfO-u5-cCj">
             <objects>
-                <navigationController storyboardIdentifier="DashboardNavigation" automaticallyAdjustsScrollViewInsets="NO" id="dN2-Vl-5wu" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DashboardNavigation" automaticallyAdjustsScrollViewInsets="NO" id="dN2-Vl-5wu" customClass="QMNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Dashboard" image="icon_overview" id="PAO-pz-OVd"/>
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -416,7 +416,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Due Task" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUz-1d-Xrx">
-                                        <rect key="frame" x="131" y="38.5" width="115" height="23"/>
+                                        <rect key="frame" x="130" y="38.5" width="115" height="23"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="19"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -468,7 +468,7 @@
         <!--Navigation Controller-->
         <scene sceneID="JTe-pQ-f46">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="E0Z-Ik-3pd" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="E0Z-Ik-3pd" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="2WO-97-817" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -492,7 +492,7 @@
         <!--Navigation Controller-->
         <scene sceneID="VMV-7G-Mcx">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="932-Gv-Z0N" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="932-Gv-Z0N" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="yPC-Uw-Wlc" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -854,7 +854,7 @@
         <!--Navigation Controller-->
         <scene sceneID="gJv-qN-55Z">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XKO-v5-F04" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XKO-v5-F04" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="rdj-j2-rwL" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -918,7 +918,7 @@
         <!--Navigation Controller-->
         <scene sceneID="4R1-TA-3Mt">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S0Y-TI-5nM" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="S0Y-TI-5nM" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="nnX-gf-tbr" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1041,7 +1041,7 @@
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ledger balance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CwL-8Y-JpF">
-                                        <rect key="frame" x="12" y="12" width="116" height="18"/>
+                                        <rect key="frame" x="12" y="11" width="116" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1056,7 +1056,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Static)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ps-sw-RbX">
-                                        <rect key="frame" x="136" y="12" width="53.5" height="18"/>
+                                        <rect key="frame" x="136" y="11" width="53.5" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1215,7 +1215,7 @@
                                 <rect key="frame" x="0.0" y="627" width="375" height="40"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ledger balance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDN-Lc-O2J">
-                                        <rect key="frame" x="12" y="12" width="116" height="18"/>
+                                        <rect key="frame" x="12" y="11" width="116" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1230,7 +1230,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(Static)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ji-qO-uwt">
-                                        <rect key="frame" x="136" y="12" width="53.5" height="18"/>
+                                        <rect key="frame" x="136" y="11" width="53.5" height="18"/>
                                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1285,7 +1285,7 @@
         <!--Navigation Controller-->
         <scene sceneID="IoN-g9-Skj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="29Y-k9-bHJ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="29Y-k9-bHJ" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Xtp-Wa-RFm" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1308,7 +1308,7 @@
         <!--Navigation Controller-->
         <scene sceneID="wcD-cS-sQ4">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HPl-bZ-5K7" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HPl-bZ-5K7" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="jKM-aJ-hkF" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1433,7 +1433,7 @@
         <!--Navigation Controller-->
         <scene sceneID="VgE-Ep-JZ4">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sLh-kr-Xle" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sLh-kr-Xle" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="aZT-HH-bhD" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1513,7 +1513,7 @@
         <!--Navigation Controller-->
         <scene sceneID="mpj-Dn-3CC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="js5-e4-9oO" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="js5-e4-9oO" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="SlE-lA-uHn" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1742,7 +1742,7 @@
         <!--Navigation Controller-->
         <scene sceneID="FO5-zd-aOb">
             <objects>
-                <navigationController storyboardIdentifier="TaxInvoiceNavigation" automaticallyAdjustsScrollViewInsets="NO" id="edj-de-mkX" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TaxInvoiceNavigation" automaticallyAdjustsScrollViewInsets="NO" id="edj-de-mkX" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="r1r-PL-DTx" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1761,7 +1761,7 @@
         <!--Navigation Controller-->
         <scene sceneID="X6D-H4-6aw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bUC-AL-QLv" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bUC-AL-QLv" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Ot5-60-DhL" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -2610,7 +2610,7 @@
         <!--Navigation Controller-->
         <scene sceneID="vND-cQ-xcI">
             <objects>
-                <navigationController storyboardIdentifier="DashboardContactNavigation" automaticallyAdjustsScrollViewInsets="NO" id="iE8-pn-bW2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DashboardContactNavigation" automaticallyAdjustsScrollViewInsets="NO" id="iE8-pn-bW2" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="gJM-Ml-HS2" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -2634,7 +2634,7 @@
         <!--Navigation Controller-->
         <scene sceneID="2Jq-HN-spo">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7w2-rk-Q6g" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7w2-rk-Q6g" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Bup-Kj-bTt" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -2658,7 +2658,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ObT-gH-kRn">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HZd-vv-hve" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HZd-vv-hve" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="vyp-44-24B" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -3088,7 +3088,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Twc-AV-ifQ">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aeY-z5-J8a" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aeY-z5-J8a" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="vLZ-9k-74j" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -3112,7 +3112,7 @@
         <!--Navigation Controller-->
         <scene sceneID="dgx-Ix-cWH">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Qhx-6t-VeD" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Qhx-6t-VeD" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="4UM-o1-kYx" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -3136,7 +3136,7 @@
         <!--Navigation Controller-->
         <scene sceneID="CGH-bU-GZj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vO0-vW-dCr" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vO0-vW-dCr" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="G0N-r6-Fpl" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -3157,7 +3157,7 @@
         <!--Navigation Controller-->
         <scene sceneID="cBB-LY-oon">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="u2V-ki-n4m" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="u2V-ki-n4m" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="RfV-Gc-wy9" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -3186,9 +3186,9 @@
         <image name="icon_prev.png" width="13" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nzN-dH-s6n"/>
-        <segue reference="QC5-xE-JvY"/>
-        <segue reference="x5l-mZ-uXi"/>
+        <segue reference="RrA-Ox-KOx"/>
+        <segue reference="fEx-Tm-eHv"/>
+        <segue reference="a4U-ac-GhS"/>
         <segue reference="U92-Co-CHC"/>
     </inferredMetricsTieBreakers>
 </document>

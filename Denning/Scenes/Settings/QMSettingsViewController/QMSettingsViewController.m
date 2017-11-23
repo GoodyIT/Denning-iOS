@@ -15,7 +15,7 @@
 #import "QMCore.h"
 #import "QMProfile.h"
 #import <QMImageView.h>
-#import "UINavigationController+QMNotification.h"
+#import "QMNavigationController.h"
 #import "QMSettingsFooterView.h"
 
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
@@ -53,6 +53,7 @@ typedef NS_ENUM(NSUInteger, QMSocialSection) {
 QMProfileDelegate,
 QMImageViewDelegate,
 QMImagePickerResultHandler,
+QMUsersServiceListenerProtocol,
 
 NYTPhotosViewControllerDelegate
 >
@@ -77,34 +78,33 @@ NYTPhotosViewControllerDelegate
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    QMCore *core = [QMCore instance];
+    [[QMCore instance].usersService addListener:self forUser:core.currentProfile.userData];
+    
     self.hiddenUserInfoCells = [NSMutableIndexSet indexSet];
     self.avatarImageView.imageViewType = QMImageViewTypeCircle;
-    
-    // Hide empty separators
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // Set tableview background color
     self.tableView.backgroundColor = QMTableViewBackgroundColor();
     
     // configure user data
-    [self configureUserData:[QMCore instance].currentProfile.userData];
-    self.pushNotificationSwitch.on = [QMCore instance].currentProfile.pushNotificationsEnabled;
+    [self configureUserData:core.currentProfile.userData];
+    self.pushNotificationSwitch.on = core.currentProfile.pushNotificationsEnabled;
     
     // determine account type
-    if ([QMCore instance].currentProfile.accountType != QMAccountTypeEmail) {
+    if (core.currentProfile.accountType != QMAccountTypeEmail) {
         
         [self.hiddenUserInfoCells addIndex:QMUserInfoSectionEmail];
         [self.hiddenUserInfoCells addIndex:QMUserInfoSectionChangePassword];
     }
     
     // subscribe to delegates
-    [QMCore instance].currentProfile.delegate = self;
+    core.currentProfile.delegate = self;
     self.avatarImageView.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     // smooth rows deselection
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
@@ -112,9 +112,7 @@ NYTPhotosViewControllerDelegate
 - (void)configureUserData:(QBUUser *)userData {
     
     [self.avatarImageView setImageWithURL:[NSURL URLWithString:userData.avatarUrl]
-                              placeholder:[UIImage imageNamed:@"upic_avatarholder"]
-                                  options:SDWebImageHighPriority
-                                 progress:nil
+                                    title:userData.fullName
                            completedBlock:nil];
     
     self.fullNameLabel.text = userData.fullName;
@@ -130,10 +128,17 @@ NYTPhotosViewControllerDelegate
     
     self.emailLabel.text = userData.email.length > 0 ? userData.email : NSLocalizedString(@"QM_STR_NONE", nil);
     
-    self.statusLabel.text = userData.status.length > 0 ? userData.status : NSLocalizedString(@"QM_STR_NONE", nil);
+    BOOL hasStatus = userData.status.length > 0;
+    
+    self.statusLabel.text =
+    hasStatus ? userData.status : NSLocalizedString(@"QM_STR_NO_STATUS_MESSAGE", nil);
+    
+    self.statusLabel.textColor =
+    hasStatus ? [UIColor darkGrayColor] : [UIColor lightGrayColor];
+    
 }
 
-#pragma mark - Actions
+//MARK: - Actions
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -152,23 +157,30 @@ NYTPhotosViewControllerDelegate
         return;
     }
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    
     BFContinuationBlock completionBlock = ^id _Nullable(BFTask * _Nonnull __unused task) {
+        if (task.faulted) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeFailed message:task.result duration:3];
+        }
+        else {
+            [QMCore instance].currentProfile.pushNotificationsEnabled ^= YES;
+            [QMCore.instance.currentProfile synchronize];
+        }
         
+        self.pushNotificationSwitch.on = [QMCore instance].currentProfile.pushNotificationsEnabled;
         [navigationController dismissNotificationPanel];
-        
+       
         return nil;
     };
     
     if (sender.isOn) {
-        
-        self.subscribeTask = [[[QMCore instance].pushNotificationManager subscribeForPushNotifications] continueWithBlock:completionBlock];
+        self.subscribeTask = [[QMCore.instance.pushNotificationManager registerAndSubscribeForPushNotifications] continueWithBlock:completionBlock];
     }
     else {
-        
-        self.subscribeTask = [[[QMCore instance].pushNotificationManager unSubscribeFromPushNotifications] continueWithBlock:completionBlock];
+        self.subscribeTask = [[QMCore.instance.pushNotificationManager unregisterFromPushNotificationsAndUnsubscribe:NO] continueWithBlock:completionBlock];
     }
 }
 
@@ -184,7 +196,7 @@ NYTPhotosViewControllerDelegate
                                                       handler:^(UIAlertAction * _Nonnull __unused action) {
                                                       }]];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     @weakify(self);
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_LOGOUT", nil)
@@ -197,9 +209,9 @@ NYTPhotosViewControllerDelegate
                                                               return;
                                                           }
                                                           
-                                                          [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+                                                          [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
                                                           
-                                                          self.logoutTask = [[[QMCore instance] logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {
+                                                          self.logoutTask = [[QMCore.instance logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {
                                                               
                                                               [navigationController dismissNotificationPanel];
                                                               [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
@@ -210,7 +222,7 @@ NYTPhotosViewControllerDelegate
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark - UITableViewDelegate
+//MARK: - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -293,7 +305,7 @@ NYTPhotosViewControllerDelegate
                                                                          CGRectGetWidth(tableView.frame),
                                                                          kQMStatusSectionHeaderHeight)];
         headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        headerView.title = [NSLocalizedString(@"QM_STR_STATUS", nil) uppercaseString];;
+        headerView.title = [NSLocalizedString(@"QM_STR_STATUS", nil) uppercaseString];
         
         return headerView;
     }
@@ -342,14 +354,22 @@ NYTPhotosViewControllerDelegate
     return CGFLOAT_MIN;
 }
 
-#pragma mark - QMProfileDelegate
+//MARK: - QMProfileDelegate
 
 - (void)profile:(QMProfile *)__unused currentProfile didUpdateUserData:(QBUUser *)userData {
     
     [self configureUserData:userData];
 }
 
-#pragma mark - QMImageViewDelegate
+// MARK: - QMUsersServiceListenerProtocol
+
+- (void)usersService:(QMUsersService *)__unused usersService didUpdateUser:(QBUUser *)user {
+    
+    user.password = QMCore.instance.currentProfile.userData.password;
+    [QMCore.instance.currentProfile synchronizeWithUserData:user];
+}
+
+//MARK: - QMImageViewDelegate
 
 - (void)imageViewDidTap:(QMImageView *)imageView {
     
@@ -369,15 +389,16 @@ NYTPhotosViewControllerDelegate
                                                           [QMImagePicker choosePhotoInViewController:self resultHandler:self];
                                                       }]];
     
-    NSString *avatarURL = [QMCore instance].currentProfile.userData.avatarUrl;
+    NSString *avatarURL = QMCore.instance.currentProfile.userData.avatarUrl;
     if (avatarURL.length > 0) {
         
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_OPEN_IMAGE", nil)
                                                             style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull __unused action) {
-                                                              
-                                                              [QMImagePreview previewImageWithURL:[NSURL URLWithString:avatarURL] inViewController:self];
-                                                          }]];
+                                                          handler:^(UIAlertAction * _Nonnull __unused action)
+                                    {
+                                        
+                                        [QMImagePreview previewImageWithURL:[NSURL URLWithString:avatarURL] inViewController:self];
+                                    }]];
     }
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
@@ -393,44 +414,35 @@ NYTPhotosViewControllerDelegate
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark - QMImagePickerResultHandler
+//MARK: - QMImagePickerResultHandler
 
 - (void)imagePicker:(QMImagePicker *)__unused imagePicker didFinishPickingPhoto:(UIImage *)photo {
     
-    if (![[QMCore instance] isInternetConnected]) {
+    if (![QMCore.instance isInternetConnected]) {
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
         return;
     }
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
-    
-    @weakify(self);
-    [[QMTasks taskUpdateCurrentUserImage:photo progress:nil] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
-        
-        @strongify(self);
-        
-        [navigationController dismissNotificationPanel];
-        
-        if (!task.isFaulted) {
-            
-            [self.avatarImageView setImage:photo withKey:task.result.avatarUrl];
-        }
-        
-        return nil;
-    }];
+    __weak __typeof(self)weakSelf = self;
+    [[QMTasks taskUpdateCurrentUserImage:photo progress:nil]
+     continueWithBlock:^id(BFTask<QBUUser *> * task __unused) {
+         
+         [(QMNavigationController *)weakSelf.navigationController dismissNotificationPanel];
+         return nil;
+     }];
 }
 
-#pragma mark - NYTPhotosViewControllerDelegate
+//MARK: - NYTPhotosViewControllerDelegate
 
 - (UIView *)photosViewController:(NYTPhotosViewController *)__unused photosViewController referenceViewForPhoto:(id<NYTPhoto>)__unused photo {
     
     return self.avatarImageView;
 }
 
-#pragma mark - Share View Controller
+//MARK: - Share View Controller
 
 - (void)showShareControllerInCell:(UITableViewCell *)cell {
     
@@ -448,7 +460,7 @@ NYTPhotosViewControllerDelegate
     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 - (BOOL)shouldShowHeaderForSection:(NSInteger)section {
     
@@ -466,6 +478,5 @@ NYTPhotosViewControllerDelegate
     
     return YES;
 }
-
 
 @end

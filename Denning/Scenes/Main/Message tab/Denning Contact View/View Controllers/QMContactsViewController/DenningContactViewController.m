@@ -69,9 +69,9 @@ SWTableViewCellDelegate
     [self configureSearch];
 
     // filling data source
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self updateItemsFromContactListWithCompletion:^{
@@ -134,9 +134,9 @@ SWTableViewCellDelegate
 - (void)configureDataSources {
     
     self.dataSource = [[QMContactsDataSource alloc] initWithKeyPath:@keypath(QBUUser.new, fullName)];
-    self.dataSource.didAddUserBlock = ^{
-        
-    };
+//    self.dataSource.didAddUserBlock = ^{
+//
+//    };
     self.tableView.dataSource = self.dataSource;
 }
 
@@ -250,21 +250,25 @@ SWTableViewCellDelegate
 
 - (BOOL)connectionExists {
     
-    if (![[QMCore instance] isInternetConnected]) {
+    if (![QMCore.instance isInternetConnected]) {
         
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil)];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning
+                                                                              message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil)
+                                                                             duration:kQMDefaultNotificationDismissTime];
         return NO;
     }
     
     if (![QBChat instance].isConnected) {
         
-        if ([QMCore instance].chatService.chatConnectionState == QMChatConnectionStateConnecting) {
+        if (QBChat.instance.isConnecting) {
             
-            [self.navigationController shake];
+            [(QMNavigationController *)self.navigationController shake];
         }
         else {
             
-            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) actionSuccess:NO inViewController:self];
+            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil)
+                            actionSuccess:NO
+                         inViewController:self];
         }
         
         return NO;
@@ -274,9 +278,9 @@ SWTableViewCellDelegate
 }
 
 - (void) addContactToFavoriteList:(QBUUser*) user {
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     [[QMNetworkManager sharedManager] addFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
         
         [navigationController dismissNotificationPanel];
@@ -290,9 +294,9 @@ SWTableViewCellDelegate
 }
 
 - (void) removeContactFromFavoriteList:(QBUUser*) user {
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     [[QMNetworkManager sharedManager] removeFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
         
         [navigationController dismissNotificationPanel];
@@ -428,24 +432,9 @@ SWTableViewCellDelegate
                     }
                 }
                 else {
-                    switch ([QMCore instance].chatService.chatConnectionState) {
-                            
-                        case QMChatConnectionStateDisconnected:
-                        case QMChatConnectionStateConnected:
-                            if ([[QMCore instance] isInternetConnected]) {
-                                
-                                [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) actionSuccess:NO inViewController:self];
-                            }
-                            else {
-                                
-                                [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) actionSuccess:NO inViewController:self];
-                            }
-                            break;
-                            
-                        case QMChatConnectionStateConnecting:
-                            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CONNECTION_IN_PROGRESS", nil) actionSuccess:NO inViewController:self];
-                            break;
-                    }
+                    [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil)
+                                    actionSuccess:NO
+                                 inViewController:self];
                 }
                 
                 return nil;
@@ -469,9 +458,9 @@ SWTableViewCellDelegate
             return;
         }
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
         
-        __weak UINavigationController *navigationController = self.navigationController;
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         
         @weakify(self);
         self.task = [[[QMCore instance].chatService createPrivateChatDialogWithOpponentID:user.ID] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
@@ -523,7 +512,7 @@ SWTableViewCellDelegate
         UINavigationController *navigationController = segue.destinationViewController;
         QMChatVC *chatViewController = [navigationController viewControllers].firstObject;
         chatViewController.chatDialog = sender;
-        chatViewController.firmCode = selectedFirmCode;
+//        chatViewController.firmCode = selectedFirmCode;
     }
 }
 

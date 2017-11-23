@@ -177,7 +177,7 @@
 
 - (void) getHeaderInfo {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardCompletionHeaderInURL:DASHBOARD_COMPLETION_TRACKING_HEADER_GET_URL withCompletion:^(S3Model * _Nonnull result, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -197,7 +197,7 @@
     if (isLoading) return;
     isLoading = YES;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
     [[QMNetworkManager sharedManager] getCompletionTrackingWithURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)

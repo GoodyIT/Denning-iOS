@@ -10,6 +10,12 @@
 
 @implementation AddLastTwoButtonsCell
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+    _lastBtn.layer.borderColor = [UIColor babyRed].CGColor ;
+}
+
 - (IBAction)didTapSave:(id)sender {
     self.saveHandler();
 }

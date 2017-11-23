@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 typedef NS_ENUM(NSUInteger, QMNotificationPanelType) {
     /**
-     *  Sucess notification, green background, success image.
+     *  Success notification, green background, success image.
      */
     QMNotificationPanelTypeSuccess,
     /**
@@ -36,6 +36,11 @@ typedef NS_ENUM(NSUInteger, QMNotificationPanelType) {
  *  Notification panel default view. Used in basic notifications as a default view.
  */
 @interface QMNotificationPanelView : UIView
+
+/**
+ *  Notification panel type.
+ */
+@property (assign, nonatomic) QMNotificationPanelType notificationPanelType;
 
 /**
  *  Notification panel view message.

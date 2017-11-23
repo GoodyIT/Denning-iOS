@@ -16,6 +16,11 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "LocationManager.h"
+#import <FirebaseCore/FirebaseCore.h>
+#import <FirebaseAuth/FirebaseAuth.h>
+
+#import "UIScreen+QMLock.h"
+#import "UIImage+Cropper.h"
 
 //#import <Flurry.h>
 
@@ -43,7 +48,7 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 
 #endif
 
-@interface AppDelegate ()<QMPushNotificationManagerDelegate, CLLocationManagerDelegate>
+@interface AppDelegate ()<QMPushNotificationManagerDelegate, CLLocationManagerDelegate, QMAuthServiceDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
@@ -73,17 +78,25 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [QBSettings setLogLevel:QBLogLevelNothing];
     [QBSettings disableXMPPLogging];
     [QMServicesManager enableLogging:NO];
+    
+    QMLogSetEnabled(NO);
 #else
     [QBSettings setLogLevel:QBLogLevelDebug];
     [QBSettings enableXMPPLogging];
     [QMServicesManager enableLogging:YES];
+    
+    QMLogSetEnabled(YES);
 #endif
+    
+    [[QMCore instance].authService addDelegate:self];
     
     // QuickbloxWebRTC settings
     [QBRTCClient initializeRTC];
-    [QBRTCConfig setICEServers:[[QMCore instance].callManager quickbloxICE]];
     [QBRTCConfig mediaStreamConfiguration].audioCodec = QBRTCAudioCodecISAC;
     [QBRTCConfig setStatsReportTimeInterval:0.0f]; // set to 1.0f to enable stats report
+    
+    [UITextField appearance].keyboardAppearance = UIKeyboardAppearanceDark;
+    
     
     // Registering for remote notifications
     [self registerForNotification];
@@ -93,6 +106,8 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
         [QMCore instance].pushNotificationManager.pushNotification = pushNotification;
     }
     
+    [FIRApp configure];
+    [[FIRAuth auth] useAppLanguage];
     // Configuring external frameworks
     [Fabric with:@[CrashlyticsKit,  [Answers class]]];
     
@@ -142,7 +157,12 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 
 - (void)application:(UIApplication *)__unused application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
-    [QMCore instance].pushNotificationManager.deviceToken = deviceToken;
+    [[QMCore instance].pushNotificationManager updateToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)__unused application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    [[QMCore instance].pushNotificationManager handleError:error];
 }
 
 - (void)startUpdatingCurrentLocation
@@ -267,73 +287,10 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
     
-    if ([identifier isEqualToString:kQMNotificationActionTextAction]) {
-        
-        NSString *text = responseInfo[UIUserNotificationActionResponseTypedTextKey];
-        
-        NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
-        if ([text stringByTrimmingCharactersInSet:whiteSpaceSet].length == 0) {
-            // do not send message that contains only of spaces
-            if (completionHandler) {
-                
-                completionHandler();
-            }
-            
-            return;
-        }
-        
-        NSString *dialogID = userInfo[kQMPushNotificationDialogIDKey];
-        
-        __block UIBackgroundTaskIdentifier task = [application beginBackgroundTaskWithExpirationHandler:^{
-            
-            [application endBackgroundTask:task];
-            task = UIBackgroundTaskInvalid;
-        }];
-        
-        // Do the work associated with the task.
-        ILog(@"Started background task timeremaining = %f", [application backgroundTimeRemaining]);
-        
-        [[[QMCore instance].chatService fetchDialogWithID:dialogID] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull t) {
-            
-            QBChatDialog *chatDialog = t.result;
-            if (chatDialog != nil) {
-                
-                NSUInteger opponentUserID = [userInfo[kQMPushNotificationUserIDKey] unsignedIntegerValue];
-                
-                if (chatDialog.type == QBChatDialogTypePrivate
-                    && ![[QMCore instance].contactManager isFriendWithUserID:opponentUserID]) {
-                    
-                    if (completionHandler) {
-                        
-                        completionHandler();
-                    }
-                    
-                    return nil;
-                }
-                
-                return [[[QMCore instance].chatManager sendBackgroundMessageWithText:text toDialogWithID:dialogID] continueWithBlock:^id _Nullable(BFTask * _Nonnull messageTask) {
-                    
-                    if (!messageTask.isFaulted
-                        && application.applicationIconBadgeNumber > 0) {
-                        
-                        application.applicationIconBadgeNumber = 0;
-                    }
-                    
-                    [application endBackgroundTask:task];
-                    task = UIBackgroundTaskInvalid;
-                    
-                    return nil;
-                }];
-            }
-            
-            return nil;
-        }];
-    }
-    
-    if (completionHandler) {
-        
-        completionHandler();
-    }
+    [[QMCore instance].pushNotificationManager handleActionWithIdentifier:identifier
+                                                       remoteNotification:userInfo
+                                                             responseInfo:responseInfo
+                                                        completionHandler:completionHandler];
 }
 
 #pragma mark - QMPushNotificationManagerDelegate protocol

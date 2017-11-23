@@ -15,10 +15,10 @@ static const CGFloat kQMIconSize = 26.0f;
 
 @interface QMNotificationPanelView ()
 
-@property (assign, nonatomic) QMNotificationPanelType *notificationPanelType;
-
 @property (strong, nonatomic) UILabel *textLabel;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIVisualEffectView *visualEffectView;
 @property (strong, nonatomic) UIView *bgColorView;
 
@@ -26,15 +26,17 @@ static const CGFloat kQMIconSize = 26.0f;
 
 @implementation QMNotificationPanelView
 
-#pragma mark - Construction
+//MARK: - Construction
 
-- (instancetype)initWithFrame:(CGRect)frame notificationPanelType:(QMNotificationPanelType)notificationPanelType {
+- (instancetype)initWithFrame:(CGRect)frame
+        notificationPanelType:(QMNotificationPanelType)notificationPanelType {
     
     self = [super initWithFrame:frame];
     if (self) {
-        
+        _notificationPanelType = notificationPanelType;
         [self configureBlurWithFrame:frame backgroundColor:color(notificationPanelType)];
-        [self configureIconWithNotificationType:notificationPanelType];
+        [self configureExtraIcons];
+        [self updateExtraIconsStateWithNotificationPanelType:notificationPanelType];
         [self configureTextLabelWithFrame:frame];
     }
     
@@ -54,37 +56,52 @@ static const CGFloat kQMIconSize = 26.0f;
     [self addSubview:_visualEffectView];
 }
 
-- (void)configureIconWithNotificationType:(QMNotificationPanelType)notificationPanelType {
+- (void)configureExtraIcons {
     
-    if (notificationPanelType == QMNotificationPanelTypeLoading) {
-        
-        // init activity indicator
-        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kQMVerticalSpace, kQMHorizontalSpace, kQMIconSize, kQMIconSize)];
-        activityIndicatorView.backgroundColor = [UIColor clearColor];
-        [activityIndicatorView startAnimating];
-        [self addSubview:activityIndicatorView];
-    }
-    else {
-        
-        // init image view
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kQMVerticalSpace, kQMHorizontalSpace, kQMIconSize, kQMIconSize)];
-        imageView.backgroundColor = [UIColor clearColor];
-        imageView.image = image(notificationPanelType);
-        [self addSubview:imageView];
-    }
+    // init activity indicator
+    _activityIndicatorView =
+    [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(kQMVerticalSpace,
+                                                              kQMHorizontalSpace,
+                                                              kQMIconSize,
+                                                              kQMIconSize)];
+    _activityIndicatorView.backgroundColor = [UIColor clearColor];
+    [_bgColorView addSubview:_activityIndicatorView];
+    
+    // init image view
+    _imageView =
+    [[UIImageView alloc] initWithFrame:CGRectMake(kQMVerticalSpace,
+                                                  kQMHorizontalSpace,
+                                                  kQMIconSize,
+                                                  kQMIconSize)];
+    
+    _imageView.backgroundColor = [UIColor clearColor];
+    [_bgColorView addSubview:_imageView];
 }
 
 - (void)configureTextLabelWithFrame:(CGRect)frame {
     // init text label
     CGFloat textLabelX = kQMVerticalSpace + kQMIconSize + kQMVerticalSpace;
-    _textLabel = [[UILabel alloc] initWithFrame:CGRectMake(textLabelX, kQMHorizontalSpace, frame.size.width - textLabelX - kQMHorizontalSpace, 26.0f)];
+    _textLabel =
+    [[UILabel alloc] initWithFrame:CGRectMake(textLabelX,
+                                              kQMHorizontalSpace,
+                                              frame.size.width - textLabelX - kQMHorizontalSpace,
+                                              26.0f)];
     _textLabel.userInteractionEnabled = YES;
     _textLabel.textColor = [UIColor whiteColor];
     _textLabel.numberOfLines = 0;
-    [self addSubview:_textLabel];
+    [_bgColorView addSubview:_textLabel];
 }
 
-#pragma mark - Setters
+//MARK: - Setters
+
+- (void)setNotificationPanelType:(QMNotificationPanelType)notificationPanelType {
+    
+    if (_notificationPanelType != notificationPanelType) {
+        _notificationPanelType = notificationPanelType;
+        _bgColorView.backgroundColor = color(notificationPanelType);
+        [self updateExtraIconsStateWithNotificationPanelType:notificationPanelType];
+    }
+}
 
 - (void)setMessage:(NSString *)message {
     
@@ -121,7 +138,26 @@ static const CGFloat kQMIconSize = 26.0f;
     self.bgColorView.frame = frame;
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
+
+- (void)updateExtraIconsStateWithNotificationPanelType:(QMNotificationPanelType)notificationPanelType {
+    switch (notificationPanelType) {
+        case QMNotificationPanelTypeSuccess:
+        case QMNotificationPanelTypeWarning:
+        case QMNotificationPanelTypeFailed:
+            _imageView.image = image(notificationPanelType);
+            _imageView.hidden = NO;
+            [_activityIndicatorView stopAnimating];
+            _activityIndicatorView.hidden = YES;
+            break;
+            
+        case QMNotificationPanelTypeLoading:
+            _activityIndicatorView.hidden = NO;
+            [_activityIndicatorView startAnimating];
+            _imageView.hidden = YES;
+            break;
+    }
+}
 
 static inline UIColor *color(QMNotificationPanelType notificationPanelType) {
     

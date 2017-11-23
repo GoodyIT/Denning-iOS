@@ -9,31 +9,70 @@
 #import "QMDBStorage.h"
 
 #import "QMSLog.h"
+#import "QMCDRecord.h"
 
 @interface QMDBStorage ()
 
 #define QM_LOGGING_ENABLED 1
 
-@property (strong, nonatomic) dispatch_queue_t queue;
-@property (strong, nonatomic) QMCDRecordStack *stack;
-@property (strong, nonatomic) NSManagedObjectContext *bgContext;
-
 @end
 
 @implementation QMDBStorage
 
-- (instancetype)initWithStoreNamed:(NSString *)storeName model:(NSManagedObjectModel *)model queueLabel:(const char *)queueLabel {
+- (instancetype)initWithStoreNamed:(NSString *)storeName
+                             model:(NSManagedObjectModel *)model
+        applicationGroupIdentifier:(NSString *)appGroupIdentifier {
     
-    self = [self init];
+    self = [super init];
+    
     if (self) {
         
-        self.queue = dispatch_queue_create(queueLabel, DISPATCH_QUEUE_SERIAL);
-        //Create Chat coredata stack
-		self.stack = [AutoMigratingQMCDRecordStack stackWithStoreNamed:storeName model:model];
-		[QMCDRecordStack setDefaultStack:self.stack];
+        _stack = [QMCDRecordStack stackWithStoreNamed:storeName
+                                                model:model
+                           applicationGroupIdentifier:appGroupIdentifier];
+        
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [QMCDRecord setLoggingLevel:QMCDRecordLoggingLevelOff];
+        });
     }
     
     return self;
+}
+
+- (void)performBackgroundQueue:(void (^)(NSManagedObjectContext *ctx))block {
+    
+    NSManagedObjectContext *backgroundContext = [NSManagedObjectContext QM_privateQueueContext];
+    [backgroundContext setParentContext:self.stack.privateWriterContext];
+    [backgroundContext performBlock:^{
+        block(backgroundContext);
+    }];
+}
+
+- (void)performMainQueue:(void (^)(NSManagedObjectContext *ctx))block {
+    
+    NSManagedObjectContext *mainContext = [NSManagedObjectContext QM_mainQueueContext];
+    [mainContext setParentContext:self.stack.privateWriterContext];
+    [mainContext performBlockAndWait:^{
+        block(mainContext);
+    }];
+}
+
+- (void)save:(void (^)(NSManagedObjectContext *ctx))block
+      finish:(dispatch_block_t)finish {
+    
+    NSManagedObjectContext *ctx = _stack.privateWriterContext;
+    [_stack.privateWriterContext performBlock:^{
+        
+        block(ctx);
+        [ctx QM_saveToPersistentStoreAndWait];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (finish) {
+                finish();
+            }
+        });
+    }];
 }
 
 + (void)setupDBWithStoreNamed:(NSString *)storeName {
@@ -41,9 +80,22 @@
     NSAssert(nil, @"must be overloaded");
 }
 
++ (void)setupDBWithStoreNamed:(NSString *)storeName
+   applicationGroupIdentifier:(nullable NSString *)appGroupIdentifier {
+    NSAssert(nil, @"must be overloaded");
+}
+
 + (void)cleanDBWithStoreName:(NSString *)name {
     
-    NSURL *storeUrl = [NSPersistentStore QM_fileURLForStoreName:name];
+    [self cleanDBWithStoreName:name applicationGroupIdentifier:nil];
+}
+
++ (void)cleanDBWithStoreName:(NSString *)name
+  applicationGroupIdentifier:(NSString *)appGroupIdentifier {
+    
+    NSURL *storeUrl =
+    [NSPersistentStore QM_fileURLForStoreNameIfExistsOnDisk:name
+                                 applicationGroupIdentifier:appGroupIdentifier];
     
     if (storeUrl) {
         
@@ -58,41 +110,6 @@
             QMSLog(@"Clear %@ - Done!", storeUrl);
         }
     }
-}
-
-- (NSManagedObjectContext *)bgContext {
-    
-    if (!_bgContext) {
-        _bgContext = [NSManagedObjectContext QM_confinementContextWithParent:self.stack.context];
-    }
-    
-    return _bgContext;
-}
-
-- (void)async:(void(^)(NSManagedObjectContext *context))block {
-    
-    dispatch_async(self.queue, ^{
-        block(self.bgContext);
-    });
-}
-
-- (void)sync:(void(^)(NSManagedObjectContext *context))block {
-    
-    dispatch_sync(self.queue, ^{
-        block(self.bgContext);
-    });
-}
-
-- (void)save:(dispatch_block_t)completion {
-    
-    [self async:^(NSManagedObjectContext *context) {
-        
-        [context QM_saveToPersistentStoreAndWait];
-        
-        if (completion) {
-            DO_AT_MAIN(completion());
-        }
-    }];
 }
 
 @end

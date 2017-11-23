@@ -917,8 +917,8 @@ NSMutableDictionary* keyValue;
     
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] updateMatterWithParams:[self buildUpdateParams] inURL:MATTER_SAVE_URL WithCompletion:^(RelatedMatterModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
@@ -943,14 +943,19 @@ NSMutableDictionary* keyValue;
     [self checkStatus];
     
     if (!isSaveMode) {
-        [self updateMatter];
+        [QMAlert showConfirmDialog:@"Do you want to update contact?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+            if  ([action.title isEqualToString:@"OK"]) {
+                [self updateMatter];
+            }
+        }];
+        
         return;
     }
     
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] saveMatterWithParams:[self buildSaveParams] inURL:MATTER_SAVE_URL WithCompletion:^(RelatedMatterModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
@@ -1422,14 +1427,14 @@ NSMutableDictionary* keyValue;
         code = partyCustomerGroup4CodeList[number];
     }
     if (code.length == 0) {
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
     }
     if (isLoading) return;
     isLoading = YES;
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] loadContactFromSearchWithCode:code completion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
         
@@ -1446,14 +1451,14 @@ NSMutableDictionary* keyValue;
 
 - (void) loadSolicitor: (NSInteger) number {
     if (solicitorCodeList[number].length == 0) {
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
     } else {
         if (isLoading) return;
         isLoading = YES;
         NSString* code = [NSString stringWithFormat:@"%@", solicitorCodeList[number]];
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-        __weak UINavigationController *navigationController = self.navigationController;
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         @weakify(self);
         [[QMNetworkManager sharedManager] loadLegalFirmWithCode:code completion:^(LegalFirmModel * _Nonnull legalFirmModel, NSError * _Nonnull error) {
             @strongify(self);
@@ -1470,14 +1475,14 @@ NSMutableDictionary* keyValue;
 
 - (void) loadProperty: (NSInteger) number {
     if (propertyCodeList[number].length == 0) {
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
     } else {
         if (isLoading) return;
         isLoading = YES;
         
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-        __weak UINavigationController *navigationController = self.navigationController;
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         @weakify(self);
         [[QMNetworkManager sharedManager] loadPropertyfromSearchWithCode:propertyCodeList[number] completion:^(AddPropertyModel * _Nonnull propertyModel, NSError * _Nonnull error) {
             
@@ -1495,14 +1500,14 @@ NSMutableDictionary* keyValue;
 
 - (void) loadBank: (NSInteger) number {
     if (bankCodeList[number].length == 0) {
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
     } else {
         if (isLoading) return;
         isLoading = YES;
         NSString* code = [NSString stringWithFormat:@"%@", bankCodeList[number]];
-        [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-        __weak UINavigationController *navigationController = self.navigationController;
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         @weakify(self);
         [[QMNetworkManager sharedManager] loadBankFromSearchWithCode:code completion:^(BankModel * _Nonnull bankModel, NSError * _Nonnull error) {
             

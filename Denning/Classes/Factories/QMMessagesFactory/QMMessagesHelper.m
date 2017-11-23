@@ -10,9 +10,12 @@
 
 @implementation QMMessagesHelper
 
-#pragma mark - Instances
-
-+ (QBChatMessage *)chatMessageWithText:(NSString *)text senderID:(NSUInteger)senderID chatDialogID:(NSString *)chatDialogID dateSent:(NSDate *)dateSent {
+//MARK: - Instances
++ (QBChatMessage *)chatMessageWithText:(NSString *)text
+                            attachment:(QBChatAttachment *)attachment
+                              senderID:(NSUInteger)senderID
+                          chatDialogID:(NSString *)chatDialogID
+                              dateSent:(NSDate *)dateSent {
     
     QBChatMessage *message = [QBChatMessage message];
     message.text = text;
@@ -22,8 +25,22 @@
     message.readIDs = @[@(senderID)];
     message.dialogID = chatDialogID;
     message.dateSent = dateSent;
-    
+    if (attachment) {
+        message.attachments = @[attachment];
+    }
     return message;
+}
+
++ (QBChatMessage *)chatMessageWithText:(NSString *)text
+                              senderID:(NSUInteger)senderID
+                          chatDialogID:(NSString *)chatDialogID
+                              dateSent:(NSDate *)dateSent {
+    
+    return [self chatMessageWithText:text
+                          attachment:nil
+                            senderID:senderID
+                        chatDialogID:chatDialogID
+                            dateSent:dateSent];
 }
 
 + (QBChatMessage *)contactRequestNotificationForUser:(QBUUser *)user {
@@ -49,7 +66,7 @@
     || message.messageType == QMMessageTypeRejectContactRequest;
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 static inline QBChatMessage *notificationForUser(QBUUser *user) {
     

@@ -41,7 +41,7 @@
 
 @implementation QMTagFieldView
 
-#pragma mark - Constructors
+//MARK: - Constructors
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -72,6 +72,7 @@
     _shadowView = [[UIView alloc] init];
     _shadowView.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, 0);
     _shadowView.layer.zPosition = 1;
+    _shadowView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [self addSubview:_shadowView];
     
     self.clipsToBounds = NO;
@@ -109,7 +110,7 @@
     _tagsList = [NSMutableArray array];
 }
 
-#pragma mark - Overrides
+//MARK: - Overrides
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -158,7 +159,7 @@
     }
 }
 
-#pragma mark - Setters
+//MARK: - Setters
 
 - (void)setPlaceholder:(NSString *)placeholder {
     
@@ -173,7 +174,7 @@
     self.shadowView.frame = CGRectMake(0.0f, frame.size.height, frame.size.width, 0.0f);
 }
 
-#pragma mark - Getters
+//MARK: - Getters
 
 - (BOOL)hasFirstResponder {
     
@@ -185,7 +186,7 @@
     return self.textField.text.length != 0;
 }
 
-#pragma mark - Methods
+//MARK: - Methods
 
 - (void)addTag:(NSString *)title tagID:(id)tagID animated:(BOOL)animated {
     
@@ -478,7 +479,7 @@
     }
 }
 
-#pragma mark - QMTagViewDelegate
+//MARK: - QMTagViewDelegate
 
 - (void)tagViewDidBecomeFirstResponder:(QMTagView *)tagView {
     
@@ -532,7 +533,7 @@
     }
 }
 
-#pragma mark - QMTextFieldDelegate
+//MARK: - QMTextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
@@ -621,7 +622,7 @@
     [self setNeedsLayout];
 }
 
-#pragma mark - Tap gestures
+//MARK: - Tap gestures
 
 - (void)tapRecognized:(UITapGestureRecognizer *)recognizer {
     

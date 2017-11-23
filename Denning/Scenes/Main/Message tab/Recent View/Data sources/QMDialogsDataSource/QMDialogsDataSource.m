@@ -12,8 +12,6 @@
 #import <QMDateUtils.h>
 #import "QBChatDialog+OpponentID.h"
 
-#import <SVProgressHUD.h>
-
 @implementation QMDialogsDataSource
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)__unused indexPath {
@@ -23,24 +21,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    QMDialogCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMDialogCell cellIdentifier] forIndexPath:indexPath];
+    static NSString * identifier = @"QMDialogCell";
+    
+    QMDialogCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
     QBChatDialog *chatDialog = self.items[indexPath.row];
     
     if (chatDialog.type == QBChatDialogTypePrivate) {
         
-        QBUUser *recipient = [[QMCore instance].usersService.usersMemoryStorage userWithID:[chatDialog opponentID]];
+        QBUUser *recipient = [QMCore.instance.usersService.usersMemoryStorage userWithID:[chatDialog opponentID]];
         
         if (recipient.fullName != nil) {
             
-            [cell setTitle:recipient.fullName placeholderID:[chatDialog opponentID] avatarUrl:recipient.avatarUrl];
+            [cell setTitle:recipient.fullName avatarUrl:recipient.avatarUrl];
         }
         else {
             
-            [cell setTitle:NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil) placeholderID:[chatDialog opponentID] avatarUrl:nil];
+            [cell setTitle:NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil) avatarUrl:nil];
         }
     } else {
         
-        [cell setTitle:chatDialog.name placeholderID:chatDialog.ID.hash avatarUrl:chatDialog.photo];
+        [cell setTitle:chatDialog.name avatarUrl:chatDialog.photo];
     }
     
     // there was a time when updated at didn't exist
@@ -69,9 +70,11 @@
     }
 }
 
+static NSMutableArray *__itmes = nil;
+
 - (NSMutableArray *)items {
     
-    return [[[QMCore instance].chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO] mutableCopy];
+    return [[QMCore.instance.chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO] mutableCopy];
 }
 
 @end

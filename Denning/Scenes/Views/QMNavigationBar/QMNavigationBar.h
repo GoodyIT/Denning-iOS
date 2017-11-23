@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QMNotificationPanelView.h"
 
 @interface QMNavigationBar : UINavigationBar
 
-@property (weak, nonatomic) UIViewController *owner;
+@property (assign, nonatomic) QMNotificationPanelType notificationPanelType;
+@property (copy, nonatomic) NSString *message;
+@property (assign, nonatomic) NSUInteger restrictedLargeTitles;
+@property (assign, nonatomic) CGFloat additionalBarShift;
+
+- (void)showNotificationPanelView:(BOOL)show animation:(dispatch_block_t)animation;
+- (void)shake;
 
 @end

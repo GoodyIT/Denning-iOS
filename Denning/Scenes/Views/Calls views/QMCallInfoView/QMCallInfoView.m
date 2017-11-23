@@ -7,7 +7,6 @@
 //
 
 #import "QMCallInfoView.h"
-#import "QMPlaceholder.h"
 #import <QMImageView.h>
 
 /**
@@ -28,7 +27,7 @@ static NSString *const kQMVideoCallInfoXibName = @"QMVideoCallInfoView";
 
 @implementation QMCallInfoView
 
-#pragma mark - Construction
+//MARK: - Construction
 
 + (instancetype)callInfoViewWithUser:(QBUUser *)user {
     
@@ -37,14 +36,9 @@ static NSString *const kQMVideoCallInfoXibName = @"QMVideoCallInfoView";
     callInfoView.fullNameLabel.text = user.fullName ?: [NSString stringWithFormat:@"%tu", user.ID];
     
     callInfoView.avatarImageView.imageViewType = QMImageViewTypeCircle;
-    UIImage *placeholder = [QMPlaceholder placeholderWithFrame:callInfoView.avatarImageView.bounds
-                                                         title:user.fullName
-                                                            ID:user.ID];
-    
+
     [callInfoView.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]
-                                      placeholder:placeholder
-                                          options:SDWebImageHighPriority
-                                         progress:nil
+                                            title:user.fullName
                                    completedBlock:nil];
     
     callInfoView.backgroundColor = [UIColor clearColor];
@@ -54,21 +48,24 @@ static NSString *const kQMVideoCallInfoXibName = @"QMVideoCallInfoView";
 
 + (instancetype)videoCallInfoViewWithUser:(QBUUser *)user {
     
-    QMCallInfoView *callInfoView = [[NSBundle mainBundle] loadNibNamed:kQMVideoCallInfoXibName owner:self options:nil].firstObject;
+    QMCallInfoView *callInfoView =
+    [[NSBundle mainBundle] loadNibNamed:kQMVideoCallInfoXibName
+                                  owner:self
+                                options:nil].firstObject;
     
     callInfoView.fullNameLabel.text = user.fullName ?: [NSString stringWithFormat:@"%tu", user.ID];
     
     return callInfoView;
 }
 
-#pragma mark - Static
+//MARK: - Static
 
 + (CGFloat)preferredVideoInfoViewHeight {
     
     return 77.0f;
 }
 
-#pragma mark - Setters
+//MARK: - Setters
 
 - (void)setBottomText:(NSString *)bottomText {
     

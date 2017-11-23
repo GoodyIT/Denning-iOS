@@ -41,8 +41,9 @@
     QMContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMContactCell cellIdentifier] forIndexPath:indexPath];
     
     QBUUser *user = [self userAtIndexPath:indexPath];
-    [cell setTitle:user.fullName placeholderID:user.ID avatarUrl:user.avatarUrl];
     
+    [cell setTitle:user.fullName avatarUrl:user.avatarUrl];
+
     NSString *onlineStatus = [[QMCore instance].contactManager onlineStatusForUser:user];
     [cell setBody:onlineStatus];
     [cell setFavButtonVisible:NO];

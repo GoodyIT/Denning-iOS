@@ -19,16 +19,15 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Add user block action.
  */
-@property (copy, nonatomic) void (^didAddUserBlock)();
+@property (copy, nonatomic) void (^didAddUserBlock)(UITableViewCell *cell);
 
 /**
  *  Set add friend button visible.
  *
  *  @param visible wheter add button should be visible or not
  */
-- (void)setFavButtonVisible:(BOOL)visible;
-
 - (void)setAddButtonVisible:(BOOL)visible;
+- (void)setFavButtonVisible:(BOOL)visible;
 
 @end
 

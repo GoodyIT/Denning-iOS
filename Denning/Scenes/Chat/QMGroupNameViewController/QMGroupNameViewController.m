@@ -8,7 +8,7 @@
 
 #import "QMGroupNameViewController.h"
 #import "QMCore.h"
-#import "UINavigationController+QMNotification.h"
+#import "QMNavigationController.h"
 
 @interface QMGroupNameViewController ()
 
@@ -37,20 +37,20 @@
     [self.groupNameField becomeFirstResponder];
 }
 
-#pragma mark - Actions
+//MARK: - Actions
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)__unused sender {
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     @weakify(self);
-    [[[QMCore instance].chatManager changeName:self.groupNameField.text forGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+    [[QMCore.instance.chatManager changeName:self.groupNameField.text forGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
         
         @strongify(self);
         
-        [navigationController dismissNotificationPanel];
+        [(QMNavigationController *)navigationController dismissNotificationPanel];
         
         if (!task.isFaulted) {
             

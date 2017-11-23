@@ -17,6 +17,7 @@ static NSString * const kQMAccountType = @"accountType";
 static NSString * const kQMUserAgreementAcceptedKey = @"userAgreementAccepted";
 static NSString * const kQMPushNotificationsEnabled = @"pushNotificationsEnabled";
 static NSString * const kQMLastDialogsFetchingDate = @"lastDialogsFetchingDate";
+static NSString * const kQMLastUserFetchDate = @"lastUserFetchDate";
 static NSString * const kQMAppExists = @"QMAppExists";
 
 @interface QMProfile ()
@@ -35,23 +36,17 @@ static NSString * const kQMAppExists = @"QMAppExists";
 - (instancetype)init {
     
     self = [super init];
+    
     if (self) {
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        
+
         [self loadProfile];
         
         BOOL exist = [defaults boolForKey:kQMAppExists];
         
-        if (_userData != nil && !exist) {
-            
+        if (!exist) {
             [self clearProfile];
-        }
-        else if (_userData == nil && [QBSession currentSession].currentUser != nil) {
-            
-            // support for updating from old qmunicate (version less then 2.0)
-            // initializing QMProfile from previous data savings
-            [self _performAccountMigration];
         }
     }
     
@@ -59,32 +54,43 @@ static NSString * const kQMAppExists = @"QMAppExists";
 }
 
 - (BOOL)synchronize {
-    NSParameterAssert(self.userData);
     
-    __block BOOL success = NO;
-    
-    @weakify(self);
-    [self keychainQuery:^(SSKeychainQuery *query) {
-        @strongify(self);
-        query.passwordObject = self;
-        NSError *error = nil;
-        success = [query save:&error];
-    }];
-    
-    if (success) {
+    if (self.userData) {
         
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:YES forKey:kQMAppExists];
+        __block BOOL success = NO;
+        __block NSError *error = nil;
         
-        // updating user in users cache
-        [[QMCore instance].usersService.usersMemoryStorage addUser:self.userData];
-        [[QMUsersCache instance] insertOrUpdateUser:self.userData];
+        @weakify(self);
+        [self keychainQuery:^(SSKeychainQuery *query) {
+            @strongify(self);
+            NSCParameterAssert(self.userData.password);
+            query.passwordObject = self;
+            success = [query save:&error];
+        }];
+        
+        if (success) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setBool:YES forKey:kQMAppExists];
+            [defaults synchronize];
+            // updating user in users cache
+            [QMCore.instance.usersService.usersMemoryStorage addUser:self.userData];
+            [[QMUsersCache instance] insertOrUpdateUser:self.userData];
+        }
+        else {
+            QMLog(@"QMProfile error %@", error);
+        }
+        
+        return success;
     }
-    
-    return success;
+ 
+    return NO;
 }
 
 - (BOOL)synchronizeWithUserData:(QBUUser *)userData {
+    
+    if (self.accountType == QMAccountTypeEmail) {
+        NSParameterAssert(userData.password);
+    }
     
     self.userData = userData;
     BOOL success = [self synchronize];
@@ -100,7 +106,7 @@ static NSString * const kQMAppExists = @"QMAppExists";
 - (void)loadProfile {
     
     __block QMProfile *profile = nil;
-
+    
     [self keychainQuery:^(SSKeychainQuery *query) {
         NSError *error = nil;
         BOOL success = [query fetch:&error];
@@ -115,6 +121,7 @@ static NSString * const kQMAppExists = @"QMAppExists";
     self.userAgreementAccepted = profile.userAgreementAccepted;
     self.userData = profile.userData;
     self.lastDialogsFetchingDate = profile.lastDialogsFetchingDate;
+    self.lastUserFetchDate = profile.lastUserFetchDate;
 }
 
 - (BOOL)clearProfile {
@@ -129,14 +136,19 @@ static NSString * const kQMAppExists = @"QMAppExists";
     
     self.userData = nil;
     self.accountType = QMAccountTypeNone;
-    self.pushNotificationsEnabled = NO;
+    self.pushNotificationsEnabled = YES;
     self.userAgreementAccepted = NO;
     self.lastDialogsFetchingDate = nil;
+    self.lastUserFetchDate = nil;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:NO forKey:kQMAppExists];
+    [defaults synchronize];
     
     return success;
 }
 
-#pragma mark - Keychain
+//MARK: - Keychain
 
 - (void)keychainQuery:(void(^)(SSKeychainQuery *query))keychainQueryBlock {
     
@@ -151,7 +163,7 @@ static NSString * const kQMAppExists = @"QMAppExists";
     keychainQueryBlock(query);
 }
 
-#pragma mark - NSCoding
+//MARK: - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
@@ -163,6 +175,7 @@ static NSString * const kQMAppExists = @"QMAppExists";
         _userAgreementAccepted = [aDecoder decodeBoolForKey:kQMUserAgreementAcceptedKey];
         _pushNotificationsEnabled = [aDecoder decodeBoolForKey:kQMPushNotificationsEnabled];
         _lastDialogsFetchingDate = [aDecoder decodeObjectForKey:kQMLastDialogsFetchingDate];
+        _lastUserFetchDate = [aDecoder decodeObjectForKey:kQMLastUserFetchDate];
     }
     
     return self;
@@ -175,9 +188,10 @@ static NSString * const kQMAppExists = @"QMAppExists";
     [aCoder encodeBool:self.userAgreementAccepted forKey:kQMUserAgreementAcceptedKey];
     [aCoder encodeBool:self.pushNotificationsEnabled forKey:kQMPushNotificationsEnabled];
     [aCoder encodeObject:self.lastDialogsFetchingDate forKey:kQMLastDialogsFetchingDate];
+    [aCoder encodeObject:self.lastUserFetchDate forKey:kQMLastUserFetchDate];
 }
 
-#pragma mark - Account migration
+//MARK: - Account migration
 
 // old account service keys
 static NSString *const kQMAuthServiceKey = @"QMAuthServiceKey";
@@ -188,40 +202,35 @@ static NSString *const kQMSettingsRememberMeKey = @"rememberMeKey";
 static NSString *const kQMSettingsUserStatusKey = @"userStatusKey";
 static NSString *const kQMLicenceAcceptedKey = @"licence_accepted";
 
-- (void)_performAccountMigration {
+//MARK: - description
+
+- (NSString *)description {
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    self.accountType = [userDefaults integerForKey:kQMAccountType];
+    NSMutableString *description = [NSMutableString stringWithString:[super description]];
+    [description appendFormat:
+     @"\rAccount type: %@"
+     "\rPush Notifications Enabled: %s"
+     "\rLast Dialogs Fetching Date: %@"
+     "\rlastUserFetchDate: %@"
+     "\rUserData: %@",
+     [self stringForAccountType:_accountType],
+     _pushNotificationsEnabled ? "YES" : "NO",
+     _lastDialogsFetchingDate,
+     _lastUserFetchDate,
+     _userData];
     
-    if (self.accountType != QMAccountTypeNone) {
-        
-        // last dialogs fetching date
-        self.lastDialogsFetchingDate = [userDefaults objectForKey:kQMLastActivityDateKey];
-        // push notifications enabled
-        self.pushNotificationsEnabled = [userDefaults boolForKey:kQMSettingsPushNotificationEnabled];
-        
-        // clearing all old account information
-        [userDefaults removeObjectForKey:kQMAccountType];
-        [userDefaults removeObjectForKey:kQMLastActivityDateKey];
-        [userDefaults removeObjectForKey:kQMSettingsPushNotificationEnabled];
-        [userDefaults removeObjectForKey:kQMSettingsLoginKey];
-        [userDefaults removeObjectForKey:kQMSettingsRememberMeKey];
-        [userDefaults removeObjectForKey:kQMSettingsUserStatusKey];
-        [userDefaults removeObjectForKey:kQMLicenceAcceptedKey];
-        
-        [userDefaults synchronize];
-        
-        if (self.accountType == QMAccountTypeEmail) {
-            
-            NSString *account = [QBSession currentSession].currentUser.email;
-            [QBSession currentSession].currentUser.password = [SSKeychain passwordForService:kQMAuthServiceKey account:account];
-            
-            // clearing old account data
-            [SSKeychain deletePasswordForService:kQMAuthServiceKey account:account];
-        }
-        
-        _userData = [QBSession currentSession].currentUser;
-        [self synchronize];
+    return [description copy];
+}
+
+- (NSString *)stringForAccountType:(QMAccountType)type {
+    
+    switch (type) {
+        case QMAccountTypeNone: return @"None";
+        case QMAccountTypeEmail: return @"Email";
+        case QMAccountTypePhone: return @"Phone";
+        case QMAccountTypeFacebook: return @"Facebook";
+        default:
+            break;
     }
 }
 

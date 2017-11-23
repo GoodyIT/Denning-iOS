@@ -56,6 +56,11 @@ NSMutableDictionary* keyValue;
 
 @implementation DashboardViewController
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -111,8 +116,8 @@ NSMutableDictionary* keyValue;
 {
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] getDashboardMainWithCompletion:^(DashboardMainModel * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)

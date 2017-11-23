@@ -14,7 +14,7 @@
 #import "QMColors.h"
 #import "QMCore.h"
 #import "QMAlert.h"
-#import "UINavigationController+QMNotification.h"
+#import "QMNavigationController.h"
 #import "QMUserInfoViewController.h"
 #import "NSArray+Intersection.h"
 #import <SVProgressHUD.h>
@@ -45,9 +45,6 @@ QMUsersServiceDelegate
     
     [self registerNibs];
     
-    // Hide empty separators
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
     // Set tableview background color
     self.tableView.backgroundColor = QMTableViewBackgroundColor();
     
@@ -55,9 +52,9 @@ QMUsersServiceDelegate
     [self configureDataSource];
     
     // subscribe for delegates
-    [[QMCore instance].chatService addDelegate:self];
-    [[QMCore instance].contactListService addDelegate:self];
-    [[QMCore instance].usersService addDelegate:self];
+    [QMCore.instance.chatService addDelegate:self];
+    [QMCore.instance.contactListService addDelegate:self];
+    [QMCore.instance.usersService addDelegate:self];
     
     // configure data
     [self updateOccupants];
@@ -90,7 +87,7 @@ QMUsersServiceDelegate
         NSUInteger userIndex = [self.dataSource userIndexForIndexPath:indexPath];
         QBUUser *user = self.dataSource.items[userIndex];
         
-        self.addUserTask = [[[QMCore instance].contactManager addUserToContactList:user] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+        self.addUserTask = [[QMCore.instance.contactManager addUserToContactList:user] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
             
             [SVProgressHUD dismiss];
             
@@ -111,15 +108,25 @@ QMUsersServiceDelegate
     };
 }
 
-#pragma mark - Methods
+//MARK: - Methods
 
 - (void)updateOccupants {
     
-    NSArray *users = [[QMCore instance].usersService.usersMemoryStorage usersWithIDs:self.chatDialog.occupantIDs];
-    self.dataSource.items = [users mutableCopy];
+    [[QMCore.instance.usersService getUsersWithIDs:self.chatDialog.occupantIDs] continueWithBlock:^id _Nullable(BFTask<NSArray<QBUUser *> *> * _Nonnull t) {
+        if (t.result) {
+            
+            self.dataSource.items = [[t.result sortedArrayUsingComparator:^NSComparisonResult(QBUUser *u1, QBUUser *u2) {
+                return [u1.fullName caseInsensitiveCompare:u2.fullName];
+            }] mutableCopy];
+            
+            [self.tableView reloadData];
+        }
+        
+        return nil;
+    }];
 }
 
-#pragma mark - Actions
+//MARK: - Actions
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -135,7 +142,7 @@ QMUsersServiceDelegate
     }
 }
 
-#pragma mark - UITableViewDelegate
+//MARK: - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -162,19 +169,19 @@ QMUsersServiceDelegate
                                                               
                                                           }]];
         
-        __weak UINavigationController *navigationController = self.navigationController;
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         
         [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_LEAVE", nil)
                                                             style:UIAlertActionStyleDestructive
                                                           handler:^(UIAlertAction * _Nonnull __unused action) {
                                                               
-                                                              [navigationController showNotificationWithType:QMNotificationPanelTypeLoading
-                                                                                                          message:NSLocalizedString(@"QM_STR_LOADING", nil)
-                                                                                                         duration:0];
+                                                              [(QMNavigationController *)navigationController showNotificationWithType:QMNotificationPanelTypeLoading
+                                                                                                                               message:NSLocalizedString(@"QM_STR_LOADING", nil)
+                                                                                                                              duration:0];
                                                               
-                                                              self.leaveTask = [[[QMCore instance].chatManager leaveChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+                                                              self.leaveTask = [[QMCore.instance.chatManager leaveChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
                                                                   
-                                                                  [navigationController dismissNotificationPanel];
+                                                                  [(QMNavigationController *)navigationController dismissNotificationPanel];
                                                                   
                                                                   if (!task.isFaulted) {
                                                                       
@@ -199,7 +206,7 @@ QMUsersServiceDelegate
         NSUInteger userIndex = [self.dataSource userIndexForIndexPath:indexPath];
         QBUUser *user = self.dataSource.items[userIndex];
         
-        if (user.ID == [QMCore instance].currentProfile.userData.ID) {
+        if (user.ID == QMCore.instance.currentProfile.userData.ID) {
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             return;
         }
@@ -230,7 +237,13 @@ QMUsersServiceDelegate
     return [self.dataSource heightForRowAtIndexPath:indexPath];
 }
 
-#pragma mark - QMChatServiceDelegate
+// MARK: - Overrides
+
+- (void)setAdditionalNavigationBarHeight:(CGFloat)__unused additionalNavigationBarHeight {
+    // do not set for this controller
+}
+
+//MARK: - QMChatServiceDelegate
 
 - (void)chatService:(QMChatService *)__unused chatService didUpdateChatDialogInMemoryStorage:(QBChatDialog *)chatDialog {
     
@@ -246,30 +259,26 @@ QMUsersServiceDelegate
     if ([dialogs containsObject:self.chatDialog]) {
         
         [self updateOccupants];
-        [self.tableView reloadData];
     }
 }
 
-#pragma mark - QMContactListService
+//MARK: - QMContactListService
 
 - (void)contactListServiceDidLoadCache {
     
     [self updateOccupants];
-    [self.tableView reloadData];
 }
 
 - (void)contactListService:(QMContactListService *)__unused contactListService contactListDidChange:(QBContactList *)__unused contactList {
     
     [self updateOccupants];
-    [self.tableView reloadData];
 }
 
-#pragma mark - QMUsersServiceDelegate
+//MARK: - QMUsersServiceDelegate
 
 - (void)usersService:(QMUsersService *)__unused usersService didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
     
     [self updateOccupants];
-    [self.tableView reloadData];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService didAddUsers:(NSArray<QBUUser *> *)user {
@@ -279,11 +288,26 @@ QMUsersServiceDelegate
     if ([self.chatDialog.occupantIDs qm_containsObjectFromArray:idsOfUsers]) {
         
         [self updateOccupants];
-        [self.tableView reloadData];
     }
 }
 
-#pragma mark - register nibs
+// MARK: QMUsersServiceDelegate
+
+- (void)usersService:(QMUsersService *)__unused usersService didUpdateUsers:(NSArray<QBUUser *> *)users {
+    
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] initWithCapacity:users.count];
+    for (QBUUser *user in users) {
+        NSIndexPath *indexPath = [self.dataSource indexPathForObject:user];
+        if (indexPath != nil) {
+            [indexPaths addObject:indexPath];
+        }
+    }
+    if (indexPaths.count > 0) {
+        [self.tableView reloadRowsAtIndexPaths:[indexPaths copy] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+//MARK: - register nibs
 
 - (void)registerNibs {
     

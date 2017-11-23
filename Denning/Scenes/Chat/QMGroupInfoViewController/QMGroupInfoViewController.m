@@ -11,35 +11,26 @@
 #import "QMGroupNameViewController.h"
 #import "QMGroupHeaderView.h"
 #import "QMCore.h"
-#import "UINavigationController+QMNotification.h"
-
-#import "QMPlaceholder.h"
+#import "QMNavigationController.h"
 #import "QMImagePicker.h"
 #import <QMImageView.h>
-
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
 #import "QMImagePreview.h"
 
 @interface QMGroupInfoViewController ()
 
-<
-QMGroupHeaderViewDelegate,
-QMImagePickerResultHandler,
-
-QMChatServiceDelegate,
-QMChatConnectionDelegate,
-
-NYTPhotosViewControllerDelegate
->
+< QMGroupHeaderViewDelegate, QMImagePickerResultHandler, QMChatServiceDelegate,
+QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
 
 @property (weak, nonatomic) QMGroupOccupantsViewController *groupOccupantsViewController;
 @property (weak, nonatomic) IBOutlet QMGroupHeaderView *headerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewTopConstraint;
 
 @end
 
 @implementation QMGroupInfoViewController
 
-#pragma mark - Life cycle
+//MARK: - Life cycle
 
 - (void)dealloc {
     
@@ -53,15 +44,15 @@ NYTPhotosViewControllerDelegate
     [self updateGroupHeaderView];
     
     // subscribing for delegates
-    [[QMCore instance].chatService addDelegate:self];
+    [QMCore.instance.chatService addDelegate:self];
 }
 
 - (void)updateGroupHeaderView {
     
-    [self.headerView setTitle:self.chatDialog.name avatarUrl:self.chatDialog.photo placeholderID:self.chatDialog.ID.hash];
+    [self.headerView setTitle:self.chatDialog.name avatarUrl:self.chatDialog.photo];
 }
 
-#pragma mark - Actions
+//MARK: - Actions
 
 - (IBAction)didPressGroupHeader {
     
@@ -82,7 +73,7 @@ NYTPhotosViewControllerDelegate
     }
 }
 
-#pragma mark - QMGroupHeaderViewDelegate
+//MARK: - QMGroupHeaderViewDelegate
 
 - (void)groupHeaderView:(QMGroupHeaderView *)__unused groupHeaderView didTapAvatar:(QMImageView *)avatarImageView {
     
@@ -92,9 +83,9 @@ NYTPhotosViewControllerDelegate
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull __unused action) {
                                                           
-                                                          if (![[QMCore instance] isInternetConnected]) {
+                                                          if (![QMCore.instance isInternetConnected]) {
                                                               
-                                                              [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
+                                                              [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
                                                               return;
                                                           }
                                                           
@@ -105,9 +96,9 @@ NYTPhotosViewControllerDelegate
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull __unused action) {
                                                           
-                                                          if (![[QMCore instance] isInternetConnected]) {
+                                                          if (![QMCore.instance isInternetConnected]) {
                                                               
-                                                              [self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
+                                                              [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) duration:kQMDefaultNotificationDismissTime];
                                                               return;
                                                           }
                                                           
@@ -137,27 +128,32 @@ NYTPhotosViewControllerDelegate
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark - QMImagePickerResultHandler
+// MARK: - Overrides
+
+- (void)setAdditionalNavigationBarHeight:(CGFloat)additionalNavigationBarHeight {
+    CGFloat previousAdditionalNavigationBarHeight = self.additionalNavigationBarHeight;
+    [super setAdditionalNavigationBarHeight:additionalNavigationBarHeight];
+    
+    self.headerViewTopConstraint.constant += additionalNavigationBarHeight - previousAdditionalNavigationBarHeight;
+}
+
+//MARK: - QMImagePickerResultHandler
 
 - (void)imagePicker:(QMImagePicker *)__unused imagePicker didFinishPickingPhoto:(UIImage *)photo {
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
-    [[[QMCore instance].chatManager changeAvatar:photo forGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+    [[QMCore.instance.chatManager changeAvatar:photo forGroupChatDialog:self.chatDialog] continueWithBlock:^id(BFTask *task __unused) {
         
-        [navigationController dismissNotificationPanel];
-        if (!task.isFaulted) {
-            
-            [self.headerView.avatarImage setImage:photo withKey:self.chatDialog.photo];
-        }
+        [(QMNavigationController *)navigationController dismissNotificationPanel];
         
         return nil;
     }];
 }
 
-#pragma mark - QMChatServiceDelegate
+//MARK: - QMChatServiceDelegate
 
 - (void)chatService:(QMChatService *)__unused chatService didUpdateChatDialogInMemoryStorage:(QBChatDialog *)chatDialog {
     
@@ -175,7 +171,7 @@ NYTPhotosViewControllerDelegate
     }
 }
 
-#pragma mark - NYTPhotosViewControllerDelegate
+//MARK: - NYTPhotosViewControllerDelegate
 
 - (UIView *)photosViewController:(NYTPhotosViewController *)__unused photosViewController referenceViewForPhoto:(id<NYTPhoto>)__unused photo {
     

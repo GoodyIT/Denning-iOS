@@ -8,18 +8,12 @@
 
 #import "QMChatCellLayoutAttributes.h"
 
-@interface QMChatCellLayoutAttributes()
-
-@property (strong, nonatomic) NSMutableDictionary *customAttributes;
-
-@end
-
 @implementation QMChatCellLayoutAttributes
 
-#pragma mark - Lifecycle
+//MARK: - Lifecycle
 
-- (instancetype)init
-{
+- (instancetype)init {
+    
     self = [super init];
     if (self) {
         self.transform = CGAffineTransformMake(1, 0, 0, -1, 0, 0);
@@ -28,20 +22,9 @@
 }
 
 - (void)dealloc {
-    
 }
 
-- (void)setAttribute:(id)attribure forKey:(id <NSCopying>)key {
-    
-    self.customAttributes[key] = attribure;
-}
-
-- (id)attributeForKey:(id <NSCopying>)key {
-    
-    return self.customAttributes[key];
-}
-
-#pragma mark - Setters
+//MARK: - Setters
 
 - (void)setContainerSize:(CGSize)containerSize {
     
@@ -54,14 +37,14 @@
     _avatarSize = [self correctedSizeFromSize:avatarSize];
 }
 
-#pragma  mark - Utilities
+//MARK: - Utilities
 
 - (CGSize)correctedSizeFromSize:(CGSize)size {
     
     return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
-#pragma mark - NSObject
+//MARK: - NSObject
 
 - (BOOL)isEqual:(id)object {
     
@@ -80,10 +63,10 @@
         QMChatCellLayoutAttributes *layoutAttributes = (QMChatCellLayoutAttributes *)object;
         
         if (!CGSizeEqualToSize(layoutAttributes.containerSize, self.containerSize)
-            ||(int)layoutAttributes.topLabelHeight != (int)self.topLabelHeight
-            ||(int)layoutAttributes.bottomLabelHeight != (int)self.bottomLabelHeight
             ||!CGSizeEqualToSize(layoutAttributes.avatarSize, self.avatarSize)
             ||!UIEdgeInsetsEqualToEdgeInsets(layoutAttributes.containerInsets, self.containerInsets)
+            ||(int)layoutAttributes.topLabelHeight != (int)self.topLabelHeight
+            ||(int)layoutAttributes.bottomLabelHeight != (int)self.bottomLabelHeight
             || (int)layoutAttributes.spaceBetweenTopLabelAndTextView != (int)self.spaceBetweenTopLabelAndTextView
             || (int)layoutAttributes.spaceBetweenTextViewAndBottomLabel != (int)self.spaceBetweenTextViewAndBottomLabel) {
             
@@ -93,19 +76,26 @@
     return [super isEqual:object];
 }
 
+- (NSString *)description {
+    
+    NSMutableString *desc = [NSMutableString stringWithString:[super description]];
+    
+    [desc appendFormat:@""];
+    return desc.copy;
+}
+
 - (NSUInteger)hash {
     
     return [self.indexPath hash];
 }
 
-#pragma mark - NSCopying
+//MARK: - NSCopying
 
 - (instancetype)copyWithZone:(NSZone *)zone {
     
     QMChatCellLayoutAttributes *copy = [super copyWithZone:zone];
     
     if (copy.representedElementCategory != UICollectionElementCategoryCell) {
-        
         return copy;
     }
     

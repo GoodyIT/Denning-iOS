@@ -12,7 +12,7 @@
 
 + (CGFloat)height {
     
-    return 60.0f;
+    return 50.0f;
 }
 
 @end

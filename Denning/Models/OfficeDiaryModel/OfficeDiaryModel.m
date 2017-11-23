@@ -24,7 +24,7 @@
     model.place = [response valueForKeyNotNull:@"place"];
     model.remarks = [response valueForKeyNotNull:@"remarks"];
     model.staffAssigned = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"staffAssigned"]];
-    model.staffAttended = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"staffAttended"]];
+    model.staffAttended = [response valueForKeyNotNull:@"staffAttended"];
     model.startDate = [response valueForKeyNotNull:@"startDate"];
     
     return model;

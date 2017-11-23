@@ -29,9 +29,9 @@ typedef NS_ENUM(NSInteger, QMAccountType) {
      */
     QMAccountTypeFacebook,
     /**
-     *  Account type is Twitter digits.
+     *  Account type is Phone number.
      */
-    QMAccountTypeDigits
+    QMAccountTypePhone
 };
 
 /**
@@ -89,6 +89,11 @@ typedef NS_ENUM(NSInteger, QMAccountType) {
  *  Last dialogs fetching date with QBRequest from server.
  */
 @property (strong, nonatomic, nullable) NSDate *lastDialogsFetchingDate;
+
+/**
+ *  Last user fetch date with QBRequest from server.
+ */
+@property (strong, nonatomic, nullable) NSDate *lastUserFetchDate;
 
 /**
  *  Returns loaded current profile with user.

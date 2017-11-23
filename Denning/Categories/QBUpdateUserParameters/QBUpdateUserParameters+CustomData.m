@@ -50,12 +50,12 @@ NSString *const kQMIsImportUpdateKey = @"is_import";
         NSDictionary *representationObject = [NSJSONSerialization JSONObjectWithData:jsonData
                                                                              options:NSJSONReadingMutableContainers
                                                                                error:&error];
-        return [representationObject mutableCopy];
+        if (!error) {
+            return [representationObject mutableCopy];
+        }
     }
-    else {
-        
-        return [NSMutableDictionary dictionary];
-    }
+    
+    return [NSMutableDictionary dictionary];
 }
 
 - (void)synchronize {
@@ -77,7 +77,7 @@ NSString *const kQMIsImportUpdateKey = @"is_import";
 @dynamic status;
 @dynamic isImport;
 
-#pragma mark - Is import
+//MARK: - Is import
 
 - (void)setIsImport:(BOOL)isImport {
     
@@ -91,7 +91,7 @@ NSString *const kQMIsImportUpdateKey = @"is_import";
     return isImprot.boolValue;
 }
 
-#pragma mark - Status
+//MARK: - Status
 
 - (void)setStatus:(NSString *)status {
     
@@ -104,7 +104,7 @@ NSString *const kQMIsImportUpdateKey = @"is_import";
     return self.context[kQMStatusUpdateKey];
 }
 
-#pragma mark - Avatar url
+//MARK: - Avatar url
 
 - (void)setAvatarUrl:(NSString *)avatarUrl {
     

@@ -5,8 +5,6 @@
 
 
 #import <Foundation/Foundation.h>
-#import <Quickblox/QBNullability.h>
-#import <Quickblox/QBGeneric.h>
 
 typedef NS_ENUM(NSInteger, QBResponseStatusCode) {
     QBResponseStatusCodeCancelled           = NSURLErrorCancelled,
@@ -29,9 +27,6 @@ typedef NS_ENUM(NSInteger, QBResponseStatusCode) {
 @property (nonatomic, getter = isSuccess, readonly) BOOL success;
 
 @property (nonatomic, readonly) QBResponseStatusCode status;
-@property (nonatomic, readonly, nullable) NSDictionary<NSString *, NSString *> *headers;
-@property (nonatomic, readonly, nullable) NSData *data;
 @property (nonatomic, readonly, nullable) QBError *error;
-@property (nonatomic, readonly, nullable) NSURL *requestUrl;
 
 @end

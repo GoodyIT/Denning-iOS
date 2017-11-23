@@ -32,16 +32,23 @@
     
     [ivc presentViewController:photosViewController animated:YES completion:nil];
     
-    [QMImageLoader imageWithURL:url
-                          frame:CGRectZero
-                        options:SDWebImageHighPriority
-                       progress:nil
-                 transformImage:nil
-                      completed:^(UIImage *image, NSError * __unused error, SDImageCacheType __unused cacheType, NSURL * __unused imageURL) {
-                          
-                          photo.image = image;
-                          [photosViewController updateImageForPhoto:photo];
-                      }];
+    QMImageLoader *loader = [QMImageLoader instance];
+    
+    [loader downloadImageWithURL:url transform:nil
+                         options:SDWebImageHighPriority
+                        progress:nil
+                       completed:^(UIImage * _Nullable image,
+                                   UIImage * _Nullable __unused transfomedImage,
+                                   NSError * _Nullable  error,
+                                   SDImageCacheType __unused cacheType,
+                                   BOOL __unused finished,
+                                   NSURL * _Nonnull __unused imageURL) {
+                           
+                           if (!error && image) {
+                               photo.image = [loader originalImageWithURL:imageURL];
+                               [photosViewController updateImageForPhoto:photo];
+                           }
+    }];
 }
 
 @end

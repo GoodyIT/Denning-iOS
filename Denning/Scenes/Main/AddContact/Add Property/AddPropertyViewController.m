@@ -350,8 +350,8 @@ NSMutableDictionary* keyValue;
 - (void) _save:(NSDictionary*) params {
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] savePropertyWithParams:params inURL:PROPERTY_SAVE_URL WithCompletion:^(AddPropertyModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
@@ -373,8 +373,8 @@ NSMutableDictionary* keyValue;
 - (void) _update:(NSDictionary*) params {
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] updatePropertyWithParams:params inURL:PROPERTY_SAVE_URL WithCompletion:^(AddPropertyModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
@@ -397,7 +397,11 @@ NSMutableDictionary* keyValue;
     NSMutableDictionary* params = [self buildParams];
     if ([_viewType isEqualToString:@"view"]) {
         [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
-        [self _update:params];
+        [QMAlert showConfirmDialog:@"Do you want to update contact?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+            if  ([action.title isEqualToString:@"OK"]) {
+                [self _update:params];
+            }
+        }];
     } else {
         [self _save:params];
     }

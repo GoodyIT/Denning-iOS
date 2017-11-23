@@ -6,10 +6,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Quickblox/QBNullability.h>
-#import <Quickblox/QBGeneric.h>
 #import <AVFoundation/AVFoundation.h>
-#import "ChatEnums.h"
+#import "QBChatTypes.h"
 
 @protocol QBChatDelegate;
 
@@ -20,17 +18,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/** 
+/**
  *  QBChat class interface.
- *  This class is the main entry point to work with Quickblox Chat API. 
+ *  This class is the main entry point to work with Quickblox Chat API.
  */
 @interface QBChat : NSObject
 
 /**
- *  Determines whether chat is connected. Returns YES if the connection is open, 
+ *  Get QBChat singleton
+ *
+ *  @return QBChat Chat service singleton
+ */
+@property (nonatomic, readonly, class) QBChat *instance;
+
+/**
+ *  Determines whether chat is connected. Returns YES if the connection is open,
  *  and the stream has been properly established.
- *  
- *  @discussion If the stream is neither disconnected, nor connected, 
+ *
+ *  @discussion If the stream is neither disconnected, nor connected,
  *  then a connection is currently being established.
  *  If this method returns YES, then it is ready for you to start sending and receiving elements.
  */
@@ -41,12 +46,23 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (assign, nonatomic, readonly) BOOL isConnecting;
 
-/** 
+/**
  *  Contact list
  */
 @property (nonatomic, readonly, nullable) QBContactList *contactList;
 
+/**
+ *  Get current chat user
+ */
+@property (nonatomic, readonly, copy, nullable) QBUUser *currentUser;
+
+/**
+ Current resource
+ */
+@property (nonatomic, readonly, copy, nullable) NSString *currentResource;
+
 - (id)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
 //MARK: - Multicast Delegate
 
@@ -64,12 +80,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)removeDelegate:(id<QBChatDelegate>)delegate;
 
-/** 
+/**
  * Removes all delegates
  */
 - (void)removeAllDelegates;
 
-/** 
+/**
  *  Array of all delegates
  */
 - (nullable NSArray<id <QBChatDelegate>> *)delegates;
@@ -83,13 +99,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)forceReconnect;
 
 //MARK: - Base Messaging
-
-/**
- *  Get QBChat singleton
- *
- *  @return QBChat Chat service singleton
- */
-+ (instancetype)instance;
 
 /**
  *  Connect to QuickBlox Chat with completion.
@@ -139,13 +148,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return YES if the request was sent successfully. If not - see log.
  */
 - (BOOL)sendPresenceWithStatus:(NSString *)status;
-
-/**
- *  Get current chat user
- *
- *  @return An instance of QBUUser
- */
-- (nullable QBUUser *)currentUser;
 
 //MARK: - Contact list
 
@@ -202,13 +204,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPrivacyList:(nullable QBPrivacyList *)privacyList;
 
 /**
- *  Set an active privacy list. QBChatDelegate's method 'didSetActivePrivacyListWithName:' will be called if success or 'didNotSetActivePrivacyListWithName:error:' if there is an error
- *
- *  @param privacyListName name of privacy list
- */
-- (void)setActivePrivacyListWithName:(nullable NSString *)privacyListName;
-
-/**
  *  Set a default privacy list. QBChatDelegate's method 'didSetDefaultPrivacyListWithName:' will be called if success or 'didNotSetDefaultPrivacyListWithName:error:' if there is an error
  *
  *  @param privacyListName name of privacy list
@@ -230,7 +225,30 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param message      QBChatMessage instance of message to send.
  *  @param completion   Completion block with failure error.
  */
-- (void)sendSystemMessage:(QBChatMessage *)message completion:(nullable QBChatCompletionBlock)completion;
+- (void)sendSystemMessage:(QBChatMessage *)message
+               completion:(nullable QBChatCompletionBlock)completion;
+
+//MARK: Last Activity
+
+/**
+ Get Last activity for user with id.
+ 
+ @param userID User ID
+ @param completion completion block with last activity in seconds and error
+ */
+- (void)lastActivityForUserWithID:(NSUInteger)userID
+                       completion:(QBUserLastActivityCompletionBlock)completion;
+
+/**
+ Get Last activity for user with id.
+ 
+ @param userID User ID
+ @param timeout timeout
+ @param completion completion block with last activity in seconds and error
+ */
+- (void)lastActivityForUserWithID:(NSUInteger)userID
+                          timeout:(NSTimeInterval)timeout
+                       completion:(QBUserLastActivityCompletionBlock)completion;
 
 //MARK: - Send pings to the server or a userID
 
@@ -269,6 +287,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @note You must be subscribed to user in contact list in order to successfully ping him
  */
 - (void)pingUserWithID:(NSUInteger)userID timeout:(NSTimeInterval)timeout completion:(QBPingCompleitonBlock)completion;
+
 
 @end
 

@@ -14,12 +14,13 @@
 #import "CourtDiaryViewController.h"
 #import "PersonalDiaryViewController.h"
 #import "OfficeDiaryViewController.h"
+#import "TodayEventViewController.h"
 
 @interface EventViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate,FSCalendarDataSource,FSCalendarDelegate,FSCalendarDelegateAppearance>
 {
     NSString* currentTopFilter, *currentBottomFilter;
     NSString* curYear, *curMonth;
-    __block BOOL isLoading;
+    __block BOOL isLoading, isAppending;
     NSString* startDate, *endDate;
 }
 @property (weak, nonatomic) IBOutlet UIView *calendarView;
@@ -53,7 +54,6 @@
 
 @property (strong, nonatomic) NSArray* topFilters;
 @property (strong, nonatomic) NSArray* bottomFilters;
-
 @property (strong, nonatomic) NSNumber* page;
 @end
 
@@ -125,6 +125,7 @@
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.tableFooterView = [UIView new];
     
     self.calendar.accessibilityIdentifier = @"calendar";
     self.dateFormatter2 = [[NSDateFormatter alloc] init];
@@ -162,8 +163,8 @@
 - (void) getMonthlySummaryWithCompletion:(void(^)(void)) completion {
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] getCalenarMonthlySummaryWithYear:curYear month:curMonth filter:currentBottomFilter withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
         @strongify(self)
@@ -181,19 +182,25 @@
 }
 
 - (void) loadEventFromFilters {
-    
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] getLatestEventWithStartDate:startDate endDate:endDate filter:currentBottomFilter search:_search page:_page withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
         
         @strongify(self);
         self->isLoading = NO;
+        self->isAppending = NO;
         [navigationController dismissNotificationPanel];
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
-            self.originalArray = eventsArray;
+            if (isAppending) {
+                _originalArray = [[_originalArray arrayByAddingObjectsFromArray:eventsArray] mutableCopy];
+            } else {
+                self.originalArray = eventsArray;
+            }
+            
             self.eventsArray = _originalArray;
             if (eventsArray.count > 0) {
                 _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
@@ -208,38 +215,9 @@
     }];
 }
 
-
 - (void) appendEvent {
-    
-    if (isLoading) return;
-    isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
-    @weakify(self);
-    [[QMNetworkManager sharedManager] getLatestEventWithStartDate:startDate endDate:endDate filter:currentBottomFilter search:_search page:_page withCompletion:^(NSArray * _Nonnull eventsArray, NSError * _Nonnull error) {
-        
-        @strongify(self);
-        self->isLoading = NO;
-        [navigationController dismissNotificationPanel];
-        if (error == nil) {
-            
-            _originalArray = [[_originalArray arrayByAddingObjectsFromArray:eventsArray] mutableCopy];
-            
-            self.eventsArray = _originalArray;
-            
-            if (eventsArray.count > 0) {
-                _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
-                // update table view
-                
-                [self.tableView reloadData];
-            }
-            
-            [self.tableView finishInfiniteScroll];
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        }
-    }];
+    isAppending = YES;
+    [self loadEventFromFilters];
 }
 
 - (void) resetState: (UIButton*) button {
@@ -379,9 +357,8 @@
 }
 
 - (void) updateEvents {
-    self.search = @"";
-    self.eventsArray = self.originalArray;
-    [self.tableView reloadData];
+    _page = @(1);
+    [self loadEventFromFilters];
 }
 
 #pragma mark - Calenar Datasource
@@ -401,9 +378,33 @@
     [self getMonthlySummaryWithCompletion:nil];
 }
 
-- (void)calendar:(FSCalendar *)calendar didDeselectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition
+- (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition
 {
+    [self showTodayEvent:[self.dateFormatter2 stringFromDate:date]];
+}
+
+- (void) showPopup: (UIViewController*) vc {
+    STPopupController *popupController = [[STPopupController alloc] initWithRootViewController:vc];
+    [STPopupNavigationBar appearance].barTintColor = [UIColor blackColor];
+    [STPopupNavigationBar appearance].tintColor = [UIColor whiteColor];
+    [STPopupNavigationBar appearance].barStyle = UIBarStyleDefault;
+    [STPopupNavigationBar appearance].titleTextAttributes = @{ NSFontAttributeName: [UIFont fontWithName:@"Cochin" size:18], NSForegroundColorAttributeName: [UIColor whiteColor] };
+    popupController.transitionStyle = STPopupTransitionStyleFade;;
+    popupController.containerView.layer.cornerRadius = 4;
+    popupController.containerView.layer.shadowColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor;
+    popupController.containerView.layer.shadowOffset = CGSizeMake(4, 4);
+    popupController.containerView.layer.shadowOpacity = 1;
+    popupController.containerView.layer.shadowRadius = 1.0;
     
+    [popupController presentInViewController:self];
+}
+
+- (void) showTodayEvent:(NSString*) date {
+    [self.view endEditing:YES];
+    
+    TodayEventViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TodayEventViewController"];
+    vc.startDate = vc.endDate = date;
+    [self showPopup:vc];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -435,6 +436,7 @@
 
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
 {
+    _search = searchText;
     [self updateEvents];
 }
 
@@ -449,7 +451,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     self.search = searchBar.text;
-    [self loadEventFromFilters];
+    [self updateEvents];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -493,8 +495,8 @@
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/%@/%@", [DataManager sharedManager].user.serverAPI,courtString,  event.eventCode];
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
@@ -514,7 +516,7 @@
                 [self performSegueWithIdentifier:kEditPersonalDiarySegue sender:model];
             }
         } else {
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
     }];
     

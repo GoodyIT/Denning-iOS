@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3AG-Pj-wD8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3AG-Pj-wD8">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,9 +13,6 @@
     <customFonts key="customFonts">
         <array key="SF-UI-Text-Medium.otf">
             <string>SFUIText-Medium</string>
-        </array>
-        <array key="SF-UI-Text-Regular.otf">
-            <string>SFUIText-Regular</string>
         </array>
     </customFonts>
     <scenes>
@@ -37,7 +34,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oY7-W3-4Ed">
-                                            <rect key="frame" x="98.5" y="40" width="178" height="65"/>
+                                            <rect key="frame" x="104" y="43" width="167" height="61"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="oY7-W3-4Ed" secondAttribute="height" multiplier="173:63" id="lx0-4e-hGx"/>
                                             </constraints>
@@ -48,7 +45,7 @@ out here.</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="m_empty_dialogs" translatesAutoresizingMaskIntoConstraints="NO" id="al4-OQ-NYZ">
-                                            <rect key="frame" x="98.5" y="156" width="178" height="263.5"/>
+                                            <rect key="frame" x="99" y="155" width="177" height="262.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="178" id="QZM-Z4-eWB"/>
                                                 <constraint firstAttribute="width" secondItem="al4-OQ-NYZ" secondAttribute="height" multiplier="29:43" id="XUg-9x-aP7"/>
@@ -216,50 +213,41 @@ out here.</string>
                     </view>
                     <navigationItem key="navigationItem" id="9YF-t2-kF4">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="Pax-kK-APl" customClass="QMOnlineTitleView">
-                            <rect key="frame" x="8" y="5.5" width="359" height="33"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quickblox main channel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uox-4i-XC2">
-                                    <rect key="frame" x="71.5" y="0.0" width="217.5" height="23"/>
-                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="19"/>
-                                    <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 members, 2 online" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nv1-o8-PMY">
-                                    <rect key="frame" x="117" y="23" width="125" height="16"/>
-                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
-                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstItem="nv1-o8-PMY" firstAttribute="top" secondItem="Uox-4i-XC2" secondAttribute="bottom" id="95S-44-owp"/>
-                                <constraint firstItem="nv1-o8-PMY" firstAttribute="centerX" secondItem="Uox-4i-XC2" secondAttribute="centerX" id="GGh-ZU-l40"/>
-                                <constraint firstItem="Uox-4i-XC2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pax-kK-APl" secondAttribute="leading" id="UuX-a8-Y3r"/>
-                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nv1-o8-PMY" secondAttribute="trailing" id="ceD-CJ-nls"/>
-                                <constraint firstItem="nv1-o8-PMY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Pax-kK-APl" secondAttribute="leading" id="i78-3a-Poa"/>
-                                <constraint firstItem="Uox-4i-XC2" firstAttribute="centerX" secondItem="Pax-kK-APl" secondAttribute="centerX" id="jwa-pf-C5b"/>
-                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uox-4i-XC2" secondAttribute="trailing" id="kEx-S0-dTW"/>
-                                <constraint firstItem="Uox-4i-XC2" firstAttribute="top" secondItem="Pax-kK-APl" secondAttribute="top" id="nHD-pJ-p47"/>
-                            </constraints>
-                            <connections>
-                                <action selector="onlineTitlePressed" destination="RLj-GU-Olc" eventType="touchUpInside" id="0gO-cy-pry"/>
-                                <outlet property="statusLabel" destination="nv1-o8-PMY" id="DJo-rg-clH"/>
-                                <outlet property="titleLabel" destination="Uox-4i-XC2" id="eeI-ee-Pf1"/>
-                            </connections>
-                        </view>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="onlineTitleView" destination="Pax-kK-APl" id="gdN-x0-pgy"/>
+                        <outlet property="onlineTitleView" destination="rmv-Km-RL6" id="FY7-bz-br7"/>
                         <segue destination="Vi6-Ys-ZwG" kind="show" identifier="SceneSegueUserInfo" id="eSO-wr-Maw"/>
                         <segue destination="OKo-87-3Ut" kind="show" identifier="SceneSegueGroupInfo" id="MzG-w8-ccf"/>
                         <segue destination="Qvc-K1-hB5" kind="show" identifier="DocumentFileSegue" id="SM3-EO-DhO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVF-0l-eNJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="rmv-Km-RL6" customClass="QMOnlineTitleView">
+                    <rect key="frame" x="0.0" y="0.0" width="173" height="36"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbq-5v-YwX">
+                            <rect key="frame" x="0.0" y="3" width="173" height="17"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="textColor" red="0.43137254899999999" green="0.43137254899999999" blue="0.43137254899999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Vj-ON-G5l">
+                            <rect key="frame" x="0.0" y="18" width="173" height="15"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="statusLabel" destination="8Vj-ON-G5l" id="55g-8m-RAO"/>
+                        <outlet property="titleLabel" destination="tbq-5v-YwX" id="i5z-rz-xgv"/>
+                    </connections>
+                </view>
             </objects>
             <point key="canvasLocation" x="-834" y="-7934"/>
         </scene>
@@ -303,7 +291,7 @@ out here.</string>
         <!--Navigation Controller-->
         <scene sceneID="IUx-YH-HSL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="t5g-eL-0FL" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="t5g-eL-0FL" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Le5-X1-1ff" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -502,7 +490,7 @@ out here.</string>
         <!--Navigation Controller-->
         <scene sceneID="fBd-RK-eOg">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eGm-Je-XuH" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eGm-Je-XuH" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DxX-ze-oWW" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

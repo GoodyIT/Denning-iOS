@@ -9,12 +9,12 @@
 #import <Quickblox/ChatServiceFramework.h>
 #import <Quickblox/QBCore.h>
 #import <Quickblox/QBAuthHeader.h>
-#import <Quickblox/QBLocationHeader.h>
 #import <Quickblox/QBUsersHeader.h>
 #import <Quickblox/QBPushNotificationsHeader.h>
 #import <Quickblox/QBCustomObjectsHeader.h>
 #import <Quickblox/QBContentHeader.h>
 #import <Quickblox/QBChatHeader.h>
+#import <Quickblox/QBAddressBookHeader.h>
 
-//! Framework version 2.9.2
+//! Framework version 2.14
 FOUNDATION_EXPORT NSString * const QuickbloxFrameworkVersion;

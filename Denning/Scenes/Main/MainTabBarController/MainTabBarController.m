@@ -31,15 +31,25 @@ QMChatConnectionDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[QMCore instance].chatService addDelegate:self];
+    
     [self setNeedsStatusBarAppearanceUpdate];
     self.delegate = self;
 }
 
+//- (void)viewWillLayoutSubviews {
+//    
+//    CGRect tabFrame = self.tabBar.frame; //self.TabBar is IBOutlet of your TabBar
+//    tabFrame.size.height = 45;
+//    tabFrame.origin.y = self.view.frame.size.height - 45;
+//    self.tabBar.frame = tabFrame;
+//}
+
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[QMCore instance].chatService addDelegate:self];
-    
+
     [self performAutoLoginAndFetchData];
 }
 
@@ -49,10 +59,10 @@ QMChatConnectionDelegate>
     [[QMCore instance].chatService removeDelegate:self];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
+//- (UIStatusBarStyle)preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleLightContent;
+//}
 
 - (void)performAutoLoginAndFetchData {
     
@@ -249,26 +259,29 @@ shouldSelectViewController:(UIViewController *)viewController
     [QMNotification showMessageNotificationWithMessage:chatMessage buttonHandler:buttonHandler hostViewController:hvc];
 }
 
+//MARK: - QMChatServiceDelegate
 
-#pragma mark - QMChatServiceDelegate
-
-- (void)chatService:(QMChatService *)chatService didAddMessageToMemoryStorage:(QBChatMessage *)message forDialogID:(NSString *)dialogID {
+- (void)chatService:(QMChatService *)chatService
+didAddMessageToMemoryStorage:(QBChatMessage *)message
+        forDialogID:(NSString *)dialogID {
     
     if (message.messageType == QMMessageTypeContactRequest) {
         
         QBChatDialog *chatDialog = [chatService.dialogsMemoryStorage chatDialogWithID:dialogID];
-        [[[QMCore instance].usersService getUserWithID:[chatDialog opponentID]] continueWithSuccessBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull __unused task) {
-            
-            [self showNotificationForMessage:message];
-            
-            return nil;
-        }];
+        [[[QMCore instance].usersService getUserWithID:[chatDialog opponentID] forceLoad:YES]
+         continueWithSuccessBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull __unused task) {
+             
+             [self showNotificationForMessage:message];
+             
+             return nil;
+         }];
     }
     else {
         
         [self showNotificationForMessage:message];
     }
 }
+
 
 #pragma mark - Navigation
 

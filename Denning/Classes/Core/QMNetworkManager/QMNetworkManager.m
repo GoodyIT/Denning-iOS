@@ -468,22 +468,10 @@
 
 - (void) getLatestEventWithStartDate: (NSString*) startDate endDate:(NSString*) endDate filter:(NSString*) filter search:(NSString*)search page:(NSNumber*) page  withCompletion: (void(^)(NSArray* eventsArray, NSError* error)) completion
 {
-    [self setPrivateHTTPHeader];
     
     NSString *url = [NSString stringWithFormat:@"%@%@?dateStart=%@&dateEnd=%@&filterBy=%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, EVENT_LATEST_URL, startDate, endDate, filter, search, page];
-    
-    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [EventModel getEventsArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
+    [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+         completion([EventModel getEventsArrayFromResponse:result], error);
     }];
 }
 
@@ -1706,54 +1694,20 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getPropertyProjectHousingWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    if ([NSOperationQueue mainQueue].operationCount > 0) {
-        [[NSOperationQueue mainQueue] cancelAllOperations];
-    }
-    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_PROJECT_HOUSING_GET_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PROPERTY_PROJECT_HOUSING_GET_URL, search, page];
     
-    [self setPrivateHTTPHeader];
-    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
-                                                               HTTPMethod:@"GET"
-                                                                URLString:_url
-                                                               parameters:nil
-                                                           uploadProgress:nil
-                                                         downloadProgress:nil
-                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      if (completion != nil) {
-                                                                          NSArray *result = [ProjectHousingModel getProjectHousingArrayFromResponse:responseObject];
-                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                              if  (completion != nil)
-                                                                              {
-                                                                                  completion(nil, error);
-                                                                              }
-                                                                          }];
-    [[NSOperationQueue mainQueue] addOperation:operation];
+    [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion([ProjectHousingModel getProjectHousingArrayFromResponse:result], error);
+    }];
 }
 
 - (void) getPropertyContactListWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    if ([NSOperationQueue mainQueue].operationCount > 0) {
-        [[NSOperationQueue mainQueue] cancelAllOperations];
-    }
-    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, CONTACT_GETLIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, CONTACT_GETLIST_URL,search, page];
     
-    [self setPrivateHTTPHeader];
-    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
-                                                               HTTPMethod:@"GET"
-                                                                URLString:_url
-                                                               parameters:nil
-                                                           uploadProgress:nil
-                                                         downloadProgress:nil
-                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      if (completion != nil) {
-                                                                          NSArray *result = [StaffModel getStaffArrayFromRepsonse:responseObject];
-                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                              if  (completion != nil)
-                                                                              {
-                                                                                  completion(nil, error);
-                                                                              }
-                                                                          }];
-    [[NSOperationQueue mainQueue] addOperation:operation];
+    [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion([StaffModel getStaffArrayFromRepsonse:result], error);
+    }];
 }
 
 /*
@@ -1764,25 +1718,11 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     if ([NSOperationQueue mainQueue].operationCount > 0) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
-    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PRESET_BILL_GET_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, PRESET_BILL_GET_URL,search, page];
     
-    [self setPrivateHTTPHeader];
-    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
-                                                               HTTPMethod:@"GET"
-                                                                URLString:_url
-                                                               parameters:nil
-                                                           uploadProgress:nil
-                                                         downloadProgress:nil
-                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      if (completion != nil) {
-                                                                          NSArray *result = [PresetBillModel getPresetBillArrayFromResponse:responseObject];
-                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                              if  (completion != nil)
-                                                                              {
-                                                                                  completion(nil, error);
-                                                                              }
-                                                                          }];
-    [[NSOperationQueue mainQueue] addOperation:operation];
+    [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion([PresetBillModel getPresetBillArrayFromResponse:result], error);
+    }];
 }
 
 - (void) calculateTaxInvoiceWithParams: (NSDictionary*) data withCompletion: (void(^)(NSDictionary* result, NSError* error)) completion
@@ -1805,20 +1745,10 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) saveBillorQuotationWithParams: (NSDictionary*) data inURL:(NSString*) url WithCompletion: (void(^)(NSDictionary* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self setPrivateHTTPHeader];
-    [self.manager POST:_url parameters:data progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
-            completion(responseObject, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
-            completion(nil, error);
-        }
+    [self sendPrivatePostWithURL:_url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error);
     }];
 }
-
 
 /*
  * Bill
@@ -1829,27 +1759,11 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     if ([NSOperationQueue mainQueue].operationCount > 0) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
-    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, QUOTATION_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, QUOTATION_GET_LIST_URL, search, page];
     
-    _url = [_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
-    
-    [self setPrivateHTTPHeader];
-    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
-                                                               HTTPMethod:@"GET"
-                                                                URLString:_url
-                                                               parameters:nil
-                                                           uploadProgress:nil
-                                                         downloadProgress:nil
-                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      if (completion != nil) {
-                                                                          NSArray *result = [QuotationModel getQuotationArrayFromResponse:responseObject];
-                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                              if  (completion != nil)
-                                                                              {
-                                                                                  completion(nil, error);
-                                                                              }
-                                                                          }];
-    [[NSOperationQueue mainQueue] addOperation:operation];
+    [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion([QuotationModel getQuotationArrayFromResponse:result], nil);
+    }];
 }
 
 /*
@@ -1861,25 +1775,11 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     if ([NSOperationQueue mainQueue].operationCount > 0) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
-    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, ACCOUNT_TYPE_GET_LIST_URL,[search stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]], page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, ACCOUNT_TYPE_GET_LIST_URL, search, page];
     
-    [self setPrivateHTTPHeader];
-    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
-                                                               HTTPMethod:@"GET"
-                                                                URLString:_url
-                                                               parameters:nil
-                                                           uploadProgress:nil
-                                                         downloadProgress:nil
-                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      if (completion != nil) {
-                                                                          NSArray *result = [AccountTypeModel getAccountTypeArrayFromResponse:responseObject];
-                                                                          completion(result, nil);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                              if  (completion != nil)
-                                                                              {
-                                                                                  completion(nil, error);
-                                                                              }
-                                                                          }];
-    [[NSOperationQueue mainQueue] addOperation:operation];
+    [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion([AccountTypeModel getAccountTypeArrayFromResponse:result], error);
+    }];
 }
 
 - (void) saveReceiptWithParams: (NSDictionary*) data WithCompletion: (void(^)(NSDictionary* result, NSError* error)) completion

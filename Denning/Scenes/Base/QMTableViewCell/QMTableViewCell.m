@@ -7,7 +7,6 @@
 //
 
 #import "QMTableViewCell.h"
-#import "QMPlaceholder.h"
 #import <QMImageView.h>
 
 @interface QMTableViewCell ()
@@ -15,17 +14,9 @@
 /**
  *  Outlets
  */
-
+@property (weak, nonatomic) IBOutlet QMImageView *avatarImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bodyLabel;
-
-/**
- *  Cached values
- */
-@property (assign, nonatomic) NSUInteger placeholderID;
-@property (copy, nonatomic) NSString *avatarUrl;
-@property (copy, nonatomic) NSString *title;
-@property (copy, nonatomic) NSString *body;
 
 @end
 
@@ -48,6 +39,7 @@
     return NSStringFromClass([self class]);
 }
 
+
 + (CGFloat)height {
     return 0;
 }
@@ -56,53 +48,32 @@
     [super awakeFromNib];
     
     _avatarImage.imageViewType = QMImageViewTypeCircle;
-    _avatarImage.userInteractionEnabled = YES;
     _titleLabel.text = nil;
     _bodyLabel.text = nil;
 }
 
-#pragma mark - Setters
+//MARK: - Setters
 
-- (void)setTitle:(NSString *)title placeholderID:(NSUInteger)placeholderID avatarUrl:(NSString *)avatarUrl {
+- (void)setTitle:(NSString *)title
+       avatarUrl:(NSString *)avatarUrl {
     
-    if (![_title isEqualToString:title]) {
-        
-        _title = [title copy];
-        self.titleLabel.text = title;
-    }
+    self.titleLabel.text = title;
     
-    if (_placeholderID != placeholderID || ![_avatarUrl isEqualToString:avatarUrl]) {
-        
-        _placeholderID = placeholderID;
-        
-        _avatarUrl = [avatarUrl copy];
-        
-        UIImage *placeholder = [QMPlaceholder placeholderWithFrame:self.avatarImage.bounds title:self.title ID:self.placeholderID];
-        
-        [self.avatarImage setImageWithURL:[NSURL URLWithString:avatarUrl]
-                              placeholder:placeholder
-                                  options:SDWebImageLowPriority
-                                 progress:nil
-                           completedBlock:nil];
-    }
+    NSURL *url = [NSURL URLWithString:avatarUrl];
+    [self.avatarImage setImageWithURL:url
+                                title:title
+                       completedBlock:nil];
+    
 }
 
 - (void)setTitle:(NSString *)title {
     
-    if (![_title isEqualToString:title]) {
-        
-        _title = [title copy];
-        self.titleLabel.text = title;
-    }
+    self.titleLabel.text = title;
 }
 
 - (void)setBody:(NSString *)body {
     
-    if (![_body isEqualToString:body]) {
-        
-        _body = [body copy];
-        self.bodyLabel.text = body;
-    }
+    self.bodyLabel.text = body;
 }
 
 @end

@@ -3,23 +3,12 @@
 
 #import "_CDAttachment.h"
 
-const struct CDAttachmentAttributes CDAttachmentAttributes = {
-	.data = @"data",
-	.id = @"id",
-	.mimeType = @"mimeType",
-	.url = @"url",
-};
-
-const struct CDAttachmentRelationships CDAttachmentRelationships = {
-	.message = @"message",
-};
-
 @implementation CDAttachmentID
 @end
 
 @implementation _CDAttachment
 
-+ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
++ (instancetype)insertInManagedObjectContext:(NSManagedObjectContext *)moc_ {
 	NSParameterAssert(moc_);
 	return [NSEntityDescription insertNewObjectForEntityForName:@"CDAttachment" inManagedObjectContext:moc_];
 }
@@ -43,15 +32,46 @@ const struct CDAttachmentRelationships CDAttachmentRelationships = {
 	return keyPaths;
 }
 
+@dynamic customParameters;
+
 @dynamic data;
 
 @dynamic id;
 
 @dynamic mimeType;
 
+@dynamic name;
+
 @dynamic url;
 
 @dynamic message;
 
+@end
+
+@implementation CDAttachmentAttributes 
++ (NSString *)customParameters {
+	return @"customParameters";
+}
++ (NSString *)data {
+	return @"data";
+}
++ (NSString *)id {
+	return @"id";
+}
++ (NSString *)mimeType {
+	return @"mimeType";
+}
++ (NSString *)name {
+	return @"name";
+}
++ (NSString *)url {
+	return @"url";
+}
+@end
+
+@implementation CDAttachmentRelationships 
++ (NSString *)message {
+	return @"message";
+}
 @end
 

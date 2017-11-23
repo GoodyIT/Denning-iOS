@@ -13,14 +13,14 @@
 
 @implementation QMContactsDataSource
 
-#pragma mark - methods
+//MARK: - methods
 
 - (QBUUser *)userAtIndexPath:(NSIndexPath *)indexPath {
     
     return [self objectAtIndexPath:indexPath];
 }
 
-#pragma mark - UITableViewDataSource
+//MARK: - UITableViewDataSource
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)__unused indexPath {
     
@@ -41,14 +41,9 @@
     QMContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMContactCell cellIdentifier] forIndexPath:indexPath];
     
     QBUUser *user = [self userAtIndexPath:indexPath];
-    [cell setTitle:user.fullName placeholderID:user.ID avatarUrl:user.avatarUrl];
+    [cell setTitle:user.fullName avatarUrl:user.avatarUrl];
     
-    NSString *onlineStatus = [[QMCore instance].contactManager onlineStatusForUser:user];
-    [cell setBody:onlineStatus];
-    
-    [cell setFavButtonVisible:YES];
-    
-    cell.didAddUserBlock = self.didAddUserBlock;
+    [cell setBody:[QMCore.instance.contactManager onlineStatusForUser:user]];
     
     return cell;
 }

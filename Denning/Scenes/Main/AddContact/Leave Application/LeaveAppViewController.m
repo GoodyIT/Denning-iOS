@@ -31,7 +31,7 @@
     
     __block Boolean isLoading, isAppending;
 }
-@property (weak, nonatomic) IBOutlet UIView *topView;
+
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *listOfValsForApp;
 @property (strong, nonatomic) NSMutableArray* listOfLeaveRecords;

@@ -600,7 +600,7 @@
         <!--Navigation Controller-->
         <scene sceneID="9VS-QU-hdd">
             <objects>
-                <navigationController storyboardIdentifier="FileUploadNavigation" automaticallyAdjustsScrollViewInsets="NO" id="y98-Lz-7ph" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FileUploadNavigation" automaticallyAdjustsScrollViewInsets="NO" id="y98-Lz-7ph" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="0g2-8D-KOz" customClass="QMNavigationBar">
@@ -1309,10 +1309,10 @@
         <!--Navigation Controller-->
         <scene sceneID="hfc-59-FPq">
             <objects>
-                <navigationController storyboardIdentifier="DocumentViewController" automaticallyAdjustsScrollViewInsets="NO" id="gea-U5-wLg" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DocumentViewController" automaticallyAdjustsScrollViewInsets="NO" id="gea-U5-wLg" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="J8S-rc-ciR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" translucent="NO" id="J8S-rc-ciR" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -3218,7 +3218,7 @@
         <!--Navigation Controller-->
         <scene sceneID="mX2-Zf-bAq">
             <objects>
-                <navigationController storyboardIdentifier="PaymentRecord" automaticallyAdjustsScrollViewInsets="NO" id="td9-Aq-MdE" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PaymentRecord" automaticallyAdjustsScrollViewInsets="NO" id="td9-Aq-MdE" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="ox9-kt-bI1" customClass="QMNavigationBar">
@@ -3283,7 +3283,7 @@
         <!--Navigation Controller-->
         <scene sceneID="64N-nX-2lz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yRj-sJ-mhX" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yRj-sJ-mhX" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="FVt-WD-xer" customClass="QMNavigationBar">

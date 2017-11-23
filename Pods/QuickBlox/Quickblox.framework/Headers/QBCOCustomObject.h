@@ -6,9 +6,6 @@
 //  Copyright (c) 2016 QuickBlox. All rights reserved.
 //
 
-#import <Quickblox/QBNullability.h>
-#import <Quickblox/QBGeneric.h>
-
 @class QBCOPermissions;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -67,6 +64,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return New instance of QBCustomObject.
  */
 + (instancetype)customObject;
+
+//MARK: Keyed subscription
+
+- (nullable id)objectForKeyedSubscript:(NSString *)key;
+- (void)setObject:(nullable id)obj forKeyedSubscript:(NSString *)key;
 
 @end
 

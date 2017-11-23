@@ -29,9 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Show message notification for News Feed
  *
-*/
+ */
 
 + (void) showMessageNotificationWithTitle:(NSString*)title message: (NSString*) messageText avatarURL:(NSString*)avatarURL buttonHandler:(MPGNotificationButtonHandler)buttonHandler hostViewController:(UIViewController *)hvc;
+
 
 /**
  *  Send push notification for user with text.
@@ -42,9 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return BFTask with completion
  */
 + (BFTask *)sendPushNotificationToUser:(QBUUser *)user withText:(NSString *)text;
-
-
-+ (BFTask *)sendPushMessageToUser:(NSUInteger) userID withUserName:(NSString*)username withMessage:(QBChatMessage *)message;
 
 @end
 

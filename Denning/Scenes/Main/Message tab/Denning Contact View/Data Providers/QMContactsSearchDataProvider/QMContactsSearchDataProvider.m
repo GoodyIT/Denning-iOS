@@ -23,7 +23,7 @@ QMUsersServiceDelegate
 
 @implementation QMContactsSearchDataProvider
 
-#pragma mark - Construction
+//MARK: - Construction
 
 - (instancetype)init {
     
@@ -31,16 +31,15 @@ QMUsersServiceDelegate
     
     if (self) {
         
-        [[QMCore instance].contactListService addDelegate:self];
-        [[QMCore instance].usersService addDelegate:self];
-        _friends = [[QMCore instance].contactManager friends];
-//        _friends = [DataManager sharedManager].staffContactsArray;
+        [QMCore.instance.contactListService addDelegate:self];
+        [QMCore.instance.usersService addDelegate:self];
+        _friends = [QMCore.instance.contactManager friends];
     }
     
     return self;
 }
 
-#pragma mark - Methods
+//MARK: - Methods
 
 - (void)performSearch:(NSString *)searchText {
     
@@ -72,18 +71,17 @@ QMUsersServiceDelegate
     });
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 - (void)updateData {
     
-    self.friends = [[QMCore instance].contactManager friends];
-//    self.friends = [DataManager sharedManager].staffContactsArray;
+    self.friends = [QMCore.instance.contactManager friends];
     [self performSearch:self.cachedSearchText];
     
     [self.delegate searchDataProvider:self didUpdateData:self.friends];
 }
 
-#pragma mark - QMUsersServiceDelegate
+//MARK: - QMUsersServiceDelegate
 
 - (void)usersService:(QMUsersService *)__unused usersService didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
     
@@ -95,7 +93,7 @@ QMUsersServiceDelegate
     [self updateData];
 }
 
-#pragma mark - QMContactListDelegate
+//MARK: - QMContactListDelegate
 
 - (void)contactListServiceDidLoadCache {
     

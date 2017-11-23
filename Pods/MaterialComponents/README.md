@@ -19,6 +19,9 @@ Material Components for iOS are written in Objective-C and support Swift and Int
 - [MDC-iOS on Stack Overflow](https://www.stackoverflow.com/questions/tagged/material-components+ios) (external site)
 - [Material.io](https://www.material.io) (external site)
 - [Material Design Guidelines](https://material.io/guidelines) (external site)
+- [Checklist status spreadsheet](https://docs.google.com/spreadsheets/d/e/2PACX-1vRQLFMuo0Q3xsJp1_TdWvImtfdc8dU0lqX2DTct5pOPAEUIrN9OsuPquvv4aKRAwKK_KItpGs7c4Fok/pubhtml)
+- [Discord Chat Room](https://discord.gg/material-components)
+
 
 ## Trying out Material Components
 
@@ -100,15 +103,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let raiseButton = MDCRaisedButton.init();
-        raiseButton.setTitle("Raised Button", forState: .Normal);
-        raiseButton.sizeToFit();
-        raiseButton.addTarget(self, action: #selector(tapped), forControlEvents: .TouchUpInside);
-        self.view.addSubview(raiseButton);
+        let raiseButton = MDCRaisedButton()
+        raiseButton.setTitle("Raised Button", for: .normal)
+        raiseButton.sizeToFit()
+        raiseButton.addTarget(self, action: #selector(tapped), for: .touchUpInside)
+        view.addSubview(raiseButton)
     }
 
-    func tapped(sender: UIButton!){
-        NSLog("Button was tapped!");
+    @objc func tapped(sender: UIButton){
+        print("Button was tapped!")
     }
 
 }
@@ -124,7 +127,7 @@ class ViewController: UIViewController {
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  MDCRaisedButton *raisedButton = [MDCRaisedButton new];
+  MDCRaisedButton *raisedButton = [[MDCRaisedButton alloc] init];
   [raisedButton setTitle:@"Raised Button" forState:UIControlStateNormal];
   [raisedButton sizeToFit];
   [raisedButton addTarget:self

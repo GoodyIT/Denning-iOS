@@ -47,7 +47,6 @@
     NSString* officeCountryCode;
     
     NSString* faxCountryCallingCode;
-    NSString* faxCountryCode;
     
     NSString* selectedPhoneHome;
     NSString* selectedPhoneMobile;
@@ -131,6 +130,134 @@
     [self setDefaultCountryCode];
 }
 
+- (void) prepareUI {
+    headers = @[@"Personal Info.", @"Contact Info", @"Other Info.", @"Company Info", @"Invitation"];
+    
+    if (self.viewType.length == 0) {
+        self.contactModel = [ContactModel new];
+        [self.saveBtn setTitle:@"Save" forState:UIControlStateNormal];
+        self.title = @"Add Contact";
+    } else {
+        self.IDType.text = self.contactModel.idType.descriptionValue;
+        selectedIDTypeCode = self.contactModel.idType.codeValue;
+        [self applyValidateRuleOfID];
+        self.IDNo.text = self.contactModel.IDNo;
+        self.oldIC.text = self.contactModel.KPLama;
+        self.name.text = self.contactModel.name;
+        self.contactTitle.text = self.contactModel.contactTitle;
+        self.address1.text = self.contactModel.address.line1;
+        self.address2.text = self.contactModel.address.line2;
+        self.address3.text = self.contactModel.address.line3;
+        self.town.text = self.contactModel.address.city;
+        self.state.text =  self.contactModel.address.state;
+        self.country.text = self.contactModel.address.country;
+        self.postcode.text = self.contactModel.address.postCode;
+        self.email.text = self.contactModel.email;
+        NSArray* homeArray = [self adjustPhone:self.contactModel.homePhone btn:_phoneHomeBtn];
+        _phoneHome.text = homeArray[0];
+        homeCountryCallingCode = homeArray[1];
+        homeCountryCode = homeArray[2];
+        NSArray* mobileArray = [self adjustPhone:self.contactModel.mobilePhone btn:_phoneMobileBtn];
+        self.phoneMobile.text = mobileArray[0];
+        mobileCountryCallingCode = mobileArray[1];
+        mobileCountryCode = mobileArray[2];
+        NSArray* officeArray = [self adjustPhone:self.contactModel.officePhone btn:_phoneOfficeBtn];
+        self.phoneOffice.text = officeArray[0];
+        officeCountryCallingCode = officeArray[1];
+        officeCountryCode = officeArray[2];
+        NSArray* faxArray = [self adjustPhone:self.contactModel.fax btn:_faxBtn];
+        self.fax.text = faxArray[0];
+        faxCountryCallingCode = faxArray[1];
+        self.contactPerson.text = self.contactModel.contactPerson;
+        self.citizenship.text = self.contactModel.citizenShip;
+        self.dateOfBirth.text = [DIHelpers convertDateToCustomFormat:self.contactModel.dateOfBirth];
+        self.occupation.text = self.contactModel.occupation.descriptionValue;
+        selectedOccupationCode = self.contactModel.occupation.codeValue;
+        self.taxFileNo.text = self.contactModel.tax;
+        self.IRDBranch.text = self.contactModel.IRDBranch.descriptionValue;
+        selectedIRDBranchCode = _contactModel.IRDBranch.codeValue;
+        self.website.text = self.contactModel.website;
+        if ([self.contactModel.InviteToDenning isEqualToString:@"1"]) {
+            [self.inviteDenning setOn:YES];
+        } else {
+            [self.inviteDenning setOn:NO];
+        }
+        
+        [self.saveBtn setTitle:@"Update" forState:UIControlStateNormal];
+        self.title = @"Update Contact";
+    }
+    
+    self.IDType.floatLabelPassiveColor = self.IDType.floatLabelActiveColor = [UIColor redColor];
+    self.IDNo.floatLabelActiveColor = self.IDNo.floatLabelPassiveColor = [UIColor redColor];
+    self.oldIC.floatLabelActiveColor = self.oldIC.floatLabelPassiveColor = [UIColor redColor];
+    self.name.floatLabelActiveColor = self.name.floatLabelPassiveColor = [UIColor redColor];
+    self.contactTitle.floatLabelActiveColor = self.contactTitle.floatLabelPassiveColor = [UIColor redColor];
+    self.address1.floatLabelActiveColor = self.address1.floatLabelPassiveColor = [UIColor redColor];
+    self.address2.floatLabelActiveColor = self.address2.floatLabelPassiveColor = [UIColor redColor];
+    self.address3.floatLabelActiveColor = self.address3.floatLabelPassiveColor = [UIColor redColor];
+    self.town.floatLabelActiveColor = self.town.floatLabelPassiveColor = [UIColor redColor];
+    self.state.floatLabelActiveColor = self.state.floatLabelPassiveColor = [UIColor redColor];
+    self.postcode.floatLabelActiveColor = self.postcode.floatLabelPassiveColor = [UIColor redColor];
+    self.email.floatLabelActiveColor = self.email.floatLabelPassiveColor = [UIColor redColor];
+    self.phoneHome.floatLabelActiveColor = self.phoneHome.floatLabelPassiveColor = [UIColor redColor];
+    self.phoneMobile.floatLabelActiveColor = self.phoneMobile.floatLabelPassiveColor = [UIColor redColor];
+    self.phoneOffice.floatLabelActiveColor = self.phoneOffice.floatLabelPassiveColor = [UIColor redColor];
+    self.country.floatLabelActiveColor = self.country.floatLabelPassiveColor = [UIColor redColor];
+    self.fax.floatLabelActiveColor = self.fax.floatLabelPassiveColor = [UIColor redColor];
+    self.contactPerson.floatLabelActiveColor = self.contactPerson.floatLabelPassiveColor = [UIColor redColor];
+    self.website.floatLabelActiveColor = self.website.floatLabelPassiveColor = [UIColor redColor];
+    self.citizenship.floatLabelActiveColor = self.citizenship.floatLabelPassiveColor = [UIColor redColor];
+    self.dateOfBirth.floatLabelActiveColor = self.dateOfBirth.floatLabelPassiveColor = [UIColor redColor];
+    self.occupation.floatLabelActiveColor = self.occupation.floatLabelPassiveColor = [UIColor redColor];
+    self.taxFileNo.floatLabelActiveColor = self.taxFileNo.floatLabelPassiveColor = [UIColor redColor];
+    self.IRDBranch.floatLabelActiveColor = self.IRDBranch.floatLabelPassiveColor = [UIColor redColor];
+    self.registeredOffice.floatLabelActiveColor = self.registeredOffice.floatLabelPassiveColor = [UIColor redColor];
+    
+    UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
+    accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
+    accessoryView.tintColor = [UIColor babyRed];
+    
+    accessoryView.items = @[
+                            [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                            [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(handleTap)]];
+    [accessoryView sizeToFit];
+    
+    self.IDType.inputAccessoryView = accessoryView;
+    self.IDNo.inputAccessoryView = accessoryView;
+    self.oldIC.inputAccessoryView = accessoryView;
+    self.name.inputAccessoryView = accessoryView;
+    self.contactTitle.inputAccessoryView = accessoryView;
+    self.address1.inputAccessoryView = accessoryView;
+    self.address2.inputAccessoryView = accessoryView;
+    self.address3.inputAccessoryView = accessoryView;
+    self.postcode.inputAccessoryView = accessoryView;
+    self.town.inputAccessoryView = accessoryView;
+    self.state.inputAccessoryView = accessoryView;
+    self.country.inputAccessoryView = accessoryView;
+    self.citizenship.inputAccessoryView = accessoryView;
+    self.dateOfBirth.inputAccessoryView = accessoryView;
+    self.occupation.inputAccessoryView = accessoryView;
+    self.IRDBranch.inputAccessoryView = accessoryView;
+    self.email.inputAccessoryView = accessoryView;
+    self.phoneHome.inputAccessoryView = accessoryView;
+    self.phoneMobile.inputAccessoryView = accessoryView;
+    self.phoneOffice.inputAccessoryView = accessoryView;
+    self.fax.inputAccessoryView = accessoryView;
+    self.taxFileNo.inputAccessoryView = accessoryView;
+    self.contactPerson.inputAccessoryView = accessoryView;
+    self.website.inputAccessoryView = accessoryView;
+    self.registeredOffice.inputAccessoryView = accessoryView;
+    
+    self.oldIC.delegate = self.IDNo.delegate = self.name.delegate = self.address1.delegate = self.address2.delegate = self.address3.delegate = self.registeredOffice.delegate = self.postcode.delegate = self.town.delegate = self.state.delegate = self.country.delegate = self.phoneMobile.delegate = self.phoneOffice.delegate = self.phoneHome.delegate = self.fax.delegate = self.contactTitle.delegate = self.IDType.delegate = self.contactPerson.delegate = self.citizenship.delegate = self.taxFileNo.delegate = self.IRDBranch.delegate = self.registeredOffice.delegate = self;
+    
+    // Hide empty separators
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void)handleTap {
+    [self.view endEditing:YES];
+}
+
 - (void) setDefaultCountryCode
 {
     NSString* selectedCountryCallingCode, *selectedCountryCode;
@@ -151,16 +278,28 @@
             buttonTitle = [NSString stringWithFormat:@"(%@)", [obj objectForKey:kCountryCallingCode]];
             selectedCountryCallingCode = [obj objectForKey:kCountryCallingCode];
             selectedCountryCode = [obj objectForKey:kCountryCode];
+            break;
         }
     }
+    if (self.phoneMobile.text.length == 0) {
+        [self.phoneMobileBtn setTitle:buttonTitle forState:UIControlStateNormal];
+        mobileCountryCallingCode = selectedCountryCallingCode;
+        mobileCountryCode = selectedCountryCode;
+    }
+    if (self.phoneHome.text.length == 0) {
+        [self.phoneHomeBtn setTitle:buttonTitle forState:UIControlStateNormal];
+        homeCountryCode = selectedCountryCode;
+    }
     
-    [self.phoneHomeBtn setTitle:buttonTitle forState:UIControlStateNormal];
-    [self.phoneMobileBtn setTitle:buttonTitle forState:UIControlStateNormal];
-    [self.phoneOfficeBtn setTitle:buttonTitle forState:UIControlStateNormal];
-    [self.faxBtn setTitle:buttonTitle forState:UIControlStateNormal];
-    
-    homeCountryCode = mobileCountryCode = officeCountryCode = faxCountryCode= selectedCountryCode;
-    homeCountryCallingCode = mobileCountryCallingCode = officeCountryCallingCode = faxCountryCallingCode= selectedCountryCallingCode;
+    if (self.phoneOffice.text.length == 0) {
+        [self.phoneOfficeBtn setTitle:buttonTitle forState:UIControlStateNormal];
+        officeCountryCode = selectedCountryCode;
+        officeCountryCallingCode = selectedCountryCallingCode;
+    }
+    if (self.fax.text.length == 0) {
+        [self.faxBtn setTitle:buttonTitle forState:UIControlStateNormal];
+        faxCountryCallingCode= selectedCountryCallingCode;
+    }
 }
 
 - (IBAction)didTapHomeBtn:(id)sender {
@@ -202,7 +341,6 @@
                 officeCountryCallingCode = countryCallingCode;
                 break;
             case 4:
-                faxCountryCode = countryCode;
                 faxCountryCallingCode = countryCallingCode;
                 break;
                 
@@ -218,9 +356,9 @@
 
 - (void) checkIDValidation:(NSString*) value url:(NSString*) url message:(NSString*) message withCompletion:(void(^)(void)) completion withFinalCompletion:(void(^)(void)) finalCompletion{
   
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"Checking", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"Checking", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     [[QMNetworkManager sharedManager] checkIDorNameDuplication:value url:url WithCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         
         if (finalCompletion!= nil) {
@@ -384,7 +522,7 @@
 }
 
 - (NSString*) removeSpecial:(NSString*) string {
-    NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"-;(;)"];
+    NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"+;-;(;)"];
     return [[string componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
 }
 
@@ -449,7 +587,11 @@
     if (self.viewType == nil || self.viewType.length == 0) {
         [self _save];
     } else {
-        [self _update];
+        [QMAlert showConfirmDialog:@"Do you want to update contact?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+            if  ([action.title isEqualToString:@"OK"]) {
+                [self _update];
+            }
+        }];
     }
 }
 
@@ -463,6 +605,13 @@
     selectedTitleCode = @"";
     selectedOccupationCode = @"";
     selectedIRDBranchCode = @"";
+}
+
+- (BOOL) comparePhones:(NSString*) phone1 phone2:(NSString*) phone2
+{
+    phone1 = [self removeSpecial:phone1];
+    phone2 = [self removeSpecial:phone2];
+    return [phone1 isEqualToString:phone2];
 }
 
 - (NSMutableDictionary*) buildParams {
@@ -483,25 +632,23 @@
         [address addEntriesFromDictionary:@{@"postcode": [self getNotNull:_postcode.text]}];
     }
     
-    NSString* fullAddress = [NSString stringWithFormat:@"%@%@%@", _address1.text, _address2.text, _address3.text];
-    if (fullAddress.length > 0 && ![fullAddress isEqualToString:_contactModel.address.fullAddress]) {
-        [address addEntriesFromDictionary:@{@"fullAddress": [self getNotNull:fullAddress]}];
-    }
-    
     if (_address1.text.length > 0 && ![_address1.text isEqualToString:_contactModel.address.line1]) {
         [address addEntriesFromDictionary:@{@"line1": [self getNotNull:self.address1.text]}];
     }
     
-    if (_address2.text.length > 0 && ![_address1.text isEqualToString:_contactModel.address.line2]) {
+    if (_address2.text.length > 0 && ![_address2.text isEqualToString:_contactModel.address.line2]) {
         [address addEntriesFromDictionary:@{@"line2": [self getNotNull:self.address2.text]}];
     }
     
-    if (_address3.text.length > 0 && ![_address1.text isEqualToString:_contactModel.address.line3]) {
+    if (_address3.text.length > 0 && ![_address3.text isEqualToString:_contactModel.address.line3]) {
         [address addEntriesFromDictionary:@{@"line3": [self getNotNull:self.address3.text]}];
     }
 
     NSMutableDictionary* data = [NSMutableDictionary new];
-    [data addEntriesFromDictionary:@{@"address":address}];
+    if (address.count > 0) {
+        [data addEntriesFromDictionary:@{@"address":address}];
+    }
+    
     if (_IDNo.text.length > 0 && ![_IDNo.text isEqualToString:_contactModel.IDNo]){
         [data addEntriesFromDictionary:@{@"IDNo": _IDNo.text}];
     }
@@ -521,22 +668,22 @@
     }
     
     NSString *_phone = [mobileCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneMobile.text]]];
-    if (_phoneMobile.text.length > 0 && ![_phone isEqualToString:[self removeSpecial:_contactModel.mobilePhone]]) {
+    if (_phoneMobile.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.mobilePhone]) {
         [data addEntriesFromDictionary:@{@"phoneMobile": _phone}];
     }
     
     _phone = [homeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneHome.text]]];
-    if (_phoneHome.text.length > 0 && ![_phone isEqualToString:[self removeSpecial:_contactModel.homePhone]]) {
+    if (_phoneHome.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.homePhone]) {
         [data addEntriesFromDictionary:@{@"phoneHome": _phone}];
     }
     
     _phone = [officeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneOffice.text]]];
-    if (_phoneOffice.text.length > 0 && ![_phoneOffice.text isEqualToString:[self removeSpecial:_contactModel.officePhone]]) {
+    if (_phoneOffice.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.officePhone]) {
         [data addEntriesFromDictionary:@{@"phoneOffice":_phone}];
     }
     
     _phone = [faxCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_fax.text]]];
-    if (_fax.text.length > 0 && ![_fax.text isEqualToString:[self removeSpecial:_contactModel.fax]]) {
+    if (_fax.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.fax]) {
         [data addEntriesFromDictionary:@{@"phoneFax":_phone}];
     }
     
@@ -581,9 +728,9 @@
     }
     
     
-    NSNumber* inviteToDenning = @(0);
+    NSString* inviteToDenning = @"";
     if (self.inviteDenning.isOn) {
-        inviteToDenning = @(1);
+        inviteToDenning = @"1";
     }
     if (inviteToDenning && ![inviteToDenning isEqual:_contactModel.InviteToDenning]) {
         [data addEntriesFromDictionary:@{@"inviteToDenning": inviteToDenning}];
@@ -594,9 +741,9 @@
 
 - (void) _save {
     
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"Saving", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"Saving", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     @weakify(self)
     [[QMNetworkManager sharedManager] saveContactWithData:[self buildParams] withCompletion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
@@ -615,17 +762,17 @@
 }
 
 - (void) _update {
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     NSMutableDictionary* data = [self buildParams];
     [data addEntriesFromDictionary:@{@"code":self.contactModel.contactCode}];
     [[QMNetworkManager sharedManager] updateContactWithData:data withCompletion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         if (error == nil) {
-            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Saved" duration:2.0];
-            [self performSegueWithIdentifier:kContactSearchSegue sender:contactModel];
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Done" duration:2.0];
+          //  [self performSegueWithIdentifier:kContactSearchSegue sender:contactModel];
             return;
         } else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:2.0];
@@ -633,138 +780,41 @@
     }];
 }
 
-- (NSString*) adjustPhone: (NSString*) phone btn:(UIButton*) countryBtn
+- (NSArray*) adjustPhone: (NSString*) phone btn:(UIButton*) countryBtn
 {
     if (phone.length == 0) {
-        return @"";
+        return @[@"", @"+1", @"US"];
     }
     NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"-"];
    phone = [[phone componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
 
     NSArray* obj = [phone componentsSeparatedByString:@")"];
-    NSString* countryCallingCode = [obj[0] substringFromIndex:1];
+    NSString* countryCallingCode = [@"+" stringByAppendingString:[obj[0] substringFromIndex:1]];
     
-    NSString *buttonTitle = [NSString stringWithFormat:@"(+%@)",countryCallingCode];
+    NSString *buttonTitle = [NSString stringWithFormat:@"(%@)",countryCallingCode];
     
     [countryBtn setTitle:buttonTitle forState:UIControlStateNormal];
     
-    return obj[1];
-}
-
-- (void) prepareUI {
-    headers = @[@"Personal Info.", @"Contact Info", @"Other Info.", @"Company Info", @"Invitation"];
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"countries" ofType:@"json"]];
+    NSError *localError = nil;
+    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
     
-    if (self.viewType.length == 0) {
-        self.contactModel = [ContactModel new];
-        [self.saveBtn setTitle:@"Save" forState:UIControlStateNormal];
-        self.title = @"Add Contact";
-    } else {
-        self.IDType.text = [((NSDictionary*)self.contactModel.idType) objectForKeyNotNull:@"description"];
-        selectedIDTypeCode = [((NSDictionary*)self.contactModel.idType) objectForKeyNotNull:@"code"];
-        [self applyValidateRuleOfID];
-        self.IDNo.text = self.contactModel.IDNo;
-        self.oldIC.text = self.contactModel.KPLama;
-        self.name.text = self.contactModel.name;
-        self.contactTitle.text = self.contactModel.contactTitle;
-        self.address1.text = self.contactModel.address.line1;
-        self.address2.text = self.contactModel.address.line2;
-        self.address3.text = self.contactModel.address.line3;
-        self.town.text = self.contactModel.address.city;
-        self.state.text =  self.contactModel.address.state;
-        self.country.text = self.contactModel.address.country;
-        self.postcode.text = self.contactModel.address.postCode;
-        self.email.text = self.contactModel.email;
-        _phoneHome.text = [self adjustPhone:self.contactModel.homePhone btn:_phoneHomeBtn];
-        self.phoneMobile.text = [self adjustPhone:self.contactModel.mobilePhone btn:_phoneMobileBtn];
-        self.phoneOffice.text = [self adjustPhone:self.contactModel.officePhone btn:_phoneOfficeBtn];
-        self.fax.text = [self adjustPhone:self.contactModel.fax btn:_faxBtn];
-        self.contactPerson.text = self.contactModel.contactPerson;
-        self.citizenship.text = self.contactModel.citizenShip;
-        self.dateOfBirth.text = [DIHelpers convertDateToCustomFormat:self.contactModel.dateOfBirth];
-        self.occupation.text = self.contactModel.occupation.descriptionValue;
-        self.taxFileNo.text = self.contactModel.tax;
-        self.IRDBranch.text = self.contactModel.IRDBranch.descriptionValue;
-        self.website.text = self.contactModel.website;
-        if ([self.contactModel.InviteToDenning isEqualToString:@"1"]) {
-            [self.inviteDenning setOn:YES];
-        } else {
-            [self.inviteDenning setOn:NO];
-        }
-        
-        [self.saveBtn setTitle:@"Update" forState:UIControlStateNormal];
-        self.title = @"Update Contact";
+    if (localError != nil) {
+        NSLog(@"%@", [localError userInfo]);
     }
     
-    self.IDType.floatLabelPassiveColor = self.IDType.floatLabelActiveColor = [UIColor redColor];
-    self.IDNo.floatLabelActiveColor = self.IDNo.floatLabelPassiveColor = [UIColor redColor];
-    self.oldIC.floatLabelActiveColor = self.oldIC.floatLabelPassiveColor = [UIColor redColor];
-    self.name.floatLabelActiveColor = self.name.floatLabelPassiveColor = [UIColor redColor];
-    self.contactTitle.floatLabelActiveColor = self.contactTitle.floatLabelPassiveColor = [UIColor redColor];
-    self.address1.floatLabelActiveColor = self.address1.floatLabelPassiveColor = [UIColor redColor];
-    self.address2.floatLabelActiveColor = self.address2.floatLabelPassiveColor = [UIColor redColor];
-    self.address3.floatLabelActiveColor = self.address3.floatLabelPassiveColor = [UIColor redColor];
-    self.town.floatLabelActiveColor = self.town.floatLabelPassiveColor = [UIColor redColor];
-    self.state.floatLabelActiveColor = self.state.floatLabelPassiveColor = [UIColor redColor];
-    self.postcode.floatLabelActiveColor = self.postcode.floatLabelPassiveColor = [UIColor redColor];
-    self.email.floatLabelActiveColor = self.email.floatLabelPassiveColor = [UIColor redColor];
-    self.phoneHome.floatLabelActiveColor = self.phoneHome.floatLabelPassiveColor = [UIColor redColor];
-    self.phoneMobile.floatLabelActiveColor = self.phoneMobile.floatLabelPassiveColor = [UIColor redColor];
-    self.phoneOffice.floatLabelActiveColor = self.phoneOffice.floatLabelPassiveColor = [UIColor redColor];
-    self.country.floatLabelActiveColor = self.country.floatLabelPassiveColor = [UIColor redColor];
-    self.fax.floatLabelActiveColor = self.fax.floatLabelPassiveColor = [UIColor redColor];
-    self.contactPerson.floatLabelActiveColor = self.contactPerson.floatLabelPassiveColor = [UIColor redColor];
-    self.website.floatLabelActiveColor = self.website.floatLabelPassiveColor = [UIColor redColor];
-    self.citizenship.floatLabelActiveColor = self.citizenship.floatLabelPassiveColor = [UIColor redColor];
-    self.dateOfBirth.floatLabelActiveColor = self.dateOfBirth.floatLabelPassiveColor = [UIColor redColor];
-    self.occupation.floatLabelActiveColor = self.occupation.floatLabelPassiveColor = [UIColor redColor];
-    self.taxFileNo.floatLabelActiveColor = self.taxFileNo.floatLabelPassiveColor = [UIColor redColor];
-    self.IRDBranch.floatLabelActiveColor = self.IRDBranch.floatLabelPassiveColor = [UIColor redColor];
-    self.registeredOffice.floatLabelActiveColor = self.registeredOffice.floatLabelPassiveColor = [UIColor redColor];
- 
-    UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
-    accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
-    accessoryView.tintColor = [UIColor babyRed];
+    countriesList = (NSArray *)parsedObject;
+    NSString* selectedCountryCode;
+    for (id obj in countriesList) {
+        if ([[obj objectForKey:kCountryCallingCode] isEqualToString:countryCallingCode]) {
+            selectedCountryCode = [obj objectForKey:kCountryCode];
+            break;
+        }
+    }
     
-    accessoryView.items = @[
-                            [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-                            [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(handleTap)]];
-    [accessoryView sizeToFit];
-    
-    self.IDType.inputAccessoryView = accessoryView;
-    self.IDNo.inputAccessoryView = accessoryView;
-    self.oldIC.inputAccessoryView = accessoryView;
-    self.name.inputAccessoryView = accessoryView;
-    self.contactTitle.inputAccessoryView = accessoryView;
-    self.address1.inputAccessoryView = accessoryView;
-    self.address2.inputAccessoryView = accessoryView;
-    self.address3.inputAccessoryView = accessoryView;
-    self.postcode.inputAccessoryView = accessoryView;
-    self.town.inputAccessoryView = accessoryView;
-    self.state.inputAccessoryView = accessoryView;
-    self.country.inputAccessoryView = accessoryView;
-    self.citizenship.inputAccessoryView = accessoryView;
-    self.dateOfBirth.inputAccessoryView = accessoryView;
-    self.occupation.inputAccessoryView = accessoryView;
-    self.IRDBranch.inputAccessoryView = accessoryView;
-    self.email.inputAccessoryView = accessoryView;
-    self.phoneHome.inputAccessoryView = accessoryView;
-    self.phoneMobile.inputAccessoryView = accessoryView;
-    self.phoneOffice.inputAccessoryView = accessoryView;
-    self.fax.inputAccessoryView = accessoryView;
-    self.taxFileNo.inputAccessoryView = accessoryView;
-    self.contactPerson.inputAccessoryView = accessoryView;
-    self.website.inputAccessoryView = accessoryView;
-    self.registeredOffice.inputAccessoryView = accessoryView;
-    
-    self.oldIC.delegate = self.IDNo.delegate = self.name.delegate = self.address1.delegate = self.address2.delegate = self.address3.delegate = self.registeredOffice.delegate = self.postcode.delegate = self.town.delegate = self.state.delegate = self.country.delegate = self.phoneMobile.delegate = self.phoneOffice.delegate = self.phoneHome.delegate = self.fax.delegate = self.contactTitle.delegate = self.IDType.delegate = self.contactPerson.delegate = self.citizenship.delegate = self.taxFileNo.delegate = self.IRDBranch.delegate = self.registeredOffice.delegate = self;
-    
-    // Hide empty separators
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    return @[obj[1], countryCallingCode, selectedCountryCode];
 }
 
-- (void)handleTap {
-    [self.view endEditing:YES];
-}
 
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidEndEditing:(UITextField *)textField

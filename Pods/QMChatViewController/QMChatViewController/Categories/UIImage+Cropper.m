@@ -7,9 +7,41 @@
 //
 
 #import "UIImage+Cropper.h"
-#include <math.h>
 
 @implementation UIImage (Cropper)
+
+- (UIImage *)imageWithCornerRadius:(CGFloat)cornerRadius
+                        targetSize:(CGSize)targetSize {
+    
+    UIImage *scaledImage = [self imageByScaleAndCrop:targetSize];
+    
+    float scaleFactor = [[UIScreen mainScreen] scale];
+    UIGraphicsBeginImageContextWithOptions(scaledImage.size, NO, scaleFactor);
+    
+    // Build a context that's the same dimensions as the new size
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(context, 0, scaledImage.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    
+    // Create a clipping path with rounded corners
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, scaledImage.size.width, scaledImage.size.height)
+                                               byRoundingCorners:UIRectCornerAllCorners
+                                                     cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
+    
+    CGContextAddPath(context, path.CGPath);
+    CGContextClip(context);
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, scaledImage.size.width, scaledImage.size.height), scaledImage.CGImage);
+    // Draw the image to the context; the clipping path will make anything outside the rounded rect transparent
+    
+    // Create a CGImage from the context
+    UIImage *roundedImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return roundedImage;
+}
 
 - (UIImage *)imageByScaleAndCrop:(CGSize)targetSize {
     
@@ -46,7 +78,7 @@
             
             thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
             
-        } else if (widthFactor < heightFactor) {
+        } else {
             
             thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
         }
@@ -68,29 +100,72 @@
 }
 
 - (UIImage *)imageByCircularScaleAndCrop:(CGSize)targetSize {
+    //bitmap context properties
+    float scaleFactor = [[UIScreen mainScreen] scale];
     
-    //Create the bitmap graphics context
-    UIGraphicsBeginImageContextWithOptions(targetSize, NO, 0.0);
+    if (CGSizeEqualToSize(targetSize, CGSizeZero)) {
+        targetSize = self.size;
+    }
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    // Create and CLIP to a CIRCULAR Path
-    // (This could be replaced with any closed path if you want a different shaped clip)
-    CGContextBeginPath (context);
-    CGContextAddArc(context, targetSize.width / 2, targetSize.height / 2, targetSize.width / 2, 0, 2 * M_PI, 0);
-    CGContextClosePath (context);
+    CGColorSpaceRef colorSpace =
+    CGColorSpaceCreateDeviceRGB();
+    CGContextRef context =
+    CGBitmapContextCreate(NULL,
+                          targetSize.width * scaleFactor,
+                          targetSize.height * scaleFactor,
+                          8,
+                          targetSize.width * scaleFactor * 4,
+                          colorSpace,
+                          kCGImageAlphaPremultipliedFirst);
+    
+    CGContextScaleCTM(context,
+                      scaleFactor,
+                      scaleFactor);
+    
+    CGContextBeginPath(context);
+    
+    CGContextAddArc(context,
+                    targetSize.width / 2,
+                    targetSize.height / 2,
+                    targetSize.width / 2,
+                    0,
+                    2 * M_PI,
+                    0);
+    
+    CGContextClosePath(context);
+    
+    CGFloat widthFactor = targetSize.width / self.size.width;
+    CGFloat heightFactor = targetSize.height  / self.size.height;
+    
+    if (widthFactor > heightFactor) {
+        scaleFactor = widthFactor;
+    }
+    else {
+        
+        scaleFactor = heightFactor;
+    }
+    
+    float w = self.size.width * scaleFactor;
+    float h = self.size.height * scaleFactor;
+    
     CGContextClip(context);
-    //Set the SCALE factor for the graphics context
-    //All future draw calls will be scaled by this factor
-    CGContextScaleCTM (context, targetSize.width / self.size.width, targetSize.height / self.size.height);
-    // Draw the IMAGE
-    CGRect myRect = CGRectMake(0, 0, self.size.width, self.size.height);
-    [self drawInRect:myRect];
+    //draw image into bitmap context
+    CGContextDrawImage(context,
+                       CGRectMake(0,0, w, h),
+                       self.CGImage);
     
-    UIImage *circularImage = UIGraphicsGetImageFromCurrentImageContext();
+    CGImageRef renderedImage =
+    CGBitmapContextCreateImage(context);
+    CGColorSpaceRelease(colorSpace);
+    CGContextRelease(context);
     
-    UIGraphicsEndImageContext();
+    UIImage *image =
+    [UIImage imageWithCGImage:renderedImage
+                        scale:0
+                  orientation:self.imageOrientation];
+    CGImageRelease(renderedImage);
     
-    return circularImage;
+    return image;
 }
 
 @end

@@ -28,8 +28,16 @@
                            resultHandler:(id<QMImagePickerResultHandler>)resultHandler
                            allowsEditing:(BOOL)allowsEditing;
 
-+ (void)chooseFromGaleryInViewController:(UIViewController *)vc resultHandler:(id<QMImagePickerResultHandler>)resultHandler;
-+ (void)chooseFromGaleryInViewController:(UIViewController *)vc resultHandler:(id<QMImagePickerResultHandler>)resultHandler allowsEditing:(BOOL)allowsEditing;
++ (void)chooseFromGaleryInViewController:(UIViewController *)vc
+                           resultHandler:(id<QMImagePickerResultHandler>)resultHandler;
+
++ (void)chooseFromGaleryInViewController:(UIViewController *)vc
+                           resultHandler:(id<QMImagePickerResultHandler>)resultHandler allowsEditing:(BOOL)allowsEditing;
+
++ (void)chooseFromGaleryInViewController:(UIViewController *)vc
+                             maxDuration:(NSTimeInterval)maxDuration
+                           resultHandler:(id<QMImagePickerResultHandler>)resultHandler
+                           allowsEditing:(BOOL)allowsEditing;
 
 @end
 
@@ -39,5 +47,7 @@
 
 - (void)imagePicker:(QMImagePicker *)imagePicker didFinishPickingPhoto:(UIImage *)photo;
 - (void)imagePicker:(QMImagePicker *)imagePicker didFinishPickingVideo:(NSURL *)videoUrl;
+- (void)imagePicker:(QMImagePicker *)imagePicker didFinishPickingWithError:(NSError *)error;
+- (void)imagePickerCanBePresented:(QMImagePicker *)imagePicker withCompletion:(void(^)(BOOL granted))grantBlock;
 
 @end

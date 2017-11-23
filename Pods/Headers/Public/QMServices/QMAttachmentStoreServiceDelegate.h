@@ -1,0 +1,1 @@
+../../../QMServices/QMChatService/QMChatService/QMAttachmentService/QMAttachmentStoreService/QMAttachmentStoreServiceDelegate.h

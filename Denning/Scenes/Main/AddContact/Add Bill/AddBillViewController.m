@@ -15,6 +15,7 @@
 #import "PresetBillViewController.h"
 #import "QuotationGetListViewController.h"
 #import "AddReceiptViewController.h"
+#import "TaxInvoiceSelectionViewController.h"
 
 @interface AddBillViewController ()<UIDocumentInteractionControllerDelegate, UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
 {
@@ -26,6 +27,7 @@
     NSString* selectedMatterCode, *selectedPresetCode;
     __block BOOL isLoading;
     __block BOOL isSaved;
+    __block BOOL isCalcDone;
     
     NSInteger selectedRow;
 }
@@ -33,6 +35,8 @@
 @property (weak, nonatomic) IBOutlet FZAccordionTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *contents;
 @property (nonatomic, strong) NSArray *headers;
+
+@property (nonatomic, strong) TaxInvoiceCalcModel* taxModel;
 
 @property (strong, nonatomic)
 NSMutableDictionary* keyValue;
@@ -49,6 +53,7 @@ NSMutableDictionary* keyValue;
 }
 - (void) prepareUI {
     issueToFirstCode = @(0);
+    selectedPresetCode = selectedMatterCode = @"";
     isRental = @"0";
     
     self.keyValue = [@{
@@ -77,6 +82,11 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)saveBill:(id)sender {
+    if (selectedMatterCode.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the matter." actionSuccess:NO inViewController:self];
+        return;
+    }
+    
     NSDictionary* data = @{
                            @"fileNo": _contents[0][2][1],
                            @"isRental": isRental,
@@ -99,20 +109,21 @@ NSMutableDictionary* keyValue;
                            };
     if (isLoading) return;
     isLoading = YES;
-    [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak UINavigationController *navigationController = self.navigationController;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
     [[QMNetworkManager sharedManager] saveBillorQuotationWithParams:data inURL:TAXINVOICE_SAVE_URL WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
+        self->isCalcDone = YES;
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             self->isSaved = YES;
             [self updateWholeData:result];
             
         } else {
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
     }];
 }
@@ -150,21 +161,17 @@ NSMutableDictionary* keyValue;
     
     [self replaceContentForSection:0 InRow:1 withValue:documentNo];
     
-    [self updateBelowViewWithData:[result objectForKeyNotNull:@"analysis"]];
+    _taxModel = [TaxInvoiceCalcModel getTaxInvoiceCalcFromResponse:[result objectForKeyNotNull:@"analysis"]];
+    
+    [self updateBelowViewWithData];
 }
 
-- (void) updateBelowViewWithData: (NSDictionary*) result {
-    NSString* iFee =  [result objectForKeyNotNull:@"iFee"];
-    NSString* iDisbTax = [result objectForKeyNotNull:@"iDisbTax"];
-    NSString* iDisbOnly = [result objectForKeyNotNull:@"iDisbOnly"];
-    NSString* iGST = [result objectForKeyNotNull:@"iGST"];
-    NSString* iTotal = [result objectForKeyNotNull:@"iTotal"];
-    
-    [self replaceContentForSection:1 InRow:0 withValue:iFee];
-    [self replaceContentForSection:1 InRow:1 withValue:iDisbTax];
-    [self replaceContentForSection:1 InRow:2 withValue:iDisbOnly];
-    [self replaceContentForSection:1 InRow:3 withValue:iGST];
-    [self replaceContentForSection:1 InRow:4 withValue:iTotal];
+- (void) updateBelowViewWithData{
+    [self replaceContentForSection:1 InRow:0 withValue:_taxModel.decFees];
+    [self replaceContentForSection:1 InRow:1 withValue:_taxModel.decDisbGST];
+    [self replaceContentForSection:1 InRow:2 withValue:_taxModel.decDisb];
+    [self replaceContentForSection:1 InRow:3 withValue:_taxModel.decGST];
+    [self replaceContentForSection:1 InRow:4 withValue:_taxModel.decTotal];
 }
 
 - (NSString*) getValidValue: (NSString*) value
@@ -202,41 +209,81 @@ NSMutableDictionary* keyValue;
     [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
 
+
+- (void) calcTax {
+    NSDictionary* data = @{
+                           @"isRental": isRental,
+                           @"spaPrice": [self getValidValue:_contents[0][5][1]],
+                           @"spaLoan": [self getValidValue:_contents[0][6][1]],
+                           @"rentalMonth": [self getValidValue:_contents[0][7][1]],
+                           @"rentalPrice": [self getValidValue:_contents[0][8][1]],
+                           @"presetCode": @{
+                                   @"code": selectedPresetCode
+                                   }
+                           };
+    
+    if (isLoading) return;
+    isLoading = YES;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] calculateTaxInvoiceWithParams:data withCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        
+        [navigationController dismissNotificationPanel];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            self->isCalcDone = YES;
+            [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:2.0];
+            _taxModel = [TaxInvoiceCalcModel getTaxInvoiceCalcFromResponse:result];
+            [self updateBelowViewWithData];
+        } else {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:2.0];
+        }
+    }];
+}
+
+- (void) viewTaxInvoice {
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, REPORT_VIEWER_PDF_TAXINVOICE_URL, _contents[0][0][1]];
+    NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
+    [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
+    
+    [SVProgressHUD show];
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
+                                                                           inDomain:NSUserDomainMask
+                                                                  appropriateForURL:nil
+                                                                             create:NO error:nil];
+        
+        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
+        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
+            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        
+        return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        [SVProgressHUD dismiss];
+        if (filePath != nil) {
+            selectedDocument = filePath;
+            [self displayDocument:filePath];
+        }
+    }];
+    [downloadTask resume];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0 && indexPath.row == 10) {
         AddLastOneButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastOneButtonCell cellIdentifier] forIndexPath:indexPath];
         cell.calculateHandler = ^{
-            NSDictionary* data = @{
-                                   @"isRental": isRental,
-                                   @"spaPrice": [self getValidValue:_contents[0][6][1]],
-                                   @"spaLoan": [self getValidValue:_contents[0][7][1]],
-                                   @"rentalMonth": [self getValidValue:_contents[0][8][1]],
-                                   @"rentalPrice": [self getValidValue:_contents[0][9][1]],
-                                   @"presetCode": @{
-                                           @"code": _contents[0][5][1]
-                                           }
-                                   };
-            
-            if (isLoading) return;
-            isLoading = YES;
-            [self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-            __weak UINavigationController *navigationController = self.navigationController;
-            @weakify(self);
-            [[QMNetworkManager sharedManager] calculateTaxInvoiceWithParams:data withCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
-                
-                [navigationController dismissNotificationPanel];
-                @strongify(self)
-                self->isLoading = NO;
-                if (error == nil) {
-                    [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:2.0];
-                    [self updateBelowViewWithData:result];
-                    
-                } else {
-                    [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:2.0];
-                }
-                
-            }];
+            [self calcTax];
         };
         return cell;
     }
@@ -254,35 +301,7 @@ NSMutableDictionary* keyValue;
             [self saveBill:nil];
         };
         cell.convertHandler = ^{
-            NSString *urlString = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, REPORT_VIEWER_PDF_QUATION_URL, _contents[0][0][1]];
-            NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-            NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-            AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-            
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            
-            [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
-            [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-            NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-                NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                                   inDomain:NSUserDomainMask
-                                                                          appropriateForURL:nil
-                                                                                     create:NO error:nil];
-                
-                NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-                if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-                    [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-                }
-                
-                return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
-            } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-                if (filePath != nil) {
-                    selectedDocument = filePath;
-                    [self displayDocument:filePath];
-                }
-            }];
-            [downloadTask resume];
+            [self viewTaxInvoice];
         };
         
         cell.convertHandler = ^{
@@ -332,7 +351,14 @@ NSMutableDictionary* keyValue;
                 cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
             }
         }
-    } 
+    } else {
+        cell.floatingTextField.userInteractionEnabled = NO;
+        if (indexPath.row == 4) {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+    }
     
     return cell;
 }
@@ -471,6 +497,10 @@ NSMutableDictionary* keyValue;
         } else if (indexPath.row == 5) {
             [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
         }
+    } else {
+        if  (isCalcDone) {
+            [self performSegueWithIdentifier:kTaxSelectionSegue sender:[NSNumber numberWithInteger:indexPath.row]];
+        }
     }
 }
 
@@ -551,23 +581,20 @@ NSMutableDictionary* keyValue;
     if ([segue.identifier isEqualToString:kSimpleMatterSegue]) {
         SimpleMatterViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterSimple *model) {
-            PartyGroupModel* partyGroup = model.partyGroupArray[0];
-            issueToFirstCode = [NSNumber numberWithInteger: [((ClientModel*)partyGroup.partyArray[0]).clientCode integerValue]];
-            
-            NSString *issueToName = @"";
-            
-            for (PartyGroupModel* partyGroup in model.partyGroupArray) {
-                if (partyGroup.partyArray.count > 0) {
-                    ClientModel* party = partyGroup.partyArray[0];
-                    issueToName = [NSString stringWithFormat:@"%@ %@ ", issueToName, party.name];
-                }
-            }
-
-            
             [self replaceContentForSection:0 InRow:2 withValue:model.systemNo];
             
-            
-            [self replaceContentForSection:0 InRow:4 withValue:issueToName];
+            if (model.partyGroupArray.count > 0) {
+                PartyGroupModel* partyGroup = model.partyGroupArray[0];
+                issueToFirstCode = [NSNumber numberWithInteger: [((ClientModel*)partyGroup.partyArray[0]).clientCode integerValue]];
+                
+                NSString *issueToName = @"";
+                
+                for(ClientModel* party in partyGroup.partyArray) {
+                    issueToName = [NSString stringWithFormat:@"%@ %@ ", issueToName, party.name];
+                }
+                
+                [self replaceContentForSection:0 InRow:4 withValue:issueToName];
+            }
         };
     }
     
@@ -588,6 +615,10 @@ NSMutableDictionary* keyValue;
             selectedPresetCode = model.billCode;
             
         };
+    } else if ([segue.identifier isEqualToString:kTaxSelectionSegue]) {
+        TaxInvoiceSelectionViewController* vc = segue.destinationViewController;
+        vc.listOfTax = @[_taxModel.Fees, _taxModel.DisbGST, _taxModel.Disb, _taxModel.GST];
+        vc.selectedPage = sender;
     }
 }
 

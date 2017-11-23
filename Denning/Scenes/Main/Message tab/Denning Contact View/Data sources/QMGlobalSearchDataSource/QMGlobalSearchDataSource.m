@@ -24,7 +24,7 @@
     return self.items.count > 0 ? [QMSearchCell height] : [QMNoResultsCell height];
 }
 
-#pragma mark - UITableViewDataSource
+//MARK: - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -39,7 +39,7 @@
     QMSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMSearchCell cellIdentifier] forIndexPath:indexPath];
     
     QBUUser *user = self.items[indexPath.row];
-    [cell setTitle:user.fullName placeholderID:user.ID avatarUrl:user.avatarUrl];
+    [cell setTitle:user.fullName avatarUrl:user.avatarUrl];
     
     if ([QBChat instance].isConnected) {
         // contact list is getting erased after
@@ -48,7 +48,7 @@
         // add button visibility, changing its state
         // only if chat is connected
         // default visibility value for add button is NO
-        BOOL isRequestRequired = ![[QMCore instance].contactManager isContactListItemExistentForUserWithID:user.ID];
+        BOOL isRequestRequired = ![QMCore.instance.contactManager isContactListItemExistentForUserWithID:user.ID];
         [cell setAddButtonVisible:isRequestRequired];
     }
     
@@ -67,7 +67,7 @@
     return self.items.count > 0 ? self.items.count : 1;
 }
 
-#pragma mark - QMGlobalSearchDataProvider
+//MARK: - QMGlobalSearchDataProvider
 
 - (QMGlobalSearchDataProvider *)globalSearchDataProvider {
     

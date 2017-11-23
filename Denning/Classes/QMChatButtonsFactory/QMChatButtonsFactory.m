@@ -13,8 +13,8 @@
 + (UIButton *)audioCall {
     
     UIButton *audioButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    audioButton.frame = CGRectMake(0, 0, 30, 30);
-    [audioButton setImage:[UIImage imageNamed:@"phone-icon"] forState:UIControlStateNormal];
+    audioButton.frame = CGRectMake(0, 0, 30, 40);
+    [audioButton setImage:[UIImage imageNamed:@"phone_icon"] forState:UIControlStateNormal];
     return audioButton;
 }
 
@@ -24,20 +24,6 @@
     videoButton.frame = CGRectMake(0, 0, 30, 40);
     [videoButton setImage:[UIImage imageNamed:@"ic_video_call"] forState:UIControlStateNormal];
     return videoButton;
-}
-
-+ (UIButton *)emojiButton {
-    
-    UIImage *buttonImage = [UIImage imageNamed:@"ic_smile"];
-    
-    UIButton *emojiButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    
-    [emojiButton setImage:buttonImage forState:UIControlStateNormal];
-    emojiButton.contentMode = UIViewContentModeScaleAspectFit;
-    emojiButton.backgroundColor = [UIColor clearColor];
-    emojiButton.tintColor = [UIColor lightGrayColor];
-    
-    return emojiButton;
 }
 
 @end

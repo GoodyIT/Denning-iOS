@@ -33,7 +33,6 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
 
 @interface JVFloatLabeledTextView ()
 
-@property (nonatomic) CGFloat startingTextContainerInsetTop;
 
 @end
 
@@ -90,7 +89,7 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
     // some basic default fonts/colors
     _floatingLabelFont = [self defaultFloatingLabelFont];
     _floatingLabel.font = _floatingLabelFont;
-    _floatingLabelTextColor = [UIColor redColor];
+    _floatingLabelTextColor = [UIColor grayColor];
     _floatingLabel.textColor = _floatingLabelTextColor;
     _animateEvenIfNotFirstResponder = NO;
     _floatingLabelShowAnimationDuration = kFloatingLabelShowAnimationDuration;
@@ -194,6 +193,26 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
     }
     else {
         [self showFloatingLabel:firstResponder];
+    }
+    
+    // Without this code, the size of the view is not calculated correctly when it
+    // is first displayed. Only seems relevant when scroll is disabled.
+    if (!self.scrollEnabled && !CGSizeEqualToSize(self.bounds.size, [self intrinsicContentSize])) {
+        [self invalidateIntrinsicContentSize];
+    }
+}
+
+- (CGSize)intrinsicContentSize
+{
+    CGSize textFieldIntrinsicContentSize = [super intrinsicContentSize];
+
+    if (self.text != nil && self.text.length > 0) {
+        return textFieldIntrinsicContentSize;
+    } else {
+        CGFloat additionalHeight = _placeholderLabel.bounds.size.height - (_floatingLabel.bounds.size.height + _floatingLabelYPadding);
+
+        return CGSizeMake(textFieldIntrinsicContentSize.width,
+                          textFieldIntrinsicContentSize.height + additionalHeight);
     }
 }
 

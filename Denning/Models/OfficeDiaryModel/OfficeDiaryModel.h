@@ -20,7 +20,7 @@
 @property (strong, nonatomic) NSString* place;
 @property (strong, nonatomic) NSString* remarks;
 @property (strong, nonatomic) ClientModel* staffAssigned;
-@property (strong, nonatomic) ClientModel* staffAttended;
+@property (strong, nonatomic) NSString* staffAttended;
 @property (strong, nonatomic) NSString* startDate;
 
 + (instancetype) getOfficeDiaryFromResponse:(NSDictionary*) response;

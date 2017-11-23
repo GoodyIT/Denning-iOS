@@ -182,7 +182,7 @@
     isLoading = YES;
     _url = [NSString stringWithFormat:@"%@%@", baseUrl, curBalanceFilter];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    __weak UINavigationController *navigationController = self.navigationController;
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardBankReconWithURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         [SVProgressHUD dismiss];
