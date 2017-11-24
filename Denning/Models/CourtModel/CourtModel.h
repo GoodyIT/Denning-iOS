@@ -12,6 +12,7 @@
 
 
 // Court case information
+@property (strong, nonatomic) NSString* courtCode;
 @property (strong, nonatomic) NSString* caseName;
 
 @property (strong, nonatomic) NSString* partyType;

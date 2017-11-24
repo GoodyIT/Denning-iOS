@@ -31,6 +31,7 @@
     if (response == nil) {
         return courtModel;
     }
+    courtModel.courtCode = [response valueForKeyNotNull:@"code"];
     courtModel.caseName = [response valueForKeyNotNull:@"caseName"];
     courtModel.partyType = [response valueForKeyNotNull:@"partyType"];
     courtModel.court = [response valueForKeyNotNull:@"court"];

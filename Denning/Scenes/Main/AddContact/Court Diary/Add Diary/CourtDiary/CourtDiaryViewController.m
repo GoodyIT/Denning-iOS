@@ -116,7 +116,8 @@
 
 - (void) displayDiary {
     _place.text = _courtDiary.court.place;
-    _placeType.text = _courtDiary.court.court;
+    _placeType.text = _courtDiary.court.typeE;
+    selectedCourtCode = _courtDiary.court.courtCode;
     _enclosureNo.text = _courtDiary.enclosureNo;
     _Remarks.text = _courtDiary.remarks;
     _caseNo.text = _courtDiary.caseNo;
