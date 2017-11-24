@@ -34,6 +34,7 @@
 #import "CompletionDateTracking.h"
 #import "DashboardFileListing.h"
 #import "EventViewController.h"
+#import "StaffLeaveViewController.h"
 
 @interface DashboardViewController ()
 <UIDocumentInteractionControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, SWTableViewCellDelegate, UITabBarControllerDelegate>
@@ -386,6 +387,8 @@ NSMutableDictionary* keyValue;
             }];
         } else if (indexPath.row == 2){
             [self performSegueWithIdentifier:kMyDueTaskSegue sender:_mainModel.s1.items[indexPath.row]];
+        } else if (indexPath.row == 3){
+            [self performSegueWithIdentifier:kStaffLeaveSegue sender:_mainModel.s1.items[indexPath.row].mainAPI];
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row > 0) {
@@ -531,6 +534,9 @@ NSMutableDictionary* keyValue;
     if ([segue.identifier isEqualToString:kFeeMatterGrowthSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         FeeAndMatterGrowth* vc = nav.viewControllers.firstObject;
+        vc.url = sender;
+    } else if ([segue.identifier isEqualToString:kStaffLeaveSegue]) {
+        StaffLeaveViewController* vc = segue.destinationViewController;
         vc.url = sender;
     }
 

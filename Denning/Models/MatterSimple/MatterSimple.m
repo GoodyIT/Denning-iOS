@@ -14,13 +14,19 @@
 + (MatterSimple*) getMatterSimpleFromResponse: (NSDictionary*) response
 {
     MatterSimple* matterSimple = [MatterSimple new];
-    matterSimple.systemNo = [response objectForKeyNotNull:@"systemNo"];
-    matterSimple.referenceNo = [response objectForKeyNotNull:@"referenceNo"];
-    matterSimple.dateOpen = [response objectForKeyNotNull:@"dateOpen"];
-    matterSimple.manualNo = [response objectForKeyNotNull:@"manualNo"];
+    
+    matterSimple.systemNo = [response valueForKeyNotNull:@"systemNo"];
+    matterSimple.referenceNo = [response valueForKeyNotNull:@"referenceNo"];
+    matterSimple.dateOpen = [response valueForKeyNotNull:@"dateOpen"];
+    matterSimple.manualNo = [response valueForKeyNotNull:@"manualNo"];
     matterSimple.matter = [MatterCodeModel getMatterCodeFromResponse: [response objectForKeyNotNull:@"matter"]];
+    matterSimple.presetBill = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"presetBill"]];
     matterSimple.partyGroupArray = [PartyGroupModel getPartyGroupArrayFromResponse: [response objectForKeyNotNull:@"partyGroup"]];
     matterSimple.primaryClient = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"primaryClient"]];
+    matterSimple.rentalMonth = [response valueForKeyNotNull:@"rentalMonth"];
+    matterSimple.rentalPrice = [response valueForKeyNotNull:@"rentalPrice"];
+    matterSimple.spaLoan = [response valueForKeyNotNull:@"spaLoan"];
+    matterSimple.spaPrice = [response valueForKeyNotNull:@"spaPrice"];
     
     return matterSimple;
 }

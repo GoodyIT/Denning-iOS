@@ -633,6 +633,8 @@ NSMutableDictionary* keyValue;
                 
                 [self replaceContentForSection:0 InRow:3 withValue:issueToName];
             }
+            [self replaceContentForSection:0 InRow:4 withValue:model.presetBill.descriptionValue];
+            selectedPresetCode = model.presetBill.codeValue;
         };
     } else if ([segue.identifier isEqualToString:kMatterCodeSegue]) {
         ListOfMatterViewController* matterVC = segue.destinationViewController;

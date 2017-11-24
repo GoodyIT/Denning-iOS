@@ -131,9 +131,10 @@
 - (void) loadLeaveRecords {
     if (isLoading) return;
     isLoading = NO;
+    NSString *url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, LEAVE_RECORD_GET_URL,submittedByCode, _page];
     [SVProgressHUD show];
     @weakify(self)
-    [[QMNetworkManager sharedManager] getLeaveRecordsWithPage: _page completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         [SVProgressHUD dismiss];
         @strongify(self)
         self->isLoading = NO;
@@ -166,7 +167,7 @@
     [params addEntriesFromDictionary:@{@"dtEndDate":[DIHelpers convertDateToMySQLFormat:endDate]}];
     [params addEntriesFromDictionary:@{@"dtStartDate":[DIHelpers convertDateToMySQLFormat:startDate]}];
     [params addEntriesFromDictionary:@{@"dtDateSubmitted":[DIHelpers todayWithTime]}];
-    [params addEntriesFromDictionary:@{@"strLeaveLenght":noOfDaysCode}];
+    [params addEntriesFromDictionary:@{@"strLeaveLength":noOfDaysCode}];
     [params addEntriesFromDictionary:@{@"strStaffRemarks":staffRemarks}];
     
     return [params copy];

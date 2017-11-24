@@ -61,6 +61,16 @@
 		790DD4971ECBBD38009D5634 /* ProjectHousingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD4961ECBBD38009D5634 /* ProjectHousingModel.m */; };
 		790DD49B1ECBC05E009D5634 /* PropertyContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */; };
 		79161CA31FC709FC0025BCB8 /* StaffLeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CA21FC709FC0025BCB8 /* StaffLeaveViewController.m */; };
+		79161CA91FC7443E0025BCB8 /* PendingApprovalHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CA71FC7443E0025BCB8 /* PendingApprovalHeaderCell.m */; };
+		79161CAA1FC7443E0025BCB8 /* PendingApprovalHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79161CA81FC7443E0025BCB8 /* PendingApprovalHeaderCell.xib */; };
+		79161CAE1FC7444B0025BCB8 /* PendingApprovalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CAC1FC7444B0025BCB8 /* PendingApprovalCell.m */; };
+		79161CAF1FC7444B0025BCB8 /* PendingApprovalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79161CAD1FC7444B0025BCB8 /* PendingApprovalCell.xib */; };
+		79161CB41FC749030025BCB8 /* ApprovalRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CB21FC749030025BCB8 /* ApprovalRecordCell.m */; };
+		79161CB51FC749030025BCB8 /* ApprovalRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79161CB31FC749030025BCB8 /* ApprovalRecordCell.xib */; };
+		79161CBD1FC754A30025BCB8 /* LeaveRecordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CBB1FC754A30025BCB8 /* LeaveRecordsViewController.m */; };
+		79161CC11FC754FA0025BCB8 /* LeavePendingApproval.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CC01FC754FA0025BCB8 /* LeavePendingApproval.m */; };
+		79161CC51FC776590025BCB8 /* StaffLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CC41FC776590025BCB8 /* StaffLeaveModel.m */; };
+		79161CC91FC7B5730025BCB8 /* TaxBillContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CC81FC7B5730025BCB8 /* TaxBillContactViewController.m */; };
 		7920E7841E9E5D0C002FEFF3 /* icon_searchswitch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */; };
 		7920E7851E9E5D0C002FEFF3 /* icon_searchswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */; };
 		7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */; };
@@ -1166,6 +1176,23 @@
 		790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyContactListViewController.m; sourceTree = "<group>"; };
 		79161CA11FC709FC0025BCB8 /* StaffLeaveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaffLeaveViewController.h; sourceTree = "<group>"; };
 		79161CA21FC709FC0025BCB8 /* StaffLeaveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaffLeaveViewController.m; sourceTree = "<group>"; };
+		79161CA61FC7443E0025BCB8 /* PendingApprovalHeaderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingApprovalHeaderCell.h; sourceTree = "<group>"; };
+		79161CA71FC7443E0025BCB8 /* PendingApprovalHeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingApprovalHeaderCell.m; sourceTree = "<group>"; };
+		79161CA81FC7443E0025BCB8 /* PendingApprovalHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingApprovalHeaderCell.xib; sourceTree = "<group>"; };
+		79161CAB1FC7444B0025BCB8 /* PendingApprovalCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PendingApprovalCell.h; sourceTree = "<group>"; };
+		79161CAC1FC7444B0025BCB8 /* PendingApprovalCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PendingApprovalCell.m; sourceTree = "<group>"; };
+		79161CAD1FC7444B0025BCB8 /* PendingApprovalCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingApprovalCell.xib; sourceTree = "<group>"; };
+		79161CB11FC749030025BCB8 /* ApprovalRecordCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApprovalRecordCell.h; sourceTree = "<group>"; };
+		79161CB21FC749030025BCB8 /* ApprovalRecordCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApprovalRecordCell.m; sourceTree = "<group>"; };
+		79161CB31FC749030025BCB8 /* ApprovalRecordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApprovalRecordCell.xib; sourceTree = "<group>"; };
+		79161CBB1FC754A30025BCB8 /* LeaveRecordsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveRecordsViewController.m; sourceTree = "<group>"; };
+		79161CBC1FC754A30025BCB8 /* LeaveRecordsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveRecordsViewController.h; sourceTree = "<group>"; };
+		79161CBF1FC754FA0025BCB8 /* LeavePendingApproval.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeavePendingApproval.h; sourceTree = "<group>"; };
+		79161CC01FC754FA0025BCB8 /* LeavePendingApproval.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeavePendingApproval.m; sourceTree = "<group>"; };
+		79161CC31FC776590025BCB8 /* StaffLeaveModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaffLeaveModel.h; sourceTree = "<group>"; };
+		79161CC41FC776590025BCB8 /* StaffLeaveModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaffLeaveModel.m; sourceTree = "<group>"; };
+		79161CC71FC7B5730025BCB8 /* TaxBillContactViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxBillContactViewController.h; sourceTree = "<group>"; };
+		79161CC81FC7B5730025BCB8 /* TaxBillContactViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxBillContactViewController.m; sourceTree = "<group>"; };
 		7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_searchswitch.png; sourceTree = "<group>"; };
 		7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@2x.png"; sourceTree = "<group>"; };
 		7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@3x.png"; sourceTree = "<group>"; };
@@ -3069,6 +3096,72 @@
 			path = StaffLeave;
 			sourceTree = "<group>";
 		};
+		79161CA41FC7440B0025BCB8 /* PendingApprovalCell */ = {
+			isa = PBXGroup;
+			children = (
+				79161CAB1FC7444B0025BCB8 /* PendingApprovalCell.h */,
+				79161CAC1FC7444B0025BCB8 /* PendingApprovalCell.m */,
+				79161CAD1FC7444B0025BCB8 /* PendingApprovalCell.xib */,
+			);
+			path = PendingApprovalCell;
+			sourceTree = "<group>";
+		};
+		79161CA51FC744170025BCB8 /* PendingApprovalHeaderCell */ = {
+			isa = PBXGroup;
+			children = (
+				79161CA61FC7443E0025BCB8 /* PendingApprovalHeaderCell.h */,
+				79161CA71FC7443E0025BCB8 /* PendingApprovalHeaderCell.m */,
+				79161CA81FC7443E0025BCB8 /* PendingApprovalHeaderCell.xib */,
+			);
+			path = PendingApprovalHeaderCell;
+			sourceTree = "<group>";
+		};
+		79161CB01FC748F80025BCB8 /* ApprovalRecordCell */ = {
+			isa = PBXGroup;
+			children = (
+				79161CB11FC749030025BCB8 /* ApprovalRecordCell.h */,
+				79161CB21FC749030025BCB8 /* ApprovalRecordCell.m */,
+				79161CB31FC749030025BCB8 /* ApprovalRecordCell.xib */,
+			);
+			path = ApprovalRecordCell;
+			sourceTree = "<group>";
+		};
+		79161CBA1FC754A30025BCB8 /* LeaveRecords */ = {
+			isa = PBXGroup;
+			children = (
+				79161CBB1FC754A30025BCB8 /* LeaveRecordsViewController.m */,
+				79161CBC1FC754A30025BCB8 /* LeaveRecordsViewController.h */,
+			);
+			path = LeaveRecords;
+			sourceTree = "<group>";
+		};
+		79161CBE1FC754EF0025BCB8 /* LeavePendingApproval */ = {
+			isa = PBXGroup;
+			children = (
+				79161CBF1FC754FA0025BCB8 /* LeavePendingApproval.h */,
+				79161CC01FC754FA0025BCB8 /* LeavePendingApproval.m */,
+			);
+			path = LeavePendingApproval;
+			sourceTree = "<group>";
+		};
+		79161CC21FC7764D0025BCB8 /* StaffLeaveModel */ = {
+			isa = PBXGroup;
+			children = (
+				79161CC31FC776590025BCB8 /* StaffLeaveModel.h */,
+				79161CC41FC776590025BCB8 /* StaffLeaveModel.m */,
+			);
+			path = StaffLeaveModel;
+			sourceTree = "<group>";
+		};
+		79161CC61FC7B5630025BCB8 /* TaxBillContact */ = {
+			isa = PBXGroup;
+			children = (
+				79161CC71FC7B5730025BCB8 /* TaxBillContactViewController.h */,
+				79161CC81FC7B5730025BCB8 /* TaxBillContactViewController.m */,
+			);
+			path = TaxBillContact;
+			sourceTree = "<group>";
+		};
 		7920E7871E9F2B9D002FEFF3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -3300,6 +3393,7 @@
 		793FF2291EC48E22001F83A5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				79161CC61FC7B5630025BCB8 /* TaxBillContact */,
 				7954325C1FC5F65100FF9E57 /* TaxInvoiceSelectionViewController */,
 				795432421FC537D100FF9E57 /* ListOfCodeStrViewController */,
 				7993767B1FC0D5B5007E35CE /* CaseTypeViewController */,
@@ -5332,6 +5426,7 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				79161CC21FC7764D0025BCB8 /* StaffLeaveModel */,
 				795432521FC5EDB300FF9E57 /* TaxInvoiceItemModel */,
 				795432511FC5EDA300FF9E57 /* TaxInvoiceCalcModel */,
 				7954324A1FC53D5000FF9E57 /* MatterBranchModel */,
@@ -5742,6 +5837,9 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				79161CB01FC748F80025BCB8 /* ApprovalRecordCell */,
+				79161CA51FC744170025BCB8 /* PendingApprovalHeaderCell */,
+				79161CA41FC7440B0025BCB8 /* PendingApprovalCell */,
 				7954327F1FC6560300FF9E57 /* QMValidationCell */,
 				96AA364E1FBCC564003D9A2C /* LeaveRecordHeaderCell */,
 				96AA36481FBCC332003D9A2C /* LeaveRecordCell */,
@@ -7008,6 +7106,8 @@
 		9620830A1ED9314D00BB595C /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				79161CBE1FC754EF0025BCB8 /* LeavePendingApproval */,
+				79161CBA1FC754A30025BCB8 /* LeaveRecords */,
 				79161CA01FC709EF0025BCB8 /* StaffLeave */,
 				960F03001F28E42B00B25BBC /* FeeTransferDetail */,
 				96821F331F1DB49000F28708 /* CompletionDateTracking */,
@@ -8487,6 +8587,7 @@
 				79EC0E3F1E8A196400320A28 /* icon_search@2x.png in Resources */,
 				7931B5041EA9B1C50090BDE0 /* icon_market.png in Resources */,
 				795DF2401E6E4C3F006D617D /* Lato-Black.ttf in Resources */,
+				79161CAA1FC7443E0025BCB8 /* PendingApprovalHeaderCell.xib in Resources */,
 				79EC0E641E8B0E8300320A28 /* icon_doc@2x.png in Resources */,
 				79FF351A1E97FC1B001BECFB /* DenningLabelCell.xib in Resources */,
 				79EC0E691E8B0E8300320A28 /* icon_pdf.png in Resources */,
@@ -8508,6 +8609,7 @@
 				96A73AC31F1CD92400B97156 /* icon_status.png in Resources */,
 				797ED5281EAF277F009C20C4 /* icon_legalfirm@3x.png in Resources */,
 				79EC0DA81E8745A600320A28 /* home_background.png in Resources */,
+				79161CAF1FC7444B0025BCB8 /* PendingApprovalCell.xib in Resources */,
 				79EC0EDD1E8C85F100320A28 /* icon_settings@2x.png in Resources */,
 				793FF14D1EBB7D67001F83A5 /* icon_chat_selected@3x.png in Resources */,
 				960D91AC1F066B3900835B82 /* StaffHeaderCell.xib in Resources */,
@@ -8677,6 +8779,7 @@
 				79FBE1F81E31600F00448FE3 /* Auth.storyboard in Resources */,
 				7931B4C61EA851B00090BDE0 /* menu_home@2x.png in Resources */,
 				9636DCED1F04059D008DDA41 /* FileListingCell.xib in Resources */,
+				79161CB51FC749030025BCB8 /* ApprovalRecordCell.xib in Resources */,
 				793FF16C1EBBFEA3001F83A5 /* denning_logo@3x.png in Resources */,
 				79FBDFE41E30421A00448FE3 /* ringtone.wav in Resources */,
 				793FF1501EBB7D67001F83A5 /* icon_chat@3x.png in Resources */,
@@ -8856,6 +8959,7 @@
 				9620834B1EDE236D00BB595C /* BankCashSecondCell.m in Sources */,
 				795DF2021E6DEDE5006D617D /* ChangePasswordViewController.m in Sources */,
 				7931B4E91EA900ED0090BDE0 /* DICustomViewController.m in Sources */,
+				79161CB41FC749030025BCB8 /* ApprovalRecordCell.m in Sources */,
 				79CE7C851EA79B95001A8101 /* NewLedgerViewController.m in Sources */,
 				964206251F26A90F008AC798 /* Template.m in Sources */,
 				79EC0E351E89F55400320A28 /* DocumentCell.m in Sources */,
@@ -8876,6 +8980,7 @@
 				960F03061F2908BE00B25BBC /* CustomDocumentViewController.m in Sources */,
 				79FBDFD01E30421A00448FE3 /* QMMessageNotification.m in Sources */,
 				9600178C1FB0D373001EAB51 /* AttendanceInfo.m in Sources */,
+				79161CC91FC7B5730025BCB8 /* TaxBillContactViewController.m in Sources */,
 				96C7AFBC1EE82E6D00EF0A37 /* MukimValueList.m in Sources */,
 				79FBDFB01E30421A00448FE3 /* PushManager.m in Sources */,
 				96821F2A1F1D65D900F28708 /* AttendanceHeaderCell.m in Sources */,
@@ -8952,6 +9057,7 @@
 				79F7322B1E96A929004F88DF /* DEMODataSource.m in Sources */,
 				79CE7C821EA78E20001A8101 /* NewLedgerModel.m in Sources */,
 				96C7AF4A1EE6957D00EF0A37 /* MukimModel.m in Sources */,
+				79161CC51FC776590025BCB8 /* StaffLeaveModel.m in Sources */,
 				79FBDFDC1E30421A00448FE3 /* QMImages.m in Sources */,
 				79734F841EBA570D00647215 /* AddContactModel.m in Sources */,
 				96BDA6171F02B96100084606 /* DashboardThirdHeaderCell.m in Sources */,
@@ -9005,6 +9111,7 @@
 				79F7322A1E96A929004F88DF /* DEMOCustomAutoCompleteObject.m in Sources */,
 				79FBDFD51E30421A00448FE3 /* QMTasks.m in Sources */,
 				962082C01ED417C200BB595C /* MatterLitigationCell.m in Sources */,
+				79161CC11FC754FA0025BCB8 /* LeavePendingApproval.m in Sources */,
 				9607589B1F014CFC008F9C69 /* SecondContactCell.m in Sources */,
 				79FBDFDE1E30421A00448FE3 /* QMPermissions.m in Sources */,
 				79FBDF9D1E30421A00448FE3 /* BaseTextInputView.m in Sources */,
@@ -9013,6 +9120,7 @@
 				9636DC961F03A339008DDA41 /* AdsModel.m in Sources */,
 				79EC0DFD1E895F7E00320A28 /* BankModel.m in Sources */,
 				9642063A1F286CA1008AC798 /* FeeUntransferModel.m in Sources */,
+				79161CAE1FC7444B0025BCB8 /* PendingApprovalCell.m in Sources */,
 				79FBE0821E304EAA00448FE3 /* QMSplitViewController.m in Sources */,
 				96D176811F1FE739008734DA /* FileNoteCell.m in Sources */,
 				96CACE051EE243500087E76B /* TaskCheckCell.m in Sources */,
@@ -9042,6 +9150,7 @@
 				79F732261E96A929004F88DF /* AFHTTPSessionOperation.m in Sources */,
 				79FBDFA71E30421A00448FE3 /* UIImage+fixOrientation.m in Sources */,
 				96D66EFE1EFCB0F3003E3A4A /* DashboardTodayCell.m in Sources */,
+				79161CBD1FC754A30025BCB8 /* LeaveRecordsViewController.m in Sources */,
 				79FBDFA81E30421A00448FE3 /* UIImage+Base64.m in Sources */,
 				96CACE101EE24E500087E76B /* TaskCheckModel.m in Sources */,
 				79EC0E811E8B5B2700320A28 /* FirmURLModel.m in Sources */,
@@ -9301,6 +9410,7 @@
 				96D176791F1FE1D4008734DA /* FileNote.m in Sources */,
 				79FBDE771E302F6600448FE3 /* AppDelegate.m in Sources */,
 				969A60421EDE62DA00A5D961 /* FeeTransferCell.m in Sources */,
+				79161CA91FC7443E0025BCB8 /* PendingApprovalHeaderCell.m in Sources */,
 				96864A911F5EFD0500350E59 /* DemoDownloadNotifications.m in Sources */,
 				79FBE1071E304F5000448FE3 /* QMLocationViewController.m in Sources */,
 				79D59A381E95690800CD3821 /* QMContactsSearchDataSource.m in Sources */,

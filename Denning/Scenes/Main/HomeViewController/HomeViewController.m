@@ -360,8 +360,13 @@ iCarouselDataSource, iCarouselDelegate>
         [self showComingSoon];
         
     } else if (indexPath.row == 8) { // Attendance
-        [self performSegueWithIdentifier:kAttendanceSegue sender:nil];
-        
+        if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+            [QMAlert showAlertWithMessage:@"This function is revserved for only Staff." actionSuccess:NO inViewController:self];
+        } else if ([CLLocationManager locationServicesEnabled] == NO) {
+            [(AppDelegate*)[UIApplication sharedApplication] showDeniedLocation];
+        } else {
+            [self performSegueWithIdentifier:kAttendanceSegue sender:nil];
+        }
     } else if (indexPath.row == 9) { // File Upload
         if ([DataManager sharedManager].user.userType.length == 0) {
             [QMAlert showAlertWithMessage:@"Please subscribe to the denning app" actionSuccess:NO inViewController:self];

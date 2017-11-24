@@ -15,19 +15,13 @@
 @interface DashboardContact ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
     BOOL isAppending;
-    BOOL initCall;
-    NSString* keyword;
 }
 
-@property (weak, nonatomic) IBOutlet UIView *searchContainer;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* listOfContacts;
-@property (strong, nonatomic) NSArray* copyedList;
 
-@property (strong, nonatomic) UISearchController *searchController;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
@@ -38,9 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    keyword = @"cust";
     [self prepareUI];
-//    [self configureSearch];
     [self registerNib];
     [self getListWithCompletion:nil];
 }
@@ -54,26 +46,10 @@
     [SecondContactCell registerForReuseInTableView:self.tableView];
 }
 
-- (void) configureSearch
-{
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
-    self.searchController.searchBar.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.definesPresentationContext = YES;
-    [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    [self.searchContainer addSubview:self.searchController.searchBar];
-}
-
 - (void) prepareUI
 {
-    self.copyedList = [NSMutableArray new];
     self.page = @(1);
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     
     self.tableView.delegate = self;
     
@@ -145,7 +121,6 @@
 
 - (void) clean {
     isLoading = NO;
-    isFirstLoading = NO;
 }
 #pragma mark - Table view data source
 
@@ -182,8 +157,16 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self openContact:self.listOfContacts[indexPath.row]];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if ([_callback isEqualToString:@"callback"]) {
+        
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            _updateHandler(self.listOfContacts[indexPath.row]);
+        }];
+    } else {
+        [self openContact:self.listOfContacts[indexPath.row]];
+
+    }
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void) openContact: (SearchResultModel*) model
@@ -256,13 +239,6 @@
     isAppending = NO;
     self.page = @(1);
     [self getListWithCompletion:nil];
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfContacts.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
 }
 
 #pragma mark - Navigation

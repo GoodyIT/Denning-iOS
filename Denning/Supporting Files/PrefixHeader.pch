@@ -179,6 +179,7 @@
 #import "MatterBranchModel.h"
 #import "TaxInvoiceItemModel.h"
 #import "TaxInvoiceCalcModel.h"
+#import "StaffLeaveModel.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

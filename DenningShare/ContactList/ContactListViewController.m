@@ -66,7 +66,8 @@
 - (void) getList{
     NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
     // Create the request.
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[(NSString*)[defaults valueForKey:@"api"] stringByAppendingString:[self.url stringByAppendingString:_filter]]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
+    _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@",[defaults valueForKey:@"api"], _url, _filter];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
     
     [request setHTTPMethod:@"GET"];
     // This is how we set header fields

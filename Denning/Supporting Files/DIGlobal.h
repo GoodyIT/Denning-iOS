@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define SEARCH_UPLOAD_SUGGESTED_FILENAME    @"denningwcf/v1/table/cboDocumentName?search="
 
-#define GENERAL_CONTACT_URL @"denningwcf/v1/generalSearch/cust?search="
+#define GENERAL_CONTACT_URL @"v1/generalSearch/cust"
 
 #define GENERAL_MATTER_LISTING_URL    @"denningwcf/v1/generalSearch/file?search="
 
@@ -283,11 +283,13 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define RECEIPT_SAVE_URL @"denningwcf/v1/ClientReceipt"
 
-#define LEAVE_RECORD_GET_URL @"denningwcf/v1/Table/StaffLeave"
+#define LEAVE_RECORD_GET_URL @"denningwcf/v1/Table/StaffLeave?search="
 
 #define STAFF_LEAVE_SAVE_URL @"denningwcf/v1/Table/StaffLeave"
 
 #define LEAVE_TYPE_GET_URL  @"denningwcf/v1/generalSelection/frmStaffLeave/leaveType?search="
+
+#define LEAVE_STATUS_GET_URL    @"denningwcf/v1/generalSelection/frmStaffLeave/leaveStatus"
 
 #define LEAVE_NUMBER_OF_DAYS_URL    @"denningwcf/v1/generalSelection/frmStaffLeave/leaveLength?search="
 

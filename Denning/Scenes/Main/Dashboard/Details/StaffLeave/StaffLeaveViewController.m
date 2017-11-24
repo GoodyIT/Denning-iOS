@@ -7,18 +7,24 @@
 //
 
 #import "StaffLeaveViewController.h"
-#import "LeaveRecordCell.h"
+#import "ApprovalRecordCell.h"
 #import "LeaveRecordHeaderCell.h"
+#import "PendingApprovalCell.h"
+#import "PendingApprovalHeaderCell.h"
+#import "LeavePendingApproval.h"
+#import "DashboardContact.h"
 
 @interface StaffLeaveViewController ()<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 {
     NSInteger selectedPage;
     __block Boolean isLoading, isAppending;
-    NSString* baseUrl, *curFilterURL;
+    NSString* baseUrl;
+    NSArray* curFilterURL;
+    AttendanceInfo* clsStaff;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray* listOfPendingApprovals, *listOfApprovalRecords;
+@property (strong, nonatomic) NSMutableArray<LeaveRecordModel*>* listOfData;
 @property (strong, nonatomic) NSNumber* page;
 
 @end
@@ -28,9 +34,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self parseURL];
     [self prepareUI];
     [self registerNibs];
-    [self parseURL];
     [self loadTableData];
 }
 
@@ -40,18 +46,20 @@
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) registerNibs {
-    [LeaveRecordCell registerForReuseInTableView:self.tableView];
+    [ApprovalRecordCell registerForReuseInTableView:self.tableView];
     [LeaveRecordHeaderCell registerForReuseInTableView:self.tableView];
+    [PendingApprovalCell registerForReuseInTableView:self.tableView];
+    [PendingApprovalHeaderCell registerForReuseInTableView:self.tableView];
 }
 
 - (void) prepareUI {
     _page = @(1);
     selectedPage = 0;
-    _listOfPendingApprovals = _listOfApprovalRecords = [NSMutableArray new];
+    _listOfData = [NSMutableArray new];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -74,7 +82,7 @@
     }];
     
     // Tying up the segmented control to a scroll view
-    HMSegmentedControl *selectionList = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 86, self.view.frame.size.width, 34)];
+    HMSegmentedControl *selectionList = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 66, self.view.frame.size.width, 34)];
     selectionList.sectionTitles = @[@"Leave Application", @"Leave Record"];
     selectionList.selectedSegmentIndex = 0;
     selectionList.backgroundColor = [UIColor blackColor];
@@ -91,7 +99,7 @@
 - (void) parseURL {
     NSRange range =  [_url rangeOfString:@"=" options:NSBackwardsSearch];
     baseUrl = [_url substringToIndex:range.location+1];
-    curFilterURL = [_url substringFromIndex:range.location+1];
+    curFilterURL = @[@"pending", @"approved"];
 }
 
 - (void) appendList {
@@ -100,7 +108,7 @@
 }
 
 - (void) loadTableData {
-    _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curFilterURL, _page];
+    _url = [NSString stringWithFormat:@"%@denningwcf/%@%@&page=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curFilterURL[selectedPage], _page];
     
     if (isLoading) return;
     isLoading = NO;
@@ -110,16 +118,15 @@
         [SVProgressHUD dismiss];
         @strongify(self)
         self->isLoading = NO;
-        self->isAppending = NO;
         if  (error == nil) {
             NSArray* array = [LeaveRecordModel getLEaveRecordArrayFromResponse:(NSArray*)result];
             if (array.count > 0) {
                 _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
             }
             if (isAppending) {
-                _listOfPendingApprovals = [[_listOfPendingApprovals arrayByAddingObjectsFromArray:array] mutableCopy];
+                _listOfData = [[_listOfData arrayByAddingObjectsFromArray:array] mutableCopy];
             } else {
-                _listOfPendingApprovals = [array mutableCopy];
+                _listOfData = [array mutableCopy];
             }
             
             [self.tableView reloadData];
@@ -127,6 +134,7 @@
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
+        self->isAppending = NO;
     }];
 }
 
@@ -137,29 +145,67 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 33;
+    return kDefaultAccordionHeaderViewHeight;
 }
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if  (selectedPage == 0) {
+        PendingApprovalHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[PendingApprovalHeaderCell cellIdentifier]];
+        
+        return cell;
+    }
     LeaveRecordHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[LeaveRecordHeaderCell cellIdentifier]];
+    cell.period.text = @"Staff";
+    cell.no.text = @"PYL";
+    cell.status.text = @"AL";
+    cell.type.text = @"Taken";
     
     return cell;
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    LeaveRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:[LeaveRecordCell cellIdentifier] forIndexPath:indexPath];
+    if  (selectedPage == 0) {
+        PendingApprovalCell *cell = [tableView dequeueReusableCellWithIdentifier:[PendingApprovalCell cellIdentifier] forIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.tag = indexPath.section;
+        [cell configureCell:_listOfData[indexPath.row]];
+        
+        return cell;
+    }
+    ApprovalRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:[ApprovalRecordCell cellIdentifier] forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.tag = indexPath.section;
-    [cell configureCellWithModel:_listOfPendingApprovals[indexPath.row]];
+    [cell configureCell:_listOfData[indexPath.row]];
     
     return cell;
 }
 
+- (void) gotoLeavePendingApproval:(NSIndexPath *)indexPath {
+    clsStaff = _listOfData[indexPath.row].clsStaff;
+    
+    _url = [NSString stringWithFormat:@"%@denningwcf/v1/table/StaffLeave/%@", [DataManager sharedManager].user.serverAPI, _listOfData[indexPath.row].leaveCode];
+    if (isLoading) return;
+    isLoading = NO;
+    [SVProgressHUD show];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        [SVProgressHUD dismiss];
+        @strongify(self)
+        self->isLoading = NO;
+        if  (error == nil) {
+            [self performSegueWithIdentifier:kLeavePendingApprovalSegue sender:[StaffLeaveModel getStaffLeaveFromResponse:result]];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (selectedPage == 0) {
+        [self gotoLeavePendingApproval:indexPath];
+    }
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -168,30 +214,28 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (selectedPage == 0) {
-        return _listOfPendingApprovals.count;
-    }
-    return _listOfApprovalRecords.count;
+    return _listOfData.count;
 }
 
 - (void) topFilterChanged: (HMSegmentedControl*) control {
     selectedPage = control.selectedSegmentIndex;
-    if (selectedPage == 0) {
-        [self.tableView reloadData];
-    } else {
-        _page = @(1);
-        [self loadTableData];
-    }
+    _page = @(1);
+    [self loadTableData];
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:kLeavePendingApprovalSegue]) {
+        LeavePendingApproval *vc = segue.destinationViewController;
+        vc.submittedBy = clsStaff.strName;
+        vc.submittedByCode = clsStaff.attendanceCode;
+        vc.model = sender;
+    }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end

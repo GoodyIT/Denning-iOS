@@ -340,7 +340,7 @@ enum MATTERSECTION {
     if (section == HEADER_SECTION) {
         return 0;
     }
-    return 30;
+    return kDefaultAccordionHeaderViewHeight;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

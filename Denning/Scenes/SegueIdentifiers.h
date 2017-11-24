@@ -192,6 +192,12 @@ static NSString* const kDueTaskSegue = @"DueTaskSegue";
 
 static NSString* const kMyDueTaskSegue = @"MyDueTaskSegue";
 
+static NSString* const kStaffLeaveSegue = @"StaffLeaveSegue";
+
+static NSString* const kLeavePendingApprovalSegue = @"LeavePendingApprovalSegue";
+
+static NSString* const kLeaveRecordSegue = @"LeaveRecordSegue";
+
 static NSString* const kDashboardCollectionSegue = @"DashboardCollectionSegue";
 
 static NSString* const kBankReconSegue = @"BankReconSegue";

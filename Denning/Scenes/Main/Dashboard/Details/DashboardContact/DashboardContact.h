@@ -14,4 +14,8 @@ typedef void(^UpdateContactHandler)(SearchResultModel* model);
 
 @property (strong, nonatomic) NSString* url;
 
+@property (strong, nonatomic) NSString* callback;
+
+@property (strong, nonatomic) UpdateContactHandler updateHandler;
+
 @end

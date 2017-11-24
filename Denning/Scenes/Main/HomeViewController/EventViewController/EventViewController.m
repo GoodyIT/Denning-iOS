@@ -191,7 +191,6 @@
         
         @strongify(self);
         self->isLoading = NO;
-        self->isAppending = NO;
         [navigationController dismissNotificationPanel];
         [self.tableView finishInfiniteScroll];
         if (error == nil) {
@@ -212,6 +211,7 @@
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
+        self->isAppending = NO;
     }];
 }
 

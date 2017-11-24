@@ -31,12 +31,12 @@
     if (response == nil) {
         return courtModel;
     }
-    courtModel.caseName = [response valueForKeyNotNull:@"CaseName"];
-    courtModel.partyType = [response valueForKeyNotNull:@"PartyType"];
-    courtModel.court = [response valueForKeyNotNull:@"Court"];
-    courtModel.place = [response valueForKeyNotNull:@"Place"];
-    courtModel.caseNumber = [response  valueForKeyNotNull:@"CaseNo"];
-    courtModel.judge = [response valueForKeyNotNull:@"Judge"];
+    courtModel.caseName = [response valueForKeyNotNull:@"caseName"];
+    courtModel.partyType = [response valueForKeyNotNull:@"partyType"];
+    courtModel.court = [response valueForKeyNotNull:@"court"];
+    courtModel.place = [response valueForKeyNotNull:@"place"];
+    courtModel.caseNumber = [response  valueForKeyNotNull:@"caseNo"];
+    courtModel.judge = [response valueForKeyNotNull:@"judge"];
     courtModel.SAR = [response valueForKeyNotNull:@"SAR"];
     courtModel.typeE = [response valueForKeyNotNull:@"typeE"];
     

@@ -10,5 +10,9 @@
 #import "DIGeneralCell.h"
 
 @interface LeaveRecordHeaderCell : DIGeneralCell
+@property (weak, nonatomic) IBOutlet UILabel *period;
+@property (weak, nonatomic) IBOutlet UILabel *no;
+@property (weak, nonatomic) IBOutlet UILabel *status;
+@property (weak, nonatomic) IBOutlet UILabel *type;
 
 @end

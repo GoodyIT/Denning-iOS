@@ -20,5 +20,7 @@
 
 @property (nonnull, nonatomic, strong, readonly) HWIFileDownloader *fileDownloader;
 
+- (void)showDeniedLocation;
+
 @end
 

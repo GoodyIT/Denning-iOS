@@ -17,7 +17,7 @@
     model.leaveCode = [response valueForKeyNotNull:@"code"];
     model.dtEndDate = [DIHelpers getDateInShortForm:[response valueForKeyNotNull:@"dtEndDate"]];
     model.dtStartDate = [DIHelpers getDateInShortForm:[response valueForKeyNotNull:@"dtStartDate"]];
-    model.strLeaveLength = [response valueForKeyNotNull:@"strLeaveLenght"];
+    model.strLeaveLength = [response valueForKeyNotNull:@"strLeaveLength"];
     model.intAL = [response valueForKeyNotNull:@"intAL"];
     model.intPYL = [response valueForKeyNotNull:@"intPYL"];
     model.intTaken = [response valueForKeyNotNull:@"intTaken"];
