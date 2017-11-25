@@ -371,6 +371,8 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 - (void) sendPrivatePutWithURL:(NSString*) url params:(NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
+- (void) sendDeleteWithURL:(NSString*) url params:(NSDictionary* ) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
+
 - (void) getLeaveRecordsWithPage:(NSNumber*) page completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 /*
  * Dashbard

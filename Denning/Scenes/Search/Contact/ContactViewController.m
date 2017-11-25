@@ -161,6 +161,7 @@
     if (indexPath.section == 0) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
         [cell configureCellWithInfo:contactModel.name number:contactModel.IDNo image:[UIImage imageNamed:@"icon_client"]];
+        cell.oldICLabel.text = contactModel.KPLama;
         cell.delegate = self;
         return cell;
     } else if (indexPath.section == 1 && ![self.gotoRelatedMatter isEqualToString:@"Matter"]) {
