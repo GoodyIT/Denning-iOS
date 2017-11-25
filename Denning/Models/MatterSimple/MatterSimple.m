@@ -20,7 +20,7 @@
     matterSimple.dateOpen = [response valueForKeyNotNull:@"dateOpen"];
     matterSimple.manualNo = [response valueForKeyNotNull:@"manualNo"];
     matterSimple.matter = [MatterCodeModel getMatterCodeFromResponse: [response objectForKeyNotNull:@"matter"]];
-    matterSimple.presetBill = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"presetBill"]];
+    matterSimple.presetBill = [PaymentModeModel getPaymentModeDesc:[response objectForKeyNotNull:@"presetBill"]];
     matterSimple.partyGroupArray = [PartyGroupModel getPartyGroupArrayFromResponse: [response objectForKeyNotNull:@"partyGroup"]];
     matterSimple.primaryClient = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"primaryClient"]];
     matterSimple.rentalMonth = [response valueForKeyNotNull:@"rentalMonth"];

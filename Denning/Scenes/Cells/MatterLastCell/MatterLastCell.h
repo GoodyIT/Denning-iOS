@@ -31,6 +31,7 @@
 @end
 
 @interface MatterLastCell : DIGeneralCell
+@property (weak, nonatomic) IBOutlet UIButton *fileFolderBtn;
 @property (weak, nonatomic) IBOutlet UIButton *paymentRecordBtn;
 
 @property (weak, nonatomic) id<MatterLastCellDelegate> matterLastCellDelegate;

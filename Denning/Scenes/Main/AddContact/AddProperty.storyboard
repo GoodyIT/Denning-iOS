@@ -114,7 +114,87 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R6L-ZV-PXi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7780" y="9409"/>
+            <point key="canvasLocation" x="7996" y="9170"/>
+        </scene>
+        <!--Select Mukim Value-->
+        <scene sceneID="kF2-KV-Iil">
+            <objects>
+                <viewController id="qsV-v2-0C5" customClass="MukimValueList" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qi6-Yy-M2K"/>
+                        <viewControllerLayoutGuide type="bottom" id="pgk-fS-uHJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="D3A-iB-Ov5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oK5-OZ-MmA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <subviews>
+                                    <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-jI-pdb">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="qsV-v2-0C5" id="gxu-o0-YdY"/>
+                                        </connections>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="9wD-jI-pdb" firstAttribute="top" secondItem="oK5-OZ-MmA" secondAttribute="top" id="IlC-xH-yx5"/>
+                                    <constraint firstItem="9wD-jI-pdb" firstAttribute="leading" secondItem="oK5-OZ-MmA" secondAttribute="leading" id="e9K-gW-h9p"/>
+                                    <constraint firstAttribute="trailing" secondItem="9wD-jI-pdb" secondAttribute="trailing" id="iZe-5u-5wt"/>
+                                    <constraint firstAttribute="height" constant="44" id="j3E-l9-33j"/>
+                                    <constraint firstAttribute="bottom" secondItem="9wD-jI-pdb" secondAttribute="bottom" id="saa-Lf-ZBH"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ziT-b3-ONq">
+                                <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CodeDescCell" rowHeight="72" id="qGt-bn-2sP">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qGt-bn-2sP" id="4X6-Ne-Ywc">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="qsV-v2-0C5" id="QpR-3G-zix"/>
+                                    <outlet property="delegate" destination="qsV-v2-0C5" id="mHd-RR-LS9"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="ziT-b3-ONq" secondAttribute="trailing" id="PCt-Xa-Wmo"/>
+                            <constraint firstItem="pgk-fS-uHJ" firstAttribute="top" secondItem="ziT-b3-ONq" secondAttribute="bottom" id="Ta5-Ig-Iii"/>
+                            <constraint firstItem="ziT-b3-ONq" firstAttribute="leading" secondItem="D3A-iB-Ov5" secondAttribute="leading" id="UwZ-TN-KSF"/>
+                            <constraint firstItem="oK5-OZ-MmA" firstAttribute="leading" secondItem="D3A-iB-Ov5" secondAttribute="leading" id="bAm-Td-VWs"/>
+                            <constraint firstAttribute="trailing" secondItem="oK5-OZ-MmA" secondAttribute="trailing" id="te2-JW-mSR"/>
+                            <constraint firstItem="oK5-OZ-MmA" firstAttribute="top" secondItem="Qi6-Yy-M2K" secondAttribute="bottom" id="xYq-9N-C50"/>
+                            <constraint firstItem="ziT-b3-ONq" firstAttribute="top" secondItem="oK5-OZ-MmA" secondAttribute="bottom" id="y2O-9X-t0A"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ATm-Hv-XIV"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Select Mukim Value" id="sse-fQ-ECM">
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="3wi-oJ-5dH">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="dismissScreen:" destination="qsV-v2-0C5" id="XKc-Dz-Usx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="9wD-jI-pdb" id="fkU-Am-a35"/>
+                        <outlet property="tableView" destination="ziT-b3-ONq" id="bd4-iW-Fq1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CuG-hA-CtR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7996" y="9891"/>
         </scene>
         <!--Select Contact-->
         <scene sceneID="32s-Fm-Ia9">
@@ -365,6 +445,7 @@
                         <segue destination="9Lf-Bh-O2Q" kind="show" identifier="MasterTitleSegue" id="ESP-1Y-46M">
                             <nil key="action"/>
                         </segue>
+                        <segue destination="qsV-v2-0C5" kind="show" identifier="MukimValueSegue" id="Xt2-Pk-FMQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpz-wR-TXa" userLabel="First Responder" sceneMemberID="firstResponder"/>

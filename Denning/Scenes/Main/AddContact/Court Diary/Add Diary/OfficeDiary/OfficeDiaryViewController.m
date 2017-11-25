@@ -11,6 +11,7 @@
 #import "StaffViewController.h"
 #import "BirthdayCalendarViewController.h"
 #import "DetailWithAutocomplete.h"
+#import "StaffAutoComplete.h"
 #import "SimpleMatterViewController.h"
 #import "ClientModel.h"
 #import "SimpleAutocomplete.h"
@@ -92,7 +93,6 @@
 - (void) displayDiary
 {
     _place.text = _officeDiary.place;
-    
     _appointment.text = _officeDiary.appointmentDetails;
     _Remarks.text = _officeDiary.remarks;
     _caseNo.text = _officeDiary.caseNo;
@@ -436,6 +436,18 @@
     [popupController presentInViewController:self];
 }
 
+- (void) showStaffAutocomplete {
+    [self.view endEditing:YES];
+    
+    StaffAutoComplete *vc = [[UIStoryboard storyboardWithName:@
+                              "AddCourt" bundle:nil] instantiateViewControllerWithIdentifier:@"StaffAutoComplete"];
+    vc.url = [NSString stringWithFormat:@"%@%@&search=", STAFF_GET_URL , @"attest"];
+    vc.updateHandler =  ^(StaffModel* model) {
+        self.staffAttended.text = model.name;
+    };
+    [self showPopup:vc];
+}
+
 - (void) showAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
@@ -509,8 +521,7 @@
         selectedStaff = @"Staff Assigned";
         [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
     }  else if (indexPath.row == 8) {
-        selectedStaff = @"Staff Attended";
-        [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+        [self showStaffAutocomplete];
     } else if (indexPath.row == 9) {
         if (_officeDiary != nil) {
             titleOfList = @"Attendant Type";
@@ -547,12 +558,8 @@
         StaffViewController* staffVC = navVC.viewControllers.firstObject;
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
-            if ([selectedStaff isEqualToString:@"Staff Assigned"]) {
-                self.staffAssigned.text = model.name;
-                selectedStaffAssigned = model.staffCode;
-            } else {
-                _staffAttended.text = model.name;
-            }
+            self.staffAssigned.text = model.name;
+            selectedStaffAssigned = model.staffCode;
         };
     } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {
         UINavigationController *navVC =segue.destinationViewController;

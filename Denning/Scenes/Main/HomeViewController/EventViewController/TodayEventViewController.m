@@ -7,6 +7,9 @@
 //
 
 #import "TodayEventViewController.h"
+#import "CourtDiaryViewController.h"
+#import "PersonalDiaryViewController.h"
+#import "OfficeDiaryViewController.h"
 #import "EventCell.h"
 
 @interface TodayEventViewController ()<UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate>
@@ -196,6 +199,66 @@
     [cell configureCellWithEvent:self.eventsArray[indexPath.section]];
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    EventModel* event = self.eventsArray[indexPath.section];
+    NSString *courtString;
+    if ([event.eventType isEqualToString:@"1court"]) {
+        courtString = @"courtDiary";
+    } else if ([event.eventType isEqualToString:@"2office"]) {
+        courtString = @"OfficeDiary";
+    } else {
+        courtString = @"PersonalDiary";
+    }
+    
+    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/%@/%@", [DataManager sharedManager].user.serverAPI,courtString,  event.eventCode];
+    if (isLoading) return;
+    isLoading = YES;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        @strongify(self)
+        self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Loaded" duration:1.0];
+            id model;
+            if ([event.eventType isEqualToString:@"1court"]) {
+                model = [EditCourtModel getEditCourtFromResponse:result];
+                [self performSegueWithIdentifier:kEditCourtSegue sender:model];
+            } else if ([event.eventType isEqualToString:@"2office"]) {
+                model = [OfficeDiaryModel getOfficeDiaryFromResponse:result];
+                [self performSegueWithIdentifier:kEditOfficeDiarySegue sender:model];
+            } else {
+                model = [OfficeDiaryModel getOfficeDiaryFromResponse:result];
+                [self performSegueWithIdentifier:kEditPersonalDiarySegue sender:model];
+            }
+        } else {
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:kEditCourtSegue]) {
+        UINavigationController *navVC = segue.destinationViewController;
+        CourtDiaryViewController* vc = navVC.viewControllers.firstObject;
+        vc.courtDiary = sender;
+    } else if ([segue.identifier isEqualToString:kEditPersonalDiarySegue]) {
+        UINavigationController *navVC = segue.destinationViewController;
+        PersonalDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;
+        editCourtVC.personalDiary = sender;
+    } else if ([segue.identifier isEqualToString:kEditOfficeDiarySegue]) {
+        UINavigationController *navVC = segue.destinationViewController;
+        OfficeDiaryViewController* editCourtVC = navVC.viewControllers.firstObject;
+        editCourtVC.officeDiary = sender;
+    }
 }
 
 @end

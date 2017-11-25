@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddBillViewController : UIViewController
+@interface AddBillViewController : BaseViewController
+
+@property (strong, nonatomic) BillModel* model;
 
 @end

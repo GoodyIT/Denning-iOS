@@ -1,5 +1,5 @@
 //
-//  TaxInvoceModel.h
+//  TaxInvoiceModel.h
 //  Denning
 //
 //  Created by Ho Thong Mee on 30/05/2017.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TaxInvoceModel : NSObject
+@interface TaxInvoiceModel : NSObject
 
 @property (strong, nonatomic) NSString* APIpdf;
 @property (strong, nonatomic) NSString* amount;
@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSString* invoiceNo;
 @property (strong, nonatomic) NSString* issueToName;
 
-+ (TaxInvoceModel*) getTaxInvoiceFromResponse: (NSDictionary*) response;
++ (TaxInvoiceModel*) getTaxInvoiceFromResponse: (NSDictionary*) response;
 
 + (NSArray*) getTaxInvoiceArrayFromResonse: (NSDictionary*) response;
 

@@ -147,7 +147,7 @@
 #import "ThreeItemModel.h"
 #import "NewMatterModel.h"
 #import "GraphModel.h"
-#import "TaxInvoceModel.h"
+#import "TaxInvoiceModel.h"
 #import "FeeTranserModel.h"
 #import "TaskCheckModel.h"
 #import "MukimModel.h"
@@ -180,6 +180,13 @@
 #import "TaxInvoiceItemModel.h"
 #import "TaxInvoiceCalcModel.h"
 #import "StaffLeaveModel.h"
+#import "CodeTransactionDesc.h"
+#import "PaymentModeModel.h"
+#import "PresetCodeModel.h"
+#import "PaymentModel.h"
+#import "ReceiptModel.h"
+#import "BillModel.h"
+
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

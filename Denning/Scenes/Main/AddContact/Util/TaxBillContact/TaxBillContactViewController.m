@@ -10,6 +10,8 @@
 #import "PropertyContactCell.h"
 #import "SecondContactCell.h"
 #import "ContactViewController.h"
+#import "CommonTextCell.h"
+#import "ContactCell.h"
 
 @interface TaxBillContactViewController ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
@@ -19,7 +21,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray* listOfContacts;
+@property (strong, nonatomic) NSMutableArray<MatterSimple*>* listOfContacts;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (copy, nonatomic) NSString *filter;
@@ -38,12 +40,14 @@
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) registerNib {
     [PropertyContactCell registerForReuseInTableView:self.tableView];
     [SecondContactCell registerForReuseInTableView:self.tableView];
+    [ContactCell registerForReuseInTableView:self.tableView];
+    [CommonTextCell registerForReuseInTableView:self.tableView];
 }
 
 - (void) prepareUI
@@ -90,16 +94,32 @@
     NSMutableArray* array = [NSMutableArray new];
     
     for (MatterSimple* simple in result) {
-        NSMutableArray* partyArray = [NSMutableArray new];
-        for (PartyGroupModel* partyGroup in simple.partyGroupArray) {
-            if  (partyGroup.partyArray.count > 0) {
-                [partyArray addObject:partyGroup.partyArray[0]];
-            }
+        if (simple.partyGroupArray.count > 0) {
+            [array addObject:simple];
         }
-        [array arrayByAddingObjectsFromArray:partyArray];
     }
     
     return [array copy];
+}
+
+- (NSDictionary*) getPartySectionInfo:(int) row matterModel:(MatterSimple*) matterSimple{
+    int count = 0;
+    NSDictionary* info = [NSDictionary new];
+    for (int i = 0; i < matterSimple.partyGroupArray.count; i++) {
+        PartyGroupModel* partyGroup = matterSimple.partyGroupArray[i];
+        if (partyGroup.partyArray.count == 0) {
+            continue;
+        }
+        info = @{@"group":[NSNumber numberWithInt:i],
+                 @"party":[NSNumber numberWithInt:row-count]
+                 };
+        count += partyGroup.partyArray.count;
+        if (row < count) {
+            break;
+        }
+    }
+    
+    return info;
 }
 
 - (void) getListWithCompletion:(void(^)(void)) completion {
@@ -107,12 +127,16 @@
     isLoading = YES;
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    if (!isAppending) {
+        [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Loading" duration:0];
+    }
     @weakify(self)
     [[QMNetworkManager sharedManager] getSimpleMatter:self.page withSearch:(NSString*)self.filter WithCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
-        
+        [navigationController dismissNotificationPanel];
         if (error == nil) {
+            result = [self filterResult:result];
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
             }
@@ -120,6 +144,7 @@
                 self.listOfContacts = [[self.listOfContacts arrayByAddingObjectsFromArray:result] mutableCopy];
                 
             } else {
+                [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:1.0];
                 self.listOfContacts = [result mutableCopy];
             }
             
@@ -130,6 +155,7 @@
         }
         
         self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
     }];
 }
 
@@ -138,43 +164,69 @@
 }
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 1;
+- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return _listOfContacts[section].systemNo;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     return self.listOfContacts.count;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    int count = 0;
+    for (PartyGroupModel* partyGroup in self.listOfContacts[section].partyGroupArray) {
+        count += partyGroup.partyArray.count;
+    }
+    
+    return count;
+}
+
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 33;
+    return kDefaultAccordionHeaderViewHeight;
 }
 
--(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
-    return cell;
-}
+//-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
+//    return cell;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SearchResultModel *model = self.listOfContacts[indexPath.row];
+    MatterSimple *model = self.listOfContacts[indexPath.section];
     
-    SecondContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SecondContactCell cellIdentifier] forIndexPath:indexPath];
-    cell.firstValue.text = [model.JsonDesc valueForKeyNotNull:@"name"];
-    cell.secondValue.text = [NSString stringWithFormat:@"%@\n%@", [model.JsonDesc valueForKeyNotNull:@"IDNo"], [model.JsonDesc valueForKeyNotNull:@"KPLama"]];
+    NSDictionary* partySectionInfo = [self getPartySectionInfo:(int)indexPath.row matterModel:model];
+    PartyGroupModel* partyGroup = model.partyGroupArray[[[partySectionInfo objectForKey:@"group"] integerValue]];
+    ClientModel* party = (ClientModel*)partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
+    
+//    SecondContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SecondContactCell cellIdentifier] forIndexPath:indexPath];
+//    cell.firstValue.text = party.IDNo;
+//    cell.secondValue.text = party.name;
+//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    if ([[partySectionInfo objectForKey:@"party"] integerValue] == 0) {
+        ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
+        [cell configureCellWithContact:partyGroup.partyGroupName text:party.name];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    }
+    CommonTextCell *cell = [tableView dequeueReusableCellWithIdentifier:[CommonTextCell cellIdentifier] forIndexPath:indexPath];
+    [cell configureCellWithString:party.name];
+    cell.valueLabel.font = [UIFont fontWithName:@"SFUIText-Light" size:13];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        _updateHandler(self.listOfContacts[indexPath.row]);
-    }];
+    MatterSimple *model = self.listOfContacts[indexPath.section];
+    
+    NSDictionary* partySectionInfo = [self getPartySectionInfo:(int)indexPath.row matterModel:model];
+    PartyGroupModel* partyGroup = model.partyGroupArray[[[partySectionInfo objectForKey:@"group"] integerValue]];
+    ClientModel* party = (ClientModel*)partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
+    _updateHandler(party);
+    [self.navigationController popViewControllerAnimated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

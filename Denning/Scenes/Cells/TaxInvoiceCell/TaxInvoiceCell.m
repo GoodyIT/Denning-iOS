@@ -21,7 +21,7 @@
     // Configure the view for the selected state
 }
 
-- (void) configureCellWithModel:(TaxInvoceModel*) model
+- (void) configureCellWithModel:(TaxInvoiceModel*) model
 {
     _taxInvoiceNo.text = model.invoiceNo;
     _fileNo.text = model.fileNo;

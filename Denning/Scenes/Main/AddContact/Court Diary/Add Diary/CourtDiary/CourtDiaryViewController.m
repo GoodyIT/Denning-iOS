@@ -11,6 +11,7 @@
 #import "StaffViewController.h"
 #import "BirthdayCalendarViewController.h"
 #import "DetailWithAutocomplete.h"
+#import "StaffAutoComplete.h"
 #import "SimpleMatterViewController.h"
 #import "MatterLitigationViewController.h"
 #import "CourtDiaryListViewController.h"
@@ -649,6 +650,18 @@
     [self showPopup:calendarViewController];
 }
 
+- (void) showStaffAutocomplete {
+    [self.view endEditing:YES];
+    
+    StaffAutoComplete *vc = [[UIStoryboard storyboardWithName:@
+                                   "AddCourt" bundle:nil] instantiateViewControllerWithIdentifier:@"StaffAutoComplete"];
+    vc.url = vc.url = [NSString stringWithFormat:@"%@%@&search=", STAFF_GET_URL , @"attest"];
+    vc.updateHandler =  ^(StaffModel* model) {
+        self.counselAttended.text = model.name;
+    };
+    [self showPopup:vc];
+}
+
 - (void) showDetailAutocomplete {
     [self.view endEditing:YES];
     
@@ -698,9 +711,12 @@
             titleOfList = @"List of Hearing Type";
             nameOfField = @"natureOfHearing";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_HEARINGTYPE_GET_URL];
-        } else if (indexPath.row == 8) {
+        } else if (indexPath.row == 8) { // Details
             selectedDetails = @"First Details";
             [self showDetailAutocomplete];
+        } else if (indexPath.row == 9) { // Assigned
+            selectedStaff = @"Counsel Assigned";
+            [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
         }
         if (_courtDiary != nil) {
             if (indexPath.row == 10) { // Attendant Type
@@ -708,8 +724,7 @@
                 nameOfField = @"Attendant Status";
                 [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_ATTENDED_STATUS_GET_URL];
             } else if (indexPath.row == 11) { // Counsel Attended
-                selectedStaff = @"Counsel Attended";
-                [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
+                [self showStaffAutocomplete];
             } else if (indexPath.row == 12) { // Coram
                 [self performSegueWithIdentifier:kCoramListSegue sender:nil];
             } else if (indexPath.row == 14) { // Decision
@@ -721,9 +736,6 @@
                 nameOfField = @"Next Date Type";
                 [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_NEXTDATE_TYPE_GET_URL];
             }
-        } else if (indexPath.row == 9) { // Details
-            selectedStaff = @"Counsel Assigned";
-            [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
         }
         
     } else {
@@ -763,12 +775,8 @@
         StaffViewController* staffVC = navVC.viewControllers.firstObject;
         staffVC.typeOfStaff = sender;
         staffVC.updateHandler = ^(NSString* typeOfStaff, StaffModel* model) {
-            if ([selectedStaff isEqualToString:@"Counsel Assigned"]) {
-                 self.councilAssigned.text = model.name;
-                selectedAssignedCode = model.staffCode;
-            } else {
-                _counselAttended.text = model.name;
-            }
+            self.councilAssigned.text = model.name;
+            selectedAssignedCode = model.staffCode;
         };
     } else if ([segue.identifier isEqualToString:kListWithCodeSegue]) {
         UINavigationController *navVC =segue.destinationViewController;

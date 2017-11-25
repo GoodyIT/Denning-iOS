@@ -140,11 +140,11 @@
             </objects>
             <point key="canvasLocation" x="2781" y="1147"/>
         </scene>
-        <!--Chat-->
+        <!--Chats-->
         <scene sceneID="LrC-wm-rkF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mWs-MB-7Q8" customClass="QMNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chat" image="icon_chat.png" id="KPI-pW-0Q2"/>
+                    <tabBarItem key="tabBarItem" title="Chats" image="icon_chat.png" id="KPI-pW-0Q2"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="9uk-SV-XqD" customClass="QMNavigationBar">

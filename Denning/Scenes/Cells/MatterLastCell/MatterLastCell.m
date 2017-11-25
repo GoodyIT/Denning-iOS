@@ -17,6 +17,9 @@
     self.paymentRecordBtn.titleLabel.minimumScaleFactor = 0.5f;
     self.paymentRecordBtn.titleLabel.numberOfLines = 0;
     self.paymentRecordBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    self.fileFolderBtn.titleLabel.minimumScaleFactor = 0.5f;
+    self.fileFolderBtn.titleLabel.numberOfLines = 0;
+    self.fileFolderBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -34,7 +37,7 @@
 }
 
 - (IBAction)tapFileNote:(id)sender {
-    [self.matterLastCellDelegate  didTapFileFolder:self];
+    [self.matterLastCellDelegate  didTapFileNote:self];
 }
 
 - (IBAction)tapPaymentRecord:(id)sender {

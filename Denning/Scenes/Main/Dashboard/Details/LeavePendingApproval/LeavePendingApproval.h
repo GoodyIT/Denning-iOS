@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeavePendingApproval : UIViewController
+@interface LeavePendingApproval : BaseViewController
 
 @property (strong, nonatomic) NSString* submittedBy, *submittedByCode;
 @property (strong, nonatomic) StaffLeaveModel* model;

@@ -2047,7 +2047,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="tWv-l4-zrD" id="xDg-fV-i91"/>
-                        <outlet property="searchContainer" destination="0eG-yn-e33" id="7qf-Kj-RHe"/>
                         <outlet property="tableView" destination="nmO-ZX-tD7" id="2ZZ-Aq-vsM"/>
                         <segue destination="2SD-jm-qHY" kind="show" identifier="ContactSearchSegue" id="6Ex-It-QiE"/>
                     </connections>
@@ -3323,7 +3322,7 @@
         <!--Leave Pending Approval-->
         <scene sceneID="8S0-ig-dRR">
             <objects>
-                <viewController id="bVk-4n-s2C" customClass="LeavePendingApproval" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LeavePendingApproval" id="bVk-4n-s2C" customClass="LeavePendingApproval" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="11h-dA-dnh"/>
                         <viewControllerLayoutGuide type="bottom" id="Sd0-JK-SIm"/>

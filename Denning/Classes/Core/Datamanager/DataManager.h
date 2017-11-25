@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+//@interface FirmArray : RLMObject
+//@property RLMArray
+
 @class UserModel;
 @interface DataManager : NSObject
 

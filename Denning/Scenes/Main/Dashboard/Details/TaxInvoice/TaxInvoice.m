@@ -15,9 +15,7 @@
 @interface TaxInvoice ()
 <UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,  HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
-    BOOL initCall;
     BOOL isAppending;
     NSInteger selectedIndex;
     NSString* curBalanceFilter, *baseUrl;
@@ -45,7 +43,6 @@
     [self parseUrl];
     [self prepareUI];
     [self registerNibs];
-//    [self configureSearch];
     [SVProgressHUD showWithStatus:@"Loading"];
     [self getList];
 }
@@ -53,6 +50,7 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
+    [SVProgressHUD dismiss];
     [super viewWillDisappear:animated];
 }
 
@@ -66,19 +64,6 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void) configureSearch
-{
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
-    self.searchController.searchBar.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.definesPresentationContext = YES;
-    [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    [self.searchContainer addSubview:self.searchController.searchBar];
-}
-
 - (void)registerNibs {
     [TaxInvoiceCell registerForReuseInTableView:self.tableView];
     [BankReconHeaderCell registerForReuseInTableView:self.tableView];
@@ -90,9 +75,7 @@
 - (void) prepareUI
 {
     self.page = @(1);
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     isAppending = NO;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -107,7 +90,7 @@
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
-    _topFilter = @[@"All", @"Settles", @"Outstanding"];
+    _topFilter = @[@"All", @"Settled", @"Outstanding"];
     _arrayOfFilterValues = @[@"all", @"settled", @"outstanding"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
@@ -120,6 +103,23 @@
     self.selectionList.backgroundColor = [UIColor blackColor];
     self.selectionList.selectedButtonIndex = 0;
     self.selectionList.hidden = NO;
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 100;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -165,21 +165,22 @@
 - (void) getList{
     if (isLoading) return;
     isLoading = YES;
-    _url = [NSString stringWithFormat:@"%@%@", baseUrl, curBalanceFilter];
+    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@%@?search=%@&page=%@&fileNo=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curBalanceFilter, _filter, _page, _fileNo];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     @weakify(self)
-    [[QMNetworkManager sharedManager] getDashboardTaxInvoiceInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
-        [SVProgressHUD dismiss];
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
+        self->isLoading = NO;
         if (error == nil) {
-            if (result.count != 0) {
+            NSArray* array = [TaxInvoiceModel getTaxInvoiceArrayFromResonse:result];
+            if (array.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
             }
             if (isAppending) {
-                self.listOfTaxInvoices = [[self.listOfTaxInvoices arrayByAddingObjectsFromArray:result] mutableCopy];
+                self.listOfTaxInvoices = [[self.listOfTaxInvoices arrayByAddingObjectsFromArray:array] mutableCopy];
                 
             } else {
-                self.listOfTaxInvoices = [result mutableCopy];
+                self.listOfTaxInvoices = [array mutableCopy];
             }
             
             [self.tableView reloadData];
@@ -187,14 +188,8 @@
         else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
-        
-        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];
+        [self.tableView finishInfiniteScroll];
     }];
-}
-
-- (void) clean {
-    isLoading = NO;
-    isFirstLoading = NO;
 }
 
 #pragma mark - Table view data source
@@ -224,7 +219,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TaxInvoceModel *model = self.listOfTaxInvoices[indexPath.row];
+    TaxInvoiceModel *model = self.listOfTaxInvoices[indexPath.row];
     
     TaxInvoiceCell *cell = [tableView dequeueReusableCellWithIdentifier:[TaxInvoiceCell cellIdentifier] forIndexPath:indexPath];
     
@@ -235,10 +230,16 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TaxInvoceModel *model = self.listOfTaxInvoices[indexPath.row];
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [self viewPDF:model.APIpdf];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    TaxInvoiceModel *model = self.listOfTaxInvoices[indexPath.row];
+    if (_fileNo != nil) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            _updateHandler(model);
+        }];
+    } else {
+        [SVProgressHUD showWithStatus:@"Loading"];
+        [self viewPDF:model.APIpdf];
+    }
 }
 
 - (void) viewPDF:(NSString*) pdfUrl {
@@ -305,17 +306,6 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-        [self appendList];
-    }
-}
-
 #pragma mark - Search Delegate
 
 
@@ -357,12 +347,6 @@
     [self getList];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfTaxInvoices.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
-}
 
 #pragma mark - Navigation
 

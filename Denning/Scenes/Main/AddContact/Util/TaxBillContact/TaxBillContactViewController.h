@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^UpdateContactHandler)(SearchResultModel* model);
+typedef void(^UpdateContactHandler)(ClientModel* model);
 
 @interface TaxBillContactViewController : UIViewController
 

@@ -73,6 +73,8 @@
 
 + (NSString*) convertDateToMySQLFormat: (NSString*)date;
 
++ (NSString*) convertDateToMySQLFormatWithTime: (NSString*)date;
+
 + (NSString*) convertDateToCustomFormat: (NSString*) date;
 
 + (NSString*) getDayFromDate: (NSString*) date;

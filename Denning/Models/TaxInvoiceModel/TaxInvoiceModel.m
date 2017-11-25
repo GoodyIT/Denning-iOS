@@ -1,18 +1,18 @@
 //
-//  TaxInvoceModel.m
+//  TaxInvoiceModel.m
 //  Denning
 //
 //  Created by Ho Thong Mee on 30/05/2017.
 //  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-#import "TaxInvoceModel.h"
+#import "TaxInvoiceModel.h"
 
-@implementation TaxInvoceModel
+@implementation TaxInvoiceModel
 
-+ (TaxInvoceModel*) getTaxInvoiceFromResponse: (NSDictionary*) response
++ (TaxInvoiceModel*) getTaxInvoiceFromResponse: (NSDictionary*) response
 {
-    TaxInvoceModel *model = [TaxInvoceModel new];
+    TaxInvoiceModel *model = [TaxInvoiceModel new];
     
     model.APIpdf = [response valueForKeyNotNull:@"APIpdf"];
     model.amount = [response valueForKeyNotNull:@"amount"];
@@ -28,7 +28,7 @@
 {
     NSMutableArray *result = [NSMutableArray new];
     for (id obj in response) {
-        [result addObject:[TaxInvoceModel getTaxInvoiceFromResponse:obj]];
+        [result addObject:[TaxInvoiceModel getTaxInvoiceFromResponse:obj]];
     }
     
     return result;

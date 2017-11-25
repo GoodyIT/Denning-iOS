@@ -131,6 +131,25 @@
     return [newFormatter stringFromDate:creationDate];
 }
 
++ (NSString*) convertDateToMySQLFormatWithTime: (NSString*)date
+{
+    if (date.length == 0) {
+        return @"";
+    }
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
+    
+    [formatter setDateFormat:@"d MMM yyyy HH:mm:ss"];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
+    [formatter setTimeZone:timeZone];
+    [newFormatter setTimeZone:timeZone];
+    [newFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSDate *creationDate = [formatter dateFromString:date];
+    
+    return [newFormatter stringFromDate:creationDate];
+}
+
 + (NSString*) convertDateToMySQLFormat: (NSString*)date
 {
     if (date.length == 0) {
@@ -356,6 +375,10 @@
 
 + (NSString*) getDayFromDate: (NSString*) date
 {
+    if (date.length == 0) {
+        return date;
+    }
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
     NSTimeZone* timeZone = [NSTimeZone localTimeZone];

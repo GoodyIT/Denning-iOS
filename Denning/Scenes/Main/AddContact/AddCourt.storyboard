@@ -17,6 +17,9 @@
         <array key="SF-UI-Text-Medium.otf">
             <string>SFUIText-Medium</string>
         </array>
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Add Diary-->
@@ -1814,6 +1817,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ND4-h9-Hyz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7609" y="2421"/>
+        </scene>
+        <!--Staff Auto Complete-->
+        <scene sceneID="a60-Fg-UTn">
+            <objects>
+                <viewController storyboardIdentifier="StaffAutoComplete" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lvM-lC-7t7" customClass="StaffAutoComplete" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tpv-8n-uXx"/>
+                        <viewControllerLayoutGuide type="bottom" id="LiT-yq-7Mb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="trU-od-yCn">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="350"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search / Input" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Co-fL-D1x" customClass="MLPAutoCompleteTextField">
+                                <rect key="frame" x="24" y="10" width="252" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4Co-fL-D1x" firstAttribute="leading" secondItem="trU-od-yCn" secondAttribute="leadingMargin" constant="8" id="J3i-Tx-Cfh"/>
+                            <constraint firstItem="4Co-fL-D1x" firstAttribute="top" secondItem="trU-od-yCn" secondAttribute="topMargin" constant="10" id="Rwo-Ua-ejz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Co-fL-D1x" secondAttribute="trailing" constant="8" id="ZcF-p8-1js"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="PBM-MV-6Vn"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="350"/>
+                    <connections>
+                        <outlet property="autocompleteTF" destination="4Co-fL-D1x" id="jLe-J2-ma1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Io-ln-FFo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6549" y="1273"/>
         </scene>
     </scenes>
     <resources>

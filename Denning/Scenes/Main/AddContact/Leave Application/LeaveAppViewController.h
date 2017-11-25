@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeaveAppViewController : UIViewController
+@interface LeaveAppViewController : BaseViewController
 
 @end

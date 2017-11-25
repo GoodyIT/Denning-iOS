@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 
 - (void) changeTitle {
     self.tabBarController.navigationItem.titleView = nil;
-    self.tabBarController.navigationItem.title = @"Chat";
+    self.tabBarController.navigationItem.title = @"Chats";
 }
 
 - (void) prepareUI

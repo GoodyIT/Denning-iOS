@@ -10,4 +10,8 @@
 
 @interface AddReceiptViewController : UITableViewController
 
+@property (strong, nonatomic) ReceiptModel* model;
+
+@property (strong, nonatomic) NSString* isUpdate;
+
 @end

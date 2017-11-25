@@ -259,9 +259,17 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define REPORT_VIEWER_PDF_QUATION_URL   @"denningwcf/v1/ReportViewer/pdf/Quotation/"
 
+#define RECEIPT_FROM_TAXINVOICE @"denningwcf/v1/convert/taxinvoice/receipt"
+
+#define RECEIPT_FROM_QUOTATION  @"denningwcf/v1/convert/quotation/receipt"
+
+#define INVOICE_FROM_QUOTATION  @"denningwcf/v1/convert/quotation/taxinvoice"
+
 #define REPORT_VIEWER_PDF_TAXINVOICE_URL   @"denningwcf/v1/ReportViewer/pdf/TaxInvoice/"
 
 #define TAXINVOICE_CALCULATION_URL  @"denningwcf/v1/Calculation/Invoice/draft"
+
+#define TAXINVOICE_ALL_GET_URL  @"v1/TaxInvoiceX/all"
 
 #define QUOTATION_SAVE_URL  @"denningwcf/v1/Quotation"
 
@@ -271,9 +279,9 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define BANK_BRANCH_GET_LIST_URL    @"denningwcf/v1/bank/Branch?search="
 
-#define RECEIPT_TAX_INVOICE_GET_LIST_URL    @"denningwcf/v1/TaxInvoice?FileNo="
+#define TRANSACTION_DESCRIPTION_RECEIPT_GET @"denningwcf/v1/table/cboTransactionDesc?docCode=R"
 
-#define RECEIPT_TRANS_DESC_GET_LIST_URL @"denningwcf/v1/account/receipt/transDesc?search="
+#define TRANSACTION_DESCRIPTION_Voucher_GET @"denningwcf/v1/table/cboTransactionDesc?docCode=V"
 
 #define ACCOUNT_TYPE_GET_LIST_URL   @"denningwcf/v1/account/type?search="
 
@@ -283,13 +291,17 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define RECEIPT_SAVE_URL @"denningwcf/v1/ClientReceipt"
 
+#define RECEIPT_UPDATE_URL  @"denningwcf/v1/Receipt"
+
+#define PAYMENT_MODE_GET_URL    @"denningwcf/v1/Table/cboPaymentMode?search="
+
 #define LEAVE_RECORD_GET_URL @"denningwcf/v1/Table/StaffLeave?search="
 
 #define STAFF_LEAVE_SAVE_URL @"denningwcf/v1/Table/StaffLeave"
 
 #define LEAVE_TYPE_GET_URL  @"denningwcf/v1/generalSelection/frmStaffLeave/leaveType?search="
 
-#define LEAVE_STATUS_GET_URL    @"denningwcf/v1/generalSelection/frmStaffLeave/leaveStatus"
+#define LEAVE_STATUS_GET_URL    @"denningwcf/v1/generalSelection/frmStaffLeave/leaveStatus?search="
 
 #define LEAVE_NUMBER_OF_DAYS_URL    @"denningwcf/v1/generalSelection/frmStaffLeave/leaveLength?search="
 

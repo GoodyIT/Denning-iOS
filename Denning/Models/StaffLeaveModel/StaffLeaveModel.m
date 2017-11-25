@@ -28,7 +28,7 @@
     model.dtDateUpdated = [response valueForKeyNotNull:@"dtDateUpdated"];
     model.dtEndDate = [response valueForKeyNotNull:@"dtEndDate"];
     model.dtStartDate = [response valueForKeyNotNull:@"dtStartDate"];
-    model.strLeaveLength = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"strLeaveLength"]];
+    model.strLeaveLength = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"clsLeaveLength"]];
     model.strLogBalancedLeave = [response valueForKeyNotNull:@"strLogBalancedLeave"];
     model.strLogEntitlement = [response valueForKeyNotNull:@"strLogEntitlement"];
     model.strLogUsedToDate = [response valueForKeyNotNull:@"strLogUsedToDate"];

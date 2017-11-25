@@ -12,12 +12,8 @@
 
 #define kNotificationDelay          4
 
-static int THE_CELL_HEIGHT = 250;
+static int THE_CELL_HEIGHT = 450;
 #define kEndTransition             @"EndTransition"
 #define kBeginTransition           @"BeginTransition"
 
-#pragma mark - baseURL
-
-static NSString *const baseURLString = @"https://reachmobileapp.us/api/v1/";
-static NSString *const imagesURLString = @"https://reachmobileapp.us";
 

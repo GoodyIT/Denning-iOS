@@ -1205,7 +1205,7 @@
             </objects>
             <point key="canvasLocation" x="6001" y="3095"/>
         </scene>
-        <!--Contact Folder-->
+        <!--File Folder-->
         <scene sceneID="qKK-C9-NRg">
             <objects>
                 <tableViewController id="Siy-4G-Oqb" customClass="DocumentViewController" sceneMemberID="viewController">
@@ -1229,7 +1229,7 @@
                             <outlet property="delegate" destination="Siy-4G-Oqb" id="Gjn-S6-dSj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Contact Folder" id="D6L-rE-95w">
+                    <navigationItem key="navigationItem" title="File Folder" id="D6L-rE-95w">
                         <barButtonItem key="leftBarButtonItem" image="Back.png" id="onI-L7-jmX">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>

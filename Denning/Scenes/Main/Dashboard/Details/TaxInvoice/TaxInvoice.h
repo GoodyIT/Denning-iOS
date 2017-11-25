@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^UpdateTaxInvoiceHandler)(TaxInvoiceModel* model);
+
 @interface TaxInvoice : UIViewController <UIDocumentInteractionControllerDelegate>
 
 @property (strong, nonatomic) NSString* url;
+
+@property (strong, nonatomic) UpdateTaxInvoiceHandler  updateHandler;
+
+@property (strong, nonatomic) NSString* fileNo;
 
 @end

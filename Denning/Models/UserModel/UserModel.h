@@ -16,7 +16,7 @@
 //@end
 
 
-RLM_ARRAY_TYPE(FirmURLModel)
+//RLM_ARRAY_TYPE(FirmURLModel)
 
 @interface UserModel : RLMObject
 

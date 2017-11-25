@@ -14,6 +14,7 @@
 #import "DateTimeViewController.h"
 #import "ListWithCodeTableViewController.h"
 #import "ListWithDescriptionViewController.h"
+#import "LeavePendingApproval.h"
 
 @interface LeaveAppViewController ()<UITableViewDataSource, UITableViewDelegate, ContactListWithCodeSelectionDelegate, ContactListWithDescSelectionDelegate, SWTableViewCellDelegate, UITextFieldDelegate>
 {
@@ -30,6 +31,9 @@
     NSString* nameOfField;
     
     __block Boolean isLoading, isAppending;
+    
+    CGPoint originalContentOffset;
+    CGRect originalFrame;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -38,6 +42,7 @@
 @property (strong, nonatomic) NSNumber* page;
 @property (weak, nonatomic) IBOutlet UILabel *staffName;
 
+@property (strong, nonatomic) NSIndexPath* textFieldIndexPath;
 @end
 
 @implementation LeaveAppViewController
@@ -68,7 +73,68 @@
     [self.tableView reloadData];
 }
 
+- (void)keyboardWillShow:(NSNotification *)notification{
+    NSValue* keyboardFrameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrame = [keyboardFrameValue CGRectValue];
+    keyboardFrame = [self.view convertRect:keyboardFrame fromView:nil];
+    
+    CGFloat tableViewHeight = CGRectGetMinY(keyboardFrame) - CGRectGetMinY(self.view.bounds);
+    
+    originalContentOffset = _tableView.contentOffset;
+    originalFrame = _tableView.frame;
+    
+    // Get the duration of the animation.
+    NSValue* animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    CGRect cellRect = [self.tableView rectForRowAtIndexPath:self.textFieldIndexPath];
+    CGFloat minCellOffsetY = CGRectGetMaxY(cellRect) - tableViewHeight + 10.0; // Add a small margin below the row
+    CGFloat maxCellOffsetY = CGRectGetMinY(cellRect) - 10.0; // Add a small margin above the row
+    maxCellOffsetY = MAX(0.0, maxCellOffsetY);
+    CGFloat maxContentOffsetY = self.tableView.contentSize.height - tableViewHeight;
+    CGFloat scrollOffsetY = self.tableView.contentOffset.y;
+    if (scrollOffsetY < minCellOffsetY)
+    {
+        scrollOffsetY = minCellOffsetY;
+    }
+    else if (scrollOffsetY > maxCellOffsetY)
+    {
+        scrollOffsetY = maxCellOffsetY;
+    }
+    scrollOffsetY = MIN(scrollOffsetY, maxContentOffsetY);
+    CGPoint updatedContentOffset = CGPointMake(self.tableView.contentOffset.x, scrollOffsetY+50);
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.tableView.contentOffset = updatedContentOffset;
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = CGRectMake(CGRectGetMinX(self.tableView.frame), CGRectGetMinY(self.tableView.frame),
+                                                           CGRectGetWidth(self.tableView.frame), tableViewHeight);
+                     }];
+}
+
+- (void)keyboardWillHide:(NSNotification *) __unused notification{
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                     }
+                     completion:^(BOOL finished) {
+                        self.tableView.frame = originalFrame;
+                         self.tableView.contentOffset = originalContentOffset;
+                     }
+     ];
+}
+
 - (void) prepareUI {
+    typeOfLeaveCode = submittedByCode = noOfDaysCode = @"";
     _staffName.text = [DataManager sharedManager].user.username;
     _listOfValsForApp = @[@"Start Date", @"End Date", @"Type Of Leave", @"No. of Days", @"Staff Remarks", @"Submitted By"];
     _page = @(1);
@@ -162,10 +228,10 @@
     NSMutableDictionary* params = [NSMutableDictionary new] ;
     
     [params addEntriesFromDictionary:@{@"clsLeaveStatus":@{@"code":@"0"}}];
-    [params addEntriesFromDictionary:@{@"clsStaff":@{@"code":@"0"}}];
+    [params addEntriesFromDictionary:@{@"clsStaff":@{@"code":submittedByCode}}];
     [params addEntriesFromDictionary:@{@"clsTypeOfLeave":@{@"code":typeOfLeaveCode}}];
-    [params addEntriesFromDictionary:@{@"dtEndDate":[DIHelpers convertDateToMySQLFormat:endDate]}];
-    [params addEntriesFromDictionary:@{@"dtStartDate":[DIHelpers convertDateToMySQLFormat:startDate]}];
+    [params addEntriesFromDictionary:@{@"dtEndDate":[DIHelpers convertDateToMySQLFormatWithTime:endDate]}];
+    [params addEntriesFromDictionary:@{@"dtStartDate":[DIHelpers convertDateToMySQLFormatWithTime:startDate]}];
     [params addEntriesFromDictionary:@{@"dtDateSubmitted":[DIHelpers todayWithTime]}];
     [params addEntriesFromDictionary:@{@"strLeaveLength":noOfDaysCode}];
     [params addEntriesFromDictionary:@{@"strStaffRemarks":staffRemarks}];
@@ -179,13 +245,13 @@
     isLoading = YES;
     [SVProgressHUD showWithStatus:@"Saving"];
     @weakify(self);
-    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:[self buildParams] completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
-       
+    [[QMNetworkManager sharedManager] sendPrivatePostWithURL:url params:[self buildParams] completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
+        [SVProgressHUD dismiss];
         if (error == nil) {
-            [SVProgressHUD showSuccessWithStatus:@"Successfully saved"];
-            
+            StaffLeaveModel* model = [StaffLeaveModel getStaffLeaveFromResponse:result];
+            [self performSegueWithIdentifier:kLeavePendingApprovalSegue sender:model];
         } else {
             [SVProgressHUD showErrorWithStatus:@"Fail to Save"];
         }
@@ -406,20 +472,26 @@
     }
 }
 
-//- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-//{
-//    if (textField.text.length == 0) {
-//        return YES;
-//    }
-//    staffRemarks = textField.text;
-//    return NO;
-//}
+- (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
+    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
+    return YES;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (textField.text.length == 0) {
         return;
     }
     staffRemarks = textField.text;
+    
+    if ([textField.superview.superview isKindOfClass:[UITableViewCell class]])
+    {
+        CGPoint buttonPosition = [textField convertPoint:CGPointZero
+                                                  toView: _tableView];
+        NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:buttonPosition];
+        
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:TRUE];
+    }
 }
 
 #pragma mark - ContactListWithDescriptionDelegate
@@ -464,6 +536,11 @@
         vc.titleOfList = titleOfList;
         vc.name = nameOfField;
         vc.contactDelegate = self;
+    } else if ([segue.identifier isEqualToString:kLeavePendingApprovalSegue]) {
+        LeavePendingApproval *vc = segue.destinationViewController;
+        vc.submittedBy = ((StaffLeaveModel*)sender).clsStaff.strName;
+        vc.submittedByCode = ((StaffLeaveModel*)sender).clsStaff.attendanceCode;
+        vc.model = sender;
     }
 }
 

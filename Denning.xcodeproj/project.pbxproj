@@ -71,6 +71,19 @@
 		79161CC11FC754FA0025BCB8 /* LeavePendingApproval.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CC01FC754FA0025BCB8 /* LeavePendingApproval.m */; };
 		79161CC51FC776590025BCB8 /* StaffLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CC41FC776590025BCB8 /* StaffLeaveModel.m */; };
 		79161CC91FC7B5730025BCB8 /* TaxBillContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CC81FC7B5730025BCB8 /* TaxBillContactViewController.m */; };
+		79161CCD1FC7E0600025BCB8 /* TaxInvoiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CCB1FC7E0600025BCB8 /* TaxInvoiceModel.m */; };
+		79161CD11FC7E8470025BCB8 /* TransactionDescViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CD01FC7E8470025BCB8 /* TransactionDescViewController.m */; };
+		79161CD51FC7F3040025BCB8 /* CodeTransactionDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CD41FC7F3040025BCB8 /* CodeTransactionDesc.m */; };
+		79161CD91FC7F6020025BCB8 /* PaymentModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CD81FC7F6020025BCB8 /* PaymentModeViewController.m */; };
+		79161CDD1FC7F6370025BCB8 /* PaymentModeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CDC1FC7F6370025BCB8 /* PaymentModeModel.m */; };
+		79161CE51FC87F920025BCB8 /* BankBranchAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CE31FC87F910025BCB8 /* BankBranchAutoComplete.m */; };
+		79161CE91FC896710025BCB8 /* PresetCodeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CE81FC896710025BCB8 /* PresetCodeModel.m */; };
+		79161CED1FC8E59A0025BCB8 /* StaffAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CEC1FC8E59A0025BCB8 /* StaffAutoComplete.m */; };
+		79161CF11FC91C620025BCB8 /* ReceiptModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CF01FC91C620025BCB8 /* ReceiptModel.m */; };
+		79161CF51FC91E3F0025BCB8 /* PaymentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CF41FC91E3F0025BCB8 /* PaymentModel.m */; };
+		79161CFB1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CF91FC95A0E0025BCB8 /* AddLastThreeButtonsCell.m */; };
+		79161CFC1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79161CFA1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib */; };
+		79161D001FC95EF00025BCB8 /* BillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CFF1FC95EF00025BCB8 /* BillModel.m */; };
 		7920E7841E9E5D0C002FEFF3 /* icon_searchswitch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */; };
 		7920E7851E9E5D0C002FEFF3 /* icon_searchswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */; };
 		7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */; };
@@ -927,7 +940,6 @@
 		968E85EB1EF2DB00001B442D /* CountryAutoCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E85EA1EF2DB00001B442D /* CountryAutoCompleteViewController.m */; };
 		968E85EF1EF2E74C001B442D /* PhoneNumberAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E85EE1EF2E74C001B442D /* PhoneNumberAutoComplete.m */; };
 		968E85F31EF431DC001B442D /* SearchMatterCodeDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E85F21EF431DC001B442D /* SearchMatterCodeDetail.m */; };
-		969A603D1EDE50EC00A5D961 /* TaxInvoceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A603C1EDE50EC00A5D961 /* TaxInvoceModel.m */; };
 		969A60421EDE62DA00A5D961 /* FeeTransferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A60401EDE62DA00A5D961 /* FeeTransferCell.m */; };
 		969A60431EDE62DA00A5D961 /* FeeTransferCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969A60411EDE62DA00A5D961 /* FeeTransferCell.xib */; };
 		969A604B1EDE650C00A5D961 /* FeeTranserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A604A1EDE650C00A5D961 /* FeeTranserModel.m */; };
@@ -1193,6 +1205,31 @@
 		79161CC41FC776590025BCB8 /* StaffLeaveModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaffLeaveModel.m; sourceTree = "<group>"; };
 		79161CC71FC7B5730025BCB8 /* TaxBillContactViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxBillContactViewController.h; sourceTree = "<group>"; };
 		79161CC81FC7B5730025BCB8 /* TaxBillContactViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxBillContactViewController.m; sourceTree = "<group>"; };
+		79161CCB1FC7E0600025BCB8 /* TaxInvoiceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxInvoiceModel.m; sourceTree = "<group>"; };
+		79161CCC1FC7E0600025BCB8 /* TaxInvoiceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxInvoiceModel.h; sourceTree = "<group>"; };
+		79161CCF1FC7E8470025BCB8 /* TransactionDescViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TransactionDescViewController.h; sourceTree = "<group>"; };
+		79161CD01FC7E8470025BCB8 /* TransactionDescViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransactionDescViewController.m; sourceTree = "<group>"; };
+		79161CD31FC7F3040025BCB8 /* CodeTransactionDesc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeTransactionDesc.h; sourceTree = "<group>"; };
+		79161CD41FC7F3040025BCB8 /* CodeTransactionDesc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeTransactionDesc.m; sourceTree = "<group>"; };
+		79161CD71FC7F6020025BCB8 /* PaymentModeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentModeViewController.h; sourceTree = "<group>"; };
+		79161CD81FC7F6020025BCB8 /* PaymentModeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentModeViewController.m; sourceTree = "<group>"; };
+		79161CDB1FC7F6370025BCB8 /* PaymentModeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentModeModel.h; sourceTree = "<group>"; };
+		79161CDC1FC7F6370025BCB8 /* PaymentModeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentModeModel.m; sourceTree = "<group>"; };
+		79161CE31FC87F910025BCB8 /* BankBranchAutoComplete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankBranchAutoComplete.m; sourceTree = "<group>"; };
+		79161CE41FC87F910025BCB8 /* BankBranchAutoComplete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankBranchAutoComplete.h; sourceTree = "<group>"; };
+		79161CE71FC896710025BCB8 /* PresetCodeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PresetCodeModel.h; sourceTree = "<group>"; };
+		79161CE81FC896710025BCB8 /* PresetCodeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PresetCodeModel.m; sourceTree = "<group>"; };
+		79161CEB1FC8E59A0025BCB8 /* StaffAutoComplete.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StaffAutoComplete.h; sourceTree = "<group>"; };
+		79161CEC1FC8E59A0025BCB8 /* StaffAutoComplete.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaffAutoComplete.m; sourceTree = "<group>"; };
+		79161CEF1FC91C620025BCB8 /* ReceiptModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReceiptModel.h; sourceTree = "<group>"; };
+		79161CF01FC91C620025BCB8 /* ReceiptModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReceiptModel.m; sourceTree = "<group>"; };
+		79161CF31FC91E3F0025BCB8 /* PaymentModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentModel.h; sourceTree = "<group>"; };
+		79161CF41FC91E3F0025BCB8 /* PaymentModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentModel.m; sourceTree = "<group>"; };
+		79161CF81FC95A0E0025BCB8 /* AddLastThreeButtonsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddLastThreeButtonsCell.h; sourceTree = "<group>"; };
+		79161CF91FC95A0E0025BCB8 /* AddLastThreeButtonsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddLastThreeButtonsCell.m; sourceTree = "<group>"; };
+		79161CFA1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddLastThreeButtonsCell.xib; sourceTree = "<group>"; };
+		79161CFE1FC95EF00025BCB8 /* BillModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BillModel.h; sourceTree = "<group>"; };
+		79161CFF1FC95EF00025BCB8 /* BillModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BillModel.m; sourceTree = "<group>"; };
 		7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_searchswitch.png; sourceTree = "<group>"; };
 		7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@2x.png"; sourceTree = "<group>"; };
 		7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@3x.png"; sourceTree = "<group>"; };
@@ -2447,8 +2484,6 @@
 		968E85EE1EF2E74C001B442D /* PhoneNumberAutoComplete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberAutoComplete.m; sourceTree = "<group>"; };
 		968E85F11EF431DC001B442D /* SearchMatterCodeDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchMatterCodeDetail.h; sourceTree = "<group>"; };
 		968E85F21EF431DC001B442D /* SearchMatterCodeDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchMatterCodeDetail.m; sourceTree = "<group>"; };
-		969A603B1EDE50EC00A5D961 /* TaxInvoceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaxInvoceModel.h; sourceTree = "<group>"; };
-		969A603C1EDE50EC00A5D961 /* TaxInvoceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaxInvoceModel.m; sourceTree = "<group>"; };
 		969A603F1EDE62DA00A5D961 /* FeeTransferCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeeTransferCell.h; sourceTree = "<group>"; };
 		969A60401EDE62DA00A5D961 /* FeeTransferCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeeTransferCell.m; sourceTree = "<group>"; };
 		969A60411EDE62DA00A5D961 /* FeeTransferCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeeTransferCell.xib; sourceTree = "<group>"; };
@@ -3162,6 +3197,115 @@
 			path = TaxBillContact;
 			sourceTree = "<group>";
 		};
+		79161CCA1FC7E0600025BCB8 /* TaxInvoiceModel */ = {
+			isa = PBXGroup;
+			children = (
+				79161CCB1FC7E0600025BCB8 /* TaxInvoiceModel.m */,
+				79161CCC1FC7E0600025BCB8 /* TaxInvoiceModel.h */,
+			);
+			path = TaxInvoiceModel;
+			sourceTree = "<group>";
+		};
+		79161CCE1FC7E83B0025BCB8 /* TransactionDesc */ = {
+			isa = PBXGroup;
+			children = (
+				79161CCF1FC7E8470025BCB8 /* TransactionDescViewController.h */,
+				79161CD01FC7E8470025BCB8 /* TransactionDescViewController.m */,
+			);
+			path = TransactionDesc;
+			sourceTree = "<group>";
+		};
+		79161CD21FC7F2E70025BCB8 /* CodeTransactionDesc */ = {
+			isa = PBXGroup;
+			children = (
+				79161CD31FC7F3040025BCB8 /* CodeTransactionDesc.h */,
+				79161CD41FC7F3040025BCB8 /* CodeTransactionDesc.m */,
+			);
+			path = CodeTransactionDesc;
+			sourceTree = "<group>";
+		};
+		79161CD61FC7F5F40025BCB8 /* PaymentMode */ = {
+			isa = PBXGroup;
+			children = (
+				79161CD71FC7F6020025BCB8 /* PaymentModeViewController.h */,
+				79161CD81FC7F6020025BCB8 /* PaymentModeViewController.m */,
+			);
+			path = PaymentMode;
+			sourceTree = "<group>";
+		};
+		79161CDA1FC7F62C0025BCB8 /* PaymentModeModel */ = {
+			isa = PBXGroup;
+			children = (
+				79161CDB1FC7F6370025BCB8 /* PaymentModeModel.h */,
+				79161CDC1FC7F6370025BCB8 /* PaymentModeModel.m */,
+			);
+			path = PaymentModeModel;
+			sourceTree = "<group>";
+		};
+		79161CE21FC87F910025BCB8 /* BankBranchAutoComplete */ = {
+			isa = PBXGroup;
+			children = (
+				79161CE31FC87F910025BCB8 /* BankBranchAutoComplete.m */,
+				79161CE41FC87F910025BCB8 /* BankBranchAutoComplete.h */,
+			);
+			path = BankBranchAutoComplete;
+			sourceTree = "<group>";
+		};
+		79161CE61FC896650025BCB8 /* PresetCodeModel */ = {
+			isa = PBXGroup;
+			children = (
+				79161CE71FC896710025BCB8 /* PresetCodeModel.h */,
+				79161CE81FC896710025BCB8 /* PresetCodeModel.m */,
+			);
+			path = PresetCodeModel;
+			sourceTree = "<group>";
+		};
+		79161CEA1FC8E57D0025BCB8 /* StaffAutoComplete */ = {
+			isa = PBXGroup;
+			children = (
+				79161CEB1FC8E59A0025BCB8 /* StaffAutoComplete.h */,
+				79161CEC1FC8E59A0025BCB8 /* StaffAutoComplete.m */,
+			);
+			path = StaffAutoComplete;
+			sourceTree = "<group>";
+		};
+		79161CEE1FC91C510025BCB8 /* ReceiptModel */ = {
+			isa = PBXGroup;
+			children = (
+				79161CEF1FC91C620025BCB8 /* ReceiptModel.h */,
+				79161CF01FC91C620025BCB8 /* ReceiptModel.m */,
+			);
+			path = ReceiptModel;
+			sourceTree = "<group>";
+		};
+		79161CF21FC91E360025BCB8 /* PaymentModel */ = {
+			isa = PBXGroup;
+			children = (
+				79161CF31FC91E3F0025BCB8 /* PaymentModel.h */,
+				79161CF41FC91E3F0025BCB8 /* PaymentModel.m */,
+			);
+			path = PaymentModel;
+			sourceTree = "<group>";
+		};
+		79161CF61FC959DB0025BCB8 /* AddLastThreeButtonsCell */ = {
+			isa = PBXGroup;
+			children = (
+				79161CF81FC95A0E0025BCB8 /* AddLastThreeButtonsCell.h */,
+				79161CF91FC95A0E0025BCB8 /* AddLastThreeButtonsCell.m */,
+				79161CFA1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib */,
+			);
+			path = AddLastThreeButtonsCell;
+			sourceTree = "<group>";
+		};
+		79161CFD1FC95EDE0025BCB8 /* BillModel */ = {
+			isa = PBXGroup;
+			children = (
+				79161CFE1FC95EF00025BCB8 /* BillModel.h */,
+				79161CFF1FC95EF00025BCB8 /* BillModel.m */,
+			);
+			path = BillModel;
+			sourceTree = "<group>";
+		};
 		7920E7871E9F2B9D002FEFF3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -3393,6 +3537,10 @@
 		793FF2291EC48E22001F83A5 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				79161CEA1FC8E57D0025BCB8 /* StaffAutoComplete */,
+				79161CE21FC87F910025BCB8 /* BankBranchAutoComplete */,
+				79161CD61FC7F5F40025BCB8 /* PaymentMode */,
+				79161CCE1FC7E83B0025BCB8 /* TransactionDesc */,
 				79161CC61FC7B5630025BCB8 /* TaxBillContact */,
 				7954325C1FC5F65100FF9E57 /* TaxInvoiceSelectionViewController */,
 				795432421FC537D100FF9E57 /* ListOfCodeStrViewController */,
@@ -5426,6 +5574,13 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				79161CFD1FC95EDE0025BCB8 /* BillModel */,
+				79161CF21FC91E360025BCB8 /* PaymentModel */,
+				79161CEE1FC91C510025BCB8 /* ReceiptModel */,
+				79161CE61FC896650025BCB8 /* PresetCodeModel */,
+				79161CDA1FC7F62C0025BCB8 /* PaymentModeModel */,
+				79161CD21FC7F2E70025BCB8 /* CodeTransactionDesc */,
+				79161CCA1FC7E0600025BCB8 /* TaxInvoiceModel */,
 				79161CC21FC7764D0025BCB8 /* StaffLeaveModel */,
 				795432521FC5EDB300FF9E57 /* TaxInvoiceItemModel */,
 				795432511FC5EDA300FF9E57 /* TaxInvoiceCalcModel */,
@@ -5460,7 +5615,6 @@
 				96CACE111EE252D60087E76B /* DashboardLedgerModel */,
 				96CACE0D1EE24E430087E76B /* TaskCheckModel */,
 				969A60481EDE650200A5D961 /* FeeTranserModel */,
-				969A603A1EDE50DF00A5D961 /* TaxInvoceModel */,
 				962083261EDD102300BB595C /* GraphModel */,
 				962083001ED92BBD00BB595C /* NewMatterModel */,
 				962082FC1ED9149000BB595C /* ItemModel */,
@@ -5837,6 +5991,7 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				79161CF61FC959DB0025BCB8 /* AddLastThreeButtonsCell */,
 				79161CB01FC748F80025BCB8 /* ApprovalRecordCell */,
 				79161CA51FC744170025BCB8 /* PendingApprovalHeaderCell */,
 				79161CA41FC7440B0025BCB8 /* PendingApprovalCell */,
@@ -7531,15 +7686,6 @@
 			path = SearchMatterCodeDetail;
 			sourceTree = "<group>";
 		};
-		969A603A1EDE50DF00A5D961 /* TaxInvoceModel */ = {
-			isa = PBXGroup;
-			children = (
-				969A603B1EDE50EC00A5D961 /* TaxInvoceModel.h */,
-				969A603C1EDE50EC00A5D961 /* TaxInvoceModel.m */,
-			);
-			path = TaxInvoceModel;
-			sourceTree = "<group>";
-		};
 		969A603E1EDE62C600A5D961 /* FeeTransferCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -8412,6 +8558,7 @@
 				793FF19B1EBD4BDF001F83A5 /* icon_taxinvoice@3x.png in Resources */,
 				9636DCBD1F03C6C8008DDA41 /* icon_db_attendance@3x.png in Resources */,
 				79D929DB1E8DA285000A53D2 /* icon_signout.png in Resources */,
+				79161CFC1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib in Resources */,
 				79FF34FD1E97D95B001BECFB /* icon_home.png in Resources */,
 				797ED5201EAF259B009C20C4 /* icon_location.png in Resources */,
 				9636DCC91F03C6C8008DDA41 /* icon_db_fee_matter_growth@3x.png in Resources */,
@@ -8977,6 +9124,7 @@
 				962082CD1ED48FE100BB595C /* CourtDiaryListViewController.m in Sources */,
 				7903D0751ECE5F340090206C /* SimpleAutocomplete.m in Sources */,
 				79FBE07E1E304EAA00448FE3 /* QMLinkViewController.m in Sources */,
+				79161CE51FC87F920025BCB8 /* BankBranchAutoComplete.m in Sources */,
 				960F03061F2908BE00B25BBC /* CustomDocumentViewController.m in Sources */,
 				79FBDFD01E30421A00448FE3 /* QMMessageNotification.m in Sources */,
 				9600178C1FB0D373001EAB51 /* AttendanceInfo.m in Sources */,
@@ -8997,6 +9145,7 @@
 				79D599FE1E9473D500CD3821 /* QMDialogsSearchDataSource.m in Sources */,
 				79F7322C1E96A929004F88DF /* MLPAutoCompleteTextField.m in Sources */,
 				79EC0DD61E88013500320A28 /* ContactCell.m in Sources */,
+				79161CF11FC91C620025BCB8 /* ReceiptModel.m in Sources */,
 				96D1768A1F1FE9AB008734DA /* FileNoteSubModel.m in Sources */,
 				7954329D1FC65B8100FF9E57 /* QMAttachmentController.m in Sources */,
 				79E5FF061E71B22700E32AF8 /* PropertyModel.m in Sources */,
@@ -9013,6 +9162,7 @@
 				790B23B81E384C040037A187 /* DIHelpers.m in Sources */,
 				79D59A431E959E4100CD3821 /* FavContactsDataSource.m in Sources */,
 				79D59A171E94762B00CD3821 /* QMGlobalSearchDataProvider.m in Sources */,
+				79161CCD1FC7E0600025BCB8 /* TaxInvoiceModel.m in Sources */,
 				79EC0E251E89E23800320A28 /* DocumentViewController.m in Sources */,
 				79FBE0841E304EAA00448FE3 /* QMTableViewDataSource.m in Sources */,
 				79734F631EB97CAC00647215 /* AddContactViewController.m in Sources */,
@@ -9056,6 +9206,7 @@
 				790B23A91E373A140037A187 /* FirmModel.m in Sources */,
 				79F7322B1E96A929004F88DF /* DEMODataSource.m in Sources */,
 				79CE7C821EA78E20001A8101 /* NewLedgerModel.m in Sources */,
+				79161CED1FC8E59A0025BCB8 /* StaffAutoComplete.m in Sources */,
 				96C7AF4A1EE6957D00EF0A37 /* MukimModel.m in Sources */,
 				79161CC51FC776590025BCB8 /* StaffLeaveModel.m in Sources */,
 				79FBDFDC1E30421A00448FE3 /* QMImages.m in Sources */,
@@ -9096,6 +9247,7 @@
 				79EC0E531E8AEF7D00320A28 /* CourtModel.m in Sources */,
 				793FF2351EC49A0A001F83A5 /* FloatingTextTwoColumnCell.m in Sources */,
 				962083291EDD103200BB595C /* GraphModel.m in Sources */,
+				79161D001FC95EF00025BCB8 /* BillModel.m in Sources */,
 				79FBDFB41E30421A00448FE3 /* QMCore.m in Sources */,
 				79FBDFDA1E30421A00448FE3 /* QMImagePicker.m in Sources */,
 				969A604B1EDE650C00A5D961 /* FeeTranserModel.m in Sources */,
@@ -9116,6 +9268,7 @@
 				79FBDFDE1E30421A00448FE3 /* QMPermissions.m in Sources */,
 				79FBDF9D1E30421A00448FE3 /* BaseTextInputView.m in Sources */,
 				79EC0EB21E8BE7F700320A28 /* StamDutyViewController.m in Sources */,
+				79161CF51FC91E3F0025BCB8 /* PaymentModel.m in Sources */,
 				960758911F012BBB008F9C69 /* MatterTwoColumn.m in Sources */,
 				9636DC961F03A339008DDA41 /* AdsModel.m in Sources */,
 				79EC0DFD1E895F7E00320A28 /* BankModel.m in Sources */,
@@ -9169,6 +9322,7 @@
 				795432721FC63A2C00FF9E57 /* QMNavigationController.m in Sources */,
 				79FBE10C1E304F5000448FE3 /* QMGroupOccupantsViewController.m in Sources */,
 				7931B4E61EA8EA570090BDE0 /* UITextField+LeftView.m in Sources */,
+				79161CD91FC7F6020025BCB8 /* PaymentModeViewController.m in Sources */,
 				96821F3F1F1DC84200F28708 /* CompletionTrackingCell.m in Sources */,
 				96046F571EFDA0180048A58D /* iCarousel.m in Sources */,
 				96A73AA71F1C9BE100B97156 /* StaffOnline.m in Sources */,
@@ -9251,6 +9405,7 @@
 				96D66EF31EFC91AD003E3A4A /* S3Model.m in Sources */,
 				7903CFA01ECD5BE50090206C /* CACModel.m in Sources */,
 				79F732271E96A929004F88DF /* AFURLSessionOperation.m in Sources */,
+				79161CDD1FC7F6370025BCB8 /* PaymentModeModel.m in Sources */,
 				960F03031F28E43D00B25BBC /* FeeTransferDetail.m in Sources */,
 				96AA36521FBCC572003D9A2C /* LeaveRecordHeaderCell.m in Sources */,
 				962082AB1ED3C76E00BB595C /* CourtDiaryViewController.m in Sources */,
@@ -9265,6 +9420,7 @@
 				79FBE1151E304F5000448FE3 /* QMSettingsViewController.m in Sources */,
 				79FBE0921E304EAB00448FE3 /* QMNotificationPanelUtils.m in Sources */,
 				79FBE0941E304EAB00448FE3 /* QMOnlineTitleView.m in Sources */,
+				79161CD11FC7E8470025BCB8 /* TransactionDescViewController.m in Sources */,
 				96E094951FBDCB0100E5FA58 /* CustomInfiniteIndicator.m in Sources */,
 				79D59A391E95690800CD3821 /* QMGlobalSearchDataSource.m in Sources */,
 				79F9A8211E6D4CD500E17629 /* NewDeviceLoginViewController.m in Sources */,
@@ -9329,11 +9485,11 @@
 				79F9FC8E1E41BDB50097CB23 /* EventModel.m in Sources */,
 				790DD47E1ECA7087009D5634 /* QuotationModel.m in Sources */,
 				7903CF711ECD303D0090206C /* PropertyContactCell.m in Sources */,
-				969A603D1EDE50EC00A5D961 /* TaxInvoceModel.m in Sources */,
 				9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */,
 				79A6AFAA1E9DBE12007AA24D /* ChatContactCell.m in Sources */,
 				79FBDFD21E30421A00448FE3 /* QMPhoto.m in Sources */,
 				79D59A311E955B6D00CD3821 /* FavoriteViewController.m in Sources */,
+				79161CE91FC896710025BCB8 /* PresetCodeModel.m in Sources */,
 				79F9FC801E4184AC0097CB23 /* NewsCell.m in Sources */,
 				79EC0E051E89655A00320A28 /* GovernmentOfficesViewController.m in Sources */,
 				7903D0881ECF1C7C0090206C /* SolicitorListViewController.m in Sources */,
@@ -9346,6 +9502,7 @@
 				79FBE1FB1E31600F00448FE3 /* QMLogInViewController.m in Sources */,
 				7903CF551ECC00CE0090206C /* TimePickerViewController.m in Sources */,
 				9636DCF21F0406E9008DDA41 /* FileListingHeaderCell.m in Sources */,
+				79161CFB1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.m in Sources */,
 				96CACE141EE252E00087E76B /* DashboardLedgerModel.m in Sources */,
 				790DD4971ECBBD38009D5634 /* ProjectHousingModel.m in Sources */,
 				9636DCE21F03DBB7008DDA41 /* DashboardForthCell.m in Sources */,
@@ -9373,6 +9530,7 @@
 				79FBE1061E304F5000448FE3 /* QMChatVC.m in Sources */,
 				79FBE0951E304EAB00448FE3 /* QMSettingsFooterView.m in Sources */,
 				79FBDFBB1E30421A00448FE3 /* QMMessagesHelper.m in Sources */,
+				79161CD51FC7F3040025BCB8 /* CodeTransactionDesc.m in Sources */,
 				7903CFAF1ECE3D1F0090206C /* TaxInvoiceListViewController.m in Sources */,
 				793FF1DB1EC382F8001F83A5 /* AddBillViewController.m in Sources */,
 				7954324D1FC53D5900FF9E57 /* MatterBranchModel.m in Sources */,

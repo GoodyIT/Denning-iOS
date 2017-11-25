@@ -315,7 +315,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="cEw-Fw-ne5" id="jqZ-OE-NLU"/>
-                        <outlet property="searchContainer" destination="ouG-Qp-Emh" id="wLR-ec-GPs"/>
                         <outlet property="tableView" destination="tii-0b-A4r" id="4JJ-Ax-n81"/>
                     </connections>
                 </viewController>
@@ -480,7 +479,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gaL-Mi-zbY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11223" y="1782"/>
+            <point key="canvasLocation" x="11262" y="1872"/>
         </scene>
         <!--Select Code-->
         <scene sceneID="88s-Ux-iHK">
@@ -1276,6 +1275,7 @@
                         <segue destination="ztX-jx-Vyf" kind="show" identifier="PresetBillSegue" id="ba6-u1-Tlf"/>
                         <segue destination="QjC-NT-5yR" kind="presentation" identifier="TaxSelectionSegue" id="van-R0-R7y"/>
                         <segue destination="uym-zz-fje" kind="show" identifier="TaxBillContactSegue" id="Z54-EA-HtM"/>
+                        <segue destination="2Cj-sM-7of" kind="show" identifier="AddBillSegue" id="9aE-LO-ISd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0eV-cB-dzl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1580,6 +1580,7 @@
                         <outlet property="tableView" destination="MOP-Km-rMX" id="2dO-yu-Uhk"/>
                         <segue destination="VSi-TI-Ye1" kind="show" identifier="ListWithCodeSegue" id="YOR-If-n3i"/>
                         <segue destination="QGN-Sg-tmO" kind="show" identifier="ListWithDescriptionSegue" id="h5M-I8-48O"/>
+                        <segue destination="uHB-sv-Orr" kind="show" identifier="LeavePendingApprovalSegue" id="c1G-bg-BjO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O0J-ut-qe3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1599,7 +1600,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ITA-e1-pHJ">
-                                <rect key="frame" x="0.0" y="44" width="375" height="110"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPr-Oe-pA4">
                                         <rect key="frame" x="15" y="30" width="38" height="32"/>
@@ -1626,7 +1627,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N9Z-j5-0hu">
-                                <rect key="frame" x="0.0" y="154" width="375" height="566"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="610"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CodeDescCell" id="Drd-ZV-X4y">
@@ -1686,13 +1687,13 @@
                             <constraint firstItem="eP7-XP-HlF" firstAttribute="leading" secondItem="MQK-kg-yxs" secondAttribute="leading" id="6T9-aF-yCf"/>
                             <constraint firstAttribute="trailing" secondItem="ITA-e1-pHJ" secondAttribute="trailing" id="8GY-f7-SPx"/>
                             <constraint firstAttribute="trailing" secondItem="N9Z-j5-0hu" secondAttribute="trailing" id="9g9-AZ-4VY"/>
+                            <constraint firstItem="ITA-e1-pHJ" firstAttribute="top" secondItem="MQK-kg-yxs" secondAttribute="top" id="CUA-yG-QwO"/>
                             <constraint firstItem="N9Z-j5-0hu" firstAttribute="top" secondItem="ITA-e1-pHJ" secondAttribute="bottom" id="LWZ-hN-qGs"/>
                             <constraint firstItem="eP7-XP-HlF" firstAttribute="top" secondItem="N9Z-j5-0hu" secondAttribute="bottom" constant="8" id="Pgc-Zh-gNy"/>
                             <constraint firstItem="ITA-e1-pHJ" firstAttribute="leading" secondItem="MQK-kg-yxs" secondAttribute="leading" id="Psm-sd-Rwh"/>
                             <constraint firstItem="PIv-Yv-OeX" firstAttribute="top" secondItem="eP7-XP-HlF" secondAttribute="bottom" id="dN7-69-9yw"/>
                             <constraint firstAttribute="trailing" secondItem="eP7-XP-HlF" secondAttribute="trailing" id="ew7-NH-QI8"/>
                             <constraint firstItem="N9Z-j5-0hu" firstAttribute="leading" secondItem="MQK-kg-yxs" secondAttribute="leading" id="idt-2N-jso"/>
-                            <constraint firstItem="ITA-e1-pHJ" firstAttribute="top" secondItem="XKb-lu-352" secondAttribute="bottom" id="ql4-eZ-jfr"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Boa-qA-AcC"/>
@@ -1713,7 +1714,15 @@
                 <viewControllerPlaceholder storyboardName="AddContact" referencedIdentifier="CodeDescriptionNavigation" id="VSi-TI-Ye1" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7yg-1P-Jhg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6200" y="434"/>
+            <point key="canvasLocation" x="6173" y="456"/>
+        </scene>
+        <!--LeavePendingApproval-->
+        <scene sceneID="1aS-AL-x28">
+            <objects>
+                <viewControllerPlaceholder storyboardName="dashboard" referencedIdentifier="LeavePendingApproval" id="uHB-sv-Orr" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WSJ-Q2-gjX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6173" y="556"/>
         </scene>
         <!--DescriptionNavigation-->
         <scene sceneID="DTJ-L5-Pj2">
@@ -1738,7 +1747,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="van-R0-R7y"/>
-        <segue reference="Jef-ox-6CI"/>
+        <segue reference="9aE-LO-ISd"/>
+        <segue reference="Z54-EA-HtM"/>
         <segue reference="ba6-u1-Tlf"/>
         <segue reference="Q4S-Mm-Vgk"/>
         <segue reference="Men-3h-UNC"/>

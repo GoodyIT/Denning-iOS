@@ -44,6 +44,8 @@ enum SECTIONS {
 @property (strong, nonatomic) NSArray<NSArray*> *listOfValsForApp;
 @property (nonatomic, strong) NSArray *headers;
 @property (strong, nonatomic) NSNumber* page;
+
+@property (strong, nonatomic) NSIndexPath* textFieldIndexPath;
 @end
 
 @implementation LeavePendingApproval
@@ -214,7 +216,7 @@ enum SECTIONS {
     [params addEntriesFromDictionary:@{@"code":_submittedByCode}];
     [params addEntriesFromDictionary:@{@"clsTypeOfLeave":@{@"code":typeOfLeaveApprovedCode}}];
     [params addEntriesFromDictionary:@{@"dtDateApproved":[DIHelpers convertDateToMySQLFormat:dateApproved]}];
-    [params addEntriesFromDictionary:@{@"strLeaveLength":noOfDaysCode}];
+    [params addEntriesFromDictionary:@{@"clsApprovedBy":approvedByCode}];
     [params addEntriesFromDictionary:@{@"strManagerRemarks":reason}];
     
     return [params copy];
@@ -307,7 +309,6 @@ enum SECTIONS {
     return cell;
 }
 
-
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -318,7 +319,7 @@ enum SECTIONS {
         if (selectedRow == 0) {
             titleOfList = @"Leave Status";
             nameOfField = @"Leave Status";
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:LEAVE_TYPE_GET_URL];
+            [self performSegueWithIdentifier:kListWithCodeSegue sender:LEAVE_STATUS_GET_URL];
         } else if (selectedRow == 2) {
             [self performSegueWithIdentifier:kContactGetListSegue sender:GENERAL_CONTACT_URL];
         } else if (selectedRow == 4) {
@@ -340,6 +341,11 @@ enum SECTIONS {
     }
     
     return _listOfValsForApp[section].count;
+}
+
+- (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
+    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
+    return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -389,12 +395,13 @@ enum SECTIONS {
         vc.updateHandler = ^(SearchResultModel *model) {
             approvedBy = [model.JsonDesc objectForKey:@"name"];
             approvedByCode = [model.JsonDesc objectForKey:@"code"];
+            [self.tableView reloadData];
         };
     } else if ([segue.identifier isEqualToString:kLeaveRecordSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         LeaveRecordsViewController *vc = nav.viewControllers.firstObject;
         vc.staffCode = _model.clsStaff.attendanceCode;
-    }
+    } 
 }
 
 @end

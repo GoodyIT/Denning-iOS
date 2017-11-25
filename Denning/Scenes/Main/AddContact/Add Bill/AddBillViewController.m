@@ -16,6 +16,8 @@
 #import "QuotationGetListViewController.h"
 #import "AddReceiptViewController.h"
 #import "TaxInvoiceSelectionViewController.h"
+#import "TaxBillContactViewController.h"
+#import "AddReceiptViewController.h"
 
 @interface AddBillViewController ()<UIDocumentInteractionControllerDelegate, UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
 {
@@ -23,13 +25,15 @@
     NSString* nameOfField;
     NSURL *selectedDocument;
     __block NSString *isRental;
-    __block NSNumber* issueToFirstCode;
+    __block NSString* issueToFirstCode;
     NSString* selectedMatterCode, *selectedPresetCode;
     __block BOOL isLoading;
     __block BOOL isSaved;
     __block BOOL isCalcDone;
     
     NSInteger selectedRow;
+    CGPoint originalContentOffset;
+    CGRect originalFrame;
 }
 
 @property (weak, nonatomic) IBOutlet FZAccordionTableView *tableView;
@@ -37,7 +41,7 @@
 @property (nonatomic, strong) NSArray *headers;
 
 @property (nonatomic, strong) TaxInvoiceCalcModel* taxModel;
-
+@property (strong, nonatomic) NSIndexPath* textFieldIndexPath;
 @property (strong, nonatomic)
 NSMutableDictionary* keyValue;
 
@@ -52,16 +56,15 @@ NSMutableDictionary* keyValue;
     [self registerNib];
 }
 - (void) prepareUI {
-    issueToFirstCode = @(0);
+    issueToFirstCode = @"";
     selectedPresetCode = selectedMatterCode = @"";
-    isRental = @"0";
     
     self.keyValue = [@{
                        @(0): @(1), @(1):@(0)
                        } mutableCopy];
     NSArray* temp = @[
-                      @[@[@"Convert Quotation", @""], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", @""], @[@"Matter", @""], @[@"Bill to", @""], @[@"Preset Code", @""], @[@"Price", @""], @[@"Loan", @""], @[@"Month", @""], @[@"Rental", @""]],
-                      @[@[@"Professional Fees", @""], @[@"Disb. with GST", @""], @[@"Disbursements", @""], @[@"GST", @""], @[@"Total.", @""]
+                      @[@[@"Convert Quotation", _model.relatedDocumentNo], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", _model.fileNo], @[@"Matter", _model.matter.matterCode], @[@"Bill to", _model.issueToName], @[@"Preset Code", _model.presetCode.billCode], @[@"Price", _model.spaPrice], @[@"Loan", _model.spaLoan], @[@"Month", _model.rentalMonth], @[@"Rental", _model.rentalPrice]],
+                      @[@[@"Professional Fees", _model.analysis.decFees], @[@"Disb. with GST", _model.analysis.decDisbGST], @[@"Disbursements", _model.analysis.decDisb], @[@"GST", _model.analysis.GST], @[@"Total.", _model.analysis.decTotal]
                         ],
                       ];
     _contents = [temp mutableCopy];
@@ -69,7 +72,13 @@ NSMutableDictionary* keyValue;
     _headers = @[@"Bill Details", @"Bill Analysis"
                  ];
     
-    isRental = @"0";
+    isRental = _model.isRental;
+    selectedMatterCode = _model.matter.matterCode;
+    selectedPresetCode = _model.presetCode.billCode;
+    _taxModel = _model.analysis;
+    if (_model != nil) {
+        isSaved = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,38 +90,122 @@ NSMutableDictionary* keyValue;
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)keyboardWillShow:(NSNotification *)notification{
+    NSValue* keyboardFrameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrame = [keyboardFrameValue CGRectValue];
+    keyboardFrame = [self.view convertRect:keyboardFrame fromView:nil];
+    
+    CGFloat tableViewHeight = CGRectGetMinY(keyboardFrame) - CGRectGetMinY(self.view.bounds);
+    
+    originalContentOffset = _tableView.contentOffset;
+    originalFrame = _tableView.frame;
+    
+    // Get the duration of the animation.
+    NSValue* animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    CGRect cellRect = [self.tableView rectForRowAtIndexPath:self.textFieldIndexPath];
+    CGFloat minCellOffsetY = CGRectGetMaxY(cellRect) - tableViewHeight + 10.0; // Add a small margin below the row
+    CGFloat maxCellOffsetY = CGRectGetMinY(cellRect) - 10.0; // Add a small margin above the row
+    maxCellOffsetY = MAX(0.0, maxCellOffsetY);
+    CGFloat maxContentOffsetY = self.tableView.contentSize.height - tableViewHeight;
+    CGFloat scrollOffsetY = self.tableView.contentOffset.y;
+    if (scrollOffsetY < minCellOffsetY)
+    {
+        scrollOffsetY = minCellOffsetY;
+    }
+    else if (scrollOffsetY > maxCellOffsetY)
+    {
+        scrollOffsetY = maxCellOffsetY;
+    }
+    scrollOffsetY = MIN(scrollOffsetY, maxContentOffsetY);
+    CGPoint updatedContentOffset = CGPointMake(self.tableView.contentOffset.x, scrollOffsetY+50);
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.tableView.contentOffset = updatedContentOffset;
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = CGRectMake(CGRectGetMinX(self.tableView.frame), CGRectGetMinY(self.tableView.frame),
+                                                           CGRectGetWidth(self.tableView.frame), tableViewHeight);
+                     }];
+}
+
+- (void)keyboardWillHide:(NSNotification *) __unused notification{
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = originalFrame;
+                         self.tableView.contentOffset = originalContentOffset;
+                     }
+     ];
+}
+
+- (NSDictionary*) buildSaveParam {
+    NSMutableDictionary* data = [NSMutableDictionary new];
+    [data addEntriesFromDictionary:@{@"issueDate": [DIHelpers todayWithTime]}];
+    if (![_contents[0][2][1] isEqualToString: _model.fileNo]) {
+        [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
+    }
+    if (![isRental isEqualToString: _model.isRental]) {
+        [data addEntriesFromDictionary:@{@"isRental": isRental}];
+    }
+//    if (![issueTo1stCode isEqualToString: _model.fileNo]) {
+//        [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
+//    }
+    if (![_contents[0][4][1] isEqualToString: _model.issueToName]) {
+        [data addEntriesFromDictionary:@{@"issueToName": _contents[0][4][1]}];
+    }
+    if (![selectedMatterCode isEqualToString: _model.matter.matterCode]) {
+        [data addEntriesFromDictionary:@{@"matter": @{
+                                                    @"code": selectedMatterCode
+                                                    }}];
+    }
+    if (![selectedPresetCode isEqualToString: _model.presetCode.billCode]) {
+        [data addEntriesFromDictionary:@{@"presetCode": @{
+                                                 @"code": selectedPresetCode
+                                                 }}];
+    }
+    if (![_contents[0][0][1] isEqualToString: _model.relatedDocumentNo]) {
+        [data addEntriesFromDictionary:@{@"relatedDocumentNo": _contents[0][0][1]}];
+    }
+    if (![_contents[0][6][1] isEqualToString: _model.spaPrice]) {
+        [data addEntriesFromDictionary:@{@"spaPrice": [self getActualNumber: [self getValidValue:_contents[0][6][1]]]}];
+    }
+    if (![_contents[0][7][1] isEqualToString: _model.spaLoan]) {
+        [data addEntriesFromDictionary:@{@"spaLoan": [self getActualNumber: [self getValidValue:_contents[0][7][1]]]}];
+    }
+    if (![_contents[0][8][1] isEqualToString: _model.rentalMonth]) {
+        [data addEntriesFromDictionary:@{@"rentalMonth": [self getActualNumber: [self getValidValue:_contents[0][8][1]]]}];
+    }
+    if (![_contents[0][9][1] isEqualToString: _model.rentalPrice]) {
+        [data addEntriesFromDictionary:@{@"rentalPrice": [self getActualNumber: [self getValidValue:_contents[0][9][1]]]}];
+    }
+   
+    return data;
+}
+
 - (IBAction)saveBill:(id)sender {
     if (selectedMatterCode.length == 0) {
         [QMAlert showAlertWithMessage:@"Please select the matter." actionSuccess:NO inViewController:self];
         return;
     }
     
-    NSDictionary* data = @{
-                           @"fileNo": _contents[0][2][1],
-                           @"isRental": isRental,
-                           @"issueDate": [DIHelpers todayWithTime],
-                           @"issueTo1stCode": @{
-                                   @"code": issueToFirstCode
-                                   },
-                           @"issueToName": _contents[0][4][1],
-                           @"matter": @{
-                                   @"code": selectedMatterCode
-                                   },
-                           @"presetCode": @{
-                                   @"code": selectedPresetCode
-                                   },
-                           @"relatedDocumentNo": _contents[0][0][1],
-                           @"spaPrice": [self getActualNumber: [self getValidValue:_contents[0][6][1]]],
-                           @"spaLoan": [self getActualNumber:[self getValidValue:_contents[0][7][1]]],
-                           @"rentalMonth": [self getValidValue:_contents[0][8][1]],
-                           @"rentalPrice": [self getActualNumber:[self getValidValue:_contents[0][9][1]]]
-                           };
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] saveBillorQuotationWithParams:data inURL:TAXINVOICE_SAVE_URL WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] saveBillorQuotationWithParams:[self buildSaveParam] inURL:TAXINVOICE_SAVE_URL WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -181,6 +274,10 @@ NSMutableDictionary* keyValue;
         value = [((NSNumber*)value) stringValue];
     }
     
+    if (!value) {
+        value = @"";
+    }
+    
     if (value.length == 0) {
         return @"0";
     }
@@ -211,6 +308,10 @@ NSMutableDictionary* keyValue;
 
 
 - (void) calcTax {
+    if (selectedPresetCode.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select file no" actionSuccess:NO inViewController:self];
+        return;
+    }
     NSDictionary* data = @{
                            @"isRental": isRental,
                            @"spaPrice": [self getValidValue:_contents[0][5][1]],
@@ -278,6 +379,34 @@ NSMutableDictionary* keyValue;
     [downloadTask resume];
 }
 
+- (void) gotoReceipt {
+    if (!isSaved) {
+        [QMAlert showAlertWithMessage:@"Please save the invoice first" actionSuccess:NO inViewController:self];
+        return;
+    }
+    
+    if (isLoading) return;
+    isLoading = YES;
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:RECEIPT_FROM_TAXINVOICE];
+    NSMutableDictionary* data = [@{@"documentNo":_contents[0][0][1]} mutableCopy];
+    [data addEntriesFromDictionary:[self buildSaveParam]];
+    
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] sendPrivatePostWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+//            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully done" duration:1.0];
+            [self performSegueWithIdentifier:kAddReceiptSegue sender:[ReceiptModel getReeipt:result]];
+            
+        } else {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0 && indexPath.row == 10) {
@@ -305,7 +434,7 @@ NSMutableDictionary* keyValue;
         };
         
         cell.convertHandler = ^{
-            [self performSegueWithIdentifier:kAddReceiptSegue sender:nil];
+            [self gotoReceipt];
         };
         return cell;
     }
@@ -398,6 +527,11 @@ NSMutableDictionary* keyValue;
     return [formattedNumber stringByReplacingOccurrencesOfString:@"," withString:@""];
 }
 
+- (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
+    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
+    return YES;
+}
+
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     string = string.uppercaseString;
@@ -487,15 +621,20 @@ NSMutableDictionary* keyValue;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        if (indexPath.row == 0 || indexPath.row == 4) {
+        if (indexPath.row == 0) {
             selectedRow = indexPath.row;
             [self performSegueWithIdentifier:kQuotationSegue sender:QUOTATION_GET_LIST_URL];
-        } else if (indexPath.row == 2) {
-            [self performSegueWithIdentifier:kSimpleMatterSegue sender:MATTERSIMPLE_GET_URL];
-        } else if (indexPath.row == 3) {
-            [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
-        } else if (indexPath.row == 5) {
-            [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
+        }
+        if (((NSString*)_contents[0][0][1]).length == 0) {
+            if (indexPath.row == 2) {
+                [self performSegueWithIdentifier:kSimpleMatterSegue sender:MATTERSIMPLE_GET_URL];
+            } else if (indexPath.row == 3) {
+//                [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
+            } else if (indexPath.row == 4) {
+                [self performSegueWithIdentifier:kTaxBillContactSegue sender:PRESET_BILL_GET_URL];
+            } else if (indexPath.row == 5) {
+                [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
+            }
         }
     } else {
         if  (isCalcDone) {
@@ -568,24 +707,42 @@ NSMutableDictionary* keyValue;
     if ([segue.identifier isEqualToString:kQuotationSegue]) {
         QuotationGetListViewController* quotationVC = segue.destinationViewController;
         quotationVC.updateHandler = ^(QuotationModel* model){
-            if (selectedRow == 0) {
-               [self replaceContentForSection:0 InRow:0 withValue:model.documentNo];
-            } else {
-                [self replaceContentForSection:0 InRow:4 withValue:model.issueToName];
-            }
+            self->isRental = model.isRental;
+            _taxModel = model.analysis;
             
-         //   [self replaceContentForSection:0 InRow:1 withValue:model.documentNo];
+            [self replaceContentForSection:0 InRow:0 withValue:model.documentNo];
+            [self replaceContentForSection:0 InRow:2 withValue:model.fileNo];
+            [self replaceContentForSection:0 InRow:3 withValue:model.matter.matterDescription];
+            [self replaceContentForSection:0 InRow:4 withValue:model.issueToName];
+            [self replaceContentForSection:0 InRow:5 withValue:model.presetCode.descriptionValue];
+            [self replaceContentForSection:0 InRow:6 withValue:model.spaPrice];
+            [self replaceContentForSection:0 InRow:7 withValue:model.spaLoan];
+            [self replaceContentForSection:0 InRow:8 withValue:model.rentalMonth];
+            [self replaceContentForSection:0 InRow:9 withValue:model.rentalPrice];
+            
+            issueToFirstCode = model.issueTo1stCode;
+            selectedMatterCode = model.matter.matterCode;
+            selectedPresetCode = model.presetCode.codeValue;
         };
     }
     
     if ([segue.identifier isEqualToString:kSimpleMatterSegue]) {
         SimpleMatterViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterSimple *model) {
+            self->isRental = model.matter.isRental;
             [self replaceContentForSection:0 InRow:2 withValue:model.systemNo];
+            [self replaceContentForSection:0 InRow:3 withValue:model.matter.matterDescription];
+            [self replaceContentForSection:0 InRow:5 withValue:model.presetBill.strDescription];
+            [self replaceContentForSection:0 InRow:6 withValue:model.spaPrice];
+            [self replaceContentForSection:0 InRow:7 withValue:model.spaLoan];
+            [self replaceContentForSection:0 InRow:8 withValue:model.rentalMonth];
+            [self replaceContentForSection:0 InRow:9 withValue:model.rentalPrice];
             
+            selectedMatterCode = model.matter.matterCode;
+            selectedPresetCode = model.presetBill.codeValue;
             if (model.partyGroupArray.count > 0) {
                 PartyGroupModel* partyGroup = model.partyGroupArray[0];
-                issueToFirstCode = [NSNumber numberWithInteger: [((ClientModel*)partyGroup.partyArray[0]).clientCode integerValue]];
+                issueToFirstCode = ((ClientModel*)partyGroup.partyArray[0]).clientCode;
                 
                 NSString *issueToName = @"";
                 
@@ -619,6 +776,15 @@ NSMutableDictionary* keyValue;
         TaxInvoiceSelectionViewController* vc = segue.destinationViewController;
         vc.listOfTax = @[_taxModel.Fees, _taxModel.DisbGST, _taxModel.Disb, _taxModel.GST];
         vc.selectedPage = sender;
+    } else if ([segue.identifier isEqualToString:kTaxBillContactSegue]) {
+        TaxBillContactViewController* vc = segue.destinationViewController;
+        vc.updateHandler = ^(ClientModel *model) {
+            [self replaceContentForSection:0 InRow:4 withValue:model.name];
+        };
+    } else if ([segue.identifier isEqualToString:kAddReceiptSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        AddReceiptViewController* vc = nav.viewControllers.firstObject;
+        vc.model = sender;
     }
 }
 

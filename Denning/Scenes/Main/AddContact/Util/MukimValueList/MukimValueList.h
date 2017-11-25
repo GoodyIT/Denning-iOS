@@ -10,7 +10,7 @@
 
 typedef void (^UpdateMukimValueHandler)(MukimModel* model);
 
-@interface MukimValueList : UITableViewController
+@interface MukimValueList : UIViewController
 
 @property (strong, nonatomic) UpdateMukimValueHandler updateHandler;
 

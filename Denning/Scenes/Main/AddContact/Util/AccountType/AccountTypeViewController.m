@@ -139,10 +139,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AccountTypeCell" forIndexPath:indexPath];
-    UILabel* code = [cell viewWithTag:1];
-    UILabel* description = [cell viewWithTag:2];
-    code.text = ((AccountTypeModel*)self.listOfAccountTypes[indexPath.row]).accountTypeCode;
-    description.text = ((AccountTypeModel*)self.listOfAccountTypes[indexPath.row]).descriptionValue;
+    cell.textLabel.text = ((AccountTypeModel*)self.listOfAccountTypes[indexPath.row]).descriptionValue;
     
     return cell;
 }

@@ -99,7 +99,7 @@ enum MATTERSECTION {
     [MatterLastCell registerForReuseInTableView:self.tableView];
     [MatterPropertyCell registerForReuseInTableView:self.tableView];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = THE_CELL_HEIGHT/2;
+    self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
 }
 
 #pragma mark - Table view data source
@@ -335,6 +335,11 @@ enum MATTERSECTION {
     return sectionName;
 }
 
+//- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return 50;
+//}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if (section == HEADER_SECTION) {
@@ -354,16 +359,8 @@ enum MATTERSECTION {
     
     if (indexPath.section == HEADER_SECTION) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
-        NSString* string = @"";
-        NSString* label = @"";
-        if (relatedMatterModel.ref.length == 0) {
-            string = relatedMatterModel.systemNo;
-            label = @"File No";
-        } else {
-            string = [NSString stringWithFormat:@"%@(%@)", relatedMatterModel.systemNo, relatedMatterModel.ref];
-            label = @"File No(Ref 2)";
-        }
-        [cell configureCellWithInfo:label number:string image:[UIImage imageNamed:@"icon_matter"]];
+        
+        [cell configureCellWithInfo:relatedMatterModel.systemNo number:relatedMatterModel.clientName image:[UIImage imageNamed:@"icon_matter"]];
         cell.chatBtn.hidden = YES;
         cell.chatLabel.hidden = YES;
         cell.delegate = self;
@@ -468,12 +465,12 @@ enum MATTERSECTION {
 #pragma mark - LastTableCellDelegate
 - (void) didTapPaymentRecord:(MatterLastCell *)cell
 {
-   [self performSegueWithIdentifier:kFileNoteListSegue sender:nil];
+    [self performSegueWithIdentifier:kPaymentSegue sender:self.relatedMatterModel.systemNo];
 }
 
 - (void) didTapFileNote:(MatterLastCell *)cell
 {
-    [self performSegueWithIdentifier:kPaymentSegue sender:self.relatedMatterModel.systemNo];
+    [self performSegueWithIdentifier:kFileNoteListSegue sender:nil];
 }
 
 - (void) didTapUpload:(MatterLastCell *)cell fileNo:(NSString *)fileNo

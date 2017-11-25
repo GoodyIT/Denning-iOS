@@ -10,11 +10,32 @@
 #import "ListWithCodeTableViewController.h"
 #import "ListWithDescriptionViewController.h"
 #import "SimpleMatterViewController.h"
-#import "TaxInvoiceListViewController.h"
+#import "TaxInvoice.h"
 #import "AccountTypeViewController.h"
-#import "SimpleAutocomplete.h"
+#import "BankBranchAutoComplete.h"
+#import "DashboardContact.h"
+#import "TransactionDescViewController.h"
+#import "PaymentModeViewController.h"
 
-@interface AddReceiptViewController ()<ContactListWithCodeSelectionDelegate, ContactListWithDescSelectionDelegate, SWTableViewCellDelegate, UITextFieldDelegate>
+enum RECEIPT_ROWS {
+    FILE_NO_ROW,
+    BILL_NO_ROW,
+    ACCOUNT_TYPE_ROW,
+    RECEIVED_FROM_ROW,
+    AMOUNT_ROW,
+    TRANSACTION_DESC_ROW
+};
+
+enum PAYMENT_MODE_ROWS {
+    MODE_ROW,
+    ISSUER_BANK_ROW,
+    BANK_BRANCH_ROW,
+    CHEQUE_NO_ROW,
+    CHEQUE_AMOUT_ROW,
+    REMARKS_ROW
+};
+
+@interface AddReceiptViewController ()<ContactListWithCodeSelectionDelegate, SWTableViewCellDelegate, UITextFieldDelegate>
 {
     NSString* titleOfList;
     NSString* nameOfField;
@@ -22,7 +43,7 @@
     CGFloat autocompleteCellHeight;
     NSString* serverAPI;
     
-    NSString* selectedIssuerBankCode;
+    NSString* selectedIssuerBankCode, *selectedRecievedFromCode, *selectedTransactionCode, *modeCode;
     NSString* selectedID;
 }
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *fileNo;
@@ -74,6 +95,9 @@
 }
 
 - (void) prepareUI {
+    selectedID = selectedTransactionCode = selectedIssuerBankCode = selectedRecievedFromCode = @"";
+    _fileNo.text = @"";
+    
     autocompleteCellHeight = 58;
     serverAPI = [DataManager sharedManager].user.serverAPI;
     
@@ -108,7 +132,6 @@
     self.mode.inputAccessoryView = _accessoryView;
     self.issuerBank.inputAccessoryView = _accessoryView;
     self.amount.inputAccessoryView = _accessoryView;
-    self.transaction.inputAccessoryView = _accessoryView;
     self.bankBranch.inputAccessoryView = _accessoryView;
     self.chequeNo.inputAccessoryView = _accessoryView;
     self.checqueAmount.inputAccessoryView = _accessoryView;
@@ -116,35 +139,35 @@
     
     // Hide empty separators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.fileNo.text = _model.fileNo;
+    self.billNo.text = _model.invoiceNo;
+    self.accountType.text = _model.accountType.descriptionValue;
+    _receivedFrom.text = _model.receivedFromName;
+//    _transaction.text =
+    _mode.text = _model.payment.mode;
+    _issuerBank.text = _model.payment.issuerBank;
+    _amount.text = _model.amount;
+    _bankBranch.text = _model.payment.bankBranch;
+    _chequeNo.text = _model.payment.referenceNo;
+    _checqueAmount.text = _model.payment.totalAmount;
+    _remarks.text = _model.remarks;
 }
 
 - (void)handleTap {
     [self.view endEditing:YES];
 }
 
-- (IBAction)saveReceipt:(id)sender {
-    NSDictionary* data = @{
-                           @"accountType": @{
-                               @"ID": selectedID
-                           },
-                           @"amount": self.amount.text,
-                           @"description": @"Fees and Disbursements",
-                           @"fileNo": self.fileNo.text,
-                           @"invoiceNo": self.billNo.text,
-                           @"payment": @{
-                               @"bankBranch": self.bankBranch.text,
-                               @"chequeAmount": self.checqueAmount.text,
-                               @"chequeRef": self.chequeNo.text,
-                               @"issuerBank": selectedIssuerBankCode,
-                               @"mode": self.mode.text
-                           },
-                           @"receivedForm": self.receivedFrom,
-                           @"remarks": self.remarks.text
-                           };
+- (BOOL) checkValidation {
+    
+    return YES;
+}
+
+- (void) _save {
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
-    [[QMNetworkManager sharedManager] saveReceiptWithParams:data WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] saveReceiptWithParams:[self buildParam] WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Saved" duration:1.0];
             
@@ -155,50 +178,131 @@
     }];
 }
 
+- (void) _update {
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:RECEIPT_UPDATE_URL];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:[self buildParam] completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Updated" duration:1.0];
+            
+            return;
+        } else {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+}
+
+- (NSDictionary*) buildParam {
+    NSMutableDictionary* data = [NSMutableDictionary new];
+    if (![selectedID isEqualToString: _model.accountType.ID]) {
+        [data addEntriesFromDictionary:@{@"accountType": @{
+                                                 @"ID": selectedID
+                                                 }}];
+    }
+    
+    if (![_amount.text isEqualToString: _model.amount]) {
+        [data addEntriesFromDictionary:@{@"amount": self.amount.text}];
+    }
+    
+    if (![_fileNo.text isEqualToString: _model.fileNo]) {
+        [data addEntriesFromDictionary:@{@"fileNo": self.fileNo.text}];
+    }
+    
+    if (![_billNo.text isEqualToString: _model.invoiceNo]) {
+        [data addEntriesFromDictionary:@{@"invoiceNo": self.billNo.text}];
+    }
+    
+    NSMutableDictionary* payment = [NSMutableDictionary new];
+    if (![_bankBranch.text isEqualToString: _model.payment.bankBranch]) {
+        [payment addEntriesFromDictionary:@{@"bankBranch": self.bankBranch.text}];
+    }
+    
+    if (![_checqueAmount.text isEqualToString:_model.payment.totalAmount ]) {
+        [payment addEntriesFromDictionary:@{@"totalAmount": self.checqueAmount.text}];
+    }
+    
+    if (![_chequeNo.text isEqualToString:_model.payment.referenceNo]) {
+        [payment addEntriesFromDictionary:@{@"referenceNo": _chequeNo.text}];
+    }
+    
+    if (![_issuerBank.text isEqualToString:_model.payment.issuerBank]) {
+        [payment addEntriesFromDictionary:@{@"issuerBank": _issuerBank.text}];
+    }
+    
+    if (![_mode.text isEqualToString:_model.payment.mode]) {
+        [payment addEntriesFromDictionary:@{@"mode": _mode.text}];
+    }
+    [data addEntriesFromDictionary:@{@"payment":payment}];
+    
+    if (![_receivedFrom.text isEqualToString:_model.receivedFromName]) {
+        [data addEntriesFromDictionary:@{@"receivedFromName": _receivedFrom.text}];
+    }
+    
+    if (![_remarks.text isEqualToString:_model.remarks]) {
+        [data addEntriesFromDictionary:@{@"remarks": _remarks.text}];
+    }
+    
+    return [data copy];
+}
+
+- (IBAction)saveReceipt:(id)sender {
+    if (![_isUpdate isEqualToString:@"update"]) {
+        [self _save];
+    } else {
+        [self _update];
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+       /* if (indexPath.row == 0) {
             self.QRCodeCell.leftUtilityButtons = [self leftButtons];
             self.QRCodeCell.delegate = self;
             return self.QRCodeCell;
-        } else if (indexPath.row == 1) {
+        } else*/
+        if (indexPath.row == FILE_NO_ROW) {
             self.fileNoCell.leftUtilityButtons = [self leftButtons];
             self.fileNoCell.delegate = self;
             return self.fileNoCell;
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == BILL_NO_ROW) {
             self.billNoCell.leftUtilityButtons = [self leftButtons];
             self.billNoCell.delegate = self;
             return self.billNoCell;
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == ACCOUNT_TYPE_ROW) {
             self.accountTypeCell.leftUtilityButtons = [self leftButtons];
             self.accountTypeCell.delegate = self;
             return self.accountTypeCell;
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == RECEIVED_FROM_ROW) {
             self.receivedFromCell.leftUtilityButtons = [self leftButtons];
             self.receivedFromCell.delegate = self;
             return self.receivedFromCell;;
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == AMOUNT_ROW) {
             return self.amountCell;
-        } else if (indexPath.row == 6) {
+        } else if (indexPath.row == TRANSACTION_DESC_ROW) {
             return self.transactionCell;
         }
     } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == MODE_ROW) {
             self.modeCell.leftUtilityButtons = [self leftButtons];
             self.modeCell.delegate = self;
             return self.modeCell;
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == ISSUER_BANK_ROW) {
             self.issuerBankCell.leftUtilityButtons = [self leftButtons];
             self.issuerBankCell.delegate = self;
             return self.issuerBankCell;
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == BANK_BRANCH_ROW) {
             return self.bankBranchCell;
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == CHEQUE_NO_ROW) {
+            self.chequeNoCell.delegate = self;
             return self.chequeNoCell;;
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == CHEQUE_AMOUT_ROW) {
+            self.chequeAmountCell.delegate = self;
             return self.chequeAmountCell;
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == REMARKS_ROW) {
+            self.remarksCell.delegate = self;
             return self.remarksCell;
         }
     }
@@ -223,31 +327,31 @@
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     [cell hideUtilityButtonsAnimated:YES];
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == FILE_NO_ROW) {
             self.fileNo.text = @"";
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == BILL_NO_ROW) {
             self.billNo.text = @"";
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == ACCOUNT_TYPE_ROW) {
             self.accountType.text = @"";
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == RECEIVED_FROM_ROW) {
             self.receivedFrom.text = @"";
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == AMOUNT_ROW) {
             self.amount.text = @"";
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == TRANSACTION_DESC_ROW) {
             self.transaction.text = @"";
         }
     } else if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == MODE_ROW) {
             self.mode.text = @"";
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == ISSUER_BANK_ROW) {
             self.issuerBank.text = @"";
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == BANK_BRANCH_ROW) {
             self.bankBranch.text = @"";
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == CHEQUE_NO_ROW) {
             self.chequeNo.text = @"";
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == CHEQUE_AMOUT_ROW) {
             self.checqueAmount.text = @"";
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == REMARKS_ROW) {
             self.remarks.text = @"";
         }
     }
@@ -269,44 +373,34 @@
     [popupController presentInViewController:self];
 }
 
-- (void) showAutocomplete {
+- (void) showDetailAutocomplete {
     [self.view endEditing:YES];
     
-    SimpleAutocomplete *vc = [[UIStoryboard storyboardWithName:@
-                                                        "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
-    vc.url = RECEIPT_TRANS_DESC_GET_LIST_URL;
-    vc.title = @"";
-    vc.updateHandler =  ^(NSString* selectedString) {
-        [self didSelectListWithDescription:nil name:nameOfField withString:selectedString];
+    BankBranchAutoComplete *vc = [[UIStoryboard storyboardWithName:@
+                                   "AddReceipt" bundle:nil] instantiateViewControllerWithIdentifier:@"BankBranchAutoComplete"];
+    vc.url = BANK_BRANCH_GET_LIST_URL;
+    vc.updateHandler =  ^(BankBranchModel* model) {
+        self.bankBranch.text = model.name;
     };
-    
     [self showPopup:vc];
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    BOOL editable = YES;
     if (textField.tag == 4 || textField.tag == 14) {
-        string = string.uppercaseString;
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-        text = [text stringByReplacingOccurrencesOfString:@"." withString:@""];
-        double number = [text intValue] * 0.01;
-        textField.text = [NSString stringWithFormat:@"%.2lf", number];
-        editable = NO;
-    } else if (textField.tag == 12 || textField.tag == 13 || textField.tag == 15) {
-        editable = YES;
-    } else {
-        editable = NO;
+        
+        textField.text = [DIHelpers formatDecimal:text];
+        return NO;
     }
     
-    return editable;
+    return YES;
 }
 
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
     return 2;
 }
 
@@ -324,28 +418,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        if (indexPath.row == 1) {
+        if (indexPath.row == FILE_NO_ROW) {
             [self performSegueWithIdentifier:kSimpleMatterSegue sender:MATTERSIMPLE_GET_URL];
-        } else if (indexPath.row == 2) {
-            [self performSegueWithIdentifier:kTaxInvoiceSegue sender:RECEIPT_TAX_INVOICE_GET_LIST_URL];
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == BILL_NO_ROW) {
+            [self performSegueWithIdentifier:kTaxInvoiceSegue sender:TAXINVOICE_ALL_GET_URL];
+        } else if (indexPath.row == ACCOUNT_TYPE_ROW) {
             [self performSegueWithIdentifier: kAccountTypeSegue sender:  ACCOUNT_TYPE_GET_LIST_URL];
-        } else if (indexPath.row == 6) {
-            [self showAutocomplete];
+        } else if (indexPath.row == RECEIVED_FROM_ROW) {
+            [self performSegueWithIdentifier:kContactGetListSegue sender:GENERAL_CONTACT_URL];
+        } else if (indexPath.row == TRANSACTION_DESC_ROW) {
+            [self performSegueWithIdentifier:kCodeTransactionDescSegue sender:TRANSACTION_DESCRIPTION_RECEIPT_GET];
         }
     } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            titleOfList = @"Select Payment";
-            nameOfField = @"payment";
-            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:ACCOUNT_PAYMENT_MODE_GET_URL];
-        } else if (indexPath.row == 1) {
+        if (indexPath.row == MODE_ROW) {
+            [self performSegueWithIdentifier:kPaymentModeSegue sender:PAYMENT_MODE_GET_URL];
+        } else if (indexPath.row == ISSUER_BANK_ROW) {
             titleOfList = @"Select Issuer";
             nameOfField = @"issuer";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];
-        } else if (indexPath.row == 2) {
-            titleOfList = @"Select Issuer";
-            nameOfField = @"issuer";
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];;
+        } else if (indexPath.row == BANK_BRANCH_ROW) {
+            [self showDetailAutocomplete];
         }
     }
     
@@ -361,14 +453,6 @@
     }
 }
 
-#pragma mark - ContactListWithDescriptionDelegate
-- (void) didSelectListWithDescription:(UIViewController *)listVC name:(NSString*) name withString:(NSString *)description
-{
-    if ([name isEqualToString:@"payment"]) {
-        self.mode.text = description;
-    }
-}
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -381,41 +465,52 @@
         listCodeVC.titleOfList = titleOfList;
         listCodeVC.name = nameOfField;
         listCodeVC.url = sender;
-    }
-    
-    if ([segue.identifier isEqualToString:kListWithDescriptionSegue]) {
-        UINavigationController *navVC =segue.destinationViewController;
-        
-        ListWithDescriptionViewController *listDescVC = navVC.viewControllers.firstObject;
-        listDescVC.contactDelegate = self;
-        listDescVC.titleOfList = titleOfList;
-        listDescVC.name = nameOfField;
-        listDescVC.url = sender;
-    }
-    
-    if ([segue.identifier isEqualToString:kSimpleMatterSegue]) {
+    } else if ([segue.identifier isEqualToString:kSimpleMatterSegue]) {
         SimpleMatterViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterSimple *model) {
-            
             self.fileNo.text = model.systemNo;
         };
-    }
-    
-    if ([segue.identifier isEqualToString:kTaxInvoiceSegue]) {
-        TaxInvoiceListViewController* vc = segue.destinationViewController;
-        vc.updateHandler = ^(TaxModel *model) {
-            self.billNo.text = model.documentNo;
+    } else if ([segue.identifier isEqualToString:kTaxInvoiceSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        TaxInvoice* vc = nav.viewControllers.firstObject;
+        vc.fileNo = _fileNo.text;
+        vc.url = sender;
+        vc.updateHandler = ^(TaxInvoiceModel *model) {
+            self.billNo.text = model.invoiceNo;
+            _receivedFrom.text = model.issueToName;
         };
-    }
-    
-    if ([segue.identifier isEqualToString:kAccountTypeSegue]) {
+    } else if ([segue.identifier isEqualToString:kAccountTypeSegue]) {
         AccountTypeViewController* vc = segue.destinationViewController;
         vc.updateHandler = ^(AccountTypeModel *model) {
             self.accountType.text = model.shortDescription;
             selectedID = model.ID;
         };
+    } else if ([segue.identifier isEqualToString:kContactGetListSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        DashboardContact* vc = nav.viewControllers.firstObject;
+        vc.url = sender;
+        vc.callback = @"callback";
+        vc.updateHandler = ^(SearchResultModel *model) {
+            _receivedFrom.text = [model.JsonDesc objectForKey:@"name"];
+             selectedRecievedFromCode = [model.JsonDesc objectForKey:@"code"];
+        };
+    } else if ([segue.identifier isEqualToString:kCodeTransactionDescSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        TransactionDescViewController* vc =  nav.viewControllers.firstObject;
+        vc.url = sender;
+        vc.updateHandler = ^(CodeTransactionDesc *model) {
+            _transaction.text = model.strTransactionDescription;
+            selectedTransactionCode = model.codeValue;
+        };
+    } else if ([segue.identifier isEqualToString:kPaymentModeSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        PaymentModeViewController* vc =  nav.viewControllers.firstObject;
+        vc.url = sender;
+        vc.updateHandler = ^(PaymentModeModel *model) {
+            _mode.text = model.strDescription;
+            modeCode = model.codeValue;
+        };
     }
 }
-
 
 @end

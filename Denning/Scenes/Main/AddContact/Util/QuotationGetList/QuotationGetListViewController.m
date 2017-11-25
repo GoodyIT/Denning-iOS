@@ -134,6 +134,7 @@
     isLoading = NO;
     isFirstLoading = NO;
 }
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -173,18 +174,24 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+#pragma mark - Search Delegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-        [self appendList];
-    }
+    [searchBar resignFirstResponder];
+    searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
 }
 
-#pragma mark - Search Delegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [searchBar resignFirstResponder];
+}
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";
@@ -193,21 +200,12 @@
     [self getList];
 }
 
-
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
 {
     self.filter = searchText;
     isAppending = NO;
     self.page = @(1);
     [self getList];
-}
-
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfAccountTypes.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
 }
 
 @end

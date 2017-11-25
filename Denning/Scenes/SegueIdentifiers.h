@@ -108,6 +108,8 @@ static NSString* const kListWithCodeSegue = @"ListWithCodeSegue";
 
 static NSString* const kListWithDescriptionSegue = @"ListWithDescriptionSegue";
 
+static NSString* const kPaymentModeSegue = @"PaymentModeSegue";
+
 static NSString* const kListWithPostcodeSegue = @"ListWithPostcodeSegue";
 
 static NSString* const kChangeBranchSegue = @"ChangeBranchSegue";
@@ -123,6 +125,8 @@ static NSString* const kSimpleMatterSegue = @"SimpleMatterSegue";
 static NSString* const kMatterLitigationSegue = @"MatterLitigationSegue";
 
 static NSString* const kListofTypeSegue = @"ListofTypeSegue";
+
+static NSString* const kTaxBillContactSegue = @"TaxBillContactSegue";
 
 static NSString* const kProjectHousingSegue = @"ProjectHousingSegue";
 
@@ -155,6 +159,8 @@ static NSString* const kCourtDiarySegue = @"CourtDiarySegue";
 static NSString* const kDiarySegue = @"DiarySegue";
 
 static NSString* const kAddReceiptSegue = @"AddReceiptSegue";
+
+static NSString* const kAddBillSegue = @"AddBillSegue";
 
 static NSString* const kEditCourtSegue = @"EditCourtSegue";
 
@@ -195,6 +201,8 @@ static NSString* const kMyDueTaskSegue = @"MyDueTaskSegue";
 static NSString* const kStaffLeaveSegue = @"StaffLeaveSegue";
 
 static NSString* const kLeavePendingApprovalSegue = @"LeavePendingApprovalSegue";
+
+static NSString* const kCodeTransactionDescSegue = @"CodeTransactionDescSegue";
 
 static NSString* const kLeaveRecordSegue = @"LeaveRecordSegue";
 

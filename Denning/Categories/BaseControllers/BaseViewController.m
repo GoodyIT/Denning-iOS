@@ -16,14 +16,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonAction)];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [self removeKeyboardObservers];
+    [super viewWillDisappear:animated];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self removeKeyboardObservers];
+    [self addKeyboardObservers];
 }
 
 - (void)backButtonAction {
@@ -41,16 +45,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification{
-    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    [self keyboardWillShowWithSize:keyboardSize];
+- (void)keyboardWillShow:(NSNotification *)__unused notification{
+  
 }
 
 - (void)keyboardWillHide:(NSNotification *) __unused notification{
-    [self keyboardWillHideToController];
+    
 }
 
-- (void)keyboardWillShowWithSize:(CGSize)__unused size  {}
-- (void)keyboardWillHideToController  {}
+
 
 @end

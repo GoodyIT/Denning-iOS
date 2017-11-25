@@ -156,7 +156,7 @@ shouldSelectViewController:(UIViewController *)viewController
               }
           }],
           
-          [RWDropdownMenuItem itemWithText:@"Chat" image:[UIImage imageNamed:@"icon_message"] action:^{
+          [RWDropdownMenuItem itemWithText:@"Chats" image:[UIImage imageNamed:@"icon_message"] action:^{
               if (![self checkPublicUser]) {
                   self.selectedViewController = self.viewControllers[3];
               }

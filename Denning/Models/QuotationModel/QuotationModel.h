@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class TaxInvoiceCalcModel;
+@class PresetCodeModel;
 
 @interface QuotationModel : NSObject
 
@@ -22,8 +23,8 @@
 @property (strong, nonatomic) NSString* issueBy;
 @property (strong, nonatomic) NSString* propertyTitle;
 @property (strong, nonatomic) NSString* primaryClient;
-@property (strong, nonatomic) NSString* matter;
-@property (strong, nonatomic) NSString* presetCode;
+@property (strong, nonatomic) MatterCodeModel* matter;
+@property (strong, nonatomic) PresetCodeModel* presetCode;
 @property (strong, nonatomic) NSString* relatedDocumentNo;
 @property (strong, nonatomic) NSString* rentalMonth;
 @property (strong, nonatomic) NSString* rentalPrice;
