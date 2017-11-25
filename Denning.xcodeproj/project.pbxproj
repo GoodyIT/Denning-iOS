@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4614714DB83FC0B8A26C9915 /* libPods-Denning.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064FEAC551343F357D0017CC /* libPods-Denning.a */; };
-		6EE6BC012F8FA5241EA721D0 /* libPods-Denning.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5B204D56B08DD5FA20D4C0F /* libPods-Denning.a */; };
 		7903CF481ECC00BB0090206C /* BirthdayCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7903CF381ECC00BB0090206C /* BirthdayCalendarViewController.m */; };
 		7903CF491ECC00BB0090206C /* DetailWithAutocomplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 7903CF3B1ECC00BB0090206C /* DetailWithAutocomplete.m */; };
 		7903CF4B1ECC00BB0090206C /* ListWithCodeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7903CF411ECC00BB0090206C /* ListWithCodeTableViewController.m */; };
@@ -1047,6 +1046,7 @@
 		96FD653F1F21097300FB9009 /* UploadTo.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FD653E1F21097300FB9009 /* UploadTo.m */; };
 		96FD65451F212A4000FB9009 /* SimpleFileLedgerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FD65431F212A4000FB9009 /* SimpleFileLedgerCell.m */; };
 		96FD65461F212A4000FB9009 /* SimpleFileLedgerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96FD65441F212A4000FB9009 /* SimpleFileLedgerCell.xib */; };
+		FB5EF0702C849D347E71F1D4 /* libPods-Denning.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5B204D56B08DD5FA20D4C0F /* libPods-Denning.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2689,7 +2689,7 @@
 				79FBDFF11E304AAC00448FE3 /* libstdc++.tbd in Frameworks */,
 				79FBDFEF1E304AA000448FE3 /* libsqlite3.tbd in Frameworks */,
 				4614714DB83FC0B8A26C9915 /* libPods-Denning.a in Frameworks */,
-				6EE6BC012F8FA5241EA721D0 /* libPods-Denning.a in Frameworks */,
+				FB5EF0702C849D347E71F1D4 /* libPods-Denning.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8374,7 +8374,7 @@
 		79FBDE671E302F6600448FE3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = DenningIT;
 				TargetAttributes = {
 					79FBDE6E1E302F6600448FE3 = {
@@ -8991,8 +8991,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Denning/Pods-Denning-resources.sh",
 				"${PODS_ROOT}/Digits/iOS/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-magnify-glass.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-magnify-glass@2x.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-shadow.png",
@@ -9000,15 +9000,15 @@
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-shadow@3x.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarDayCell/GLCalendarDayCell.xib",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarView.xib",
-				$PODS_CONFIGURATION_BUILD_DIR/NYTPhotoViewer/NYTPhotoViewer.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/NYTPhotoViewer/NYTPhotoViewer.bundle",
 				"${PODS_ROOT}/QMChatViewController/QMChatViewController/Icons/Media.xcassets",
-				$PODS_CONFIGURATION_BUILD_DIR/QMChatViewController/QMChatViewController.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMChatCacheModel.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMContactListCacheModel.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMUsersCacheModel.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMOpenGraphCacheModel.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/QMChatViewController/QMChatViewController.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMChatCacheModel.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMContactListCacheModel.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMUsersCacheModel.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMOpenGraphCacheModel.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle,
+				"$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -9653,7 +9653,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -9661,7 +9663,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -9703,7 +9709,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -9711,7 +9719,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

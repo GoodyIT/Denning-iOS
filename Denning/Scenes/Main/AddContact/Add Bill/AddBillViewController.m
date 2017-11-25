@@ -62,23 +62,29 @@ NSMutableDictionary* keyValue;
     self.keyValue = [@{
                        @(0): @(1), @(1):@(0)
                        } mutableCopy];
+    
     NSArray* temp = @[
-                      @[@[@"Convert Quotation", _model.relatedDocumentNo], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", _model.fileNo], @[@"Matter", _model.matter.matterCode], @[@"Bill to", _model.issueToName], @[@"Preset Code", _model.presetCode.billCode], @[@"Price", _model.spaPrice], @[@"Loan", _model.spaLoan], @[@"Month", _model.rentalMonth], @[@"Rental", _model.rentalPrice]],
-                      @[@[@"Professional Fees", _model.analysis.decFees], @[@"Disb. with GST", _model.analysis.decDisbGST], @[@"Disbursements", _model.analysis.decDisb], @[@"GST", _model.analysis.GST], @[@"Total.", _model.analysis.decTotal]
+                      @[@[@"Convert Quotation", @""], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", @""], @[@"Matter", @""], @[@"Bill to", @""], @[@"Preset Code", @""], @[@"Price", @""], @[@"Loan", @""], @[@"Month", @""], @[@"Rental", @""]],
+                      @[@[@"Professional Fees", @""], @[@"Disb. with GST", @""], @[@"Disbursements", @""], @[@"GST", @""], @[@"Total.", @""]
                         ],
                       ];
     _contents = [temp mutableCopy];
+    if (_model != nil) {
+        isSaved = YES;
+        isRental = _model.isRental;
+        selectedMatterCode = _model.matter.matterCode;
+        selectedPresetCode = _model.presetCode.billCode;
+        _taxModel = _model.analysis;
+        NSArray* temp = @[
+                          @[@[@"Convert Quotation", _model.relatedDocumentNo], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", _model.fileNo], @[@"Matter", _model.matter.matterCode], @[@"Bill to", _model.issueToName], @[@"Preset Code", _model.presetCode.billCode], @[@"Price", _model.spaPrice], @[@"Loan", _model.spaLoan], @[@"Month", _model.rentalMonth], @[@"Rental", _model.rentalPrice]],
+                          @[@[@"Professional Fees", _model.analysis.decFees], @[@"Disb. with GST", _model.analysis.decDisbGST], @[@"Disbursements", _model.analysis.decDisb], @[@"GST", _model.analysis.decGST], @[@"Total.", _model.analysis.decTotal]
+                            ],
+                          ];
+        _contents = [temp mutableCopy];
+    }
     
     _headers = @[@"Bill Details", @"Bill Analysis"
                  ];
-    
-    isRental = _model.isRental;
-    selectedMatterCode = _model.matter.matterCode;
-    selectedPresetCode = _model.presetCode.billCode;
-    _taxModel = _model.analysis;
-    if (_model != nil) {
-        isSaved = YES;
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -150,25 +156,26 @@ NSMutableDictionary* keyValue;
      ];
 }
 
-- (NSDictionary*) buildSaveParam {
+- (NSDictionary*) buildParam {
     NSMutableDictionary* data = [NSMutableDictionary new];
     [data addEntriesFromDictionary:@{@"issueDate": [DIHelpers todayWithTime]}];
     if (![_contents[0][2][1] isEqualToString: _model.fileNo]) {
         [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
     }
-    if (![isRental isEqualToString: _model.isRental]) {
-        [data addEntriesFromDictionary:@{@"isRental": isRental}];
-    }
-//    if (![issueTo1stCode isEqualToString: _model.fileNo]) {
-//        [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
-//    }
+    [data addEntriesFromDictionary:@{@"isRental": isRental}];
+    //    if (![isRental isEqualToString: _model.isRental]) {
+    //        [data addEntriesFromDictionary:@{@"isRental": isRental}];
+    //    }
+    //    if (![issueTo1stCode isEqualToString: _model.fileNo]) {
+    //        [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
+    //    }
     if (![_contents[0][4][1] isEqualToString: _model.issueToName]) {
         [data addEntriesFromDictionary:@{@"issueToName": _contents[0][4][1]}];
     }
     if (![selectedMatterCode isEqualToString: _model.matter.matterCode]) {
         [data addEntriesFromDictionary:@{@"matter": @{
-                                                    @"code": selectedMatterCode
-                                                    }}];
+                                                 @"code": selectedMatterCode
+                                                 }}];
     }
     if (![selectedPresetCode isEqualToString: _model.presetCode.billCode]) {
         [data addEntriesFromDictionary:@{@"presetCode": @{
@@ -190,13 +197,23 @@ NSMutableDictionary* keyValue;
     if (![_contents[0][9][1] isEqualToString: _model.rentalPrice]) {
         [data addEntriesFromDictionary:@{@"rentalPrice": [self getActualNumber: [self getValidValue:_contents[0][9][1]]]}];
     }
-   
+    
     return data;
 }
 
+- (NSDictionary*) buildSaveParam {
+    return @{
+             @"fileNo": _contents[0][2][1],
+             @"isRental": isRental,
+             @"issueDate": [DIHelpers todayWithTime],
+             @"issueToName": _contents[0][4][1],
+             
+             };
+}
+
 - (IBAction)saveBill:(id)sender {
-    if (selectedMatterCode.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the matter." actionSuccess:NO inViewController:self];
+    if (selectedPresetCode.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the file." actionSuccess:NO inViewController:self];
         return;
     }
     
@@ -205,7 +222,7 @@ NSMutableDictionary* keyValue;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] saveBillorQuotationWithParams:[self buildSaveParam] inURL:TAXINVOICE_SAVE_URL WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] saveBillorQuotationWithParams:[self buildParam] inURL:TAXINVOICE_SAVE_URL WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -397,6 +414,7 @@ NSMutableDictionary* keyValue;
     [[QMNetworkManager sharedManager] sendPrivatePostWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
+        [navigationController dismissNotificationPanel];
         if (error == nil) {
 //            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully done" duration:1.0];
             [self performSegueWithIdentifier:kAddReceiptSegue sender:[ReceiptModel getReeipt:result]];
@@ -411,6 +429,7 @@ NSMutableDictionary* keyValue;
     
     if (indexPath.section == 0 && indexPath.row == 10) {
         AddLastOneButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastOneButtonCell cellIdentifier] forIndexPath:indexPath];
+        [cell.calculateBtn setTitle:@"Issue Receipt" forState:UIControlStateNormal];
         cell.calculateHandler = ^{
             [self calcTax];
         };
@@ -478,6 +497,15 @@ NSMutableDictionary* keyValue;
             if (indexPath.row == 9 || indexPath.row == 8) {
                 cell.hidden = YES;
                 cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
+            }
+        }
+        if (((NSString*)_contents[0][1][1]).length > 0){
+            if (indexPath.row >= 6 || indexPath.row <= 9) {
+                cell.floatingTextField.userInteractionEnabled = NO;
+            }
+        } else {
+            if (indexPath.row >= 6 || indexPath.row <= 9) {
+                cell.floatingTextField.userInteractionEnabled = YES;
             }
         }
     } else {
@@ -630,11 +658,17 @@ NSMutableDictionary* keyValue;
                 [self performSegueWithIdentifier:kSimpleMatterSegue sender:MATTERSIMPLE_GET_URL];
             } else if (indexPath.row == 3) {
 //                [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
-            } else if (indexPath.row == 4) {
-                [self performSegueWithIdentifier:kTaxBillContactSegue sender:PRESET_BILL_GET_URL];
-            } else if (indexPath.row == 5) {
-                [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
             }
+        } else {
+            if (indexPath.row == 3) {
+                [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
+            }
+        }
+        if (indexPath.row == 4) {
+            [self performSegueWithIdentifier:kTaxBillContactSegue sender:nil];
+        }
+        if (indexPath.row == 5) {
+            [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
         }
     } else {
         if  (isCalcDone) {

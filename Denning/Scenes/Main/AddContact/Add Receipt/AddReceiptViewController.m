@@ -167,7 +167,7 @@ enum PAYMENT_MODE_ROWS {
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
-    [[QMNetworkManager sharedManager] saveReceiptWithParams:[self buildParam] WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] saveReceiptWithParams:[self buildSaveParam] WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Saved" duration:1.0];
             
@@ -192,6 +192,26 @@ enum PAYMENT_MODE_ROWS {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
     }];
+}
+
+- (NSDictionary*) buildSaveParam {
+    return @{
+             @"accountType": @{
+                     @"ID": selectedID
+                     },
+             @"amount": self.amount.text,
+            @"fileNo": self.fileNo.text,
+             @"invoiceNo": self.billNo.text,
+             @"payment":@{
+                 @"bankBranch": self.bankBranch.text,
+                 @"totalAmount": self.checqueAmount.text,
+                 @"referenceNo": _chequeNo.text,
+                 @"issuerBank": _issuerBank.text,
+                 @"mode": _mode.text,
+             },
+             @"receivedFromName": _receivedFrom.text,
+             @"remarks": _remarks.text
+         };
 }
 
 - (NSDictionary*) buildParam {

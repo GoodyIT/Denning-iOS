@@ -14,9 +14,10 @@
 #import "PresetBillViewController.h"
 #import "TaxInvoiceSelectionViewController.h"
 #import "TaxBillContactViewController.h"
-#import "AddLastThreeButtonsCell.h"
+#import "AddLastTwoButtonsCell.h"
 #import "AddBillViewController.h"
 #import "AddReceiptViewController.h"
+#import "DashboardContact.h"
 
 @interface AddQuotationViewController ()<UIDocumentInteractionControllerDelegate, UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
 {
@@ -60,8 +61,8 @@ NSMutableDictionary* keyValue;
                        @(0): @(1), @(1):@(0)
                        } mutableCopy];
     NSArray* temp = @[
-                      @[@[@"Quotation No (Auto assinged)", @""], @[@"File No.", @""], @[@"Matter", @""], @[@"Quotation to", @""], @[@"Preset Code", @""], @[@"Price", @""], @[@"Loan", @""], @[@"Month", @""], @[@"Rental", @""]],
-                      @[@[@"Professional Fees", @""], @[@"Disb. with GST", @""], @[@"Disbursements", @""], @[@"GST", @""], @[@"Total.", @""]
+                      @[@[@"Quotation No (Auto assinged)", @""], @[@"File No.", @""], @[@"Matter", @""], @[@"Quotation to", @""], @[@"Preset Code", @""], @[@"Price", @""], @[@"Loan", @""], @[@"Month", @""], @[@"Rental", @""], @[@"Convert", @""]],
+                      @[@[@"Professional Fees", @""], @[@"Disb. with GST", @""], @[@"Disbursements", @""], @[@"GST", @""], @[@"Total.", @""], @[@"Save & Invoice", @""], @[@"Issue Receipt", @""]
                         ],
                       ];
     _contents = [temp mutableCopy];
@@ -241,7 +242,7 @@ NSMutableDictionary* keyValue;
     
     [FloatingTextCell registerForReuseInTableView:self.tableView];
     [AddLastOneButtonCell registerForReuseInTableView:self.tableView];
-    [AddLastThreeButtonsCell registerForReuseInTableView:self.tableView];
+    [AddLastTwoButtonsCell registerForReuseInTableView:self.tableView];
    
     [self.tableView registerNib:[UINib nibWithNibName:@"AccordionHeaderView" bundle:nil] forHeaderFooterViewReuseIdentifier:kAccordionHeaderViewReuseIdentifier];
     
@@ -255,7 +256,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.contents[section] count] + 1;
+    return [self.contents[section] count];
 }
 
 - (void) updateWholeData: (NSDictionary*) result {
@@ -394,7 +395,7 @@ NSMutableDictionary* keyValue;
 
 - (void) gotoInvoice {
     if (!isSaved) {
-        [QMAlert showAlertWithMessage:@"Please save the invoice first" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please save the quotation first" actionSuccess:NO inViewController:self];
         return;
     }
     
@@ -410,6 +411,7 @@ NSMutableDictionary* keyValue;
     [[QMNetworkManager sharedManager] sendPrivatePostWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
+        [navigationController dismissNotificationPanel];
         if (error == nil) {
             [self performSegueWithIdentifier:kAddBillSegue sender:[BillModel getBill:result]];
             
@@ -422,7 +424,7 @@ NSMutableDictionary* keyValue;
 
 - (void) gotoReceipt {
     if (!isSaved) {
-        [QMAlert showAlertWithMessage:@"Please save the invoice first" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please save the quotation first" actionSuccess:NO inViewController:self];
         return;
     }
     
@@ -438,6 +440,7 @@ NSMutableDictionary* keyValue;
     [[QMNetworkManager sharedManager] sendPrivatePostWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
+        [navigationController dismissNotificationPanel];
         if (error == nil) {
             //            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully done" duration:1.0];
             [self performSegueWithIdentifier:kAddReceiptSegue sender:[ReceiptModel getReeipt:result]];
@@ -459,26 +462,36 @@ NSMutableDictionary* keyValue;
         return cell;
     }
     
-    if (indexPath.section == 1 && indexPath.row == 5) {
-        AddLastThreeButtonsCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastThreeButtonsCell cellIdentifier] forIndexPath:indexPath];
-        cell.viewHandler = ^{
-            if (!isSaved) {
-                [QMAlert showAlertWithMessage:@"Please save your quotaion first to view" actionSuccess:NO inViewController:self];
-                
-                return;
-            }
-            [self viewQuotation];
-        };
-        cell.saveHandler = ^{
-            [self saveQuotaion:nil];
-        };
-        cell.invoiceHandler = ^{
-            [self gotoInvoice];
-        };
-        cell.receiptHandler = ^{
-            [self gotoReceipt];
-        };
-        return cell;
+    if (indexPath.section == 1) {
+        if (indexPath.row == 5) {
+            AddLastTwoButtonsCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastTwoButtonsCell cellIdentifier] forIndexPath:indexPath];
+            cell.viewHandler = ^{
+                if (!isSaved) {
+                    [QMAlert showAlertWithMessage:@"Please save your quotaion first to view" actionSuccess:NO inViewController:self];
+                    
+                    return;
+                }
+                [self viewQuotation];
+            };
+            
+            cell.saveHandler = ^{
+                [self saveQuotaion:nil];
+            };
+            
+            [cell.lastBtn setTitle:@"Convert To Tax Invoice" forState:UIControlStateNormal];
+            cell.convertHandler = ^{
+                [self gotoInvoice];
+            };
+           
+            return cell;
+        } else if (indexPath.row == 6) {
+            AddLastOneButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastOneButtonCell cellIdentifier] forIndexPath:indexPath];
+            [cell.calculateBtn setTitle:@"Issue Receipt"  forState:UIControlStateNormal];
+            cell.calculateHandler = ^{
+                [self gotoReceipt];
+            };
+            return cell;
+        }
     }
     
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
@@ -503,7 +516,6 @@ NSMutableDictionary* keyValue;
     cell.delegate = self;
     
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.floatingTextField.userInteractionEnabled = YES;
     if (indexPath.section == 0) {
         if (indexPath.row >= 1 && indexPath.row <= 4) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -520,6 +532,15 @@ NSMutableDictionary* keyValue;
             if (indexPath.row == 7 || indexPath.row == 8) {
                 cell.hidden = YES;
                 cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
+            }
+        }
+        if (((NSString*)_contents[0][2][1]).length > 0){
+            if (indexPath.row >= 5 || indexPath.row <= 8) {
+                cell.floatingTextField.userInteractionEnabled = NO;
+            }
+        } else {
+            if (indexPath.row >= 5 || indexPath.row <= 8) {
+                cell.floatingTextField.userInteractionEnabled = YES;
             }
         }
     }
@@ -667,14 +688,20 @@ NSMutableDictionary* keyValue;
     if (indexPath.section == 0) {
         if (indexPath.row == 1) {
             [self performSegueWithIdentifier:kSimpleMatterSegue sender:MATTERSIMPLE_GET_URL];
-        } else if (((NSString*)_contents[0][1][1]).length > 0){
+        }
+        if (((NSString*)_contents[0][1][1]).length == 0){
             if (indexPath.row == 2) {
-                            [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
+                [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
+            }
+            if (indexPath.row == 3) {
+                [self performSegueWithIdentifier:kTaxBillContactSegue sender:nil];
+            }
+        } else {
+            if (indexPath.row == 3) {
+                [self performSegueWithIdentifier:kDashboardContactSegue sender:GENERAL_CONTACT_URL];
             }
         }
-        if (indexPath.row == 3) {
-            [self performSegueWithIdentifier:kTaxBillContactSegue sender:nil];
-        }
+       
         if (indexPath.row == 4) {
             [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
         }
@@ -815,6 +842,14 @@ NSMutableDictionary* keyValue;
         UINavigationController* nav = segue.destinationViewController;
         AddBillViewController* vc = nav.viewControllers.firstObject;
         vc.model = sender;
+    } else if ([segue.identifier isEqualToString:kDashboardContactSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        DashboardContact* vc = nav.viewControllers.firstObject;
+        vc.url = sender;
+        vc.callback = @"callback";
+        vc.updateHandler = ^(SearchResultModel *model) {
+            [self replaceContentForSection:0 InRow:3 withValue:[model.JsonDesc objectForKey:@"name"]];
+        };
     }
 }
 

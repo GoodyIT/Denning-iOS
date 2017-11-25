@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^UpdateContactHandler)(ClientModel* model);
+typedef void(^UpdateBillContactHandler)(ClientModel* model);
 
 @interface TaxBillContactViewController : UIViewController
 
 @property (strong, nonatomic) NSString* url;
 
-@property (strong, nonatomic) UpdateContactHandler updateHandler;
+@property (strong, nonatomic) UpdateBillContactHandler updateHandler;
 
 
 @end

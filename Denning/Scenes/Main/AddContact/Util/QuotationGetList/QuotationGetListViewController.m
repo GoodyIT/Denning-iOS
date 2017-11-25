@@ -125,13 +125,13 @@
         else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
-        
-        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];
+        self->isLoading = NO;
+//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];
     }];
 }
 
 - (void) clean {
-    isLoading = NO;
+    
     isFirstLoading = NO;
 }
 

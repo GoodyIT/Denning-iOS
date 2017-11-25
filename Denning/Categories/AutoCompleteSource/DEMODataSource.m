@@ -62,7 +62,7 @@
                                                            uploadProgress:nil
                                                          downloadProgress:nil
                                                                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      NSLog(@"%@", responseObject);
+//                                                                      NSLog(@"%@", responseObject);
                                                                       
                                                                       handler([self parseResponse:responseObject]);                     } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
                                               NSLog(@"%@", error);

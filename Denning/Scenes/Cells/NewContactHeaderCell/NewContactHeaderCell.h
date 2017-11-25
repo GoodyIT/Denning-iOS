@@ -26,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fileNumberLable;
+@property (weak, nonatomic) IBOutlet UILabel *oldICLabel;
 @property (weak, nonatomic) IBOutlet UIButton *chatBtn;
 @property (weak, nonatomic) IBOutlet UILabel *chatLabel;
 @property (weak, nonatomic) IBOutlet UIButton *editBtn;

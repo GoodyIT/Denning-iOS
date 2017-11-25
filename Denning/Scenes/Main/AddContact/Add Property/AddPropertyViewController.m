@@ -18,6 +18,7 @@
 #import "PropertyTypeListViewController.h"
 #import "SimpleAutocomplete.h"
 #import "PropertyAutoComplete.h"
+#import "DetailWithAutocomplete.h"
 #import "MukimValueList.h"
 #import "MasterTitleView.h"
 
@@ -39,7 +40,7 @@ enum  {
     NSString* selectedAreaTypeCode;
     NSString* selectedRestrictionCode;
     NSString* selectedPropertyCode;
-    NSNumber* selectedProjectCode;
+    NSString* selectedProjectCode;
     __block BOOL isLoading;
     __block BOOL isHeaderOpening;
     NSInteger selectedContactRow;
@@ -83,7 +84,7 @@ NSMutableDictionary* keyValue;
         selectedTitleIssuedCode = _propertyModel.titleIssued.codeValue;
         NSArray* temp = @[
                           @[@[@"Property Type", _propertyModel.propertyType.descriptionValue], @[@"Individual / Strata Title", _propertyModel.titleIssued.descriptionValue], @[@"ID (System assinged)", _propertyModel.propertyID]],
-                          @[@[@"Title Type", _propertyModel.title.type], @[@"Title No.", _propertyModel.title.value], @[@"Lot Type", _propertyModel.lotPT.type], @[@"Lot / PT No.", _propertyModel.lotPT.value], @[@"Mukim Type", _propertyModel.mukim.type], @[@"Mukim", _propertyModel.mukim.value], @[@"Daerah", _propertyModel.daerah], @[@"Negeri", _propertyModel.negeri],  @[@"Area Value", _propertyModel.area.value], @[@"Area Type", _propertyModel.area.type], @[@"Tenure", _propertyModel.tenure], @[@"Address / Place", _propertyModel.address], @[@"Lease Expiry Date", [DIHelpers convertDateToCustomFormat:_propertyModel.leaseExpiryDate]], @[@"Restriction in Interest", _propertyModel.restrictionInInterest.descriptionValue], @[@"Restriction Against", _propertyModel.restrictionAgainst], @[@"Approving Authority", _propertyModel.approvingAuthority], @[@"Category of Land Use", _propertyModel.landUse]
+                          @[@[@"Title Type", _propertyModel.title.type], @[@"Title No.", _propertyModel.title.value], @[@"Lot Type", _propertyModel.lotPT.type], @[@"Lot / PT No.", _propertyModel.lotPT.value], @[@"Mukim Type", _propertyModel.mukim.type], @[@"Mukim", _propertyModel.mukim.value], @[@"Daerah", _propertyModel.daerah], @[@"Negeri", _propertyModel.negeri],  @[@"Area Value", _propertyModel.area.value], @[@"Area Type", _propertyModel.area.type], @[@"Tenure", _propertyModel.tenure],@[@"Lease Expiry Date", [DIHelpers convertDateToCustomFormat:_propertyModel.leaseExpiryDate]], @[@"Address / Place", _propertyModel.address],  @[@"Restriction in Interest", _propertyModel.restrictionInInterest.descriptionValue], @[@"Restriction Against", _propertyModel.restrictionAgainst], @[@"Approving Authority", _propertyModel.approvingAuthority], @[@"Category of Land Use", _propertyModel.landUse]
                             ],
                           @[@[@"Parcel No.", _propertyModel.parcelNo], @[@"Storey No.", _propertyModel.storeyNo], @[@"Building No", _propertyModel.buildingNo], @[@"Accessory Parcel No.", _propertyModel.accParcelNo], @[@"Accessory Storey No.", _propertyModel.accStoreyNo], @[@"Accessory Building No.", _propertyModel.accBuildingNo], @[@"Units of Shares", _propertyModel.unitShare], @[@"Total Shares", _propertyModel.totalShare]],
                           @[@[@"Parcel Type", _propertyModel.spaParcel.type], @[@"Unit/Parcel No.", _propertyModel.spaParcel.value], @[@"Storey No.", _propertyModel.storeyNo], @[@"Building/Block No.", _propertyModel.buildingNo], @[@"Apt/Condo name", _propertyModel.spaCondoName], @[@"Accessory Parcel No", _propertyModel.spaAccParcelNo], @[@"SPA Area", _propertyModel.spaArea.value], @[@"Measurement Unit", _propertyModel.spaArea.type]],
@@ -108,7 +109,7 @@ NSMutableDictionary* keyValue;
     
     NSArray* temp = @[
                       @[@[@"Property Type", @""], @[@"Individual / Strata Title", @""], @[@"ID (System assinged)", @""]],
-                      @[@[@"Title Type", @""], @[@"Title No.", @""], @[@"Lot Type", @""], @[@"Lot / PT No.", @""], @[@"Mukim Type", @""], @[@"Mukim", @""], @[@"Daerah", @""], @[@"Negeri", @""],  @[@"Area Value", @""], @[@"Area Type", @""], @[@"Tenure", @""], @[@"Address / Place", @""], @[@"Lease Expiry Date", @""], @[@"Restriction in Interest", @""], @[@"Restriction Against", @""], @[@"Approving Authority", @""], @[@"Category of Land Use", @""]
+                      @[@[@"Title Type", @""], @[@"Title No.", @""], @[@"Lot Type", @""], @[@"Lot / PT No.", @""], @[@"Mukim Type", @""], @[@"Mukim", @""], @[@"Daerah", @""], @[@"Negeri", @""],  @[@"Area Value", @""], @[@"Area Type", @""], @[@"Tenure", @""], @[@"Lease Expiry Date", @""], @[@"Address / Place", @""], @[@"Lease Expiry Date", @""], @[@"Restriction in Interest", @""], @[@"Restriction Against", @""], @[@"Approving Authority", @""], @[@"Category of Land Use", @""]
                         ],
                       @[@[@"Parcel No.", @""], @[@"Storey No.", @""], @[@"Building No", @""], @[@"Accessory Prcel No.", @""], @[@"Accessory Storey No.", @""], @[@"Accessory Building No.", @""], @[@"Units of Shares", @""], @[@"Total Shares", @""]],
                       @[@[@"Parcel Type", @""], @[@"Unit/Parcel No.", @""], @[@"Storey No.", @""], @[@"Building/Block No.", @""], @[@"Apt/Condo name", @""], @[@"Accessory Parcel No", @""], @[@"SPA Area", @""], @[@"Measurement Unit", @""]],
@@ -186,13 +187,25 @@ NSMutableDictionary* keyValue;
     [self showPopup:vc];
 }
 
+- (void) showDetailAutoComplete: (NSString*) url {
+    DetailWithAutocomplete *vc = [[UIStoryboard storyboardWithName:@
+                               "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
+    vc.url = url;
+    vc.title = titleOfList;
+    vc.updateHandler =  ^(CodeDescription* model) {
+        [self didSelectListWithDescription:nil name:nameOfField withString:model.descriptionValue];
+    };
+    
+    [self showPopup:vc];
+}
+
 - (void) showAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
     SimpleAutocomplete *vc = [[UIStoryboard storyboardWithName:@
                                "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"SimpleAutocomplete"];
     vc.url = url;
-    vc.title = @"";
+    vc.title = titleOfList;
     vc.updateHandler =  ^(NSString* selectedString) {
         [self didSelectListWithDescription:nil name:nameOfField withString:selectedString];
     };
@@ -215,8 +228,8 @@ NSMutableDictionary* keyValue;
         [data addEntriesFromDictionary:@{@"accStoreyNo":_contents[2][4][1]}];
     }
     
-    if (((NSString*)_contents[1][11][1]).length > 0 && ![_contents[1][11][1] isEqualToString:_propertyModel.accStoreyNo]) {
-        [data addEntriesFromDictionary:@{@"address":_contents[1][11][1]}];
+    if (((NSString*)_contents[1][12][1]).length > 0 && ![_contents[1][12][1] isEqualToString:_propertyModel.accStoreyNo]) {
+        [data addEntriesFromDictionary:@{@"address":_contents[1][12][1]}];
     }
     
     if (((NSString*)_contents[1][13][1]).length > 0 && ![_contents[1][13][1] isEqualToString:_propertyModel.approvingAuthority]) {
@@ -242,8 +255,8 @@ NSMutableDictionary* keyValue;
         [data addEntriesFromDictionary:@{@"landUse":_contents[1][16][1]}];
     }
     
-    if (((NSString*)_contents[1][12][1]).length > 0 && ![[DIHelpers convertDateToMySQLFormat:_contents[1][12][1]] isEqualToString:_propertyModel.leaseExpiryDate]) {
-        [data addEntriesFromDictionary:@{@"leaseExpiryDate":[DIHelpers convertDateToMySQLFormat:_contents[1][12][1]]}];
+    if (((NSString*)_contents[1][11][1]).length > 0 && ![[DIHelpers convertDateToMySQLFormat:_contents[1][11][1]] isEqualToString:_propertyModel.leaseExpiryDate]) {
+        [data addEntriesFromDictionary:@{@"leaseExpiryDate":[DIHelpers convertDateToMySQLFormat:_contents[1][11][1]]}];
     }
     
     NSMutableDictionary* propertyTitle = [NSMutableDictionary new];
@@ -488,7 +501,7 @@ NSMutableDictionary* keyValue;
         
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.rightFloatingText.tag = [self calcPrevRowCount:indexPath.section] + rows+1; // consider section 0
-
+        
         cell.leftFloatingText.placeholder = self.contents[indexPath.section][rows][0];
         cell.rightFloatingText.placeholder = self.contents[indexPath.section][rows+1][0];
         cell.leftFloatingText.text = self.contents[indexPath.section][rows][1];
@@ -504,11 +517,11 @@ NSMutableDictionary* keyValue;
         
         cell.rightFloatingText.delegate = self;
         cell.leftFloatingText.userInteractionEnabled = NO;
-        if (![_viewType isEqualToString:@"view"]) {
-            cell.rightFloatingText.userInteractionEnabled = YES;
-        } else {
-            cell.rightFloatingText.userInteractionEnabled = NO;
-        }
+//        if (![_viewType isEqualToString:@"view"]) {
+//            cell.rightFloatingText.userInteractionEnabled = YES;
+//        } else {
+//            cell.rightFloatingText.userInteractionEnabled = NO;
+//        }
         
         cell.rightDetailDisclosure.hidden = YES;
         if (indexPath.section == 1 ) {
@@ -518,11 +531,11 @@ NSMutableDictionary* keyValue;
                 cell.leftFloatingText.delegate = self;
                 cell.leftFloatingText.tag = 104;
                 cell.rightFloatingText.tag = 105;
-                if (![_viewType isEqualToString:@"view"]) {
-                    cell.leftFloatingText.userInteractionEnabled = YES;
-                } else {
-                    cell.rightFloatingText.userInteractionEnabled = NO;
-                }
+//                if (![_viewType isEqualToString:@"view"]) {
+//                    cell.leftFloatingText.userInteractionEnabled = YES;
+//                } else {
+//                    cell.rightFloatingText.userInteractionEnabled = NO;
+//                }
             }
         }
         
@@ -534,16 +547,16 @@ NSMutableDictionary* keyValue;
         NSInteger rows = indexPath.row;
         if (indexPath.section == 1) {
             rows += 3;
-            if (![_viewType isEqualToString:@"view"]) {
-                cell.rightType.userInteractionEnabled = YES;
-            } else {
-                cell.rightType.userInteractionEnabled = NO;
-            }
+//            if (![_viewType isEqualToString:@"view"]) {
+//                cell.rightType.userInteractionEnabled = YES;
+//            } else {
+//                cell.rightType.userInteractionEnabled = NO;
+//            }
             if (indexPath.row == 5) {
                 cell.rightType.userInteractionEnabled = NO;
             }
         }
-        
+        cell.delegate = self;
         if (indexPath.section == 3) {
             rows += 1;
             cell.rightType.userInteractionEnabled = NO;
@@ -565,20 +578,7 @@ NSMutableDictionary* keyValue;
     
     FloatingTextCell *cell = [tableView dequeueReusableCellWithIdentifier:[FloatingTextCell cellIdentifier] forIndexPath:indexPath];
     
-    int rows = (int)indexPath.row;
-    if (indexPath.section == 1) {
-        if (indexPath.row > 2 && indexPath.row < 5) {
-            rows += 3;
-        }
-        else if (indexPath.row > 5) {
-            rows += 4;
-        }
-        
-    } else if (indexPath.section == 3) {
-        if (indexPath.row > 0) {
-            rows += 1;
-        }
-    }
+    NSInteger rows = [self calcRow:indexPath];
     
     cell.floatingTextField.tag = [self calcPrevRowCount:indexPath.section] + rows;
     
@@ -590,13 +590,12 @@ NSMutableDictionary* keyValue;
     cell.leftUtilityButtons = [self leftButtons];
     cell.delegate = self;
 
-    
     cell.accessoryType = UITableViewCellAccessoryNone;
-    if (![_viewType isEqualToString:@"view"]) {
-        cell.floatingTextField.userInteractionEnabled = YES;
-    } else {
-        cell.floatingTextField.userInteractionEnabled = NO;
-    }
+//    if (![_viewType isEqualToString:@"view"]) {
+//        cell.floatingTextField.userInteractionEnabled = YES;
+//    } else {
+//        cell.floatingTextField.userInteractionEnabled = NO;
+//    }
     cell.floatingTextField.delegate = self;
     if (indexPath.section == 0) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -605,7 +604,7 @@ NSMutableDictionary* keyValue;
         }
         cell.floatingTextField.userInteractionEnabled = NO;
     } else if (indexPath.section == 1) {
-        if (indexPath.row == 6 || (indexPath.row >= 8  && indexPath.row <= 12)) {
+        if (indexPath.row == 6 || indexPath.row == 7 || (indexPath.row >= 9  && indexPath.row <= 12)) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.floatingTextField.userInteractionEnabled = NO;
         }
@@ -623,7 +622,7 @@ NSMutableDictionary* keyValue;
             cell.floatingTextField.userInteractionEnabled = NO;
         }
         if (indexPath.row == 4) {
-            cell.floatingTextField.keyboardType = UIKeyboardTypeNumberPad;
+            cell.floatingTextField.keyboardType = UIKeyboardTypeDefault;
         } else {
             cell.floatingTextField.keyboardType = UIKeyboardTypeDefault;
         }
@@ -655,10 +654,30 @@ NSMutableDictionary* keyValue;
     return leftUtilityButtons;
 }
 
+- (NSInteger) calcRow:(NSIndexPath*) indexPath {
+    NSInteger rows = indexPath.row;
+    if (indexPath.section == 1) {
+        if (indexPath.row > 2 && indexPath.row < 5) {
+            rows += 3;
+        }
+        else if (indexPath.row > 5) {
+            rows += 4;
+        }
+    } else if (indexPath.section == 3) {
+        if (indexPath.row > 0) {
+            rows += 1;
+        }
+    }
+    return rows;
+}
+
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     [cell hideUtilityButtonsAnimated:YES];
-    [self replaceContentForSection:indexPath.section InRow:indexPath.row withValue:@""];
+    NSInteger rows = [self calcRow:indexPath];
+    
+    
+    [self replaceContentForSection:indexPath.section InRow:rows withValue:@""];
 }
 
 #pragma mark - UITextField Delegate
@@ -668,7 +687,8 @@ NSMutableDictionary* keyValue;
     if (textField.tag == 104) {
         titleOfList = @"Select Mukim Type";
         nameOfField = self.contents[1][4][0];
-        [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_MUKIM_TYPE_GET_URL];
+//        [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_MUKIM_TYPE_GET_URL];
+        [self showAutocomplete:PROPERTY_MUKIM_TYPE_GET_URL];
         return NO;
     } else if (textField.tag == 105) {
         [self performSegueWithIdentifier:kMukimValueSegue sender:nil];
@@ -791,9 +811,9 @@ NSMutableDictionary* keyValue;
 - (void)tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ([_viewType isEqualToString:@"view"]) {
-        return;
-    }
+//    if ([_viewType isEqualToString:@"view"]) {
+//        return;
+//    }
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             titleOfList = @"Select Property Type";
@@ -836,24 +856,27 @@ NSMutableDictionary* keyValue;
             titleOfList = @"Tenure Type of Property";
             nameOfField = self.contents[indexPath.section][rows][0];
             [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_TENURE_TYPE_GET_URL];
-        } else if (indexPath.row == 8) {
+        } else if (indexPath.row == 7) {
             [self showCalendar];
         } else if (indexPath.row == 9) {
-            titleOfList = @"Restriction of Property";
+            titleOfList = @"Restriction in Interest";
             nameOfField = self.contents[indexPath.section][rows][0];
             [self performSegueWithIdentifier:kListWithCodeSegue sender:PROPERTY_RESTRICTION_GET_URL];
         } else if (indexPath.row == 10) {
-            titleOfList = @"Restriction Against of Property";
+            titleOfList = @"Restriction Against";
             nameOfField = self.contents[indexPath.section][rows][0];
-            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_RESTRICTION_AGAINST_GET_URL];
+//            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_RESTRICTION_AGAINST_GET_URL];
+            [self showDetailAutoComplete:PROPERTY_RESTRICTION_AGAINST_GET_URL];
         }else if (indexPath.row == 11) {
             titleOfList = @"Approving Authority";
             nameOfField = self.contents[indexPath.section][rows][0];
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:PROPERTY_APPROVING_AUTHORITY_GET_URL];
+//            [self performSegueWithIdentifier:kListWithCodeSegue sender:PROPERTY_APPROVING_AUTHORITY_GET_URL];
+            [self showDetailAutoComplete:PROPERTY_APPROVING_AUTHORITY_GET_URL];
         } else if (indexPath.row == 12) {
-            titleOfList = @"Conduse of Property";
+            titleOfList = @"Category of Land Use";
             nameOfField = self.contents[indexPath.section][rows][0];
-            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_LANDUSE_GET_URL];
+//            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_LANDUSE_GET_URL];
+            [self showAutocomplete:PROPERTY_LANDUSE_GET_URL];
         }
     } else if (indexPath.section == 3) {
         NSInteger rows = indexPath.row;
@@ -862,9 +885,10 @@ NSMutableDictionary* keyValue;
         }
        
         if (indexPath.row == 0) {
-            titleOfList = @"Parcel Type of Property";
+            titleOfList = @"Parcel Type";
             nameOfField = self.contents[indexPath.section][rows][0];
-            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_PARCEL_TYPE_GETLIST_URL];
+            [self showAutocomplete:PROPERTY_PARCEL_TYPE_GETLIST_URL];
+//            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_PARCEL_TYPE_GETLIST_URL];
         } else if (indexPath.row == 5) {
             titleOfList = @"Measurement Type of Property";
             nameOfField = self.contents[indexPath.section][rows+1][0];

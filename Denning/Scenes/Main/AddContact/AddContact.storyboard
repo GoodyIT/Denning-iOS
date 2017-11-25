@@ -35,6 +35,14 @@
             </objects>
             <point key="canvasLocation" x="6931" y="1960"/>
         </scene>
+        <!--DashboardContactNavigation-->
+        <scene sceneID="fBQ-Pz-VMV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="dashboard" referencedIdentifier="DashboardContactNavigation" id="aDR-6m-LkW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XQg-fM-7M8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7531" y="940"/>
+        </scene>
         <!--AddReceiptNavigation-->
         <scene sceneID="Q4b-kj-CMc">
             <objects>
@@ -161,7 +169,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8LI-oP-a0Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7649" y="1349"/>
+            <point key="canvasLocation" x="7830" y="1349"/>
         </scene>
         <!--Select Preset Bill-->
         <scene sceneID="rcZ-pd-j5A">
@@ -1276,6 +1284,7 @@
                         <segue destination="QjC-NT-5yR" kind="presentation" identifier="TaxSelectionSegue" id="van-R0-R7y"/>
                         <segue destination="uym-zz-fje" kind="show" identifier="TaxBillContactSegue" id="Z54-EA-HtM"/>
                         <segue destination="2Cj-sM-7of" kind="show" identifier="AddBillSegue" id="9aE-LO-ISd"/>
+                        <segue destination="aDR-6m-LkW" kind="show" identifier="DashboardContactSegue" id="zXn-gN-8dM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0eV-cB-dzl" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -13,6 +13,21 @@
 + (MatterCodeModel*) getMatterCodeFromResponse:(NSDictionary*) response
 {
     MatterCodeModel* model = [MatterCodeModel new];
+    if (response == nil) {
+        model.category = @"";
+        model.matterCode = @"";
+        model.matterDescription = @"";
+        model.department = @"";
+        model.formName = @"";
+        model.groupName1 = @"";
+        model.groupName2 = @"";
+        model.groupName3 = @"";
+        model.groupName4 = @"";
+        model.groupName5 = @"";
+        model.isRental = @"";
+        model.turnAround = @"";
+        return model;
+    }
     model.category = [response valueForKeyNotNull:@"category"];
     model.matterCode = [response valueForKeyNotNull:@"code"];
     model.matterDescription = [response valueForKeyNotNull:@"description"];

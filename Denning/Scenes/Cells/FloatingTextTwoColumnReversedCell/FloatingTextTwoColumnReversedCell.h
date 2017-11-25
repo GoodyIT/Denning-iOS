@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DIGeneralCell.h"
+#import "GeneralContactCell.h"
 
-@interface FloatingTextTwoColumnReversedCell : DIGeneralCell
+@interface FloatingTextTwoColumnReversedCell : GeneralContactCell
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *leftValue;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *rightType;
 
