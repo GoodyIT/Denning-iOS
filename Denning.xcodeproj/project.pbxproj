@@ -8991,8 +8991,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Denning/Pods-Denning-resources.sh",
 				"${PODS_ROOT}/Digits/iOS/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebaseAuthUI.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/FirebaseUI/FirebasePhoneAuthUI.bundle,
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-magnify-glass.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-magnify-glass@2x.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-shadow.png",
@@ -9000,15 +9000,15 @@
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/Images/gl-calendar-shadow@3x.png",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarDayCell/GLCalendarDayCell.xib",
 				"${PODS_ROOT}/GLCalendarView/GLCalendarView/Sources/GLCalendarView.xib",
-				"$PODS_CONFIGURATION_BUILD_DIR/NYTPhotoViewer/NYTPhotoViewer.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/NYTPhotoViewer/NYTPhotoViewer.bundle,
 				"${PODS_ROOT}/QMChatViewController/QMChatViewController/Icons/Media.xcassets",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMChatViewController/QMChatViewController.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMChatCacheModel.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMContactListCacheModel.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMUsersCacheModel.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMOpenGraphCacheModel.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/QMChatViewController/QMChatViewController.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMChatCacheModel.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMContactListCacheModel.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMUsersCacheModel.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/QMServices/QMOpenGraphCacheModel.bundle,
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (

@@ -5073,7 +5073,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
@@ -5086,7 +5086,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "-[QMNetworkManager removeFavoriteContact:withCompletion:]"
@@ -5101,7 +5101,7 @@
                   offsetFromSymbolStart = "429">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "__57-[QMNetworkManager removeFavoriteContact:withCompletion:]_block_invoke"
@@ -5195,6 +5195,22 @@
             startingLineNumber = "287"
             endingLineNumber = "287"
             landmarkName = "-addContactToFavoriteList:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Message tab/Denning Contact View/View Controllers/QMContactsViewController/DenningContactViewController.m"
+            timestampString = "533346078.085681"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
+            landmarkName = "-removeContactFromFavoriteList:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
