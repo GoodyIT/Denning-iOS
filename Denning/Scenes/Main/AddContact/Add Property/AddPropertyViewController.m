@@ -109,7 +109,7 @@ NSMutableDictionary* keyValue;
     
     NSArray* temp = @[
                       @[@[@"Property Type", @""], @[@"Individual / Strata Title", @""], @[@"ID (System assinged)", @""]],
-                      @[@[@"Title Type", @""], @[@"Title No.", @""], @[@"Lot Type", @""], @[@"Lot / PT No.", @""], @[@"Mukim Type", @""], @[@"Mukim", @""], @[@"Daerah", @""], @[@"Negeri", @""],  @[@"Area Value", @""], @[@"Area Type", @""], @[@"Tenure", @""], @[@"Lease Expiry Date", @""], @[@"Address / Place", @""], @[@"Lease Expiry Date", @""], @[@"Restriction in Interest", @""], @[@"Restriction Against", @""], @[@"Approving Authority", @""], @[@"Category of Land Use", @""]
+                      @[@[@"Title Type", @""], @[@"Title No.", @""], @[@"Lot Type", @""], @[@"Lot / PT No.", @""], @[@"Mukim Type", @""], @[@"Mukim", @""], @[@"Daerah", @""], @[@"Negeri", @""],  @[@"Area Value", @""], @[@"Area Type", @""], @[@"Tenure", @""], @[@"Lease Expiry Date", @""], @[@"Address / Place", @""], @[@"Restriction in Interest", @""], @[@"Restriction Against", @""], @[@"Approving Authority", @""], @[@"Category of Land Use", @""]
                         ],
                       @[@[@"Parcel No.", @""], @[@"Storey No.", @""], @[@"Building No", @""], @[@"Accessory Prcel No.", @""], @[@"Accessory Storey No.", @""], @[@"Accessory Building No.", @""], @[@"Units of Shares", @""], @[@"Total Shares", @""]],
                       @[@[@"Parcel Type", @""], @[@"Unit/Parcel No.", @""], @[@"Storey No.", @""], @[@"Building/Block No.", @""], @[@"Apt/Condo name", @""], @[@"Accessory Parcel No", @""], @[@"SPA Area", @""], @[@"Measurement Unit", @""]],
@@ -406,17 +406,66 @@ NSMutableDictionary* keyValue;
     }];
 }
 
+- (BOOL) checkValidation {
+    if (((NSString*)_contents[0][0][1]).length == 0) {
+        [QMAlert showAlertWithMessage:@"Please Select Property Type" actionSuccess:NO inViewController:self];
+        return NO;
+    }
+    if (((NSString*)_contents[0][1][1]).length == 0) {
+        if ([_contents[0][1][1] isEqualToString:@"Issued"]) {
+            if (((NSString*)_contents[1][0][1]).length == 0) {
+                [QMAlert showAlertWithMessage:@"Please Select Title Type" actionSuccess:NO inViewController:self];
+                return NO;
+            }
+            if (((NSString*)_contents[1][1][1]).length == 0) {
+                [QMAlert showAlertWithMessage:@"Please Select Title No" actionSuccess:NO inViewController:self];
+                return NO;
+            }
+            if (((NSString*)_contents[1][2][1]).length == 0) {
+                [QMAlert showAlertWithMessage:@"Please Select Lot Type" actionSuccess:NO inViewController:self];
+                return NO;
+            }
+            if (((NSString*)_contents[1][3][1]).length == 0) {
+                [QMAlert showAlertWithMessage:@"Please Select Lot No" actionSuccess:NO inViewController:self];
+                return NO;
+            }
+        } else {
+            if (((NSString*)_contents[3][0][1]).length == 0) {
+                [QMAlert showAlertWithMessage:@"Please Select Parcel Type" actionSuccess:NO inViewController:self];
+                return NO;
+            }
+            if (((NSString*)_contents[2][0][1]).length == 0) {
+                [QMAlert showAlertWithMessage:@"Please Select Parcel No" actionSuccess:NO inViewController:self];
+                return NO;
+            }
+            if (((NSString*)_contents[2][1][1]).length == 0) {
+                [QMAlert showAlertWithMessage:@"Please Select Storey No" actionSuccess:NO inViewController:self];
+                return NO;
+            }
+        }
+    } else {
+        [QMAlert showAlertWithMessage:@"Please Select Individual/Strata Title" actionSuccess:NO inViewController:self];
+        return NO;
+    }
+    
+    return YES;
+}
+
 - (IBAction)saveProperty:(id)sender {
     NSMutableDictionary* params = [self buildParams];
     if ([_viewType isEqualToString:@"view"]) {
         [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
         [QMAlert showConfirmDialog:@"Do you want to update contact?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
-                [self _update:params];
+                if ([self checkValidation]) {
+                    [self _update:params];
+                }
             }
         }];
     } else {
-        [self _save:params];
+        if ([self checkValidation]) {
+            [self _save:params];
+        }
     }
 }
 
@@ -501,7 +550,8 @@ NSMutableDictionary* keyValue;
         
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.rightFloatingText.tag = [self calcPrevRowCount:indexPath.section] + rows+1; // consider section 0
-        
+        cell.delegate = self;
+        cell.leftUtilityButtons = [self leftButtons];
         cell.leftFloatingText.placeholder = self.contents[indexPath.section][rows][0];
         cell.rightFloatingText.placeholder = self.contents[indexPath.section][rows+1][0];
         cell.leftFloatingText.text = self.contents[indexPath.section][rows][1];
@@ -556,15 +606,17 @@ NSMutableDictionary* keyValue;
                 cell.rightType.userInteractionEnabled = NO;
             }
         }
-        cell.delegate = self;
         if (indexPath.section == 3) {
             rows += 1;
             cell.rightType.userInteractionEnabled = NO;
         }
-        
+        cell.delegate = self;
+        cell.leftUtilityButtons = [self leftButtons];
         cell.leftValue.delegate = self;
         cell.leftValue.keyboardType = UIKeyboardTypeDecimalPad;
         cell.leftValue.tag = [self calcPrevRowCount:indexPath.section] + rows;
+        cell.leftValue.delegate = self;
+        
         cell.leftValue.placeholder = self.contents[indexPath.section][rows][0];
         cell.rightType.placeholder = self.contents[indexPath.section][rows+1][0];
         cell.leftValue.text = self.contents[indexPath.section][rows][1];
@@ -675,9 +727,28 @@ NSMutableDictionary* keyValue;
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     [cell hideUtilityButtonsAnimated:YES];
     NSInteger rows = [self calcRow:indexPath];
-    
-    
-    [self replaceContentForSection:indexPath.section InRow:rows withValue:@""];
+    BOOL isTwoColumn = NO;
+    if (indexPath.section == 1) {
+        if (indexPath.row > 2 && indexPath.row < 5) {
+            rows += 3;
+            isTwoColumn = YES;
+        }
+        else if (indexPath.row > 5) {
+            rows += 4;
+            isTwoColumn = YES;
+        }
+    } else if (indexPath.section == 3) {
+        if (indexPath.row > 0) {
+            rows += 1;
+            isTwoColumn = YES;
+        }
+    }
+    if (isTwoColumn) {
+        [self replaceContentForSection:indexPath.section InRow:rows withValue:@""];
+        [self replaceContentForSection:indexPath.section InRow:rows+1 withValue:@""];
+    } else {
+        [self replaceContentForSection:indexPath.section InRow:rows withValue:@""];
+    }
 }
 
 #pragma mark - UITextField Delegate
@@ -708,7 +779,7 @@ NSMutableDictionary* keyValue;
         return NO;
     }
     
-    if (([obj[0] integerValue] == 3 && [obj[1] integerValue] == 5)) {
+    if (([obj[0] integerValue] == 3 && [obj[1] integerValue] == 6)) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         textField.text = [DIHelpers formatDecimal:text];;
         return NO;
@@ -803,7 +874,7 @@ NSMutableDictionary* keyValue;
     BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@
                                                                "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.updateHandler =  ^(NSString* date) {
-        [self replaceContentForSection:1 InRow:12 withValue:date];
+        [self replaceContentForSection:1 InRow:11 withValue:date];
     };
     [self showPopup:calendarViewController];
 }

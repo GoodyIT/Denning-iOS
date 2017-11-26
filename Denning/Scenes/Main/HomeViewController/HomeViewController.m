@@ -352,7 +352,7 @@ iCarouselDataSource, iCarouselDelegate>
     } else if (indexPath.row == 4) {
         [self performSegueWithIdentifier:kCalculateSegue sender:nil];
     } else if (indexPath.row == 5) {
-        [self getSharedFoldersWithCompletion:nil];
+        [self getSharedFolder];
     } else if (indexPath.row == 6) {
         [self showComingSoon];
         
@@ -368,11 +368,7 @@ iCarouselDataSource, iCarouselDelegate>
             [self performSegueWithIdentifier:kAttendanceSegue sender:nil];
         }
     } else if (indexPath.row == 9) { // File Upload
-        if ([DataManager sharedManager].user.userType.length == 0) {
-            [QMAlert showAlertWithMessage:@"Please subscribe to the denning app" actionSuccess:NO inViewController:self];
-            return;
-        }
-        [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
+        [self gotoUpload];
     } else if (indexPath.row == 10) { // Calendar
         if (![[DataManager sharedManager].user.userType isEqualToString:@""]) {
             [self geteventsArrayWithCompletion:^(NSArray * array) {
@@ -389,44 +385,27 @@ iCarouselDataSource, iCarouselDelegate>
     cell.backgroundColor = [UIColor whiteColor];
 }
 
-
-- (void)tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (hideCells) {
-        [self performSegueWithIdentifier:kCalculateSegue sender:nil];
-    } else {
-        if (indexPath.row == 0) {
-            [self getLatestNewsWithCompletion:^(NSArray *array) {
-                [self performSegueWithIdentifier:kNewsSegue sender:array];
-            }];
-        } else if (indexPath.row == 1) {
-            [self getLatestUpdatesWithCompletion:^(NSArray *array) {
-                [self performSegueWithIdentifier:kUpdateSegue sender:array];
-            }];
-        } else if (indexPath.row == 2) {
-            [self performSegueWithIdentifier:kCalculateSegue sender:nil];
-        } else if (indexPath.row == 3) {
-            [self getSharedFoldersWithCompletion:nil];
-        } else if (indexPath.row == 4) {
-            [self geteventsArrayWithCompletion:^(NSArray * array) {
-                [self performSegueWithIdentifier:kEventSegue sender:array];
-            }];
-        }
-    }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void) gotoUpload {
+    [DataManager sharedManager].documentView = @"upload";
+    [self loginAndGotoBranch];
 }
 
-- (void) getSharedFoldersWithCompletion: (void (^)(NSArray* array))completion
+- (void) getSharedFolder
 {
-    if (isLoading) return;
-    isLoading = YES;
+    [DataManager sharedManager].documentView = @"shared";
+    [self loginAndGotoBranch];
+}
+
+- (void) loginAndGotoBranch {
     if ([DataManager sharedManager].user.password.length == 0) {
         // go to login
         [self performSegueWithIdentifier:kAuthSegue sender:nil];
     } else if (![[DataManager sharedManager].user.userType isEqualToString:@""]) {
+        
+        if (isLoading) return;
+        isLoading = YES;
         // denning or personal user can access the shared folder
-        [DataManager sharedManager].documentView = @"shared";
+        
         [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
         @weakify(self);
         [[QMNetworkManager sharedManager] userSignInWithEmail:[DataManager sharedManager].user.email password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary* responseObject) {
@@ -443,8 +422,6 @@ iCarouselDataSource, iCarouselDelegate>
     } else {
         // Public user cannot access the shared folder
         [QMAlert showAlertWithMessage:@"You cannot access this folder. please subscribe dening user" actionSuccess:NO inViewController:self];
-        self->isLoading = NO;
-        return;
     }
 }
 

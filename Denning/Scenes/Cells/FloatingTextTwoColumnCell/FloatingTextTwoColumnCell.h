@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DIGeneralCell.h"
+#import "GeneralContactCell.h"
 
 typedef void (^UpdateTypeHandler)(void);
 
 typedef void (^UpdateValueHandler)(void);
 
-@interface FloatingTextTwoColumnCell : DIGeneralCell
+@interface FloatingTextTwoColumnCell : GeneralContactCell
 @property (weak, nonatomic) IBOutlet UIImageView *rightDetailDisclosure;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *leftFloatingText;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *rightFloatingText;

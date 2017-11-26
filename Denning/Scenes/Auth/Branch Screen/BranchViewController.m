@@ -98,46 +98,56 @@
     return cell;
 }
 
-- (IBAction) gotoPasswordConfirm: (UIButton*) sender
-{
-    FirmURLModel* urlModel = self.firmArray[sender.tag];
+- (void) gotoUpload:(FirmURLModel*)urlModel  {
+    [DataManager sharedManager].tempServerURL = urlModel.firmServerURL;
+    [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
+}
+
+- (void) proceedLogin:(FirmURLModel*)urlModel {
+//    FirmURLModel* urlModel = self.firmArray[sender.tag];
     [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
-    
-    if (![[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
-        if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"] && ![[DataManager sharedManager].user.userType isEqualToString:@"personal"]){
-            if ([[DataManager sharedManager].statusCode  isEqual: @(250)]) {
-                [self performSegueWithIdentifier:kPasswordConfirmSegue sender:nil];
-            } else {
-                [self performSegueWithIdentifier:kPersonalFolderSegue sender:urlModel.document];
-            }
+    if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"] && ![[DataManager sharedManager].user.userType isEqualToString:@"personal"]){
+        if ([[DataManager sharedManager].statusCode  isEqual: @(250)]) {
+            [self performSegueWithIdentifier:kPasswordConfirmSegue sender:nil];
         } else {
-            if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
-                [[QMNetworkManager sharedManager] denningSignIn:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSString * _Nonnull error, NSDictionary * _Nonnull responseObject) {
-                    if (error == nil) {
-                        [[DataManager sharedManager] setSessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
-                        [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-                    } else {
-                        [QMAlert showAlertWithMessage:error.localizedLowercaseString actionSuccess:NO inViewController:self];
-                    }
-                }];
-            } else {
-                NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_CLIENT_SIGNIN];
-                [[QMNetworkManager sharedManager] clientSignIn:url password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSString * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
-                    if (error == nil) {
-                        [[DataManager sharedManager] setSessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
-                        if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqualToString:@"200"]) {
-                            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-                        } else {
-                            [self performSegueWithIdentifier:kPasswordConfirmSegue sender:nil];
-                        }
-                    } else {
-                        [QMAlert showAlertWithMessage:error.localizedLowercaseString actionSuccess:NO inViewController:self];
-                    }
-                }];
-            }
+            [self performSegueWithIdentifier:kPersonalFolderSegue sender:urlModel.document];
         }
     } else {
-        [self gotoSharedFolder];
+        if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+            [[QMNetworkManager sharedManager] denningSignIn:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSString * _Nonnull error, NSDictionary * _Nonnull responseObject) {
+                if (error == nil) {
+                    [[DataManager sharedManager] setSessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+                    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+                } else {
+                    [QMAlert showAlertWithMessage:error.localizedLowercaseString actionSuccess:NO inViewController:self];
+                }
+            }];
+        } else {
+            NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_CLIENT_SIGNIN];
+            [[QMNetworkManager sharedManager] clientSignIn:url password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSString * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
+                if (error == nil) {
+                    [[DataManager sharedManager] setSessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+                    if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqualToString:@"200"]) {
+                        [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+                    } else {
+                        [self performSegueWithIdentifier:kPasswordConfirmSegue sender:nil];
+                    }
+                } else {
+                    [QMAlert showAlertWithMessage:error.localizedLowercaseString actionSuccess:NO inViewController:self];
+                }
+            }];
+        }
+    }
+}
+
+- (IBAction) gotoPasswordConfirm: (UIButton*) sender
+{
+    if ([[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
+        [self gotoSharedFolder:self.firmArray[sender.tag]];
+    } else if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
+        [self gotoUpload:self.firmArray[sender.tag]];
+    } else {
+        [self proceedLogin:self.firmArray[sender.tag]];
     }
 }
 
@@ -160,7 +170,8 @@
     [self presentViewController:alert animated:YES completion:nil]; // 6
 }
 
-- (void) gotoSharedFolder {
+- (void) gotoSharedFolder:(FirmURLModel*)urlModel  {
+    [DataManager sharedManager].tempServerURL = urlModel.firmServerURL;
     [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
     @weakify(self);
     NSString *password = [DataManager sharedManager].user.password;

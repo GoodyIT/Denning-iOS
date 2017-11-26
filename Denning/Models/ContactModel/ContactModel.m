@@ -24,6 +24,7 @@
     contactModel.email = [response valueForKeyNotNull:@"emailAddress"];
     contactModel.address = [AddressModel getAddressFromResponse:[response objectForKeyNotNull:@"address"]];
     
+    contactModel.KPLama = [response valueForKeyNotNull:@"KPLama"];
     contactModel.dateOfBirth = [response valueForKeyNotNull:@"dateBirth"];
     contactModel.citizenShip = [response valueForKeyNotNull:@"citizenship"];
     contactModel.fax = [response valueForKeyNotNull:@"phoneFax"];

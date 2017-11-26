@@ -506,17 +506,17 @@
         return NO;
     }
     
-    if (![self checkPhoneValidation:homeCountryCallingCode selectedCountryCode:homeCountryCode textfield:self.phoneHome]) {
-        return NO;
-    }
+//    if (![self checkPhoneValidation:homeCountryCallingCode selectedCountryCode:homeCountryCode textfield:self.phoneHome]) {
+//        return NO;
+//    }
     
-    if (![self checkPhoneValidation:mobileCountryCallingCode selectedCountryCode:mobileCountryCode textfield:self.phoneMobile]) {
-        return NO;
-    }
+//    if (![self checkPhoneValidation:mobileCountryCallingCode selectedCountryCode:mobileCountryCode textfield:self.phoneMobile]) {
+//        return NO;
+//    }
     
-    if (![self checkPhoneValidation:officeCountryCallingCode selectedCountryCode:officeCountryCode textfield:self.phoneOffice]) {
-        return NO;
-    }
+//    if (![self checkPhoneValidation:officeCountryCallingCode selectedCountryCode:officeCountryCode textfield:self.phoneOffice]) {
+//        return NO;
+//    }
     
     return YES;
 }
