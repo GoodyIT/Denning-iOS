@@ -23,8 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnBreak;
 @property (weak, nonatomic) IBOutlet UIView *headerBackground;
 
-@property (strong, nonatomic) AttendanceModel* attendanceModel;
-
 @end
 
 @implementation Attendance
@@ -34,7 +32,9 @@
     // Do any additional setup after loading the view.
     [self prepareUI];
     [self registerNibs];
-    [self getAttendanceModel];
+    [self updateHeader];
+//    [self.tableView reloadData];
+//    [self getAttendanceModel];
 }
 
 - (void)didReceiveMemoryWarning {

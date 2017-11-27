@@ -23,6 +23,7 @@
 #import "AddPropertyViewController.h"
 #import "AddMatterViewController.h"
 #import "CommonTextCell.h"
+#import "MatterNewLastCell.h"
 #import "NewContactHeaderCell.h"
 #import "Template.h"
 #import "FileUpload.h"
@@ -41,11 +42,12 @@ enum MATTERSECTION {
     IMPORTANT_DATES_SECTION,
     OTHER_INFO_SECTION,
     FILE_LEDGER_SECTION,
+    PAYMENT_RECORT_SECTION,
     
     section_count
 };
 
-@interface RelatedMatterViewController ()<MatterLastCellDelegate, NewContactHeaderCellDelegate>
+@interface RelatedMatterViewController ()<MatterLastCellDelegate, NewContactHeaderCellDelegate, MatterNewLastCellDelegate>
 {
     __block BOOL isLoading;
 }
@@ -98,6 +100,7 @@ enum MATTERSECTION {
     [ContactCell registerForReuseInTableView:self.tableView];
     [MatterLastCell registerForReuseInTableView:self.tableView];
     [MatterPropertyCell registerForReuseInTableView:self.tableView];
+    [MatterNewLastCell registerForReuseInTableView:self.tableView];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
 }
@@ -170,6 +173,9 @@ enum MATTERSECTION {
             return relatedMatterModel.textGroupArray.count;
             break;
         case FILE_LEDGER_SECTION: // File Folder & Ledger
+            return 1;
+            break;
+        case PAYMENT_RECORT_SECTION:
             return 1;
             break;
             
@@ -342,7 +348,7 @@ enum MATTERSECTION {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == HEADER_SECTION) {
+    if (section == HEADER_SECTION || section == PAYMENT_RECORT_SECTION) {
         return 0;
     }
     return kDefaultAccordionHeaderViewHeight;
@@ -451,6 +457,15 @@ enum MATTERSECTION {
         cell.matterLastCellDelegate = self;
         cell.accessoryType = UITableViewCellAccessoryNone;
         return cell;
+    } else if (indexPath.section == PAYMENT_RECORT_SECTION) { // FIle & Ledger
+        
+        MatterNewLastCell *cell = [tableView dequeueReusableCellWithIdentifier:[MatterNewLastCell cellIdentifier] forIndexPath:indexPath];
+        
+        [cell configureCellWithModfel:relatedMatterModel];
+        
+        cell.matterNewLastCellDelegate = self;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        return cell;
     }
 
     return cell;
@@ -463,24 +478,24 @@ enum MATTERSECTION {
 }
 
 #pragma mark - LastTableCellDelegate
-- (void) didTapPaymentRecord:(MatterLastCell *)cell
+- (void) didTapPaymentRecord:(MatterNewLastCell *)cell
 {
     [self performSegueWithIdentifier:kPaymentSegue sender:self.relatedMatterModel.systemNo];
+}
+
+- (void) didTapUpload:(MatterNewLastCell *)cell fileNo:(NSString *)fileNo
+{
+    [self performSegueWithIdentifier:kFileUploadSegue sender:fileNo];
+}
+
+- (void) didTapTemplate:(MatterNewLastCell *)cell withModel:(SearchResultModel *)model
+{
+    [self performSegueWithIdentifier:kTemplateSegue sender:model];
 }
 
 - (void) didTapFileNote:(MatterLastCell *)cell
 {
     [self performSegueWithIdentifier:kFileNoteListSegue sender:nil];
-}
-
-- (void) didTapUpload:(MatterLastCell *)cell fileNo:(NSString *)fileNo
-{
-    [self performSegueWithIdentifier:kFileUploadSegue sender:fileNo];
-}
-
-- (void) didTapTemplate:(MatterLastCell *)cell withModel:(SearchResultModel *)model
-{
-    [self performSegueWithIdentifier:kTemplateSegue sender:model];
 }
 
 - (void) didTapFileFolder:(MatterLastCell *)cell
@@ -557,7 +572,9 @@ enum MATTERSECTION {
         vc.model = sender;
     }else if ([segue.identifier isEqualToString:kTemplateSegue]){
         Template* vc = segue.destinationViewController;
-        vc.model = sender;
+        RelatedMatterModel* model = sender;
+        vc.fileNoLabel = model.systemNo;
+        vc.fileNameLabel = model.clientName;
     }else if ([segue.identifier isEqualToString:kFileUploadSegue]){
         UINavigationController* navC = segue.destinationViewController;
         FileUpload* vc = navC.viewControllers.firstObject;

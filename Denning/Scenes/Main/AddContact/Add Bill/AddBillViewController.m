@@ -475,12 +475,12 @@ NSMutableDictionary* keyValue;
     cell.floatingTextField.floatLabelActiveColor = cell.floatingTextField.floatLabelPassiveColor = [UIColor redColor];
     cell.floatingTextField.delegate = self;
     cell.floatingTextField.inputAccessoryView = accessoryView;
-    cell.floatingTextField.tag = indexPath.row;
+    cell.floatingTextField.tag = indexPath.section * 10 + indexPath.row;
     cell.leftUtilityButtons = [self leftButtons];
     cell.delegate = self;
     
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.floatingTextField.userInteractionEnabled = YES;
+    cell.floatingTextField.userInteractionEnabled = NO;
     if (indexPath.section == 0) {
         if (indexPath.row == 0 || indexPath.row == 2 || indexPath.row == 3  || indexPath.row == 4  || indexPath.row == 5) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -556,8 +556,11 @@ NSMutableDictionary* keyValue;
 }
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-    return YES;
+    if (textField.tag > 5 && textField.tag < 10) {
+        _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
+        return YES;
+    }
+     return NO;
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -566,6 +569,7 @@ NSMutableDictionary* keyValue;
     if (textField.tag == 6 || textField.tag == 7 || textField.tag == 8 || textField.tag == 9) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         textField.text = [DIHelpers formatDecimal:text];
+        return YES;
     }
     return NO;
 }

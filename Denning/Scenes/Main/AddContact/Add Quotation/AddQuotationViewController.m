@@ -592,8 +592,11 @@ NSMutableDictionary* keyValue;
 }
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-    return YES;
+    if (textField.tag == 5 || textField.tag == 6 || textField.tag == 7 || textField.tag == 8) {
+        _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
+        return YES;
+    }
+    return NO;
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -602,6 +605,7 @@ NSMutableDictionary* keyValue;
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         
         textField.text = [DIHelpers formatDecimal:text];
+        return YES;
     }
     
     return NO;

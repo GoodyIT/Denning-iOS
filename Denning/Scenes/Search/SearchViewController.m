@@ -1067,7 +1067,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     
     if ([segue.identifier isEqualToString:kTemplateSegue]){
         Template* vc = segue.destinationViewController;
-        vc.model = sender;
+        SearchResultModel* model = sender;
+        vc.fileNoLabel = [DIHelpers separateFileNameAndNoFromTitle:model.title][0];
+        vc.fileNameLabel = [DIHelpers separateFileNameAndNoFromTitle:model.title][1];
     }
     
     if ([segue.identifier isEqualToString:kClientFileUploadSegue]){

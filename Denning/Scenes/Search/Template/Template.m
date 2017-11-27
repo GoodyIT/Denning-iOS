@@ -52,7 +52,6 @@ ContactListWithDescSelectionDelegate>
     [self updateHeaderInfo];
     [self registerNibs];
     [self configureSearch];
-
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -73,8 +72,8 @@ ContactListWithDescSelectionDelegate>
 }
 
 - (void) updateHeaderInfo {
-    _fileNo.text = [DIHelpers separateFileNameAndNoFromTitle:_model.title][0];
-    _fileName.text = [DIHelpers separateFileNameAndNoFromTitle:_model.title][1];
+    _fileNo.text = _fileNoLabel;
+    _fileName.text = _fileNameLabel;
 }
 
 - (void) configureSearch

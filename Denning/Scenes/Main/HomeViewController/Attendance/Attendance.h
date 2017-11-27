@@ -10,4 +10,6 @@
 
 @interface Attendance : UIViewController
 
+@property (strong, nonatomic) AttendanceModel* attendanceModel;
+
 @end

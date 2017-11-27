@@ -14,9 +14,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.paymentRecordBtn.titleLabel.minimumScaleFactor = 0.5f;
-    self.paymentRecordBtn.titleLabel.numberOfLines = 0;
-    self.paymentRecordBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
     self.fileFolderBtn.titleLabel.minimumScaleFactor = 0.5f;
     self.fileFolderBtn.titleLabel.numberOfLines = 0;
     self.fileFolderBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -38,19 +35,6 @@
 
 - (IBAction)tapFileNote:(id)sender {
     [self.matterLastCellDelegate  didTapFileNote:self];
-}
-
-- (IBAction)tapPaymentRecord:(id)sender {
-    [self.matterLastCellDelegate didTapPaymentRecord:self];
-}
-
-
-- (IBAction)tempateTapped:(id)sender {
-    [self.matterLastCellDelegate didTapTemplate:self withModel:_model];
-}
-
-- (IBAction)uploadTapped:(id)sender {
-    [self.matterLastCellDelegate didTapUpload:self fileNo:_model.systemNo];
 }
 
 - (void) configureCellWithModfel: (RelatedMatterModel*) model

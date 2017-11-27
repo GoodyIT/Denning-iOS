@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -17,21 +18,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="68" id="KGk-i7-Jjw" customClass="MatterLastCell">
-            <rect key="frame" x="0.0" y="0.0" width="403" height="68"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="KGk-i7-Jjw" customClass="MatterNewLastCell">
+            <rect key="frame" x="0.0" y="0.0" width="486" height="100"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="403" height="67.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="486" height="99.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Arp-B8-10p">
-                        <rect key="frame" x="28" y="14" width="347" height="40"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fqN-En-25u">
+                        <rect key="frame" x="28" y="30" width="430" height="40"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ww2-IT-tUb">
-                                <rect key="frame" x="0.0" y="0.0" width="109" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="es4-R6-JhK">
+                                <rect key="frame" x="0.0" y="0.0" width="136.5" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="File Folder">
+                                <state key="normal" title="Payment Record">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -41,14 +42,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="tapFileFolder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="btk-WW-90h"/>
+                                    <action selector="tapPaymentRecord:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lud-3J-95P"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXz-09-bGS">
-                                <rect key="frame" x="119" y="0.0" width="109" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXk-AE-dSf">
+                                <rect key="frame" x="146.5" y="0.0" width="137" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Accounts">
+                                <state key="normal" title="Upload">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -58,14 +59,14 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="tapAccounts:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Hsi-iH-YX4"/>
+                                    <action selector="uploadTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="viU-Rk-JmO"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yao-qt-Asd">
-                                <rect key="frame" x="238" y="0.0" width="109" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CNa-VR-naK">
+                                <rect key="frame" x="293.5" y="0.0" width="136.5" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="File Note">
+                                <state key="normal" title="Template">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -75,25 +76,26 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="tapFileNote:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xJJ-fR-1yy"/>
+                                    <action selector="tempateTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Dbp-Ba-pNe"/>
                                 </connections>
                             </button>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="zkT-O9-knV"/>
+                            <constraint firstAttribute="height" constant="40" id="9a3-7n-VbD"/>
                         </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Arp-B8-10p" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="MCN-vl-yNa"/>
-                    <constraint firstItem="Arp-B8-10p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="sMo-ZM-mua"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Arp-B8-10p" secondAttribute="trailing" constant="8" id="v7H-Qz-x19"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fqN-En-25u" secondAttribute="trailing" constant="8" id="90e-Wm-7Qo"/>
+                    <constraint firstItem="fqN-En-25u" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="jLB-Ec-X8q"/>
+                    <constraint firstItem="fqN-En-25u" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="k7P-sG-7dG"/>
                 </constraints>
             </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="fileFolderBtn" destination="Ww2-IT-tUb" id="xRf-3n-Phw"/>
+                <outlet property="paymentRecordBtn" destination="es4-R6-JhK" id="7At-aF-hBi"/>
             </connections>
-            <point key="canvasLocation" x="-155.5" y="-291"/>
+            <point key="canvasLocation" x="29" y="82"/>
         </tableViewCell>
     </objects>
 </document>

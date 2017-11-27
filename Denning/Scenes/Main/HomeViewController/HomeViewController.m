@@ -19,6 +19,7 @@
 #import "MenuCell.h"
 #import "ChangeBranchViewController.h"
 #import "MainTabBarController.h"
+#import "Attendance.h"
 
 @interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate,
     UITextFieldDelegate,
@@ -328,6 +329,29 @@ iCarouselDataSource, iCarouselDelegate>
 //    [QMAlert showInformationWithMessage:@"Coming Soon. Thank you for your support." inViewController:self];
 }
 
+- (void) handleResponse:(AttendanceModel*) result error:(NSError*) error {
+    if (!error) {
+        [self performSegueWithIdentifier:kAttendanceSegue sender:result];
+    } else {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription maskType:SVProgressHUDMaskTypeClear];
+    }
+}
+
+- (void) getAttendanceModel {
+    if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+        [QMAlert showAlertWithMessage:@"This function is revserved for only Staff." actionSuccess:NO inViewController:self];
+    } else if ([CLLocationManager locationServicesEnabled] == NO) {
+        [(AppDelegate*)[UIApplication sharedApplication] showDeniedLocation];
+    } else {
+        [SVProgressHUD show];
+        
+        [[QMNetworkManager sharedManager] getAttendanceListWithCompletion:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
+            [SVProgressHUD dismiss];
+            [self handleResponse:result error:error];
+        }];
+    }
+}
+
 #pragma mark -
 #pragma mark UICollectionViewDelegate
 
@@ -360,13 +384,7 @@ iCarouselDataSource, iCarouselDelegate>
         [self showComingSoon];
         
     } else if (indexPath.row == 8) { // Attendance
-        if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
-            [QMAlert showAlertWithMessage:@"This function is revserved for only Staff." actionSuccess:NO inViewController:self];
-        } else if ([CLLocationManager locationServicesEnabled] == NO) {
-            [(AppDelegate*)[UIApplication sharedApplication] showDeniedLocation];
-        } else {
-            [self performSegueWithIdentifier:kAttendanceSegue sender:nil];
-        }
+        [self getAttendanceModel];
     } else if (indexPath.row == 9) { // File Upload
         [self gotoUpload];
     } else if (indexPath.row == 10) { // Calendar
@@ -567,6 +585,10 @@ iCarouselDataSource, iCarouselDelegate>
     if ([segue.identifier isEqualToString:kChangeBranchSegue]){
         ChangeBranchViewController* changeBranchVC = segue.destinationViewController;
         changeBranchVC.branchArray = sender;
+    } else if ([segue.identifier isEqualToString:kAttendanceSegue]) {
+        UINavigationController* navVC = segue.destinationViewController;
+        Attendance* vc = navVC.viewControllers.firstObject;
+        vc.attendanceModel = sender;
     }
 }
 

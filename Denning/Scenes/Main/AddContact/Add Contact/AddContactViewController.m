@@ -653,6 +653,10 @@
         [data addEntriesFromDictionary:@{@"IDNo": _IDNo.text}];
     }
     
+    if (_oldIC.text.length > 0 && ![_oldIC.text isEqualToString:_contactModel.KPLama]) {
+        [data addEntriesFromDictionary:@{@"KPLama": _oldIC.text}];
+    }
+    
     if (selectedIDTypeCode.length > 0 && ![selectedIDTypeCode isEqualToString:_contactModel.idType.codeValue]) {
         [data addEntriesFromDictionary:@{@"idType": @{
                                                  @"code":[self getValidValue:selectedIDTypeCode]

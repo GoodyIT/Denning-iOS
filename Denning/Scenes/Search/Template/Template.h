@@ -12,4 +12,6 @@
 @interface Template : CustomDocumentViewController
 
 @property (strong, nonatomic) SearchResultModel* model;
+
+@property (strong, nonatomic) NSString* fileNameLabel, *fileNoLabel;
 @end

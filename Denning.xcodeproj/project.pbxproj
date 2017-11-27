@@ -83,6 +83,8 @@
 		79161CFB1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CF91FC95A0E0025BCB8 /* AddLastThreeButtonsCell.m */; };
 		79161CFC1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79161CFA1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib */; };
 		79161D001FC95EF00025BCB8 /* BillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161CFF1FC95EF00025BCB8 /* BillModel.m */; };
+		79161D101FCBA5EE0025BCB8 /* MatterNewLastCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79161D0E1FCBA5EE0025BCB8 /* MatterNewLastCell.m */; };
+		79161D111FCBA5EE0025BCB8 /* MatterNewLastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79161D0F1FCBA5EE0025BCB8 /* MatterNewLastCell.xib */; };
 		7920E7841E9E5D0C002FEFF3 /* icon_searchswitch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */; };
 		7920E7851E9E5D0C002FEFF3 /* icon_searchswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */; };
 		7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */; };
@@ -1230,6 +1232,9 @@
 		79161CFA1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddLastThreeButtonsCell.xib; sourceTree = "<group>"; };
 		79161CFE1FC95EF00025BCB8 /* BillModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BillModel.h; sourceTree = "<group>"; };
 		79161CFF1FC95EF00025BCB8 /* BillModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BillModel.m; sourceTree = "<group>"; };
+		79161D0D1FCBA5EE0025BCB8 /* MatterNewLastCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MatterNewLastCell.h; sourceTree = "<group>"; };
+		79161D0E1FCBA5EE0025BCB8 /* MatterNewLastCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MatterNewLastCell.m; sourceTree = "<group>"; };
+		79161D0F1FCBA5EE0025BCB8 /* MatterNewLastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MatterNewLastCell.xib; sourceTree = "<group>"; };
 		7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_searchswitch.png; sourceTree = "<group>"; };
 		7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@2x.png"; sourceTree = "<group>"; };
 		7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@3x.png"; sourceTree = "<group>"; };
@@ -3304,6 +3309,16 @@
 				79161CFF1FC95EF00025BCB8 /* BillModel.m */,
 			);
 			path = BillModel;
+			sourceTree = "<group>";
+		};
+		79161D0C1FCBA5E00025BCB8 /* MatterNewLastCell */ = {
+			isa = PBXGroup;
+			children = (
+				79161D0D1FCBA5EE0025BCB8 /* MatterNewLastCell.h */,
+				79161D0E1FCBA5EE0025BCB8 /* MatterNewLastCell.m */,
+				79161D0F1FCBA5EE0025BCB8 /* MatterNewLastCell.xib */,
+			);
+			path = MatterNewLastCell;
 			sourceTree = "<group>";
 		};
 		7920E7871E9F2B9D002FEFF3 /* Common */ = {
@@ -5991,6 +6006,7 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				79161D0C1FCBA5E00025BCB8 /* MatterNewLastCell */,
 				79161CF61FC959DB0025BCB8 /* AddLastThreeButtonsCell */,
 				79161CB01FC748F80025BCB8 /* ApprovalRecordCell */,
 				79161CA51FC744170025BCB8 /* PendingApprovalHeaderCell */,
@@ -8711,6 +8727,7 @@
 				7920E7A31E9FA747002FEFF3 /* icon_message_selected.png in Resources */,
 				9636DCDB1F03C6C8008DDA41 /* icon_db_tax_invoice@3x.png in Resources */,
 				79EC0D611E85520700320A28 /* splash_logo@3x.png in Resources */,
+				79161D111FCBA5EE0025BCB8 /* MatterNewLastCell.xib in Resources */,
 				79FF35061E97D95B001BECFB /* logo_label.png in Resources */,
 				793FF2281EC3F75B001F83A5 /* expandableImage_reverse@2x.png in Resources */,
 				79FF35021E97D95B001BECFB /* icon_share@3x.png in Resources */,
@@ -9202,6 +9219,7 @@
 				79FBE1011E304F5000448FE3 /* QMSelectableContactCell.m in Sources */,
 				79EC0EBC1E8BF82200320A28 /* CalendarViewController.m in Sources */,
 				960758961F01349F008F9C69 /* SecondMatterTypeCell.m in Sources */,
+				79161D101FCBA5EE0025BCB8 /* MatterNewLastCell.m in Sources */,
 				96D66EE31EFC4830003E3A4A /* DashboardMainModel.m in Sources */,
 				790B23A91E373A140037A187 /* FirmModel.m in Sources */,
 				79F7322B1E96A929004F88DF /* DEMODataSource.m in Sources */,

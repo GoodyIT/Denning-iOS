@@ -218,6 +218,7 @@
                         <segue destination="WAq-5t-4IA" kind="show" identifier="FileNoteListSegue" id="Gz4-Cw-Utg"/>
                         <segue destination="MOC-aM-pc9" kind="show" identifier="payment" id="ZU4-rS-eJ0"/>
                         <segue destination="xmK-x8-V5n" kind="show" identifier="AddMatterSegue" id="mq2-XE-11I"/>
+                        <segue destination="W88-Zi-DtO" kind="show" identifier="PaymentSegue" id="IKi-kN-Lop"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qj5-7H-mOg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -239,6 +240,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXb-HV-gJ8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7683" y="-848"/>
+        </scene>
+        <!--PaymentRecord-->
+        <scene sceneID="XX8-xP-ufJ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="PaymentRecord" id="W88-Zi-DtO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MY4-Qq-YKE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7483" y="76"/>
         </scene>
         <!--PaymentRecord-->
         <scene sceneID="v2J-Pb-nRM">
@@ -264,10 +273,10 @@
             </objects>
             <point key="canvasLocation" x="7807" y="-791"/>
         </scene>
-        <!--FileUpload-->
+        <!--FileUploadNavigation-->
         <scene sceneID="VKu-2g-PPM">
             <objects>
-                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="FileUpload" id="gGq-vG-mdk" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="FileUploadNavigation" id="gGq-vG-mdk" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0VI-zz-6am" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7603" y="-909"/>
@@ -378,7 +387,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Cr-o5-wYs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6788" y="197"/>
+            <point key="canvasLocation" x="6798" y="262"/>
         </scene>
         <!--Legal Firm-->
         <scene sceneID="pMe-BA-747">
@@ -535,7 +544,7 @@
                 <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="RelatedMatterViewController" id="KAB-sv-ED6" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EW9-cQ-aDO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7548" y="196"/>
+            <point key="canvasLocation" x="7542" y="327"/>
         </scene>
         <!--ClientUploadNavigation-->
         <scene sceneID="3F8-VX-l7J">
@@ -3110,7 +3119,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Glp-4P-4w9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6745" y="-2749"/>
+            <point key="canvasLocation" x="6743" y="-2695"/>
         </scene>
         <!--Suggested Filename-->
         <scene sceneID="Gez-OP-ZGL">
