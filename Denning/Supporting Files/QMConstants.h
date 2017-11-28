@@ -23,6 +23,7 @@ static NSString *const kQBPassword = @"denningIT";
 
 // storyboards
 static NSString *const kQMMainStoryboard = @"Main";
+static NSString *const kLicenseSegue = @"LicenseSegue";
 static NSString *const kQMChatStoryboard = @"Chat";
 static NSString *const kQMSettingsStoryboard = @"Settings";
 

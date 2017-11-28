@@ -76,6 +76,7 @@
 #import "JVFloatLabeledTextView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImage+Base64.h"
+#import "QMLicenseAgreement.h"
 
 #import "TimePickerViewController.h"
 #import "FZAccordionTableView.h"

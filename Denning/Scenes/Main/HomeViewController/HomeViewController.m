@@ -20,6 +20,7 @@
 #import "ChangeBranchViewController.h"
 #import "MainTabBarController.h"
 #import "Attendance.h"
+#import "QMChatVC.h"
 
 @interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate,
     UITextFieldDelegate,
@@ -589,6 +590,14 @@ iCarouselDataSource, iCarouselDelegate>
         UINavigationController* navVC = segue.destinationViewController;
         Attendance* vc = navVC.viewControllers.firstObject;
         vc.attendanceModel = sender;
+    } else if ([segue.identifier isEqualToString:kQMSceneSegueChat]) {
+        
+        QMNavigationController *chatNavigationController = segue.destinationViewController;
+        chatNavigationController.currentAdditionalNavigationBarHeight =
+        [(QMNavigationController *)self.navigationController currentAdditionalNavigationBarHeight];
+        
+        QMChatVC *chatViewController = (QMChatVC *)chatNavigationController.topViewController;
+        chatViewController.chatDialog = sender;
     }
 }
 

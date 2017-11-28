@@ -324,7 +324,7 @@ out here.</string>
         <!--Navigation Controller-->
         <scene sceneID="IUx-YH-HSL">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="t5g-eL-0FL" customClass="QMNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ChatNavigation" automaticallyAdjustsScrollViewInsets="NO" id="t5g-eL-0FL" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Le5-X1-1ff" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

@@ -11,6 +11,6 @@
 @interface QMLicenseAgreement : NSObject
 
 + (void)checkAcceptedUserAgreementInViewController:(UIViewController *)vc completion:(void(^)(BOOL success))completion;
-+ (void)presentUserAgreementInViewController:(UIViewController *)vc completion:(void(^)(BOOL success))completion;
++ (void)presentUserAgreementInViewController:(UIViewController *)vc contents:(NSString*) contents completion:(void(^)(BOOL success))completion;
 
 @end

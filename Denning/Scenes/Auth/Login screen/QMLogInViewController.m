@@ -142,7 +142,7 @@
     [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-        [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+//        [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
     });
 }
 

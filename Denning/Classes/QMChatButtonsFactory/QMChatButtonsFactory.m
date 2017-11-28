@@ -14,7 +14,7 @@
     
     UIButton *audioButton = [UIButton buttonWithType:UIButtonTypeCustom];
     audioButton.frame = CGRectMake(0, 0, 30, 40);
-    [audioButton setImage:[UIImage imageNamed:@"phone_icon"] forState:UIControlStateNormal];
+    [audioButton setImage:[UIImage imageNamed:@"phone-icon"] forState:UIControlStateNormal];
     return audioButton;
 }
 

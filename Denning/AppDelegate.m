@@ -10,6 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "QMCore.h"
 #import "QMImages.h"
+#import "QMColors.h"
 #import "QMHelpers.h"
 #import "QMNetworkManager.h"
 #import "DataManager.h"
@@ -95,34 +96,31 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [QBRTCConfig mediaStreamConfiguration].audioCodec = QBRTCAudioCodecISAC;
     [QBRTCConfig setStatsReportTimeInterval:0.0f]; // set to 1.0f to enable stats report
     
+    [[UISearchBar appearance] setSearchBarStyle:UISearchBarStyleMinimal];
+    [[UISearchBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UISearchBar appearance] setBackgroundImage:QMStatusBarBackgroundImage() forBarPosition:0 barMetrics:UIBarMetricsDefault];
+    
+    [[UITextField appearance] setTintColor:QMSecondaryApplicationColor()];
     [UITextField appearance].keyboardAppearance = UIKeyboardAppearanceDark;
     
     
     // Registering for remote notifications
-    [self registerForNotification];
+//    [self registerForNotification];
     // Handling push notifications if needed
-    if (launchOptions != nil) {
-        NSDictionary *pushNotification = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-        [QMCore instance].pushNotificationManager.pushNotification = pushNotification;
-    }
     
     [FIRApp configure];
     [[FIRAuth auth] useAppLanguage];
     // Configuring external frameworks
     [Fabric with:@[CrashlyticsKit,  [Answers class]]];
     
-    // setup app download store
-//    self.demoDownloadStore = [[DemoDownloadStore alloc] init];
-//
-//    // setup downloader
-//    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
-//        self.fileDownloader = [[HWIFileDownloader alloc] initWithDelegate:self.demoDownloadStore];
-//    [self.fileDownloader setupWithCompletion:nil];
-
+    if (launchOptions != nil) {
+        NSDictionary *pushNotification = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+        [QMCore instance].pushNotificationManager.pushNotification = pushNotification;
+    }
+    
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
 }
-
 
 #pragma mark - Push notification registration
 
@@ -158,6 +156,14 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 - (void)application:(UIApplication *)__unused application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     [[QMCore instance].pushNotificationManager updateToken:deviceToken];
+    
+    FIRAuthAPNSTokenType firTokenType;
+#if DEVELOPMENT == 0
+    firTokenType = FIRAuthAPNSTokenTypeProd;
+#else
+    firTokenType = FIRAuthAPNSTokenTypeSandbox;
+#endif
+    [[FIRAuth auth] setAPNSToken:deviceToken type:firTokenType];
 }
 
 - (void)application:(UIApplication *)__unused application
@@ -262,8 +268,15 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     }
 }
 
+- (void)application:(UIApplication *)__unused application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    if ([[FIRAuth auth] canHandleNotification:userInfo]) {
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
+}
+
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-   
+   application.applicationIconBadgeNumber = 0;
     [[QMCore instance].chatManager disconnectFromChatIfNeeded];
 }
 

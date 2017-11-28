@@ -17,11 +17,13 @@
 #import "DashboardViewController.h"
 #import "MainContactViewController.h"
 
-static const NSInteger kQMUnAuthorizedErrorCode = -1011;
+static const NSInteger kQMNotAuthorizedInRest = -1000;
+static const NSInteger kQMUnauthorizedErrorCode = -1011;
 
 @interface MainTabBarController ()
 <QMChatServiceDelegate,
-QMChatConnectionDelegate>
+QMChatConnectionDelegate,
+QMPushNotificationManagerDelegate>
 @property (nonatomic, strong) NSArray *menuItems;
 
 
@@ -32,24 +34,13 @@ QMChatConnectionDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[QMCore instance].chatService addDelegate:self];
-    
-    [self setNeedsStatusBarAppearanceUpdate];
     self.delegate = self;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
-
-//- (void)viewWillLayoutSubviews {
-//    
-//    CGRect tabFrame = self.tabBar.frame; //self.TabBar is IBOutlet of your TabBar
-//    tabFrame.size.height = 45;
-//    tabFrame.origin.y = self.view.frame.size.height - 45;
-//    self.tabBar.frame = tabFrame;
-//}
-
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
     [self performAutoLoginAndFetchData];
 }
 
@@ -59,27 +50,36 @@ QMChatConnectionDelegate>
     [[QMCore instance].chatService removeDelegate:self];
 }
 
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    return UIStatusBarStyleLightContent;
-//}
-
 - (void)performAutoLoginAndFetchData {
     
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
+                                                                          message:NSLocalizedString(@"QM_STR_CONNECTING", nil)
+                                                                         duration:0];
+    __weak UINavigationController *navigationController = self.navigationController;
     
-    [[[[QMCore instance] login] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+    [[[QMCore.instance login] continueWithBlock:^id(BFTask *task) {
         
         if (task.isFaulted) {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
             
-            if (task.error.code == kQMUnAuthorizedErrorCode
-                || (task.error.code == kBFMultipleErrorsError
-                    && ([task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][0] code] == kQMUnAuthorizedErrorCode
-                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnAuthorizedErrorCode))) {
+            [(QMNavigationController *)navigationController dismissNotificationPanel];
+            
+            NSInteger errorCode = task.error.code;
+            if (errorCode == kQMNotAuthorizedInRest
+                || errorCode == kQMUnauthorizedErrorCode
+                || (errorCode == kBFMultipleErrorsError
+                    && ([task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][0] code] == kQMUnauthorizedErrorCode
+                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))) {
                         
-                        return [[QMCore instance] logout];
+                        return [QMCore.instance logout];
                     }
+        }
+        
+        if (QMCore.instance.pushNotificationManager.pushNotification != nil) {
+            [QMCore.instance.pushNotificationManager handlePushNotificationWithDelegate:self];
+        }
+        
+        if (QMCore.instance.currentProfile.pushNotificationsEnabled) {
+            [QMCore.instance.pushNotificationManager registerAndSubscribeForPushNotifications];
         }
         
         return [BFTask cancelledTask];
@@ -87,7 +87,6 @@ QMChatConnectionDelegate>
     }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
         
         if (!task.isCancelled) {
-            
             [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
         }
         
@@ -179,7 +178,7 @@ shouldSelectViewController:(UIViewController *)viewController
           }],
           
           [RWDropdownMenuItem itemWithText:@"Terms of Uses" image:[UIImage imageNamed:@"menu_terms_of_uses"] action:^{
-              
+              [self tapLicense];
           }],
           
           [RWDropdownMenuItem itemWithText:@"Log out" image:[UIImage imageNamed:@"menu_logout"] action:^{
@@ -199,7 +198,30 @@ shouldSelectViewController:(UIViewController *)viewController
     [self performSegueWithIdentifier:kAuthSegue sender:nil];
 }
 
+- (void) tapLicense {
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    [[QMNetworkManager sharedManager] setPublicHTTPHeader];
+    [[QMNetworkManager sharedManager] sendGetWithURL:kDIAgreementUrl completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        [SVProgressHUD dismiss];
+        if (error) {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        } else {
+            [QMLicenseAgreement presentUserAgreementInViewController:self contents:[result valueForKeyNotNull:@"strItemDescription"] completion:^(BOOL success) {
+                if (success) {
+                    [self performSegueWithIdentifier:kQMMainStoryboard sender:nil];
+                }
+            }];
+        }
+    }];
+}
+
 #pragma mark - Notification
+
+- (void)pushNotificationManager:(QMPushNotificationManager *)__unused pushNotificationManager
+       didSucceedFetchingDialog:(QBChatDialog *)chatDialog {
+    
+//    [self performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
+}
 
 - (void)showNotificationForMessage:(QBChatMessage *)chatMessage {
     
@@ -248,7 +270,7 @@ shouldSelectViewController:(UIViewController *)viewController
         buttonHandler = ^void(MPGNotification * __unused notification, NSInteger buttonIndex) {
             
             if (buttonIndex == 1) {
-                
+                [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
                 UINavigationController *navigationController = self.viewControllers.firstObject;
                 UIViewController *dialogsVC = navigationController.viewControllers.firstObject;
                 [dialogsVC performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
@@ -281,15 +303,4 @@ didAddMessageToMemoryStorage:(QBChatMessage *)message
         [self showNotificationForMessage:message];
     }
 }
-
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
-
 @end

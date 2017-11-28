@@ -70,7 +70,6 @@ SWTableViewCellDelegate
     
     // search implementation
     [self configureSearch];
-//    [self configureDataSources];
     [self registerNibs];
     // filling data source
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];

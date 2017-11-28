@@ -84,7 +84,7 @@ UIGestureRecognizerDelegate
     // registering nibs for current VC and search results VC
     [self registerNibs];
     
-    [self performAutoLoginAndFetchData];
+  //  [self performAutoLoginAndFetchData];
     
     // adding refresh control task
     if (self.refreshControl) {
@@ -164,13 +164,13 @@ UIGestureRecognizerDelegate
                     }
         }
         
-        if (QMCore.instance.pushNotificationManager.pushNotification != nil) {
-            [QMCore.instance.pushNotificationManager handlePushNotificationWithDelegate:self];
-        }
-        
-        if (QMCore.instance.currentProfile.pushNotificationsEnabled) {
-            [QMCore.instance.pushNotificationManager registerAndSubscribeForPushNotifications];
-        }
+//        if (QMCore.instance.pushNotificationManager.pushNotification != nil) {
+//            [QMCore.instance.pushNotificationManager handlePushNotificationWithDelegate:self];
+//        }
+//
+//        if (QMCore.instance.currentProfile.pushNotificationsEnabled) {
+//            [QMCore.instance.pushNotificationManager registerAndSubscribeForPushNotifications];
+//        }
         
         return [BFTask cancelledTask];
         

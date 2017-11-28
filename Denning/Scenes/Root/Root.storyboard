@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wqz-6A-qr6">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Medium</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--My Welcome View Controller-->
+        <scene sceneID="eAE-xR-yky">
+            <objects>
+                <viewController id="lcQ-2m-3ym" customClass="MyWelcomeViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1l8-yx-pa2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="splash_logo_white.png" translatesAutoresizingMaskIntoConstraints="NO" id="aU3-PU-0Wf">
+                                <rect key="frame" x="128" y="286.5" width="119" height="94"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <constraints>
+                            <constraint firstItem="aU3-PU-0Wf" firstAttribute="centerX" secondItem="1l8-yx-pa2" secondAttribute="centerX" id="AgB-qZ-1Rh"/>
+                            <constraint firstItem="aU3-PU-0Wf" firstAttribute="centerY" secondItem="1l8-yx-pa2" secondAttribute="centerY" id="K67-4H-1Ok"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1uV-qV-Hl3"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="SAZ-ZP-Arr"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <segue destination="dGp-hw-3RF" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="wca-CP-q4p"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jS0-TS-Rj8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="604" y="242"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="aRe-h7-8Ym">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wqz-6A-qr6" customClass="QMNavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="icon_home.png" id="r6P-xD-Izt"/>
+                    <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="9ce-iA-1Cy" customClass="QMNavigationBar">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="19"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lcQ-2m-3ym" kind="relationship" relationship="rootViewController" id="5xJ-Nl-U6N"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1aZ-Bh-VPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="243"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="APm-Rh-yi1">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="dGp-hw-3RF" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Odi-FJ-hsX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1230" y="233"/>
+        </scene>
+        <!--License Agreement View Controller-->
+        <scene sceneID="0oI-FV-N9H">
+            <objects>
+                <viewController storyboardIdentifier="QMLicenceAgreementControllerID" id="iM1-vj-My8" customClass="QMLicenseAgreementViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GYr-IY-QNH"/>
+                        <viewControllerLayoutGuide type="bottom" id="mJy-YF-jHd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zfd-Eb-0Ve">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sRj-ly-t8V">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="sRj-ly-t8V" firstAttribute="top" secondItem="GYr-IY-QNH" secondAttribute="bottom" id="H8q-9c-WFP"/>
+                            <constraint firstItem="sRj-ly-t8V" firstAttribute="leading" secondItem="u9Z-ch-jGz" secondAttribute="leading" id="rf4-3A-xuG"/>
+                            <constraint firstItem="u9Z-ch-jGz" firstAttribute="trailing" secondItem="sRj-ly-t8V" secondAttribute="trailing" id="wQ8-Uu-2bJ"/>
+                            <constraint firstItem="mJy-YF-jHd" firstAttribute="top" secondItem="sRj-ly-t8V" secondAttribute="bottom" id="xlC-5G-drE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="u9Z-ch-jGz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="98i-D9-LLM">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" image="Back_gray.png" id="ad6-mH-AME">
+                            <connections>
+                                <action selector="done:" destination="iM1-vj-My8" id="zMc-CZ-0pQ"/>
+                            </connections>
+                        </barButtonItem>
+                        <view key="titleView" contentMode="scaleToFill" id="sJX-jA-hNe">
+                            <rect key="frame" x="110.5" y="5.5" width="154" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="License Agreement" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OKn-6Z-Zee">
+                                    <rect key="frame" x="0.0" y="0.0" width="154" height="33"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" title="Accept" id="mOQ-Wz-Pcr">
+                            <connections>
+                                <action selector="acceptLicense:" destination="iM1-vj-My8" id="BNo-8j-pma"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="acceptButton" destination="mOQ-Wz-Pcr" id="3AO-co-Nuj"/>
+                        <outlet property="textView" destination="sRj-ly-t8V" id="Ibg-tC-hNp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m6W-QJ-dtx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="865" y="-489"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Back_gray.png" width="18" height="18"/>
+        <image name="icon_home.png" width="20" height="20"/>
+        <image name="splash_logo_white.png" width="119" height="94"/>
+    </resources>
+</document>

@@ -20,6 +20,7 @@
 @synthesize personalArray;
 @synthesize searchType;
 @synthesize documentView;
+@synthesize userAgreementAccepted;
 
 + (DataManager *)sharedManager {
     static DataManager *manager = nil;
@@ -38,6 +39,7 @@
     if (self) {
         searchType = @"Public";
         documentView = @"nothing";
+        userAgreementAccepted = NO;
         user = [UserModel allObjects].firstObject;
         if (!user) {
             [[RLMRealm defaultRealm] transactionWithBlock:^{

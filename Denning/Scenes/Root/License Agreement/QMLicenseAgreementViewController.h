@@ -14,4 +14,6 @@ typedef void (^LicenceCompletionBlock)(BOOL accepted);
 
 @property (copy, nonatomic) LicenceCompletionBlock licenceCompletionBlock;
 
+@property (strong, nonatomic) NSString* contents;
+
 @end

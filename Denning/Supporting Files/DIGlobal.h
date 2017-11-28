@@ -53,6 +53,8 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define header_height 0
 
+#define kDIAgreementUrl @"http://denningsoft.dlinkddns.com/denningwcf/v1/table/eulaAPP"
+
 #define FORGOT_PASSWORD_SEND_SMS_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/SMS/lostPassword"
 
 #define FORGOT_PASSWORD_REQUEST_URL     @"http://denningsoft.dlinkddns.com/denningwcf/v1/password/forget"

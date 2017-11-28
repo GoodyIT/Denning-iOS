@@ -26,6 +26,8 @@
 @property (strong, nonatomic) NSMutableArray* clientContactsArray;
 @property (strong, nonatomic) NSMutableArray* staffContactsArray;
 
+@property (assign, nonatomic) BOOL userAgreementAccepted;
+
 @property (strong, nonatomic) NSString* tempServerURL;
 
 @property (strong, nonatomic) NSString* isFirstLoading;

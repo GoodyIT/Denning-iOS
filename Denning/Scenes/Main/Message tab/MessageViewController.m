@@ -42,7 +42,13 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     [self prepareUI];
+    [self addView:self.viewControllers[0]];
+    [self setDefaultImageForButtons];
+    [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"]
+                        forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,10 +63,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
    
     [self configureBackBtnWithImageName:@"Back" withSelector:@selector(popupScreen:)];
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
-    
-    [self addView:self.viewControllers[0]];
-    [self setDefaultImageForButtons];
-    [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"] forState:UIControlStateNormal];
+ 
     [self hideTabBar];
 }
 

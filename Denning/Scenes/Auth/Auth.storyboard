@@ -175,7 +175,7 @@
                         <segue destination="08q-Ns-XbJ" kind="show" identifier="NewDeviceSegue" id="6Yz-ai-32P"/>
                         <segue destination="RGb-wO-bIA" kind="show" identifier="ChangePasswordSegue" id="cqB-uN-mxx"/>
                         <segue destination="tir-Rr-0MW" kind="show" identifier="BranchSegue" id="2bt-gq-iwV"/>
-                        <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" action="showViewController:sender:" id="7Mr-nR-sFA"/>
+                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="7Mr-nR-sFA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XhT-zK-AZ0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -438,7 +438,7 @@
                     <connections>
                         <outlet property="confirmPasswordTextField" destination="TLp-mD-s0C" id="OMr-H2-OzM"/>
                         <outlet property="newpasswordTextField" destination="YtN-Xr-FF8" id="tDD-zy-hSb"/>
-                        <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="uPh-MT-glH"/>
+                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="uPh-MT-glH"/>
                         <segue destination="tir-Rr-0MW" kind="show" identifier="BranchSegue" id="dc0-qL-bzh"/>
                     </connections>
                 </viewController>
@@ -754,7 +754,7 @@
                         <outlet property="phoneNumberLabel" destination="Tpf-XT-Dzl" id="woL-CJ-nD8"/>
                         <segue destination="RGb-wO-bIA" kind="show" identifier="ChangePasswordSegue" id="QgY-oX-Ext"/>
                         <segue destination="tir-Rr-0MW" kind="show" identifier="BranchSegue" id="T5P-mp-1U6"/>
-                        <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" action="showViewController:sender:" id="79l-80-WBG"/>
+                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="79l-80-WBG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3Y-Oy-L1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -854,7 +854,7 @@
                     </view>
                     <connections>
                         <outlet property="TACTextField" destination="97t-Vp-3bq" id="l1P-cO-b4a"/>
-                        <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" action="showViewController:sender:" id="BVD-6W-ve9"/>
+                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="BVD-6W-ve9"/>
                         <segue destination="SZu-GE-wQm" kind="show" identifier="PersonalFolderSegue" id="tuM-u7-NJ9"/>
                     </connections>
                 </viewController>
@@ -917,7 +917,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <segue destination="PVn-Bg-VPa" kind="show" identifier="PasswordConfirmSegue" id="Otz-f5-X7Z"/>
-                        <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" action="showViewController:sender:" id="lHY-Ch-f8A"/>
+                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="lHY-Ch-f8A"/>
                         <segue destination="SZu-GE-wQm" kind="show" identifier="PersonalFolderSegue" id="1y3-lj-odg"/>
                         <segue destination="b65-dt-lUt" kind="show" identifier="FileUploadSegue" id="hH5-HS-vSY"/>
                     </connections>
@@ -958,7 +958,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" id="AmQ-lr-OR6"/>
+                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="AmQ-lr-OR6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A1U-Is-GgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1015,7 +1015,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" id="mPD-Un-Pzu"/>
+                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="mPD-Un-Pzu"/>
                         <segue destination="8sU-BW-8mn" kind="show" identifier="DocumentSegue" id="TN1-TK-vI9"/>
                     </connections>
                 </tableViewController>
@@ -1129,6 +1129,6 @@
         <segue reference="2bt-gq-iwV"/>
         <segue reference="1y3-lj-odg"/>
         <segue reference="cqB-uN-mxx"/>
-        <segue reference="AmQ-lr-OR6"/>
+        <segue reference="lHY-Ch-f8A"/>
     </inferredMetricsTieBreakers>
 </document>

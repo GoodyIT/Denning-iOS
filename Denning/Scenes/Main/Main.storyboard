@@ -17,7 +17,7 @@
         <!--Navigation Controller-->
         <scene sceneID="c6B-Zi-Ann">
             <objects>
-                <navigationController id="sR8-X8-fSi" sceneMemberID="viewController">
+                <navigationController id="sR8-X8-fSi" customClass="QMNavigationController" sceneMemberID="viewController">
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="black" id="MzL-UN-PCJ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
