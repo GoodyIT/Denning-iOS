@@ -41,7 +41,6 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 @property(nonatomic, strong) AFHTTPSessionManager  *manager;
 
-
 @property (strong, atomic) NSString       *installDate;
 @property (strong, atomic) NSString       *installDateTemp;
 @property (assign) CLLocationCoordinate2D     oldLocation;

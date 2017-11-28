@@ -12,8 +12,5 @@
 
 - (void)addKeyboardObservers;
 - (void)removeKeyboardObservers;
-- (void)keyboardWillShowWithSize:(CGSize)size;
-- (void)keyboardWillHideToController;
-- (void)backButtonAction;
 
 @end

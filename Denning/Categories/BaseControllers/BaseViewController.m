@@ -30,10 +30,6 @@
     [self addKeyboardObservers];
 }
 
-- (void)backButtonAction {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark - Keyboard Observers
 
 - (void)addKeyboardObservers{

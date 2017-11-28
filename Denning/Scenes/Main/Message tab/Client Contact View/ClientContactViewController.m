@@ -7,10 +7,10 @@
 //
 
 #import "ClientContactViewController.h"
-#import "QMContactsDataSource.h"
-#import "QMContactsSearchDataSource.h"
-#import "QMGlobalSearchDataSource.h"
-#import "QMContactsSearchDataProvider.h"
+//#import "QMContactsDataSource.h"
+//#import "QMContactsSearchDataSource.h"
+//#import "QMGlobalSearchDataSource.h"
+//#import "QMContactsSearchDataProvider.h"
 #import "MessageViewController.h"
 
 #import "QMUserInfoViewController.h"
@@ -50,7 +50,7 @@ SWTableViewCellDelegate
 /**
  *  Data sources
  */
-@property (strong, nonatomic) QMContactsDataSource *dataSource;
+//@property (strong, nonatomic) QMContactsDataSource *dataSource;
 
 @property (strong, nonatomic) NSString* filter;
 
@@ -72,7 +72,8 @@ SWTableViewCellDelegate
     [self configureSearch];
     
     // setting up data source
-    [self configureDataSources];
+//    [self configureDataSources];
+    [self registerNibs];
     
     // filling data source
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
@@ -82,7 +83,7 @@ SWTableViewCellDelegate
         [self updateItemsFromContactListWithCompletion:^{
             [navigationController dismissNotificationPanel];
             // registering nibs for current VC and search results VC
-            [self registerNibs];
+            
             
             [self updateFriendList];
         }];
@@ -149,16 +150,6 @@ SWTableViewCellDelegate
     
     self.definesPresentationContext = YES;
 }
-
-- (void)configureDataSources {
-    
-    self.dataSource = [[QMContactsDataSource alloc] initWithKeyPath:@keypath(QBUUser.new, fullName)];
-//    self.dataSource.didAddUserBlock = ^{
-//
-//    };
-    self.tableView.dataSource = self.dataSource;
-}
-
 
 #pragma mark - UITableView Datasource
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {

@@ -23,8 +23,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray<MatterSimple*>* listOfContacts;
 
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 
 @end
@@ -53,7 +51,6 @@
 - (void) prepareUI
 {
     self.page = @(1);
-    self.filter = @"";
     _url = GENERAL_CONTACT_URL;
     self.tableView.delegate = self;
     
@@ -62,22 +59,22 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    
-    // Set custom indicator
-    self.tableView.infiniteScrollIndicatorView = indicator;
-    // Set custom indicator margin
-    self.tableView.infiniteScrollIndicatorMargin = 40;
-    
-    // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 500;
-    
-    // Add infinite scroll handler
-    @weakify(self)
-    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
-        @strongify(self)
-        [self appendList];
-    }];
+//    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+//
+//    // Set custom indicator
+//    self.tableView.infiniteScrollIndicatorView = indicator;
+//    // Set custom indicator margin
+//    self.tableView.infiniteScrollIndicatorMargin = 40;
+//
+//    // Set custom trigger offset
+//    self.tableView.infiniteScrollTriggerOffset = 500;
+//
+//    // Add infinite scroll handler
+//    @weakify(self)
+//    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+//        @strongify(self)
+//        [self appendList];
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -232,58 +229,6 @@
 
 #pragma mark - ScrollView Delegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    //    CGFloat contentHeight = scrollView.contentSize.height;
-    if (offsetY > 10) {
-        
-        [self.searchBar endEditing:YES];
-        _searchBar.showsCancelButton = NO;
-    }
-}
-
-#pragma mark - Search Delegate
-
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    _searchBar.showsCancelButton = YES;
-    return YES;
-}
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    [_searchBar resignFirstResponder];
-    _searchBar.showsCancelButton = NO;
-    searchBar.text = @"";
-    [self searchBarSearchButtonClicked:searchBar];
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    self.filter = searchBar.text;
-    isAppending = NO;
-    self.page = @(1);
-    [self getListWithCompletion:nil];
-    [_searchBar resignFirstResponder];
-}
-
-- (void)willDismissSearchController:(UISearchController *) __unused searchController {
-    self.filter = @"";
-    self.page = @(1);
-    searchController.searchBar.text = @"";
-    isAppending = NO;
-    [self getListWithCompletion:nil];
-}
-
-- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
-{
-    self.filter = searchText;
-    isAppending = NO;
-    self.page = @(1);
-    [self getListWithCompletion:nil];
-}
 
 #pragma mark - Navigation
 

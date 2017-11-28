@@ -535,11 +535,11 @@ NSMutableDictionary* keyValue;
             }
         }
         if (((NSString*)_contents[0][2][1]).length > 0){
-            if (indexPath.row >= 5 || indexPath.row <= 8) {
+            if (indexPath.row >= 5 && indexPath.row <= 8) {
                 cell.floatingTextField.userInteractionEnabled = NO;
             }
         } else {
-            if (indexPath.row >= 5 || indexPath.row <= 8) {
+            if (indexPath.row >= 5 && indexPath.row <= 8) {
                 cell.floatingTextField.userInteractionEnabled = YES;
             }
         }
@@ -698,11 +698,11 @@ NSMutableDictionary* keyValue;
                 [self performSegueWithIdentifier:kMatterCodeSegue sender:MATTER_LIST_GET_URL];
             }
             if (indexPath.row == 3) {
-                [self performSegueWithIdentifier:kTaxBillContactSegue sender:nil];
+                [self performSegueWithIdentifier:kDashboardContactSegue sender:GENERAL_CONTACT_URL];
             }
         } else {
             if (indexPath.row == 3) {
-                [self performSegueWithIdentifier:kDashboardContactSegue sender:GENERAL_CONTACT_URL];
+                [self performSegueWithIdentifier:kTaxBillContactSegue sender:_contents[0][1][1]];
             }
         }
        
@@ -835,6 +835,7 @@ NSMutableDictionary* keyValue;
         vc.selectedPage = sender;
     } else if ([segue.identifier isEqualToString:kTaxBillContactSegue]) {
         TaxBillContactViewController* vc = segue.destinationViewController;
+        vc.filter = sender;
         vc.updateHandler = ^(ClientModel *model) {
             [self replaceContentForSection:0 InRow:3 withValue:model.name];
         };

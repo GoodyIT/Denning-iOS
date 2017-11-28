@@ -926,12 +926,12 @@
             </objects>
             <point key="canvasLocation" x="-984.05797101449286" y="-6720.652173913044"/>
         </scene>
-        <!--Personal Document View Controller-->
+        <!--Documents-->
         <scene sceneID="Fgq-7z-vTN">
             <objects>
                 <tableViewController id="Mxs-Kq-6Ew" customClass="PersonalDocumentViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="YoC-UC-sdm">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -949,6 +949,14 @@
                             <outlet property="delegate" destination="Mxs-Kq-6Ew" id="tqW-jc-n5l"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Documents" id="Lnt-m5-aTa">
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="lMJ-ET-1mW">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="dismissScreen:" destination="Mxs-Kq-6Ew" id="0NF-31-7ng"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" id="AmQ-lr-OR6"/>
                     </connections>
@@ -1007,8 +1015,8 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="Mxs-Kq-6Ew" kind="show" identifier="DocumentSegue" id="vl8-kj-VFQ"/>
                         <segue destination="LAN-DZ-jv6" kind="showDetail" identifier="SceneSegueMain" id="mPD-Un-Pzu"/>
+                        <segue destination="8sU-BW-8mn" kind="show" identifier="DocumentSegue" id="TN1-TK-vI9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USO-mx-ehC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1060,6 +1068,30 @@
             <point key="canvasLocation" x="-2779.7101449275365" y="-8372.282608695652"/>
         </scene>
         <!--Navigation Controller-->
+        <scene sceneID="Xfy-CF-aC3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8sU-BW-8mn" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="IQh-Rj-RdF">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="21"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Mxs-Kq-6Ew" kind="relationship" relationship="rootViewController" id="D4b-oI-3gr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r2x-un-GwN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1163" y="-8803"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="7vO-ie-VTI">
             <objects>
                 <navigationController storyboardIdentifier="BranchNavigation" automaticallyAdjustsScrollViewInsets="NO" id="tir-Rr-0MW" sceneMemberID="viewController">
@@ -1088,6 +1120,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Back.png" width="18" height="18"/>
         <image name="Back_gray.png" width="18" height="18"/>
         <image name="icon_home.png" width="20" height="20"/>
         <image name="splash_logo.png" width="119" height="94"/>
@@ -1096,6 +1129,6 @@
         <segue reference="2bt-gq-iwV"/>
         <segue reference="1y3-lj-odg"/>
         <segue reference="cqB-uN-mxx"/>
-        <segue reference="lHY-Ch-f8A"/>
+        <segue reference="AmQ-lr-OR6"/>
     </inferredMetricsTieBreakers>
 </document>

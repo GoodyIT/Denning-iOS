@@ -8,9 +8,9 @@
 
 #import "FavoriteViewController.h"
 #import "FavContactsDataSource.h"
-#import "QMContactsSearchDataSource.h"
-#import "QMGlobalSearchDataSource.h"
-#import "QMContactsSearchDataProvider.h"
+//#import "QMContactsSearchDataSource.h"
+//#import "QMGlobalSearchDataSource.h"
+//#import "QMContactsSearchDataProvider.h"
 #import "MessageViewController.h"
 
 #import "QMUserInfoViewController.h"

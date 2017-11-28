@@ -473,7 +473,7 @@ NSMutableDictionary* keyValue;
     cell.floatingTextField.placeholder = self.contents[indexPath.section][rows][0];
     cell.floatingTextField.text = [NSString stringWithFormat:@"%@", self.contents[indexPath.section][rows][1]];
     cell.floatingTextField.floatLabelActiveColor = cell.floatingTextField.floatLabelPassiveColor = [UIColor redColor];
-    cell.floatingTextField.delegate = self;
+    
     cell.floatingTextField.inputAccessoryView = accessoryView;
     cell.floatingTextField.tag = indexPath.section * 10 + indexPath.row;
     cell.leftUtilityButtons = [self leftButtons];
@@ -492,19 +492,21 @@ NSMutableDictionary* keyValue;
             if (indexPath.row == 6 || indexPath.row == 7) {
                 cell.hidden = NO;
                 cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
+                cell.floatingTextField.delegate = self;
             }
         } else {
             if (indexPath.row == 9 || indexPath.row == 8) {
                 cell.hidden = YES;
                 cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
+                cell.floatingTextField.delegate = self;
             }
         }
         if (((NSString*)_contents[0][1][1]).length > 0){
-            if (indexPath.row >= 6 || indexPath.row <= 9) {
+            if (indexPath.row >= 6 && indexPath.row <= 9) {
                 cell.floatingTextField.userInteractionEnabled = NO;
             }
         } else {
-            if (indexPath.row >= 6 || indexPath.row <= 9) {
+            if (indexPath.row >= 6 && indexPath.row <= 9) {
                 cell.floatingTextField.userInteractionEnabled = YES;
             }
         }
@@ -669,7 +671,9 @@ NSMutableDictionary* keyValue;
             }
         }
         if (indexPath.row == 4) {
-            [self performSegueWithIdentifier:kTaxBillContactSegue sender:nil];
+            if (((NSString*)_contents[0][2][1]).length != 0) {
+                [self performSegueWithIdentifier:kTaxBillContactSegue sender:_contents[0][2][1]];
+            }
         }
         if (indexPath.row == 5) {
             [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
@@ -816,6 +820,7 @@ NSMutableDictionary* keyValue;
         vc.selectedPage = sender;
     } else if ([segue.identifier isEqualToString:kTaxBillContactSegue]) {
         TaxBillContactViewController* vc = segue.destinationViewController;
+        vc.filter = sender;
         vc.updateHandler = ^(ClientModel *model) {
             [self replaceContentForSection:0 InRow:4 withValue:model.name];
         };

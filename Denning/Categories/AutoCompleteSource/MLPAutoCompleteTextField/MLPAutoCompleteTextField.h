@@ -17,6 +17,8 @@
 #import "MLPAutoCompleteTextFieldDataSource.h"
 #import "MLPAutoCompleteTextFieldDelegate.h"
 
+typedef void (^FetchCompletionBlock)(NSArray *items);
+
 @protocol MLPAutoCompleteSortOperationDelegate <NSObject>
 - (void)autoCompleteTermsDidSort:(NSArray *)completions;
 - (NSInteger)maximumEditDistanceForAutoCompleteTerms;

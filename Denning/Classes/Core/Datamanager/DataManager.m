@@ -17,7 +17,6 @@
 @implementation DataManager
 @synthesize user;
 @synthesize denningArray;
-//@synthesize bussinessArray;
 @synthesize personalArray;
 @synthesize searchType;
 @synthesize documentView;

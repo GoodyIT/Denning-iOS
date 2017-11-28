@@ -7,10 +7,9 @@
 //
 
 #import "PersonalDocumentViewController.h"
-#import "BranchHeaderCell.h"
 #import "DocumentCell.h"
 
-@interface PersonalDocumentViewController ()<BranchHeaderDelegate, UIDocumentInteractionControllerDelegate>
+@interface PersonalDocumentViewController ()< UIDocumentInteractionControllerDelegate>
 {
     NSURL* selectedDocument;
     NSString* email, *sessionID;
@@ -32,6 +31,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)dismissScreen:(id)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void) prepareUI {
     email = [DataManager sharedManager].user.email;
@@ -39,38 +41,25 @@
 }
 
 - (void)registerNibs {
-    [BranchHeaderCell registerForReuseInTableView:self.tableView];
     [DocumentCell registerForReuseInTableView:self.tableView];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
 }
 
-#pragma mark - BranchHeaderDelegate
-- (void) didBackBtnTapped:(BranchHeaderCell *)cell
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 #pragma mark - Table view data source
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return 100;
-    }
-    
     return 84;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return folderModel.folders.count + 2;
+    return folderModel.folders.count + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 1;
-    } else if (section == 1) {
         return folderModel.documents.count;
     }
 
@@ -81,9 +70,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *sectionName;
-    if (section == 0) {
-        sectionName = @"";
-    } else if (section == 1){
+    if (section == 0){
         sectionName = @"Files";
     } else {
         FolderModel* model = folderModel.folders[section-2];
@@ -95,20 +82,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 0;
-    }
     return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        BranchHeaderCell *branchCell = [tableView dequeueReusableCellWithIdentifier:[BranchHeaderCell cellIdentifier] forIndexPath:indexPath];
-        [branchCell configureCellWithTitle:@"Documents"];
-        branchCell.delegate = self;
-        branchCell.accessoryType = UITableViewCellAccessoryNone;
-        return branchCell;
-    } else if (indexPath.section == 1) {
         DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
         cell.backgroundColor = [UIColor clearColor];
         FileModel* file = folderModel.documents[indexPath.row];
@@ -175,7 +153,6 @@
     [documentInteractionController presentPreviewAnimated:YES];
 }
 
-
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
 {
     return self;
@@ -195,6 +172,5 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-
 
 @end

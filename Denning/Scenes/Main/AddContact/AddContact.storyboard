@@ -263,28 +263,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ouG-Qp-Emh">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                <subviews>
-                                    <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="cEw-Fw-ne5">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="uym-zz-fje" id="8XM-PU-gVn"/>
-                                        </connections>
-                                    </searchBar>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="I21-VA-CKt"/>
-                                    <constraint firstItem="cEw-Fw-ne5" firstAttribute="top" secondItem="ouG-Qp-Emh" secondAttribute="top" id="ORZ-Jg-Yo1"/>
-                                    <constraint firstItem="cEw-Fw-ne5" firstAttribute="leading" secondItem="ouG-Qp-Emh" secondAttribute="leading" id="Urc-y0-mql"/>
-                                    <constraint firstAttribute="bottom" secondItem="cEw-Fw-ne5" secondAttribute="bottom" id="gMG-P5-21H"/>
-                                    <constraint firstAttribute="trailing" secondItem="cEw-Fw-ne5" secondAttribute="trailing" id="muU-OG-hJC"/>
-                                </constraints>
-                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tii-0b-A4r">
-                                <rect key="frame" x="0.0" y="50" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="641"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CodeDescCell" rowHeight="72" id="Jz3-hW-18S">
@@ -304,13 +284,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ouG-Qp-Emh" firstAttribute="leading" secondItem="ixZ-2C-k4e" secondAttribute="leading" id="9sU-2m-0GA"/>
                             <constraint firstAttribute="trailing" secondItem="tii-0b-A4r" secondAttribute="trailing" id="AnZ-kR-dnv"/>
-                            <constraint firstItem="tii-0b-A4r" firstAttribute="top" secondItem="ouG-Qp-Emh" secondAttribute="bottom" id="C18-uQ-XCB"/>
                             <constraint firstItem="tii-0b-A4r" firstAttribute="leading" secondItem="ixZ-2C-k4e" secondAttribute="leading" id="LaR-q5-iOd"/>
                             <constraint firstItem="yJZ-fo-bFe" firstAttribute="top" secondItem="tii-0b-A4r" secondAttribute="bottom" id="VQR-uO-gza"/>
-                            <constraint firstAttribute="trailing" secondItem="ouG-Qp-Emh" secondAttribute="trailing" id="jpN-yT-Mfu"/>
-                            <constraint firstItem="ouG-Qp-Emh" firstAttribute="top" secondItem="9XJ-PX-pNP" secondAttribute="bottom" id="pbA-4Q-700"/>
+                            <constraint firstItem="tii-0b-A4r" firstAttribute="top" secondItem="9XJ-PX-pNP" secondAttribute="bottom" id="hnq-hu-yn7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Select Contact" id="P3j-ML-h2A">
@@ -322,7 +299,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="cEw-Fw-ne5" id="jqZ-OE-NLU"/>
                         <outlet property="tableView" destination="tii-0b-A4r" id="4JJ-Ax-n81"/>
                     </connections>
                 </viewController>

@@ -13,6 +13,7 @@ typedef void(^UpdateBillContactHandler)(ClientModel* model);
 @interface TaxBillContactViewController : UIViewController
 
 @property (strong, nonatomic) NSString* url;
+@property (copy, nonatomic) NSString *filter;
 
 @property (strong, nonatomic) UpdateBillContactHandler updateHandler;
 

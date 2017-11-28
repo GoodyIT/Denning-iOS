@@ -7,10 +7,10 @@
 //
 
 #import "DenningContactViewController.h"
-#import "QMContactsDataSource.h"
-#import "QMContactsSearchDataSource.h"
-#import "QMGlobalSearchDataSource.h"
-#import "QMContactsSearchDataProvider.h"
+//#import "QMContactsDataSource.h"
+//#import "QMContactsSearchDataSource.h"
+//#import "QMGlobalSearchDataSource.h"
+//#import "QMContactsSearchDataProvider.h"
 #import "MessageViewController.h"
 
 #import "QMUserInfoViewController.h"
@@ -40,14 +40,16 @@ SWTableViewCellDelegate
     NSMutableArray* originalContacts;
     NSMutableArray* contactsArray;
     NSString* selectedFirmCode;
+    NSInteger selectedIndex;
 }
 
 @property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *userTypeSegment;
 
 /**
  *  Data sources
  */
-@property (strong, nonatomic) QMContactsDataSource *dataSource;
+//@property (strong, nonatomic) QMContactsDataSource *dataSource;
 
 @property (strong, nonatomic) NSString* filter;
 
@@ -64,10 +66,12 @@ SWTableViewCellDelegate
     
     // Hide empty separators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    selectedIndex = 0;
     
     // search implementation
     [self configureSearch];
-
+//    [self configureDataSources];
+    [self registerNibs];
     // filling data source
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
@@ -78,7 +82,7 @@ SWTableViewCellDelegate
             // registering nibs for current VC and search results VC
             [navigationController dismissNotificationPanel];
             
-            [self registerNibs];
+            
             [self updateFriendList];
         }];
     });
@@ -112,10 +116,32 @@ SWTableViewCellDelegate
     }
 }
 
-- (void) updateFriendList {
-    originalContacts = [DataManager sharedManager].staffContactsArray;
+- (void) updateDataSourceByScope:(NSInteger) index {
+    selectedIndex = index;
+    switch (index) {
+        case 0:
+            originalContacts = [[[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray] mutableCopy];
+            break;
+        case 1:
+            originalContacts = [DataManager sharedManager].staffContactsArray;
+            break;
+        case 2:
+            originalContacts = [DataManager sharedManager].clientContactsArray;
+            break;
+
+        default:
+            break;
+    }
     contactsArray = originalContacts;
+
     [self.tableView reloadData];
+}
+
+- (void) updateFriendList {
+//    originalContacts = [[[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray] mutableCopy];
+//    contactsArray = [originalContacts copy];
+//    [self.tableView reloadData];
+    [self updateDataSourceByScope:selectedIndex];
 }
 
 - (void) configureSearch
@@ -128,16 +154,18 @@ SWTableViewCellDelegate
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.definesPresentationContext = YES;
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    self.tableView.tableHeaderView = self.searchController.searchBar;
-}
-
-- (void)configureDataSources {
     
-    self.dataSource = [[QMContactsDataSource alloc] initWithKeyPath:@keypath(QBUUser.new, fullName)];
-//    self.dataSource.didAddUserBlock = ^{
-//
-//    };
-    self.tableView.dataSource = self.dataSource;
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 45)];
+    [containerView addSubview:_searchController.searchBar];
+    [containerView addSubview:_userTypeSegment];
+    
+     self.tableView.tableHeaderView =  containerView;
+    
+    [_userTypeSegment mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_searchController.searchBar.mas_bottom).offset(8); //with is an optional semantic filler
+        make.centerX.equalTo(containerView.mas_centerX);
+        make.bottom.equalTo(containerView.mas_bottom).offset(-8);
+    }];
 }
 
 #pragma mark - UITableView Datasource
@@ -318,8 +346,11 @@ SWTableViewCellDelegate
         [self removeContactFromFavoriteList:user];
     }
 }
+- (IBAction)didChangeUserType:(UISegmentedControl*)sender {
+    [self updateDataSourceByScope:sender.selectedSegmentIndex];
+//    [self filterContactList];
+}
 
-#pragma mark - Search Delegate
 - (void)willPresentSearchController:(UISearchController *)searchController
 {
     MessageViewController* messageVC = (MessageViewController*)self.parentViewController;
@@ -342,7 +373,7 @@ SWTableViewCellDelegate
 {
     NSMutableArray* newArray = [NSMutableArray new];
     if (self.filter.length == 0) {
-        [self updateFriendList];
+        contactsArray = originalContacts;
     } else {
         for (ChatFirmModel* firmModel in originalContacts) {
             ChatFirmModel* newModel = [ChatFirmModel new];
@@ -367,14 +398,18 @@ SWTableViewCellDelegate
     [self.tableView reloadData];
 }
 
-- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
-{
+- (void) didChangeSearchBar:(NSString*) searchText {
     self.filter = searchText;
     if (self.filter.length == 0) {
         [self updateFriendList];
     } else {
         [self filterContactList];
     }
+}
+
+- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
+{
+    [self didChangeSearchBar:searchText];
 }
 
 #pragma mark - Update items

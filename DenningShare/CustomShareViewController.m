@@ -13,17 +13,26 @@
 #import "SearchResultModel.h"
 @import MobileCoreServices;
 #import "DIGlobal.h"
-#import "FileNameAutoComplete.h"
+#import "MLPAutoCompleteTextField.h"
+#import "DEMOCustomAutoCompleteCell.h"
+#import "CoreDataOperation.h"
+//#import "APIDataSource.h"
+#import "Items.h"
+#import "GetJSONOperation.h"
+#import "Constants.h"
+#import "NSString+URLEncoding.h"
+#import "RequestObject.h"
 
-@interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate>
+@interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource>
 {
     NSString* fileNo1, *contactKey, *fileKey;
     NSURLSession* mySession;
-    NSString* userType;
+    NSString* userType, *customString;
+    NSUserDefaults* defaults;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UITextField *fileName;
+@property (weak, nonatomic) IBOutlet MLPAutoCompleteTextField *fileName;
 @property (weak, nonatomic) IBOutlet UITextView *remarks;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;
 @property (weak, nonatomic) IBOutlet UILabel *uploadToLabel;
@@ -34,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *uploadToValue;
 
 @property (strong, nonatomic) NSString* url;
+@property RequestObject *requestDataObject;
 @end
 
 @implementation CustomShareViewController
@@ -46,7 +56,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+
+    [self prepareUI];
+
+    [self configureFileNameAutoComplete];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_fileName resignFirstResponder];
+}
+
+- (void) prepareUI {
     for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments) {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
@@ -54,7 +77,6 @@
             }];
         }
     }
-
     fileNo1 = @"Transit Folder";
     self.activity.hidden = YES;
     self.sendBtn.enabled = YES;
@@ -80,19 +102,44 @@
     }
 }
 
+- (void) configureFileNameAutoComplete {
+    _fileName.autoCompleteDataSource = self;
+    _fileName.delegate = self;
+    _fileName.autoCompleteDelegate = self;
+    _fileName.backgroundColor = [UIColor whiteColor];
+    [_fileName registerAutoCompleteCellClass:[DEMOCustomAutoCompleteCell class]
+                      forCellReuseIdentifier:@"CustomCellId"];
+    _fileName.maximumNumberOfAutoCompleteRows = 7;
+    _fileName.applyBoldEffectToAutoCompleteSuggestions = YES;
+    _fileName.showAutoCompleteTableWhenEditingBegins = YES;
+    _fileName.disableAutoCompleteTableUserInteractionWhileFetching = YES;
+    [_fileName setAutoCompleteRegularFontName:@"Helvetica"];
+    [_fileName setAutoCompleteBoldFontName:@"Helvetica-Bold"];
+    [_fileName setAutoCompleteFontSize:15];
+    
+    UIToolbar* _accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
+    _accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
+    _accessoryView.tintColor = [UIColor redColor];
+    
+    _accessoryView.items = @[
+                             [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                             [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(handleTap)]];
+    [_accessoryView sizeToFit];
+    _fileName.inputAccessoryView = _accessoryView;
+}
+
+- (void)handleTap {
+    [self.view endEditing:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void) showAutocomplete:(NSString*) url {
-    [self.view endEditing:YES];
-    [self performSegueWithIdentifier:@"FileNameSegue" sender:url];
-}
-
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search=letter&pagesize=5"];
+//    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search=letter&pagesize=5"];
 }
 
 - (IBAction)didTapUploadTo:(UISegmentedControl*)sender {
@@ -227,7 +274,7 @@
                                          @"remarks":self.remarks.text,
                                          @"base64":[[NSData dataWithContentsOfFile:(NSString*)item] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]
                                          };
-                NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+                
                 // Create the request.
                 NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[(NSString*)[defaults valueForKey:@"api"] stringByAppendingString:self.url]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
                 
@@ -261,8 +308,8 @@
 - (void)URLSession:(NSURLSession *)session
 dataTask:(NSURLSessionDataTask *)dataTask
 didReceiveData:(NSData *)data{
-    NSArray *dataArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSLog(@"data %@", dataArray);
+//    NSArray *dataArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//    NSLog(@"data %@", dataArray);
 
 }
 
@@ -296,6 +343,65 @@ didCompleteWithError:(NSError *)error{
     return items;
 }
 
+- (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
+ possibleCompletionsForString:(NSString *)string
+            completionHandler:(void (^)(NSArray *))handler
+{
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
+    self.requestDataObject = [RequestObject new];
+    [self.requestDataObject setIncompleteString:[string urlEncodeUsingEncoding:NSUTF8StringEncoding]];
+    [self.requestDataObject setCompletionBlock:handler];
+    //Postpone the search request
+//    NSString *urlString = [NSString stringWithFormat:@"https://www.googleapis.com/customsearch/v1?key=%@&q=%@&cx=%@",apiKey,self.requestDataObject.incompleteString, engineID];
+    NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/v1/table/cboDocumentName?search=%@", [defaults valueForKey:@"api"], string];
+    NSURL *downloadURL = [NSURL URLWithString:urlString];
+    GetJSONOperation *operation = [[GetJSONOperation alloc] initWithDownloadURL:downloadURL
+                                                            withCompletionBlock:self.requestDataObject.completionBlock];
+    [[NSOperationQueue mainQueue] addOperation:operation];
+}
+
+
+#pragma mark - MLPAutoCompleteTextField Delegate
+
+- (BOOL)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
+          shouldConfigureCell:(UITableViewCell *)cell
+       withAutoCompleteString:(NSString *)autocompleteString
+         withAttributedString:(NSAttributedString *)boldedString
+        forAutoCompleteObject:(id<MLPAutoCompletionObject>)autocompleteObject
+            forRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    cell.textLabel.text = autocompleteString;
+    return YES;
+}
+
+- (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
+  didSelectAutoCompleteString:(NSString *)selectedString
+       withAutoCompleteObject:(id<MLPAutoCompletionObject>)selectedObject
+            forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    customString = selectedString;
+    _fileName.text = selectedString;
+}
+
+- (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField willHideAutoCompleteTableView:(UITableView *)autoCompleteTableView {
+    NSLog(@"Autocomplete table view will be removed from the view hierarchy");
+}
+
+- (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField willShowAutoCompleteTableView:(UITableView *)autoCompleteTableView {
+    
+}
+
+- (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField didHideAutoCompleteTableView:(UITableView *)autoCompleteTableView {
+    NSLog(@"Autocomplete table view ws removed from the view hierarchy");
+    
+}
+
+- (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField didShowAutoCompleteTableView:(UITableView *)autoCompleteTableView {
+    NSLog(@"Autocomplete table view was added to the view hierarchy");
+}
+
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ContactGetlistSegue"]) {
@@ -318,13 +424,6 @@ didCompleteWithError:(NSError *)error{
             self.uploadToValue.text = fileKey;
             
             fileNo1 = model.key;
-        };
-    } else if ([segue.identifier isEqualToString:@"FileNameSegue"]) {
-        FileNameAutoComplete *vc = (FileNameAutoComplete*)segue.destinationViewController;
-        vc.url = sender;
-        vc.title = @"";
-        vc.updateHandler =  ^(NSString* selectedString) {
-            self.fileName.text = selectedString;
         };
     }
 }

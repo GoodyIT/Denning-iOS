@@ -16,6 +16,7 @@
 #import "MLPAutoCompletionObject.h"
 #import "NSString+Levenshtein.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DataManager.h"
 
 
 static NSString *kSortInputStringKey = @"sortInputString";
@@ -68,8 +69,6 @@ static NSString *kDefaultAutoCompleteCellIdentifier = @"_DefaultAutoCompleteCell
 @property (assign) CGSize originalShadowOffset;
 @property (assign) CGFloat originalShadowOpacity;
 @end
-
-
 
 @implementation MLPAutoCompleteTextField
 
@@ -246,7 +245,7 @@ withAutoCompleteString:(NSString *)string
     
     NSAttributedString *boldedString = nil;
     BOOL attributedTextSupport = [cell.textLabel respondsToSelector:@selector(setAttributedText:)];
-    if(attributedTextSupport && self.applyBoldEffectToAutoCompleteSuggestions){
+    if(attributedTextSupport && self.applyBoldEffectToAutoCompleteSuggestions && self.text.length != 0){
         NSRange boldedRange = [string rangeOfString:self.text options:NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch];
         boldedString = [self boldedString:string withRange:boldedRange];
     }
@@ -919,9 +918,9 @@ withAutoCompleteString:(NSString *)string
             return;
         }
         
-        if ([[DataManager sharedManager].isFirstLoading isEqualToString:@"YES"]) {
-            return;
-        }
+//        if ([[DataManager sharedManager].isFirstLoading isEqualToString:@"YES"]) {
+//            return;
+//        }
         
         if([self.dataSource respondsToSelector:@selector(autoCompleteTextField:possibleCompletionsForString:completionHandler:)]){
             __weak MLPAutoCompleteFetchOperation *operation = self;

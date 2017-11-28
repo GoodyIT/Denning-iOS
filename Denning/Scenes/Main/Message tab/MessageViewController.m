@@ -10,7 +10,7 @@
 #import "QMDialogsViewController.h"
 #import "DenningContactViewController.h"
 #import "QMNewMessageViewController.h"
-#import "ClientContactViewController.h"
+//#import "ClientContactViewController.h"
 #import "FavoriteViewController.h"
 #import "MainTabBarController.h"
 
@@ -59,6 +59,8 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
     
     [self addView:self.viewControllers[0]];
+    [self setDefaultImageForButtons];
+    [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"] forState:UIControlStateNormal];
     [self hideTabBar];
 }
 
@@ -72,7 +74,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     [self configureBackBtnWithImageName:nil withSelector:@selector(popupScreen:)];
     
     self.viewControllerIdentifiers = @[@"DenningContactViewController", @"FavoriteViewController",
-        @"QMNewMessageViewController", @"QMDialogsViewController", @"ClientContactViewController"];
+        @"QMNewMessageViewController", @"QMDialogsViewController"];
     
     QMDialogsViewController* recentVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"QMDialogsViewController"];
     
@@ -81,8 +83,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     QMNewMessageViewController *groupVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"QMNewMessageViewController"];
     
     DenningContactViewController *denningContactVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"DenningContactViewController"];
-    ClientContactViewController* clientContactVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"ClientContactViewController"];
-    self.viewControllers = @[recentVC, favVC, groupVC, denningContactVC, clientContactVC];
+    self.viewControllers = @[recentVC, favVC, groupVC, denningContactVC];
     
     // Set the recent chat to default
     selectedIndex = DIChatRecentTab;
@@ -99,8 +100,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 - (void) setDefaultImageForButtons {
     [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message"] forState:UIControlStateNormal];
     [self.favoriteBtn setImage:[UIImage imageNamed:@"icon_favorite"] forState:UIControlStateNormal];
-    [self.staffBtn setImage:[UIImage imageNamed:@"icon_staff"] forState:UIControlStateNormal];
-    [self.clientBtn setImage:[UIImage imageNamed:@"icon_client"] forState:UIControlStateNormal];
+    [self.staffBtn setImage:[UIImage imageNamed:@"icon_contact"] forState:UIControlStateNormal];
 }
 
 - (IBAction)recentTabClicked:(id)sender {
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     [self removeView:self.viewControllers[selectedIndex]];
     selectedIndex = DIChatStaffTab;
     [self setDefaultImageForButtons];
-    [self.staffBtn setImage:[UIImage imageNamed:@"icon_staff_selected"] forState:UIControlStateNormal];
+    [self.staffBtn setImage:[UIImage imageNamed:@"icon_contact_selected"] forState:UIControlStateNormal];
 }
 
 - (IBAction)clientTabClicked:(id)sender {

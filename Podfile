@@ -3,6 +3,7 @@ platform :ios, ’10.2’
 project ‘Denning.xcodeproj’
 source 'https://github.com/CocoaPods/Specs.git'
 
+
 target ‘Denning’ do
     
     	pod 'UIDevice-Hardware', '~> 0.1.3'
@@ -45,6 +46,7 @@ target ‘Denning’ do
 	pod 'UIScrollView-InfiniteScroll', '~> 1.0.0'
 
 	pod 'AFNetworking’
+
 	pod 'Bolts'
 
 	pod 'dyci', :git => 'https://github.com/DyCI/dyci-main.git'

@@ -10,6 +10,7 @@
 #import "DEMOCustomAutoCompleteObject.h"
 #import <AFNetworking.h>
 #import "AFHTTPSessionOperation.h"
+#import "QMNetworkManager.h"
 
 @interface DEMODataSource ()
 @property(strong,nonatomic) NSOperationQueue *fetchQueue;

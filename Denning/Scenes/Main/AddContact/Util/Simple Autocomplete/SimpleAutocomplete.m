@@ -67,6 +67,8 @@
     self.autocompleteTF.showAutoCompleteTableWhenEditingBegins = YES;
     self.autocompleteTF.disableAutoCompleteTableUserInteractionWhileFetching = YES;
     [self.autocompleteTF setAutoCompleteRegularFontName:@"SFUIText-Regular"];
+    [self.autocompleteTF setAutoCompleteBoldFontName:@"SFUIText-Medium"];
+    
     self.autocompleteTF.inputAccessoryView = _accessoryView;
     [self.autocompleteTF becomeFirstResponder];
     //    self.details.autoCompleteTableAppearsAsKeyboardAccessory = YES;
