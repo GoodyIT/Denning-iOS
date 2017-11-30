@@ -6,6 +6,7 @@
 
 #import "GetJSONOperation.h"
 #import "RequestOperation.h"
+#import "CustomOperation.h"
 #import "JSONManager.h"
 
 typedef void (^FetchCompletionBlock)(NSArray *items);
@@ -23,6 +24,25 @@ typedef void (^FetchCompletionBlock)(NSArray *items);
             }
         }];
 
+        [[NSOperationQueue mainQueue] addOperation:downloadOperation];
+        
+    }
+    return self;
+}
+
+- (instancetype)initWithCustomURL:(NSURL*)url withCompletionBlock:(FetchCompletionBlock)completion
+{
+    if (self = [super init]) {
+        CustomOperation *downloadOperation = [[CustomOperation alloc] initWithUrl:url completion:^(NSURL *url, NSURLResponse *response, NSData *data, NSError *error) {
+            if (error == nil) {
+                NSArray *JSON = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingMutableContainers error: &error];
+                
+                if (completion != nil) {
+                    completion(JSON);
+                }
+            }
+        }];
+        
         [[NSOperationQueue mainQueue] addOperation:downloadOperation];
         
     }

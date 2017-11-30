@@ -389,7 +389,9 @@
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        _updateHanlder(_contactModel);
+    }];
 }
 
 
@@ -522,6 +524,9 @@
 }
 
 - (NSString*) removeSpecial:(NSString*) string {
+    if (string.length == 0) {
+        return @"";
+    }
     NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"+;-;(;)"];
     return [[string componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
 }
@@ -777,6 +782,7 @@
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Done" duration:2.0];
           //  [self performSegueWithIdentifier:kContactSearchSegue sender:contactModel];
+            _contactModel = contactModel;
             return;
         } else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:2.0];

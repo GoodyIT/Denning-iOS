@@ -227,9 +227,7 @@ typedef void(^QBTokenCompletionBlock)(NSData *token, NSError *error);
     
     [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
-    
 }
-
 
 - (void)handleActionWithIdentifier:(NSString *)identifier
                 remoteNotification:(NSDictionary *)userInfo

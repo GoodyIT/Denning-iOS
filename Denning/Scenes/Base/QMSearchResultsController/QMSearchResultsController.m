@@ -19,7 +19,21 @@
     
     // Hide empty separators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    CGRect rect  = self.view.frame;
+//    self.view.frame = CGRectMake(rect.origin.x, rect.origin.y  + 44, rect.size.width, rect.size.height);
 }
+
+//- (void) viewWillAppear:(BOOL)animated
+//{
+//    self.tableView.contentInset = UIEdgeInsetsMake(0, 100, 0, 0);
+//    [super viewWillAppear:animated];
+//}
+//
+//- (void) viewWillDisappear:(BOOL)animated
+//{
+//    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+//    [super viewWillDisappear:animated];
+//}
 
 - (void)performSearch:(NSString *)searchText {
     

@@ -133,7 +133,8 @@
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
         
-        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];
+        self->isLoading = NO;
+//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];;
     }];
 }
 

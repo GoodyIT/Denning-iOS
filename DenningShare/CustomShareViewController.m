@@ -16,7 +16,6 @@
 #import "MLPAutoCompleteTextField.h"
 #import "DEMOCustomAutoCompleteCell.h"
 #import "CoreDataOperation.h"
-//#import "APIDataSource.h"
 #import "Items.h"
 #import "GetJSONOperation.h"
 #import "Constants.h"
@@ -29,6 +28,8 @@
     NSURLSession* mySession;
     NSString* userType, *customString;
     NSUserDefaults* defaults;
+    
+    BOOL isLoading;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -66,10 +67,46 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_fileName resignFirstResponder];
+    if (_fileName.isFirstResponder) {
+        [_fileName resignFirstResponder];
+    }
+}
+
+UIImage *QMStatusBarBackgroundImage(void) {
+    
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextFillRect(context, rect);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+UIColor *QMSecondaryApplicationColor() {
+    static UIColor *color = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        color = [UIColor colorWithRed:74.0f/255.0f green:74.0f/255.0f blue:74.0f/255.0f alpha:1.0f];
+    });
+    
+    return color;
 }
 
 - (void) prepareUI {
+    [[UISearchBar appearance] setSearchBarStyle:UISearchBarStyleMinimal];
+    [[UISearchBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UISearchBar appearance] setBackgroundImage:QMStatusBarBackgroundImage() forBarPosition:0 barMetrics:UIBarMetricsDefault];
+    
+    [[UITextField appearance] setTintColor:QMSecondaryApplicationColor()];
+    [UITextField appearance].keyboardAppearance = UIKeyboardAppearanceDark;
+    
     for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments) {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
@@ -79,6 +116,9 @@
     }
     fileNo1 = @"Transit Folder";
     self.activity.hidden = YES;
+    _activity.hidesWhenStopped = YES;
+    _activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    _activity.backgroundColor = [UIColor grayColor];
     self.sendBtn.enabled = YES;
     self.segmented.hidden = YES;
     NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
@@ -245,6 +285,9 @@
 - (void)didSelectPost {
     // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
     
+    if (isLoading) return;
+    isLoading = YES;
+    
     for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments) {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
@@ -325,6 +368,7 @@ didCompleteWithError:(NSError *)error{
     NSLog(@"%s",__func__);
     [self.activity stopAnimating];
     self.activity.hidden = YES;
+    isLoading = NO;
     if (!error) {
         [self showAlertWithMessage:@"Successfully uploaded." actionSuccess:YES inViewController:self];
     }

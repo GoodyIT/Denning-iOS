@@ -111,6 +111,19 @@
 		79161E301FCC439F0025BCB8 /* SearchResultModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 79161E0D1FCC15EA0025BCB8 /* SearchResultModel.h */; };
 		79161E311FCC43AE0025BCB8 /* NSDictionary+NotNull.h in Sources */ = {isa = PBXBuildFile; fileRef = 795DF1FD1E6DE540006D617D /* NSDictionary+NotNull.h */; };
 		79161E321FCC43AE0025BCB8 /* NSDictionary+NotNull.m in Sources */ = {isa = PBXBuildFile; fileRef = 795DF1FE1E6DE540006D617D /* NSDictionary+NotNull.m */; };
+		791B4FE41FCF8E41003C30EC /* CustomOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 791B4FE31FCF8E40003C30EC /* CustomOperation.m */; };
+		791B4FE51FCF96EE003C30EC /* CustomInfiniteIndicator.h in Sources */ = {isa = PBXBuildFile; fileRef = 96E094931FBDCB0100E5FA58 /* CustomInfiniteIndicator.h */; };
+		791B4FE61FCF96EE003C30EC /* CustomInfiniteIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E094941FBDCB0100E5FA58 /* CustomInfiniteIndicator.m */; };
+		791B4FEA1FCF975C003C30EC /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 791B4FE81FCF975B003C30EC /* UIScrollView+InfiniteScroll.m */; };
+		791B4FEB1FCF9DCA003C30EC /* PropertyContactCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 7903CF6E1ECD303D0090206C /* PropertyContactCell.h */; };
+		791B4FEC1FCF9DCA003C30EC /* PropertyContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7903CF6F1ECD303D0090206C /* PropertyContactCell.m */; };
+		791B4FED1FCF9DCA003C30EC /* PropertyContactCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 7903CF701ECD303D0090206C /* PropertyContactCell.xib */; };
+		791B4FEE1FCF9DD4003C30EC /* DIGeneralCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FC831E41874E0097CB23 /* DIGeneralCell.h */; };
+		791B4FEF1FCF9DD4003C30EC /* DIGeneralCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FC841E41874E0097CB23 /* DIGeneralCell.m */; };
+		791B4FF01FCF9E24003C30EC /* StaffModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1B01EBF8D46001F83A5 /* StaffModel.h */; };
+		791B4FF11FCF9E24003C30EC /* StaffModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1B11EBF8D46001F83A5 /* StaffModel.m */; };
+		791B4FF21FCFA266003C30EC /* AddressModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 790B23A41E373A090037A187 /* AddressModel.h */; };
+		791B4FF31FCFA266003C30EC /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 790B23A51E373A090037A187 /* AddressModel.m */; };
 		7920E7841E9E5D0C002FEFF3 /* icon_searchswitch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */; };
 		7920E7851E9E5D0C002FEFF3 /* icon_searchswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */; };
 		7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */; };
@@ -422,7 +435,6 @@
 		79D599FC1E9473D500CD3821 /* QMDialogsSearchDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D599EF1E9473D500CD3821 /* QMDialogsSearchDataProvider.m */; };
 		79D599FD1E9473D500CD3821 /* QMDialogsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D599F31E9473D500CD3821 /* QMDialogsDataSource.m */; };
 		79D599FE1E9473D500CD3821 /* QMDialogsSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D599F61E9473D500CD3821 /* QMDialogsSearchDataSource.m */; };
-		79D599FF1E9473D500CD3821 /* QMPlaceholderDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D599F91E9473D500CD3821 /* QMPlaceholderDataSource.m */; };
 		79D59A001E9473D500CD3821 /* QMDialogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D599FB1E9473D500CD3821 /* QMDialogsViewController.m */; };
 		79D59A1B1E94762B00CD3821 /* DenningContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A151E94762B00CD3821 /* DenningContactViewController.m */; };
 		79D59A251E95245E00CD3821 /* QMNewMessageContactListSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A201E95245E00CD3821 /* QMNewMessageContactListSearchDataSource.m */; };
@@ -1294,6 +1306,10 @@
 		79161D1D1FCC01880025BCB8 /* icon_contact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_contact@2x.png"; sourceTree = "<group>"; };
 		79161E0C1FCC15EA0025BCB8 /* SearchResultModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultModel.m; sourceTree = "<group>"; };
 		79161E0D1FCC15EA0025BCB8 /* SearchResultModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultModel.h; sourceTree = "<group>"; };
+		791B4FE21FCF8E40003C30EC /* CustomOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomOperation.h; sourceTree = "<group>"; };
+		791B4FE31FCF8E40003C30EC /* CustomOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomOperation.m; sourceTree = "<group>"; };
+		791B4FE81FCF975B003C30EC /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
+		791B4FE91FCF975B003C30EC /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_searchswitch.png; sourceTree = "<group>"; };
 		7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@2x.png"; sourceTree = "<group>"; };
 		7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@3x.png"; sourceTree = "<group>"; };
@@ -1689,8 +1705,6 @@
 		79D599F31E9473D500CD3821 /* QMDialogsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMDialogsDataSource.m; sourceTree = "<group>"; };
 		79D599F51E9473D500CD3821 /* QMDialogsSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMDialogsSearchDataSource.h; sourceTree = "<group>"; };
 		79D599F61E9473D500CD3821 /* QMDialogsSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMDialogsSearchDataSource.m; sourceTree = "<group>"; };
-		79D599F81E9473D500CD3821 /* QMPlaceholderDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMPlaceholderDataSource.h; sourceTree = "<group>"; };
-		79D599F91E9473D500CD3821 /* QMPlaceholderDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMPlaceholderDataSource.m; sourceTree = "<group>"; };
 		79D599FA1E9473D500CD3821 /* QMDialogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMDialogsViewController.h; sourceTree = "<group>"; };
 		79D599FB1E9473D500CD3821 /* QMDialogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMDialogsViewController.m; sourceTree = "<group>"; };
 		79D59A141E94762B00CD3821 /* DenningContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DenningContactViewController.h; sourceTree = "<group>"; };
@@ -3431,6 +3445,15 @@
 			path = SearchResultModel;
 			sourceTree = "<group>";
 		};
+		791B4FE71FCF975B003C30EC /* UIScrollView+InfiniteScroll */ = {
+			isa = PBXGroup;
+			children = (
+				791B4FE81FCF975B003C30EC /* UIScrollView+InfiniteScroll.m */,
+				791B4FE91FCF975B003C30EC /* UIScrollView+InfiniteScroll.h */,
+			);
+			path = "UIScrollView+InfiniteScroll";
+			sourceTree = "<group>";
+		};
 		7920E7871E9F2B9D002FEFF3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -4118,6 +4141,8 @@
 				79BC1E961FCC6A2900E90B12 /* FetchOperation.m */,
 				79BC1E971FCC6A2900E90B12 /* Operation.h */,
 				79BC1E981FCC6A2900E90B12 /* CoreDataOperation.h */,
+				791B4FE21FCF8E40003C30EC /* CustomOperation.h */,
+				791B4FE31FCF8E40003C30EC /* CustomOperation.m */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -4310,7 +4335,6 @@
 			children = (
 				79D599F11E9473D500CD3821 /* QMDialogsDataSource */,
 				79D599F41E9473D500CD3821 /* QMDialogsSearchDataSource */,
-				79D599F71E9473D500CD3821 /* QMPlaceholderDataSource */,
 			);
 			path = "Data sources";
 			sourceTree = "<group>";
@@ -4331,15 +4355,6 @@
 				79D599F61E9473D500CD3821 /* QMDialogsSearchDataSource.m */,
 			);
 			path = QMDialogsSearchDataSource;
-			sourceTree = "<group>";
-		};
-		79D599F71E9473D500CD3821 /* QMPlaceholderDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				79D599F81E9473D500CD3821 /* QMPlaceholderDataSource.h */,
-				79D599F91E9473D500CD3821 /* QMPlaceholderDataSource.m */,
-			);
-			path = QMPlaceholderDataSource;
 			sourceTree = "<group>";
 		};
 		79D59A121E94762B00CD3821 /* View Controllers */ = {
@@ -7758,6 +7773,7 @@
 		9685EBDE1F51F8E80006C0E0 /* DenningShare */ = {
 			isa = PBXGroup;
 			children = (
+				791B4FE71FCF975B003C30EC /* UIScrollView+InfiniteScroll */,
 				79BC1EBF1FCC6C4000E90B12 /* supporting */,
 				79BC1EAA1FCC6B1B00E90B12 /* Model */,
 				79BC1E8E1FCC6A2900E90B12 /* Operations */,
@@ -9683,7 +9699,6 @@
 				79FBDFCD1E30421A00448FE3 /* QMContent.m in Sources */,
 				9636DD121F05E30F008DDA41 /* ViewDepositCollection.m in Sources */,
 				79FBE0891E304EAB00448FE3 /* QMLocalVideoView.m in Sources */,
-				79D599FF1E9473D500CD3821 /* QMPlaceholderDataSource.m in Sources */,
 				79FBE0F51E304F5000448FE3 /* QMAddMemberCell.m in Sources */,
 				79D599FC1E9473D500CD3821 /* QMDialogsSearchDataProvider.m in Sources */,
 				7920E7B91EA05DF6002FEFF3 /* FCFileManager.m in Sources */,
@@ -9758,6 +9773,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				791B4FF21FCFA266003C30EC /* AddressModel.h in Sources */,
+				791B4FF31FCFA266003C30EC /* AddressModel.m in Sources */,
+				791B4FF01FCF9E24003C30EC /* StaffModel.h in Sources */,
+				791B4FF11FCF9E24003C30EC /* StaffModel.m in Sources */,
+				791B4FEE1FCF9DD4003C30EC /* DIGeneralCell.h in Sources */,
+				791B4FEF1FCF9DD4003C30EC /* DIGeneralCell.m in Sources */,
+				791B4FEB1FCF9DCA003C30EC /* PropertyContactCell.h in Sources */,
+				791B4FEC1FCF9DCA003C30EC /* PropertyContactCell.m in Sources */,
+				791B4FED1FCF9DCA003C30EC /* PropertyContactCell.xib in Sources */,
+				791B4FE51FCF96EE003C30EC /* CustomInfiniteIndicator.h in Sources */,
+				791B4FE61FCF96EE003C30EC /* CustomInfiniteIndicator.m in Sources */,
 				79BC1EC41FCC6FA800E90B12 /* MLPAutoCompleteTextField.h in Sources */,
 				79BC1EC51FCC6FA800E90B12 /* MLPAutoCompleteTextField.m in Sources */,
 				79BC1EC61FCC6FA800E90B12 /* MLPAutoCompleteTextFieldDataSource.h in Sources */,
@@ -9778,8 +9804,10 @@
 				79161D2E1FCC11380025BCB8 /* NSString+Validation.h in Sources */,
 				79BC1E9D1FCC6A2900E90B12 /* RequestOperation.m in Sources */,
 				79BC1EBC1FCC6B1B00E90B12 /* JSONItem.m in Sources */,
+				791B4FEA1FCF975C003C30EC /* UIScrollView+InfiniteScroll.m in Sources */,
 				79BC1EBE1FCC6B1B00E90B12 /* JSONGenerator.m in Sources */,
 				79BC1E9A1FCC6A2900E90B12 /* Operation.m in Sources */,
+				791B4FE41FCF8E41003C30EC /* CustomOperation.m in Sources */,
 				79BC1EBD1FCC6B1B00E90B12 /* JSONManager.m in Sources */,
 				79BC1E9E1FCC6A2900E90B12 /* FetchOperation.m in Sources */,
 				79161D2F1FCC11380025BCB8 /* NSString+Validation.m in Sources */,

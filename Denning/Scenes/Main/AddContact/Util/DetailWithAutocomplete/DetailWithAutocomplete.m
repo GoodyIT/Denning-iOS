@@ -139,7 +139,7 @@
 {
     NSMutableArray* keywords = [NSMutableArray new];
     for (id obj in response) {
-        [keywords addObject:[obj objectForKeyNotNull:@"description"]];
+        [keywords addObject:[obj valueForKeyNotNull:@"description"]];
     }
     
     return keywords;

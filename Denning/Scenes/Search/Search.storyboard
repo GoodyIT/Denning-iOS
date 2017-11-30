@@ -492,6 +492,7 @@
                     <connections>
                         <segue destination="hJl-ak-VyK" kind="show" identifier="RelatedMatterSegue" id="nkk-rR-ueX"/>
                         <segue destination="mJy-Sm-dt1" kind="show" identifier="AddContactSegue" id="TzU-0z-esV"/>
+                        <segue destination="pp4-gf-4Ec" kind="show" identifier="SceneSegueChat" id="pgI-aZ-uD6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bfu-vD-hjs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -505,6 +506,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DeS-69-2B7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7489" y="-1361"/>
+        </scene>
+        <!--ChatNavigation-->
+        <scene sceneID="pR0-iO-Cbu">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Message" referencedIdentifier="ChatNavigation" id="pp4-gf-4Ec" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XBj-yr-bGl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7682" y="-1213"/>
         </scene>
         <!--AddContactNavigation-->
         <scene sceneID="xip-BX-jOt">
@@ -2585,12 +2594,10 @@
                                     <constraint firstItem="oCS-0Z-Tuc" firstAttribute="top" secondItem="N2f-25-X7V" secondAttribute="top" constant="30" id="BrQ-sY-JpD"/>
                                     <constraint firstItem="oCS-0Z-Tuc" firstAttribute="leading" secondItem="N2f-25-X7V" secondAttribute="leading" constant="15" id="FMc-fZ-GDq"/>
                                     <constraint firstItem="Bli-ne-sxW" firstAttribute="top" secondItem="YsW-r4-oVT" secondAttribute="bottom" id="Qjs-Jf-YLZ"/>
-                                    <constraint firstItem="Bli-ne-sxW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="N2f-25-X7V" secondAttribute="leading" constant="12" id="UfE-9c-JlV"/>
                                     <constraint firstAttribute="height" constant="90" id="Yet-rm-ncv"/>
                                     <constraint firstItem="YsW-r4-oVT" firstAttribute="top" secondItem="N2f-25-X7V" secondAttribute="top" constant="33" id="b9a-qT-IH1"/>
                                     <constraint firstItem="YsW-r4-oVT" firstAttribute="centerX" secondItem="N2f-25-X7V" secondAttribute="centerX" id="bYu-X2-4NB"/>
                                     <constraint firstItem="Bli-ne-sxW" firstAttribute="centerX" secondItem="N2f-25-X7V" secondAttribute="centerX" id="dmr-ed-MOF"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Bli-ne-sxW" secondAttribute="trailing" constant="12" id="nWm-Qf-5Hj"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HnH-3F-UfV">
@@ -2745,7 +2752,7 @@
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Gfn-Dg-XuF">
+                                    <stackView opaque="NO" contentMode="scaleAspectFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Gfn-Dg-XuF">
                                         <rect key="frame" x="126" y="57" width="124.5" height="17"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="File No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3HE-wt-iqx">
@@ -2768,10 +2775,10 @@
                                     <constraint firstItem="Gfn-Dg-XuF" firstAttribute="centerX" secondItem="Uyq-1p-ajm" secondAttribute="centerX" id="CGH-EO-0TF"/>
                                     <constraint firstItem="zuz-YB-SBO" firstAttribute="leading" secondItem="Uyq-1p-ajm" secondAttribute="leading" constant="15" id="GIn-qq-NrT"/>
                                     <constraint firstItem="zuz-YB-SBO" firstAttribute="top" secondItem="Uyq-1p-ajm" secondAttribute="top" constant="30" id="LTX-UC-x5h"/>
-                                    <constraint firstItem="Gfn-Dg-XuF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Uyq-1p-ajm" secondAttribute="leading" constant="12" id="Rkq-Rv-s9i"/>
+                                    <constraint firstItem="Gfn-Dg-XuF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Uyq-1p-ajm" secondAttribute="leading" constant="8" id="Rkq-Rv-s9i"/>
                                     <constraint firstItem="Gfn-Dg-XuF" firstAttribute="top" secondItem="YaP-Ts-lP4" secondAttribute="bottom" id="fwA-f0-HHU"/>
                                     <constraint firstItem="YaP-Ts-lP4" firstAttribute="centerX" secondItem="Uyq-1p-ajm" secondAttribute="centerX" id="gIn-El-aoK"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Gfn-Dg-XuF" secondAttribute="trailing" constant="12" id="kiy-tS-NpY"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Gfn-Dg-XuF" secondAttribute="trailing" constant="8" id="kiy-tS-NpY"/>
                                     <constraint firstItem="YaP-Ts-lP4" firstAttribute="top" secondItem="Uyq-1p-ajm" secondAttribute="top" constant="33" id="oYs-Gf-yH0"/>
                                     <constraint firstAttribute="height" constant="90" id="u6a-qI-0Lo"/>
                                 </constraints>

@@ -20,6 +20,9 @@
 {
     __block BOOL isLoading;
 }
+@property (weak, nonatomic) BFTask *addUserTask;
+
+@property (weak, nonatomic) BFTask *task;
 
 @end
 
@@ -145,15 +148,7 @@
     if (section == 0) {
         return 0;
     }
-    return 30;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return 0;
-    }
-    return 10;
+    return 44;
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -217,10 +212,121 @@
     }
 }
 
+- (void) inviteUserToDenning:(NSString*) email {
+    
+}
+
+- (void) revokeChat:(QBUUser*) user {
+    BOOL isRequestSent = [[QMCore instance].contactManager isContactListItemExistentForUserWithID:user.ID];
+    
+    if (![[QMCore instance].contactManager isFriendWithUserID: user.ID] && !isRequestSent) {
+        @weakify(self);
+        [self addToContact:user withCompletion:^{
+            @strongify(self);
+            [self gotoChat:user];
+        }];
+    } else {
+        [self gotoChat:user];
+    }
+}
+
+- (IBAction)addToContact:(QBUUser*) user withCompletion:(void(^)(void)) completion {
+    
+    if (self.addUserTask) {
+        // task in progress
+        return;
+    }
+    
+    if (![[QMCore instance].contactManager isFriendWithUserID:user.ID]) {
+        BOOL isRequestSent = [[QMCore instance].contactManager isContactListItemExistentForUserWithID:user.ID];
+        if (isRequestSent) {
+            if (completion != nil) {
+                completion();
+            }
+            return;
+        } else {
+            [SVProgressHUD showWithStatus:@"Sending"];
+            
+            self.addUserTask = [[[QMCore instance].contactManager addUserToContactList:user] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+                
+                [SVProgressHUD dismiss];
+                if (self == nil) return nil;
+                if (!task.isFaulted) {
+                    if (completion != nil) {
+                        completion();
+                    }
+                }
+                else {
+                    [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil)
+                                    actionSuccess:NO
+                                 inViewController:self];
+                }
+                
+                return nil;
+            }];
+        }
+    }
+}
+
+- (void) gotoChat: (QBUUser*) user {
+    
+    QBChatDialog *privateChatDialog = [[QMCore instance].chatService.dialogsMemoryStorage privateChatDialogWithOpponentID:user.ID];
+    
+    if (privateChatDialog) {
+        
+        [self performSegueWithIdentifier:kQMSceneSegueChat sender:privateChatDialog];
+    }
+    else {
+        
+        if (self.task) {
+            // task in progress
+            return;
+        }
+        
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+        
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+        
+        @weakify(self);
+        self.task = [[[QMCore instance].chatService createPrivateChatDialogWithOpponentID:user.ID] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
+            
+            @strongify(self);
+            [navigationController dismissNotificationPanel];
+            if (!task.isFaulted) {
+                
+                [self performSegueWithIdentifier:kQMSceneSegueChat sender:task.result];
+            }
+            
+            return nil;
+        }];
+    }
+}
+
 #pragma mark - NewContactHeaderCellDelegate
 - (void) didTapMessage:(NewContactHeaderCell *)cell
 {
     // Go to message
+    if (![QMCore instance].callManager.hasActiveCall && [QMCore instance].currentProfile != nil) {
+        [[QMNetworkManager sharedManager] getChatContactsWithCompletion:^{
+            
+            NSArray* contactArray = [[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray];
+            QBUUser* __user = nil;
+            for (ChatFirmModel* firmModel in contactArray) {
+                for(QBUUser* user in firmModel.users) {
+                    if ([user.email  isEqualToString:self.contactModel.email]) {
+                        __user = user;
+                        break;
+                    }
+                }
+            }
+            
+            if (__user == nil) {
+                [self inviteUserToDenning:self.contactModel.email];
+            } else {
+                [self revokeChat:__user];
+            }
+        }];
+    }
 }
 
 - (void) didTapEdit:(NewContactHeaderCell *)cell
@@ -306,9 +412,18 @@
     if ([segue.identifier isEqualToString:kAddContactSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         AddContactViewController* addVC = nav.viewControllers.firstObject;
+        addVC.updateHanlder = ^(ContactModel *model) {
+            self.contactModel = model;
+            [self.tableView reloadData];
+        };
         addVC.viewType = @"Update";
         addVC.title = @"Update Contact";
         addVC.contactModel = sender;
+    } else if ([segue.identifier isEqualToString:kQMSceneSegueChat]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        QMChatVC *chatViewController = [navigationController viewControllers].firstObject;
+        chatViewController.chatDialog = sender;
+        //        chatViewController.firmCode = selectedFirmCode;
     }
 }
 

@@ -17,13 +17,6 @@
 {
     SearchResultModel* searchResult = [SearchResultModel new];
     
-//    NSString *strJson=@"{\"name\":{\"dob\":88,\"age\":61},\"family\" : [{\"location\":\"us\",\"mobile\":\"mobile\"}]}";
-    if ([[response objectForKey:@"JSON"] isKindOfClass:[NSString class]]) {
-        NSData *data = [[response objectForKey:@"JSON"] dataUsingEncoding:NSUTF8StringEncoding];
-        id jsonOutput = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        NSLog(@"%@",jsonOutput);
-    }
-    
     searchResult.searchDescription = [response objectForKey:@"Desc"];
     searchResult.form = [response objectForKey:@"Form"];
     searchResult.header = [response objectForKey:@"Header"];

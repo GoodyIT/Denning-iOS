@@ -26,14 +26,13 @@ QMChatConnectionDelegate,
 QMPushNotificationManagerDelegate>
 @property (nonatomic, strong) NSArray *menuItems;
 
-
 @end
 
 @implementation MainTabBarController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[QMCore instance].chatService addDelegate:self];
+    
     self.delegate = self;
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -41,13 +40,14 @@ QMPushNotificationManagerDelegate>
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self performAutoLoginAndFetchData];
+//    [[QMCore instance].chatService addDelegate:self];
+//    [self performAutoLoginAndFetchData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[QMCore instance].chatService removeDelegate:self];
+//    [[QMCore instance].chatService removeDelegate:self];
 }
 
 - (void)performAutoLoginAndFetchData {

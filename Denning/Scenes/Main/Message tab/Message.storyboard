@@ -14,7 +14,7 @@
         <!--Chats-->
         <scene sceneID="0yT-kM-cR3">
             <objects>
-                <tableViewController storyboardIdentifier="QMDialogsViewController" id="gBS-aa-eGi" customClass="QMDialogsViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="QMDialogsViewController" automaticallyAdjustsScrollViewInsets="NO" id="gBS-aa-eGi" customClass="QMDialogsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="76" sectionHeaderHeight="28" sectionFooterHeight="28" id="SsZ-hQ-APG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -206,6 +206,7 @@ out here.</string>
                             <constraint firstItem="k2D-zg-hGn" firstAttribute="top" secondItem="4cW-an-Q3r" secondAttribute="bottom" id="sLh-SQ-4O7"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="B05-Hp-CmX">
                         <nil key="title"/>
                     </navigationItem>
@@ -573,6 +574,6 @@ out here.</string>
         <image name="m_empty_dialogs" width="180" height="265"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yFu-Ld-5fp"/>
+        <segue reference="uh6-CF-IYu"/>
     </inferredMetricsTieBreakers>
 </document>

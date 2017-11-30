@@ -7,6 +7,7 @@
 //
 
 #import "AddressModel.h"
+#import "NSDictionary+NotNull.h"
 
 @implementation AddressModel
 @synthesize city;

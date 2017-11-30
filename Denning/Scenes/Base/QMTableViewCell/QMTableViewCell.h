@@ -20,4 +20,7 @@
 - (void)setTitle:(NSString *)title;
 - (void)setBody:(NSString *)body;
 
+// Custom
+- (void) configureCellWithUser: (QBUUser*) user;
+- (void) configureCellWithChatDialog:(QBChatDialog*) dialog;
 @end

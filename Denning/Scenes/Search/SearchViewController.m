@@ -58,6 +58,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     NSString* gotoMatter;
     NSString* _email;
     NSString* _sessionID;
+    NSString* fileFolderTitle;
     BOOL isDenningUser;
     
     __block BOOL isFirstLoading;
@@ -462,6 +463,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 - (void) didTapFileFolder:(SearchMatterCell *)cell
 {
     SearchResultModel* model = self.searchResultArray[cell.tag];
+    fileFolderTitle = @"File Folder";
     [self openDocument:model];
 }
 
@@ -611,6 +613,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         };
         
         cell.contactHandler = ^(SearchResultModel *_model) {
+            fileFolderTitle = @"Contact Folder";
             [self openDocumentFromContact:_model];
         };
         
@@ -1044,6 +1047,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     if ([segue.identifier isEqualToString:kDocumentSearchSegue]){
         UINavigationController* navC = segue.destinationViewController;
         DocumentViewController* documentVC = navC.viewControllers.firstObject;
+        documentVC.title = fileFolderTitle;
         documentVC.documentModel = sender;
     }
     

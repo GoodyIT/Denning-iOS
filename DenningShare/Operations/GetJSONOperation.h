@@ -13,4 +13,6 @@ typedef void (^FetchCompletionBlock)(NSArray *items);
 
 - (instancetype)initWithDownloadURL:(NSURL*)url withCompletionBlock:(FetchCompletionBlock)completion;
 
+- (instancetype)initWithCustomURL:(NSURL*)url withCompletionBlock:(FetchCompletionBlock)completion;
+
 @end

@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^UpdateMatterHandler)(RelatedMatterModel* model);
+
 @interface AddMatterViewController : UIViewController
 
 @property (nonatomic, strong) RelatedMatterModel* matterModel;
 
+@property (nonatomic, strong) UpdateMatterHandler updateHandler;
 @end

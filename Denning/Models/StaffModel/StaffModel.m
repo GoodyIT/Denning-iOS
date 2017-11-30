@@ -8,6 +8,7 @@
 
 #import "StaffModel.h"
 #import "AddressModel.h"
+#import "NSDictionary+NotNull.h"
 
 @implementation StaffModel
 

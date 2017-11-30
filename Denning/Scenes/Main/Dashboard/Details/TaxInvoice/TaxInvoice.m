@@ -171,6 +171,7 @@
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
+        [SVProgressHUD dismiss];
         if (error == nil) {
             NSArray* array = [TaxInvoiceModel getTaxInvoiceArrayFromResonse:result];
             if (array.count != 0) {

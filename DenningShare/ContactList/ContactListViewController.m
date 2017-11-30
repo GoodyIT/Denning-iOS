@@ -10,19 +10,25 @@
 #import "StaffModel.h"
 #import "ClientModel.h"
 #import "SearchResultModel.h"
-//#import "PropertyContactCell.h"
-//#import "SecondContactCell.h"
+#import "GetJSONOperation.h"
+#import "RequestObject.h"
+#import "CustomInfiniteIndicator.h"
+#import "UIScrollView+InfiniteScroll.h"
+#import "PropertyContactCell.h"
 
-@interface ContactListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource, NSURLSessionDelegate, NSURLSessionDataDelegate>
+@interface ContactListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource>
 {
     NSURLSession* mySession;
     NSMutableData *receivedData;
+    RequestObject* requestDataObject;
 }
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSString* filter;
-@property (strong, nonatomic) NSArray* listOfContact;
+@property (strong, nonatomic) NSMutableArray* listOfContact;
+@property (assign, nonatomic) BOOL isAppending;
+@property (assign, nonatomic) NSInteger page;
 @end
 
 @implementation ContactListViewController
@@ -46,7 +52,7 @@
 }
 
 - (void) registerNib {
-//    [PropertyContactCell registerForReuseInTableView:self.tableView];
+    [PropertyContactCell registerForReuseInTableView:self.tableView];
 //    [SecondContactCell registerForReuseInTableView:self.tableView];
 }
 
@@ -56,71 +62,68 @@
 
 - (void) prepareUI {
     _filter = @"";
+    _page = 1;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 150;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 100;
+    
+    // Add infinite scroll handler
+    __weak typeof(self) weakSelf = self;
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        [weakSelf appendList];
+    }];
+}
+
+- (void) appendList {
+    _isAppending = YES;
+    [self getList];
 }
 
 - (void) getList{
     NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
-    // Create the request.
-    _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@",[defaults valueForKey:@"api"], _url, _filter];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
-    
-    [request setHTTPMethod:@"GET"];
-    // This is how we set header fields
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:[defaults valueForKey:@"sessionID"]  forHTTPHeaderField:@"webuser-sessionid"];
-    [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
-    
-    dispatch_async(dispatch_get_main_queue(), ^(void){
-        NSURLSessionDataTask *task = [[self  configureMySession]
-                                      dataTaskWithRequest: request];
-        [task resume];
-    });
-}
-
-- (NSURLSession *) configureMySession {
-    if (!mySession) {
-        NSURLSessionConfiguration* config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"group.denningshare.extension"];
-        // To access the shared container you set up, use the sharedContainerIdentifier property on your configuration object.
-        config.sharedContainerIdentifier = @"group.denningshare.extension";
-        mySession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
     }
-    return mySession;
-}
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
-didReceiveResponse:(nonnull NSURLResponse *)response completionHandler:(nonnull void (^)(NSURLSessionResponseDisposition))completionHandler
-{
-    receivedData = [NSMutableData new];
-    completionHandler(NSURLSessionResponseAllow);
+    requestDataObject = [RequestObject new];
+    [requestDataObject setIncompleteString:@""];
+    __weak typeof(self) weakSelf = self;
+    [requestDataObject setCompletionBlock:^(NSArray *items) {
+        if (items == nil) {
+            return;
+        }
+        if (items > 0) {
+            weakSelf.page++;
+        }
+        NSArray* array = [SearchResultModel getSearchResultArrayFromResponse:items];
+        if (weakSelf.isAppending) {
+            _listOfContact = [[_listOfContact arrayByAddingObjectsFromArray:array] mutableCopy];
+        } else {
+            _listOfContact = [array mutableCopy];
+        }
+        
+        [weakSelf.tableView reloadData];
+        weakSelf.isAppending = NO;
+        [weakSelf.tableView finishInfiniteScroll];
+    }];
+    NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%ld",[defaults valueForKey:@"api"], _url, _filter, _page];
+    NSURL *downloadURL = [NSURL URLWithString:urlString];
+    GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
+                                                            withCompletionBlock:requestDataObject.completionBlock];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
-- (void)URLSession:(NSURLSession *)session
-          dataTask:(NSURLSessionDataTask *)dataTask
-    didReceiveData:(NSData *)data{
-    [receivedData appendData:data];
-}
-
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
-didCompleteWithError:(NSError *)error
-{
-    NSError *errorJson=nil;
-    _listOfContact = [SearchResultModel getSearchResultArrayFromResponse: [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:&errorJson]];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // code here
-        [self.tableView reloadData];
-    });
-}
-
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
- willCacheResponse:(NSCachedURLResponse *)proposedResponse
- completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler{
-    NSLog(@"%s",__func__);
-}
 
 #pragma mark - Table view data source
 
@@ -139,10 +142,12 @@ didCompleteWithError:(NSError *)error
     return 33;
 }
 
-//-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
-//    return cell;
-//}
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
+    cell.name.text = @"ID";
+    cell.ID.text = @"Name";
+    return cell;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchResultModel *model = self.listOfContact[indexPath.row];
@@ -180,7 +185,7 @@ didCompleteWithError:(NSError *)error
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     self.filter = searchBar.text;
-
+    _page = 1;
     [self getList];
     [_searchBar resignFirstResponder];
 }
@@ -188,16 +193,16 @@ didCompleteWithError:(NSError *)error
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
     self.filter = @"";
     searchController.searchBar.text = @"";
-
+    _page = 1;
     [self getList];
 }
 
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
 {
     self.filter = searchText;
+    _page = 1;
     [self getList];
 }
-
 
 /*
 #pragma mark - Navigation

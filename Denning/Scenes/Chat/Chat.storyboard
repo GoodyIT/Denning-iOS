@@ -401,26 +401,37 @@
                         <sections>
                             <tableViewSection id="DSa-ED-nKa">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="UV7-4e-pn7">
-                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="90" id="UV7-4e-pn7">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UV7-4e-pn7" id="e9q-gN-d4I">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="89.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZCZ-4p-aiV">
-                                                    <rect key="frame" x="19" y="11" width="562" height="21"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZCZ-4p-aiV">
+                                                    <rect key="frame" x="27" y="42" width="321" height="29"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <action selector="groupNameFieldEditingChanged:" destination="y4a-Rd-aBj" eventType="editingChanged" id="3t8-ku-ghR"/>
                                                     </connections>
                                                 </textField>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Group Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kqc-zq-CYv">
+                                                    <rect key="frame" x="27" y="16" width="101" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="groupNameFieldEditingChanged:" destination="y4a-Rd-aBj" eventType="editingChanged" id="LV6-vD-T3Z"/>
+                                                    </connections>
+                                                </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ZCZ-4p-aiV" firstAttribute="centerY" secondItem="e9q-gN-d4I" secondAttribute="centerY" id="9YF-js-bSS"/>
+                                                <constraint firstItem="Kqc-zq-CYv" firstAttribute="top" secondItem="e9q-gN-d4I" secondAttribute="topMargin" constant="5" id="0Bd-mp-X3e"/>
+                                                <constraint firstItem="ZCZ-4p-aiV" firstAttribute="leading" secondItem="Kqc-zq-CYv" secondAttribute="leading" id="Emi-f3-w6G"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="ZCZ-4p-aiV" secondAttribute="trailing" constant="11" id="iYg-qr-tdK"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ZCZ-4p-aiV" secondAttribute="bottom" constant="8" id="kjh-4r-DVY"/>
                                                 <constraint firstItem="ZCZ-4p-aiV" firstAttribute="leading" secondItem="e9q-gN-d4I" secondAttribute="leadingMargin" constant="11" id="uaO-Yu-9AY"/>
+                                                <constraint firstItem="ZCZ-4p-aiV" firstAttribute="top" secondItem="Kqc-zq-CYv" secondAttribute="bottom" constant="5" id="voC-fh-p6G"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -445,7 +456,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fdB-Os-IVi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-592" y="-7967"/>
+            <point key="canvasLocation" x="-592.79999999999995" y="-7967.7661169415296"/>
         </scene>
         <!--Group Occupants View Controller-->
         <scene sceneID="xLN-ns-DIP">
@@ -564,7 +575,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RuT-Qc-RyG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="182" y="-7341.5"/>
+            <point key="canvasLocation" x="482" y="-7342"/>
         </scene>
     </scenes>
     <resources>

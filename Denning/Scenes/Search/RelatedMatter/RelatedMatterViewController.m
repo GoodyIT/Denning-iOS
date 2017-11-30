@@ -590,6 +590,10 @@ enum MATTERSECTION {
     } else if ([segue.identifier isEqualToString:kAddMatterSegue]){
         UINavigationController* navC = segue.destinationViewController;
         AddMatterViewController* vc = navC.viewControllers.firstObject;
+        vc.updateHandler = ^(RelatedMatterModel *model) {
+            relatedMatterModel = model;
+            [self.tableView reloadData];
+        };
         vc.matterModel = sender;
     }
 }

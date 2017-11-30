@@ -17,8 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
-    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-    return;
+//    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+//    return;
 
     // Do any additional setup after loading the view.
     NSDictionary* params = @{@"email":@"",
@@ -31,7 +31,7 @@
 //        [SVProgressHUD dismiss];
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        } else if ([[result valueForKeyNotNull:@"code"] isEqualToString:@"201"]) {
+        } else if ([[result valueForKeyNotNull:@"code"] isEqualToString:@"200"]) {
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
         } else {
             [QMLicenseAgreement presentUserAgreementInViewController:self contents:[result valueForKeyNotNull:@"strItemDescription"] completion:^(BOOL success) {

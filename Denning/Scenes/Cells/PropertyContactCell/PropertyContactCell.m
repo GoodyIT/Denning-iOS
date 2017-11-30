@@ -7,14 +7,13 @@
 //
 
 #import "PropertyContactCell.h"
+#import "StaffModel.h"
 
 @implementation PropertyContactCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.ID.copyingEnabled = YES;
-    self.name.copyingEnabled = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

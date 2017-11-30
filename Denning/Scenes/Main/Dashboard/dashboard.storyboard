@@ -64,14 +64,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="E0Z-Ik-3pd" kind="presentation" identifier="FileListingSegue" modalTransitionStyle="partialCurl" id="sab-qH-Hw4"/>
-                        <segue destination="932-Gv-Z0N" kind="presentation" identifier="DueTaskSegue" modalTransitionStyle="partialCurl" id="F1j-j4-YCi"/>
-                        <segue destination="XKO-v5-F04" kind="presentation" identifier="DashboardCollectionSegue" modalTransitionStyle="partialCurl" id="qzv-Uc-bRJ"/>
-                        <segue destination="S0Y-TI-5nM" kind="presentation" identifier="BankReconSegue" modalTransitionStyle="partialCurl" id="LEB-Nf-cf5"/>
-                        <segue destination="29Y-k9-bHJ" kind="presentation" identifier="FileLedgerSegue" modalTransitionStyle="partialCurl" id="a4U-ac-GhS"/>
-                        <segue destination="HPl-bZ-5K7" kind="presentation" identifier="MyDueTaskSegue" modalTransitionStyle="partialCurl" id="fEx-Tm-eHv"/>
+                        <segue destination="E0Z-Ik-3pd" kind="presentation" identifier="FileListingSegue" id="sab-qH-Hw4"/>
+                        <segue destination="932-Gv-Z0N" kind="presentation" identifier="DueTaskSegue" id="F1j-j4-YCi"/>
+                        <segue destination="XKO-v5-F04" kind="presentation" identifier="DashboardCollectionSegue" id="qzv-Uc-bRJ"/>
+                        <segue destination="S0Y-TI-5nM" kind="presentation" identifier="BankReconSegue" id="LEB-Nf-cf5"/>
+                        <segue destination="29Y-k9-bHJ" kind="presentation" identifier="FileLedgerSegue" id="a4U-ac-GhS"/>
+                        <segue destination="HPl-bZ-5K7" kind="presentation" identifier="MyDueTaskSegue" id="fEx-Tm-eHv"/>
                         <segue destination="sLh-kr-Xle" kind="show" identifier="BankAndCashBalanceSegue" id="RrA-Ox-KOx"/>
-                        <segue destination="js5-e4-9oO" kind="presentation" identifier="TrialBalanceSegue" modalTransitionStyle="partialCurl" id="3eK-fd-YZH"/>
+                        <segue destination="js5-e4-9oO" kind="presentation" identifier="TrialBalanceSegue" id="3eK-fd-YZH"/>
                         <segue destination="edj-de-mkX" kind="show" identifier="TaxInvoiceSegue" id="zER-DN-tv6"/>
                         <segue destination="bUC-AL-QLv" kind="show" identifier="FeesTransferSegue" id="h5Z-pi-6bY"/>
                         <segue destination="iE8-pn-bW2" kind="presentation" identifier="ContactGetListSegue" id="WAl-Ls-jwK"/>
@@ -81,7 +81,7 @@
                         <segue destination="Qhx-6t-VeD" kind="show" identifier="FeeMatterGrowthSegue" id="0Lt-dn-Pou"/>
                         <segue destination="u2V-ki-n4m" kind="show" identifier="CompletionTrackingSegue" id="5AA-BJ-JXV"/>
                         <segue destination="2Nz-RR-Y2g" kind="show" identifier="EventSegue" id="M1i-Om-N3l"/>
-                        <segue destination="hfJ-wa-sHg" kind="presentation" identifier="StaffLeaveSegue" modalTransitionStyle="partialCurl" id="SeX-s4-kdH"/>
+                        <segue destination="hfJ-wa-sHg" kind="presentation" identifier="StaffLeaveSegue" id="SeX-s4-kdH"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Zq-1o-jeV" userLabel="First Responder" sceneMemberID="firstResponder"/>

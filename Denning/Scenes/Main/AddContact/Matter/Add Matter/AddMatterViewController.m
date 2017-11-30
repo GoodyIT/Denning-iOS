@@ -350,7 +350,9 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        _updateHandler(_matterModel);
+    }];
 }
 
 - (void) registerNib {

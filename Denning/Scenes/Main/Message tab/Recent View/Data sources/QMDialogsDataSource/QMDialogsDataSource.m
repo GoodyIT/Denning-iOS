@@ -32,16 +32,18 @@
         QBUUser *recipient = [QMCore.instance.usersService.usersMemoryStorage userWithID:[chatDialog opponentID]];
         
         if (recipient.fullName != nil) {
-            
+
             [cell setTitle:recipient.fullName avatarUrl:recipient.avatarUrl];
         }
         else {
-            
+
             [cell setTitle:NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil) avatarUrl:nil];
         }
+//        [cell configureCellWithUser:recipient];
     } else {
         
         [cell setTitle:chatDialog.name avatarUrl:chatDialog.photo];
+//        [cell configureCellWithChatDialog:chatDialog];
     }
     
     // there was a time when updated at didn't exist

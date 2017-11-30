@@ -579,6 +579,7 @@ NSMutableDictionary* keyValue;
                 cell.rightDetailDisclosure.hidden = NO;
                 cell.rightDetailDisclosure.hidden = NO;
                 cell.leftFloatingText.delegate = self;
+                cell.leftFloatingText.userInteractionEnabled = YES;
                 cell.leftFloatingText.tag = 104;
                 cell.rightFloatingText.tag = 105;
 //                if (![_viewType isEqualToString:@"view"]) {
@@ -634,8 +635,14 @@ NSMutableDictionary* keyValue;
     
     cell.floatingTextField.tag = [self calcPrevRowCount:indexPath.section] + rows;
     
-    cell.floatingTextField.placeholder = self.contents[indexPath.section][rows][0];
-    cell.floatingTextField.text = self.contents[indexPath.section][rows][1];
+    if ([self.contents[indexPath.section][rows][0] isKindOfClass:[NSDictionary class]]) {
+        cell.floatingTextField.placeholder = self.contents[indexPath.section][rows][0];
+    } else {
+        cell.floatingTextField.placeholder = self.contents[indexPath.section][rows][0];
+        cell.floatingTextField.text = self.contents[indexPath.section][rows][1];
+    }
+    
+    
     cell.floatingTextField.floatLabelActiveColor = cell.floatingTextField.floatLabelPassiveColor = [UIColor redColor];
     
     cell.floatingTextField.inputAccessoryView = accessoryView;
@@ -756,7 +763,7 @@ NSMutableDictionary* keyValue;
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
 {
     if (textField.tag == 104) {
-        titleOfList = @"Select Mukim Type";
+        titleOfList = @"Mukim Type";
         nameOfField = self.contents[1][4][0];
 //        [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_MUKIM_TYPE_GET_URL];
         [self showAutocomplete:PROPERTY_MUKIM_TYPE_GET_URL];
@@ -910,21 +917,21 @@ NSMutableDictionary* keyValue;
             rows += 4;
         }
         if (indexPath.row == 0) {
-            titleOfList = @"Type of Property";
+            titleOfList = @"Title Type";
             nameOfField = self.contents[indexPath.section][rows][0];
             [self showAutocomplete:PROPERTY_TITLE_TYPE_GET_URL];
         } else if (indexPath.row == 1) {
-            titleOfList = @"Lot Type of Property";
+            titleOfList = @"Lot Type";
             nameOfField = self.contents[indexPath.section][rows][0];
             [self showAutocomplete:PROPERTY_LOT_TYPE_GET_URL];
         } else if (indexPath.row == 3) {
             
         } else if (indexPath.row == 5) {
-            titleOfList = @"Area Type of Property";
+            titleOfList = @"Area Type";
             nameOfField = self.contents[indexPath.section][rows+1][0];
             [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_AREA_TYPE_GET_URL];
         } else if (indexPath.row == 6) {
-            titleOfList = @"Tenure Type of Property";
+            titleOfList = @"Tenure Type";
             nameOfField = self.contents[indexPath.section][rows][0];
             [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_TENURE_TYPE_GET_URL];
         } else if (indexPath.row == 7) {
@@ -937,7 +944,7 @@ NSMutableDictionary* keyValue;
             titleOfList = @"Restriction Against";
             nameOfField = self.contents[indexPath.section][rows][0];
 //            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_RESTRICTION_AGAINST_GET_URL];
-            [self showDetailAutoComplete:PROPERTY_RESTRICTION_AGAINST_GET_URL];
+            [self showAutocomplete:PROPERTY_RESTRICTION_AGAINST_GET_URL];
         }else if (indexPath.row == 11) {
             titleOfList = @"Approving Authority";
             nameOfField = self.contents[indexPath.section][rows][0];

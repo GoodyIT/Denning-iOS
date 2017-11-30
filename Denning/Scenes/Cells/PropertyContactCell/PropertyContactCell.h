@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DIGeneralCell.h"
 
+@class StaffModel;
 @interface PropertyContactCell : DIGeneralCell
 @property (weak, nonatomic) IBOutlet UILabel *ID;
 @property (weak, nonatomic) IBOutlet UILabel *name;

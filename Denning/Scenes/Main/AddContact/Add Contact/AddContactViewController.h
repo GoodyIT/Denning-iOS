@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^UpdateContactHandler)(ContactModel* model);
 @class ListWithCodeTableViewController;
 
-
 @interface AddContactViewController : UITableViewController<UITextFieldDelegate, ContactListWithCodeSelectionDelegate, ContactListWithDescSelectionDelegate>
-
 
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *postcodeTextField;
 
 @property (strong, nonatomic) ContactModel* contactModel;
 @property(strong, nonatomic) NSString* viewType;
 
+@property (strong, nonatomic) UpdateContactHandler updateHanlder;
 @end

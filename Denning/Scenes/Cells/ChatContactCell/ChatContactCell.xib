@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-uN-U96" customClass="QMImageView">
-                        <rect key="frame" x="20" y="12.5" width="40" height="40"/>
+                        <rect key="frame" x="28" y="12.5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="lWG-io-z6T"/>
                             <constraint firstAttribute="height" constant="40" id="q3S-py-lhN"/>
@@ -32,19 +32,19 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Adam44" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klr-9F-SUf">
-                        <rect key="frame" x="68" y="12.5" width="65.5" height="21"/>
+                        <rect key="frame" x="76" y="12.5" width="65.5" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Last seen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjP-YT-fs4">
-                        <rect key="frame" x="68" y="34.5" width="54.5" height="15"/>
+                        <rect key="frame" x="76" y="34.5" width="54.5" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VxF-2O-jgY">
-                        <rect key="frame" x="262" y="13.5" width="38" height="38"/>
+                        <rect key="frame" x="254" y="13.5" width="38" height="38"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="38" id="i2X-2a-NdI"/>
                             <constraint firstAttribute="height" constant="38" id="zmH-gx-CAO"/>
@@ -76,10 +76,10 @@
                 <outlet property="lastSeenLabel" destination="ZjP-YT-fs4" id="frk-9Z-h9A"/>
                 <outlet property="userNameLabel" destination="klr-9F-SUf" id="NWO-PT-Dcy"/>
             </connections>
-            <point key="canvasLocation" x="-94" y="-110.5"/>
+            <point key="canvasLocation" x="-116" y="-110"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icon_favorite.png" width="26" height="24"/>
+        <image name="icon_favorite.png" width="19" height="18"/>
     </resources>
 </document>

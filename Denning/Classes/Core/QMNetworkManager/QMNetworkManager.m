@@ -1060,7 +1060,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     [self setPublicHTTPHeader];
     NSDictionary* params = @{@"email": [QBSession currentSession].currentUser.email, @"favourite": user.email};
     
-    [self sendDeleteWithURL:REMOVE_FAVORITE_CONTACT_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [self sendPostWithURL:REMOVE_FAVORITE_CONTACT_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion(error);
     }];
 }
