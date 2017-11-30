@@ -213,7 +213,17 @@
 }
 
 - (void) inviteUserToDenning:(NSString*) email {
+    [[QMNetworkManager sharedManager] setPublicHTTPHeader];
+    NSDictionary* params = @{@"email": [QBSession currentSession].currentUser.email, @"favourite": email};
+    NSString* url = PUBLIC_ADD_FAVORITE_CONTACT_URL;
     
+    [[QMNetworkManager sharedManager] sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        if (error == nil) {
+            [SVProgressHUD showSuccessWithStatus:@"Successfully Done"];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"Oops..."];
+        }
+    }];
 }
 
 - (void) revokeChat:(QBUUser*) user {
