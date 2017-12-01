@@ -215,7 +215,7 @@
 - (void) inviteUserToDenning:(NSString*) email {
     [[QMNetworkManager sharedManager] setPublicHTTPHeader];
     NSDictionary* params = @{@"email": [QBSession currentSession].currentUser.email, @"favourite": email};
-    NSString* url = PUBLIC_ADD_FAVORITE_CONTACT_URL;
+    NSString* url = INVITE_DENNING_URL;
     
     [[QMNetworkManager sharedManager] sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         if (error == nil) {
@@ -331,7 +331,11 @@
             }
             
             if (__user == nil) {
-                [self inviteUserToDenning:self.contactModel.email];
+                [QMAlert showConfirmDialog:@"Do you want to invite this client?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+                    if  ([action.title isEqualToString:@"OK"]) {
+                       [self inviteUserToDenning:self.contactModel.email];
+                    }
+                }];
             } else {
                 [self revokeChat:__user];
             }

@@ -71,17 +71,11 @@
     self.MAC = [DIHelpers getMAC] != nil ? [DIHelpers getMAC] : @"";
 }
 
-- (AFHTTPSessionManager*) setLoginHTTPHeader
-{
-    [self.manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}" forHTTPHeaderField:@"webuser-sessionid"];
-    [self.manager.requestSerializer setValue:@"iPhone@denning.com.my" forHTTPHeaderField:@"webuser-id"];
-    
-    return self.manager;
-}
-
-- (void) setPublicHTTPHeader {
+- (AFHTTPSessionManager*) setPublicHTTPHeader {
     [self.manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}"  forHTTPHeaderField:@"webuser-sessionid"];
     [self.manager.requestSerializer setValue:@"SkySea@denning.com.my" forHTTPHeaderField:@"webuser-id"];
+    
+    return _manager;
 }
 
 - (AFHTTPSessionManager*) setPrivateHTTPHeader {
@@ -120,7 +114,7 @@
                                                             @"email": email,
                                                             @"password": password}];
     
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     
     [self sendPostWithURL:SIGNIN_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * error,  NSURLSessionDataTask * _Nonnull task) {
             if (error == nil) {
@@ -164,7 +158,7 @@
 - (void) sendSMSGeneralWithEmail: (NSDictionary*) params url:(NSString*)url withCompletion:(void(^)(BOOL success, NSInteger statusCode, NSString* error, NSDictionary* response)) completion
 {
 
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     
     [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * error,  NSURLSessionDataTask * _Nonnull task) {
                 NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
@@ -181,7 +175,7 @@
 {
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": email, @"hpNumber": phoneNumber, @"activationCode": activationCode}];
     
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     [self.manager.requestSerializer setValue:email forHTTPHeaderField:@"webuser-id"];
     
     [self.manager POST:FORGOT_PASSWORD_REQUEST_URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -220,7 +214,7 @@
 
 - (void) getFirmListWithPage: (NSNumber*) page completion: (void(^)(NSArray* resultArray, NSError* error)) completion
 {
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     
     NSString* url = [NSString stringWithFormat:@"%@?page=%@", SIGNUP_FIRM_LIST_URL, page];
     
@@ -244,7 +238,7 @@
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email,
                                                                    @"password": password, @"sessionID": [DataManager sharedManager].user.sessionID}];
     
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_SIGNIN_URL];
     [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -263,7 +257,7 @@
 {
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email, @"password": password, @"sessionID": [DataManager sharedManager].user.sessionID}];
 
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         DocumentModel* result = [DocumentModel getDocumentFromResponse:responseObject];
@@ -288,7 +282,7 @@
                                                                    @"isLawyer": isLayer,
                                                                    @"firmCode": firmCode}];
     
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     
     [self.manager POST:SIGNUP_URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if  (completion != nil)
@@ -965,7 +959,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getChatContactsWithCompletion:(void(^)(void)) completion
 {
-    [self setLoginHTTPHeader];
+    [self setPublicHTTPHeader];
     NSString* url = [GET_CHAT_CONTACT_URL stringByAppendingString:[DataManager sharedManager].user.email];
     __block ChatContactModel* chatContacts;
     [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

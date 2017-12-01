@@ -30,4 +30,13 @@
     _invoiceTo.text = model.issueToName;
 }
 
+- (void) configureCellWithTaxModel:(TaxModel*) model
+{
+    _taxInvoiceNo.text = model.documentNo;
+    _invoiceTo.text = model.issueToName;
+    _fileNo.text = model.fileNo;
+    _fileName.text = model.matter.matterDescription;
+    _amount.text = [DIHelpers addThousandsSeparator: model.spaPrice];
+}
+
 @end

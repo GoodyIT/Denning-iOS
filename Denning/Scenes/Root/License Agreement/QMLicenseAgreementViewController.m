@@ -34,8 +34,14 @@
 }
 
 - (IBAction)done:(id)__unused sender {
-    
-    [self dismissViewControllerSuccess:NO];
+    if (_backAction == nil) {
+        [self dismissViewControllerSuccess:NO];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^{
+            _backAction();
+        }];
+        
+    }
 }
 
 - (void)dismissViewControllerSuccess:(BOOL)success {

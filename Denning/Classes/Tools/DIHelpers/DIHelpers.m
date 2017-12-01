@@ -526,6 +526,9 @@
 
 + (NSString*) addThousandsSeparator: (id) value
 {
+    if (((NSString*)value).length == 0) {
+        return value;
+    }
     NSScanner *scanner = [NSScanner scannerWithString:[value stringByReplacingOccurrencesOfString:@"," withString:@""]];
     BOOL isNumeric = [scanner scanInteger:NULL] && [scanner isAtEnd];
     if (((NSString*)value).length == 0 && !isNumeric) {

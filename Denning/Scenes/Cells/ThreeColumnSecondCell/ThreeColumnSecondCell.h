@@ -19,4 +19,6 @@
 
 - (void) configureCellWithDict:(NSDictionary*) dict;
 
+- (void) configureCellWithContactFolderItem:(ContactFolderItem*) model;
+
 @end

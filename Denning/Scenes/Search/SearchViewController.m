@@ -698,6 +698,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 
 - (void) openDocumentFromContact:(SearchResultModel*) model {
     NSString* url = [NSString stringWithFormat:@"v1/app/contactFolder/%@", model.key];
+    if (isLoading) return;
+    isLoading = YES;
     @weakify(self);
     [SVProgressHUD showWithStatus:@"Loading"];
     [[QMNetworkManager sharedManager] getResponseWithUrl:url withCompletion:^(id  _Nonnull result, NSError * _Nonnull error) {

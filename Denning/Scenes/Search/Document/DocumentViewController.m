@@ -326,6 +326,8 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
         }
         self.navigationItem.rightBarButtonItem = self.selectBtn;
     }
+    
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void) popupScreen:(id)sender {
@@ -479,6 +481,10 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         cell.editLabel.hidden = YES;
         cell.chatLabel.hidden = YES;
         cell.accessoryType = UITableViewCellAccessoryNone;
+        
+//        if ([_fromDashboard isEqualToString: @"from dashboard"]) {
+//            cell.hidden = YES;
+//        }
         return cell;
     } else if (indexPath.section == 1) {
         DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];

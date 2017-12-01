@@ -17,4 +17,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
 
 - (void) configureCellWithModel:(TaxInvoiceModel*) model;
+- (void) configureCellWithTaxModel:(TaxModel*) model;
 @end

@@ -187,7 +187,7 @@
 #import "PaymentModel.h"
 #import "ReceiptModel.h"
 #import "BillModel.h"
-
+#import "ContactFolderItem.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

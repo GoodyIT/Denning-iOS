@@ -456,6 +456,7 @@ NSMutableDictionary* keyValue;
     
     if (indexPath.section == 0 && indexPath.row == 9) {
         AddLastOneButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastOneButtonCell cellIdentifier] forIndexPath:indexPath];
+        [cell.calculateBtn setTitle:@"Calculate"  forState:UIControlStateNormal];
         cell.calculateHandler = ^{
             [self calcTax];
         };
@@ -710,7 +711,7 @@ NSMutableDictionary* keyValue;
             [self performSegueWithIdentifier:kPresetBillSegue sender:PRESET_BILL_GET_URL];
         }
     } else {
-        if  (isCalcDone) {
+        if  (isCalcDone && indexPath.row <= 3) {
             [self performSegueWithIdentifier:kTaxSelectionSegue sender:[NSNumber numberWithInteger:indexPath.row]];
         }
     }

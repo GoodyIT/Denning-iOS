@@ -63,9 +63,8 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 + (QMNetworkManager *)sharedManager;
 
-- (AFHTTPSessionManager*) setLoginHTTPHeader;
 - (AFHTTPSessionManager*) setPrivateHTTPHeader;
-- (void) setPublicHTTPHeader;
+- (AFHTTPSessionManager*) setPublicHTTPHeader;
 
 /*
  ******** Auth *********

@@ -35,6 +35,9 @@
 #import "DashboardFileListing.h"
 #import "EventViewController.h"
 #import "StaffLeaveViewController.h"
+#import "DocumentViewController.h"
+#import "DashboardContactFolder.h"
+#import "DashboardQuotation.h"
 
 @interface DashboardViewController ()
 <UIDocumentInteractionControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UITextFieldDelegate, SWTableViewCellDelegate, UITabBarControllerDelegate>
@@ -372,10 +375,28 @@ NSMutableDictionary* keyValue;
     }];
 }
 
+- (void) openTransitFolder: (NSString*) url
+{
+    url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    if (isLoading) return;
+    isLoading = YES;
+    @weakify(self);
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        @strongify(self);
+        self->isLoading = false;
+        [SVProgressHUD dismiss];
+        if (error == nil) {
+            DocumentModel* documentModel = [DocumentModel getDocumentFromResponse:result];
+            [self performSegueWithIdentifier:kDocumentSearchSegue sender:documentModel];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
-    
     if (indexPath.section == 0) {
         
     } else if (indexPath.section == 1) {
@@ -389,6 +410,10 @@ NSMutableDictionary* keyValue;
             [self performSegueWithIdentifier:kMyDueTaskSegue sender:_mainModel.s1.items[indexPath.row]];
         } else if (indexPath.row == 3){
             [self performSegueWithIdentifier:kStaffLeaveSegue sender:_mainModel.s1.items[indexPath.row].mainAPI];
+        } else if (indexPath.row == 4){ // Transit folder
+            [self openTransitFolder:_mainModel.s1.items[indexPath.row].mainAPI];
+        } else if (indexPath.row == 5){ // Contact folder
+            [self performSegueWithIdentifier:kDashboardContactFolderSegue sender:_mainModel.s1.items[indexPath.row].mainAPI];
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row > 0) {
@@ -423,6 +448,8 @@ NSMutableDictionary* keyValue;
             [self performSegueWithIdentifier:kAttendanceSegue sender:url];
         } else if (indexPath.row == 11) {
             [self performSegueWithIdentifier:kFeeMatterGrowthSegue sender:url];
+        } else if (indexPath.row == 12) {
+            [self performSegueWithIdentifier:kDashboardQuotationSegue sender:url];
         }
     }
 }
@@ -538,8 +565,21 @@ NSMutableDictionary* keyValue;
     } else if ([segue.identifier isEqualToString:kStaffLeaveSegue]) {
         StaffLeaveViewController* vc = segue.destinationViewController;
         vc.url = sender;
+    } else if ([segue.identifier isEqualToString:kDocumentSearchSegue]){
+        UINavigationController* navC = segue.destinationViewController;
+        DocumentViewController* documentVC = navC.viewControllers.firstObject;
+        documentVC.title = @"Transit Folder";
+        documentVC.documentModel = sender;
+    } else if ([segue.identifier isEqualToString:kDashboardContactFolderSegue]){
+        UINavigationController* navC = segue.destinationViewController;
+        DashboardContactFolder* vc = navC.viewControllers.firstObject;
+        vc.url = sender;
+    } else if ([segue.identifier isEqualToString:kDashboardQuotationSegue]){
+        UINavigationController* navC = segue.destinationViewController;
+        DashboardQuotation* vc = navC.viewControllers.firstObject;
+        vc.url = sender;
+        vc.title = @"Quotation";
     }
-
 }
 
 @end

@@ -1,19 +1,19 @@
-
 //
-//  TaxInvoice.m
+//  DashboardQuotation.m
 //  Denning
 //
-//  Created by Ho Thong Mee on 15/07/2017.
+//  Created by Denning IT on 2017-12-01.
 //  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-#import "TaxInvoice.h"
+#import "DashboardQuotation.h"
 #import <HTHorizontalSelectionList/HTHorizontalSelectionList.h>
 #import "TaxInvoiceCell.h"
 #import "BankReconHeaderCell.h"
+#import "ViewQuotation.h"
 
-@interface TaxInvoice ()
-<UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,  HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate>
+@interface DashboardQuotation ()
+<UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource,  HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate>
 {
     __block BOOL isLoading;
     BOOL isAppending;
@@ -35,7 +35,7 @@
 @property (strong, nonatomic) NSArray* arrayOfFilterValues;
 @end
 
-@implementation TaxInvoice
+@implementation DashboardQuotation
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -90,8 +90,8 @@
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
-    _topFilter = @[@"All", @"Settled", @"Outstanding"];
-    _arrayOfFilterValues = @[@"all", @"settled", @"outstanding"];
+    _topFilter = @[@"All", @"Converted", @"Pending"];
+    _arrayOfFilterValues = @[@"all", @"convert", @"pending"];
     self.selectionList.selectionIndicatorColor = [UIColor colorWithHexString:@"FF3B2F"];
     [self.selectionList setTitleColor:[UIColor colorWithHexString:@"FF3B2F"] forState:UIControlStateHighlighted];
     [self.selectionList setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -165,10 +165,8 @@
 - (void) getList{
     if (isLoading) return;
     isLoading = YES;
-    if ([_fileNo isKindOfClass:[NSNull class]]) {
-        _fileNo = @"";
-    }
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@%@?search=%@&page=%@&fileNo=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curBalanceFilter, _filter, _page, _fileNo];
+
+    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curBalanceFilter, _filter, _page];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     @weakify(self)
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
@@ -215,7 +213,7 @@
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     BankReconHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconHeaderCell cellIdentifier]];
-    cell.firstValue.text = @"Tax invoice no.";
+    cell.firstValue.text = @"Quotation no.";
     cell.secondValue.text = @"File no.";
     cell.thirdValue.text = @"Amount";
     
@@ -235,66 +233,28 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    TaxInvoiceModel *model = self.listOfTaxInvoices[indexPath.row];
-    if (_fileNo != nil) {
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-            _updateHandler(model);
-        }];
-    } else {
-        [SVProgressHUD showWithStatus:@"Loading"];
-        [self viewPDF:model.APIpdf];
-    }
+    [self gotoViewQuotaion:_listOfTaxInvoices[indexPath.row]];
 }
 
-- (void) viewPDF:(NSString*) pdfUrl {
-    NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, pdfUrl];
-    NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+- (void) gotoViewQuotaion:(TaxInvoiceModel*) model {
+    if (isLoading) return;
+    isLoading = YES;
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSString* url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, model.APIpdf];
     
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
-    [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                           inDomain:NSUserDomainMask
-                                                                  appropriateForURL:nil
-                                                                             create:NO error:nil];
-        
-        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        
-        return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+    [SVProgressHUD show];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         [SVProgressHUD dismiss];
-        if (filePath != nil) {
-            selectedDocument = filePath;
-            [self displayDocument:filePath];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            BillModel* billModel = [BillModel getBill:result];
+            [self performSegueWithIdentifier:kViewQuotationSegue sender:billModel];
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"Oops..."];
         }
     }];
-    [downloadTask resume];
-}
-
-- (void)displayDocument:(NSURL*)document {
-    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
-    documentInteractionController.delegate = self;
-    [documentInteractionController presentPreviewAnimated:YES];
-}
-
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
-{
-    return self;
-}
-
-- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
-{
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
 
 #pragma mark - ScrollView Delegate
@@ -351,7 +311,13 @@
     [self getList];
 }
 
-
-#pragma mark - Navigation
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kViewQuotationSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        ViewQuotation* vc = nav.viewControllers.firstObject;
+        vc.model = sender;
+    }
+}
 
 @end

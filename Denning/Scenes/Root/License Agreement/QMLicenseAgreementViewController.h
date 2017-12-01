@@ -10,9 +10,13 @@
 
 typedef void (^LicenceCompletionBlock)(BOOL accepted);
 
+typedef void(^BackAction) (void);
+
 @interface QMLicenseAgreementViewController : UIViewController
 
 @property (copy, nonatomic) LicenceCompletionBlock licenceCompletionBlock;
+
+@property (copy, nonatomic) BackAction backAction;
 
 @property (strong, nonatomic) NSString* contents;
 

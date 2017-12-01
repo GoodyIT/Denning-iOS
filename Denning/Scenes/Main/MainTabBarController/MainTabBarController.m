@@ -210,7 +210,7 @@ shouldSelectViewController:(UIViewController *)viewController
                 if (success) {
                     [self performSegueWithIdentifier:kQMMainStoryboard sender:nil];
                 }
-            }];
+            } backAction:nil];
         }
     }];
 }

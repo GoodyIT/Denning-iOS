@@ -124,6 +124,10 @@
 		791B4FF11FCF9E24003C30EC /* StaffModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 793FF1B11EBF8D46001F83A5 /* StaffModel.m */; };
 		791B4FF21FCFA266003C30EC /* AddressModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 790B23A41E373A090037A187 /* AddressModel.h */; };
 		791B4FF31FCFA266003C30EC /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 790B23A51E373A090037A187 /* AddressModel.m */; };
+		791B4FFB1FD0D56E003C30EC /* DashboardContactFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 791B4FFA1FD0D56E003C30EC /* DashboardContactFolder.m */; };
+		791B4FFF1FD0D5DB003C30EC /* ContactFolderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 791B4FFE1FD0D5DB003C30EC /* ContactFolderItem.m */; };
+		791B50031FD0F882003C30EC /* DashboardQuotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 791B50021FD0F882003C30EC /* DashboardQuotation.m */; };
+		791B500A1FD105BC003C30EC /* ViewQuotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 791B50091FD105BC003C30EC /* ViewQuotation.m */; };
 		7920E7841E9E5D0C002FEFF3 /* icon_searchswitch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */; };
 		7920E7851E9E5D0C002FEFF3 /* icon_searchswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */; };
 		7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */; };
@@ -1310,6 +1314,14 @@
 		791B4FE31FCF8E40003C30EC /* CustomOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomOperation.m; sourceTree = "<group>"; };
 		791B4FE81FCF975B003C30EC /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		791B4FE91FCF975B003C30EC /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
+		791B4FF91FD0D56E003C30EC /* DashboardContactFolder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DashboardContactFolder.h; sourceTree = "<group>"; };
+		791B4FFA1FD0D56E003C30EC /* DashboardContactFolder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DashboardContactFolder.m; sourceTree = "<group>"; };
+		791B4FFD1FD0D5DB003C30EC /* ContactFolderItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactFolderItem.h; sourceTree = "<group>"; };
+		791B4FFE1FD0D5DB003C30EC /* ContactFolderItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactFolderItem.m; sourceTree = "<group>"; };
+		791B50011FD0F882003C30EC /* DashboardQuotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DashboardQuotation.h; sourceTree = "<group>"; };
+		791B50021FD0F882003C30EC /* DashboardQuotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DashboardQuotation.m; sourceTree = "<group>"; };
+		791B50081FD105BC003C30EC /* ViewQuotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewQuotation.h; sourceTree = "<group>"; };
+		791B50091FD105BC003C30EC /* ViewQuotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewQuotation.m; sourceTree = "<group>"; };
 		7920E7811E9E5D0C002FEFF3 /* icon_searchswitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_searchswitch.png; sourceTree = "<group>"; };
 		7920E7821E9E5D0C002FEFF3 /* icon_searchswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@2x.png"; sourceTree = "<group>"; };
 		7920E7831E9E5D0C002FEFF3 /* icon_searchswitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_searchswitch@3x.png"; sourceTree = "<group>"; };
@@ -3452,6 +3464,42 @@
 				791B4FE91FCF975B003C30EC /* UIScrollView+InfiniteScroll.h */,
 			);
 			path = "UIScrollView+InfiniteScroll";
+			sourceTree = "<group>";
+		};
+		791B4FF81FD0D52E003C30EC /* Contact Folder */ = {
+			isa = PBXGroup;
+			children = (
+				791B4FF91FD0D56E003C30EC /* DashboardContactFolder.h */,
+				791B4FFA1FD0D56E003C30EC /* DashboardContactFolder.m */,
+			);
+			path = "Contact Folder";
+			sourceTree = "<group>";
+		};
+		791B4FFC1FD0D5C8003C30EC /* DashboardContactFolder */ = {
+			isa = PBXGroup;
+			children = (
+				791B4FFD1FD0D5DB003C30EC /* ContactFolderItem.h */,
+				791B4FFE1FD0D5DB003C30EC /* ContactFolderItem.m */,
+			);
+			path = DashboardContactFolder;
+			sourceTree = "<group>";
+		};
+		791B50001FD0F864003C30EC /* Quotation */ = {
+			isa = PBXGroup;
+			children = (
+				791B50011FD0F882003C30EC /* DashboardQuotation.h */,
+				791B50021FD0F882003C30EC /* DashboardQuotation.m */,
+			);
+			path = Quotation;
+			sourceTree = "<group>";
+		};
+		791B50041FD103A9003C30EC /* ViewQuotation */ = {
+			isa = PBXGroup;
+			children = (
+				791B50081FD105BC003C30EC /* ViewQuotation.h */,
+				791B50091FD105BC003C30EC /* ViewQuotation.m */,
+			);
+			path = ViewQuotation;
 			sourceTree = "<group>";
 		};
 		7920E7871E9F2B9D002FEFF3 /* Common */ = {
@@ -5778,6 +5826,7 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				791B4FFC1FD0D5C8003C30EC /* DashboardContactFolder */,
 				79161E0B1FCC15EA0025BCB8 /* SearchResultModel */,
 				79161CFD1FC95EDE0025BCB8 /* BillModel */,
 				79161CF21FC91E360025BCB8 /* PaymentModel */,
@@ -7440,6 +7489,8 @@
 		9620830A1ED9314D00BB595C /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				791B50041FD103A9003C30EC /* ViewQuotation */,
+				791B4FF81FD0D52E003C30EC /* Contact Folder */,
 				79161CBE1FC754EF0025BCB8 /* LeavePendingApproval */,
 				79161CBA1FC754A30025BCB8 /* LeaveRecords */,
 				79161CA01FC709EF0025BCB8 /* StaffLeave */,
@@ -7453,6 +7504,7 @@
 				96A73A8C1F1B0F1000B97156 /* ProfitAndLoss */,
 				96A73AB01F1C9EA300B97156 /* FeesTranserDetail */,
 				96A73A7D1F1AAEDE00B97156 /* FeesTransfer */,
+				791B50001FD0F864003C30EC /* Quotation */,
 				96A73A731F1A877200B97156 /* TaxInvoice */,
 				96A73A4E1F1A5FDD00B97156 /* TrialBalance */,
 				96A73A4A1F1A4D9800B97156 /* BankAndCashBalance */,
@@ -9299,6 +9351,7 @@
 				793FF2171EC3A9A7001F83A5 /* FloatingTextCell.m in Sources */,
 				962082CD1ED48FE100BB595C /* CourtDiaryListViewController.m in Sources */,
 				7903D0751ECE5F340090206C /* SimpleAutocomplete.m in Sources */,
+				791B500A1FD105BC003C30EC /* ViewQuotation.m in Sources */,
 				79FBE07E1E304EAA00448FE3 /* QMLinkViewController.m in Sources */,
 				79161CE51FC87F920025BCB8 /* BankBranchAutoComplete.m in Sources */,
 				960F03061F2908BE00B25BBC /* CustomDocumentViewController.m in Sources */,
@@ -9400,6 +9453,7 @@
 				797ED5321EAFDC31009C20C4 /* CalendarRangeView.m in Sources */,
 				79FBDFCF1E30421A00448FE3 /* QMStatusStringBuilder.m in Sources */,
 				79734F781EB99ED300647215 /* CityModel.m in Sources */,
+				791B50031FD0F882003C30EC /* DashboardQuotation.m in Sources */,
 				79FD2D021E428526005978E3 /* MainTabBarController.m in Sources */,
 				96E094911FBDBE9800E5FA58 /* OfficeDiaryModel.m in Sources */,
 				7993767E1FC0D5C5007E35CE /* CaseTypeViewController.m in Sources */,
@@ -9464,6 +9518,7 @@
 				960017711FB0C7F7001EAB51 /* AttendanceModel.m in Sources */,
 				96A73A8F1F1B0F2200B97156 /* ProfitAndLoss.m in Sources */,
 				960A662D1F02A6D80063AB6C /* SearchLastCell.m in Sources */,
+				791B4FFB1FD0D56E003C30EC /* DashboardContactFolder.m in Sources */,
 				960758A41F015B61008F9C69 /* MasterTitleModel.m in Sources */,
 				793FF1AE1EBF893C001F83A5 /* ClientModel.m in Sources */,
 				79FBDF9F1E30421A00448FE3 /* NSArray+Intersection.m in Sources */,
@@ -9500,6 +9555,7 @@
 				795432721FC63A2C00FF9E57 /* QMNavigationController.m in Sources */,
 				79FBE10C1E304F5000448FE3 /* QMGroupOccupantsViewController.m in Sources */,
 				7931B4E61EA8EA570090BDE0 /* UITextField+LeftView.m in Sources */,
+				791B4FFF1FD0D5DB003C30EC /* ContactFolderItem.m in Sources */,
 				79161CD91FC7F6020025BCB8 /* PaymentModeViewController.m in Sources */,
 				96821F3F1F1DC84200F28708 /* CompletionTrackingCell.m in Sources */,
 				96046F571EFDA0180048A58D /* iCarousel.m in Sources */,

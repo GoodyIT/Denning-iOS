@@ -194,6 +194,10 @@ static NSString* const kAddPropertySegue = @"AddPropertySegue";
 
 static NSString* const kFileListingSegue = @"FileListingSegue";
 
+static NSString* const kDashboardContactFolderSegue = @"DashboardContactFolderSegue";
+
+static NSString* const kDashboardTransitFolderSegue = @"DashboardTransitFolderSegue";
+
 static NSString* const kDueTaskSegue = @"DueTaskSegue";
 
 static NSString* const kMyDueTaskSegue = @"MyDueTaskSegue";
@@ -232,6 +236,8 @@ static NSString* const kAttendanceDetailSegue = @"AttendanceDetailSegue";
 
 static NSString* const kFeeMatterGrowthSegue = @"FeeMatterGrowthSegue";
 
+static NSString* const kDashboardQuotationSegue = @"DashboardQuotationSegue";
+
 static NSString* const kCompletionTrackingSegue = @"CompletionTrackingSegue";
 
 static NSString* const kBankLedgerDetailSegue = @"BankLedgerDetailSegue";
@@ -253,5 +259,7 @@ static NSString* const kTemplateSegue = @"TemplateSegue";
 static NSString* const kTemplateTypeSegue = @"TemplateTypeSegue";
 
 static NSString* const kFeeTransferDetailSegue = @"FeeTransferDetailSegue";
+
+static NSString* const kViewQuotationSegue = @"ViewQuotationSegue";
 
 static NSString* const kClientFileUploadSegue = @"ClientFileUploadSegue";

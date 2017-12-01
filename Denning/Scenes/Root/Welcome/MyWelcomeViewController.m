@@ -17,15 +17,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
-//    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-//    return;
 
     // Do any additional setup after loading the view.
     NSDictionary* params = @{@"email":@"",
                              @"MAC":[QMNetworkManager sharedManager].MAC,
                              @"deviceName":[QMNetworkManager sharedManager].device
                              };
-//    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+
     [[QMNetworkManager sharedManager] setPublicHTTPHeader];
     [[QMNetworkManager sharedManager] sendPostWithURL:kDIAgreementUrl params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
 //        [SVProgressHUD dismiss];
@@ -34,10 +32,12 @@
         } else if ([[result valueForKeyNotNull:@"code"] isEqualToString:@"200"]) {
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
         } else {
-            [QMLicenseAgreement presentUserAgreementInViewController:self contents:[result valueForKeyNotNull:@"strItemDescription"] completion:^(BOOL success) {
+            [QMLicenseAgreement presentUserAgreementInViewController:self contents:[result valueForKeyNotNull:@"strItemDescription"] completion:^(BOOL success){
                 if (success) {
                     [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
                 }
+            } backAction:^{
+                [QMAlert showInformationWithMessage:@"Thank you for using Denning App" inViewController:self];
             }];
         }
     }];

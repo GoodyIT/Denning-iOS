@@ -13,4 +13,5 @@
 @property (strong, nonatomic) DocumentModel* documentModel;
 @property (strong, nonatomic) NSString* previousScreen;
 
+@property (strong, nonatomic) NSString* fromDashboard;
 @end

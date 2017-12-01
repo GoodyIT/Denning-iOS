@@ -25,7 +25,7 @@
     model.issueBy = [response valueForKeyNotNull:@"issueBy"];
     model.primaryClient = [response valueForKeyNotNull:@"primaryClient"];
     model.propertyTitle = [response valueForKeyNotNull:@"propertyTitle"];
-    model.matter = [response valueForKeyNotNull:@"matter"];
+    model.matter = [MatterCodeModel getMatterCodeFromResponse:[response objectForKeyNotNull:@"matter"]];
     model.presetCode = [response valueForKeyNotNull:@"presetCode"];
     model.relatedDocumentNo = [response valueForKeyNotNull:@"relatedDocumentNo"];
     model.rentalMonth = [response valueForKeyNotNull:@"rentalMonth"];

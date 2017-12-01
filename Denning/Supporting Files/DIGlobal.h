@@ -121,6 +121,8 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define PUBLIC_ADD_FAVORITE_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/fav"
 
+#define INVITE_DENNING_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/invite"
+
 #define PRIVATE_ADD_FAVORITE_CONTACT_URL    @"denningwcf/v1/chat/contact/fav"
 
 #define REMOVE_FAVORITE_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/fav"

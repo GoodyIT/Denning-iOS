@@ -1,18 +1,17 @@
 //
-//  DashboardContact.m
+//  DashboardContactFolder.m
 //  Denning
 //
-//  Created by Ho Thong Mee on 15/07/2017.
+//  Created by Denning IT on 2017-12-01.
 //  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-#import "DashboardContact.h"
-#import "ClientModel.h"
-#import "PropertyContactCell.h"
-#import "SecondContactCell.h"
-#import "ContactViewController.h"
+#import "DashboardContactFolder.h"
+#import "ThreeColumnSecondCell.h"
+#import "BankReconHeaderCell.h"
+#import "DocumentViewController.h"
 
-@interface DashboardContact ()
+@interface DashboardContactFolder ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     __block BOOL isLoading;
@@ -20,21 +19,22 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray* listOfContacts;
+@property (strong, nonatomic) NSMutableArray* listOfContactFolders;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 @end
 
-@implementation DashboardContact
+@implementation DashboardContactFolder
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
     [self prepareUI];
     [self registerNib];
-    [self getListWithCompletion:nil];
+    [self getList];
 }
 
 - (IBAction)dismissScreen:(id)sender {
@@ -42,8 +42,8 @@
 }
 
 - (void) registerNib {
-    [PropertyContactCell registerForReuseInTableView:self.tableView];
-    [SecondContactCell registerForReuseInTableView:self.tableView];
+    [ThreeColumnSecondCell registerForReuseInTableView:self.tableView];
+    [BankReconHeaderCell registerForReuseInTableView:self.tableView];
 }
 
 - (void) prepareUI
@@ -83,48 +83,41 @@
 
 - (void) appendList {
     isAppending = YES;
-    [self getListWithCompletion:nil];
+    [self getList];
 }
 
-- (void) getListWithCompletion:(void(^)(void)) completion {
+- (void) getList{
     if (isLoading) return;
     isLoading = YES;
+    NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, _url, _filter, _page];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
-    [[QMNetworkManager sharedManager] getDashboardContactInURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:urlString completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         [self.tableView finishInfiniteScroll];
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
             }
-            
+            NSArray* array = [ContactFolderItem getContactFolderItemArray:(NSArray*)result];
             if (isAppending) {
-                self.listOfContacts = [[self.listOfContacts arrayByAddingObjectsFromArray:result] mutableCopy];
+                self.listOfContactFolders = [[self.listOfContactFolders arrayByAddingObjectsFromArray:array] mutableCopy];
                 
             } else {
-                self.listOfContacts = [result mutableCopy];
+                self.listOfContactFolders = [array mutableCopy];
             }
             
             [self.tableView reloadData];
-            if (completion != nil) {
-                
-            }
         }
         else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
         
         self->isLoading = NO;
-//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];;
     }];
 }
 
-- (void) clean {
-    isLoading = NO;
-}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -134,7 +127,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return self.listOfContacts.count;
+    return self.listOfContactFolders.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -143,16 +136,19 @@
 }
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
+    BankReconHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankReconHeaderCell cellIdentifier]];
+    cell.firstValue.text = @"Contact";
+    cell.secondValue.text = @"Last Modified";
+    cell.thirdValue.text = @"Items";
     return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SearchResultModel *model = self.listOfContacts[indexPath.row];
+    ContactFolderItem *model = self.listOfContactFolders[indexPath.row];
     
-    SecondContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SecondContactCell cellIdentifier] forIndexPath:indexPath];
-    cell.firstValue.text = [model.JsonDesc valueForKeyNotNull:@"name"];
-    cell.secondValue.text = [NSString stringWithFormat:@"%@\n%@", [model.JsonDesc valueForKeyNotNull:@"IDNo"], [model.JsonDesc valueForKeyNotNull:@"KPLama"]];
+    ThreeColumnSecondCell *cell = [tableView dequeueReusableCellWithIdentifier:[ThreeColumnSecondCell cellIdentifier] forIndexPath:indexPath];
+    [cell configureCellWithContactFolderItem:model];
+    
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -160,29 +156,23 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([_callback isEqualToString:@"callback"]) {
-        
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{
-            _updateHandler(self.listOfContacts[indexPath.row]);
-        }];
-    } else {
-        [self openContact:self.listOfContacts[indexPath.row]];
-
-    }
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self openContactFolder:_listOfContactFolders[indexPath.row]];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void) openContact: (SearchResultModel*) model
+- (void) openContactFolder: (ContactFolderItem*) model
 {
-    [SVProgressHUD showWithStatus:@"Loading"];
+    if (isLoading) return;
+    isLoading = YES;
     @weakify(self);
-    [[QMNetworkManager sharedManager] loadContactFromSearchWithCode:model.key completion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
-        
+    [SVProgressHUD showWithStatus:@"Loading"];
+    [[QMNetworkManager sharedManager] getResponseWithUrl:model.url withCompletion:^(id  _Nonnull result, NSError * _Nonnull error) {
         @strongify(self);
         self->isLoading = false;
         [SVProgressHUD dismiss];
         if (error == nil) {
-            [self performSegueWithIdentifier:kContactSearchSegue sender:contactModel];
+            DocumentModel* documentModel = [DocumentModel getDocumentFromResponse:result];
+            [self performSegueWithIdentifier:kDocumentSearchSegue sender:documentModel];
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
@@ -224,7 +214,7 @@
     self.filter = searchBar.text;
     isAppending = NO;
     self.page = @(1);
-    [self getListWithCompletion:nil];
+    [self getList];
     [_searchBar resignFirstResponder];
 }
 
@@ -233,7 +223,7 @@
     self.page = @(1);
     searchController.searchBar.text = @"";
     isAppending = NO;
-    [self getListWithCompletion:nil];
+    [self getList];
 }
 
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
@@ -241,17 +231,23 @@
     self.filter = searchText;
     isAppending = NO;
     self.page = @(1);
-    [self getListWithCompletion:nil];
+    [self getList];
 }
 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:kContactSearchSegue]){
-        UINavigationController* navVC = segue.destinationViewController;
-        ContactViewController* contactVC = navVC.viewControllers.firstObject;
-        contactVC.contactModel = sender;
+    if ([segue.identifier isEqualToString:kDocumentSearchSegue]){
+        UINavigationController* navC = segue.destinationViewController;
+        DocumentViewController* documentVC = navC.viewControllers.firstObject;
+        documentVC.title = @"Contact Folder";
+        documentVC.documentModel = sender;
     }
+    // Get the new view controller using [segue destinationViewController].
+    
+    // Pass the selected object to the new view controller.
 }
+
+
 @end

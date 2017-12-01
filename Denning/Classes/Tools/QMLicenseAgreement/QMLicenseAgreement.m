@@ -26,13 +26,14 @@
     }
 }
 
-+ (void)presentUserAgreementInViewController:(UIViewController *)vc contents:(NSString*) contents completion:(void(^)(BOOL success))completion {
++ (void)presentUserAgreementInViewController:(UIViewController *)vc contents:(NSString*) contents completion:(void(^)(BOOL success))completion backAction:(void(^)(void)) backAction{
     
     QMLicenseAgreementViewController *licenceController =
     [[UIStoryboard storyboardWithName:@"Root" bundle:nil] instantiateViewControllerWithIdentifier:@"QMLicenceAgreementControllerID"];
     
     licenceController.licenceCompletionBlock = completion;
     licenceController.contents = contents;
+    licenceController.backAction = backAction;
     
     UINavigationController *navViewController =
     [[UINavigationController alloc] initWithRootViewController:licenceController];
