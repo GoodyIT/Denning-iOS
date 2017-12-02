@@ -140,6 +140,7 @@ UIGestureRecognizerDelegate
         self.tableView.contentOffset = offset;
     }
     
+    [self performAutoLoginAndFetchData];
     [self updateDialogSource];
     [self.tableView reloadData];
 }

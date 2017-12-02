@@ -608,16 +608,16 @@ SWTableViewCellDelegate
 
 - (void)usersService:(QMUsersService *)__unused usersService didAddUsers:(NSArray<QBUUser *> *)__unused users {
     
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+//    [self updateItemsFromContactListWithCompletion:^{
+//        [self updateFriendList];
+//    }];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService didUpdateUsers:(NSArray<QBUUser *> *)__unused users {
     
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+//    [self updateItemsFromContactListWithCompletion:^{
+//        [self updateFriendList];
+//    }];
 }
 
 #pragma mark - QMSearchProtocol

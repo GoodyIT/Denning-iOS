@@ -30,7 +30,8 @@
         @strongify(self);
         if (self.serviceManager.currentProfile.userData != nil) {
             
-            self.serviceManager.currentProfile.lastDialogsFetchingDate = [NSDate date];
+//            self.serviceManager.currentProfile.lastDialogsFetchingDate = [NSDate date];
+            self.serviceManager.currentProfile.lastDialogsFetchingDate = nil;
             [self.serviceManager.currentProfile synchronize];
         }
         
