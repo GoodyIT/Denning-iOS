@@ -47,7 +47,7 @@ QMPushNotificationManagerDelegate>
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    [[QMCore instance].chatService removeDelegate:self];
+    [[QMCore instance].chatService removeDelegate:self];
 }
 
 - (void)performAutoLoginAndFetchData {

@@ -1569,6 +1569,13 @@ QMUsersServiceDelegate
 
 - (void)_sendMessage:(QBChatMessage *)message {
     
+    BOOL isOnline = [QMCore.instance.contactManager isUserOnlineWithID:[self.chatDialog opponentID]];
+//    if (!isOnline) {
+        QBUUser *opponentUser = [QMCore.instance.usersService.usersMemoryStorage userWithID:[self.chatDialog opponentID]];
+        
+        [QMNotification sendPushNotificationToUser:opponentUser withText:message.text];
+//    }
+    
     [[QMCore.instance.chatService sendMessage:message
                                      toDialog:self.chatDialog
                                 saveToHistory:YES

@@ -90,14 +90,15 @@ SWTableViewCellDelegate
     [[QMCore instance].contactListService addDelegate:self];
     [[QMCore instance].usersService addDelegate:self];
     
+    self.refreshControl = nil;
     // adding refresh control task
-    if (self.refreshControl) {
-        
-        self.refreshControl.backgroundColor = [UIColor whiteColor];
-        [self.refreshControl addTarget:self
-                                action:@selector(updateContactsAndEndRefreshing)
-                      forControlEvents:UIControlEventValueChanged];
-    }
+//    if (self.refreshControl) {
+//
+//        self.refreshControl.backgroundColor = [UIColor whiteColor];
+//        [self.refreshControl addTarget:self
+//                                action:@selector(updateContactsAndEndRefreshing)
+//                      forControlEvents:UIControlEventValueChanged];
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,14 +106,14 @@ SWTableViewCellDelegate
     
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
     
-    if (self.refreshControl.isRefreshing) {
-        // fix for freezing refresh control after tab bar switch
-        // if it is still active
-        CGPoint offset = self.tableView.contentOffset;
-        [self.refreshControl endRefreshing];
-        [self.refreshControl beginRefreshing];
-        self.tableView.contentOffset = offset;
-    }
+//    if (self.refreshControl.isRefreshing) {
+//        // fix for freezing refresh control after tab bar switch
+//        // if it is still active
+//        CGPoint offset = self.tableView.contentOffset;
+//        [self.refreshControl endRefreshing];
+//        [self.refreshControl beginRefreshing];
+//        self.tableView.contentOffset = offset;
+//    }
 }
 
 - (void) updateDataSourceByScope:(NSInteger) index {
