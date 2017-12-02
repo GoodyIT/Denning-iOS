@@ -9,6 +9,7 @@
 #import "BankViewController.h"
 #import "CommonTextCell.h"
 #import "ContactCell.h"
+#import "SearchLastCell.h"
 #import "RelatedMatterViewController.h"
 
 @interface BankViewController ()
@@ -65,6 +66,7 @@
 - (void)registerNibs {
     
     [ContactCell registerForReuseInTableView:self.tableView];
+    [SearchLastCell registerForReuseInTableView:self.tableView];
     [CommonTextCell registerForReuseInTableView:self.tableView];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -152,7 +154,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
-    
+    cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             [cell configureCellWithContact:self.bankModel.name text:@""];
@@ -176,8 +178,13 @@
     } else {
         SearchResultModel *matterModel = self.bankModel.relatedMatter[indexPath.row];
         NSArray* matter = [DIHelpers removeFileNoAndSeparateFromMatterTitle: matterModel.title];
-        [cell configureCellWithContact:matter[0] text:matter[1]];
-        [cell setEnableRightBtn:NO image:nil];
+        SearchLastCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchLastCell cellIdentifier] forIndexPath:indexPath];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.topLabel.text = matter[0];
+        cell.bottomLabel.text = matter[1];
+        cell.rightLabel.text = [DIHelpers getDateInShortForm:matterModel.sortDate];
         
         return cell;
     }

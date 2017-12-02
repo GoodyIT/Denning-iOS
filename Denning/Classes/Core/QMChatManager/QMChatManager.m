@@ -21,7 +21,7 @@
 
 @dynamic serviceManager;
 
-#pragma mark - Chat Connection
+//MARK: - Chat Connection
 
 - (BFTask *)disconnectFromChat {
     @weakify(self);
@@ -49,7 +49,7 @@
     return nil;
 }
 
-#pragma mark - Notifications
+//MARK: - Notifications
 
 - (BFTask *)addUsers:(NSArray *)users toGroupChatDialog:(QBChatDialog *)chatDialog {
     NSAssert(chatDialog.type == QBChatDialogTypeGroup, @"Chat dialog must be group type!");
@@ -104,6 +104,7 @@
     NSAssert(chatDialog.type == QBChatDialogTypeGroup, @"Chat dialog must be group type!");
     
     @weakify(self);
+    
     return [[self.serviceManager.chatService sendNotificationMessageAboutLeavingDialog:chatDialog withNotificationText:kQMDialogsUpdateNotificationMessage] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
         
         @strongify(self);
@@ -113,7 +114,7 @@
 
 - (BFTask *)sendBackgroundMessageWithText:(NSString *)text toDialogWithID:(NSString *)chatDialogID {
     
-    NSUInteger currentUserID = [QMCore instance].currentProfile.userData.ID;
+    NSUInteger currentUserID = QMCore.instance.currentProfile.userData.ID;
     
     QBChatMessage *message = [QMMessagesHelper chatMessageWithText:text
                                                           senderID:currentUserID

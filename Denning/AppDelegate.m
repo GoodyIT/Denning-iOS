@@ -64,13 +64,15 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     // Override point for customization after application launch.
     
     [self startUpdatingCurrentLocation];
+	
+	application.applicationIconBadgeNumber = 0;
     
     // Quickblox settings
     [QBSettings setApplicationID:kQMApplicationID];
     [QBSettings setAuthKey:kQMAuthorizationKey];
     [QBSettings setAuthSecret:kQMAuthorizationSecret];
     [QBSettings setAccountKey:kQMAccountKey];
-//    [QBSettings setApplicationGroupIdentifier:kQMAppGroupIdentifier];
+    [QBSettings setApplicationGroupIdentifier:kQMAppGroupIdentifier];
     
     [QBSettings setAutoReconnectEnabled:YES];
     [QBSettings setCarbonsEnabled:YES];
@@ -96,6 +98,12 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [QBRTCConfig mediaStreamConfiguration].audioCodec = QBRTCAudioCodecISAC;
     [QBRTCConfig setStatsReportTimeInterval:0.0f]; // set to 1.0f to enable stats report
     
+    // Configuring app appearance
+    [[UITabBar appearance] setTintColor:QMMainApplicationColor()];
+  //  [[UINavigationBar appearance] setTintColor:QMSecondaryApplicationColor()];
+
+    // Configuring searchbar appearance
+
     [[UISearchBar appearance] setSearchBarStyle:UISearchBarStyleMinimal];
     [[UISearchBar appearance] setBarTintColor:[UIColor whiteColor]];
     [[UISearchBar appearance] setBackgroundImage:QMStatusBarBackgroundImage() forBarPosition:0 barMetrics:UIBarMetricsDefault];
@@ -122,35 +130,63 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
                                     didFinishLaunchingWithOptions:launchOptions];
 }
 
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    if (application.applicationState == UIApplicationStateInactive) {
+        
+        NSString *dialogID = userInfo[kQMPushNotificationDialogIDKey];
+        NSString *activeDialogID = [QMCore instance].activeDialogID;
+        if ([dialogID isEqualToString:activeDialogID]) {
+            // dialog is already active
+            return;
+        }
+        
+        [QMCore instance].pushNotificationManager.pushNotification = userInfo;
+        
+        // calling dispatch async for push notification handling to have priority in main queue
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[QMCore instance].pushNotificationManager handlePushNotificationWithDelegate:self];
+        });
+    }
+}
+
+- (void)application:(UIApplication *)__unused application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    if ([[FIRAuth auth] canHandleNotification:userInfo]) {
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    application.applicationIconBadgeNumber = 0;
+    [[QMCore instance].chatManager disconnectFromChatIfNeeded];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [[QMCore instance] login];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    [FBSDKAppEvents activateApp];
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+
 #pragma mark - Push notification registration
 
-- (void)registerForNotification {
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)__unused notificationSettings {
     
-    NSSet *categories = nil;
-    if (iosMajorVersion() > 8) {
-        // text input reply is ios 9 +
-        UIMutableUserNotificationAction *textAction = [[UIMutableUserNotificationAction alloc] init];
-        textAction.identifier = kQMNotificationActionTextAction;
-        textAction.title = NSLocalizedString(@"QM_STR_REPLY", nil);
-        textAction.activationMode = UIUserNotificationActivationModeBackground;
-        textAction.authenticationRequired = NO;
-        textAction.destructive = NO;
-        textAction.behavior = UIUserNotificationActionBehaviorTextInput;
-        
-        UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
-        category.identifier = kQMNotificationCategoryReply;
-        [category setActions:@[textAction] forContext:UIUserNotificationActionContextDefault];
-        [category setActions:@[textAction] forContext:UIUserNotificationActionContextMinimal];
-        
-        categories = [NSSet setWithObject:category];
-    }
-    
-    UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings
-                                                        settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)
-                                                        categories:categories];
-    [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
-    
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)__unused application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -169,6 +205,18 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 - (void)application:(UIApplication *)__unused application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     [[QMCore instance].pushNotificationManager handleError:error];
+}
+
+- (void)application:(UIApplication *)__unused application
+handleActionWithIdentifier:(NSString *)identifier
+forRemoteNotification:(NSDictionary *)userInfo
+   withResponseInfo:(NSDictionary *)responseInfo
+  completionHandler:(void (^)())completionHandler {
+    
+    [[QMCore instance].pushNotificationManager handleActionWithIdentifier:identifier
+                                                       remoteNotification:userInfo
+                                                             responseInfo:responseInfo
+                                                        completionHandler:completionHandler];
 }
 
 - (void)startUpdatingCurrentLocation
@@ -246,65 +294,6 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 
 }
 
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    
-    if (application.applicationState == UIApplicationStateInactive) {
-        
-        NSString *dialogID = userInfo[kQMPushNotificationDialogIDKey];
-        NSString *activeDialogID = [QMCore instance].activeDialogID;
-        if ([dialogID isEqualToString:activeDialogID]) {
-            // dialog is already active
-            return;
-        }
-        
-        [QMCore instance].pushNotificationManager.pushNotification = userInfo;
-        
-        // calling dispatch async for push notification handling to have priority in main queue
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [[QMCore instance].pushNotificationManager handlePushNotificationWithDelegate:self];
-        });
-    }
-}
-
-- (void)application:(UIApplication *)__unused application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    if ([[FIRAuth auth] canHandleNotification:userInfo]) {
-        completionHandler(UIBackgroundFetchResultNoData);
-        return;
-    }
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-   application.applicationIconBadgeNumber = 0;
-    [[QMCore instance].chatManager disconnectFromChatIfNeeded];
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    [[QMCore instance] login];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
-    [FBSDKAppEvents activateApp];
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
-    
-    [[QMCore instance].pushNotificationManager handleActionWithIdentifier:identifier
-                                                       remoteNotification:userInfo
-                                                             responseInfo:responseInfo
-                                                        completionHandler:completionHandler];
-}
-
 #pragma mark - QMPushNotificationManagerDelegate protocol
 
 - (void)pushNotificationManager:(QMPushNotificationManager *)__unused pushNotificationManager didSucceedFetchingDialog:(QBChatDialog *)chatDialog {
@@ -321,6 +310,35 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     [dialogsVC performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
 }
 
+
+- (void)registerForNotification {
+    
+    NSSet *categories = nil;
+    if (iosMajorVersion() > 8) {
+        // text input reply is ios 9 +
+        UIMutableUserNotificationAction *textAction = [[UIMutableUserNotificationAction alloc] init];
+        textAction.identifier = kQMNotificationActionTextAction;
+        textAction.title = NSLocalizedString(@"QM_STR_REPLY", nil);
+        textAction.activationMode = UIUserNotificationActivationModeBackground;
+        textAction.authenticationRequired = NO;
+        textAction.destructive = NO;
+        textAction.behavior = UIUserNotificationActionBehaviorTextInput;
+        
+        UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+        category.identifier = kQMNotificationCategoryReply;
+        [category setActions:@[textAction] forContext:UIUserNotificationActionContextDefault];
+        [category setActions:@[textAction] forContext:UIUserNotificationActionContextMinimal];
+        
+        categories = [NSSet setWithObject:category];
+    }
+    
+    UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings
+                                                        settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge)
+                                                        categories:categories];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+    
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+}
 
 #pragma mark LocationManager Delegate
 - (void)locationManager:(CLLocationManager *) __unused manager

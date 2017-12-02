@@ -153,6 +153,7 @@
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.section == 0) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
         [cell configureCellWithInfo:contactModel.name number:contactModel.IDNo image:[UIImage imageNamed:@"icon_client"]];
@@ -199,10 +200,10 @@
     } else {
         SearchResultModel *matterModel = self.contactModel.relatedMatter[indexPath.row];
         NSArray* matter = [DIHelpers removeFileNoAndSeparateFromMatterTitle: matterModel.title];
-        [cell configureCellWithContact:matter[0] text:matter[1]];
-        [cell setEnableRightBtn:NO image:nil];
         
         SearchLastCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchLastCell cellIdentifier] forIndexPath:indexPath];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         cell.topLabel.text = matter[0];
         cell.bottomLabel.text = matter[1];

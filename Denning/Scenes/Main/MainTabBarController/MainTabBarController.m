@@ -40,8 +40,8 @@ QMPushNotificationManagerDelegate>
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [[QMCore instance].chatService addDelegate:self];
-//    [self performAutoLoginAndFetchData];
+    [[QMCore instance].chatService addDelegate:self];
+    [self performAutoLoginAndFetchData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated

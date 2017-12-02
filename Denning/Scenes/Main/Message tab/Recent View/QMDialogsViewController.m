@@ -83,7 +83,7 @@ UIGestureRecognizerDelegate
     // registering nibs for current VC and search results VC
     [self registerNibs];
     
-    [self performAutoLoginAndFetchData];
+//    [self performAutoLoginAndFetchData];
     
     // adding refresh control task
     if (self.refreshControl) {

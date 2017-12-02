@@ -22,7 +22,7 @@
 
 @dynamic serviceManager;
 
-#pragma mark - Contacts management
+//MARK: - Contacts management
 
 - (BFTask *)addUserToContactList:(QBUUser *)user {
     
@@ -111,7 +111,7 @@
     }];
 }
 
-#pragma mark - Users
+//MARK: - Users
 
 - (NSString *)fullNameForUserID:(NSUInteger)userID {
     
@@ -199,29 +199,44 @@
 
 - (NSString *)onlineStatusForUser:(QBUUser *)user {
     
-    QBContactListItem *contactListItem = [self.serviceManager.contactListService.contactListMemoryStorage contactListItemWithUserID:user.ID];
+    QBContactListItem *contactListItem =
+    [self.serviceManager.contactListService.contactListMemoryStorage contactListItemWithUserID:user.ID];
+    
     NSString *status = nil;
     
     if (user.ID == self.serviceManager.currentProfile.userData.ID || contactListItem.isOnline) {
-        
         status = NSLocalizedString(@"QM_STR_ONLINE", nil);
     }
-    else {
+    else if (!contactListItem.isOnline) {
         
-        if (user.lastRequestAt) {
-            
-            status = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"QM_STR_LAST_SEEN", nil), [QMDateUtils formattedLastSeenString:user.lastRequestAt withTimePrefix:NSLocalizedString(@"QM_STR_TIME_PREFIX", nil)]];
+        NSDate *statusDate = user.lastRequestAt;
+        if (statusDate == nil) {
+            statusDate = user.createdAt;
         }
-        else {
-            
-            status = NSLocalizedString(@"QM_STR_OFFLINE", nil);
+        
+        status = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"QM_STR_LAST_SEEN", nil), [QMDateUtils formattedLastSeenString:statusDate withTimePrefix:NSLocalizedString(@"QM_STR_TIME_PREFIX", nil)]];
+        
+        if (contactListItem.subscriptionState != QBPresenceSubscriptionStateNone) {
+            // requesting update on activity
+            [[QBChat instance] lastActivityForUserWithID:contactListItem.userID completion:^(NSUInteger seconds, NSError * _Nullable error) {
+                if (error == nil) {
+                    if (seconds != (NSUInteger)fabs([user.lastRequestAt timeIntervalSinceNow])) {
+                        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-(NSTimeInterval)seconds];
+                        if ([user.lastRequestAt compare:date] == NSOrderedAscending) {
+                            // always should have newest date
+                            user.lastRequestAt = date;
+                            [self.serviceManager.usersService updateUsers:@[user]];
+                        }
+                    }
+                }
+            }];
         }
     }
     
     return status;
 }
 
-#pragma mark - States
+//MARK: - States
 
 - (BOOL)isFriendWithUserID:(NSUInteger)userID {
     

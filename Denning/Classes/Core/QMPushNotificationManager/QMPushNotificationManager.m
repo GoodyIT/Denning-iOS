@@ -124,7 +124,7 @@ typedef void(^QBTokenCompletionBlock)(NSData *token, NSError *error);
     return source.task;
 }
 
-#pragma mark - Push notification handling
+//MARK: - Push notification handling
 
 - (void)handlePushNotificationWithDelegate:(id<QMPushNotificationManagerDelegate>)delegate {
     
@@ -226,8 +226,9 @@ typedef void(^QBTokenCompletionBlock)(NSData *token, NSError *error);
                                                         categories:categories];
     
     [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
 }
+
 
 - (void)handleActionWithIdentifier:(NSString *)identifier
                 remoteNotification:(NSDictionary *)userInfo

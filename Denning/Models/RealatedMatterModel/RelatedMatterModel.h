@@ -42,6 +42,8 @@
 
 @property (strong, nonatomic) NSString* dateClose;
 
+@property (strong, nonatomic) NSString* manualNo;
+
 @property (strong, nonatomic) MatterCodeModel * matter;
 
 @property (strong, nonatomic) MatterBranchModel* branch;

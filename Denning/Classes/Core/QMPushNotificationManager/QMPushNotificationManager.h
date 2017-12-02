@@ -8,6 +8,7 @@
 
 #import "QMBaseService.h"
 
+
 @class QMPushNotificationManager;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -66,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface QMPushNotificationManager : QMBaseService
 
 /**
- *  Current device token. Used for subscribing for push notifications.
+ *  Current device token. Used for registering for push notifications.
  */
 @property (copy, nonatomic, nullable, readonly) NSData *deviceToken;
 

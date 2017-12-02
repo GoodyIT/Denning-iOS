@@ -24,8 +24,8 @@ static NSString *const kQMLastActivityDateKey = @"last_activity_date";
 static NSString *const kQMErrorKey = @"errors";
 static NSString *const kQMBaseErrorKey = @"base";
 
-static NSString *const kQMContactListCacheNameKey = @"denning-contacts";
-static NSString *const kQMOpenGraphCacheNameKey = @"denning-open-graph";
+static NSString *const kQMContactListCacheNameKey = @"q-municate-contacts";
+static NSString *const kQMOpenGraphCacheNameKey = @"q-municate-open-graph";
 
 @interface QMCore () <QMAuthServiceDelegate>
 
@@ -427,7 +427,7 @@ didAddOpenGraphItemToMemoryStorage:(QMOpenGraphItem *)openGraphItem {
     
     if (iosMajorVersion() > 9) {
 //        [INPreferences requestSiriAuthorization:^(INSiriAuthorizationStatus __unused status) {
-//            
+//
 //        }];
     }
 }

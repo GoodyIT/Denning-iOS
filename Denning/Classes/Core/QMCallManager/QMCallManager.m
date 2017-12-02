@@ -12,10 +12,8 @@
 #import "QMSoundManager.h"
 #import "QMPermissions.h"
 #import "QMNotification.h"
-#import <mach/mach.h>
 
 static const NSTimeInterval kQMAnswerTimeInterval = 60.0f;
-static const NSTimeInterval kQMDisconnectTimeInterval = 30.0f;
 static const NSTimeInterval kQMDialingTimeInterval = 5.0f;
 static const NSTimeInterval kQMCallViewControllerEndScreenDelay = 1.0f;
 
@@ -43,7 +41,6 @@ QBRTCClientDelegate
 - (void)serviceWillStart {
     
     [QBRTCConfig setAnswerTimeInterval:kQMAnswerTimeInterval];
-//    [QBRTCConfig setDisconnectTimeInterval:kQMDisconnectTimeInterval];
     [QBRTCConfig setDialingTimeInterval:kQMDialingTimeInterval];
     
     _multicastDelegate = (id<QMCallManagerDelegate>)[[QBMulticastDelegate alloc] init];
@@ -51,7 +48,7 @@ QBRTCClientDelegate
     [[QBRTCClient instance] addDelegate:self];
 }
 
-#pragma mark - Call managing
+//MARK: - Call managing
 
 - (void)callToUserWithID:(NSUInteger)userID conferenceType:(QBRTCConferenceType)conferenceType {
     
@@ -91,8 +88,11 @@ QBRTCClientDelegate
         
         [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
         
+        
         [self prepareCallWindow];
+        
         self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
+        
         [self.session startCall:nil];
         self.hasActiveCall = YES;
     }];
@@ -104,12 +104,13 @@ QBRTCClientDelegate
     [[UIApplication sharedApplication].keyWindow endEditing:YES];
     
     self.callWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
     // displaying window under status bar
     self.callWindow.windowLevel = UIWindowLevelStatusBar - 1;
     [self.callWindow makeKeyAndVisible];
 }
 
-#pragma mark - Setters
+//MARK: - Setters
 
 - (void)setHasActiveCall:(BOOL)hasActiveCall {
     
@@ -124,13 +125,12 @@ QBRTCClientDelegate
         }
         
         if (!hasActiveCall) {
-            
             [self.serviceManager.chatManager disconnectFromChatIfNeeded];
         }
     }
 }
 
-#pragma mark - Getters
+//MARK: - Getters
 
 - (QBUUser *)opponentUser {
     
@@ -156,7 +156,7 @@ QBRTCClientDelegate
     return opponentUser;
 }
 
-#pragma mark - QBRTCClientDelegate
+//MARK: - QBRTCClientDelegate
 
 - (void)didReceiveNewSession:(QBRTCSession *)session userInfo:(NSDictionary *)__unused userInfo {
     
@@ -186,7 +186,7 @@ QBRTCClientDelegate
     self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
 }
 
-- (void)session:(QBRTCSession *)session updatedStatsReport:(QBRTCStatsReport *)report forUserID:(NSNumber *)__unused userID {
+- (void)session:(QBRTCSession *)__unused session updatedStatsReport:(QBRTCStatsReport *)__unused report forUserID:(NSNumber *)__unused userID {
     
     ILog(@"Stats report for userID: %@\n%@", userID, [report statsString]);
 }
@@ -232,7 +232,7 @@ QBRTCClientDelegate
     [self.multicastDelegate removeDelegate:delegate];
 }
 
-#pragma mark - Sound management
+//MARK: - Sound management
 
 - (void)startPlayingCallingSound {
     
@@ -248,6 +248,7 @@ QBRTCClientDelegate
 - (void)startPlayingRingtoneSound {
     
     [self stopAllSounds];
+    
     [QMSoundManager playRingtoneSound];
     self.soundTimer = [NSTimer scheduledTimerWithTimeInterval:[QBRTCConfig dialingTimeInterval]
                                                        target:[QMSoundManager class]
@@ -267,7 +268,7 @@ QBRTCClientDelegate
     [[QMSoundManager instance] stopAllSounds];
 }
 
-#pragma mark - Permissions check
+//MARK: - Permissions check
 
 - (void)checkPermissionsWithConferenceType:(QBRTCConferenceType)conferenceType completion:(PermissionBlock)completion {
     
@@ -325,7 +326,7 @@ QBRTCClientDelegate
     }];
 }
 
-#pragma mark - Call notifications
+//MARK: - Call notifications
 
 - (QBChatMessage *)_callNotificationMessageForSession:(QBRTCSession *)session
                                                 state:(QMCallNotificationState)state {
@@ -391,7 +392,7 @@ QBRTCClientDelegate
     [self _sendNotificationMessage:message];
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 - (void)showAlertWithTitle:(NSString *)title message:(NSString *)message {
     
