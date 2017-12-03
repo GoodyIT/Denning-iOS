@@ -38,7 +38,7 @@ SWTableViewCellDelegate
 >
 {
     NSMutableArray* originalContacts;
-    NSMutableArray* contactsArray;
+    NSMutableArray<ChatFirmModel*>* contactsArray;
     NSString* selectedFirmCode;
     NSInteger selectedIndex;
 }
@@ -67,6 +67,7 @@ SWTableViewCellDelegate
     // Hide empty separators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     selectedIndex = 0;
+    
     
     // search implementation
     [self configureSearch];
@@ -133,7 +134,21 @@ SWTableViewCellDelegate
             break;
     }
     contactsArray = originalContacts;
-
+   
+//    NSMutableArray *indexPaths = [NSMutableArray new];
+//    for (int i = 0; i < contactsArray.count; i++) {
+//        for (int j = 0; j < contactsArray[i].users.count; j++) {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+//            if (indexPath != nil) {
+//                [indexPaths addObject:indexPath];
+//            }
+//        }
+//    }
+//
+//    if (indexPaths.count > 0) {
+//        [self.tableView reloadRowsAtIndexPaths:[indexPaths copy] withRowAnimation:UITableViewRowAnimationNone];
+//    }
+    
     [self.tableView reloadData];
 }
 
@@ -216,6 +231,7 @@ SWTableViewCellDelegate
                                                                                            forIndexPath:indexPath];
     cell.leftUtilityButtons = [self leftButtons];
     cell.delegate = self;
+    cell.tag = indexPath.section * 1000 + indexPath.row;
     cell.chatDelegate = self;
     
     ChatFirmModel* firmModel = contactsArray[indexPath.section];
@@ -247,7 +263,9 @@ SWTableViewCellDelegate
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
     [cell hideUtilityButtonsAnimated:YES];
-    QBUUser* user = contactsArray[cell.tag];
+    NSInteger section = cell.tag / 1000;
+    NSInteger row = cell.tag  - section * 1000;
+    QBUUser* user = contactsArray[section].users[row];
     switch (index) {
         case 0:
             if (![self callsAllowed:user]) {

@@ -83,7 +83,7 @@ UIGestureRecognizerDelegate
     // registering nibs for current VC and search results VC
     [self registerNibs];
     
-//    [self performAutoLoginAndFetchData];
+    [self performAutoLoginAndFetchData];
     
     // adding refresh control task
     if (self.refreshControl) {
@@ -140,8 +140,7 @@ UIGestureRecognizerDelegate
         self.tableView.contentOffset = offset;
     }
     
-    [self performAutoLoginAndFetchData];
-    [self updateDialogSource];
+    
     [self.tableView reloadData];
 }
 
@@ -168,13 +167,7 @@ UIGestureRecognizerDelegate
                     }
         }
         
-        if (QMCore.instance.pushNotificationManager.pushNotification != nil) {
-            [QMCore.instance.pushNotificationManager handlePushNotificationWithDelegate:self];
-        }
-        
-        if (QMCore.instance.currentProfile.pushNotificationsEnabled) {
-            [QMCore.instance.pushNotificationManager registerAndSubscribeForPushNotifications];
-        }
+        [self updateDialogSource];
         
         return [BFTask cancelledTask];
         

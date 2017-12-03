@@ -39,7 +39,7 @@ SWTableViewCellDelegate
 >
 {
     NSMutableArray* originalContacts;
-    NSMutableArray* contactsArray;
+    NSMutableArray<ChatFirmModel*>* contactsArray;
     NSString* selectedFirmCode;
 }
 
@@ -135,7 +135,16 @@ SWTableViewCellDelegate
     originalContacts = [DataManager sharedManager].favoriteContactsArray;
     contactsArray = originalContacts;
     
-    [self.tableView reloadData];
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] initWithCapacity:contactsArray.count];
+    for (QBUUser *user in contactsArray) {
+        NSIndexPath *indexPath = [self.dataSource indexPathForObject:user];
+        if (indexPath != nil) {
+            [indexPaths addObject:indexPath];
+        }
+    }
+    if (indexPaths.count > 0) {
+        [self.tableView reloadRowsAtIndexPaths:[indexPaths copy] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 - (void) configureSearch
@@ -235,7 +244,7 @@ SWTableViewCellDelegate
     cell.leftUtilityButtons = [self leftButtons];
     cell.rightUtilityButtons = [self rightButtons];
     cell.delegate = self;
-    cell.tag = indexPath.row;
+    cell.tag = indexPath.section * 1000 + indexPath.row;
     ChatFirmModel* firmModel = contactsArray[indexPath.section];
     QBUUser *user = firmModel.users[indexPath.row];
     [cell configureCellWithContact:user];
@@ -277,7 +286,9 @@ SWTableViewCellDelegate
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
     [cell hideUtilityButtonsAnimated:YES];
-    QBUUser* user = contactsArray[cell.tag];
+    NSInteger section = cell.tag / 1000;
+    NSInteger row = cell.tag  - section * 1000;
+    QBUUser* user = contactsArray[section].users[row];
     switch (index) {
         case 0:
             if (![self callsAllowed:user]) {
@@ -337,14 +348,17 @@ SWTableViewCellDelegate
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
     [cell hideUtilityButtonsAnimated:YES];
+    NSInteger section = cell.tag / 1000;
+    NSInteger row = cell.tag  - section * 1000;
+    QBUUser* user = contactsArray[section].users[row];
     switch (index) {
         case 0:
         {
             // Delete button was pressed
             NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-            
-            QBUUser *user = contactsArray[cellIndexPath.row];
-            
+//
+//            QBUUser *user = (QBUUser *) (contactsArray[cellIndexPath.section].users[cellIndexPath.row]);
+//
             [self removeUserFromList:user cellIndexPath:cellIndexPath];
             
             break;
@@ -608,16 +622,16 @@ SWTableViewCellDelegate
 
 - (void)usersService:(QMUsersService *)__unused usersService didAddUsers:(NSArray<QBUUser *> *)__unused users {
     
-//    [self updateItemsFromContactListWithCompletion:^{
-//        [self updateFriendList];
-//    }];
+    [self updateItemsFromContactListWithCompletion:^{
+        [self updateFriendList];
+    }];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService didUpdateUsers:(NSArray<QBUUser *> *)__unused users {
     
-//    [self updateItemsFromContactListWithCompletion:^{
-//        [self updateFriendList];
-//    }];
+    [self updateItemsFromContactListWithCompletion:^{
+        [self updateFriendList];
+    }];
 }
 
 #pragma mark - QMSearchProtocol

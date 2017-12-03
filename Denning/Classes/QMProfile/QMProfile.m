@@ -122,6 +122,14 @@ static NSString * const kQMAppExists = @"QMAppExists";
     self.userData = profile.userData;
     self.lastDialogsFetchingDate = profile.lastDialogsFetchingDate;
     self.lastUserFetchDate = profile.lastUserFetchDate;
+    
+    [self clearLastDialogsFetchingDate];
+}
+
+- (BOOL) clearLastDialogsFetchingDate {
+
+    self.lastDialogsFetchingDate = nil;
+    return YES;
 }
 
 - (BOOL)clearProfile {

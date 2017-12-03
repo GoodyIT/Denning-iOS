@@ -31,6 +31,7 @@
         if (self.serviceManager.currentProfile.userData != nil) {
             
 //            self.serviceManager.currentProfile.lastDialogsFetchingDate = [NSDate date];
+            [[QMCore instance].currentProfile clearLastDialogsFetchingDate];
             self.serviceManager.currentProfile.lastDialogsFetchingDate = nil;
             [self.serviceManager.currentProfile synchronize];
         }

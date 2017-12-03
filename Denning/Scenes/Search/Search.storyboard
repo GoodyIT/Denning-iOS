@@ -696,7 +696,7 @@
         <!--Bank-->
         <scene sceneID="V2l-Oz-Umj">
             <objects>
-                <tableViewController storyboardIdentifier="BankViewController" id="xz0-Tq-S9b" customClass="BankViewController" sceneMemberID="viewController">
+                <tableViewController id="xz0-Tq-S9b" customClass="BankViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="CPP-wF-Un4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -736,7 +736,7 @@
         <!--Navigation Controller-->
         <scene sceneID="xLV-rw-Qg5">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lD9-2J-l1i" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="BankViewController" automaticallyAdjustsScrollViewInsets="NO" id="lD9-2J-l1i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="YuN-Ot-afy">

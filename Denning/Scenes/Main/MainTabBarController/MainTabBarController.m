@@ -103,14 +103,20 @@ QMPushNotificationManagerDelegate>
 - (BOOL)tabBarController:(UITabBarController *)tabBarController
 shouldSelectViewController:(UIViewController *)viewController
 {
-    if ([viewController.childViewControllers[0] isKindOfClass:[MessageViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[DashboardViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[MainContactViewController class]]) {
-        if ([DataManager sharedManager].user.username.length == 0 || [QBSession currentSession].currentUser.email.length == 0) {
+    if ([viewController.childViewControllers[0] isKindOfClass:[DashboardViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[MainContactViewController class]]) {
+        if ([DataManager sharedManager].user.username.length == 0) {
             [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
             self.tabBarController.selectedIndex = 0;
             return NO;
         }
     }
-    
+    if ([viewController.childViewControllers[0] isKindOfClass:[MessageViewController class]]) {
+        if ([QBSession currentSession].currentUser.email.length == 0) {
+            [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
+            self.tabBarController.selectedIndex = 0;
+            return NO;
+        }
+    }
     
     return YES;
 }
@@ -220,7 +226,7 @@ shouldSelectViewController:(UIViewController *)viewController
 - (void)pushNotificationManager:(QMPushNotificationManager *)__unused pushNotificationManager
        didSucceedFetchingDialog:(QBChatDialog *)chatDialog {
     
-//    [self performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
+    [self performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
 }
 
 - (void)showNotificationForMessage:(QBChatMessage *)chatMessage {

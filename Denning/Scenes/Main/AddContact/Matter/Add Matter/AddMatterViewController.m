@@ -1780,7 +1780,8 @@ NSMutableDictionary* keyValue;
     }
     
     if ([segue.identifier isEqualToString:kBankSearchSegue]){
-        BankViewController* bankVC = segue.destinationViewController;
+        UINavigationController* nav = segue.destinationViewController;
+        BankViewController* bankVC = nav.viewControllers.firstObject;
         bankVC.bankModel = sender;
         bankVC.previousScreen = @"Back";
     }

@@ -126,6 +126,10 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
         [QMCore instance].pushNotificationManager.pushNotification = pushNotification;
     }
     
+    if ([QMCore instance].currentProfile != nil) {
+        [[QMCore instance].currentProfile clearLastDialogsFetchingDate];
+    }
+    
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                     didFinishLaunchingWithOptions:launchOptions];
 }

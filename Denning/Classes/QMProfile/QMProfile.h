@@ -125,6 +125,8 @@ typedef NS_ENUM(NSInteger, QMAccountType) {
  */
 - (BOOL)clearProfile;
 
+- (BOOL) clearLastDialogsFetchingDate;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,6 +9,8 @@
 #import "GovernmentOfficesViewController.h"
 #import "CommonTextCell.h"
 #import "ContactCell.h"
+#import "NewContactHeaderCell.h"
+#import "SearchLastCell.h"
 #import "RelatedMatterViewController.h"
 
 @interface GovernmentOfficesViewController ()
@@ -72,8 +74,10 @@
 }
 
 - (void)registerNibs {
+    [NewContactHeaderCell registerForReuseInTableView:self.tableView];
     [ContactCell registerForReuseInTableView:self.tableView];
     [CommonTextCell registerForReuseInTableView:self.tableView];
+    [SearchLastCell registerForReuseInTableView:self.tableView];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
@@ -88,7 +92,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 2;
+        return 1;
     } else if (section == 1) {
         return 5;
     }
@@ -163,32 +167,42 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            [cell configureCellWithContact:self.govOfficeModel.name text:@""];
-        } else {
-            [cell configureCellWithContact:self.govOfficeModel.IDNo text:@""];
-        }
+        NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
+        [cell configureCellWithInfo:self.govOfficeModel.name number:self.govOfficeModel.IDNo image:[UIImage imageNamed:@"icon_client"]];
+        cell.chatBtn.hidden = YES;
+        cell.editBtn.hidden = YES;
         return cell;
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
             [cell configureCellWithContact:@"Telephone" text:self.govOfficeModel.tel];
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
         } else if (indexPath.row == 1) {
             [cell configureCellWithContact:@"mobile" text:self.govOfficeModel.mobile];
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
         } else if (indexPath.row == 2) {
             [cell configureCellWithContact:@"office" text:self.govOfficeModel.office];
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
         } else if (indexPath.row == 3) {
             [cell configureCellWithContact:@"email" text:self.govOfficeModel.email];
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_email_red"]];
         } else if (indexPath.row == 4) {
             [cell configureCellWithContact:@"address" text:self.govOfficeModel.address];
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_location"]];
         }
         return cell;
     } else {
         SearchResultModel *matterModel = self.govOfficeModel.relatedMatter[indexPath.row];
         NSArray* matter = [DIHelpers removeFileNoAndSeparateFromMatterTitle: matterModel.title];
-        [cell configureCellWithContact:matter[0] text:matter[1]];
-        [cell setEnableRightBtn:NO image:nil];
+        SearchLastCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchLastCell cellIdentifier] forIndexPath:indexPath];
+        
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.topLabel.text = matter[0];
+        cell.bottomLabel.text = matter[1];
+        cell.rightLabel.text = [DIHelpers getDateInShortForm:matterModel.sortDate];
         
         return cell;
     }

@@ -7,7 +7,6 @@
 //
 
 #import "ContactViewController.h"
-#import "ContactHeaderCell.h"
 #import "ContactCell.h"
 #import "CommonTextCell.h"
 #import "SearchLastCell.h"
@@ -87,7 +86,6 @@
 }
 
 - (void)registerNibs {
-    [ContactHeaderCell registerForReuseInTableView:self.tableView];
     [NewContactHeaderCell registerForReuseInTableView:self.tableView];
     [CommonTextCell registerForReuseInTableView:self.tableView];
     [ContactCell registerForReuseInTableView:self.tableView];
