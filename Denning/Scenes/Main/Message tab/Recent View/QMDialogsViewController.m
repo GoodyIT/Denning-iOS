@@ -167,7 +167,7 @@ UIGestureRecognizerDelegate
                     }
         }
         
-        [self updateDialogSource];
+        [self updateDataAndEndRefreshing];
         
         return [BFTask cancelledTask];
         

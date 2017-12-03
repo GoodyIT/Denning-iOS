@@ -30,6 +30,7 @@
 @property (strong, nonatomic) NSString *nickName;
 @property (strong, nonatomic) NSString *chatStatus;
 @property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *KPLama;
 
 + (StaffModel*) getStaffFromResponse: (NSDictionary*) response;
 

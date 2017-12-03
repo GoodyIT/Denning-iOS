@@ -51,45 +51,44 @@ QMPushNotificationManagerDelegate>
 }
 
 - (void)performAutoLoginAndFetchData {
-    
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
                                                                           message:NSLocalizedString(@"QM_STR_CONNECTING", nil)
                                                                          duration:0];
     __weak UINavigationController *navigationController = self.navigationController;
-    
+
     [[[QMCore.instance login] continueWithBlock:^id(BFTask *task) {
-        
+
         if (task.isFaulted) {
-            
+
             [(QMNavigationController *)navigationController dismissNotificationPanel];
-            
+
             NSInteger errorCode = task.error.code;
             if (errorCode == kQMNotAuthorizedInRest
                 || errorCode == kQMUnauthorizedErrorCode
                 || (errorCode == kBFMultipleErrorsError
                     && ([task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][0] code] == kQMUnauthorizedErrorCode
                         || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))) {
-                        
+
                         return [QMCore.instance logout];
                     }
         }
-        
+
         if (QMCore.instance.pushNotificationManager.pushNotification != nil) {
             [QMCore.instance.pushNotificationManager handlePushNotificationWithDelegate:self];
         }
-        
+
         if (QMCore.instance.currentProfile.pushNotificationsEnabled) {
             [QMCore.instance.pushNotificationManager registerAndSubscribeForPushNotifications];
         }
-        
+
         return [BFTask cancelledTask];
-        
+
     }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
-        
+
         if (!task.isCancelled) {
             [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
         }
-        
+
         return nil;
     }];
 }

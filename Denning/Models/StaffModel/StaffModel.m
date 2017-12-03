@@ -32,6 +32,7 @@
     staff.chatStatus = [response valueForKeyNotNull:@"chatStatus"];
     staff.nickName = [response valueForKeyNotNull:@"nickName"];
     staff.userID = [response valueForKeyNotNull:@"userID"];
+    staff.KPLama = [response valueForKeyNotNull:@"KPLama"];
     
     return staff;
 }

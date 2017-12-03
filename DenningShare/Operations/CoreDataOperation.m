@@ -61,7 +61,6 @@
     [context performBlock:^{
         NSError *executeError = nil;
         weakSelf.result = (NSAsynchronousFetchResult *)[context executeRequest:asyncFetch error:&executeError];
-        
     }];
 }
 
@@ -70,7 +69,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(completedUnitCount))]) {
-        NSNumber *newValue = [change objectForKey:@"new"];
+   //     NSNumber *newValue = [change objectForKey:@"new"];
 //        NSLog(@"completed:%@",newValue);
     }
     else if ([keyPath isEqualToString:NSStringFromSelector(@selector(totalUnitCount))]) {
