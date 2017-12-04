@@ -9,7 +9,7 @@ target ‘Denning’ do
     	pod 'UIDevice-Hardware', '~> 0.1.3'
     	pod 'SVProgressHUD', '~> 1.0'
     	pod 'SSKeychain', '~> 1.2.2'
-	pod 'SDWebImage', '~> 4.0.0'
+        pod 'SDWebImage', '~> 4.0.0'
     	pod 'MPGNotification', '~> 1.2'
     	pod 'Reachability', '~> 3.2'
     	pod 'TTTAttributedLabel', '~> 2.0'

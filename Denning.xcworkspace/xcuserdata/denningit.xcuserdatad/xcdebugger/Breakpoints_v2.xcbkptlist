@@ -1973,54 +1973,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Denning/Scenes/Cells/MatterLastCell/MatterLastCell.h"
-            timestampString = "533465838.908852"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "-didTapAccounts:"
-            landmarkType = "6">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[MatterLastCell paymentRecordBtn]"
-                  moduleName = "Denning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denningit/Documents/denning-ios/Denning/Scenes/Cells/MatterLastCell/MatterLastCell.h"
-                  timestampString = "532852477.366328"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
-                  offsetFromSymbolStart = "16">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[MatterLastCell setPaymentRecordBtn:]"
-                  moduleName = "Denning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denningit/Documents/denning-ios/Denning/Scenes/Cells/MatterLastCell/MatterLastCell.h"
-                  timestampString = "532852477.369605"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
-                  offsetFromSymbolStart = "49">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Search/RelatedMatter/RelatedMatterViewController.m"
             timestampString = "533957577.876378"
             startingColumnNumber = "9223372036854775807"
@@ -6422,12 +6374,12 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Main/Message%20tab/Favorite%20View/FavoriteViewController.m"
-                  timestampString = "534002378.068037"
+                  timestampString = "534084777.843855"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "576"
                   endingLineNumber = "576"
-                  offsetFromSymbolStart = "52">
+                  offsetFromSymbolStart = "49">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -6437,12 +6389,12 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Main/Message%20tab/Favorite%20View/FavoriteViewController.m"
-                  timestampString = "534002378.07113"
+                  timestampString = "534084777.847489"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "578"
                   endingLineNumber = "578"
-                  offsetFromSymbolStart = "48">
+                  offsetFromSymbolStart = "44">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -10032,6 +10032,7 @@
 				CODE_SIGN_ENTITLEMENTS = Denning/Denning.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Thong Mee Ho (FR83CC98GQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_BITCODE = NO;
@@ -10353,6 +10354,7 @@
 				CODE_SIGN_ENTITLEMENTS = Denning/Denning.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Thong Mee Ho (6ATV26A86Y)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
