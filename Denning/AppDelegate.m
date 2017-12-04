@@ -13,6 +13,7 @@
 #import "QMColors.h"
 #import "QMHelpers.h"
 #import "QMNetworkManager.h"
+#import "QMChatVC.h"
 #import "DataManager.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -156,12 +157,12 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     }
 }
 
-- (void)application:(UIApplication *)__unused application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    if ([[FIRAuth auth] canHandleNotification:userInfo]) {
-        completionHandler(UIBackgroundFetchResultNoData);
-        return;
-    }
-}
+//- (void)application:(UIApplication *)__unused application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+//    if ([[FIRAuth auth] canHandleNotification:userInfo]) {
+//        completionHandler(UIBackgroundFetchResultNoData);
+//        return;
+//    }
+//}
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     application.applicationIconBadgeNumber = 0;
@@ -311,7 +312,16 @@ forRemoteNotification:(NSDictionary *)userInfo
         return;
     }
     
-    [dialogsVC performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
+    @try {
+        [dialogsVC performSegueWithIdentifier:kQMSceneSegueChat sender:chatDialog];
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        QMChatVC* chatVC = [QMChatVC chatViewControllerWithChatDialog:chatDialog];
+        [dialogsVC.navigationController pushViewController:chatVC animated:YES];
+    }
 }
 
 

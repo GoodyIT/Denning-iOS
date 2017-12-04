@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (BFTask *)sendPushNotificationToUser:(QBUUser *)user withText:(NSString *)text;
 
++ (BFTask *)sendPushMessageToUser:(NSUInteger) userID withUserName:(NSString*)username withMessage:(QBChatMessage *)message;
+
 @end
 
 NS_ASSUME_NONNULL_END

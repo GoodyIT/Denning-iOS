@@ -1381,6 +1381,8 @@ QMUsersServiceDelegate
         currentCell.containerView.bgColor = [UIColor whiteColor];
         currentCell.layer.cornerRadius = 8;
         currentCell.clipsToBounds = YES;
+        
+        [self chatContactRequestDidAccept:YES sender:cell];
     }
     
     if ([cell isKindOfClass:[QMChatBaseLinkPreviewCell class]]) {
@@ -1572,8 +1574,12 @@ QMUsersServiceDelegate
     BOOL isOnline = [QMCore.instance.contactManager isUserOnlineWithID:[self.chatDialog opponentID]];
 //    if (!isOnline) {
         QBUUser *opponentUser = [QMCore.instance.usersService.usersMemoryStorage userWithID:[self.chatDialog opponentID]];
-        
-        [QMNotification sendPushNotificationToUser:opponentUser withText:message.text];
+    
+        NSString* myName = [QBSession currentSession].currentUser.fullName;
+    
+        [QMNotification sendPushMessageToUser:[self.chatDialog opponentID] withUserName:myName withMessage:message];
+    
+//        [QMNotification sendPushNotificationToUser:opponentUser withText:message.text];
 //    }
     
     [[QMCore.instance.chatService sendMessage:message
