@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +25,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mvr-OB-JoE">
-                        <rect key="frame" x="229" y="11" width="120" height="19.5"/>
+                        <rect key="frame" x="221" y="14" width="120" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="120" id="zNo-xT-ofd"/>
                         </constraints>
@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RgV-Z5-tU1">
-                        <rect key="frame" x="16" y="11" width="205" height="19.5"/>
+                        <rect key="frame" x="24" y="14" width="189" height="14"/>
                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" red="0.08235294118" green="0.12549019610000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <nil key="highlightedColor"/>
@@ -51,6 +51,10 @@
                     <constraint firstItem="Mvr-OB-JoE" firstAttribute="bottom" secondItem="RgV-Z5-tU1" secondAttribute="bottom" id="y6d-5F-2pz"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="ID" destination="Mvr-OB-JoE" id="r3x-xJ-hgt"/>
+                <outlet property="name" destination="RgV-Z5-tU1" id="BVv-8i-vdk"/>
+            </connections>
             <point key="canvasLocation" x="-193" y="-549"/>
         </tableViewCell>
     </objects>

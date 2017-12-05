@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddPropertyViewController : UIViewController
+@interface AddPropertyViewController : BaseViewController
 
 @property (strong, nonatomic) AddPropertyModel* propertyModel;
 

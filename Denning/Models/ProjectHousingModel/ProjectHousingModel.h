@@ -10,12 +10,12 @@
 
 @interface ProjectHousingModel : NSObject
 @property (strong, nonatomic) NSString* housingCode;
-@property (strong, nonatomic) NSString* developer;
+@property (strong, nonatomic) StaffModel* developer;
 @property (strong, nonatomic) NSString* licenseNo;
 @property (strong, nonatomic) NSString* masterTitle;
 @property (strong, nonatomic) NSString* name;
 @property (strong, nonatomic) NSString* phase;
-@property (strong, nonatomic) NSString* proprietor;
+@property (strong, nonatomic) StaffModel* proprietor;
 
 + (ProjectHousingModel*) getProjectHousingFromResponse: (NSDictionary*) response;
 

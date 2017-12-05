@@ -126,13 +126,7 @@
         }
         
         self->isLoading = NO;
-//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];
-        
     }];
-}
-
-- (void) clean {
-    isLoading = NO;
 }
 
 #pragma mark - Table view data source
@@ -146,7 +140,6 @@
     
     return self.listOfMatters.count;
 }
-
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

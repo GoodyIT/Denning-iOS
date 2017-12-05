@@ -15,12 +15,12 @@
     ProjectHousingModel* model = [ProjectHousingModel new];
     
     model.housingCode = [response valueForKeyNotNull:@"code"];
-    model.developer = [response valueForKeyNotNull:@"developer"];
+    model.developer = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"developer"]];
     model.licenseNo = [response valueForKeyNotNull:@"licenseNo"];
     model.masterTitle = [response valueForKeyNotNull:@"masterTitle"];
     model.name = [response valueForKeyNotNull:@"name"];
     model.phase = [response valueForKeyNotNull:@"phase"];
-    model.proprietor = [response valueForKeyNotNull:@"proprietor"];
+    model.proprietor = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"proprietor"]];
     
     return model;
 }

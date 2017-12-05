@@ -7,14 +7,15 @@
 //
 
 #import "ProjectHousingViewController.h"
+#import "TwoColumnCell.h"
+#import "SecondMatterTypeCell.h"
+#import "TwoColumnCell.h"
 
 @interface ProjectHousingViewController ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
     BOOL isAppending;
-    BOOL initCall;
 }
 
 
@@ -34,7 +35,9 @@
     
     [self prepareUI];
     [self configureSearch];
+    [self registerNib];
     [self getList];
+    
 }
 
 - (IBAction)dismissScreen:(id)sender {
@@ -42,7 +45,8 @@
 }
 
 - (void) registerNib {
-    
+    [TwoColumnCell registerForReuseInTableView:self.tableView];
+    [SecondMatterTypeCell registerForReuseInTableView:self.tableView];
 }
 
 - (void) configureSearch
@@ -62,9 +66,7 @@
 {
     self.copyedList = [NSMutableArray new];
     self.page = @(0);
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     
     self.tableView.delegate = self;
     
@@ -79,6 +81,23 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 100;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 
@@ -108,11 +127,12 @@
         }
         
         if (error == nil) {
+            if (result.count != 0) {
+                self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
+            }
+            
             if (isAppending) {
                 self.listOfHousings = [[self.listOfHousings arrayByAddingObjectsFromArray:result] mutableCopy];
-                if (result.count != 0) {
-                    self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
-                }
             } else {
                 self.listOfHousings = [result mutableCopy];
             }
@@ -125,14 +145,10 @@
         }
         
         self->isLoading = NO;
-//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];;
+        [self.tableView finishInfiniteScroll];
     }];
 }
 
-- (void) clean {
-    isLoading = NO;
-    isFirstLoading = NO;
-}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -145,14 +161,24 @@
     return self.listOfHousings.count;
 }
 
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 33;
+}
+
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier]];
+    cell.codeLabel.text = @"ID";
+    cell.descLabel.text = @"Name";
+    return cell;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PropertyHousingCell" forIndexPath:indexPath];
-    
     ProjectHousingModel *model = self.listOfHousings[indexPath.row];
-    UILabel* fileNo = [cell viewWithTag:1];
-    UILabel* caseName = [cell viewWithTag:2];
-    fileNo.text = [NSString stringWithFormat:@"%@", model.housingCode];
-    caseName.text = model.masterTitle;
+    
+    SecondMatterTypeCell *cell = [tableView dequeueReusableCellWithIdentifier:[SecondMatterTypeCell cellIdentifier] forIndexPath:indexPath];
+    cell.firstValue.text = model.housingCode;
+    cell.secondValue.text = model.name;
     
     return cell;
 }
@@ -176,17 +202,6 @@
     }
 }
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading) {
-        
-        [self appendList];
-    }
-}
-
 #pragma mark - Search Delegate
 
 - (void)willDismissSearchController:(UISearchController *) __unused searchController {
@@ -203,14 +218,6 @@
     isAppending = NO;
      self.page = @(1);
     [self getList];
-}
-
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfHousings.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
 }
 
 

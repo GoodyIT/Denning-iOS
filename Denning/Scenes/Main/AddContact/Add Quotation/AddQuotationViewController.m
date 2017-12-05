@@ -129,48 +129,9 @@ NSMutableDictionary* keyValue;
                      completion:^(BOOL finished) {
                          self.tableView.frame = originalFrame;
                          self.tableView.contentOffset = originalContentOffset;
+                         [self.tableView reloadData];
                      }
      ];
-}
-
--(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
-        return;
-    }
-    CGPoint p = [gestureRecognizer locationInView:self.tableView];
-    
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-    if (indexPath != nil) {
-        UIAlertController * alert=   [UIAlertController
-                                      alertControllerWithTitle:@"Info"
-                                      message:@"Do you want to clear the input"
-                                      preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* ok = [UIAlertAction
-                             actionWithTitle:@"OK"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action)
-                             {
-                                 [self replaceContentForSection:indexPath.section InRow:indexPath.row withValue:@""];
-                                 [alert dismissViewControllerAnimated:YES completion:nil];
-                                 
-                             }];
-        UIAlertAction* cancel = [UIAlertAction
-                                 actionWithTitle:@"Cancel"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     
-                                 }];
-        
-        [alert addAction:ok];
-        [alert addAction:cancel];
-        
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -587,6 +548,7 @@ NSMutableDictionary* keyValue;
 {
     [self replaceContentForSection:0 InRow:textField.tag withValue:textField.text];
 }
+
 - (NSString*) getActualNumber: (NSString*) formattedNumber
 {
     return [formattedNumber stringByReplacingOccurrencesOfString:@"," withString:@""];
@@ -595,9 +557,9 @@ NSMutableDictionary* keyValue;
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField.tag == 5 || textField.tag == 6 || textField.tag == 7 || textField.tag == 8) {
         _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-        return YES;
+        return NO;
     }
-    return NO;
+    return YES;
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

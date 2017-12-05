@@ -23,7 +23,7 @@
      model.area = [TypeValueModel getTypeValueFromResponse:[response objectForKeyNotNull:@"area"]];
      model.buildingNo = [response valueForKeyNotNull:@"buildingNo"];
      model.daerah = [response valueForKeyNotNull:@"daerah"];
-     model.developer = [response valueForKeyNotNull:@"developer"];
+     model.developer = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"developer"]];
      model.fullTitle = [response valueForKeyNotNull:@"fullTitle"];
      model.landUse = [response valueForKeyNotNull:@"landUse"];
      model.leaseExpiryDate = [response valueForKeyNotNull:@"leaseExpiryDate"];
@@ -33,10 +33,10 @@
      model.mukim = [TypeValueModel getTypeValueFromResponse:[response objectForKeyNotNull:@"mukim"]];
      model.negeri = [response valueForKeyNotNull:@"negeri"];
      model.parcelNo = [response valueForKeyNotNull:@"parcelNo"];
-     model.project = [response valueForKeyNotNull:@"project"];
+     model.project = [ProjectHousingModel getProjectHousingFromResponse:[response objectForKeyNotNull:@"project"]];
      model.propertyID = [response valueForKeyNotNull:@"propertyID"];
      model.propertyType = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"propertyType"]];
-    model.proprietor = [response valueForKeyNotNull:@"proprietor"];
+    model.proprietor = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"proprietor"]];
     model.relatedMatter = [SearchResultModel getSearchResultArrayFromResponse:[response objectForKeyNotNull:@"relatedMatter"]];
     model.restrictionAgainst = [response valueForKeyNotNull:@"restrictionAgainst"];
     model.restrictionInInterest = [CodeDescription getCodeDescriptionFromResponse:[response objectForKeyNotNull:@"restrictionInInterest"]];

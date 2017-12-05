@@ -98,6 +98,11 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(nextBtnDidTap)];
 }
 
+- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    customString = textField.text;
+    return YES;
+}
 
 - (void) selectProjectHousing {
     BOOL isSame = NO;
@@ -112,8 +117,10 @@
     if (!isSame) {
         curProject = [ProjectHousingModel new];
         curProject.name = customString;
-        curProject.proprietor = @"";
-        curProject.developer = @"";
+        curProject.proprietor = [StaffModel new];
+        curProject.proprietor.name = curProject.proprietor.nickName = @"";
+        curProject.developer = [StaffModel new];
+        curProject.developer.name = curProject.developer.nickName = @"";
         curProject.licenseNo = @"";
         curProject.housingCode = @"";
         curProject.masterTitle = @"";
@@ -161,7 +168,7 @@
                                                            uploadProgress:nil
                                                          downloadProgress:nil
                                                                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      NSLog(@"%@", responseObject);
+                                                                     
                                                                       
                                                                       handler([self parseResponse:responseObject]);                     } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
                                                                           NSLog(@"%@", error);

@@ -41,11 +41,15 @@ enum  {
     NSString* selectedRestrictionCode;
     NSString* selectedPropertyCode;
     NSString* selectedProjectCode;
+    NSString* developerCode, *proprietorCode;
     __block BOOL isLoading;
     __block BOOL isHeaderOpening;
     NSInteger selectedContactRow;
     
     NSString* propertyID;
+    
+    CGPoint originalContentOffset;
+    CGRect originalFrame;
 }
 
 @property (weak, nonatomic) IBOutlet FZAccordionTableView *tableView;
@@ -55,6 +59,7 @@ enum  {
 
 @property (strong, nonatomic)
 NSMutableDictionary* keyValue;
+@property (strong, nonatomic) NSIndexPath* textFieldIndexPath;
 @end
 
 @implementation AddPropertyViewController
@@ -82,6 +87,9 @@ NSMutableDictionary* keyValue;
         selectedPropertyType = _propertyModel.propertyType.codeValue;
         selectedAreaTypeCode = _propertyModel.area.type;
         selectedTitleIssuedCode = _propertyModel.titleIssued.codeValue;
+        selectedPropertyCode = _propertyModel.propertyCode;
+        developerCode = _propertyModel.developer.staffCode;
+        proprietorCode = _propertyModel.proprietor.staffCode;
         NSArray* temp = @[
                           @[@[@"Property Type", _propertyModel.propertyType.descriptionValue], @[@"Individual / Strata Title", _propertyModel.titleIssued.descriptionValue], @[@"ID (System assinged)", _propertyModel.propertyID]],
                           @[@[@"Title Type", _propertyModel.title.type], @[@"Title No.", _propertyModel.title.value], @[@"Lot Type", _propertyModel.lotPT.type], @[@"Lot / PT No.", _propertyModel.lotPT.value], @[@"Mukim Type", _propertyModel.mukim.type], @[@"Mukim", _propertyModel.mukim.value], @[@"Daerah", _propertyModel.daerah], @[@"Negeri", _propertyModel.negeri],  @[@"Area Value", _propertyModel.area.value], @[@"Area Type", _propertyModel.area.type], @[@"Tenure", _propertyModel.tenure],@[@"Lease Expiry Date", [DIHelpers convertDateToCustomFormat:_propertyModel.leaseExpiryDate]], @[@"Address / Place", _propertyModel.address],  @[@"Restriction in Interest", _propertyModel.restrictionInInterest.descriptionValue], @[@"Restriction Against", _propertyModel.restrictionAgainst], @[@"Approving Authority", _propertyModel.approvingAuthority], @[@"Category of Land Use", _propertyModel.landUse]
@@ -102,10 +110,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) clearInput {
-    selectedRestrictionCode = @"";
-    selectedPropertyType = @"";
-    selectedAreaTypeCode = @"";
-    selectedTitleIssuedCode = @"";
+    selectedRestrictionCode =  selectedPropertyType = selectedAreaTypeCode =  selectedTitleIssuedCode = developerCode = proprietorCode = @"";
     
     NSArray* temp = @[
                       @[@[@"Property Type", @""], @[@"Individual / Strata Title", @""], @[@"ID (System assinged)", @""]],
@@ -140,6 +145,69 @@ NSMutableDictionary* keyValue;
  
     self.contents = [newArray copy];
     [self.tableView reloadData];
+}
+
+
+- (void)keyboardWillShow:(NSNotification *)notification{
+    NSValue* keyboardFrameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrame = [keyboardFrameValue CGRectValue];
+    keyboardFrame = [self.view convertRect:keyboardFrame fromView:nil];
+    
+    CGFloat tableViewHeight = CGRectGetMinY(keyboardFrame) - CGRectGetMinY(self.view.bounds);
+    
+    originalContentOffset = _tableView.contentOffset;
+    originalFrame = _tableView.frame;
+    
+    // Get the duration of the animation.
+    NSValue* animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    CGRect cellRect = [self.tableView rectForRowAtIndexPath:self.textFieldIndexPath];
+    CGFloat minCellOffsetY = CGRectGetMaxY(cellRect) - tableViewHeight + 10.0; // Add a small margin below the row
+    CGFloat maxCellOffsetY = CGRectGetMinY(cellRect) - 10.0; // Add a small margin above the row
+    maxCellOffsetY = MAX(0.0, maxCellOffsetY);
+    CGFloat maxContentOffsetY = self.tableView.contentSize.height - tableViewHeight;
+    CGFloat scrollOffsetY = self.tableView.contentOffset.y;
+    if (scrollOffsetY < minCellOffsetY)
+    {
+        scrollOffsetY = minCellOffsetY;
+    }
+    else if (scrollOffsetY > maxCellOffsetY)
+    {
+        scrollOffsetY = maxCellOffsetY;
+    }
+    scrollOffsetY = MIN(scrollOffsetY, maxContentOffsetY);
+    CGPoint updatedContentOffset = CGPointMake(self.tableView.contentOffset.x, scrollOffsetY);
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.tableView.contentOffset = updatedContentOffset;
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = CGRectMake(CGRectGetMinX(self.tableView.frame), CGRectGetMinY(self.tableView.frame),
+                                                           CGRectGetWidth(self.tableView.frame), tableViewHeight);
+                     }];
+}
+
+- (void)keyboardWillHide:(NSNotification *) __unused notification{
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = originalFrame;
+                         self.tableView.contentOffset = originalContentOffset;
+                        
+                         [self.tableView reloadData];
+                     }
+     ];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -177,9 +245,9 @@ NSMutableDictionary* keyValue;
     vc.updateHandler =  ^(ProjectHousingModel* model) {
         [self didSelectListWithDescription:nil name:nameOfField withString:model.name];
         nameOfField = @"Developer";
-        [self didSelectListWithDescription:nil name:nameOfField withString:model.developer];
+        [self didSelectListWithDescription:nil name:nameOfField withString:model.developer.name];
         nameOfField = @"Proprietor";
-        [self didSelectListWithDescription:nil name:nameOfField withString:model.proprietor];
+        [self didSelectListWithDescription:nil name:nameOfField withString:model.proprietor.name];
         nameOfField = @"Block/Master Title";
         [self didSelectListWithDescription:nil name:nameOfField withString:model.masterTitle];
     };
@@ -357,6 +425,25 @@ NSMutableDictionary* keyValue;
         [data addEntriesFromDictionary:@{@"unitShare":_contents[2][6][1]}];
     }
     
+    NSMutableDictionary* project = [NSMutableDictionary new];
+    if (selectedProjectCode.length > 0 && ![selectedProjectCode isEqualToString:_propertyModel.project.housingCode]) {
+        [project addEntriesFromDictionary:@{@"code":selectedProjectCode}];
+    }
+    
+    if (developerCode.length > 0 && ![developerCode isEqualToString:_propertyModel.project.developer.staffCode]) {
+        [project addEntriesFromDictionary:@{@"developer":@{@"code":developerCode}}];
+    }
+    
+    if (proprietorCode.length > 0 && ![proprietorCode isEqualToString:_propertyModel.project.proprietor.staffCode]) {
+        [project addEntriesFromDictionary:@{@"proprietor":@{@"code":developerCode}}];
+    }
+    
+    if (((NSString*)_contents[4][3][1]).length > 0 && ![_contents[4][3][1] isEqualToString:_propertyModel.tenure]) {
+        [project addEntriesFromDictionary:@{@"masterTitle":_contents[4][3][1]}];
+    }
+    
+    [data addEntriesFromDictionary:@{@"project": project}];
+    
     return data;
 }
 
@@ -412,40 +499,40 @@ NSMutableDictionary* keyValue;
         return NO;
     }
     if (((NSString*)_contents[0][1][1]).length == 0) {
-        if ([_contents[0][1][1] isEqualToString:@"Issued"]) {
-            if (((NSString*)_contents[1][0][1]).length == 0) {
-                [QMAlert showAlertWithMessage:@"Please Select Title Type" actionSuccess:NO inViewController:self];
-                return NO;
-            }
-            if (((NSString*)_contents[1][1][1]).length == 0) {
-                [QMAlert showAlertWithMessage:@"Please Select Title No" actionSuccess:NO inViewController:self];
-                return NO;
-            }
-            if (((NSString*)_contents[1][2][1]).length == 0) {
-                [QMAlert showAlertWithMessage:@"Please Select Lot Type" actionSuccess:NO inViewController:self];
-                return NO;
-            }
-            if (((NSString*)_contents[1][3][1]).length == 0) {
-                [QMAlert showAlertWithMessage:@"Please Select Lot No" actionSuccess:NO inViewController:self];
-                return NO;
-            }
-        } else {
-            if (((NSString*)_contents[3][0][1]).length == 0) {
-                [QMAlert showAlertWithMessage:@"Please Select Parcel Type" actionSuccess:NO inViewController:self];
-                return NO;
-            }
-            if (((NSString*)_contents[2][0][1]).length == 0) {
-                [QMAlert showAlertWithMessage:@"Please Select Parcel No" actionSuccess:NO inViewController:self];
-                return NO;
-            }
-            if (((NSString*)_contents[2][1][1]).length == 0) {
-                [QMAlert showAlertWithMessage:@"Please Select Storey No" actionSuccess:NO inViewController:self];
-                return NO;
-            }
-        }
-    } else {
         [QMAlert showAlertWithMessage:@"Please Select Individual/Strata Title" actionSuccess:NO inViewController:self];
         return NO;
+    }
+
+    if ([_contents[0][1][1] isEqualToString:@"Issued"]) {
+        if (((NSString*)_contents[1][0][1]).length == 0) {
+            [QMAlert showAlertWithMessage:@"Please Select Title Type" actionSuccess:NO inViewController:self];
+            return NO;
+        }
+        if (((NSString*)_contents[1][1][1]).length == 0) {
+            [QMAlert showAlertWithMessage:@"Please Select Title No" actionSuccess:NO inViewController:self];
+            return NO;
+        }
+        if (((NSString*)_contents[1][2][1]).length == 0) {
+            [QMAlert showAlertWithMessage:@"Please Select Lot Type" actionSuccess:NO inViewController:self];
+            return NO;
+        }
+        if (((NSString*)_contents[1][3][1]).length == 0) {
+            [QMAlert showAlertWithMessage:@"Please Select Lot No" actionSuccess:NO inViewController:self];
+            return NO;
+        }
+    } else {
+        if (((NSString*)_contents[3][0][1]).length == 0) {
+            [QMAlert showAlertWithMessage:@"Please Select Parcel Type" actionSuccess:NO inViewController:self];
+            return NO;
+        }
+        if (((NSString*)_contents[2][0][1]).length == 0) {
+            [QMAlert showAlertWithMessage:@"Please Select Parcel No" actionSuccess:NO inViewController:self];
+            return NO;
+        }
+        if (((NSString*)_contents[2][1][1]).length == 0) {
+            [QMAlert showAlertWithMessage:@"Please Select Storey No" actionSuccess:NO inViewController:self];
+            return NO;
+        }
     }
     
     return YES;
@@ -567,12 +654,7 @@ NSMutableDictionary* keyValue;
         
         cell.rightFloatingText.delegate = self;
         cell.leftFloatingText.userInteractionEnabled = NO;
-//        if (![_viewType isEqualToString:@"view"]) {
-//            cell.rightFloatingText.userInteractionEnabled = YES;
-//        } else {
-//            cell.rightFloatingText.userInteractionEnabled = NO;
-//        }
-        
+
         cell.rightDetailDisclosure.hidden = YES;
         if (indexPath.section == 1 ) {
             if (indexPath.row == 2) {
@@ -580,13 +662,8 @@ NSMutableDictionary* keyValue;
                 cell.rightDetailDisclosure.hidden = NO;
                 cell.leftFloatingText.delegate = self;
                 cell.leftFloatingText.userInteractionEnabled = YES;
-                cell.leftFloatingText.tag = 104;
-                cell.rightFloatingText.tag = 105;
-//                if (![_viewType isEqualToString:@"view"]) {
-//                    cell.leftFloatingText.userInteractionEnabled = YES;
-//                } else {
-//                    cell.rightFloatingText.userInteractionEnabled = NO;
-//                }
+                cell.leftFloatingText.tag = 1004;
+                cell.rightFloatingText.tag = 1005;
             }
         }
         
@@ -598,11 +675,6 @@ NSMutableDictionary* keyValue;
         NSInteger rows = indexPath.row;
         if (indexPath.section == 1) {
             rows += 3;
-//            if (![_viewType isEqualToString:@"view"]) {
-//                cell.rightType.userInteractionEnabled = YES;
-//            } else {
-//                cell.rightType.userInteractionEnabled = NO;
-//            }
             if (indexPath.row == 5) {
                 cell.rightType.userInteractionEnabled = NO;
             }
@@ -635,13 +707,8 @@ NSMutableDictionary* keyValue;
     
     cell.floatingTextField.tag = [self calcPrevRowCount:indexPath.section] + rows;
     
-    if ([self.contents[indexPath.section][rows][0] isKindOfClass:[NSDictionary class]]) {
-        cell.floatingTextField.placeholder = self.contents[indexPath.section][rows][0];
-    } else {
-        cell.floatingTextField.placeholder = self.contents[indexPath.section][rows][0];
-        cell.floatingTextField.text = self.contents[indexPath.section][rows][1];
-    }
-    
+    cell.floatingTextField.placeholder = self.contents[indexPath.section][rows][0];
+    cell.floatingTextField.text = self.contents[indexPath.section][rows][1];
     
     cell.floatingTextField.floatLabelActiveColor = cell.floatingTextField.floatLabelPassiveColor = [UIColor redColor];
     
@@ -650,11 +717,7 @@ NSMutableDictionary* keyValue;
     cell.delegate = self;
 
     cell.accessoryType = UITableViewCellAccessoryNone;
-//    if (![_viewType isEqualToString:@"view"]) {
-//        cell.floatingTextField.userInteractionEnabled = YES;
-//    } else {
-//        cell.floatingTextField.userInteractionEnabled = NO;
-//    }
+    cell.floatingTextField.userInteractionEnabled = YES;
     cell.floatingTextField.delegate = self;
     if (indexPath.section == 0) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -665,10 +728,13 @@ NSMutableDictionary* keyValue;
     } else if (indexPath.section == 1) {
         if (indexPath.row == 6 || indexPath.row == 7 || (indexPath.row >= 9  && indexPath.row <= 12)) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.floatingTextField.userInteractionEnabled = NO;
         }
-        
+        cell.floatingTextField.userInteractionEnabled = NO;
         cell.floatingTextField.keyboardType = UIKeyboardTypeDefault;
+        
+        if (indexPath.row == 8) {
+            cell.floatingTextField.userInteractionEnabled = YES;
+        }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 6 || indexPath.row == 7) {
             cell.floatingTextField.keyboardType = UIKeyboardTypeNumberPad;
@@ -676,12 +742,10 @@ NSMutableDictionary* keyValue;
             cell.floatingTextField.keyboardType = UIKeyboardTypeDefault;
         }
     } else if (indexPath.section == 3) {
-        if (indexPath.row == 5) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.floatingTextField.userInteractionEnabled = NO;
-        }
         if (indexPath.row == 4) {
-            cell.floatingTextField.keyboardType = UIKeyboardTypeDefault;
+            cell.floatingTextField.tag = [self calcPrevRowCount:indexPath.section] + rows;
+            cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
+            
         } else {
             cell.floatingTextField.keyboardType = UIKeyboardTypeDefault;
         }
@@ -762,17 +826,25 @@ NSMutableDictionary* keyValue;
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == 104) {
+    if (textField.tag == 1004) {
         titleOfList = @"Mukim Type";
         nameOfField = self.contents[1][4][0];
-//        [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_MUKIM_TYPE_GET_URL];
         [self showAutocomplete:PROPERTY_MUKIM_TYPE_GET_URL];
         return NO;
-    } else if (textField.tag == 105) {
+    } else if (textField.tag == 1005) {
         [self performSegueWithIdentifier:kMukimValueSegue sender:nil];
         return NO;
+    } else {
+        NSArray* obj = [self calcSectionNumber:textField.tag];
+        if ([obj[0] integerValue] == 3 && [obj[1] integerValue] == 6) {
+            _textFieldIndexPath = [NSIndexPath indexPathForRow:[obj[1] integerValue] -1  inSection:[obj[0] integerValue] ];
+        } else {
+            _textFieldIndexPath = [NSIndexPath indexPathForRow:[obj[1] integerValue]  inSection:[obj[0] integerValue] ];
+        }
+        
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -786,7 +858,7 @@ NSMutableDictionary* keyValue;
         return NO;
     }
     
-    if (([obj[0] integerValue] == 3 && [obj[1] integerValue] == 6)) {
+    if (([obj[0] integerValue] == 3) && ([obj[1] integerValue] == 5 || [obj[1] integerValue] == 6)) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         textField.text = [DIHelpers formatDecimal:text];;
         return NO;
@@ -974,8 +1046,7 @@ NSMutableDictionary* keyValue;
         }
     } else if (indexPath.section == 4) {
         if (indexPath.row == 0) {
-            nameOfField = self.contents[indexPath.section][indexPath.row][0];
-            [self showPropertyAutocomplete:PROPERTY_PROJECT_HOUSING_GET_URL];
+            [self performSegueWithIdentifier:kProjectHousingSegue sender:nil];
         } else if (indexPath.row == 3) {
             nameOfField = self.contents[indexPath.section][indexPath.row][0];
             [self performSegueWithIdentifier:kMasterTitleSegue sender:PROPERTY_MASTER_TITLE_GETLIST_URL];
@@ -1092,6 +1163,23 @@ NSMutableDictionary* keyValue;
         MasterTitleView* vc = segue.destinationViewController;
         vc.updateHandler = ^(MasterTitleModel *model) {
             [self replaceContentForSection:4 InRow:3 withValue:model.masterCode];
+        };
+    }
+    
+    if ([segue.identifier isEqualToString:kProjectHousingSegue]) {
+        ProjectHousingViewController* vc = segue.destinationViewController;
+        vc.updateHandler = ^(ProjectHousingModel *model) {
+            nameOfField = self.contents[4][0][0];
+            [self didSelectListWithDescription:nil name:nameOfField withString:model.name];
+            selectedProjectCode = model.housingCode;
+            nameOfField = @"Developer";
+            [self didSelectListWithDescription:nil name:nameOfField withString:model.developer.name];
+            developerCode = model.developer.staffCode;
+            nameOfField = @"Proprietor";
+            [self didSelectListWithDescription:nil name:nameOfField withString:model.proprietor.name];
+            proprietorCode = model.proprietor.staffCode;
+            nameOfField = @"Block/Master Title";
+            [self didSelectListWithDescription:nil name:nameOfField withString:model.masterTitle];
         };
     }
 }

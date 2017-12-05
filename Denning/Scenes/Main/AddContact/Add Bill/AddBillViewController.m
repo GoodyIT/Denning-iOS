@@ -152,6 +152,7 @@ NSMutableDictionary* keyValue;
                      completion:^(BOOL finished) {
                          self.tableView.frame = originalFrame;
                          self.tableView.contentOffset = originalContentOffset;
+                        [self.tableView reloadData];
                      }
      ];
 }
@@ -560,9 +561,9 @@ NSMutableDictionary* keyValue;
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField.tag > 5 && textField.tag < 10) {
         _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-        return YES;
+        return NO;
     }
-     return NO;
+     return YES;
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
