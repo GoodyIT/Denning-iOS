@@ -7,7 +7,7 @@
 //
 
 #import "QMTableViewCell.h"
-#import <QMImageView.h>
+#import "QMImageView.h"
 #import "QMPlaceholder.h"
 
 @interface QMTableViewCell ()

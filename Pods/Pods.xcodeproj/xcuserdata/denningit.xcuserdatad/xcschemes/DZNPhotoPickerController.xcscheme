@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '53E39A76C869ED9901FA78A385961D38'
+               BlueprintIdentifier = 'E1284741A82D8BC2C726451615699391'
                BlueprintName = 'DZNPhotoPickerController'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libDZNPhotoPickerController.a'>
+               BuildableName = 'DZNPhotoPickerController.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

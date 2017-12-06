@@ -14,7 +14,7 @@
 #import "QMTasks.h"
 #import "QMCore.h"
 #import "QMProfile.h"
-#import <QMImageView.h>
+#import "QMImageView.h"
 #import "QMNavigationController.h"
 #import "QMSettingsFooterView.h"
 

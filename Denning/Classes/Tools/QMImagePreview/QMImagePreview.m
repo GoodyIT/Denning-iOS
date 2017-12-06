@@ -7,7 +7,7 @@
 //
 
 #import "QMImagePreview.h"
-#import <QMImageLoader.h>
+#import "QMImageLoader.h"
 
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
 #import "QMPhoto.h"

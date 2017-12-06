@@ -215,8 +215,7 @@ static NSArray *qm_colors = nil;
     
     [self sd_cancelCurrentAnimationImagesLoad];
     
-//    CGSize targetSize = self.bounds.size;
-    CGSize targetSize = CGSizeMake(40, 40);
+    CGSize targetSize = self.bounds.size;
     QMImageTransformType type = self.imageViewType == QMImageViewTypeCircle ?  QMImageTransformTypeCircle : QMImageTransformTypeCustom;
     QMImageTransform *transform;
     if (type == QMImageTransformTypeCircle)

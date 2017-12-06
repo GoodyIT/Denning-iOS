@@ -1,0 +1,6 @@
+framework module UIFloatLabelTextView {
+  umbrella header "UIFloatLabelTextView-umbrella.h"
+
+  export *
+  module * { export * }
+}

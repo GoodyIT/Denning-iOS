@@ -28,8 +28,8 @@
 #import "QMChatButtonsFactory.h"
 #import "UIImage+fixOrientation.h"
 #import "QBChatDialog+OpponentID.h"
-#import <QMDateUtils.h>
-#import <UIImageView+QMLocationSnapshot.h>
+#import "QMDateUtils.h"
+#import "UIImageView+QMLocationSnapshot.h"
 #import "QBChatMessage+QMCallNotifications.h"
 #import "QMAudioRecorder.h"
 #import "QMMediaController.h"

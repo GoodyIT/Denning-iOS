@@ -7,11 +7,11 @@
 //
 
 #import "QMCore.h"
-#import <Reachability.h>
+#import "Reachability.h"
 #import "QMFacebook.h"
 #import "QMNotification.h"
 #import "QMTasks.h"
-#import <SVProgressHUD.h>
+#import "SVProgressHUD.h"
 #import "QMImageLoader.h"
 #import "QMCallManager.h"
 #import <Intents/Intents.h>

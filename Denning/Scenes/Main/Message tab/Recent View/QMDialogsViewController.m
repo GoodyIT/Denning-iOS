@@ -12,7 +12,7 @@
 #import "QMNoResultsCell.h"
 #import "QMChatVC.h"
 #import "QMTasks.h"
-#import <QMDateUtils.h>
+#import "QMDateUtils.h"
 #import "QBChatDialog+OpponentID.h"
 #import "MessageViewController.h"
 #import "QMDialogsDataSource.h"

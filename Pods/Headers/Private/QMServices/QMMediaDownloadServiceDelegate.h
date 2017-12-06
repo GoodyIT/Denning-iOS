@@ -1,1 +1,0 @@
-../../../QMServices/QMChatService/QMChatService/QMAttachmentService/QMAttachmentContentService/QMMediaDownloadSevice/QMMediaDownloadServiceDelegates/QMMediaDownloadServiceDelegate.h

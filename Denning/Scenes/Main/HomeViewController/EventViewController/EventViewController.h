@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GLCalendarDateRange.h>
+
+@class GLCalendarDateRange;
 
 @interface EventViewController : UIViewController
 

@@ -13,7 +13,6 @@
 #import "QMCore.h"
 #import "QMNavigationController.h"
 #import "QMImagePicker.h"
-#import <QMImageView.h>
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
 #import "QMImagePreview.h"
 

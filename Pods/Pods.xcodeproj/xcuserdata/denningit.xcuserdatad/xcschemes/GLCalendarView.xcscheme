@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F7C26A4876CB4CA8712D01B81528F298'
+               BlueprintIdentifier = 'CCD1D2CC4F92866504C910104E79BBD1'
                BlueprintName = 'GLCalendarView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libGLCalendarView.a'>
+               BuildableName = 'GLCalendarView.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

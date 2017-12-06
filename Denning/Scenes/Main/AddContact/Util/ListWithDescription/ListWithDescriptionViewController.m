@@ -34,26 +34,11 @@
     [super viewDidLoad];
     
     [self prepareUI];
- //   [self configureSearch];
     [self getList];
 }
 
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-- (void) configureSearch
-{
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
-    self.searchController.searchBar.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.definesPresentationContext = YES;
-    [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    [self.searchContainer addSubview:self.searchController.searchBar];
 }
 
 - (void) prepareUI
@@ -143,15 +128,8 @@
         }
         
         self->isLoading = NO;
-//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];;
-     
     }];
 }
-
-- (void) clean {
-    isLoading = NO;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

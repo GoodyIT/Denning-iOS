@@ -16,5 +16,4 @@
 @property (nonatomic) UIEdgeInsets badgeEdgeInsets;
 @property (nonatomic) BOOL hideWhenZero;
 
-
 @end

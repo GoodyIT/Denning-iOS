@@ -8,7 +8,8 @@
 
 #import "QMNotification.h"
 #import "QMCore.h"
-#import <SDWebImageManager.h>
+#import "SDWebImageManager.h"
+
 #import "QMStatusStringBuilder.h"
 #import "QMMessageNotification.h"
 

@@ -23,8 +23,6 @@
 #import "QMNoResultsCell.h"
 #import "FavContactCell.h"
 
-#import <SVProgressHUD.h>
-
 @interface FavoriteViewController ()
 <
 FavContactDataSourceDelegate,

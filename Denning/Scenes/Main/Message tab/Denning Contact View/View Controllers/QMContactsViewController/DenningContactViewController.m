@@ -22,9 +22,6 @@
 #import "QMNoContactsCell.h"
 #import "QMNoResultsCell.h"
 #import "ChatContactCell.h"
-
-#import <SVProgressHUD.h>
-
 @interface DenningContactViewController ()
 <
 UISearchControllerDelegate,

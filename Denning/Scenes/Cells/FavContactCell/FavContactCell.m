@@ -7,6 +7,7 @@
 //
 
 #import "FavContactCell.h"
+#import "SDWebImageManager.h"
 #import "QMPlaceholder.h"
 
 @interface FavContactCell()
@@ -28,7 +29,7 @@
     
     [self.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]
                               placeholder:placeholder
-                                  options:SDWebImageLowPriority
+                                  options:1
                                  progress:nil
                            completedBlock:nil];
 

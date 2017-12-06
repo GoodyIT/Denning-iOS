@@ -1,0 +1,6 @@
+framework module UIFloatLabelTextField {
+  umbrella header "UIFloatLabelTextField-umbrella.h"
+
+  export *
+  module * { export * }
+}

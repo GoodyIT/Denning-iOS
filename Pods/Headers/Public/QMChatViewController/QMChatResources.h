@@ -1,1 +1,0 @@
-../../../QMChatViewController/QMChatViewController/Utils/QMChatResources/QMChatResources.h

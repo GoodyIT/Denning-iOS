@@ -8,15 +8,14 @@
 
 #import "TemplateType.h"
 
-@interface TemplateType ()<UIScrollViewDelegate>
+@interface TemplateType ()<UIScrollViewDelegate, UISearchBarDelegate, UISearchControllerDelegate>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading;
     BOOL isAppending;
-    BOOL initCall;
 }
 
 @property (strong, nonatomic) NSArray* listOfTypes;
+@property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 
@@ -28,6 +27,7 @@
     [super viewDidLoad];
     
     [self prepareUI];
+    [self configureSearch];
     [self getList];
 }
 
@@ -41,20 +41,47 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void) configureSearch
+{
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search", nil);
+    self.searchController.searchBar.delegate = self;
+    self.searchController.delegate = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.definesPresentationContext = YES;
+    [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+}
+
 - (void) prepareUI
 {
     self.title = [NSString stringWithFormat:@"%@ Type", _category];
     self.page = @(1);
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
+    
+    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
+    // Set custom indicator
+    self.tableView.infiniteScrollIndicatorView = indicator;
+    // Set custom indicator margin
+    self.tableView.infiniteScrollIndicatorMargin = 40;
+    
+    // Set custom trigger offset
+    self.tableView.infiniteScrollTriggerOffset = 100;
+    
+    // Add infinite scroll handler
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        @strongify(self)
+        [self appendList];
+    }];
 }
-
 
 - (void) appendList {
     isAppending = YES;
@@ -88,16 +115,9 @@
         }
         
         self->isLoading = NO;
-//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];;
+        [self.tableView finishInfiniteScroll];
     }];
 }
-
-- (void) clean {
-    isLoading = NO;
-    isFirstLoading = NO;
-}
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -128,21 +148,48 @@
 
 #pragma mark - ScrollView Delegate
 
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat contentHeight = scrollView.contentSize.height;
-    
-    if (offsetY > contentHeight - scrollView.frame.size.height && !isFirstLoading && !isLoading) {
+    //    CGFloat contentHeight = scrollView.contentSize.height;
+    if (offsetY > 10) {
         
-        [self appendList];
+        [self.searchController.searchBar endEditing:YES];
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfTypes.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
+#pragma mark - Search Delegate
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    searchBar.showsCancelButton = NO;
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
 }
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+    [searchBar resignFirstResponder];
+}
+
+- (void)willDismissSearchController:(UISearchController *) __unused searchController {
+    self.filter = @"";
+    searchController.searchBar.text = @"";
+    isAppending = NO;
+    [self getList];
+}
+
+- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
+{
+    self.filter = searchText;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+}
+
 @end

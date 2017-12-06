@@ -10,7 +10,7 @@
 #import "QMDialogCell.h"
 #import "QMNoResultsCell.h"
 #import "QMCore.h"
-#import <QMDateUtils.h>
+#import "QMDateUtils.h"
 #import "QBChatDialog+OpponentID.h"
 
 @implementation QMDialogsSearchDataSource

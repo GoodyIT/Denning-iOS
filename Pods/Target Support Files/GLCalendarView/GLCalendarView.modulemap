@@ -1,0 +1,6 @@
+framework module GLCalendarView {
+  umbrella header "GLCalendarView-umbrella.h"
+
+  export *
+  module * { export * }
+}

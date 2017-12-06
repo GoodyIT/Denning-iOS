@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B6BE6CAF2FD31A087DE1D1752D68FD28'
+               BlueprintIdentifier = 'F138139F5C96E3311FC2A71C0B5589CA'
                BlueprintName = 'MIBadgeButton'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libMIBadgeButton.a'>
+               BuildableName = 'MIBadgeButton.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

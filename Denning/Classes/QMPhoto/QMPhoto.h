@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <NYTPhoto.h>
+#import "NYTPhoto.h"
 
 @interface QMPhoto : NSObject <NYTPhoto>
 
