@@ -216,7 +216,7 @@ NYTPhotosViewControllerDelegate
                                                               [navigationController dismissNotificationPanel];
                                                               [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
                                                               return nil;
-                                                          }];
+                                                        }];
                                                       }]];
     
     [self presentViewController:alertController animated:YES completion:nil];

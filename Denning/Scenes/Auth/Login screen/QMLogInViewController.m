@@ -204,6 +204,30 @@
     [QMAlert showAlertWithMessage:errorString actionSuccess:NO inViewController:self];
 }
 
+- (void) loginToQB:(NSInteger) statusCode response:(NSDictionary*)responseObject{
+    QBUUser *user = [QBUUser user];
+    user.email = self.emailField.text;
+    user.password = kQBPassword;
+    
+    @weakify(self);
+    self.task = [[[QMCore instance].authService loginWithUser:user] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
+        
+        @strongify(self);
+        [SVProgressHUD dismiss];
+        
+        if (!task.isFaulted) {
+            
+            [QMCore instance].currentProfile.accountType = QMAccountTypeEmail;
+            [[QMCore instance].currentProfile synchronizeWithUserData:task.result];
+            
+            [self manageSuccessResult:statusCode response:responseObject];
+        } else {
+            [QMAlert showAlertWithMessage:task.error.localizedDescription actionSuccess:NO inViewController:self];
+        }
+        return nil;
+    }];
+}
+
 - (void) loginWithEmail: (NSString*) email password:(NSString*) password
 {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
@@ -215,35 +239,15 @@
         
         @strongify(self)
         if (error == nil){
-            QBUUser *user = [QBUUser user];
-            user.email = self.emailField.text;
-            user.password = kQBPassword;
-            
             [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-            
-            @weakify(self);
-            self.task = [[[QMCore instance].authService loginWithUser:user] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
-                
-                @strongify(self);
-                [SVProgressHUD dismiss];
-                
-                if (!task.isFaulted) {
-                    
-                    [QMCore instance].currentProfile.accountType = QMAccountTypeEmail;
-                    [[QMCore instance].currentProfile synchronizeWithUserData:task.result];
-                    
-                    [self manageSuccessResult:statusCode response:responseObject];
-                } else {
-                    [QMAlert showAlertWithMessage:task.error.localizedDescription actionSuccess:NO inViewController:self];
-                }
-                
-                
-                
-                return nil;
-            }];
-            
-//            [self manageSuccessResult:statusCode response:responseObject];
-            
+            if ([QMCore instance].currentUser.email != nil) {
+                [[QMCore.instance logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {
+                    [self loginToQB:statusCode response:responseObject];
+                    return nil;
+                }];
+            } else {
+                [self loginToQB:statusCode response:responseObject];
+            }
         } else {
             [SVProgressHUD dismiss];
             [self manageErrorResult:statusCode error:error];
