@@ -316,7 +316,7 @@
         vc.model = sender;
     } else if ([segue.identifier isEqualToString:kTaxSelectionSegue]) {
         TaxInvoiceSelectionViewController* vc = segue.destinationViewController;
-        vc.listOfTax = @[_model.analysis.Fees, _model.analysis.DisbGST, _model.analysis.Disb, _model.analysis.GST];
+        vc.taxModel = _model.analysis;
         vc.titleString = [NSString stringWithFormat:@"Quotation-%@", _model.documentNo];
         vc.selectedPage = sender;
     }

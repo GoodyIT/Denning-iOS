@@ -187,6 +187,7 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
+    self->isLoading = NO;
     [self.tableView finishInfiniteScroll];
     [[QMNetworkManager sharedManager] getDashboardMyDueTaskWithURL:newUrl withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
@@ -207,9 +208,6 @@
         else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
-        
-        self->isLoading = NO;
-//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];;
     }];
 }
 

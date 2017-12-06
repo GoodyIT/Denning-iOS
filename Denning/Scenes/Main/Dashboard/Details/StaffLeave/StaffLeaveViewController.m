@@ -118,6 +118,7 @@
         [SVProgressHUD dismiss];
         @strongify(self)
         self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
         if  (error == nil) {
             NSArray* array = [LeaveRecordModel getLEaveRecordArrayFromResponse:(NSArray*)result];
             if (array.count > 0) {
@@ -135,6 +136,7 @@
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
         self->isAppending = NO;
+        
     }];
 }
 

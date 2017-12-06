@@ -18,5 +18,5 @@ typedef void(^UpdateContactHandler)(ContactModel* model);
 @property (strong, nonatomic) ContactModel* contactModel;
 @property(strong, nonatomic) NSString* viewType;
 
-@property (strong, nonatomic) UpdateContactHandler updateHanlder;
+@property (strong, nonatomic) UpdateContactHandler updateHandler;
 @end

@@ -99,6 +99,8 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         
         @strongify(self)
+        self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
@@ -117,8 +119,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
         
-        self->isLoading = NO;
-        [self.tableView finishInfiniteScroll];
+        
         
     }];
 }

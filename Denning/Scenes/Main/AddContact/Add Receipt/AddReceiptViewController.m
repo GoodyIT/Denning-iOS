@@ -10,12 +10,14 @@
 #import "ListWithCodeTableViewController.h"
 #import "ListWithDescriptionViewController.h"
 #import "SimpleMatterViewController.h"
+#import "DetailWithAutocomplete.h"
 #import "TaxInvoice.h"
 #import "AccountTypeViewController.h"
 #import "BankBranchAutoComplete.h"
 #import "DashboardContact.h"
 #import "TransactionDescViewController.h"
 #import "PaymentModeViewController.h"
+#import "CodeTransactionAutoComplete.h"
 
 enum RECEIPT_ROWS {
     FILE_NO_ROW,
@@ -393,7 +395,7 @@ enum PAYMENT_MODE_ROWS {
     [popupController presentInViewController:self];
 }
 
-- (void) showDetailAutocomplete {
+- (void) showBankBranchAutocomplete {
     [self.view endEditing:YES];
     
     BankBranchAutoComplete *vc = [[UIStoryboard storyboardWithName:@
@@ -402,6 +404,33 @@ enum PAYMENT_MODE_ROWS {
     vc.updateHandler =  ^(BankBranchModel* model) {
         self.bankBranch.text = model.name;
     };
+    [self showPopup:vc];
+}
+
+
+- (void) showDetailAutoComplete: (NSString*) url {
+    DetailWithAutocomplete *vc = [[UIStoryboard storyboardWithName:@
+                                   "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
+    vc.url = url;
+    vc.title = titleOfList;
+    vc.updateHandler =  ^(CodeDescription* model) {
+        self.issuerBank.text = model.descriptionValue;
+        selectedIssuerBankCode = model.codeValue;
+    };
+    
+    [self showPopup:vc];
+}
+
+- (void) showTransactionAutoComplete: (NSString*) url {
+    CodeTransactionAutoComplete *vc = [[UIStoryboard storyboardWithName:@
+                                   "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CodeTransactionAutoComplete"];
+    vc.url = url;
+    vc.title = titleOfList;
+    vc.updateHandler =  ^(CodeTransactionDesc* model) {
+        self.transaction.text = model.strTransactionDescription;
+        selectedTransactionCode = model.codeValue;
+    };
+    
     [self showPopup:vc];
 }
 
@@ -447,7 +476,7 @@ enum PAYMENT_MODE_ROWS {
         } else if (indexPath.row == RECEIVED_FROM_ROW) {
             [self performSegueWithIdentifier:kContactGetListSegue sender:GENERAL_CONTACT_URL];
         } else if (indexPath.row == TRANSACTION_DESC_ROW) {
-            [self performSegueWithIdentifier:kCodeTransactionDescSegue sender:TRANSACTION_DESCRIPTION_RECEIPT_GET];
+            [self showTransactionAutoComplete:TRANSACTION_DESCRIPTION_RECEIPT_GET];
         }
     } else if (indexPath.section == 1) {
         if (indexPath.row == MODE_ROW) {
@@ -455,9 +484,10 @@ enum PAYMENT_MODE_ROWS {
         } else if (indexPath.row == ISSUER_BANK_ROW) {
             titleOfList = @"Select Issuer";
             nameOfField = @"issuer";
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];
+//            [self performSegueWithIdentifier:kListWithCodeSegue sender:ACCOUNT_CHEQUE_ISSUEER_GET_URL];
+            [self showDetailAutoComplete:ACCOUNT_CHEQUE_ISSUEER_GET_URL];
         } else if (indexPath.row == BANK_BRANCH_ROW) {
-            [self showDetailAutocomplete];
+            [self showBankBranchAutocomplete];
         }
     }
     

@@ -391,8 +391,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
                 [self.tableView reloadData];
             }
             
-            [self.tableView finishInfiniteScroll];
-            
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }

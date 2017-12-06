@@ -695,6 +695,42 @@
             </objects>
             <point key="canvasLocation" x="6414" y="-1225"/>
         </scene>
+        <!--Code Transaction Auto Complete-->
+        <scene sceneID="pyi-48-8tO">
+            <objects>
+                <viewController storyboardIdentifier="CodeTransactionAutoComplete" useStoryboardIdentifierAsRestorationIdentifier="YES" id="K3Z-rb-SP3" customClass="CodeTransactionAutoComplete" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SYS-fp-TwT"/>
+                        <viewControllerLayoutGuide type="bottom" id="36b-NX-b1n"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9ir-8S-0Gx">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="350"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search / Input" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8mv-J4-pt2" customClass="MLPAutoCompleteTextField">
+                                <rect key="frame" x="24" y="54" width="252" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="8mv-J4-pt2" secondAttribute="trailing" constant="8" id="25p-vl-jde"/>
+                            <constraint firstItem="8mv-J4-pt2" firstAttribute="top" secondItem="9ir-8S-0Gx" secondAttribute="topMargin" constant="10" id="I9K-V5-AcC"/>
+                            <constraint firstItem="8mv-J4-pt2" firstAttribute="leading" secondItem="9ir-8S-0Gx" secondAttribute="leadingMargin" constant="8" id="SWH-ES-LcM"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="350"/>
+                    <connections>
+                        <outlet property="autocompleteTF" destination="8mv-J4-pt2" id="pDk-XZ-MW0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OCM-D8-FP3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6930" y="-1225"/>
+        </scene>
         <!--Simple Autocomplete-->
         <scene sceneID="Gzi-3P-IeV">
             <objects>

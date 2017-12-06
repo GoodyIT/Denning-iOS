@@ -70,12 +70,12 @@
     
     self.tableView.delegate = self;
     
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor clearColor];
-    self.refreshControl.tintColor = [UIColor blackColor];
-    [self.refreshControl addTarget:self
-                            action:@selector(appendList)
-                  forControlEvents:UIControlEventValueChanged];
+//    self.refreshControl = [[UIRefreshControl alloc] init];
+//    self.refreshControl.backgroundColor = [UIColor clearColor];
+//    self.refreshControl.tintColor = [UIColor blackColor];
+//    [self.refreshControl addTarget:self
+//                            action:@selector(appendList)
+//                  forControlEvents:UIControlEventValueChanged];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
@@ -121,11 +121,12 @@
         
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
-        if (self.refreshControl.isRefreshing) {
-            self.refreshControl.attributedTitle = [DIHelpers getLastRefreshingTime];
-            [self.refreshControl endRefreshing];
-        }
-        
+//        if (self.refreshControl.isRefreshing) {
+//            self.refreshControl.attributedTitle = [DIHelpers getLastRefreshingTime];
+//            [self.refreshControl endRefreshing];
+//        }
+        self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
             if (result.count != 0) {
                 self.page = [NSNumber numberWithInteger:[self.page integerValue] + 1];
@@ -144,8 +145,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
         
-        self->isLoading = NO;
-        [self.tableView finishInfiniteScroll];
+        
     }];
 }
 

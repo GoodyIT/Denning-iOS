@@ -129,7 +129,7 @@ NSMutableDictionary* keyValue;
                      completion:^(BOOL finished) {
                          self.tableView.frame = originalFrame;
                          self.tableView.contentOffset = originalContentOffset;
-                         [self.tableView reloadData];
+                         [self.tableView layoutIfNeeded];
                      }
      ];
 }
@@ -794,8 +794,8 @@ NSMutableDictionary* keyValue;
         };
     } else if ([segue.identifier isEqualToString:kTaxSelectionSegue]) {
         TaxInvoiceSelectionViewController* vc = segue.destinationViewController;
-        vc.listOfTax = @[_taxModel.Fees, _taxModel.DisbGST, _taxModel.Disb, _taxModel.GST];
         vc.selectedPage = sender;
+        vc.taxModel = _taxModel;
         vc.titleString = [NSString stringWithFormat:@"Quotation-%@", _contents[0][1][1]];
     } else if ([segue.identifier isEqualToString:kTaxBillContactSegue]) {
         TaxBillContactViewController* vc = segue.destinationViewController;

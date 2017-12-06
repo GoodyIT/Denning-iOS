@@ -10,7 +10,7 @@
 
 @protocol ContactListWithCodeSelectionDelegate;
 
-@interface ListWithCodeTableViewController : UIViewController
+@interface ListWithCodeTableViewController : BaseViewController
 @property (weak, nonatomic) id<ContactListWithCodeSelectionDelegate> delegate;
 
 @property (strong, nonatomic) NSMutableArray* listOfCodeDesc;

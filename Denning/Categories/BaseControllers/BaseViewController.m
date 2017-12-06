@@ -22,6 +22,12 @@
 {
     [self removeKeyboardObservers];
     [super viewWillDisappear:animated];
+    
+    [SVProgressHUD dismiss];
+    [self.view endEditing:YES];
+    if ([self.navigationController isKindOfClass:[QMNavigationController class]]) {
+        [(QMNavigationController*)self.navigationController dismissNotificationPanel];
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated

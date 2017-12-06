@@ -37,6 +37,9 @@ enum SECTIONS {
     NSString* titleOfList;
     NSString* nameOfField;
     
+    CGPoint originalContentOffset;
+    CGRect originalFrame;
+    
     __block BOOL isLoading;
 }
 
@@ -75,6 +78,68 @@ enum SECTIONS {
     [FloatingTextCell registerForReuseInTableView:self.tableView];
     
     [self.tableView reloadData];
+}
+
+
+- (void)keyboardWillShow:(NSNotification *)notification{
+    NSValue* keyboardFrameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrame = [keyboardFrameValue CGRectValue];
+    keyboardFrame = [self.view convertRect:keyboardFrame fromView:nil];
+    
+    CGFloat tableViewHeight = CGRectGetMinY(keyboardFrame) - CGRectGetMinY(self.view.bounds);
+    
+    originalContentOffset = _tableView.contentOffset;
+    originalFrame = _tableView.frame;
+    
+    // Get the duration of the animation.
+    NSValue* animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    CGRect cellRect = [self.tableView rectForRowAtIndexPath:self.textFieldIndexPath];
+    CGFloat minCellOffsetY = CGRectGetMaxY(cellRect) - tableViewHeight + 10.0; // Add a small margin below the row
+    CGFloat maxCellOffsetY = CGRectGetMinY(cellRect) - 10.0; // Add a small margin above the row
+    maxCellOffsetY = MAX(0.0, maxCellOffsetY);
+    CGFloat maxContentOffsetY = self.tableView.contentSize.height - tableViewHeight;
+    CGFloat scrollOffsetY = self.tableView.contentOffset.y;
+    if (scrollOffsetY < minCellOffsetY)
+    {
+        scrollOffsetY = minCellOffsetY;
+    }
+    else if (scrollOffsetY > maxCellOffsetY)
+    {
+        scrollOffsetY = maxCellOffsetY;
+    }
+    scrollOffsetY = MIN(scrollOffsetY, maxContentOffsetY) + kDefaultAccordionHeaderViewHeight;
+    CGPoint updatedContentOffset = CGPointMake(self.tableView.contentOffset.x, scrollOffsetY);
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.tableView.contentOffset = updatedContentOffset;
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = CGRectMake(CGRectGetMinX(self.tableView.frame), CGRectGetMinY(self.tableView.frame),
+                                                           CGRectGetWidth(self.tableView.frame), tableViewHeight);
+                     }];
+}
+
+- (void)keyboardWillHide:(NSNotification *) __unused notification{
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = originalFrame;
+                         self.tableView.contentOffset = originalContentOffset;
+                         [self.tableView layoutIfNeeded];
+                     }
+     ];
 }
 
 - (void) prepareUI {
@@ -261,7 +326,7 @@ enum SECTIONS {
     [accessoryView sizeToFit];
     
     FloatingTextCell *cell = [tableView dequeueReusableCellWithIdentifier:[FloatingTextCell cellIdentifier] forIndexPath:indexPath];
-    cell.floatingTextField.tag = indexPath.row;
+    cell.floatingTextField.tag = indexPath.section * 10 + indexPath.row;
     cell.floatingTextField.userInteractionEnabled = NO;
     
     cell.floatingTextField.floatLabelActiveColor = cell.floatingTextField.floatLabelPassiveColor = [UIColor redColor];
@@ -344,7 +409,9 @@ enum SECTIONS {
 }
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
+    NSInteger section = textField.tag / 10;
+    NSInteger row = textField.tag - section*10;
+    _textFieldIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
     return YES;
 }
 

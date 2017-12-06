@@ -70,6 +70,12 @@ NSMutableDictionary* keyValue;
     [self registerNib];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView layoutIfNeeded];
+}
+
 - (void) prepareUI {
     self.keyValue = [@{
                        @(0): @(1), @(1):@(1),
@@ -205,7 +211,7 @@ NSMutableDictionary* keyValue;
                          self.tableView.frame = originalFrame;
                          self.tableView.contentOffset = originalContentOffset;
                         
-                         [self.tableView reloadData];
+                         [self.tableView layoutIfNeeded];
                      }
      ];
 }
@@ -836,12 +842,21 @@ NSMutableDictionary* keyValue;
         return NO;
     } else {
         NSArray* obj = [self calcSectionNumber:textField.tag];
-        if ([obj[0] integerValue] == 3 && [obj[1] integerValue] == 6) {
-            _textFieldIndexPath = [NSIndexPath indexPathForRow:[obj[1] integerValue] -1  inSection:[obj[0] integerValue] ];
-        } else {
-            _textFieldIndexPath = [NSIndexPath indexPathForRow:[obj[1] integerValue]  inSection:[obj[0] integerValue] ];
+        NSInteger section = [obj[0] integerValue];
+        NSInteger row = [obj[1] integerValue];
+        if (section == 3 ) {
+            row -= 1;
+        } else if (section == 1 && row == 1) {
+            row -= 1;
+        } else if (section == 1 && row == 3) {
+            row -= 2;
+        } else if (section == 1 && row == 8) {
+            row -= 3;
+        } else if (section == 1 && row == 12) {
+            row -= 4;
         }
         
+        _textFieldIndexPath = [NSIndexPath indexPathForRow:row  inSection:section];
         return YES;
     }
     return NO;
@@ -1065,14 +1080,14 @@ NSMutableDictionary* keyValue;
     if (isHeaderOpening) {
         return;
     }
-    isHeaderOpening = YES;
+    isHeaderOpening = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow: ([self.tableView numberOfRowsInSection:section]-1) inSection:section];
-        
+
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
         isHeaderOpening = NO;
     });
-
+    [self.tableView layoutIfNeeded];
 }
 
 - (void)tableView:(FZAccordionTableView *)tableView willCloseSection:(NSInteger)section withHeader:(UITableViewHeaderFooterView *)header {
@@ -1082,7 +1097,8 @@ NSMutableDictionary* keyValue;
 }
 
 - (void)tableView:(FZAccordionTableView *)tableView didCloseSection:(NSInteger)section withHeader:(UITableViewHeaderFooterView *)header {
-    
+    [self.tableView reloadData];
+    [self.tableView layoutIfNeeded];
 }
 
 #pragma mark - ContactListWithCodeSelectionDelegate

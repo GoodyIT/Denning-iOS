@@ -425,7 +425,7 @@
     if ([segue.identifier isEqualToString:kAddContactSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         AddContactViewController* addVC = nav.viewControllers.firstObject;
-        addVC.updateHanlder = ^(ContactModel *model) {
+        addVC.updateHandler = ^(ContactModel *model) {
             self.contactModel = model;
             [self.tableView reloadData];
         };

@@ -10,6 +10,7 @@
 
 @interface TaxInvoiceSelectionViewController : UIViewController
 
+@property (nonatomic, strong) TaxInvoiceCalcModel* taxModel;
 @property (strong, nonatomic) NSArray<NSArray*>* listOfTax;
 @property (strong, nonatomic) NSArray* listOfTotalPrice;
 @property (strong, nonatomic) NSNumber* selectedPage;

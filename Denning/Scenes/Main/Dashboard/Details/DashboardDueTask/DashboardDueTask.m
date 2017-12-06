@@ -108,6 +108,7 @@
     [[QMNetworkManager sharedManager] getDashboardItemModelWithURL:DASHBOARD_DUE_TASK_GET_URL withPage:[NSNumber numberWithInteger:page] withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         [SVProgressHUD dismiss];
+        self->isLoading = NO;
         [self.tableView finishInfiniteScroll];
         if (error == nil) {
             if  (result.count > 0) {
@@ -125,7 +126,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
         
-        self->isLoading = NO;
+        
     }];
 }
 

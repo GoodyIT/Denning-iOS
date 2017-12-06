@@ -132,6 +132,8 @@
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         @strongify(self)
         [navigationController dismissNotificationPanel];
+        self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
         if (error == nil) {
             result = [self filterResult:result];
             if (result.count != 0) {
@@ -151,8 +153,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
         
-        self->isLoading = NO;
-        [self.tableView finishInfiniteScroll];
+        
     }];
 }
 

@@ -94,6 +94,8 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)
+    self->isLoading = NO;
+    [self.tableView finishInfiniteScroll];
     [[QMNetworkManager sharedManager] getTemplateTypeWithFilter:_category withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         if (error == nil) {
@@ -114,8 +116,7 @@
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
         
-        self->isLoading = NO;
-        [self.tableView finishInfiniteScroll];
+       
     }];
 }
 #pragma mark - Table view data source

@@ -172,6 +172,7 @@
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
         [SVProgressHUD dismiss];
         if (error == nil) {
             NSArray* array = [TaxInvoiceModel getTaxInvoiceArrayFromResonse:result];
@@ -190,7 +191,7 @@
         else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
-        [self.tableView finishInfiniteScroll];
+        
     }];
 }
 

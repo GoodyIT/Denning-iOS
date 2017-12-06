@@ -58,6 +58,7 @@
 		790DD4931ECBBCEF009D5634 /* ProjectHousingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD4921ECBBCEF009D5634 /* ProjectHousingViewController.m */; };
 		790DD4971ECBBD38009D5634 /* ProjectHousingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD4961ECBBD38009D5634 /* ProjectHousingModel.m */; };
 		790DD49B1ECBC05E009D5634 /* PropertyContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */; };
+		790EA88A1FD887AF00894AC9 /* CodeTransactionAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -1237,6 +1238,8 @@
 		790DD4961ECBBD38009D5634 /* ProjectHousingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectHousingModel.m; sourceTree = "<group>"; };
 		790DD4991ECBC05E009D5634 /* PropertyContactListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyContactListViewController.h; sourceTree = "<group>"; };
 		790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyContactListViewController.m; sourceTree = "<group>"; };
+		790EA8881FD887AF00894AC9 /* CodeTransactionAutoComplete.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeTransactionAutoComplete.h; sourceTree = "<group>"; };
+		790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeTransactionAutoComplete.m; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -3222,6 +3225,15 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		790EA8871FD887A300894AC9 /* CodeTransactionAutoComplete */ = {
+			isa = PBXGroup;
+			children = (
+				790EA8881FD887AF00894AC9 /* CodeTransactionAutoComplete.h */,
+				790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */,
+			);
+			path = CodeTransactionAutoComplete;
+			sourceTree = "<group>";
+		};
 		791360411FCDB3480022E80F /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -3767,6 +3779,7 @@
 				79B1341C1FC3167F0011F77B /* DateTimeViewController */,
 				7903CF511ECC00CE0090206C /* Time Picker */,
 				7903CF361ECC00BB0090206C /* Birthday Calendar */,
+				790EA8871FD887A300894AC9 /* CodeTransactionAutoComplete */,
 				7903CF391ECC00BB0090206C /* DetailWithAutocomplete */,
 				7903CF3F1ECC00BB0090206C /* ListWithCodeDescription */,
 				7903CF421ECC00BB0090206C /* ListWithDescription */,
@@ -9694,6 +9707,7 @@
 				79EC0EAD1E8BE7F700320A28 /* IncomeTaxViewController.m in Sources */,
 				795432A21FC65BF600FF9E57 /* QMImageBarButtonItem.m in Sources */,
 				962083181EDB32DA00BB595C /* DashboardTaxInvoiceCell.m in Sources */,
+				790EA88A1FD887AF00894AC9 /* CodeTransactionAutoComplete.m in Sources */,
 				795432551FC5EDBE00FF9E57 /* TaxInvoiceItemModel.m in Sources */,
 				79BC1EEB1FCC8F4500E90B12 /* QMGlobalSearchDataSource.m in Sources */,
 				7920E7B51EA0512C002FEFF3 /* DIFileBrowser.m in Sources */,

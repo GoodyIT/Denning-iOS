@@ -41,7 +41,10 @@
 
 - (void) prepareUI {
     _titleLabel.text = _titleString;
-    [self calaTotalPrice];
+    _listOfTax = @[_taxModel.Fees, _taxModel.DisbGST, _taxModel.Disb, _taxModel.GST];
+    _listOfTotalPrice = @[_taxModel.decFees, _taxModel.decDisbGST, _taxModel.decDisb, _taxModel.decGST];
+    _totalPrice = _listOfTotalPrice[0];
+
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -62,19 +65,6 @@
     [self.view addSubview:selectionList];
 }
 
-- (void) calaTotalPrice {
-    int total = 0;
-    for (TaxInvoiceItemModel* model in _listOfTax[[self.selectedPage integerValue]]) {
-        total += [model.amount integerValue];
-    }
-    
-    _totalPrice.text = [NSString stringWithFormat:@"%d", total];
-}
-
-//- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return 50.0f;
-//}
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -121,7 +111,7 @@
 
 - (void) topFilterChanged: (HMSegmentedControl*) control {
     self.selectedPage = [NSNumber numberWithInteger:control.selectedSegmentIndex];
-    [self calaTotalPrice];
+    _totalPrice = _listOfTotalPrice[control.selectedSegmentIndex];
     [self.tableView reloadData];
 }
 
