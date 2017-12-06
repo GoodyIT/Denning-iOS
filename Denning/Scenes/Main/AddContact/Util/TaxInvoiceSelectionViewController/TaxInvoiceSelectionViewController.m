@@ -40,6 +40,7 @@
 }
 
 - (void) prepareUI {
+    _titleLabel.text = _titleString;
     [self calaTotalPrice];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;

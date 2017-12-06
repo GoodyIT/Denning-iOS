@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SF-UI-Text-Medium.otf">
-            <string>SFUIText-Medium</string>
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue-Medium</string>
         </array>
         <array key="SF-UI-Text-Regular.otf">
             <string>SFUIText-Regular</string>
@@ -26,17 +26,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="185" height="144"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyL-pp-sSg" customClass="BadgeLabel">
-                        <rect key="frame" x="89" y="75" width="6" height="14.5"/>
-                        <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="12"/>
-                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt; 61" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ohg-k3-hRJ">
-                        <rect key="frame" x="79" y="49" width="26.5" height="16"/>
+                        <rect key="frame" x="79.5" y="49" width="26" height="16"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGW-UD-aGN" customClass="BadgeLabel">
+                        <rect key="frame" x="78" y="68" width="30.5" height="14"/>
+                        <color key="backgroundColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -44,15 +44,14 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="ohg-k3-hRJ" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" constant="-15" id="3w2-f8-Zez"/>
-                <constraint firstItem="jyL-pp-sSg" firstAttribute="centerX" secondItem="ohg-k3-hRJ" secondAttribute="centerX" id="DKL-AY-VzO"/>
-                <constraint firstItem="jyL-pp-sSg" firstAttribute="top" secondItem="ohg-k3-hRJ" secondAttribute="bottom" constant="10" id="GH8-sq-150"/>
+                <constraint firstItem="aGW-UD-aGN" firstAttribute="top" secondItem="ohg-k3-hRJ" secondAttribute="bottom" constant="3" id="Vb0-fI-AK8"/>
                 <constraint firstItem="ohg-k3-hRJ" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="iqd-8J-7jt"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jyL-pp-sSg" secondAttribute="bottom" constant="3" id="tj4-dm-qo9"/>
+                <constraint firstItem="aGW-UD-aGN" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="qfG-7E-OQh"/>
                 <constraint firstItem="ohg-k3-hRJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="vZO-h8-Y58"/>
             </constraints>
             <size key="customSize" width="185" height="144"/>
             <connections>
-                <outlet property="badgeValue" destination="jyL-pp-sSg" id="NjH-6S-hfr"/>
+                <outlet property="badgeValue" destination="aGW-UD-aGN" id="rbk-b5-b15"/>
                 <outlet property="centerValue" destination="ohg-k3-hRJ" id="6xc-FV-q0F"/>
             </connections>
             <point key="canvasLocation" x="-119.5" y="-50"/>

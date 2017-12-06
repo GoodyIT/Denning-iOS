@@ -350,8 +350,11 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)dismissScreen:(id)sender {
+    
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        _updateHandler(_matterModel);
+        if (!_matterModel && !_updateHandler) {
+            _updateHandler(_matterModel);
+        }
     }];
 }
 

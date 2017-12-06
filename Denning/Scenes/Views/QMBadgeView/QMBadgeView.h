@@ -12,5 +12,6 @@
 
 @property (assign, nonatomic) IBInspectable NSUInteger badgeNumber;
 @property (assign, nonatomic) IBInspectable BOOL hideOnZeroValue;
-
+@property (strong, nonatomic) UIColor *badgeTextColor;
+@property (strong, nonatomic) UIColor *badgeBGColor;
 @end

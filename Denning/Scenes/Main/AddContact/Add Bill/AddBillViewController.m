@@ -819,6 +819,7 @@ NSMutableDictionary* keyValue;
         TaxInvoiceSelectionViewController* vc = segue.destinationViewController;
         vc.listOfTax = @[_taxModel.Fees, _taxModel.DisbGST, _taxModel.Disb, _taxModel.GST];
         vc.selectedPage = sender;
+        vc.titleString = [NSString stringWithFormat:@"Quotation-%@", _contents[0][2][1]];
     } else if ([segue.identifier isEqualToString:kTaxBillContactSegue]) {
         TaxBillContactViewController* vc = segue.destinationViewController;
         vc.filter = sender;

@@ -66,12 +66,6 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 }
 
 - (void) initMultipleDownloader {
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDownloadDidComplete:) name:downloadDidCompleteNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onProgressDidChange:) name:downloadProgressChangedNotification object:nil];
-//    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
-//    {
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onTotalProgressDidChange:) name:totalDownloadProgressChangedNotification object:nil];
-//    }
     
     email = [DataManager sharedManager].user.email;
     sessionID = [DataManager sharedManager].user.sessionID;

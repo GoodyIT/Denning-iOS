@@ -83,6 +83,7 @@
     _proFees.text = _model.analysis.decFees;
     _dsbWithGST.text = _model.analysis.decDisbGST;
     _disb.text = _model.analysis.decDisb;
+    _GST.text = _model.analysis.decGST;
     _total.text = _model.analysis.decTotal;
 }
 
@@ -316,6 +317,7 @@
     } else if ([segue.identifier isEqualToString:kTaxSelectionSegue]) {
         TaxInvoiceSelectionViewController* vc = segue.destinationViewController;
         vc.listOfTax = @[_model.analysis.Fees, _model.analysis.DisbGST, _model.analysis.Disb, _model.analysis.GST];
+        vc.titleString = [NSString stringWithFormat:@"Quotation-%@", _model.documentNo];
         vc.selectedPage = sender;
     }
 }

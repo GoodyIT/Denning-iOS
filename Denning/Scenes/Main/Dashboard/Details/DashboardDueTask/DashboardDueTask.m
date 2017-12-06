@@ -13,9 +13,7 @@
 @interface DashboardDueTask ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
-    __block BOOL isFirstLoading;
     __block BOOL isLoading, isAppending;
-    BOOL initCall;
     NSInteger page;
 }
 
@@ -65,9 +63,7 @@
 
 - (void) prepareUI
 {
-    isFirstLoading = YES;
     self.filter = @"";
-    initCall = YES;
     page = 1;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
@@ -130,13 +126,7 @@
         }
         
         self->isLoading = NO;
-//        [self performSelector:@selector(clean) withObject:nil afterDelay:1.0];;
     }];
-}
-
-- (void) clean {
-    isLoading = NO;
-    isFirstLoading = NO;
 }
 
 #pragma mark - Table view data source
@@ -155,16 +145,14 @@
     ItemModel *model = self.listOfTasks[indexPath.row];
     
     OneRowWithDot *cell = [tableView dequeueReusableCellWithIdentifier:[OneRowWithDot cellIdentifier] forIndexPath:indexPath];
-   
-    cell.leftLabel.text = model.label;
-    cell.dotValue.text = model.value;
     
+    [cell configureCellWithLeftValue:model.label dotValue:model.value];
+   
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performSegueWithIdentifier:kMyDueTaskSegue sender:self.listOfTasks[indexPath.row]];
 }
@@ -223,14 +211,6 @@
     page = 1;
     [self getList];
 }
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.listOfTasks.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
-    }
-}
-
 
 #pragma mark - Navigation
 

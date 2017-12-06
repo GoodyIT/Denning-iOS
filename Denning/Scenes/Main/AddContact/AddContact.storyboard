@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uty-tP-hgq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uty-tP-hgq">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1644,23 +1644,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(static)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vXj-aX-uUd">
-                                        <rect key="frame" x="95" y="12" width="51" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="51" id="5HO-r2-oux"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" red="0.99607843137254903" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="w0U-pI-gjX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vXj-aX-uUd" secondAttribute="trailing" constant="12" id="1XY-E7-Jfh"/>
-                                    <constraint firstItem="vXj-aX-uUd" firstAttribute="leading" secondItem="3uj-9B-B7N" secondAttribute="trailing" constant="5" id="99q-LO-W7w"/>
                                     <constraint firstItem="3uj-9B-B7N" firstAttribute="centerY" secondItem="eP7-XP-HlF" secondAttribute="centerY" id="IDc-zw-f70"/>
                                     <constraint firstItem="3uj-9B-B7N" firstAttribute="leading" secondItem="eP7-XP-HlF" secondAttribute="leading" constant="12" id="IFx-rF-AdE"/>
-                                    <constraint firstItem="vXj-aX-uUd" firstAttribute="centerY" secondItem="eP7-XP-HlF" secondAttribute="centerY" id="JaR-Yj-kfg"/>
                                     <constraint firstAttribute="height" constant="44" id="Lew-tI-CYp"/>
                                     <constraint firstAttribute="trailing" secondItem="w0U-pI-gjX" secondAttribute="trailing" constant="20" id="PI5-Sc-4id"/>
                                     <constraint firstItem="w0U-pI-gjX" firstAttribute="centerY" secondItem="eP7-XP-HlF" secondAttribute="centerY" id="lL0-j1-tET"/>
@@ -1686,6 +1674,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="N9Z-j5-0hu" id="N22-bx-HdX"/>
+                        <outlet property="titleLabel" destination="AV4-gR-vJY" id="vDF-cR-zdh"/>
                         <outlet property="totalPrice" destination="w0U-pI-gjX" id="4oK-Ss-NLw"/>
                     </connections>
                 </viewController>

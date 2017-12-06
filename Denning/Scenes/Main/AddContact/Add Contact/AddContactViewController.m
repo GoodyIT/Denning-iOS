@@ -390,7 +390,9 @@
 
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        _updateHanlder(_contactModel);
+        if (!_contactModel && !_updateHanlder) {
+            _updateHanlder(_contactModel);
+        }
     }];
 }
 

@@ -10,8 +10,7 @@
 
 @interface QMBadgeView()
 
-@property (strong, nonatomic) UIColor *badgeTextColor;
-@property (strong, nonatomic) UIColor *badgeBGColor;
+
 @property (strong, nonatomic) UIImageView *bgView;
 @property (strong, nonatomic) UILabel *badge;
 

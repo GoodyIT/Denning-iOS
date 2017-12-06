@@ -576,7 +576,9 @@
 
     // optional to change the default position of the badge
     CGSize size = button.frame.size;
-    [button setBadgeEdgeInsets:UIEdgeInsetsMake(3, 3, 0, 3)];
+    CGSize textSize = [badgeString sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13.0f]}];
+    [button setBadgeEdgeInsets:UIEdgeInsetsMake(size.height / 2 + 18, 0, 0, size.width/2 + textSize.width / 2)];
+    
     [button setBadgeString:badgeString];
     [button setBadgeBackgroundColor:color];
 }
