@@ -111,7 +111,7 @@
 
 - (void) topFilterChanged: (HMSegmentedControl*) control {
     self.selectedPage = [NSNumber numberWithInteger:control.selectedSegmentIndex];
-    _totalPrice = _listOfTotalPrice[control.selectedSegmentIndex];
+    _totalPrice.text = _listOfTotalPrice[control.selectedSegmentIndex];
     [self.tableView reloadData];
 }
 
