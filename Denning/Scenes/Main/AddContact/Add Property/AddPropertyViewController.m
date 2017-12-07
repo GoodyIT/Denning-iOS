@@ -864,6 +864,10 @@ NSMutableDictionary* keyValue;
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if (textField.text.length > 14) {
+        return NO;
+    }
+    
     NSArray* obj = [self calcSectionNumber:textField.tag];
     
     if ([obj[0] integerValue] == 2 && ([obj[1] integerValue] == 6 || [obj[1] integerValue] == 7))

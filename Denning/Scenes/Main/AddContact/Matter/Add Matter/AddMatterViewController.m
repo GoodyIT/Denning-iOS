@@ -983,6 +983,10 @@ NSMutableDictionary* keyValue;
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if (textField.text.length > 14) {
+        return NO;
+    }
+    
     NSInteger section = [[self calcSectionNumber:textField.tag][0] integerValue];
     if (section == IMPORTANT_RM_SECTION) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];

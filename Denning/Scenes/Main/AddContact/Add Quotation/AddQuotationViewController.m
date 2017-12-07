@@ -167,8 +167,12 @@ NSMutableDictionary* keyValue;
     return data;
 }
 - (IBAction)saveQuotaion:(id)sender {
-    if (!_contents[0][1][1]) {
-        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
+//    if (!_contents[0][1][1]) {
+//        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
+//        return;
+//    }
+    if (selectedPresetCode.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the preset." actionSuccess:NO inViewController:self];
         return;
     }
     
@@ -508,7 +512,6 @@ NSMutableDictionary* keyValue;
     }
     
     if (indexPath.section == 1) {
-        cell.floatingTextField.userInteractionEnabled = NO;
         if (indexPath.row == 4) {
             cell.accessoryType = UITableViewCellAccessoryNone;
         } else {
@@ -557,21 +560,24 @@ NSMutableDictionary* keyValue;
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
     if (textField.tag == 5 || textField.tag == 6 || textField.tag == 7 || textField.tag == 8) {
         _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-        return NO;
+        return YES;
     }
-    return YES;
+    return NO;
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if (textField.text.length > 14) {
+        return NO;
+    }
     if (textField.tag == 5 || textField.tag == 6 || textField.tag == 7 || textField.tag == 8) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         
         textField.text = [DIHelpers formatDecimal:text];
-        return YES;
+        return NO;
     }
     
-    return NO;
+    return YES;
 }
 
 #pragma mark - UITableView Datasource

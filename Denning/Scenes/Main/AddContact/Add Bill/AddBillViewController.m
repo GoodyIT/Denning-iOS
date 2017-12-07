@@ -202,19 +202,19 @@ NSMutableDictionary* keyValue;
     return data;
 }
 
-- (NSDictionary*) buildSaveParam {
-    return @{
-             @"fileNo": _contents[0][2][1],
-             @"isRental": isRental,
-             @"issueDate": [DIHelpers todayWithTime],
-             @"issueToName": _contents[0][4][1],
-             
-             };
-}
-
 - (IBAction)saveBill:(id)sender {
+    if (((NSString*)_contents[0][2][1]).length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
+        return;
+    }
+    
+    if (((NSString*)_contents[0][4][1]).length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the bill to." actionSuccess:NO inViewController:self];
+        return;
+    }
+    
     if (selectedPresetCode.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the file." actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please select the preset." actionSuccess:NO inViewController:self];
         return;
     }
     
@@ -407,7 +407,7 @@ NSMutableDictionary* keyValue;
     isLoading = YES;
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:RECEIPT_FROM_TAXINVOICE];
     NSMutableDictionary* data = [@{@"documentNo":_contents[0][0][1]} mutableCopy];
-    [data addEntriesFromDictionary:[self buildSaveParam]];
+    [data addEntriesFromDictionary:[self buildParam]];
     
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
@@ -568,13 +568,17 @@ NSMutableDictionary* keyValue;
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if (textField.text.length > 14) {
+        return NO;
+    }
+    
     string = string.uppercaseString;
     if (textField.tag == 6 || textField.tag == 7 || textField.tag == 8 || textField.tag == 9) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         textField.text = [DIHelpers formatDecimal:text];
-        return YES;
+        return NO;
     }
-    return NO;
+    return YES;
 }
 
 #pragma mark - UITableView Datasource

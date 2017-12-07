@@ -43,7 +43,7 @@
     _titleLabel.text = _titleString;
     _listOfTax = @[_taxModel.Fees, _taxModel.DisbGST, _taxModel.Disb, _taxModel.GST];
     _listOfTotalPrice = @[_taxModel.decFees, _taxModel.decDisbGST, _taxModel.decDisb, _taxModel.decGST];
-    _totalPrice = _listOfTotalPrice[0];
+    _totalPrice.text = _listOfTotalPrice[0];
 
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;

@@ -436,6 +436,9 @@ enum PAYMENT_MODE_ROWS {
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if (textField.text.length > 14) {
+        return NO;
+    }
     if (textField.tag == 4 || textField.tag == 14) {
         NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
         
