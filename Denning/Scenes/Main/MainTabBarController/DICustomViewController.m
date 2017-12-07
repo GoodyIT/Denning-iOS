@@ -37,16 +37,7 @@
 }
 
 - (void) hideTabBar {
-    [self setTabBarVisible:NO animated:YES completion:^(BOOL finished) {
-    }];
-}
-
-- (void) showTabBar {
-    @weakify(self);
-    [self setTabBarVisible:YES animated:YES completion:^(BOOL finished) {
-        @strongify(self)
-        [self performSelector:@selector(hideTabBar) withObject:nil afterDelay:2.0];
-    }];
+    [self setTabBarVisible:NO animated:YES completion:nil];
 }
 
 //Getter to know the current state

@@ -58,6 +58,7 @@ NSMutableDictionary* keyValue;
 - (void) prepareUI {
     issueToFirstCode = @"";
     selectedPresetCode = selectedMatterCode = @"";
+    isRental = @"0";
     
     self.keyValue = [@{
                        @(0): @(1), @(1):@(0)
@@ -386,7 +387,7 @@ NSMutableDictionary* keyValue;
             [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
         }
         
-        return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
+        return [[NSURL URLWithString:newPath] URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
         if (filePath != nil) {

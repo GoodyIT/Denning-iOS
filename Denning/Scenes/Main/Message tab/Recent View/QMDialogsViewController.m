@@ -140,7 +140,7 @@ UIGestureRecognizerDelegate
         self.tableView.contentOffset = offset;
     }
     
-    
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self.tableView reloadData];
 }
 
@@ -168,6 +168,8 @@ UIGestureRecognizerDelegate
         }
         
         [self updateDataAndEndRefreshing];
+        
+        [self updateDialogSource];
         
         return [BFTask cancelledTask];
         
@@ -381,6 +383,7 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)chatService:(QMChatService *)__unused chatService
 didAddChatDialogsToMemoryStorage:(NSArray *)__unused chatDialogs {
  
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self updateDialogSource];
     [self.tableView reloadData];
 }
@@ -390,12 +393,15 @@ didAddChatDialogToMemoryStorage:(QBChatDialog *)__unused chatDialog {
     
     [self updateDialogSource];
     [self.tableView reloadData];
+    
+    [(MessageViewController*)self.parentViewController updateBadge];
 }
 
 - (void)chatService:(QMChatService *)__unused chatService
 didAddMessagesToMemoryStorage:(NSArray<QBChatMessage *> *)__unused messages
         forDialogID:(NSString *)__unused dialogID {
     
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self.tableView reloadData];
 }
 
@@ -403,6 +409,7 @@ didAddMessagesToMemoryStorage:(NSArray<QBChatMessage *> *)__unused messages
 didAddMessageToMemoryStorage:(QBChatMessage *)__unused message
         forDialogID:(NSString *)__unused dialogID {
     
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self.tableView reloadData];
 }
 
@@ -424,6 +431,7 @@ didDeleteChatDialogWithIDFromMemoryStorage:(NSString *)__unused chatDialogID {
         
     }
     
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self.tableView reloadData];
 }
 
@@ -436,16 +444,19 @@ didReceiveNotificationMessage:(QBChatMessage *)message
         [QMCore.instance.usersService getUsersWithIDs:message.addedOccupantsIDs];
     }
     
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self.tableView reloadData];
 }
 
 - (void)chatService:(QMChatService *)__unused chatService didUpdateChatDialogInMemoryStorage:(QBChatDialog *)__unused chatDialog {
     
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self.tableView reloadData];
 }
 
 - (void)chatService:(QMChatService *)__unused chatService didUpdateChatDialogsInMemoryStorage:(NSArray<QBChatDialog *> *)__unused dialogs {
     
+    [(MessageViewController*)self.parentViewController updateBadge];
     [self.tableView reloadData];
 }
 

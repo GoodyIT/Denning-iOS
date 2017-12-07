@@ -25,6 +25,7 @@ static const NSInteger kQMUnauthorizedErrorCode = -1011;
 QMChatConnectionDelegate,
 QMPushNotificationManagerDelegate>
 @property (nonatomic, strong) NSArray *menuItems;
+@property (nonatomic, strong) id badgeObserver;
 
 @end
 
@@ -34,6 +35,7 @@ QMPushNotificationManagerDelegate>
     [super viewDidLoad];
     
     self.delegate = self;
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge) name:@"updateBadge" object:nil];
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -41,6 +43,7 @@ QMPushNotificationManagerDelegate>
 {
     [super viewWillAppear:animated];
     [[QMCore instance].chatService addDelegate:self];
+    [QMCore.instance.chatService addDelegate:self];
     [self performAutoLoginAndFetchData];
 }
 
@@ -48,6 +51,7 @@ QMPushNotificationManagerDelegate>
 {
     [super viewWillDisappear:animated];
     [[QMCore instance].chatService removeDelegate:self];
+    [QMCore.instance.chatService removeDelegate:self];
 }
 
 - (void)performAutoLoginAndFetchData {
@@ -220,6 +224,36 @@ shouldSelectViewController:(UIViewController *)viewController
     }];
 }
 
+#pragma mark - Chat connect
+- (void)chatServiceChatDidConnect:(QMChatService *)__unused chatService {
+    [QMTasks taskFetchAllData];
+    [QMTasks taskUpdateContacts];
+}
+
+- (void)chatServiceChatDidReconnect:(QMChatService *)__unused chatService {
+    
+    [QMTasks taskFetchAllData];
+    [QMTasks taskUpdateContacts];
+}
+
+- (void)chatService:(QMChatService *)__unused chatService
+didAddMessagesToMemoryStorage:(NSArray<QBChatMessage *> *)__unused messages
+        forDialogID:(NSString *)__unused dialogID {
+    
+    [self updateBadge];
+}
+
+- (void)chatService:(QMChatService *)__unused chatService
+didAddChatDialogsToMemoryStorage:(NSArray *)__unused chatDialogs {
+    
+    [self updateBadge];
+}
+
+- (void)chatService:(QMChatService *)__unused chatService
+didAddChatDialogToMemoryStorage:(QBChatDialog *)__unused chatDialog {
+    [self updateBadge];
+}
+
 #pragma mark - Notification
 
 - (void)pushNotificationManager:(QMPushNotificationManager *)__unused pushNotificationManager
@@ -292,6 +326,8 @@ shouldSelectViewController:(UIViewController *)viewController
 didAddMessageToMemoryStorage:(QBChatMessage *)message
         forDialogID:(NSString *)dialogID {
     
+    [self updateBadge];
+    
     if (message.messageType == QMMessageTypeContactRequest) {
         
         QBChatDialog *chatDialog = [chatService.dialogsMemoryStorage chatDialogWithID:dialogID];
@@ -307,5 +343,21 @@ didAddMessageToMemoryStorage:(QBChatMessage *)message
         
         [self showNotificationForMessage:message];
     }
+}
+
+// MARK: - Update badge for tabbar item
+
+- (void) updateBadge {
+    NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
+    
+    if (unreadDialogs.count == 0) {
+        [DataManager sharedManager].badgeValue = @"";
+    } else {
+        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", unreadDialogs.count];
+    }
+    
+    [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
+    
 }
 @end

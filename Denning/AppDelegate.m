@@ -165,7 +165,7 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 //}
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    application.applicationIconBadgeNumber = 0;
+    application.applicationIconBadgeNumber = [[DataManager sharedManager].badgeValue integerValue];
     [[QMCore instance].chatManager disconnectFromChatIfNeeded];
 }
 

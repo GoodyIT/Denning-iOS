@@ -30,11 +30,11 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 @property (weak, nonatomic) IBOutlet UIView *myPageViwer;
 @property (strong, nonatomic) NSArray* viewControllers;
 @property (strong, nonatomic) NSArray* viewControllerIdentifiers;
-@property (weak, nonatomic) IBOutlet UIButton *chatRecentBtn;
+@property (weak, nonatomic) IBOutlet MIBadgeButton *chatRecentBtn;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteBtn;
 @property (weak, nonatomic) IBOutlet UIButton *groupChatBtn;
 @property (weak, nonatomic) IBOutlet UIButton *staffBtn;
-@property (weak, nonatomic) IBOutlet UIButton *clientBtn;
+
 
 @end
 
@@ -65,6 +65,24 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     self.tabBarController.navigationItem.rightBarButtonItem = nil;
  
     [self hideTabBar];
+}
+
+- (void) updateBadge {
+    NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
+    
+    if (unreadDialogs.count == 0) {
+        [DataManager sharedManager].badgeValue = @"";
+    } else {
+        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", unreadDialogs.count];
+    }
+    
+    _chatRecentBtn.badgeString = [DataManager sharedManager].badgeValue;
+    _chatRecentBtn.badgeTextColor = [UIColor whiteColor];
+    _chatRecentBtn.badgeBackgroundColor = [UIColor redColor];
+    CGSize size = _chatRecentBtn.frame.size;
+    [_chatRecentBtn setBadgeEdgeInsets:UIEdgeInsetsMake(20, 0, 0, size.width/2 - 18)];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateBadge" object:nil];
 }
 
 - (void) changeTitle {
@@ -143,15 +161,6 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     selectedIndex = DIChatStaffTab;
     [self setDefaultImageForButtons];
     [self.staffBtn setImage:[UIImage imageNamed:@"icon_contact_selected"] forState:UIControlStateNormal];
-}
-
-- (IBAction)clientTabClicked:(id)sender {
-    if (selectedIndex == DIChatClientTab) return;
-    [self addView:self.viewControllers[DIChatClientTab]];
-    [self removeView:self.viewControllers[selectedIndex]];
-    selectedIndex = DIChatClientTab;
-    [self setDefaultImageForButtons];
-    [self.clientBtn setImage:[UIImage imageNamed:@"icon_client_selected"] forState:UIControlStateNormal];
 }
 
 - (void) addView: (UIViewController*) viewController

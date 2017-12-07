@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomDocumentViewController : UIViewController
+@interface CustomDocumentViewController : UIViewController< UIDocumentInteractionControllerDelegate>
 
 - (void) viewDocument:(NSString*) Url;
 

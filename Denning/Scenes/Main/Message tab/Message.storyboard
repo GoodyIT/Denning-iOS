@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3AG-Pj-wD8">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LlB-kf-Get">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,7 +16,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="QMDialogsViewController" automaticallyAdjustsScrollViewInsets="NO" id="gBS-aa-eGi" customClass="QMDialogsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="76" sectionHeaderHeight="28" sectionFooterHeight="28" id="SsZ-hQ-APG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -25,7 +25,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="420"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ayq-lq-4Gs" id="AJy-aw-wv9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="419.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="419.66666666666669"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oY7-W3-4Ed">
@@ -40,7 +40,7 @@ out here.</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="m_empty_dialogs" translatesAutoresizingMaskIntoConstraints="NO" id="al4-OQ-NYZ">
-                                            <rect key="frame" x="99" y="155" width="177" height="262.5"/>
+                                            <rect key="frame" x="99" y="154.99999999999997" width="177" height="262.33333333333326"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="178" id="QZM-Z4-eWB"/>
                                                 <constraint firstAttribute="width" secondItem="al4-OQ-NYZ" secondAttribute="height" multiplier="29:43" id="XUg-9x-aP7"/>
@@ -79,7 +79,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WJx-tG-Bt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2562" y="-8472"/>
+            <point key="canvasLocation" x="-2350.5" y="-8472.5"/>
         </scene>
         <!--Message View Controller-->
         <scene sceneID="bR6-Sa-Q3p">
@@ -90,13 +90,13 @@ out here.</string>
                         <viewControllerLayoutGuide type="bottom" id="KjL-g5-nvO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dwJ-lI-E6y">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="4cW-an-Q3r" userLabel="ChatOptionView">
-                                <rect key="frame" x="16" y="20" width="343" height="44"/>
+                                <rect key="frame" x="16" y="44" width="343" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lf8-LT-V58" userLabel="Recent">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lf8-LT-V58" userLabel="Recent" customClass="MIBadgeButton">
                                         <rect key="frame" x="0.0" y="0.0" width="45" height="44"/>
                                         <inset key="titleEdgeInsets" minX="-10" minY="20" maxX="5" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="15" minY="-10" maxX="0.0" maxY="0.0"/>
@@ -123,7 +123,7 @@ out here.</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QY5-qe-sZV" userLabel="Favorite">
-                                        <rect key="frame" x="89.5" y="0.0" width="59" height="44"/>
+                                        <rect key="frame" x="90" y="0.0" width="59" height="44"/>
                                         <color key="tintColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="titleEdgeInsets" minX="-15" minY="20" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="20" minY="-10" maxX="0.0" maxY="0.0"/>
@@ -145,7 +145,7 @@ out here.</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zxe-wM-uTY" userLabel="Group chat">
-                                        <rect key="frame" x="193.5" y="0.0" width="54" height="44"/>
+                                        <rect key="frame" x="194" y="0.0" width="53" height="44"/>
                                         <inset key="titleEdgeInsets" minX="-20" minY="20" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="15" minY="-10" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="icon_group.png">
@@ -191,7 +191,7 @@ out here.</string>
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k2D-zg-hGn">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="724"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -202,19 +202,21 @@ out here.</string>
                             <constraint firstItem="4cW-an-Q3r" firstAttribute="top" secondItem="DNp-Bt-HN9" secondAttribute="bottom" id="EGm-8P-LQD"/>
                             <constraint firstItem="k2D-zg-hGn" firstAttribute="leading" secondItem="dwJ-lI-E6y" secondAttribute="leading" id="FZU-be-9WU"/>
                             <constraint firstItem="4cW-an-Q3r" firstAttribute="leading" secondItem="dwJ-lI-E6y" secondAttribute="leadingMargin" id="U4c-6H-0Bd"/>
-                            <constraint firstItem="KjL-g5-nvO" firstAttribute="top" secondItem="k2D-zg-hGn" secondAttribute="bottom" id="s2f-Mj-p5Q"/>
+                            <constraint firstAttribute="bottom" secondItem="k2D-zg-hGn" secondAttribute="bottom" id="Wfu-7d-LiO"/>
                             <constraint firstItem="k2D-zg-hGn" firstAttribute="top" secondItem="4cW-an-Q3r" secondAttribute="bottom" id="sLh-SQ-4O7"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="B05-Hp-CmX">
                         <nil key="title"/>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="chatOptionView" destination="4cW-an-Q3r" id="9hi-xa-6UH"/>
-                        <outlet property="chatRecentBtn" destination="Lf8-LT-V58" id="erU-oe-duK"/>
+                        <outlet property="chatRecentBtn" destination="Lf8-LT-V58" id="ql3-Bj-2dd"/>
                         <outlet property="favoriteBtn" destination="QY5-qe-sZV" id="JJ8-rj-kmk"/>
                         <outlet property="groupChatBtn" destination="Zxe-wM-uTY" id="SRr-vZ-ucH"/>
                         <outlet property="myPageViwer" destination="k2D-zg-hGn" id="Gi9-Th-wY0"/>
@@ -224,7 +226,7 @@ out here.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BVM-Su-Q6z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3626.4000000000001" y="-7946.1769115442285"/>
+            <point key="canvasLocation" x="-3415.9420289855075" y="-7946.739130434783"/>
         </scene>
         <!--ChatVC-->
         <scene sceneID="2Zs-wt-LvJ">
@@ -235,7 +237,7 @@ out here.</string>
                         <viewControllerLayoutGuide type="bottom" id="aRW-SG-cyv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pbF-EE-78D">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -283,14 +285,14 @@ out here.</string>
                     </connections>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-834" y="-7934"/>
+            <point key="canvasLocation" x="-622.5" y="-7934.5"/>
         </scene>
         <!--Document List-->
         <scene sceneID="b6T-QA-UDj">
             <objects>
                 <tableViewController id="Qvc-K1-hB5" customClass="DIFileBrowser" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="p6s-98-h2w">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -298,7 +300,7 @@ out here.</string>
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qf7-RQ-60e" id="GkH-yn-ZB8">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -312,7 +314,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VIu-s9-eGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="257" y="-7935"/>
+            <point key="canvasLocation" x="468.5" y="-7935.5"/>
         </scene>
         <!--QMGroupInfoViewController-->
         <scene sceneID="iST-ep-V0d">
@@ -328,7 +330,7 @@ out here.</string>
                 <navigationController storyboardIdentifier="ChatNavigation" automaticallyAdjustsScrollViewInsets="NO" id="t5g-eL-0FL" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Le5-X1-1ff" customClass="QMNavigationBar">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -343,14 +345,14 @@ out here.</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJH-aZ-1qy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1720" y="-7935"/>
+            <point key="canvasLocation" x="-1508.5" y="-7935.5"/>
         </scene>
         <!--Favorite View Controller-->
         <scene sceneID="zvx-HP-U4G">
             <objects>
                 <tableViewController storyboardIdentifier="FavoriteViewController" id="c8q-Zx-Hrg" customClass="FavoriteViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="dUz-pF-r0F">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
@@ -373,7 +375,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rjD-oe-OaN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2554" y="-7762"/>
+            <point key="canvasLocation" x="-2342.5" y="-7762.5"/>
         </scene>
         <!--QMUserInfoNavigation-->
         <scene sceneID="q75-Zb-x9u">
@@ -388,7 +390,7 @@ out here.</string>
             <objects>
                 <tableViewController storyboardIdentifier="DenningContactViewController" id="Yoh-6d-tzT" customClass="DenningContactViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9MF-Vf-kYx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
@@ -430,7 +432,7 @@ out here.</string>
             <objects>
                 <tableViewController storyboardIdentifier="ClientContactViewController" id="1fS-6S-kRG" customClass="ClientContactViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Vin-Pa-jFI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
@@ -470,18 +472,18 @@ out here.</string>
                         <viewControllerLayoutGuide type="bottom" id="zNt-BA-G6i"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="BKZ-9G-PHs">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wIZ-5M-bHe" customClass="QMTagFieldView">
-                                <rect key="frame" x="-4" y="64" width="383" height="44"/>
+                                <rect key="frame" x="-4" y="88" width="383" height="44"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="gke-QW-SEy"/>
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nc6-UK-fG1">
-                                <rect key="frame" x="-4" y="108" width="383" height="559"/>
+                                <rect key="frame" x="-4" y="132" width="383" height="646"/>
                                 <connections>
                                     <segue destination="lQ7-BA-1UQ" kind="embed" identifier="SceneSegueNewMessageContactList" id="i4x-GF-jKs"/>
                                 </connections>
@@ -523,7 +525,7 @@ out here.</string>
             <objects>
                 <tableViewController id="lQ7-BA-1UQ" customClass="QMMessageContactListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="zwl-sD-EjC">
-                        <rect key="frame" x="0.0" y="0.0" width="383" height="559"/>
+                        <rect key="frame" x="0.0" y="0.0" width="383" height="646"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <connections>
@@ -542,7 +544,7 @@ out here.</string>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eGm-Je-XuH" customClass="QMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DxX-ze-oWW" customClass="QMNavigationBar">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -560,17 +562,41 @@ out here.</string>
             </objects>
             <point key="canvasLocation" x="-2375.1999999999998" y="-9233.4332833583212"/>
         </scene>
+        <!--Chats-->
+        <scene sceneID="u32-F6-Jp4">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Zh-13-JNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="LlB-kf-Get" customClass="QMNavigationController" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Chats" image="icon_chat.png" id="pFd-t6-ZV2"/>
+                    <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="Wgb-cG-6el" customClass="QMNavigationBar">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="3AG-Pj-wD8" kind="relationship" relationship="rootViewController" id="Hu8-Ym-RXS"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-4274" y="-7958"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Back.png" width="18" height="18"/>
+        <image name="icon_chat.png" width="19" height="20"/>
         <image name="icon_contact.png" width="13" height="17"/>
         <image name="icon_contact_selected.png" width="13" height="17"/>
         <image name="icon_favorite.png" width="19" height="18"/>
         <image name="icon_favorite_selected.png" width="19" height="18"/>
-        <image name="icon_group.png" width="23" height="17"/>
-        <image name="icon_group_selected.png" width="23" height="17"/>
-        <image name="icon_message.png" width="16" height="17"/>
-        <image name="icon_message_selected.png" width="16" height="17"/>
+        <image name="icon_group.png" width="22" height="17"/>
+        <image name="icon_group_selected.png" width="22" height="17"/>
+        <image name="icon_message.png" width="16" height="16"/>
+        <image name="icon_message_selected.png" width="16" height="16"/>
         <image name="m_empty_dialogs" width="180" height="265"/>
     </resources>
     <inferredMetricsTieBreakers>

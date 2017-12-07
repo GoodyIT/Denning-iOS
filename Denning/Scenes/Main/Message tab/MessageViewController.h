@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIStackView *chatOptionView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageViewerTopConstraint;
 
+- (void) updateBadge;
 
 @end

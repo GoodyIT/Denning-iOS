@@ -519,7 +519,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
             [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
         }
         
-        return [documentsDirectory URLByAppendingPathComponent:[response suggestedFilename]];
+        return [[NSURL URLWithString:newPath] URLByAppendingPathComponent:[response suggestedFilename]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
         completion(filePath, error);

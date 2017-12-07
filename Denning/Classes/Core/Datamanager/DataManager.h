@@ -32,6 +32,8 @@
 
 @property (strong, nonatomic) NSString* isFirstLoading;
 
+@property (strong, nonatomic) NSString* badgeValue;
+
 + (DataManager *)sharedManager;
 
 - (void) setUserPassword: (NSString*) password;
