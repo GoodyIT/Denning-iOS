@@ -353,11 +353,14 @@ didAddMessageToMemoryStorage:(QBChatMessage *)message
     if (unreadDialogs.count == 0) {
         [DataManager sharedManager].badgeValue = @"";
     } else {
-        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", unreadDialogs.count];
+        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
     }
     
     [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
-    self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
-    
+    if ([[DataManager sharedManager].badgeValue isEqualToString:@"0"]) {
+        self.childViewControllers.lastObject.tabBarItem.badgeValue = nil;
+    } else {
+        self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
+    }
 }
 @end

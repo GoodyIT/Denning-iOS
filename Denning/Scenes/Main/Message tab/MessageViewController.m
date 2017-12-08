@@ -73,7 +73,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     if (unreadDialogs.count == 0) {
         [DataManager sharedManager].badgeValue = @"";
     } else {
-        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", unreadDialogs.count];
+        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
     }
     
     _chatRecentBtn.badgeString = [DataManager sharedManager].badgeValue;
