@@ -132,38 +132,38 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 }
 
 - (IBAction)didTapShare:(id)sender {
-    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
-    NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
-    NSMutableArray* urlArray = [NSMutableArray new];
-    for (NSIndexPath *selectionIndex in selectedRows)
-    {
-        if (selectionIndex.section == 0) {
-            continue;
-        }
-        if (selectionIndex.section == 1) {
-            FileModel* file = self.documentModel.documents[selectionIndex.row];
-            [urlArray addObject:[self getFileURL:file]];
-        } else {
-            FolderModel* model = self.documentModel.folders[selectionIndex.section-2];
-            FileModel* file = model.documents[selectionIndex.row];
-            [urlArray addObject:[self getFileURL:file]];
-        }
-    }
-    
-    NSMutableArray* localURLArray = [NSMutableArray new];
-    for (NSURL* url in urlArray) {
-        // Add a task to the group
-        [self downloadDocumentForURL:url withCompletion:^(NSURL *filePath, NSError *error) {
-            NSLog(@"%@ -----", url);
-            [localURLArray addObject:filePath];
-            if (localURLArray.count == urlArray.count) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self shareDocument:localURLArray];
-                });
-            }
-        }];
-    }
-    
+//    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+//    NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
+//    NSMutableArray* urlArray = [NSMutableArray new];
+//    for (NSIndexPath *selectionIndex in selectedRows)
+//    {
+//        if (selectionIndex.section == 0) {
+//            continue;
+//        }
+//        if (selectionIndex.section == 1) {
+//            FileModel* file = self.documentModel.documents[selectionIndex.row];
+//            [urlArray addObject:[self getFileURL:file]];
+//        } else {
+//            FolderModel* model = self.documentModel.folders[selectionIndex.section-2];
+//            FileModel* file = model.documents[selectionIndex.row];
+//            [urlArray addObject:[self getFileURL:file]];
+//        }
+//    }
+//
+//    NSMutableArray* localURLArray = [NSMutableArray new];
+//    for (NSURL* url in urlArray) {
+//        // Add a task to the group
+//        [self downloadDocumentForURL:url withCompletion:^(NSURL *filePath, NSError *error) {
+//            NSLog(@"%@ -----", url);
+//            [localURLArray addObject:filePath];
+//            if (localURLArray.count == urlArray.count) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [self shareDocument:localURLArray];
+//                });
+//            }
+//        }];
+//    }
+//
     //    AppDelegate *theAppDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 //    [theAppDelegate.demoDownloadStore setupDownloadItems:urlArray];
 //    for (DemoDownloadItem *aDownloadItem in [theAppDelegate demoDownloadStore].downloadItemsArray) {
@@ -476,9 +476,6 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         cell.chatLabel.hidden = YES;
         cell.accessoryType = UITableViewCellAccessoryNone;
         
-//        if ([_fromDashboard isEqualToString: @"from dashboard"]) {
-//            cell.hidden = YES;
-//        }
         return cell;
     } else if (indexPath.section == 1) {
         DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
@@ -500,33 +497,6 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     return cell;
 }
 
-- (void) downloadDocumentForURL:(NSURL*)url withCompletion:(void(^)(NSURL *filePath, NSError *error)) completion{
-    [SVProgressHUD show];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:email  forHTTPHeaderField:@"webuser-id"];
-    [request setValue:sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                           inDomain:NSUserDomainMask
-                                                                  appropriateForURL:nil
-                                                                             create:NO error:nil];
-        
-        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        
-        return [[NSURL URLWithString:newPath] URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        [SVProgressHUD dismiss];
-        completion(filePath, error);
-    }];
-    [downloadTask resume];
-}
-
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.isEditing) {
@@ -544,30 +514,13 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     }
     NSURL *url = [self getFileURL:file];
     
-    [self downloadDocumentForURL:url withCompletion:^(NSURL *filePath, NSError *error) {
+    [self viewDocument:url withCompletion:^(NSURL *filePath) {
         selectedDocument = filePath;
-        [self displayDocument:filePath];
     }];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)displayDocument:(NSURL*)document {
-    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
-    documentInteractionController.delegate = self;
-    [documentInteractionController presentPreviewAnimated:YES];
-}
-
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
-{
-    return self;
-}
-
-- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
-{
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
-}
 
 #pragma mark - Navigation
 

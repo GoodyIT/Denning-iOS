@@ -59,6 +59,7 @@
 		790DD4971ECBBD38009D5634 /* ProjectHousingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD4961ECBBD38009D5634 /* ProjectHousingModel.m */; };
 		790DD49B1ECBC05E009D5634 /* PropertyContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */; };
 		790EA88A1FD887AF00894AC9 /* CodeTransactionAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */; };
+		7912823C1FDACD7F006E93E2 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912823B1FDACD7F006E93E2 /* BaseTableViewController.m */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -846,7 +847,6 @@
 		960D91AB1F066B3900835B82 /* StaffHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 960D91A91F066B3900835B82 /* StaffHeaderCell.m */; };
 		960D91AC1F066B3900835B82 /* StaffHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 960D91AA1F066B3900835B82 /* StaffHeaderCell.xib */; };
 		960F03031F28E43D00B25BBC /* FeeTransferDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 960F03021F28E43D00B25BBC /* FeeTransferDetail.m */; };
-		960F03061F2908BE00B25BBC /* CustomDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 960F03051F2908BE00B25BBC /* CustomDocumentViewController.m */; };
 		960F030A1F29512900B25BBC /* ClientFileFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 960F03091F29512900B25BBC /* ClientFileFolder.m */; };
 		960F030E1F2960BC00B25BBC /* CustomFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 960F030D1F2960BC00B25BBC /* CustomFileUpload.m */; };
 		961D46361F22CF0900B8714D /* splash_logo_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 961D46331F22CF0900B8714D /* splash_logo_white.png */; };
@@ -1240,6 +1240,8 @@
 		790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyContactListViewController.m; sourceTree = "<group>"; };
 		790EA8881FD887AF00894AC9 /* CodeTransactionAutoComplete.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeTransactionAutoComplete.h; sourceTree = "<group>"; };
 		790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeTransactionAutoComplete.m; sourceTree = "<group>"; };
+		7912823A1FDACD7F006E93E2 /* BaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
+		7912823B1FDACD7F006E93E2 /* BaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -2360,8 +2362,6 @@
 		960D91AA1F066B3900835B82 /* StaffHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StaffHeaderCell.xib; sourceTree = "<group>"; };
 		960F03011F28E43D00B25BBC /* FeeTransferDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeeTransferDetail.h; sourceTree = "<group>"; };
 		960F03021F28E43D00B25BBC /* FeeTransferDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeeTransferDetail.m; sourceTree = "<group>"; };
-		960F03041F2908BE00B25BBC /* CustomDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomDocumentViewController.h; sourceTree = "<group>"; };
-		960F03051F2908BE00B25BBC /* CustomDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomDocumentViewController.m; sourceTree = "<group>"; };
 		960F03081F29512900B25BBC /* ClientFileFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientFileFolder.h; sourceTree = "<group>"; };
 		960F03091F29512900B25BBC /* ClientFileFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientFileFolder.m; sourceTree = "<group>"; };
 		960F030C1F2960BC00B25BBC /* CustomFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomFileUpload.h; sourceTree = "<group>"; };
@@ -5247,6 +5247,8 @@
 				79FBDEBF1E30421A00448FE3 /* CustomTaBBarController.m */,
 				79FBDEC01E30421A00448FE3 /* CustomViewController.h */,
 				79FBDEC11E30421A00448FE3 /* CustomViewController.m */,
+				7912823A1FDACD7F006E93E2 /* BaseTableViewController.h */,
+				7912823B1FDACD7F006E93E2 /* BaseTableViewController.m */,
 			);
 			path = BaseControllers;
 			sourceTree = "<group>";
@@ -7052,8 +7054,6 @@
 				79FD2D011E428526005978E3 /* MainTabBarController.m */,
 				7931B4E71EA900ED0090BDE0 /* DICustomViewController.h */,
 				7931B4E81EA900ED0090BDE0 /* DICustomViewController.m */,
-				960F03041F2908BE00B25BBC /* CustomDocumentViewController.h */,
-				960F03051F2908BE00B25BBC /* CustomDocumentViewController.m */,
 			);
 			path = MainTabBarController;
 			sourceTree = "<group>";
@@ -9465,7 +9465,6 @@
 				791B500A1FD105BC003C30EC /* ViewQuotation.m in Sources */,
 				79FBE07E1E304EAA00448FE3 /* QMLinkViewController.m in Sources */,
 				79161CE51FC87F920025BCB8 /* BankBranchAutoComplete.m in Sources */,
-				960F03061F2908BE00B25BBC /* CustomDocumentViewController.m in Sources */,
 				79FBDFD01E30421A00448FE3 /* QMMessageNotification.m in Sources */,
 				9600178C1FB0D373001EAB51 /* AttendanceInfo.m in Sources */,
 				79161CC91FC7B5730025BCB8 /* TaxBillContactViewController.m in Sources */,
@@ -9910,6 +9909,7 @@
 				960017761FB0CD2A001EAB51 /* AttendanceItemCell.m in Sources */,
 				79EC0E291E89E45D00320A28 /* DocumentModel.m in Sources */,
 				79FBE10A1E304F5000448FE3 /* QMGroupInfoViewController.m in Sources */,
+				7912823C1FDACD7F006E93E2 /* BaseTableViewController.m in Sources */,
 				79FBDFB61E30421A00448FE3 /* QMPushNotificationManager.m in Sources */,
 				96D176791F1FE1D4008734DA /* FileNote.m in Sources */,
 				79FBDE771E302F6600448FE3 /* AppDelegate.m in Sources */,

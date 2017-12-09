@@ -10,7 +10,7 @@
 
 typedef void (^UpdateTaxInvoiceHandler)(TaxInvoiceModel* model);
 
-@interface TaxInvoice : UIViewController <UIDocumentInteractionControllerDelegate>
+@interface TaxInvoice : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

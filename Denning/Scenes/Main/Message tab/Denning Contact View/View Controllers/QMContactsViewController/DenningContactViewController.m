@@ -208,11 +208,6 @@ SWTableViewCellDelegate
     return 40;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 10;
-}
-
 #pragma MARK - UITableView Delegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     

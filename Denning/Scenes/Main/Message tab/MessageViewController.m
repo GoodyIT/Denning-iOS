@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
     
     if (unreadDialogs.count == 0) {
-        [DataManager sharedManager].badgeValue = @"";
+        [DataManager sharedManager].badgeValue = nil;
     } else {
         [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
     }

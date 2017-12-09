@@ -19,7 +19,7 @@
 #import "TaxBillContactViewController.h"
 #import "AddReceiptViewController.h"
 
-@interface AddBillViewController ()<UIDocumentInteractionControllerDelegate, UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
+@interface AddBillViewController ()< UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
 {
     NSString *titleOfList;
     NSString* nameOfField;
@@ -65,8 +65,8 @@ NSMutableDictionary* keyValue;
                        } mutableCopy];
     
     NSArray* temp = @[
-                      @[@[@"Convert Quotation", @""], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", @""], @[@"Matter", @""], @[@"Bill to", @""], @[@"Preset Code", @""], @[@"Price", @""], @[@"Loan", @""], @[@"Month", @""], @[@"Rental", @""]],
-                      @[@[@"Professional Fees", @""], @[@"Disb. with GST", @""], @[@"Disbursements", @""], @[@"GST", @""], @[@"Total.", @""]
+                      @[@[@"Convert Quotation", @""], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", @""], @[@"Matter", @""], @[@"Bill to", @""], @[@"Preset Code", @""], @[@"Price", @""], @[@"Loan", @""], @[@"Month", @""], @[@"Rental", @""], @[@"Calculate", @""]],
+                      @[@[@"Professional Fees", @""], @[@"Disb. with GST", @""], @[@"Disbursements", @""], @[@"GST", @""], @[@"Total.", @""], @[@"Save & View & Issue Receipt", @""]
                         ],
                       ];
     _contents = [temp mutableCopy];
@@ -78,7 +78,7 @@ NSMutableDictionary* keyValue;
         _taxModel = _model.analysis;
         NSArray* temp = @[
                           @[@[@"Convert Quotation", _model.relatedDocumentNo], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", _model.fileNo], @[@"Matter", _model.matter.matterCode], @[@"Bill to", _model.issueToName], @[@"Preset Code", _model.presetCode.billCode], @[@"Price", _model.spaPrice], @[@"Loan", _model.spaLoan], @[@"Month", _model.rentalMonth], @[@"Rental", _model.rentalPrice]],
-                          @[@[@"Professional Fees", _model.analysis.decFees], @[@"Disb. with GST", _model.analysis.decDisbGST], @[@"Disbursements", _model.analysis.decDisb], @[@"GST", _model.analysis.decGST], @[@"Total.", _model.analysis.decTotal]
+                          @[@[@"Professional Fees", _model.analysis.decFees], @[@"Disb. with GST", _model.analysis.decDisbGST], @[@"Disbursements", _model.analysis.decDisb], @[@"GST", _model.analysis.decGST], @[@"Total.", _model.analysis.decTotal], @[@"Save & View & Issue Receipt", @""]
                             ],
                           ];
         _contents = [temp mutableCopy];
@@ -265,7 +265,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.contents[section] count] + 1;
+    return [self.contents[section] count];
 }
 
 - (void) updateWholeData: (NSDictionary*) result {
@@ -307,28 +307,9 @@ NSMutableDictionary* keyValue;
     return value;
 }
 
-
-- (void)displayDocument:(NSURL*)document {
-    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
-    documentInteractionController.delegate = self;
-    [documentInteractionController presentPreviewAnimated:YES];
-}
-
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
-{
-    return self;
-}
-
-- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
-{
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
-}
-
-
 - (void) calcTax {
     if (selectedPresetCode.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select file no" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please select preset" actionSuccess:NO inViewController:self];
         return;
     }
     NSDictionary* data = @{
@@ -364,38 +345,18 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) viewTaxInvoice {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, REPORT_VIEWER_PDF_TAXINVOICE_URL, _contents[0][0][1]];
+    if (!isSaved) {
+        [QMAlert showAlertWithMessage:@"Please save your quotaion first to view" actionSuccess:NO inViewController:self];
+        
+        return;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, REPORT_VIEWER_PDF_TAXINVOICE_URL, _contents[0][1][1]];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
-    [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    
-    [SVProgressHUD show];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                           inDomain:NSUserDomainMask
-                                                                  appropriateForURL:nil
-                                                                             create:NO error:nil];
-        
-        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        
-        return [[NSURL URLWithString:newPath] URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        [SVProgressHUD dismiss];
-        if (filePath != nil) {
-            selectedDocument = filePath;
-            [self displayDocument:filePath];
-        }
+    [self viewDocument:url withCompletion:^(NSURL *filePath) {
+         selectedDocument = filePath;
     }];
-    [downloadTask resume];
 }
 
 - (void) gotoReceipt {
@@ -431,7 +392,7 @@ NSMutableDictionary* keyValue;
     
     if (indexPath.section == 0 && indexPath.row == 10) {
         AddLastOneButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastOneButtonCell cellIdentifier] forIndexPath:indexPath];
-        [cell.calculateBtn setTitle:@"Issue Receipt" forState:UIControlStateNormal];
+        [cell.calculateBtn setTitle: _contents[0][10][0] forState:UIControlStateNormal];
         cell.calculateHandler = ^{
             [self calcTax];
         };
@@ -450,10 +411,11 @@ NSMutableDictionary* keyValue;
         cell.saveHandler = ^{
             [self saveBill:nil];
         };
-        cell.convertHandler = ^{
+        cell.viewHandler = ^{
             [self viewTaxInvoice];
         };
         
+        [cell.lastBtn setTitle:@"Issue Receipt" forState:UIControlStateNormal];
         cell.convertHandler = ^{
             [self gotoReceipt];
         };

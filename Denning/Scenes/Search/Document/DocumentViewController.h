@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DocumentViewController : UITableViewController
+@interface DocumentViewController : BaseTableViewController
 
 @property (strong, nonatomic) DocumentModel* documentModel;
 @property (strong, nonatomic) NSString* previousScreen;

@@ -1,28 +1,37 @@
 //
-//  BaseViewController.m
-//  Reach-iOS
+//  BaseTableViewController.m
+//  Denning
 //
-//  Created by MaksymRachytskyy on 11/21/15.
-//  Copyright © 2015 Maksym Rachytskyy. All rights reserved.
+//  Created by Denning IT on 2017-12-08.
+//  Copyright © 2017 DenningIT. All rights reserved.
 //
 
-#import "BaseViewController.h"
+#import "BaseTableViewController.h"
 
-@interface BaseViewController ()
+@interface BaseTableViewController ()
 
 @end
 
-@implementation BaseViewController
+@implementation BaseTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-    [self removeKeyboardObservers];
     [super viewWillDisappear:animated];
-    
     [[QMNetworkManager sharedManager] cancelAllOperations];
     
     [SVProgressHUD dismiss];
@@ -32,33 +41,18 @@
     }
 }
 
-- (void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self addKeyboardObservers];
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+   return 0;
 }
 
-#pragma mark - Keyboard Observers
-
-- (void)addKeyboardObservers{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+   return 0;
 }
 
-- (void)removeKeyboardObservers {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)keyboardWillShow:(NSNotification *)__unused notification{
-  
-}
-
-- (void)keyboardWillHide:(NSNotification *) __unused notification{
+- (void) viewDocument:(NSURL*) Url withCompletion:(void(^)(NSURL *filePath)) completion{
     
-}
-
-
-- (void) viewDocument:(NSURL*) Url withCompletion:(void(^)(NSURL *filePath)) completion {
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
@@ -104,5 +98,6 @@
 {
     return self;
 }
+
 
 @end

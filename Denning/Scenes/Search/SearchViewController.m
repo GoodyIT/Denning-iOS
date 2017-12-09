@@ -173,19 +173,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     } else {
         [DataManager sharedManager].searchType = @"Public";
     }
-    CGFloat customRefreshControlHeight = 50.0f;
-    CGFloat customRefreshControlWidth = 320.0f;
-    CGRect customRefreshControlFrame = CGRectMake(0.0f,
-                                                  -customRefreshControlHeight,
-                                                  customRefreshControlWidth,
-                                                  customRefreshControlHeight);
-    
-    self.refreshControl = [[UIRefreshControl alloc] initWithFrame:customRefreshControlFrame];
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [UIColor clearColor];
-    self.refreshControl.tintColor = [UIColor blackColor];
-    
-    [self.tableView addSubview:self.refreshControl];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EBEBF1"];
@@ -208,13 +195,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         [self appendSearchResult];
     }];
 
-    
-//    self.tableView.refreshControl = [[UIRefreshControl alloc] init];
-//    self.tableView.refreshControl.backgroundColor = [UIColor clearColor];
-//    self.tableView.refreshControl.tintColor = [UIColor blackColor];
-    [self.refreshControl addTarget:self
-                            action:@selector(displaySearchResult)
-                  forControlEvents:UIControlEventValueChanged];
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 69, self.view.frame.size.width, 44)];
@@ -361,45 +341,13 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [self dismissView:sender];
 }
 
-- (void) appendList
-{
+- (void) appendSearchResult {
     isAppending = YES;
     [self displaySearchResult];
 }
 
-- (void) appendSearchResult {
-    [self.selectionList reloadData];
-    self.selectionList.selectedButtonIndex = selectedIndexOfFilter;
-    if (isLoading) return;
-    isLoading = YES;
-    
-    @weakify(self)
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
-        
-        [SVProgressHUD dismiss];
-        self->isLoading = NO;
-        [self.tableView finishInfiniteScroll];
-        @strongify(self);
-        if (error == nil)
-        {
-            _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
-            
-            if (resultArray.count > 0) {
-                _page = [NSNumber numberWithInteger:([_page integerValue] + 1)];
-                // update table view
-                [self.tableView reloadData];
-            }
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        }
-    }];
-}
-
 - (void) displaySearchResult
 {
-//    self.selectionList.hidden = NO;
     [self.selectionList reloadData];
     self.selectionList.selectedButtonIndex = selectedIndexOfFilter;
     if (isLoading) return;
@@ -410,18 +358,17 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
         
         [SVProgressHUD dismiss];
-        self->isLoading = NO;
-        if (self.refreshControl.isRefreshing) {
-            CGPoint offset = self.tableView.contentOffset;
-            self.refreshControl.attributedTitle = [DIHelpers getLastRefreshingTime];
-            [self.refreshControl endRefreshing];
-            self.tableView.contentOffset = offset;
-        }
-        
         @strongify(self);
+        self->isLoading = NO;
+        [self.tableView finishInfiniteScroll];
         if (error == nil)
         {
-            self.searchResultArray = [resultArray mutableCopy];
+            if (isAppending) {
+                _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
+            } else {
+                self.searchResultArray = [resultArray mutableCopy];
+            }
+            
             [self.tableView reloadData];
 
             if (resultArray.count > 0) {
@@ -431,6 +378,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
+        
+        self->isAppending = NO;
     }];
 }
 
@@ -529,7 +478,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     }
     
     _page = @(1);
-    isAppending = NO;
     [self.tableView reloadData];
     [self.searchTextField resignFirstResponder];
     
@@ -973,7 +921,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         searchType = @"Normal";
         keyword = selectedString;
         _page = @(1);
-        isAppending = NO;
         [self displaySearchResult];
     }
 }

@@ -18,7 +18,7 @@
 @property(strong, nonatomic) NSString       *countryName;
 @property(strong, nonatomic) NSString       *cityName;
 @property(strong, nonatomic) NSString       *stateName;
-@property(strong, nonatomic) NSString* streetName;
+@property(strong, nonatomic) NSString       *streetName;
 
 @property(strong, nonatomic) NSString       *serverStatus;
 

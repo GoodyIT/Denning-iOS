@@ -364,6 +364,8 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     messageVC.navigationController.navigationBarHidden = NO;
     self.tabBarController.tabBar.hidden = NO;
     searchController.searchBar.text = @"";
+    
+    [self performSearch:@""];
 }
 
 - (void)searchResultsController:(QMSearchResultsController *)__unused searchResultsController

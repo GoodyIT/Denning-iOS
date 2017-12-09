@@ -66,6 +66,8 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 - (AFHTTPSessionManager*) setPrivateHTTPHeader;
 - (AFHTTPSessionManager*) setPublicHTTPHeader;
 
+- (void) cancelAllOperations;
+
 /*
  ******** Auth *********
  */

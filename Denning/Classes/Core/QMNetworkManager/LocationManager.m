@@ -14,6 +14,8 @@
 @synthesize cityName;
 @synthesize countryName;
 @synthesize serverStatus;
+@synthesize streetName;
+@synthesize oldLocation;
 
 + (LocationManager *)sharedManager {
     static LocationManager *manager = nil;
@@ -50,5 +52,6 @@
     cityName = @"";
     countryName = @"";
     serverStatus = @"";
+    streetName = @"";
 }
 @end

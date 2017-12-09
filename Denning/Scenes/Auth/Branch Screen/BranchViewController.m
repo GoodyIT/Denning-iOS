@@ -104,20 +104,16 @@
 }
 
 - (void) proceedLogin:(FirmURLModel*)urlModel {
-//    FirmURLModel* urlModel = self.firmArray[sender.tag];
     [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
-    if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"] && ![[DataManager sharedManager].user.userType isEqualToString:@"personal"]){
-        if ([[DataManager sharedManager].statusCode  isEqual: @(250)]) {
-            [self performSegueWithIdentifier:kPasswordConfirmSegue sender:nil];
-        } else {
-            [self performSegueWithIdentifier:kPersonalFolderSegue sender:urlModel.document];
-        }
+    if (![[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
+        [self parseResponse:[DataManager sharedManager].statusCode firmUrlModel:nil];
+        
     } else {
         if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
             [[QMNetworkManager sharedManager] denningSignIn:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSString * _Nonnull error, NSDictionary * _Nonnull responseObject) {
                 if (error == nil) {
                     [[DataManager sharedManager] setSessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
-                    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+                    [self parseResponse:[DataManager sharedManager].statusCode firmUrlModel:nil];
                 } else {
                     [QMAlert showAlertWithMessage:error.localizedLowercaseString actionSuccess:NO inViewController:self];
                 }
@@ -140,11 +136,29 @@
     }
 }
 
+- (void) gotoPasswordConfirm {
+    [self performSegueWithIdentifier:kPasswordConfirmSegue sender:nil];
+}
+
+- (void) gotoMain {
+    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+}
+
+- (void) gotoFolder:(DocumentModel*) document {
+    [self performSegueWithIdentifier:kPersonalFolderSegue sender:document];
+}
+
+- (void) parseResponse:(NSNumber*) statusCode firmUrlModel:(FirmURLModel*)urlModel {
+    if ([[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
+        
+    } else {
+        
+    }
+}
+
 - (IBAction) gotoPasswordConfirm: (UIButton*) sender
 {
-    if ([[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
-        [self gotoSharedFolder:self.firmArray[sender.tag]];
-    } else if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
+    if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
         [self gotoUpload:self.firmArray[sender.tag]];
     } else {
         [self proceedLogin:self.firmArray[sender.tag]];

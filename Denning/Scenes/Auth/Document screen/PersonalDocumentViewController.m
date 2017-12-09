@@ -9,7 +9,7 @@
 #import "PersonalDocumentViewController.h"
 #import "DocumentCell.h"
 
-@interface PersonalDocumentViewController ()< UIDocumentInteractionControllerDelegate>
+@interface PersonalDocumentViewController ()
 {
     NSURL* selectedDocument;
     NSString* email, *sessionID;
@@ -119,49 +119,12 @@
         NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, file.URL];
         url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     }
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:email  forHTTPHeaderField:@"webuser-id"];
-    [request setValue:sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                           inDomain:NSUserDomainMask
-                                                                  appropriateForURL:nil
-                                                                             create:NO error:nil];
-        
-        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        
-        return [[NSURL URLWithString:newPath] URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        [SVProgressHUD dismiss];
+    
+    [self viewDocument:url withCompletion:^(NSURL *filePath) {
         selectedDocument = filePath;
-        [self displayDocument:filePath];
     }];
-    [downloadTask resume];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-- (void)displayDocument:(NSURL*)document {
-    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
-    documentInteractionController.delegate = self;
-    [documentInteractionController presentPreviewAnimated:YES];
-}
-
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
-{
-    return self;
-}
-
-- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
-{
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
 
 #pragma mark - Navigation

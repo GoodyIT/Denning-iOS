@@ -43,6 +43,7 @@
 
 #import "AppDelegate.h"
 #import "BaseViewController.h"
+#import "BaseTableViewController.h"
 #import <ChameleonFramework/Chameleon.h>
 #import "UIColor+CustomColors.h"
 #import "NetworkErrors.h"

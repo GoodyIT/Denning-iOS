@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewQuotation : UITableViewController
+@interface ViewQuotation : BaseTableViewController
 
 @property (strong, nonatomic) BillModel* model;
 

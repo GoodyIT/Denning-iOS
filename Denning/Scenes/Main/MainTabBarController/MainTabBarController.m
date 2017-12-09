@@ -351,16 +351,13 @@ didAddMessageToMemoryStorage:(QBChatMessage *)message
     NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
     
     if (unreadDialogs.count == 0) {
-        [DataManager sharedManager].badgeValue = @"";
+        [DataManager sharedManager].badgeValue = @"0";
+        self.childViewControllers.lastObject.tabBarItem.badgeValue = nil;
     } else {
         [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
+        self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
     }
     
     [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
-    if ([[DataManager sharedManager].badgeValue isEqualToString:@"0"]) {
-        self.childViewControllers.lastObject.tabBarItem.badgeValue = nil;
-    } else {
-        self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
-    }
 }
 @end

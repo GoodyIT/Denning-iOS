@@ -100,7 +100,7 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [QBRTCConfig setStatsReportTimeInterval:0.0f]; // set to 1.0f to enable stats report
     
     // Configuring app appearance
-    [[UITabBar appearance] setTintColor:QMMainApplicationColor()];
+//    [[UITabBar appearance] setTintColor:QMMainApplicationColor()];
   //  [[UINavigationBar appearance] setTintColor:QMSecondaryApplicationColor()];
 
     // Configuring searchbar appearance
@@ -377,7 +377,7 @@ forRemoteNotification:(NSDictionary *)userInfo
     
     NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[LocationManager sharedManager].lastLoggedDateTime];
     if (fabs(howRecent) > defaultTolerate || [[LocationManager sharedManager].cityName isEqualToString:@""]) {
-        //    {
+        
         [LocationManager sharedManager].lastLoggedDateTime = eventDate;
         [LocationManager sharedManager].oldLocation = location.coordinate;
         
@@ -385,17 +385,19 @@ forRemoteNotification:(NSDictionary *)userInfo
         [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
          {
              CLPlacemark *placemark = [placemarks objectAtIndex:0];
-             if([placemark.country length] != 0) {
+             if ([placemark.country length] != 0) {
                  [LocationManager sharedManager].countryName = placemark.country;
              } else {
                  [LocationManager sharedManager].countryName = @"";
              }
-             if([placemark.locality length] != 0) {
+             
+             if ([placemark.locality length] != 0) {
                  [LocationManager sharedManager].cityName = placemark.locality;
-             } if([placemark.administrativeArea length] != 0) {
-                 [LocationManager sharedManager].stateName = placemark.administrativeArea;
              }
-             else {
+             
+             if ([placemark.administrativeArea length] != 0) {
+                 [LocationManager sharedManager].stateName = placemark.administrativeArea;
+             } else {
                  [LocationManager sharedManager].cityName = @"";
              }
              

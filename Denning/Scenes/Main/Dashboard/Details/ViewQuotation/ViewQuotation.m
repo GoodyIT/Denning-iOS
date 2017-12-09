@@ -12,7 +12,7 @@
 #import "TaxInvoiceSelectionViewController.h"
 
 @interface ViewQuotation ()
-<UITextFieldDelegate, SWTableViewCellDelegate, UIDocumentInteractionControllerDelegate>
+<UITextFieldDelegate, SWTableViewCellDelegate>
 {
      NSURL* selectedDocument;
     __block BOOL isLoading;
@@ -90,36 +90,10 @@
 - (IBAction)viewDocument:(id)sender {
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, REPORT_VIEWER_PDF_QUATION_URL, _model.documentNo];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
-    [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    
-    [SVProgressHUD show];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                           inDomain:NSUserDomainMask
-                                                                  appropriateForURL:nil
-                                                                             create:NO error:nil];
-        
-        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        
-        return [[NSURL URLWithString:newPath] URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        [SVProgressHUD dismiss];
-        if (filePath != nil) {
-            selectedDocument = filePath;
-            [self displayDocument:filePath];
-        }
+    [self viewDocument:url withCompletion:^(NSURL *filePath) {
+        selectedDocument = filePath;
     }];
-    [downloadTask resume];
 }
 
 

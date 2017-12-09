@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonalDocumentViewController : UITableViewController
+@interface PersonalDocumentViewController : BaseTableViewController
 
 @property (strong, nonatomic) FolderModel* folderModel;
 @end

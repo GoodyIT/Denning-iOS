@@ -19,7 +19,7 @@
 #import "AddReceiptViewController.h"
 #import "DashboardContact.h"
 
-@interface AddQuotationViewController ()<UIDocumentInteractionControllerDelegate, UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
+@interface AddQuotationViewController ()<UITableViewDelegate, UITableViewDataSource, ContactListWithDescSelectionDelegate, UITextFieldDelegate, SWTableViewCellDelegate>
 {
     NSString *titleOfList;
     NSString* nameOfField;
@@ -260,23 +260,6 @@ NSMutableDictionary* keyValue;
     return value;
 }
 
-- (void)displayDocument:(NSURL*)document {
-    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
-    documentInteractionController.delegate = self;
-    [documentInteractionController presentPreviewAnimated:YES];
-}
-
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
-{
-    return self;
-}
-
-- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
-{
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
-}
-
 - (NSInteger) calcTag: (NSIndexPath*) indexPath {
     NSInteger tag = 0;
     for (int i = 0; i < [_contents count]; i++) {
@@ -324,38 +307,17 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) viewQuotation {
+    if (!isSaved) {
+        [QMAlert showAlertWithMessage:@"Please save your bill to view" actionSuccess:NO inViewController:self];
+        
+        return;
+    }
+    
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, REPORT_VIEWER_PDF_QUATION_URL, _contents[0][0][1]];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
-    [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
-    
-    [SVProgressHUD show];
-    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory
-                                                                           inDomain:NSUserDomainMask
-                                                                  appropriateForURL:nil
-                                                                             create:NO error:nil];
-        
-        NSString* newPath = [[documentsDirectory absoluteString] stringByAppendingString:[NSString stringWithFormat:@"DenningIT%@/", [DIHelpers randomTime]]];
-        if (![FCFileManager isDirectoryItemAtPath:newPath]) {
-            [[NSFileManager defaultManager] createDirectoryAtPath:newPath  withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        
-        return [[NSURL URLWithString:newPath] URLByAppendingPathComponent:[response suggestedFilename]];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        [SVProgressHUD dismiss];
-        if (filePath != nil) {
-            selectedDocument = filePath;
-            [self displayDocument:filePath];
-        }
+    [self viewDocument:url withCompletion:^(NSURL *filePath) {
+        selectedDocument = filePath;
     }];
-    [downloadTask resume];
 }
 
 - (void) gotoInvoice {
@@ -432,11 +394,7 @@ NSMutableDictionary* keyValue;
         if (indexPath.row == 5) {
             AddLastTwoButtonsCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastTwoButtonsCell cellIdentifier] forIndexPath:indexPath];
             cell.viewHandler = ^{
-                if (!isSaved) {
-                    [QMAlert showAlertWithMessage:@"Please save your quotaion first to view" actionSuccess:NO inViewController:self];
-                    
-                    return;
-                }
+               
                 [self viewQuotation];
             };
             

@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BaseViewController : UIViewController
+@interface BaseViewController : UIViewController< UIDocumentInteractionControllerDelegate>
 
 - (void)addKeyboardObservers;
 - (void)removeKeyboardObservers;
+
+- (void) viewDocument:(NSURL*) Url withCompletion:(void(^)(NSURL *filePath)) completion;
 
 @end

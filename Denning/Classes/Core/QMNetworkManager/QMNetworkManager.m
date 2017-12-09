@@ -85,6 +85,13 @@
     return _manager;
 }
 
+- (void) cancelAllOperations
+{
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
+}
+
 - (NSDictionary*) buildRquestParamsFromDictionary: (NSDictionary*) dict
 {
     NSDictionary* basicParams = @{
