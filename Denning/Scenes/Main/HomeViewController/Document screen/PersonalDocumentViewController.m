@@ -32,7 +32,7 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController  popViewControllerAnimated:YES];
 }
 
 - (void) prepareUI {
@@ -63,7 +63,7 @@
         return folderModel.documents.count;
     }
 
-    FolderModel* model = folderModel.folders[section-2];
+    DocumentModel* model = folderModel.folders[section-1];
     return model.documents.count;
 }
 
@@ -73,7 +73,7 @@
     if (section == 0){
         sectionName = @"Files";
     } else {
-        FolderModel* model = folderModel.folders[section-2];
+        DocumentModel* model = folderModel.folders[section-2];
         sectionName = model.name;
     }
 
@@ -99,7 +99,7 @@
     DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
     
-    FolderModel* model = folderModel.folders[indexPath.section-2];
+    DocumentModel* model = folderModel.folders[indexPath.section-2];
     FileModel* file = model.documents[indexPath.row];
     [cell configureCellWithFileModel:file
      ];

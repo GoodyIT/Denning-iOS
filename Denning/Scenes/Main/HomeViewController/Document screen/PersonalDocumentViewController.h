@@ -10,5 +10,5 @@
 
 @interface PersonalDocumentViewController : BaseTableViewController
 
-@property (strong, nonatomic) FolderModel* folderModel;
+@property (strong, nonatomic) DocumentModel* folderModel;
 @end

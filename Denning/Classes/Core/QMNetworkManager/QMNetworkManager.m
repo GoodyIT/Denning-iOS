@@ -125,10 +125,10 @@
     
     [self sendPostWithURL:SIGNIN_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * error,  NSURLSessionDataTask * _Nonnull task) {
             if (error == nil) {
-                    completion(YES, error, [[result objectForKey:@"statusCode"] integerValue], result);
-                } else {
-            NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
-            completion(NO, error, test.statusCode, nil);
+                completion(YES, error, [[result objectForKey:@"statusCode"] integerValue], result);
+            } else {
+                NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
+                completion(NO, error, test.statusCode, nil);
         }
     }];
 }
@@ -240,43 +240,14 @@
     }];
 }
 
--(void) denningSignIn:(NSString*) password withCompletion:(void(^)(BOOL success, NSString* error, NSDictionary* responseObject)) completion
+- (void) clientSignIn: (NSString*) url withCompletion: (void(^)(BOOL success, NSDictionary * responseObject, NSError* error,  DocumentModel* doumentModel)) completion
 {
-    NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email,
-                                                                   @"password": password, @"sessionID": [DataManager sharedManager].user.sessionID}];
+    NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email, @"password": [DataManager sharedManager].user.password, @"sessionID": [DataManager sharedManager].user.sessionID}];
+
+    [self setPublicHTTPHeader];
     
-    [self setPublicHTTPHeader];
-    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_SIGNIN_URL];
-    [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completion != nil) {
-            completion(YES, nil, responseObject);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(NO, error.localizedDescription, nil);
-        }
-    }];
-}
-
-- (void) clientSignIn: (NSString*) url password:(NSString*) password withCompletion: (void(^)(BOOL success, NSDictionary * responseObject, NSString* error,  DocumentModel* doumentModel)) completion
-{
-    NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email, @"password": password, @"sessionID": [DataManager sharedManager].user.sessionID}];
-
-    [self setPublicHTTPHeader];
-    [self.manager POST:url parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        DocumentModel* result = [DocumentModel getDocumentFromResponse:responseObject];
-        if (completion != nil) {
-            completion(YES, responseObject, nil, result);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(NO, nil, error.localizedDescription, nil);
-        }
+    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+         completion(YES, result, error, [DocumentModel getDocumentFromResponse:result]);
     }];
 }
 

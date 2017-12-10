@@ -9,6 +9,7 @@
 #import "QMBaseMediaCell.h"
 #import "QMMediaViewDelegate.h"
 #import "QMChatResources.h"
+#import "QMChatViewController.h"
 
 @implementation UIButton (QMAnimated)
 
@@ -298,6 +299,9 @@ static inline UIImage* QMPlayButtonImageForState(QMMediaViewState state) {
     UIImage *buttonImage =
     [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
+//    UIImage *buttonImage =
+//        [[UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:QMChatViewController.class] compatibleWithTraitCollection:nil]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//
     return buttonImage;
 }
 

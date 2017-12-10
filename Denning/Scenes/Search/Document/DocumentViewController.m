@@ -144,7 +144,7 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 //            FileModel* file = self.documentModel.documents[selectionIndex.row];
 //            [urlArray addObject:[self getFileURL:file]];
 //        } else {
-//            FolderModel* model = self.documentModel.folders[selectionIndex.section-2];
+//            DocumentModel* model = self.documentModel.folders[selectionIndex.section-2];
 //            FileModel* file = model.documents[selectionIndex.row];
 //            [urlArray addObject:[self getFileURL:file]];
 //        }
@@ -343,16 +343,16 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 - (void) filterDocument {
     DocumentModel *newDocument = [DocumentModel new];
     NSMutableArray* newFolders = [NSMutableArray new];
-    for (FolderModel* model in self.originalDocumentModel.folders) {
-        FolderModel* newFolderModel = [FolderModel new];
+    for (DocumentModel* model in self.originalDocumentModel.folders) {
+        DocumentModel* newDocumentModel = [DocumentModel new];
         NSMutableArray *fileArray =[NSMutableArray new];
         for (FileModel* file in model.documents) {
             if ([file.name localizedCaseInsensitiveContainsString:self.filter]) {
                 [fileArray addObject:file];
             }
         }
-        newFolderModel.documents = [fileArray copy];
-        [newFolders addObject:newFolderModel];
+        newDocumentModel.documents = [fileArray copy];
+        [newFolders addObject:newDocumentModel];
     }
     
     NSMutableArray *fileArray =[NSMutableArray new];
@@ -428,7 +428,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         return self.documentModel.documents.count;
     }
 
-    FolderModel* model = self.documentModel.folders[section-2];
+    DocumentModel* model = self.documentModel.folders[section-2];
     
     return model.documents.count;
 }
@@ -441,7 +441,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     } else if (section == 1){
         sectionName = @"Files";
     } else {
-        FolderModel* model = self.documentModel.folders[section-2];
+        DocumentModel* model = self.documentModel.folders[section-2];
         sectionName = model.name;
     }
     
@@ -488,7 +488,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
-    FolderModel* model = self.documentModel.folders[indexPath.section-2];
+    DocumentModel* model = self.documentModel.folders[indexPath.section-2];
     FileModel* file = model.documents[indexPath.row];
     [cell configureCellWithFileModel:file
          ];
@@ -509,7 +509,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     } else if (indexPath.section == 1) {
         file = self.documentModel.documents[indexPath.row];
     } else {
-        FolderModel* model = self.documentModel.folders[indexPath.section-2];
+        DocumentModel* model = self.documentModel.folders[indexPath.section-2];
         file = model.documents[indexPath.row];
     }
     NSURL *url = [self getFileURL:file];

@@ -40,7 +40,7 @@
 
 - (void) setUserInfoFromLogin: (NSDictionary*) response;
 
-- (void) setSessionID: (NSString*) sessionID;
+- (void) setSessionID: (NSDictionary*) response;
 
 - (void) setUserInfoFromNewDeviceLogin: (NSDictionary*) response;
 
@@ -48,5 +48,8 @@
 
 - (void) setServerAPI: (NSString*) serverAPI withFirmName:(NSString*) firmName withFirmCity:(NSString*)firmCity;
 
+- (BOOL) isClient;
+
+- (BOOL) isLoggedIn;
 
 @end

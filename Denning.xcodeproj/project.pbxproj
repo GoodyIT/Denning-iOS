@@ -60,6 +60,11 @@
 		790DD49B1ECBC05E009D5634 /* PropertyContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 790DD49A1ECBC05E009D5634 /* PropertyContactListViewController.m */; };
 		790EA88A1FD887AF00894AC9 /* CodeTransactionAutoComplete.m in Sources */ = {isa = PBXBuildFile; fileRef = 790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */; };
 		7912823C1FDACD7F006E93E2 /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912823B1FDACD7F006E93E2 /* BaseTableViewController.m */; };
+		791282431FDC6BF0006E93E2 /* PersonalDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912823E1FDC6BEF006E93E2 /* PersonalDocumentViewController.m */; };
+		791282441FDC6BF0006E93E2 /* FolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791282411FDC6BF0006E93E2 /* FolderViewController.m */; };
+		791282461FDC9BFF006E93E2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791282451FDC9BFE006E93E2 /* CoreTelephony.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		791282481FDC9C0B006E93E2 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791282471FDC9C09006E93E2 /* Intents.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		7912824A1FDC9C11006E93E2 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791282491FDC9C11006E93E2 /* IntentsUI.framework */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -448,8 +453,6 @@
 		79D59A2B1E953B0400CD3821 /* ChatContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2A1E953B0400CD3821 /* ChatContactModel.m */; };
 		79D59A2E1E955B4900CD3821 /* ClientContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2D1E955B4900CD3821 /* ClientContactViewController.m */; };
 		79D59A311E955B6D00CD3821 /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A301E955B6D00CD3821 /* FavoriteViewController.m */; };
-		79D929C21E8D80AC000A53D2 /* FolderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D929C11E8D80AC000A53D2 /* FolderViewController.m */; };
-		79D929C81E8D84B0000A53D2 /* PersonalDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D929C71E8D84B0000A53D2 /* PersonalDocumentViewController.m */; };
 		79D929CC1E8DA27A000A53D2 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929C91E8DA27A000A53D2 /* icon_add.png */; };
 		79D929CD1E8DA27A000A53D2 /* icon_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */; };
 		79D929CE1E8DA27A000A53D2 /* icon_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */; };
@@ -546,7 +549,6 @@
 		79EC0E2D1E89E75E00320A28 /* FileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E2C1E89E75E00320A28 /* FileModel.m */; };
 		79EC0E351E89F55400320A28 /* DocumentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E331E89F55400320A28 /* DocumentCell.m */; };
 		79EC0E361E89F55400320A28 /* DocumentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0E341E89F55400320A28 /* DocumentCell.xib */; };
-		79EC0E3A1E8A0A2600320A28 /* FolderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E391E8A0A2600320A28 /* FolderModel.m */; };
 		79EC0E3E1E8A196400320A28 /* icon_search.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0E3B1E8A196400320A28 /* icon_search.png */; };
 		79EC0E3F1E8A196400320A28 /* icon_search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0E3C1E8A196400320A28 /* icon_search@2x.png */; };
 		79EC0E401E8A196400320A28 /* icon_search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0E3D1E8A196400320A28 /* icon_search@3x.png */; };
@@ -590,7 +592,6 @@
 		79EC0EBC1E8BF82200320A28 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0EBB1E8BF82200320A28 /* CalendarViewController.m */; };
 		79EC0EC11E8C511A00320A28 /* BranchHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0EBF1E8C511A00320A28 /* BranchHeaderCell.m */; };
 		79EC0EC21E8C511A00320A28 /* BranchHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0EC01E8C511A00320A28 /* BranchHeaderCell.xib */; };
-		79EC0EC61E8C745D00320A28 /* FirmPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0EC51E8C745D00320A28 /* FirmPasswordViewController.m */; };
 		79EC0ED31E8C85F100320A28 /* icon_help.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0EC71E8C85F100320A28 /* icon_help.png */; };
 		79EC0ED41E8C85F100320A28 /* icon_help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0EC81E8C85F100320A28 /* icon_help@2x.png */; };
 		79EC0ED51E8C85F100320A28 /* icon_help@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0EC91E8C85F100320A28 /* icon_help@3x.png */; };
@@ -1242,6 +1243,13 @@
 		790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeTransactionAutoComplete.m; sourceTree = "<group>"; };
 		7912823A1FDACD7F006E93E2 /* BaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTableViewController.h; sourceTree = "<group>"; };
 		7912823B1FDACD7F006E93E2 /* BaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewController.m; sourceTree = "<group>"; };
+		7912823E1FDC6BEF006E93E2 /* PersonalDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalDocumentViewController.m; sourceTree = "<group>"; };
+		7912823F1FDC6BEF006E93E2 /* PersonalDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalDocumentViewController.h; sourceTree = "<group>"; };
+		791282411FDC6BF0006E93E2 /* FolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderViewController.m; sourceTree = "<group>"; };
+		791282421FDC6BF0006E93E2 /* FolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderViewController.h; sourceTree = "<group>"; };
+		791282451FDC9BFE006E93E2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		791282471FDC9C09006E93E2 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		791282491FDC9C11006E93E2 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -1736,10 +1744,6 @@
 		79D59A2D1E955B4900CD3821 /* ClientContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientContactViewController.m; sourceTree = "<group>"; };
 		79D59A2F1E955B6D00CD3821 /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
 		79D59A301E955B6D00CD3821 /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
-		79D929C01E8D80AC000A53D2 /* FolderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderViewController.h; sourceTree = "<group>"; };
-		79D929C11E8D80AC000A53D2 /* FolderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderViewController.m; sourceTree = "<group>"; };
-		79D929C61E8D84B0000A53D2 /* PersonalDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalDocumentViewController.h; sourceTree = "<group>"; };
-		79D929C71E8D84B0000A53D2 /* PersonalDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalDocumentViewController.m; sourceTree = "<group>"; };
 		79D929C91E8DA27A000A53D2 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
 		79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@2x.png"; sourceTree = "<group>"; };
 		79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@3x.png"; sourceTree = "<group>"; };
@@ -1864,8 +1868,6 @@
 		79EC0E321E89F55400320A28 /* DocumentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentCell.h; sourceTree = "<group>"; };
 		79EC0E331E89F55400320A28 /* DocumentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentCell.m; sourceTree = "<group>"; };
 		79EC0E341E89F55400320A28 /* DocumentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DocumentCell.xib; sourceTree = "<group>"; };
-		79EC0E381E8A0A2600320A28 /* FolderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderModel.h; sourceTree = "<group>"; };
-		79EC0E391E8A0A2600320A28 /* FolderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderModel.m; sourceTree = "<group>"; };
 		79EC0E3B1E8A196400320A28 /* icon_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_search.png; sourceTree = "<group>"; };
 		79EC0E3C1E8A196400320A28 /* icon_search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_search@2x.png"; sourceTree = "<group>"; };
 		79EC0E3D1E8A196400320A28 /* icon_search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_search@3x.png"; sourceTree = "<group>"; };
@@ -1928,8 +1930,6 @@
 		79EC0EBE1E8C511A00320A28 /* BranchHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchHeaderCell.h; sourceTree = "<group>"; };
 		79EC0EBF1E8C511A00320A28 /* BranchHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchHeaderCell.m; sourceTree = "<group>"; };
 		79EC0EC01E8C511A00320A28 /* BranchHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BranchHeaderCell.xib; sourceTree = "<group>"; };
-		79EC0EC41E8C745D00320A28 /* FirmPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirmPasswordViewController.h; sourceTree = "<group>"; };
-		79EC0EC51E8C745D00320A28 /* FirmPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirmPasswordViewController.m; sourceTree = "<group>"; };
 		79EC0EC71E8C85F100320A28 /* icon_help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_help.png; sourceTree = "<group>"; };
 		79EC0EC81E8C85F100320A28 /* icon_help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_help@2x.png"; sourceTree = "<group>"; };
 		79EC0EC91E8C85F100320A28 /* icon_help@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_help@3x.png"; sourceTree = "<group>"; };
@@ -2761,6 +2761,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7912824A1FDC9C11006E93E2 /* IntentsUI.framework in Frameworks */,
+				791282481FDC9C0B006E93E2 /* Intents.framework in Frameworks */,
+				791282461FDC9BFF006E93E2 /* CoreTelephony.framework in Frameworks */,
 				79FBDFF91E304ADC00448FE3 /* CoreData.framework in Frameworks */,
 				79F732321E96B833004F88DF /* libz.tbd in Frameworks */,
 				79F732311E96B6D6004F88DF /* QuartzCore.framework in Frameworks */,
@@ -3232,6 +3235,24 @@
 				790EA8891FD887AF00894AC9 /* CodeTransactionAutoComplete.m */,
 			);
 			path = CodeTransactionAutoComplete;
+			sourceTree = "<group>";
+		};
+		7912823D1FDC6BEF006E93E2 /* Document screen */ = {
+			isa = PBXGroup;
+			children = (
+				7912823E1FDC6BEF006E93E2 /* PersonalDocumentViewController.m */,
+				7912823F1FDC6BEF006E93E2 /* PersonalDocumentViewController.h */,
+			);
+			path = "Document screen";
+			sourceTree = "<group>";
+		};
+		791282401FDC6BF0006E93E2 /* Folder screen */ = {
+			isa = PBXGroup;
+			children = (
+				791282411FDC6BF0006E93E2 /* FolderViewController.m */,
+				791282421FDC6BF0006E93E2 /* FolderViewController.h */,
+			);
+			path = "Folder screen";
 			sourceTree = "<group>";
 		};
 		791360411FCDB3480022E80F /* Root */ = {
@@ -4482,24 +4503,6 @@
 			path = ChatContactModel;
 			sourceTree = "<group>";
 		};
-		79D929BE1E8D8080000A53D2 /* Document screen */ = {
-			isa = PBXGroup;
-			children = (
-				79D929C61E8D84B0000A53D2 /* PersonalDocumentViewController.h */,
-				79D929C71E8D84B0000A53D2 /* PersonalDocumentViewController.m */,
-			);
-			path = "Document screen";
-			sourceTree = "<group>";
-		};
-		79D929BF1E8D8080000A53D2 /* Folder screen */ = {
-			isa = PBXGroup;
-			children = (
-				79D929C01E8D80AC000A53D2 /* FolderViewController.h */,
-				79D929C11E8D80AC000A53D2 /* FolderViewController.m */,
-			);
-			path = "Folder screen";
-			sourceTree = "<group>";
-		};
 		79D929E11E8DCF66000A53D2 /* LedgerCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -4716,15 +4719,6 @@
 			path = DocumentCell;
 			sourceTree = "<group>";
 		};
-		79EC0E371E8A0A0200320A28 /* FolderModel */ = {
-			isa = PBXGroup;
-			children = (
-				79EC0E381E8A0A2600320A28 /* FolderModel.h */,
-				79EC0E391E8A0A2600320A28 /* FolderModel.m */,
-			);
-			path = FolderModel;
-			sourceTree = "<group>";
-		};
 		79EC0E411E8A8DDF00320A28 /* SearchDocumentCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -4912,15 +4906,6 @@
 			path = BranchHeaderCell;
 			sourceTree = "<group>";
 		};
-		79EC0EC31E8C743F00320A28 /* FirmPassword */ = {
-			isa = PBXGroup;
-			children = (
-				79EC0EC41E8C745D00320A28 /* FirmPasswordViewController.h */,
-				79EC0EC51E8C745D00320A28 /* FirmPasswordViewController.m */,
-			);
-			path = FirmPassword;
-			sourceTree = "<group>";
-		};
 		79F732101E96A929004F88DF /* AFHTTPSessionOperation */ = {
 			isa = PBXGroup;
 			children = (
@@ -5023,6 +5008,8 @@
 		79F9FC771E41838A0097CB23 /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7912823D1FDC6BEF006E93E2 /* Document screen */,
+				791282401FDC6BF0006E93E2 /* Folder screen */,
 				9635BBA01F2AEDC700BE7CF0 /* Attendance */,
 				960F03071F29511500B25BBC /* ClientFileFolder */,
 				96EAEBB01F22B3A1004F75FC /* ComingSoon */,
@@ -5812,6 +5799,9 @@
 		79FBDFE91E304A6200448FE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				791282491FDC9C11006E93E2 /* IntentsUI.framework */,
+				791282471FDC9C09006E93E2 /* Intents.framework */,
+				791282451FDC9BFE006E93E2 /* CoreTelephony.framework */,
 				790DD4881ECB8F67009D5634 /* External */,
 				79F732301E96B6D6004F88DF /* QuartzCore.framework */,
 				79F7322E1E96B6B3004F88DF /* libz.tbd */,
@@ -5919,7 +5909,6 @@
 				79734F751EB99ED300647215 /* CodeDescription */,
 				79D59A281E953AF300CD3821 /* ChatContactModel */,
 				79EC0E501E8AEF6900320A28 /* CourtModel */,
-				79EC0E371E8A0A0200320A28 /* FolderModel */,
 				79EC0E2A1E89E75400320A28 /* FileModel */,
 				79EC0E261E89E44C00320A28 /* DocumentModel */,
 				79EC0E121E89C93500320A28 /* LedgerDetailModel */,
@@ -7003,9 +6992,6 @@
 		79FBE1EA1E31600F00448FE3 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				79D929BE1E8D8080000A53D2 /* Document screen */,
-				79D929BF1E8D8080000A53D2 /* Folder screen */,
-				79EC0EC31E8C743F00320A28 /* FirmPassword */,
 				795DF2571E6F04CE006D617D /* Category Select */,
 				79F9A81D1E6D4CBD00E17629 /* ChangePassword */,
 				79F9A81E1E6D4CBD00E17629 /* NewDeviceLogin */,
@@ -9458,6 +9444,7 @@
 				79FBDFBA1E30421A00448FE3 /* QMErrorsFactory.m in Sources */,
 				9600178F1FB0DAEF001EAB51 /* LocationManager.m in Sources */,
 				79FBE0811E304EAA00448FE3 /* QMSearchResultsController.m in Sources */,
+				791282431FDC6BF0006E93E2 /* PersonalDocumentViewController.m in Sources */,
 				79FF35191E97FC1B001BECFB /* DenningLabelCell.m in Sources */,
 				793FF2171EC3A9A7001F83A5 /* FloatingTextCell.m in Sources */,
 				962082CD1ED48FE100BB595C /* CourtDiaryListViewController.m in Sources */,
@@ -9597,7 +9584,6 @@
 				7903CF6B1ECD2B2D0090206C /* BillCell.m in Sources */,
 				7903CF7D1ECD37510090206C /* PropertyCodeCell.m in Sources */,
 				962082BB1ED40C3000BB595C /* MatterLitigationModel.m in Sources */,
-				79D929C81E8D84B0000A53D2 /* PersonalDocumentViewController.m in Sources */,
 				9635BB9E1F2A54FD00BE7CF0 /* SearchContactCell.m in Sources */,
 				793C1A0F1EC5314C00271B7F /* PresetBillModel.m in Sources */,
 				960F030A1F29512900B25BBC /* ClientFileFolder.m in Sources */,
@@ -9652,6 +9638,7 @@
 				962082C51ED4828E00BB595C /* MatterLitigationViewController.m in Sources */,
 				7903CF481ECC00BB0090206C /* BirthdayCalendarViewController.m in Sources */,
 				793C19FB1EC4E8A900271B7F /* MatterCodeModel.m in Sources */,
+				791282441FDC6BF0006E93E2 /* FolderViewController.m in Sources */,
 				79BC1EEC1FCC8F4500E90B12 /* QMContactsSearchDataSource.m in Sources */,
 				9607F97B1F06E2D20012ABCD /* AddMatterPropertyCell.m in Sources */,
 				7954326E1FC6392B00FF9E57 /* UIScreen+QMLock.m in Sources */,
@@ -9739,7 +9726,6 @@
 				793FF1B21EBF8D46001F83A5 /* StaffModel.m in Sources */,
 				7920E78D1E9F2B9D002FEFF3 /* NSString+QMTransliterating.m in Sources */,
 				79EC0EAE1E8BE7F700320A28 /* LoanAmortisationViewController.m in Sources */,
-				79D929C21E8D80AC000A53D2 /* FolderViewController.m in Sources */,
 				79EC0EB11E8BE7F700320A28 /* SPAViewController.m in Sources */,
 				79FBE1F91E31600F00448FE3 /* QMForgotPasswordViewController.m in Sources */,
 				7920E7AE1EA01295002FEFF3 /* ChatFirmModel.m in Sources */,
@@ -9794,7 +9780,6 @@
 				79D929E81E8DCF9A000A53D2 /* LedgerCell.m in Sources */,
 				79EC0EB31E8BE7F700320A28 /* TenancyViewController.m in Sources */,
 				96BDA61C1F02B9D400084606 /* DashboardThirdCell.m in Sources */,
-				79EC0EC61E8C745D00320A28 /* FirmPasswordViewController.m in Sources */,
 				9642062A1F26ACD9008AC798 /* TemplateCell.m in Sources */,
 				79E5FEFC1E71819F00E32AF8 /* PropertyViewController.m in Sources */,
 				7954325B1FC5EEC100FF9E57 /* TaxInvoiceCalcModel.m in Sources */,
@@ -9827,7 +9812,6 @@
 				968E85F31EF431DC001B442D /* SearchMatterCodeDetail.m in Sources */,
 				790DD4821ECA73A1009D5634 /* QuotationGetListViewController.m in Sources */,
 				962082A01ED2C6DA00BB595C /* PropertyAutoComplete.m in Sources */,
-				79EC0E3A1E8A0A2600320A28 /* FolderModel.m in Sources */,
 				79F9FC8E1E41BDB50097CB23 /* EventModel.m in Sources */,
 				790DD47E1ECA7087009D5634 /* QuotationModel.m in Sources */,
 				7903CF711ECD303D0090206C /* PropertyContactCell.m in Sources */,
@@ -10578,7 +10562,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				INFOPLIST_FILE = DenningShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning.DenningShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10595,7 +10579,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6ATV26A86Y;
 				INFOPLIST_FILE = DenningShare/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning.DenningShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";

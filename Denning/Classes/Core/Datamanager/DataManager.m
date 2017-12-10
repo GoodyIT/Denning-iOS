@@ -53,12 +53,14 @@
 
 - (void) getFirmServerArrayFromResponse: (NSDictionary*) response {
     self.denningArray = [FirmURLModel getFirmArrayFromResponse:[response objectForKey:@"catDenning"]];
-//    self.bussinessArray = [FirmURLModel getFirmArrayFromResponse:[response objectForKey:@"catBussiness"]];
     self.personalArray = [FirmURLModel getFirmArrayFromResponse:[response objectForKey:@"catPersonal"]];
 }
 
 - (NSString*) determineUserType
 {
+    [[NSUserDefaults standardUserDefaults] setBool:personalArray.count > 0 forKey:@"isClient"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     NSString* type;
     if (self.denningArray.count > 0) {
         type = @"denning";
@@ -116,11 +118,13 @@
     [defaults synchronize];
 }
 
-- (void) setSessionID: (NSString*) sessionID
+- (void) setSessionID: (NSDictionary*) response
 {
-    [self _setInfoWithValue:sessionID for:@"sessionID"];
+    [self getFirmServerArrayFromResponse:response];
+    
+    [self _setInfoWithValue:[response valueForKeyNotNull:@"sessionID"] for:@"sessionID"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
-        user.sessionID = sessionID;
+        user.sessionID = [response valueForKeyNotNull:@"sessionID"];
     }];
 }
 
@@ -133,6 +137,16 @@
         user.firmName = firmName;
         user.firmCity = firmCity;
     }];
+}
+
+- (BOOL) isClient {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return (BOOL)[defaults boolForKey:@"isClient"];
+}
+
+- (BOOL) isLoggedIn {
+    return user.email.length > 0;
 }
 
 @end

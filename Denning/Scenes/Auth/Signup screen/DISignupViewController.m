@@ -220,6 +220,7 @@
         {
             QBUUser *user = [QBUUser user];
             user.email = self.emailField.text;
+            user.login = _emailField.text;
             user.password = kQBPassword;
             user.fullName = self.usernameField.text;
             user.tags = [@[@"Public"] mutableCopy];

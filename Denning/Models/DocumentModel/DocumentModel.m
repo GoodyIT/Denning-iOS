@@ -16,7 +16,7 @@
     
     documentModel.date = [response objectForKey:@"date"];
     documentModel.name = [response objectForKey:@"name"];
-    documentModel.folders = [FolderModel getFolderArrayFromResponse: [response objectForKey:@"folders"]];
+    documentModel.folders = [DocumentModel getDocumentArrayFromResponse: [response objectForKey:@"folders"]];
     documentModel.documents = [FileModel getFileArrayFromResponse: [response objectForKey:@"documents"]];
     
     return documentModel;

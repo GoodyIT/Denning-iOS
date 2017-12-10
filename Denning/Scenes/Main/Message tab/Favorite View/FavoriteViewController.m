@@ -133,16 +133,7 @@ SWTableViewCellDelegate
     originalContacts = [DataManager sharedManager].favoriteContactsArray;
     contactsArray = originalContacts;
     
-    NSMutableArray *indexPaths = [[NSMutableArray alloc] initWithCapacity:contactsArray.count];
-    for (QBUUser *user in contactsArray) {
-        NSIndexPath *indexPath = [self.dataSource indexPathForObject:user];
-        if (indexPath != nil) {
-            [indexPaths addObject:indexPath];
-        }
-    }
-    if (indexPaths.count > 0) {
-        [self.tableView reloadRowsAtIndexPaths:[indexPaths copy] withRowAnimation:UITableViewRowAnimationNone];
-    }
+    [self.tableView reloadData];
 }
 
 - (void) configureSearch
@@ -217,11 +208,6 @@ SWTableViewCellDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 40;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 10;
 }
 
 #pragma MARK - UITableView Delegate

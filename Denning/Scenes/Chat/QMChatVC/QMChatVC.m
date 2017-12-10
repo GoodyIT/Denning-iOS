@@ -1571,12 +1571,12 @@ QMUsersServiceDelegate
 
 - (void)_sendMessage:(QBChatMessage *)message {
     
-    BOOL isOnline = [QMCore.instance.contactManager isUserOnlineWithID:[self.chatDialog opponentID]];
-    if (!isOnline) {
+//    BOOL isOnline = [QMCore.instance.contactManager isUserOnlineWithID:[self.chatDialog opponentID]];
+//    if (!isOnline) {
         NSString* myName = [QBSession currentSession].currentUser.fullName;
     
         [QMNotification sendPushMessageToUser:[self.chatDialog opponentID] withUserName:myName withMessage:message];
-    }
+//    }
     
     [[QMCore.instance.chatService sendMessage:message
                                      toDialog:self.chatDialog

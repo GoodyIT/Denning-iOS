@@ -21,6 +21,7 @@
 #import "MainTabBarController.h"
 #import "Attendance.h"
 #import "QMChatVC.h"
+#import "FolderViewController.h"
 
 @interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate,
     UITextFieldDelegate,
@@ -163,7 +164,7 @@ iCarouselDataSource, iCarouselDelegate>
 
 - (IBAction)changeBranch:(id)sender {
     if ([DataManager sharedManager].user.userType.length == 0) {
-        [QMAlert showAlertWithMessage:@"You cannot access this folder. please subscribe dening user" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"You cannot access this function. please subscribe dening user" actionSuccess:NO inViewController:self];
         return;
     }
     
@@ -404,91 +405,105 @@ iCarouselDataSource, iCarouselDelegate>
     cell.backgroundColor = [UIColor whiteColor];
 }
 
+- (void) clientLogin {
+    if ([[DataManager sharedManager] isLoggedIn]) {
+        if (isLoading) return;
+        isLoading = YES;
+        NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_CLIENT_SIGNIN];
+        
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+        @weakify(self)
+        [[QMNetworkManager sharedManager] clientSignIn:url withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSError * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
+            [SVProgressHUD dismiss];
+            @strongify(self)
+            self->isLoading = NO;
+            if (error == nil) {
+                [[DataManager sharedManager] setSessionID:responseObject];
+                if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(250)]) {
+                    [self clientFirstLogin];
+                } else {
+                    if (doumentModel.folders.count == 0) {
+                        [QMAlert showAlertWithMessage:@"There is no shared folder for you" actionSuccess:NO inViewController:self];
+                    } else {
+                        [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
+                    }
+                }
+                
+            } else {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }
+        }];
+    }
+}
+
+- (void) clientFirstLogin {
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_CLIENT_FIRST_SIGNIN];
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    [[QMNetworkManager sharedManager] clientSignIn:url withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSError * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
+        [SVProgressHUD dismiss];
+        if (error == nil) {
+            [[DataManager sharedManager] setSessionID:responseObject];
+            [self performSegueWithIdentifier:kBranchSegue sender:[DataManager sharedManager].personalArray];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
+- (void) loginAndGotoBranch {
+    if ([[DataManager sharedManager] isLoggedIn]) {
+        if (isLoading) return;
+        isLoading = YES;
+        NSString* email = [DataManager sharedManager].user.email;
+        NSString* password = [DataManager sharedManager].user.password;
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+        @weakify(self)
+        [[QMNetworkManager sharedManager] userSignInWithEmail:email password:password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
+            [SVProgressHUD dismiss];
+            @strongify(self)
+            self->isLoading = NO;
+            if (success) {
+                [[DataManager sharedManager] setSessionID:responseObject];
+                
+                [self performSegueWithIdentifier:kBranchSegue sender:[DataManager sharedManager].personalArray];
+            } else {
+                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            }
+        }];
+    }
+}
+
+- (BOOL) checkPossibility {
+    if (![[DataManager sharedManager] isLoggedIn]) {
+        [QMAlert showAlertWithMessage:@"You cannot access this function. please subscribe dening user" actionSuccess:NO inViewController:self];
+        return NO;
+    }
+    
+    if (![[DataManager sharedManager] isClient]) {
+        [QMAlert showAlertWithMessage:@"Sorry, only client can use this function" actionSuccess:NO inViewController:self];
+        return NO;
+    }
+    return YES;
+}
+
 - (void) gotoUpload {
+    if (![self checkPossibility]) {
+        return;
+    }
+    
     [DataManager sharedManager].documentView = @"upload";
     [self loginAndGotoBranch];
 }
 
 - (void) getSharedFolder
 {
+    if (![self checkPossibility]) {
+        return;
+    }
+    
     [DataManager sharedManager].documentView = @"shared";
-    [self loginAndGotoBranch];
-}
-
-- (void) loginAndGotoBranch {
-    if ([DataManager sharedManager].user.password.length == 0) {
-        // go to login
-        [self performSegueWithIdentifier:kAuthSegue sender:nil];
-    } else if (![[DataManager sharedManager].user.userType isEqualToString:@""]) {
-        
-        if (isLoading) return;
-        isLoading = YES;
-        // denning or personal user can access the shared folder
-        
-        [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-        @weakify(self);
-        [[QMNetworkManager sharedManager] userSignInWithEmail:[DataManager sharedManager].user.email password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary* responseObject) {
-            
-            @strongify(self)
-            self->isLoading = NO;
-            [SVProgressHUD dismiss];
-            if (success){
-                [self manageSuccessResult:statusCode response:responseObject];
-            } else {
-                [self manageErrorResult:statusCode error:error];
-            }
-        }];
-    } else {
-        // Public user cannot access the shared folder
-        [QMAlert showAlertWithMessage:@"You cannot access this folder. please subscribe dening user" actionSuccess:NO inViewController:self];
-    }
-}
-
-- (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
-    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-    });
-}
-
-- (void) manageUserType {
-    if ([DataManager sharedManager].personalArray.count > 0) {
-        [self performSegueWithIdentifier:kBranchSegue sender:[DataManager sharedManager].personalArray];
-    } else {
-        [QMAlert showAlertWithMessage:@"Sorry, There is no shared document for you" actionSuccess:NO inViewController:self];
-    }
-}
-
-- (void) manageSuccessResult: (NSInteger) statusCode response:(NSDictionary*) response {
-    [[DataManager sharedManager] setUserInfoFromLogin:response];
-    if (statusCode == 250) {
-        [DataManager sharedManager].statusCode = [NSNumber numberWithInteger:statusCode];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self performSegueWithIdentifier:kNewDeviceSegue sender:nil];
-        });
-    } else if (statusCode == 280) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self performSegueWithIdentifier:kChangePasswordSegue sender:nil];
-        });
-    } else {
-        [self manageUserType];
-    }
-}
-
-- (void) manageErrorResult: (NSInteger) statusCode error: (NSError*) error {
-    NSString* errorString;
-    if (statusCode == 401) {
-        int value = [[QMNetworkManager sharedManager].invalidTry intValue];
-        [QMNetworkManager sharedManager].invalidTry = [NSNumber numberWithInt:value+1];
-        
-        if (value >= 10){
-            errorString = @"Locked for 1 minutes. invalid username and password more than 10 times...";
-            [QMNetworkManager sharedManager].startTrackTimeForLogin = [[NSDate alloc] init];
-        } else {
-            errorString = @"Invalid username and password";
-        }
-    }
-    [QMAlert showAlertWithMessage:errorString actionSuccess:NO inViewController:self];
+    [self clientLogin];
 }
 
 - (void) getLatestUpdatesWithCompletion: (void (^)(NSArray* array))completion
@@ -563,27 +578,19 @@ iCarouselDataSource, iCarouselDelegate>
         UINavigationController* navVC = segue.destinationViewController;
         EventViewController* eventVC = navVC.viewControllers.firstObject;
         eventVC.originalArray = sender;
-    }
-    
-    if ([segue.identifier isEqualToString:kNewsSegue]) {
+    } else if ([segue.identifier isEqualToString:kNewsSegue]) {
         UINavigationController* navVC = segue.destinationViewController;
         NewsViewController* newsVC = navVC.viewControllers.firstObject;
         newsVC.newsArray = sender;
-    }
-    
-    if ([segue.identifier isEqualToString:kUpdateSegue]) {
+    } else if ([segue.identifier isEqualToString:kUpdateSegue]) {
         UINavigationController* navVC = segue.destinationViewController;
         UpdateViewController* updatesVC = navVC.viewControllers.firstObject;
         updatesVC.updatesArray = sender;
-    }
-    
-    if ([segue.identifier isEqualToString:kBranchSegue]){
+    } else if ([segue.identifier isEqualToString:kBranchSegue]){
         UINavigationController* navVC = segue.destinationViewController;
         BranchViewController *branchVC = navVC.viewControllers.firstObject;
         branchVC.firmArray = sender;
-    }
-    
-    if ([segue.identifier isEqualToString:kChangeBranchSegue]){
+    } else if ([segue.identifier isEqualToString:kChangeBranchSegue]){
         ChangeBranchViewController* changeBranchVC = segue.destinationViewController;
         changeBranchVC.branchArray = sender;
     } else if ([segue.identifier isEqualToString:kAttendanceSegue]) {
@@ -598,6 +605,10 @@ iCarouselDataSource, iCarouselDelegate>
         
         QMChatVC *chatViewController = (QMChatVC *)chatNavigationController.topViewController;
         chatViewController.chatDialog = sender;
+    } else if ([segue.identifier isEqualToString:kPersonalFolderSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        FolderViewController* folderVC = (FolderViewController*)nav.topViewController;
+        folderVC.documentModel = sender;
     }
 }
 
