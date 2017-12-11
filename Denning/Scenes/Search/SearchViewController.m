@@ -1006,7 +1006,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     
     if ([segue.identifier isEqualToString:kFileNoteListSegue]){
         FileNoteList* vc = segue.destinationViewController;
-        vc.clientName = ((SearchResultModel*)sender).title;
+        vc.clientName = [DIHelpers separateFileNameAndNoFromTitle:((SearchResultModel*)sender).title][0];
         vc.key =((SearchResultModel*)sender).key;
     }
     

@@ -79,9 +79,8 @@
 }
 
 - (void) updateHeaderInfo {
-    NSArray* item = [DIHelpers separateFileNameAndNoFromTitle:_clientName];
-    _fileNo.text = item[0];
-    _fileName.text = item[1];
+    _fileNo.text = _key;
+    _fileName.text = _clientName;
 
     _page = @(1);
 }

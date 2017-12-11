@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *paymentRecordBtn;
+@property (weak, nonatomic) IBOutlet UIButton *fileFolderBtn;
+@property (weak, nonatomic) IBOutlet UIButton *fileNoteBtn;
 
 @end
 
@@ -27,6 +29,14 @@
     self.paymentRecordBtn.titleLabel.minimumScaleFactor = 0.5f;
     self.paymentRecordBtn.titleLabel.numberOfLines = 0;   
     self.paymentRecordBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    
+    self.fileFolderBtn.titleLabel.minimumScaleFactor = 0.5f;
+    self.fileFolderBtn.titleLabel.numberOfLines = 0;
+    self.fileFolderBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    
+    self.fileNoteBtn.titleLabel.minimumScaleFactor = 0.5f;
+    self.fileNoteBtn.titleLabel.numberOfLines = 0;
+    self.fileNoteBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
     
     self.titleLabel.copyingEnabled = YES;
     self.headerLabel.copyingEnabled = YES;

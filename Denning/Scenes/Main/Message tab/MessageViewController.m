@@ -10,7 +10,7 @@
 #import "QMDialogsViewController.h"
 #import "DenningContactViewController.h"
 #import "QMNewMessageViewController.h"
-//#import "ClientContactViewController.h"
+#import "GroupChatsViewController.h"
 #import "FavoriteViewController.h"
 #import "MainTabBarController.h"
 
@@ -18,8 +18,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     DIChatRecentTab,
     DIChatFavoriteTab,
     DIChatGroupTab,
-    DIChatStaffTab,
-    DIChatClientTab
+    DIChatStaffTab
 };
 
 @interface MessageViewController ()
@@ -87,7 +86,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 
 - (void) changeTitle {
     self.tabBarController.navigationItem.titleView = nil;
-    self.tabBarController.navigationItem.title = @"Chats";
+    self.tabBarController.navigationItem.title = @"Denning Chats";
 }
 
 - (void) prepareUI
@@ -95,13 +94,13 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     [self configureBackBtnWithImageName:nil withSelector:@selector(popupScreen:)];
     
     self.viewControllerIdentifiers = @[@"DenningContactViewController", @"FavoriteViewController",
-        @"QMNewMessageViewController", @"QMDialogsViewController"];
+        @"GroupChatsViewController", @"QMDialogsViewController"];
     
     QMDialogsViewController* recentVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"QMDialogsViewController"];
     
     FavoriteViewController *favVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"FavoriteViewController"];
     
-    QMNewMessageViewController *groupVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"QMNewMessageViewController"];
+    GroupChatsViewController *groupVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatsViewController"];
     
     DenningContactViewController *denningContactVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"DenningContactViewController"];
     self.viewControllers = @[recentVC, favVC, groupVC, denningContactVC];
@@ -122,6 +121,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message"] forState:UIControlStateNormal];
     [self.favoriteBtn setImage:[UIImage imageNamed:@"icon_favorite"] forState:UIControlStateNormal];
     [self.staffBtn setImage:[UIImage imageNamed:@"icon_contact"] forState:UIControlStateNormal];
+    [self.groupChatBtn setImage:[UIImage imageNamed:@"icon_group"] forState:UIControlStateNormal];
 }
 
 - (IBAction)recentTabClicked:(id)sender {
@@ -147,11 +147,13 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 }
 
 - (IBAction)groupTabClicked:(id)sender {
-    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
-        [self performSegueWithIdentifier:kGroupChatSegue sender:nil];
-    } else {
-        [QMAlert showAlertWithMessage:@"You can create a new group" actionSuccess:NO inViewController:self];
-    }
+    if (selectedIndex == DIChatGroupTab) return;
+    
+    [self addView:self.viewControllers[DIChatGroupTab]];
+    [self removeView:self.viewControllers[selectedIndex]];
+    selectedIndex = DIChatGroupTab;
+    [self setDefaultImageForButtons];
+    [self.groupChatBtn setImage:[UIImage imageNamed:@"icon_group_selected"] forState:UIControlStateNormal];
 }
 
 - (IBAction)staffTabClicked:(id)sender {

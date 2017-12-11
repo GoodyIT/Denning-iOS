@@ -25,6 +25,7 @@
 #import "CommonTextCell.h"
 #import "MatterNewLastCell.h"
 #import "NewContactHeaderCell.h"
+#import "ContactPartyCell.h"
 #import "Template.h"
 #import "FileUpload.h"
 #import "FileNoteList.h"
@@ -98,6 +99,7 @@ enum MATTERSECTION {
     [ContactHeaderCell registerForReuseInTableView:self.tableView];
     [CommonTextCell registerForReuseInTableView:self.tableView];
     [ContactCell registerForReuseInTableView:self.tableView];
+    [ContactPartyCell registerForReuseInTableView:self.tableView];
     [MatterLastCell registerForReuseInTableView:self.tableView];
     [MatterPropertyCell registerForReuseInTableView:self.tableView];
     [MatterNewLastCell registerForReuseInTableView:self.tableView];
@@ -408,13 +410,12 @@ enum MATTERSECTION {
         ClientModel* party = partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
         if ([[partySectionInfo objectForKey:@"party"] integerValue] == 0) {
             ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
-           [cell configureCellWithContact:partyGroup.partyGroupName text:party.name];
+           [cell configureCellWithContact:partyGroup.partyGroupName text:party.name.capitalizedString withLower:YES];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         } else {
-            CommonTextCell *cell = [tableView dequeueReusableCellWithIdentifier:[CommonTextCell cellIdentifier] forIndexPath:indexPath];
-            [cell configureCellWithString:party.name];
-            cell.valueLabel.font = [UIFont fontWithName:@"SFUIText-Light" size:13];
+            ContactPartyCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactPartyCell cellIdentifier] forIndexPath:indexPath];
+            cell.partyName.text = party.name.capitalizedString;
              cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
              return cell;
         }

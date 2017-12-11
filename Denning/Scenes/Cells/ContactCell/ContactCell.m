@@ -46,7 +46,7 @@
     if (isLower) {
         self.contentLabel.text = text;
     } else {
-        self.contentLabel.text = text;
+        self.contentLabel.text = text.uppercaseString;
     }
     
     self.value = text;

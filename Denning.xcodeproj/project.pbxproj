@@ -65,6 +65,9 @@
 		791282461FDC9BFF006E93E2 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791282451FDC9BFE006E93E2 /* CoreTelephony.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		791282481FDC9C0B006E93E2 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791282471FDC9C09006E93E2 /* Intents.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7912824A1FDC9C11006E93E2 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 791282491FDC9C11006E93E2 /* IntentsUI.framework */; };
+		7912824E1FDE749C006E93E2 /* GroupChatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912824C1FDE749C006E93E2 /* GroupChatsViewController.m */; };
+		791282531FDEB193006E93E2 /* ContactPartyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 791282511FDEB193006E93E2 /* ContactPartyCell.m */; };
+		791282541FDEB193006E93E2 /* ContactPartyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791282521FDEB193006E93E2 /* ContactPartyCell.xib */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -451,7 +454,6 @@
 		79D59A261E95245E00CD3821 /* QMMessageContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A221E95245E00CD3821 /* QMMessageContactListViewController.m */; };
 		79D59A271E95245E00CD3821 /* QMNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A241E95245E00CD3821 /* QMNewMessageViewController.m */; };
 		79D59A2B1E953B0400CD3821 /* ChatContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2A1E953B0400CD3821 /* ChatContactModel.m */; };
-		79D59A2E1E955B4900CD3821 /* ClientContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2D1E955B4900CD3821 /* ClientContactViewController.m */; };
 		79D59A311E955B6D00CD3821 /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A301E955B6D00CD3821 /* FavoriteViewController.m */; };
 		79D929CC1E8DA27A000A53D2 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929C91E8DA27A000A53D2 /* icon_add.png */; };
 		79D929CD1E8DA27A000A53D2 /* icon_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */; };
@@ -1250,6 +1252,11 @@
 		791282451FDC9BFE006E93E2 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		791282471FDC9C09006E93E2 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		791282491FDC9C11006E93E2 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		7912824C1FDE749C006E93E2 /* GroupChatsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupChatsViewController.m; sourceTree = "<group>"; };
+		7912824D1FDE749C006E93E2 /* GroupChatsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupChatsViewController.h; sourceTree = "<group>"; };
+		791282501FDEB193006E93E2 /* ContactPartyCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactPartyCell.h; sourceTree = "<group>"; };
+		791282511FDEB193006E93E2 /* ContactPartyCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactPartyCell.m; sourceTree = "<group>"; };
+		791282521FDEB193006E93E2 /* ContactPartyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactPartyCell.xib; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -1740,8 +1747,6 @@
 		79D59A241E95245E00CD3821 /* QMNewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNewMessageViewController.m; sourceTree = "<group>"; };
 		79D59A291E953B0400CD3821 /* ChatContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContactModel.h; sourceTree = "<group>"; };
 		79D59A2A1E953B0400CD3821 /* ChatContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactModel.m; sourceTree = "<group>"; };
-		79D59A2C1E955B4900CD3821 /* ClientContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientContactViewController.h; sourceTree = "<group>"; };
-		79D59A2D1E955B4900CD3821 /* ClientContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientContactViewController.m; sourceTree = "<group>"; };
 		79D59A2F1E955B6D00CD3821 /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
 		79D59A301E955B6D00CD3821 /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
 		79D929C91E8DA27A000A53D2 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
@@ -3255,6 +3260,25 @@
 			path = "Folder screen";
 			sourceTree = "<group>";
 		};
+		7912824B1FDE749C006E93E2 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				7912824C1FDE749C006E93E2 /* GroupChatsViewController.m */,
+				7912824D1FDE749C006E93E2 /* GroupChatsViewController.h */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
+		7912824F1FDEB180006E93E2 /* ContactPartyCell */ = {
+			isa = PBXGroup;
+			children = (
+				791282501FDEB193006E93E2 /* ContactPartyCell.h */,
+				791282511FDEB193006E93E2 /* ContactPartyCell.m */,
+				791282521FDEB193006E93E2 /* ContactPartyCell.xib */,
+			);
+			path = ContactPartyCell;
+			sourceTree = "<group>";
+		};
 		791360411FCDB3480022E80F /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -3997,10 +4021,10 @@
 		79556DBD1E9323B700A16CB8 /* Message tab */ = {
 			isa = PBXGroup;
 			children = (
+				7912824B1FDE749C006E93E2 /* Groups */,
 				79D599EB1E94735000CD3821 /* Recent View */,
 				79D599EA1E94735000CD3821 /* Favorite View */,
 				79D599E91E94735000CD3821 /* Denning Contact View */,
-				79D599E81E94735000CD3821 /* Client Contact View */,
 				79D59A1C1E95245E00CD3821 /* QMNewMessageViewController */,
 				79556DBE1E9323D000A16CB8 /* Message.storyboard */,
 				79556DC01E932F7700A16CB8 /* MessageViewController.h */,
@@ -4358,15 +4382,6 @@
 				79CE7C811EA78E20001A8101 /* NewLedgerModel.m */,
 			);
 			path = NewLedgerModel;
-			sourceTree = "<group>";
-		};
-		79D599E81E94735000CD3821 /* Client Contact View */ = {
-			isa = PBXGroup;
-			children = (
-				79D59A2C1E955B4900CD3821 /* ClientContactViewController.h */,
-				79D59A2D1E955B4900CD3821 /* ClientContactViewController.m */,
-			);
-			path = "Client Contact View";
 			sourceTree = "<group>";
 		};
 		79D599E91E94735000CD3821 /* Denning Contact View */ = {
@@ -6254,6 +6269,7 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				7912824F1FDEB180006E93E2 /* ContactPartyCell */,
 				79161D0C1FCBA5E00025BCB8 /* MatterNewLastCell */,
 				79161CF61FC959DB0025BCB8 /* AddLastThreeButtonsCell */,
 				79161CB01FC748F80025BCB8 /* ApprovalRecordCell */,
@@ -9128,6 +9144,7 @@
 				960758AE1F0198A9008F9C69 /* EmptyHeaderCell.xib in Resources */,
 				7931B4CF1EA851B00090BDE0 /* menu_overview@2x.png in Resources */,
 				79EC0EDE1E8C85F100320A28 /* icon_settings@3x.png in Resources */,
+				791282541FDEB193006E93E2 /* ContactPartyCell.xib in Resources */,
 				797ED5131EAEDA86009C20C4 /* icon_message_red@3x.png in Resources */,
 				96D176821F1FE739008734DA /* FileNoteCell.xib in Resources */,
 				79D929CD1E8DA27A000A53D2 /* icon_add@2x.png in Resources */,
@@ -9278,6 +9295,7 @@
 				"${BUILT_PRODUCTS_DIR}/JVFloatLabeledTextField/JVFloatLabeledTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/M13BadgeView/M13BadgeView.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/MEVFloatingButton/MEVFloatingButton.framework",
 				"${BUILT_PRODUCTS_DIR}/MIBadgeButton/MIBadgeButton.framework",
 				"${BUILT_PRODUCTS_DIR}/MPGNotification/MPGNotification.framework",
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
@@ -9337,6 +9355,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JVFloatLabeledTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13BadgeView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MEVFloatingButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MIBadgeButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MPGNotification.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
@@ -9553,6 +9572,7 @@
 				791B50031FD0F882003C30EC /* DashboardQuotation.m in Sources */,
 				79FD2D021E428526005978E3 /* MainTabBarController.m in Sources */,
 				96E094911FBDBE9800E5FA58 /* OfficeDiaryModel.m in Sources */,
+				791282531FDEB193006E93E2 /* ContactPartyCell.m in Sources */,
 				7993767E1FC0D5C5007E35CE /* CaseTypeViewController.m in Sources */,
 				962083451EDE151300BB595C /* BankCashCell.m in Sources */,
 				9636DCFC1F046A04008DDA41 /* DashboardDueTask.m in Sources */,
@@ -9618,6 +9638,7 @@
 				960758A41F015B61008F9C69 /* MasterTitleModel.m in Sources */,
 				793FF1AE1EBF893C001F83A5 /* ClientModel.m in Sources */,
 				79FBDF9F1E30421A00448FE3 /* NSArray+Intersection.m in Sources */,
+				7912824E1FDE749C006E93E2 /* GroupChatsViewController.m in Sources */,
 				962082B71ED3D03800BB595C /* AddDiaryViewController.m in Sources */,
 				79FBDFE61E30421A00448FE3 /* REMessageUI.m in Sources */,
 				7993767A1FC0D3DE007E35CE /* CaseTypeModel.m in Sources */,
@@ -9766,7 +9787,6 @@
 				96A73A931F1B1DE000B97156 /* ProfitLossDetail.m in Sources */,
 				79D929EC1E8DDD8D000A53D2 /* UpdateModel.m in Sources */,
 				79D59A261E95245E00CD3821 /* QMMessageContactListViewController.m in Sources */,
-				79D59A2E1E955B4900CD3821 /* ClientContactViewController.m in Sources */,
 				7920E7B11EA0129F002FEFF3 /* ChatUserModel.m in Sources */,
 				96A73AAB1F1C9D2100B97156 /* StaffOnlineModel.m in Sources */,
 				962082F21ED7B9E200BB595C /* LineGraphCell.m in Sources */,

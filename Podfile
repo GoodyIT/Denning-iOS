@@ -18,6 +18,8 @@ target 'Denning' do
   pod 'libextobjc/EXTKeyPathCoding', '~> 0.4.1'
   pod 'NYTPhotoViewer', '~> 1.1.0'
   
+  pod 'MEVFloatingButton'
+  
   pod 'ChameleonFramework'
   pod 'STPopup'
   pod 'DZNPhotoPickerController/Editor'

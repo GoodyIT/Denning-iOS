@@ -3289,7 +3289,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Lm-Pz-sQx">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwl-Ho-aNV">
                                         <rect key="frame" x="15" y="30" width="38" height="32"/>
@@ -3310,13 +3310,13 @@
                                 <constraints>
                                     <constraint firstItem="13F-HV-97Q" firstAttribute="top" secondItem="0Lm-Pz-sQx" secondAttribute="top" constant="33" id="JZv-b1-JOn"/>
                                     <constraint firstItem="13F-HV-97Q" firstAttribute="centerX" secondItem="0Lm-Pz-sQx" secondAttribute="centerX" id="T1L-lD-xWs"/>
-                                    <constraint firstAttribute="height" constant="110" id="Vr9-FB-5ow"/>
+                                    <constraint firstAttribute="height" constant="100" id="Vr9-FB-5ow"/>
                                     <constraint firstItem="xwl-Ho-aNV" firstAttribute="top" secondItem="0Lm-Pz-sQx" secondAttribute="top" constant="30" id="eXy-N1-mvu"/>
                                     <constraint firstItem="xwl-Ho-aNV" firstAttribute="leading" secondItem="0Lm-Pz-sQx" secondAttribute="leading" constant="15" id="jlh-wv-gev"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="crA-BF-GcV">
-                                <rect key="frame" x="0.0" y="110" width="375" height="557"/>
+                                <rect key="frame" x="0.0" y="100" width="375" height="567"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CodeDescCell" id="DQB-Ke-g7U">
@@ -3370,7 +3370,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="weT-2s-rgZ">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHD-fa-qMm">
                                         <rect key="frame" x="15" y="30" width="38" height="32"/>
@@ -3396,20 +3396,29 @@
                                             <action selector="gotoLeaveRecords:" destination="bVk-4n-s2C" eventType="touchUpInside" id="HgW-EA-Zze"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73E-U3-bBO">
+                                        <rect key="frame" x="188" y="58" width="0.0" height="0.0"/>
+                                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="BwY-NX-0YN" secondAttribute="trailing" constant="8" id="6E7-wn-nke"/>
                                     <constraint firstItem="e5p-Be-ege" firstAttribute="centerX" secondItem="weT-2s-rgZ" secondAttribute="centerX" id="CSe-xA-5fB"/>
+                                    <constraint firstItem="73E-U3-bBO" firstAttribute="centerX" secondItem="weT-2s-rgZ" secondAttribute="centerX" id="DqC-bD-rQB"/>
+                                    <constraint firstItem="e5p-Be-ege" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dHD-fa-qMm" secondAttribute="trailing" constant="5" id="PNQ-s2-i9M"/>
                                     <constraint firstItem="BwY-NX-0YN" firstAttribute="centerY" secondItem="e5p-Be-ege" secondAttribute="centerY" id="TMF-OU-bkA"/>
                                     <constraint firstItem="e5p-Be-ege" firstAttribute="top" secondItem="weT-2s-rgZ" secondAttribute="top" constant="33" id="UMQ-c4-2nR"/>
                                     <constraint firstItem="dHD-fa-qMm" firstAttribute="top" secondItem="weT-2s-rgZ" secondAttribute="top" constant="30" id="Xw8-j5-osr"/>
-                                    <constraint firstAttribute="height" constant="80" id="rNq-uC-EHa"/>
+                                    <constraint firstAttribute="height" constant="90" id="rNq-uC-EHa"/>
+                                    <constraint firstItem="73E-U3-bBO" firstAttribute="top" secondItem="e5p-Be-ege" secondAttribute="bottom" constant="1" id="wNz-QT-yKk"/>
                                     <constraint firstItem="dHD-fa-qMm" firstAttribute="leading" secondItem="weT-2s-rgZ" secondAttribute="leading" constant="15" id="xvn-82-vmq"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4fr-Hn-8AW">
-                                <rect key="frame" x="0.0" y="80" width="375" height="587"/>
+                                <rect key="frame" x="0.0" y="90" width="375" height="577"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CodeDescCell" id="dco-Zh-h0i">
@@ -3442,6 +3451,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="staffName" destination="73E-U3-bBO" id="4Nd-wr-7HM"/>
                         <outlet property="tableView" destination="4fr-Hn-8AW" id="86w-L8-7ng"/>
                         <segue destination="c6Q-4H-Wbi" kind="show" identifier="ListWithCodeSegue" id="ZqY-9l-7S0"/>
                         <segue destination="tvE-jo-JoY" kind="show" identifier="ContactGetListSegue" id="5Wy-Sv-1XE"/>

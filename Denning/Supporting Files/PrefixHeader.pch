@@ -54,6 +54,7 @@
 #import "HMSegmentedControl.h"
 #import "QMImageView.h"
 #import "QMBadgeView.h"
+#import "UIScrollView+FloatingButton.h"
 
 #import "QMCore.h"
 #import "QMLog.h"

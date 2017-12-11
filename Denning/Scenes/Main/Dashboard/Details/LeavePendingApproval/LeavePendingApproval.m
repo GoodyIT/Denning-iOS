@@ -45,6 +45,7 @@ enum SECTIONS {
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray<NSArray*> *listOfValsForApp;
+@property (weak, nonatomic) IBOutlet UILabel *staffName;
 @property (nonatomic, strong) NSArray *headers;
 @property (strong, nonatomic) NSNumber* page;
 
@@ -156,6 +157,8 @@ enum SECTIONS {
     dateApproved = [DIHelpers getDateInShortForm:[DIHelpers todayWithTime]];
     approvedBy = _model.clsApprovedBy.strName;
     approvedByCode = _model.clsApprovedBy.attendanceCode;
+    
+    _staffName.text = _submittedBy;
     
     _listOfValsForApp = @[@[@"Start Date", @"End Date", @"Type Of Leave", @"No. of Days", @"Staff Remarks", @"Submitted By"], @[@"Status", @"Reason", @"Approved By", @"Date Approved", @"Type of Leave Approved", @"Submit"]];
     _headers = @[@"Application Details", @"Approval Details"];
