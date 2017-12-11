@@ -1502,14 +1502,14 @@ QMUsersServiceDelegate
 
 - (IBAction)onlineTitlePressed {
     
-    if (self.chatDialog.type == QBChatDialogTypePrivate) {
-        
-        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
-    }
-    else {
-        
-        [self performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:self.chatDialog];
-    }
+//    if (self.chatDialog.type == QBChatDialogTypePrivate) {
+//
+//        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
+//    }
+//    else {
+//
+//        [self performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:self.chatDialog];
+//    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

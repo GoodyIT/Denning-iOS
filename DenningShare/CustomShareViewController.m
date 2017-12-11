@@ -25,6 +25,10 @@
 @interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource, UIDocumentInteractionControllerDelegate>
 {
     NSString* fileNo1, *contactKey, *fileKey;
+    NSURL* openedItem;
+    NSString* fileType;
+    NSString* base64Data;
+    NSNumber* fileLength;
     NSURLSession* mySession;
     NSString* userType, *customString;
     NSUserDefaults* defaults;
@@ -62,6 +66,13 @@
     [self prepareUI];
 
     [self configureFileNameAutoComplete];
+    
+    [self registerForKeyboardNotifications];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -99,6 +110,69 @@ UIColor *QMSecondaryApplicationColor() {
     return color;
 }
 
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    NSNumber* durationValue  = info[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    
+
+    NSInteger options = UIViewAnimationOptionCurveLinear;
+    
+    [UIView animateWithDuration:animationDuration delay:0 options:options animations:^{
+        self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y - kbSize.height/2, self.view.frame.size.width, self.view.frame.size.height);
+    } completion:nil];
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    
+    NSNumber* durationValue  = info[UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration = durationValue.doubleValue;
+    
+    
+    NSInteger options = UIViewAnimationOptionCurveLinear;
+    
+    [UIView animateWithDuration:animationDuration delay:0 options:options animations:^{
+        self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y + kbSize.height/2, self.view.frame.size.width, self.view.frame.size.height);
+    } completion:nil];
+}
+
+- (void) getDataFromItem:(NSURL*) item
+{
+    NSData* imgData;
+    if ([(NSObject*)item isKindOfClass:[NSURL class]]) {
+        imgData = [NSData dataWithContentsOfURL:item];
+    }
+    
+    if ([(NSObject*)item isKindOfClass:[UIImage class]]) {
+        imgData = UIImagePNGRepresentation((UIImage*)item);
+    }
+    
+    fileLength = [NSNumber numberWithInteger:imgData.length];
+
+    base64Data = [[NSData dataWithContentsOfFile:(NSString*)item] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+}
+
 - (void) prepareUI {
     [[UISearchBar appearance] setSearchBarStyle:UISearchBarStyleMinimal];
     [[UISearchBar appearance] setBarTintColor:[UIColor whiteColor]];
@@ -110,25 +184,25 @@ UIColor *QMSecondaryApplicationColor() {
     for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments) {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
+                [self getDataFromItem:(NSURL*)item];
                 self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:(NSString*)item ]];
+                fileType = [(NSString*)item pathExtension];
             }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypePDF]){
-            
+            self.imageView.image = [UIImage imageNamed:@"share_pdf"];
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypePDF options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
-                NSURL* document = [[NSURL alloc] initFileURLWithPath:(NSString*)item];
-                CGRect rect1 = self.imageView.frame;
-                UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
-                documentInteractionController.delegate = self;
-                [documentInteractionController  presentOptionsMenuFromRect:rect1 inView:self.imageView animated:YES];
+                openedItem = (NSURL*)item;
+                [self getDataFromItem:(NSURL*)item];
+                fileType = [(NSString*)item pathExtension];
             }];
         }
     }
     
     fileNo1 = @"Transit Folder";
-    self.activity.hidden = YES;
     _activity.hidesWhenStopped = YES;
     _activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     _activity.backgroundColor = [UIColor grayColor];
+    
     self.sendBtn.enabled = YES;
     self.segmented.hidden = YES;
     NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
@@ -150,6 +224,17 @@ UIColor *QMSecondaryApplicationColor() {
         self.topConstraint.constant = 16;
         self.bottomConstraint.constant = 21;
     }
+    
+    // Add Tap to imageview
+    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapImage)];
+    gesture.numberOfTapsRequired = 1;
+    [_imageView addGestureRecognizer:gesture];
+}
+
+- (void) didTapImage {
+    if ([fileType isEqualToString:@"pdf"]) {
+        [self displayDocument:openedItem];
+    }
 }
 
 - (void) configureFileNameAutoComplete {
@@ -159,13 +244,13 @@ UIColor *QMSecondaryApplicationColor() {
     _fileName.backgroundColor = [UIColor whiteColor];
     [_fileName registerAutoCompleteCellClass:[DEMOCustomAutoCompleteCell class]
                       forCellReuseIdentifier:@"CustomCellId"];
-    _fileName.maximumNumberOfAutoCompleteRows = 7;
+    _fileName.maximumNumberOfAutoCompleteRows = 3;
     _fileName.applyBoldEffectToAutoCompleteSuggestions = YES;
     _fileName.showAutoCompleteTableWhenEditingBegins = YES;
     _fileName.disableAutoCompleteTableUserInteractionWhileFetching = YES;
     [_fileName setAutoCompleteRegularFontName:@"Helvetica"];
     [_fileName setAutoCompleteBoldFontName:@"Helvetica-Bold"];
-    [_fileName setAutoCompleteFontSize:15];
+    [_fileName setAutoCompleteFontSize:13];
     
     UIToolbar* _accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     _accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
@@ -176,6 +261,7 @@ UIColor *QMSecondaryApplicationColor() {
                              [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(handleTap)]];
     [_accessoryView sizeToFit];
     _fileName.inputAccessoryView = _accessoryView;
+    _remarks.inputAccessoryView = _accessoryView;
 }
 
 - (void)handleTap {
@@ -185,6 +271,18 @@ UIColor *QMSecondaryApplicationColor() {
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) displayDocument:(NSURL*) document
+{
+    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
+    documentInteractionController.delegate = self;
+    [documentInteractionController presentPreviewAnimated:YES];
+}
+
+- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
+{
+    return self;
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
@@ -298,64 +396,48 @@ UIColor *QMSecondaryApplicationColor() {
     if (isLoading) return;
     isLoading = YES;
     
-    for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments) {
-        if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage]) {
-            [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
-                NSData* imgData;
-                if ([(NSObject*)item isKindOfClass:[NSURL class]]) {
-                    imgData = [NSData dataWithContentsOfURL:(NSURL*) item];
-                }
-                
-                if ([(NSObject*)item isKindOfClass:[UIImage class]]) {
-                    imgData = UIImagePNGRepresentation((UIImage*)item);
-                }
-                
-                if (self.fileName.text.length == 0) {
-                                        [self showAlertWithMessage:@"Please input the file name" actionSuccess:NO inViewController:self];
-                    return;
-                }
-                
-                self.imageView.image = [UIImage imageWithData:imgData];
-                
-                NSNumber* length = [NSNumber numberWithInteger:imgData.length];
-                NSDictionary* params = @{@"fileNo1":fileNo1,
-                                         @"FileName":[self.fileName.text stringByAppendingString:@".jpg"],
-                                         @"MimeType":@"jpg",
-                                         @"dateCreate":[self todayWithTime],
-                                         @"dateModify":[self todayWithTime],
-                                         @"fileLength":length,
-                                         @"remarks":self.remarks.text,
-                                         @"base64":[[NSData dataWithContentsOfFile:(NSString*)item] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]
-                                         };
-                
-                // Create the request.
-                NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[(NSString*)[defaults valueForKey:@"api"] stringByAppendingString:self.url]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
-                
-                // Specify that it will be a POST request
-                [request setHTTPMethod:  @"POST"];
-                
-                // This is how we set header fields
-                [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-                [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-                [request setValue:[defaults valueForKey:@"sessionID"]  forHTTPHeaderField:@"webuser-sessionid"];
-                [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
-                
-                // Convert your data and set your request's HTTPBody property
-                //                NSString *stringData = @"some data";
-                NSData *requestBodyData = [NSJSONSerialization dataWithJSONObject:params
-                                                                          options:0 error:&error];
-                //                NSString* bodyStr = [[NSString alloc] initWithData:requestBodyData encoding:NSUTF8StringEncoding];
-                request.HTTPBody = requestBodyData;
-                NSURLSession* session = [self configureMySession];
-                
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    NSURLSessionDataTask *task = [session
-                                                  dataTaskWithRequest: request];
-                    [task resume];
-                });
-            }];
-        }
+    if (self.fileName.text.length == 0) {
+        [self showAlertWithMessage:@"Please input the file name" actionSuccess:NO inViewController:self];
+        return;
     }
+    
+    NSString* name = [NSString stringWithFormat:@"%@.%@", self.fileName.text, fileType];
+    
+    NSDictionary* params = @{@"fileNo1":fileNo1,
+                             @"FileName":name,
+                             @"MimeType":@"jpg",
+                             @"dateCreate":[self todayWithTime],
+                             @"dateModify":[self todayWithTime],
+                             @"fileLength":fileLength,
+                             @"remarks":self.remarks.text,
+                             @"base64":base64Data
+                             };
+    
+    // Create the request.
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[(NSString*)[defaults valueForKey:@"api"] stringByAppendingString:self.url]] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
+    
+    // Specify that it will be a POST request
+    [request setHTTPMethod:  @"POST"];
+    
+    // This is how we set header fields
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:[defaults valueForKey:@"sessionID"]  forHTTPHeaderField:@"webuser-sessionid"];
+    [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
+    
+    // Convert your data and set your request's HTTPBody property
+    //                NSString *stringData = @"some data";
+    NSData *requestBodyData = [NSJSONSerialization dataWithJSONObject:params
+                                                              options:0 error:nil];
+    //                NSString* bodyStr = [[NSString alloc] initWithData:requestBodyData encoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestBodyData;
+    NSURLSession* session = [self configureMySession];
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        NSURLSessionDataTask *task = [session
+                                      dataTaskWithRequest: request];
+        [task resume];
+    });
 }
 
 - (void)URLSession:(NSURLSession *)session
@@ -377,7 +459,6 @@ didReceiveData:(NSData *)data{
 didCompleteWithError:(NSError *)error{
     NSLog(@"%s",__func__);
     [self.activity stopAnimating];
-    self.activity.hidden = YES;
     isLoading = NO;
     if (!error) {
         [self showAlertWithMessage:@"Successfully uploaded." actionSuccess:YES inViewController:self];

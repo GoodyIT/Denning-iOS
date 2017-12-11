@@ -68,6 +68,12 @@
 		7912824E1FDE749C006E93E2 /* GroupChatsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912824C1FDE749C006E93E2 /* GroupChatsViewController.m */; };
 		791282531FDEB193006E93E2 /* ContactPartyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 791282511FDEB193006E93E2 /* ContactPartyCell.m */; };
 		791282541FDEB193006E93E2 /* ContactPartyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 791282521FDEB193006E93E2 /* ContactPartyCell.xib */; };
+		791282581FDEE594006E93E2 /* share_pdf.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282551FDEE58F006E93E2 /* share_pdf.png */; };
+		791282591FDEE594006E93E2 /* share_pdf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282561FDEE590006E93E2 /* share_pdf@2x.png */; };
+		7912825A1FDEE594006E93E2 /* share_pdf@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282571FDEE590006E93E2 /* share_pdf@3x.png */; };
+		7912825B1FDEE826006E93E2 /* share_pdf.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282551FDEE58F006E93E2 /* share_pdf.png */; };
+		7912825C1FDEE826006E93E2 /* share_pdf@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282561FDEE590006E93E2 /* share_pdf@2x.png */; };
+		7912825D1FDEE826006E93E2 /* share_pdf@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282571FDEE590006E93E2 /* share_pdf@3x.png */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -1257,6 +1263,9 @@
 		791282501FDEB193006E93E2 /* ContactPartyCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactPartyCell.h; sourceTree = "<group>"; };
 		791282511FDEB193006E93E2 /* ContactPartyCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactPartyCell.m; sourceTree = "<group>"; };
 		791282521FDEB193006E93E2 /* ContactPartyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactPartyCell.xib; sourceTree = "<group>"; };
+		791282551FDEE58F006E93E2 /* share_pdf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_pdf.png; sourceTree = "<group>"; };
+		791282561FDEE590006E93E2 /* share_pdf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_pdf@2x.png"; sourceTree = "<group>"; };
+		791282571FDEE590006E93E2 /* share_pdf@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_pdf@3x.png"; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -6631,6 +6640,9 @@
 		79FBE14B1E30F7F500448FE3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				791282551FDEE58F006E93E2 /* share_pdf.png */,
+				791282561FDEE590006E93E2 /* share_pdf@2x.png */,
+				791282571FDEE590006E93E2 /* share_pdf@3x.png */,
 				791360531FCDEF240022E80F /* phone-icon.png */,
 				791360541FCDEF240022E80F /* phone-icon@2x.png */,
 				791360551FCDEF240022E80F /* phone-icon@3x.png */,
@@ -8878,6 +8890,7 @@
 				96821F401F1DC84200F28708 /* CompletionTrackingCell.xib in Resources */,
 				96EAEB9E1F21B0CC004F75FC /* comming_soon@2x.png in Resources */,
 				7931B4C51EA851B00090BDE0 /* menu_home.png in Resources */,
+				791282581FDEE594006E93E2 /* share_pdf.png in Resources */,
 				96A73A991F1B240900B97156 /* icon_prev@2x.png in Resources */,
 				79EC0DC01E874ED700320A28 /* law-firm.jpg in Resources */,
 				79734F9B1EBAA11500647215 /* icon_delivery.png in Resources */,
@@ -8939,6 +8952,7 @@
 				7931B4C91EA851B00090BDE0 /* menu_logout@2x.png in Resources */,
 				79734FAD1EBAABA900647215 /* icon_calculator.png in Resources */,
 				96A73ABF1F1CD77900B97156 /* StaffOnlineHeaderCell.xib in Resources */,
+				7912825A1FDEE594006E93E2 /* share_pdf@3x.png in Resources */,
 				795DF2481E6E4C3F006D617D /* Lato-LightItalic.ttf in Resources */,
 				793FF1961EBD4BDF001F83A5 /* icon_receipt.png in Resources */,
 				9636DD0B1F04D340008DDA41 /* myDueTaskCell.xib in Resources */,
@@ -9078,6 +9092,7 @@
 				79161D251FCC018A0025BCB8 /* icon_group@2x.png in Resources */,
 				9636DCDE1F03C6C8008DDA41 /* icon_db_trial_balance@3x.png in Resources */,
 				7920E7AA1E9FA747002FEFF3 /* icon_staff_selected@2x.png in Resources */,
+				791282591FDEE594006E93E2 /* share_pdf@2x.png in Resources */,
 				964206201F269B8B008AC798 /* icon_down@2x.png in Resources */,
 				961D46371F22CF0900B8714D /* splash_logo_white@2x.png in Resources */,
 				797ED5211EAF259B009C20C4 /* icon_location@2x.png in Resources */,
@@ -9945,6 +9960,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7912825B1FDEE826006E93E2 /* share_pdf.png in Sources */,
+				7912825C1FDEE826006E93E2 /* share_pdf@2x.png in Sources */,
+				7912825D1FDEE826006E93E2 /* share_pdf@3x.png in Sources */,
 				791B4FF21FCFA266003C30EC /* AddressModel.h in Sources */,
 				791B4FF31FCFA266003C30EC /* AddressModel.m in Sources */,
 				791B4FF01FCF9E24003C30EC /* StaffModel.h in Sources */,
