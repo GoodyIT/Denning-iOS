@@ -524,10 +524,10 @@ QMUsersServiceDelegate
         
         if (![QMCore.instance.contactManager isFriendWithUserID:[self.chatDialog opponentID]]) {
             
-            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_SEND_MESSAGES", nil)
-                            actionSuccess:NO
-                         inViewController:self];
-            return NO;
+//            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_SEND_MESSAGES", nil)
+//                            actionSuccess:NO
+//                         inViewController:self];
+            return YES;
         }
     }
     
@@ -722,7 +722,6 @@ QMUsersServiceDelegate
         [self sendAttachmentMessageWithImage:attachmentImage];
         [self finishSendingMessageAnimated:YES];
     }
-    
 }
 
 - (void)didPressSendButton:(UIButton *)button
@@ -1704,6 +1703,10 @@ QMUsersServiceDelegate
     [self.navigationItem setRightBarButtonItems:@[audioCallBarButtonItem] animated:YES];
 }
 
+- (void) groupCall {
+    [QMCore.instance.callManager callToUserWithIDs:[_chatDialog.occupantIDs mutableCopy] conferenceType:QBRTCConferenceTypeAudio];
+}
+
 - (void)configureGroupChatAvatar {
     
     self.imageBarButtonItem = [[QMImageBarButtonItem alloc] init];
@@ -1712,6 +1715,7 @@ QMUsersServiceDelegate
     void(^onTapBlock)(QMImageView *) = ^(QMImageView __unused *imageView) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:strongSelf.chatDialog];
+//        [self groupCall];
     };
     
     self.imageBarButtonItem.onTapHandler = onTapBlock;

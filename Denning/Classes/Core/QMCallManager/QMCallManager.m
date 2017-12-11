@@ -50,6 +50,63 @@ QBRTCClientDelegate
 
 //MARK: - Call managing
 
+// Group call
+
+ - (void)callToUserWithIDs:(NSMutableArray *)opponentsIDs conferenceType:(QBRTCConferenceType)conferenceType
+{
+    NSInteger myID = [QBSession currentSession].currentUser.ID;
+    if ([opponentsIDs containsObject:@(myID)]) {
+        [opponentsIDs removeObject:@(myID)];
+    }
+    
+    @weakify(self);
+    [self checkPermissionsWithConferenceType:conferenceType completion:^(BOOL granted) {
+        
+        @strongify(self);
+        
+        if (!granted) {
+            // no permissions
+            return;
+        }
+        
+        if (self.session != nil) {
+            // session in progress
+            return;
+        }
+        
+        self.session = [[QBRTCClient instance] createNewSessionWithOpponents:opponentsIDs
+                                                          withConferenceType:conferenceType];
+        
+        if (self.session == nil) {
+            // failed to create session
+            return;
+        }
+        
+        [self startPlayingCallingSound];
+        
+        // instantiating view controller
+        QMCallState callState = conferenceType == QBRTCConferenceTypeVideo ? QMCallStateOutgoingVideoCall : QMCallStateOutgoingAudioCall;
+        
+        QBUUser *opponentUser = [self.serviceManager.usersService.usersMemoryStorage userWithID:[opponentsIDs.firstObject integerValue]];
+        QBUUser *currentUser = self.serviceManager.currentProfile.userData;
+
+        NSString *callerName = currentUser.fullName ?: [NSString stringWithFormat:@"%tu", currentUser.ID];
+        NSString *pushText = [NSString stringWithFormat:@"%@ %@", callerName, NSLocalizedString(@"QM_STR_IS_CALLING_YOU", nil)];
+
+        [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
+        
+        
+        [self prepareCallWindow];
+        
+        self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
+        
+        [self.session startCall:nil];
+        self.hasActiveCall = YES;
+    }];
+}
+
+// Private call
+
 - (void)callToUserWithID:(NSUInteger)userID conferenceType:(QBRTCConferenceType)conferenceType {
     
     @weakify(self);

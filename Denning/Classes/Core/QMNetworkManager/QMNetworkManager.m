@@ -240,12 +240,21 @@
     }];
 }
 
-- (void) clientSignIn: (NSString*) url withCompletion: (void(^)(BOOL success, NSDictionary * responseObject, NSError* error,  DocumentModel* doumentModel)) completion
+- (void) staffSignIn: (NSString*) url password:password withCompletion: (void(^)(NSDictionary * responseObject, NSError* error)) completion
 {
-    NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email, @"password": [DataManager sharedManager].user.password, @"sessionID": [DataManager sharedManager].user.sessionID}];
+    NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email, @"password": password, @"sessionID": [DataManager sharedManager].user.sessionID}];
+    
+    [self setPublicHTTPHeader];
+    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion(result, error);
+    }];
+}
+
+- (void) clientSignIn: (NSString*) url password:password withCompletion: (void(^)(BOOL success, NSDictionary * responseObject, NSError* error,  DocumentModel* doumentModel)) completion
+{
+    NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": [DataManager sharedManager].user.email, @"password": password, @"sessionID": [DataManager sharedManager].user.sessionID}];
 
     [self setPublicHTTPHeader];
-    
     [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
          completion(YES, result, error, [DocumentModel getDocumentFromResponse:result]);
     }];
@@ -495,8 +504,8 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) uploadFileWithUrl:(NSString*) url params:(NSDictionary*) params WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self sendPostWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+//    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
+    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion((NSArray*)result, error);
     }];
 }
@@ -1119,6 +1128,22 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }];
 }
 
+- (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
+}
+
+- (void) displaySessionExpireMessage {
+    [QMAlert showAlertWithMessage:@"Session expired. Please log in again." actionSuccess:NO inViewController:[self topMostController]];
+}
+
 /*
  Leave Application
  */
@@ -1137,6 +1162,10 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
                                                          downloadProgress:nil
                                                                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
                                                                       if (completion != nil) {                                 completion(responseObject, nil, task);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                          if (((NSHTTPURLResponse *)task.response).statusCode == 410) { // Session expired.
+                                                                              [self displaySessionExpireMessage];
+                                                                              
+                                                                          }
                                                                           if  (completion != nil)
                                                                           {
                                                                               completion(nil, error, task);

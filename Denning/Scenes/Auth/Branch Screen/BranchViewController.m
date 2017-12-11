@@ -11,6 +11,9 @@
 #import "FolderViewController.h"
 
 @interface BranchViewController ()<BranchHeaderDelegate>
+{
+    __block BOOL isLoading;
+}
 
 @end
 
@@ -105,46 +108,107 @@
 
 - (void) proceedLogin:(FirmURLModel*)urlModel {
     [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
-    [self gotoMain];
+    [self staffLogin];
 }
 
 - (void) gotoMain {
     [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
 }
 
+- (void) gotoSharedFolder:(FirmURLModel*)urlModel  {
+    [DataManager sharedManager].tempServerURL = urlModel.firmServerURL;
+    [self clientLogin];
+}
+
+- (void) staffLogin {
+    if (isLoading) return;
+    isLoading = YES;
+    
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_SIGNIN_URL];
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] staffSignIn:url password:[DataManager sharedManager].user.password withCompletion:^(NSDictionary * _Nonnull responseObject, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
+                [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+                [self gotoMain];
+            } else {
+                [QMAlert showAlertWithMessage:@"You have not access privilege to this firm." actionSuccess:NO inViewController:self];
+            }
+            
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
+- (void) clientLogin {
+    if (isLoading) return;
+    isLoading = YES;
+    NSString* url = [[DataManager sharedManager].tempServerURL stringByAppendingString:DENNING_CLIENT_SIGNIN];
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] clientSignIn:url password:[DataManager sharedManager].user.password withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSError * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
+        [SVProgressHUD dismiss];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+            if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(250)]) {
+                [self clientFirstLogin];
+            } else {
+                if (doumentModel.folders.count == 0) {
+                    [QMAlert showAlertWithMessage:@"There is no shared folder for you" actionSuccess:NO inViewController:self];
+                } else {
+                    [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
+                }
+            }
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
+- (void) clientFirstLogin {
+    NSString* url = [[DataManager sharedManager].tempServerURL stringByAppendingString:DENNING_CLIENT_FIRST_SIGNIN];
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    [[QMNetworkManager sharedManager] clientSignIn:url password:@"5566" withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSError * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
+        [SVProgressHUD dismiss];
+        if (error == nil) {
+            [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+            [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
 - (IBAction) gotoPasswordConfirm: (UIButton*) sender
 {
     if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
         [self gotoUpload:self.firmArray[sender.tag]];
+    } else if ([[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
+        [self gotoSharedFolder:self.firmArray[sender.tag]];
     } else {
         [self proceedLogin:self.firmArray[sender.tag]];
     }
 }
 
-- (void) confirmGotoSharedFolder {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Denning"
-                                                                   message:@""
-                                                            preferredStyle:UIAlertControllerStyleActionSheet]; // 1
-    UIAlertAction *firstAction = [UIAlertAction actionWithTitle:@"Document"
-                                                          style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                                                              [self confirmGotoSharedFolder];
-                                                          }]; // 2
-    UIAlertAction *secondAction = [UIAlertAction actionWithTitle:@"Information"
-                                                           style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                                                               
-                                                           }]; // 3
-    
-    [alert addAction:firstAction]; // 4
-    [alert addAction:secondAction]; // 5
-    
-    [self presentViewController:alert animated:YES completion:nil]; // 6
-}
-
 #pragma mark - Navigation
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    
-//}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:kPersonalFolderSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        FolderViewController* folderVC = (FolderViewController*)nav.topViewController;
+        folderVC.documentModel = sender;
+    }
+}
 
 
 @end

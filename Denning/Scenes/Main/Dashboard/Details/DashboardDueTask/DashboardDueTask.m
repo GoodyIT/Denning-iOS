@@ -192,8 +192,8 @@
 {
     self.filter = searchBar.text;
     isAppending = NO;
+     page = 1;
     [self getList];
-    page = 1;
     [_searchBar resignFirstResponder];
 }
 

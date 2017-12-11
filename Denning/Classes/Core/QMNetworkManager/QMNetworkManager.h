@@ -131,8 +131,11 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
  *  Secondary Log in
  */
 
+// Staff login
+- (void) staffSignIn: (NSString*) url password:password withCompletion: (void(^)(NSDictionary * responseObject, NSError* error)) completion;
+
 // client login
-- (void) clientSignIn: (NSString*) url withCompletion: (void(^)(BOOL success, NSDictionary * responseObject, NSError* error,  DocumentModel* doumentModel)) completion;
+- (void) clientSignIn: (NSString*) url password:password withCompletion: (void(^)(BOOL success, NSDictionary * responseObject, NSError* error,  DocumentModel* doumentModel)) completion;
 
 
 /*

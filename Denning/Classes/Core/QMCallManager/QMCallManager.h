@@ -81,6 +81,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)callToUserWithID:(NSUInteger)userID conferenceType:(QBRTCConferenceType)conferenceType;
 
 /**
+ *   Custom
+ *
+ *   Group Call
+ *
+ */
+ - (void)callToUserWithIDs:(NSMutableArray *)opponentsIDs conferenceType:(QBRTCConferenceType)conferenceType;
+
+/**
  *  Current opponent user.
  *
  *  @return Current opponent user if session exists

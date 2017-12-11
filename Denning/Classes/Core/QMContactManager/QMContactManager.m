@@ -147,14 +147,14 @@
     
     for (QBContactListItem *item in allContactListItems) {
         
-        if (item.subscriptionState != QBPresenceSubscriptionStateNone) {
-            
+//        if (item.subscriptionState != QBPresenceSubscriptionStateNone) {
+        
             QBUUser *user = [self.serviceManager.usersService.usersMemoryStorage userWithID:item.userID];
             if (user) {
                 
                 [friends addObject:user];
             }
-        }
+//        }
     }
     
     return [friends copy];
@@ -247,7 +247,9 @@
     
     QBContactListItem *contactListItem = [self.serviceManager.contactListService.contactListMemoryStorage contactListItemWithUserID:userID];
     
-    return contactListItem != nil && contactListItem.subscriptionState != QBPresenceSubscriptionStateNone;
+    return contactListItem != nil;
+    
+//    return contactListItem != nil && contactListItem.subscriptionState != QBPresenceSubscriptionStateNone;
 }
 
 - (BOOL)isContactListItemExistentForUserWithID:(NSUInteger)userID {

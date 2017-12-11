@@ -21,6 +21,7 @@
 @synthesize searchType;
 @synthesize documentView;
 @synthesize userAgreementAccepted;
+@synthesize tempServerURL;
 
 + (DataManager *)sharedManager {
     static DataManager *manager = nil;
@@ -40,6 +41,7 @@
         searchType = @"Public";
         documentView = @"nothing";
         userAgreementAccepted = NO;
+        tempServerURL = @"";
         user = [UserModel allObjects].firstObject;
         if (!user) {
             [[RLMRealm defaultRealm] transactionWithBlock:^{
@@ -121,10 +123,13 @@
 - (void) setSessionID: (NSDictionary*) response
 {
     [self getFirmServerArrayFromResponse:response];
-    
-    [self _setInfoWithValue:[response valueForKeyNotNull:@"sessionID"] for:@"sessionID"];
+    [self setOnlySessionID:[response valueForKeyNotNull:@"sessionID"]];
+}
+
+- (void) setOnlySessionID:(NSString*) sessionID {
+    [self _setInfoWithValue:sessionID for:@"sessionID"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
-        user.sessionID = [response valueForKeyNotNull:@"sessionID"];
+        user.sessionID = sessionID;
     }];
 }
 

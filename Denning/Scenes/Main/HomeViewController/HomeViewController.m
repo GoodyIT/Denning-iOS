@@ -405,52 +405,6 @@ iCarouselDataSource, iCarouselDelegate>
     cell.backgroundColor = [UIColor whiteColor];
 }
 
-- (void) clientLogin {
-    if ([[DataManager sharedManager] isLoggedIn]) {
-        if (isLoading) return;
-        isLoading = YES;
-        NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_CLIENT_SIGNIN];
-        
-        [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-        @weakify(self)
-        [[QMNetworkManager sharedManager] clientSignIn:url withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSError * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
-            [SVProgressHUD dismiss];
-            @strongify(self)
-            self->isLoading = NO;
-            if (error == nil) {
-                [[DataManager sharedManager] setSessionID:responseObject];
-                if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(250)]) {
-                    [self clientFirstLogin];
-                } else {
-                    if (doumentModel.folders.count == 0) {
-                        [QMAlert showAlertWithMessage:@"There is no shared folder for you" actionSuccess:NO inViewController:self];
-                    } else {
-                        [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
-                    }
-                }
-                
-            } else {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            }
-        }];
-    }
-}
-
-- (void) clientFirstLogin {
-    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_CLIENT_FIRST_SIGNIN];
-    
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-    [[QMNetworkManager sharedManager] clientSignIn:url withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSError * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
-        [SVProgressHUD dismiss];
-        if (error == nil) {
-            [[DataManager sharedManager] setSessionID:responseObject];
-            [self performSegueWithIdentifier:kBranchSegue sender:[DataManager sharedManager].personalArray];
-        } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        }
-    }];
-}
-
 - (void) loginAndGotoBranch {
     if ([[DataManager sharedManager] isLoggedIn]) {
         if (isLoading) return;
@@ -503,7 +457,7 @@ iCarouselDataSource, iCarouselDelegate>
     }
     
     [DataManager sharedManager].documentView = @"shared";
-    [self clientLogin];
+    [self loginAndGotoBranch];
 }
 
 - (void) getLatestUpdatesWithCompletion: (void (^)(NSArray* array))completion
@@ -605,11 +559,7 @@ iCarouselDataSource, iCarouselDelegate>
         
         QMChatVC *chatViewController = (QMChatVC *)chatNavigationController.topViewController;
         chatViewController.chatDialog = sender;
-    } else if ([segue.identifier isEqualToString:kPersonalFolderSegue]) {
-        UINavigationController* nav = segue.destinationViewController;
-        FolderViewController* folderVC = (FolderViewController*)nav.topViewController;
-        folderVC.documentModel = sender;
-    }
+    } 
 }
 
 

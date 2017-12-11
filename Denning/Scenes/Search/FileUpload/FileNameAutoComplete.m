@@ -48,7 +48,7 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 - (void) configureAutocompleteSearch {
-    serverAPI = [DataManager sharedManager].user.serverAPI;
+    serverAPI = [DataManager sharedManager].tempServerURL;
     sessionID = [DataManager sharedManager].user.sessionID;
     UIToolbar* _accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     _accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];

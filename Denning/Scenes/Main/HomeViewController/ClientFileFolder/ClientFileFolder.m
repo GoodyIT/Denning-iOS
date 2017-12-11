@@ -94,6 +94,9 @@
                              @"remarks":self.remarks.text,
                              @"base64":[self.imagePreview.image encodeToBase64String]
                              };
+    
+    self.url = [[DataManager sharedManager].tempServerURL stringByAppendingString:self.url];
+    
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);

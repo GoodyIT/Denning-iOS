@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BranchViewController : UITableViewController
+@interface BranchViewController : BaseTableViewController
 
 @property (strong, nonatomic) NSArray* firmArray;
 @end

@@ -22,7 +22,7 @@
 #import "NSString+URLEncoding.h"
 #import "RequestObject.h"
 
-@interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource>
+@interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource, UIDocumentInteractionControllerDelegate>
 {
     NSString* fileNo1, *contactKey, *fileKey;
     NSURLSession* mySession;
@@ -112,8 +112,18 @@ UIColor *QMSecondaryApplicationColor() {
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
                 self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:(NSString*)item ]];
             }];
+        } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypePDF]){
+            
+            [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypePDF options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
+                NSURL* document = [[NSURL alloc] initFileURLWithPath:(NSString*)item];
+                CGRect rect1 = self.imageView.frame;
+                UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
+                documentInteractionController.delegate = self;
+                [documentInteractionController  presentOptionsMenuFromRect:rect1 inView:self.imageView animated:YES];
+            }];
         }
     }
+    
     fileNo1 = @"Transit Folder";
     self.activity.hidden = YES;
     _activity.hidesWhenStopped = YES;

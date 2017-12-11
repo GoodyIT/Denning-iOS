@@ -854,13 +854,11 @@
                     </view>
                     <connections>
                         <outlet property="TACTextField" destination="97t-Vp-3bq" id="l1P-cO-b4a"/>
-                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="BVD-6W-ve9"/>
-                        <segue destination="SZu-GE-wQm" kind="show" identifier="PersonalFolderSegue" id="tuM-u7-NJ9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="740-La-Qrc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="597.10144927536237" y="-6796.467391304348"/>
+            <point key="canvasLocation" x="896" y="-6030"/>
         </scene>
         <!--Branch View Controller-->
         <scene sceneID="JI3-mo-vie">
@@ -916,10 +914,9 @@
                     <navigationItem key="navigationItem" id="MqU-Fm-hEb"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <segue destination="PVn-Bg-VPa" kind="show" identifier="PasswordConfirmSegue" id="Otz-f5-X7Z"/>
                         <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="lHY-Ch-f8A"/>
-                        <segue destination="SZu-GE-wQm" kind="show" identifier="PersonalFolderSegue" id="1y3-lj-odg"/>
                         <segue destination="b65-dt-lUt" kind="show" identifier="FileUploadSegue" id="hH5-HS-vSY"/>
+                        <segue destination="TYK-rG-DsM" kind="show" identifier="PersonalFolderSegue" id="PlG-JC-BXq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HjI-dn-nRp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -975,13 +972,10 @@
                             <outlet property="delegate" destination="SZu-GE-wQm" id="YM1-xs-zUg"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="mPD-Un-Pzu"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="USO-mx-ehC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1163.768115942029" y="-7813.04347826087"/>
+            <point key="canvasLocation" x="1526" y="-6029"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="y0K-ls-vtC">
@@ -1054,16 +1048,148 @@
             </objects>
             <point key="canvasLocation" x="-957" y="-6144"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="zDH-S8-guj">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TYK-rG-DsM" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="bqD-hd-ds5">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="21"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tU8-VH-Thf" kind="relationship" relationship="rootViewController" id="odj-Sa-FSA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Owf-Lg-uCb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-291" y="-7659"/>
+        </scene>
+        <!--Select Folder-->
+        <scene sceneID="Cbq-O9-fGa">
+            <objects>
+                <tableViewController id="tU8-VH-Thf" customClass="FolderViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Q88-hr-nZ8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="C3a-ZW-aHd">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" rowHeight="71" id="Zm1-KU-JVo">
+                                <rect key="frame" x="0.0" y="82" width="320" height="71"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zm1-KU-JVo" id="s1C-Sk-KBZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="71"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mpi-VL-0GU">
+                                            <rect key="frame" x="30" y="8" width="260" height="55"/>
+                                            <color key="backgroundColor" red="0.25882352939999997" green="0.52156862749999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
+                                            <state key="normal" title="Button">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="gotoDocument:" destination="tU8-VH-Thf" eventType="touchUpInside" id="R06-zR-lAe"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Mpi-VL-0GU" firstAttribute="top" secondItem="s1C-Sk-KBZ" secondAttribute="top" constant="8" id="4CG-AH-IYH"/>
+                                        <constraint firstAttribute="bottom" secondItem="Mpi-VL-0GU" secondAttribute="bottom" constant="8" id="A6z-pd-gIY"/>
+                                        <constraint firstItem="Mpi-VL-0GU" firstAttribute="leading" secondItem="s1C-Sk-KBZ" secondAttribute="leading" constant="30" id="H8V-yX-AaT"/>
+                                        <constraint firstAttribute="trailing" secondItem="Mpi-VL-0GU" secondAttribute="trailing" constant="30" id="YvC-0F-X19"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="tU8-VH-Thf" id="qCH-fd-oct"/>
+                            <outlet property="delegate" destination="tU8-VH-Thf" id="ZNg-gP-SDK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select Folder" id="It1-ju-7Pc">
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="Duq-wt-Y7L">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="didBackBtnTapped:" destination="tU8-VH-Thf" id="PHK-s8-Pkt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="JGs-qJ-sw7" kind="show" identifier="DocumentSegue" id="CeA-Zd-NAs">
+                            <nil key="action"/>
+                        </segue>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P5T-9d-wMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="476" y="-7659"/>
+        </scene>
+        <!--Documents-->
+        <scene sceneID="MDw-WR-iuc">
+            <objects>
+                <tableViewController id="JGs-qJ-sw7" customClass="PersonalDocumentViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="3K9-3W-IZ2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="obH-W6-aR1">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="obH-W6-aR1" id="ZrW-B8-J4b">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="JGs-qJ-sw7" id="iux-qh-pmc"/>
+                            <outlet property="delegate" destination="JGs-qJ-sw7" id="uMm-sM-LED"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Documents" id="Tki-14-Uk0">
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="bnG-9I-1hM">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="dismissScreen:" destination="JGs-qJ-sw7" id="a8U-Ed-RRk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qcQ-3R-ifc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1299" y="-7659"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Back.png" width="18" height="18"/>
         <image name="Back_gray.png" width="18" height="18"/>
         <image name="icon_home.png" width="20" height="20"/>
         <image name="splash_logo.png" width="119" height="94"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="2bt-gq-iwV"/>
-        <segue reference="1y3-lj-odg"/>
         <segue reference="cqB-uN-mxx"/>
-        <segue reference="mPD-Un-Pzu"/>
+        <segue reference="lHY-Ch-f8A"/>
     </inferredMetricsTieBreakers>
 </document>

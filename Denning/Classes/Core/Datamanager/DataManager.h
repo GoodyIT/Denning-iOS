@@ -42,6 +42,8 @@
 
 - (void) setSessionID: (NSDictionary*) response;
 
+- (void) setOnlySessionID:(NSString*) sessionID;
+
 - (void) setUserInfoFromNewDeviceLogin: (NSDictionary*) response;
 
 - (void) setUserInfoFromChangePassword: (NSDictionary*) response;

@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define NEW_DEVICE_SEND_SMS_URL     @"http://denningsoft.dlinkddns.com/denningwcf/v1/SMS/newDevice"
 
-#define DENNING_SIGNIN_URL  @"/denningwcf/v1/app/staffLogin"
+#define DENNING_SIGNIN_URL  @"denningwcf/v1/app/staffLogin"
 
 #define DENNING_CLIENT_SIGNIN @"denningwcf/v1/app/clientLogin"
 
@@ -149,13 +149,13 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
 
 #define CONTACT_IRDBRANCH_URL   @"denningwcf/v1/IRDBranch?search="
 
-#define CONTACT_SAVE_URL    @"/denningwcf/v1/app/contact"
+#define CONTACT_SAVE_URL    @"denningwcf/v1/app/contact"
 
 #define CONTACT_GETLIST_URL @"denningwcf/v1/party?search="
 
 #define CONTACT_SOLICITOR_GET_LIST_URL   @"denningwcf/v1/Solicitor?search="
 
-#define CONTACT_UPDATE_URL    @"/denningwcf/v1/contact?search="
+#define CONTACT_UPDATE_URL    @"denningwcf/v1/contact?search="
 
 #define MATTERSIMPLE_GET_URL @"denningwcf/v1/matter/simpleList?search="
 
