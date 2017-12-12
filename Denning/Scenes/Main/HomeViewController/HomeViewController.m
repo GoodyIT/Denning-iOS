@@ -406,26 +406,24 @@ iCarouselDataSource, iCarouselDelegate>
 }
 
 - (void) loginAndGotoBranch {
-    if ([[DataManager sharedManager] isLoggedIn]) {
-        if (isLoading) return;
-        isLoading = YES;
-        NSString* email = [DataManager sharedManager].user.email;
-        NSString* password = [DataManager sharedManager].user.password;
-        [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-        @weakify(self)
-        [[QMNetworkManager sharedManager] userSignInWithEmail:email password:password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
-            [SVProgressHUD dismiss];
-            @strongify(self)
-            self->isLoading = NO;
-            if (success) {
-                [[DataManager sharedManager] setSessionID:responseObject];
-                
-                [self performSegueWithIdentifier:kBranchSegue sender:[DataManager sharedManager].personalArray];
-            } else {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            }
-        }];
-    }
+    if (isLoading) return;
+    isLoading = YES;
+    NSString* email = [DataManager sharedManager].user.email;
+    NSString* password = [DataManager sharedManager].user.password;
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] userSignInWithEmail:email password:password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary * _Nonnull responseObject) {
+        [SVProgressHUD dismiss];
+        @strongify(self)
+        self->isLoading = NO;
+        if (success) {
+            [[DataManager sharedManager] setSessionID:responseObject];
+            
+            [self performSegueWithIdentifier:kBranchSegue sender:[DataManager sharedManager].personalArray];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
 }
 
 - (BOOL) checkPossibility {

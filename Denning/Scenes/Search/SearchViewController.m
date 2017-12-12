@@ -619,7 +619,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         return DIGovernmentPTGOfficesCell;
     } else if ([form isEqualToString:@"300lawyer"]){ // Legal firm
         return DILegalFirmCell;
-    } else if ([form isEqualToString:@"950docfile"]){ // Document
+    } else if ([form isEqualToString:@"950docfile"] || [form isEqualToString:@"900book"]){ // Document
         return DIDocumentCell;
     }
     

@@ -107,8 +107,8 @@
 }
 
 - (void) proceedLogin:(FirmURLModel*)urlModel {
-    [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
-    [self staffLogin];
+    
+    [self staffLogin:urlModel];
 }
 
 - (void) gotoMain {
@@ -120,7 +120,7 @@
     [self clientLogin];
 }
 
-- (void) staffLogin {
+- (void) staffLogin:(FirmURLModel*)urlModel {
     if (isLoading) return;
     isLoading = YES;
     
@@ -134,10 +134,11 @@
         self->isLoading = NO;
         if (error == nil) {
             if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
+                [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
                 [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
                 [self gotoMain];
             } else {
-                [QMAlert showAlertWithMessage:@"You have not access privilege to this firm." actionSuccess:NO inViewController:self];
+                [QMAlert showAlertWithMessage:@"You have no access privilege to this firm." actionSuccess:NO inViewController:self];
             }
             
         } else {

@@ -121,30 +121,16 @@ SWTableViewCellDelegate
             originalContacts = [[[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray] mutableCopy];
             break;
         case 1:
-            originalContacts = [DataManager sharedManager].staffContactsArray;
+            originalContacts = [[DataManager sharedManager].staffContactsArray copy];
             break;
         case 2:
-            originalContacts = [DataManager sharedManager].clientContactsArray;
+            originalContacts = [[DataManager sharedManager].clientContactsArray copy];
             break;
 
         default:
             break;
     }
     contactsArray = originalContacts;
-   
-//    NSMutableArray *indexPaths = [NSMutableArray new];
-//    for (int i = 0; i < contactsArray.count; i++) {
-//        for (int j = 0; j < contactsArray[i].users.count; j++) {
-//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
-//            if (indexPath != nil) {
-//                [indexPaths addObject:indexPath];
-//            }
-//        }
-//    }
-//
-//    if (indexPaths.count > 0) {
-//        [self.tableView reloadRowsAtIndexPaths:[indexPaths copy] withRowAnimation:UITableViewRowAnimationNone];
-//    }
     
     [self.tableView reloadData];
 }
@@ -154,6 +140,7 @@ SWTableViewCellDelegate
 //    contactsArray = [originalContacts copy];
 //    [self.tableView reloadData];
     [self updateDataSourceByScope:selectedIndex];
+    [self filterContactList];
 }
 
 - (void) configureSearch
@@ -358,7 +345,7 @@ SWTableViewCellDelegate
 }
 - (IBAction)didChangeUserType:(UISegmentedControl*)sender {
     [self updateDataSourceByScope:sender.selectedSegmentIndex];
-//    [self filterContactList];
+    [self filterContactList];
 }
 
 - (void)willPresentSearchController:(UISearchController *)searchController
@@ -389,17 +376,13 @@ SWTableViewCellDelegate
             ChatFirmModel* newModel = [ChatFirmModel new];
             newModel.firmName = firmModel.firmName;
             newModel.firmCode = firmModel.firmCode;
-            if ([firmModel.firmName localizedCaseInsensitiveContainsString:self.filter]) {
-                newModel.users = firmModel.users;
-            } else {
-                NSMutableArray* userArray = [NSMutableArray new];
-                for(QBUUser* user in firmModel.users) {
-                    if ([user.fullName localizedCaseInsensitiveContainsString:self.filter]) {
-                        [userArray addObject:user];
-                    }
+            NSMutableArray* userArray = [NSMutableArray new];
+            for(QBUUser* user in firmModel.users) {
+                if ([user.fullName localizedCaseInsensitiveContainsString:self.filter]) {
+                    [userArray addObject:user];
                 }
-                newModel.users = [userArray copy];
             }
+            newModel.users = [userArray copy];
             [newArray addObject:newModel];
         }
         contactsArray = [newArray copy];

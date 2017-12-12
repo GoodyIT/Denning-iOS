@@ -404,9 +404,7 @@
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (![self.gotoRelatedMatter isEqualToString:@"Matter"] &&indexPath.section == 2) {
-        [self loadRelatedMatter:indexPath];
-    } else if ([self.gotoRelatedMatter isEqualToString:@"Matter"] &&indexPath.section == 1) {
+    if (![self.gotoRelatedMatter isEqualToString:@"Matter"] && indexPath.section == 2) {
         [self loadRelatedMatter:indexPath];
     }
     

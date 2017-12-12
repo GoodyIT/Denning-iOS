@@ -47,7 +47,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 @property(strong, atomic) NSString       *countryName;
 @property(strong, nonatomic) NSString       *cityName;
 @property(strong, atomic) NSString       *stateName;
-@property (strong, atomic) NSNumber      *invalidTry;
+@property (assign, nonatomic) NSInteger      invalidTry;
 @property (strong, atomic) NSDate       *startTrackTimeForLogin;
 
 @property (strong, nonatomic) NSString* ipWAN;

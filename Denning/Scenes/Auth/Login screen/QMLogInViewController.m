@@ -125,7 +125,7 @@
         
         [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"QM_STR_FILL_IN_ALL_THE_FIELDS", nil)];
     }
-    else if ([[QMNetworkManager sharedManager].invalidTry intValue] >= 1){
+    else if ([QMNetworkManager sharedManager].invalidTry >= 1){
         NSDate* currentTime = [[NSDate alloc] init];
         float duration = [currentTime timeIntervalSinceDate:[QMNetworkManager sharedManager].startTrackTimeForLogin];
         if (fabsf(duration) < 60){
@@ -142,7 +142,6 @@
     [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-//        [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
     });
 }
 
@@ -191,8 +190,8 @@
 - (void) manageErrorResult: (NSInteger) statusCode error: (NSError*) error {
     NSString* errorString = error.localizedDescription;
     if (statusCode == 401) {
-        int value = [[QMNetworkManager sharedManager].invalidTry intValue];
-        [QMNetworkManager sharedManager].invalidTry = [NSNumber numberWithInt:value+1];
+        NSInteger value = [QMNetworkManager sharedManager].invalidTry;
+        [QMNetworkManager sharedManager].invalidTry = value + 1;
         
         if (value >= 10){
             errorString = @"Locked for 1 minutes. invalid username and password more than 10 times...";
