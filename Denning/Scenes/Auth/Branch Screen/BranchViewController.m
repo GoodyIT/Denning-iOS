@@ -107,7 +107,7 @@
 }
 
 - (void) proceedLogin:(FirmURLModel*)urlModel {
-    
+    [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
     [self staffLogin:urlModel];
 }
 

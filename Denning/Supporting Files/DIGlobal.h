@@ -29,6 +29,10 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
     PublicGovernmentOffices = 512
 };
 
+static NSString * const kQMChatPdfMessageTypeName = @"pdf";
+static NSString * const kQMChatWordMessageTypeName = @"word";
+static NSString * const kQMChatFileMessageTypeName = @"file";
+
 #define kCountryName        @"name"
 #define kCountryCallingCode @"dial_code"
 #define kCountryCode        @"code"

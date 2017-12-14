@@ -188,26 +188,30 @@ enum MATTERSECTION {
     return 0;
 }
 
+- (void) gotoContact:(NSString*) code {
+    if (isLoading) return;
+    isLoading = YES;
+    [SVProgressHUD showWithStatus:@"Loading"];
+    @weakify(self);
+    [[QMNetworkManager sharedManager] loadContactFromSearchWithCode:code completion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
+        
+        @strongify(self);
+        self->isLoading = false;
+        [SVProgressHUD dismiss];
+        if (error == nil) {
+            [self performSegueWithIdentifier:kContactSearchSegue sender:contactModel];
+        } else {
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        }
+    }];
+}
+
 - (void)tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == HEADER_SECTION) {
     } else if (indexPath.section == MAIN_SECTION) {
         if (indexPath.row == 0) { // Contact client
-            if (isLoading) return;
-            isLoading = YES;
-            [SVProgressHUD showWithStatus:@"Loading"];
-            @weakify(self);
-            [[QMNetworkManager sharedManager] loadContactFromSearchWithCode:relatedMatterModel.contactCode completion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
-                
-                @strongify(self);
-                self->isLoading = false;
-                [SVProgressHUD dismiss];
-                if (error == nil) {
-                    [self performSegueWithIdentifier:kContactSearchSegue sender:contactModel];
-                } else {
-                    [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-                }
-            }];
+            [self gotoContact:relatedMatterModel.contactCode];
         } else if (indexPath.row == 3) {
             [self performSegueWithIdentifier:kMatterCodeSegue sender:relatedMatterModel.matter];
         }
@@ -217,23 +221,8 @@ enum MATTERSECTION {
         NSDictionary* partySectionInfo = [self getPartySectionInfo:(int)indexPath.row];
         PartyGroupModel* partyGroup = relatedMatterModel.partyGroupArray[[[partySectionInfo objectForKey:@"group"] integerValue]];
         ClientModel* party = (ClientModel*)partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
-        if (isLoading) return;
-        isLoading = YES;
-        [SVProgressHUD showWithStatus:@"Loading"];
-        @weakify(self);
-        [[QMNetworkManager sharedManager] loadContactFromSearchWithCode:party.clientCode completion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
-            
-            @strongify(self);
-            self->isLoading = false;
-            [SVProgressHUD dismiss];
-            if (error == nil) {
-                [self performSegueWithIdentifier:kContactSearchSegue sender:contactModel];
-            } else {
-                [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-            }
-        }];
+        [self gotoContact:party.clientCode];
     }
-    
     
     if (indexPath.section == SOLICITORS_SECTION) { // Solicitor, Legal Firm
         if (isLoading) return;

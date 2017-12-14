@@ -6,17 +6,19 @@
 //  Copyright (c) 2015 QuickBlox Team. All rights reserved.
 //
 
-#import "QMChatCell.h"
-#import "QMChatAttachmentCell.h"
+#import "QMMediaIncomingCell.h"
+@class QMProgressView;
 
 /**
  *  Incoming attachment message cell class.
  */
-@interface QMChatAttachmentIncomingCell : QMChatCell<QMChatAttachmentCell>
+@interface QMChatAttachmentIncomingCell : QMMediaIncomingCell
 
 /**
  *  Attachment image view.
  */
-@property (nonatomic, weak) IBOutlet UIImageView *attachmentImageView;
+//@property (weak, nonatomic) IBOutlet QMProgressView *progressView;
+//
+//@property (weak, nonatomic) IBOutlet QMImageView* attachmentImageView;
 
 @end

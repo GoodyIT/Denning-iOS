@@ -57,6 +57,40 @@ QMMediaHandler>
 
 //MARK: - Interface
 
+- (void) displayFileAttachStatusImage:(NSString*) name inView:(id<QMChatAttachmentCell>) view {
+    [view setAttachmentImage:[UIImage imageNamed:name]];
+}
+
+- (void) displayNotReadyImage:(id<QMChatAttachmentCell>) view {
+    [self displayFileAttachStatusImage:@"share_pdf" inView:view];
+}
+
+- (void) displayReadyImage: (id<QMChatAttachmentCell>) view {
+    [self displayFileAttachStatusImage:@"share_pdf" inView:view];
+}
+
+- (void) configureViewForFileAttach:(id<QMChatAttachmentCell>) view
+                        withMessage:(QBChatMessage*) message
+{
+    QBChatAttachment *attachment = [message.attachments firstObject];
+    NSParameterAssert(attachment != nil);
+
+    
+    if (attachment.ID) {
+        
+//        if (view.messageID != nil && ![view.messageID isEqualToString:message.ID]) {
+//
+//            QBChatMessage *messageToCancel = [[QMCore instance].chatService.messagesMemoryStorage messageWithID:view.messageID
+//                                                                                                   fromDialogID:self.viewController.dialogID];
+//            [self cancelOperationsForMessage:messageToCancel];
+//        }
+    }
+    
+//    [self updateViewForFileAttach:view
+//      withAttachment:attachment
+//             message:message];
+}
+
 - (void)configureView:(id<QMMediaViewDelegate>)view
           withMessage:(QBChatMessage *)message {
     
@@ -80,7 +114,6 @@ QMMediaHandler>
       withAttachment:attachment
              message:message];
 }
-
 
 - (void)updateView:(id<QMMediaViewDelegate>)view
     withAttachment:(QBChatAttachment *)attachment
@@ -136,6 +169,49 @@ QMMediaHandler>
 - (void)loadAttachment:(QBChatAttachment *)attachment
             forMessage:(QBChatMessage *)message
               withView:(id<QMMediaViewDelegate>)view {
+    
+    if (!(attachment.attachmentType == QMAttachmentContentTypeImage ||
+          attachment.attachmentType == QMAttachmentContentTypeAudio ||
+          attachment.attachmentType == QMAttachmentContentTypeVideo)) {
+        NSURL *url = [attachment remoteURLWithToken:YES];
+        if (!url) {
+            view.viewState = QMMediaViewStateLoading;
+        }
+        else {
+            UIImage *cachedImage = nil;
+            if  ([[DIDocumentManager shared] isAttachedFileExist:attachment.ID]) {
+                cachedImage = [UIImage imageNamed:@"share_pdf"];
+            }
+            if (cachedImage) {
+                view.viewState = QMMediaViewStateReady;
+                view.image = cachedImage;
+            }
+            else {
+                view.viewState = QMMediaViewStateLoading;
+                // Download file from the qb server.
+                [[DIDocumentManager shared] downloadFileFromURL:url withProgress:^(CGFloat progress) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        view.progress = progress;
+                    });
+                } completion:^(NSURL *filePath) {
+                    // ready to open
+                    if ([view.messageID isEqualToString:message.ID]) {
+                        if (filePath != nil) {
+                            UIImage* transfomedImage = [UIImage imageNamed:@"share_pdf"];
+                            view.viewState = QMMediaViewStateReady;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                view.image = transfomedImage;
+                            });
+                        } else {
+//                            [view showLoadingError:@"error"];
+                        }
+                    }
+                } onError:^(NSError *error) {
+//                    [view showLoadingError:@"error"];
+                }];
+            }
+        }
+    }
     
     if (attachment.attachmentType == QMAttachmentContentTypeImage) {
         
@@ -387,7 +463,7 @@ QMMediaHandler>
         }
     }
     
-    [self didTapContainer:view];
+    [self didTapContainer:view inView:nil];
 }
 
 //MARK: - QMChatAttachmentService Delegate
@@ -455,7 +531,17 @@ didUpdateStatus:(QMAudioPlayerStatus *)status {
 
 //MARK: QMEventHandler
 
-- (void)didTapContainer:(id<QMMediaViewDelegate>)view {
+- (BOOL) isImageFile:(QBChatAttachment*) attachment {
+    BOOL isImage = NO;
+    
+    if ([attachment.type containsString:@""]) {
+        
+    }
+    
+    return isImage;
+}
+
+- (void)didTapContainer:(id<QMMediaViewDelegate>)view inView:(UIViewController* _Nullable) viewController{
     
     NSParameterAssert([view conformsToProtocol:@protocol(QMMediaViewDelegate)]);
     
@@ -554,6 +640,11 @@ didUpdateStatus:(QMAudioPlayerStatus *)status {
         }
         else if (attachmentStatus == QMMessageAttachmentStatusLoaded) {
             [self playAttachment:attachment forMessage:message];
+        }
+    } else { // Custom file attachment
+        NSURL *fileURL = [[DIDocumentManager shared] isAttachedFileExist:attachment.ID];
+        if (fileURL != nil) {
+            [[DIDocumentManager shared] displayDocument:fileURL inView:viewController];
         }
     }
 }

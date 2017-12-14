@@ -168,6 +168,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.section == 0) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
         [cell configureCellWithInfo:self.legalFirmModel.name number:self.legalFirmModel.IDNo image:[UIImage imageNamed:@"icon_legalfirm"]];
@@ -176,30 +177,28 @@
     } else if (indexPath.section == 1) {
         [cell setEnableRightBtn:NO image:nil];
         if (indexPath.row == 0) {
-            [cell configureCellWithContact:@"Phone 1" text:self.legalFirmModel.tel];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
+            [cell configureCellWithContact:@"Phone 1" text:self.legalFirmModel.tel];
             cell.tag = 1;
         } if (indexPath.row == 1) {
+             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
             [cell configureCellWithContact:@"Phone 2" text:self.legalFirmModel.fax];
-            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
-            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
-            cell.tag = 1;
             cell.tag = 1;
         } else if (indexPath.row == 2) {
-            [cell configureCellWithContact:@"Phone (mobile)" text:self.legalFirmModel.mobile];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
+            [cell configureCellWithContact:@"Phone (mobile)" text:self.legalFirmModel.mobile];
             cell.tag = 1;
         } else if (indexPath.row == 3) {
-            [cell configureCellWithContact:@"Phone (office)" text:self.legalFirmModel.office];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
+            [cell configureCellWithContact:@"Phone (office)" text:self.legalFirmModel.office];
             cell.tag = 1;
         } else if (indexPath.row == 4) {
-            [cell configureCellWithContact:@"email" text:self.legalFirmModel.email];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_email_red"]];
+            [cell configureCellWithContact:@"email" text:self.legalFirmModel.email];
             cell.tag = 2;
         } else if (indexPath.row == 5) {
-            [cell configureCellWithContact:@"address" text:self.legalFirmModel.address];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_location"]];
+            [cell configureCellWithContact:@"address" text:self.legalFirmModel.address];
             cell.tag = 3;
         }
         cell.delegate = self;
@@ -210,6 +209,7 @@
         [cell configureCellWithContact:matter[0] text:matter[1]];
         [cell setEnableRightBtn:NO image:nil];
         
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
 }

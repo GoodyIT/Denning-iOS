@@ -354,7 +354,7 @@ NSMutableDictionary* keyValue;
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, REPORT_VIEWER_PDF_TAXINVOICE_URL, _contents[0][1][1]];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     
-    [self viewDocument:url withCompletion:^(NSURL *filePath) {
+    [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
          selectedDocument = filePath;
     }];
 }

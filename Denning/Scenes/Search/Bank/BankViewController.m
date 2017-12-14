@@ -10,9 +10,10 @@
 #import "CommonTextCell.h"
 #import "ContactCell.h"
 #import "SearchLastCell.h"
+#import "NewContactHeaderCell.h"
 #import "RelatedMatterViewController.h"
 
-@interface BankViewController ()
+@interface BankViewController ()<NewContactHeaderCellDelegate>
 {
     __block BOOL isLoading;
 }
@@ -64,7 +65,7 @@
 }
 
 - (void)registerNibs {
-    
+    [NewContactHeaderCell registerForReuseInTableView:self.tableView];
     [ContactCell registerForReuseInTableView:self.tableView];
     [SearchLastCell registerForReuseInTableView:self.tableView];
     [CommonTextCell registerForReuseInTableView:self.tableView];
@@ -82,7 +83,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 2;
+        return 1;
     } else if (section == 1) {
         return 5;
     }
@@ -146,32 +147,34 @@
     return 30;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    
-    return 10;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            [cell configureCellWithContact:self.bankModel.name text:@""];
-        } else {
-            [cell configureCellWithContact:self.bankModel.IDNo text:@""];
-        }
+        NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
+        [cell configureCellWithInfo:self.bankModel.name number:self.bankModel.IDNo image:[UIImage imageNamed:@"icon_client"]];
+        cell.chatBtn.hidden = cell.editBtn.hidden = YES;
+//        cell.delegate = self;
         return cell;
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
             [cell configureCellWithContact:@"Telephone" text:self.bankModel.tel];
+            cell.tag = 1;
         } else if (indexPath.row == 1) {
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
             [cell configureCellWithContact:@"mobile" text:self.bankModel.mobile];
+            cell.tag = 1;
         } else if (indexPath.row == 2) {
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
             [cell configureCellWithContact:@"office" text:self.bankModel.office];
+            cell.tag = 1;
         } else if (indexPath.row == 3) {
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_email_red"]];
             [cell configureCellWithContact:@"email" text:self.bankModel.email];
+            cell.tag = 2;
         } else if (indexPath.row == 4) {
+            [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_location"]];
             [cell configureCellWithContact:@"address" text:self.bankModel.address];
         }
         return cell;

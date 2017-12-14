@@ -38,6 +38,9 @@
     self.contentLabel.text = text.uppercaseString;
     
     self.value = text;
+    if (text.length == 0) {
+        self.rightBtn.hidden = YES;
+    }
 }
 
 - (void) configureCellWithContact:(NSString*) title text:(NSString*) text withLower:(BOOL) isLower

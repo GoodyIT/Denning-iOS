@@ -10,6 +10,4 @@
 
 @interface BaseTableViewController : UITableViewController< UIDocumentInteractionControllerDelegate>
 
-- (void) viewDocument:(NSURL*) Url withCompletion:(void(^)(NSURL *filePath)) completion;
-
 @end

@@ -166,22 +166,22 @@
         } else if (indexPath.row == 1) {
             [cell configureCellWithContact:@"Citizenship" text:contactModel.citizenShip];
         } else if (indexPath.row == 2) {
-            [cell configureCellWithContact:@"Phone (mobile)" text:contactModel.mobilePhone];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
+            [cell configureCellWithContact:@"Phone (mobile)" text:contactModel.mobilePhone];
             cell.tag = 1;
         } else if (indexPath.row == 3) {
-            [cell configureCellWithContact:@"Phone (office)" text:contactModel.officePhone];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
+            [cell configureCellWithContact:@"Phone (office)" text:contactModel.officePhone];
             cell.tag = 1;
         } else if (indexPath.row == 4) {
-            [cell configureCellWithContact:@"Phone (home)" text:contactModel.homePhone];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_phone_red"]];
+            [cell configureCellWithContact:@"Phone (home)" text:contactModel.homePhone];
             cell.tag = 1;
         } else if (indexPath.row == 5) {
             [cell configureCellWithContact:@"Fax" text:contactModel.fax];
         } else if (indexPath.row == 6) {
-            [cell configureCellWithContact:@"Email" text:contactModel.email withLower:YES];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_email_red"]];
+            [cell configureCellWithContact:@"Email" text:contactModel.email withLower:YES];
             cell.tag = 2;
             return cell;
         } else if (indexPath.row == 7) {
@@ -191,8 +191,8 @@
         } else if (indexPath.row == 9) {
             [cell configureCellWithContact:@"Occupation" text:contactModel.occupation.descriptionValue];
         }  else if (indexPath.row == 10) {
-            [cell configureCellWithContact:@"Address" text:contactModel.address.fullAddress];
             [cell setEnableRightBtn:YES image:[UIImage imageNamed:@"icon_location"]];
+            [cell configureCellWithContact:@"Address" text:contactModel.address.fullAddress];
         }
         cell.delegate = self;
         return cell;

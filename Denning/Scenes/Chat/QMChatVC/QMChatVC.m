@@ -23,6 +23,10 @@
 #import "QMHelpers.h"
 #import "QMSplitViewController.h"
 #import "QMMessagesHelper.h"
+//
+//#import "DIBaseFileAttachmentCell.h"
+//#import "DIFileAttachmentIncomingCell.h"
+//#import "DIFileAttachmentOutgoingCell.h"
 
 // helpers
 #import "QMChatButtonsFactory.h"
@@ -203,6 +207,8 @@ QMUsersServiceDelegate
     
     [super viewDidLoad];
     
+//    [self registerNibs];
+    
     self.navigationItem.titleView = self.onlineTitleView;
     
     if (iosMajorVersion() >= 10) {
@@ -376,6 +382,13 @@ QMUsersServiceDelegate
     //Stop player
     [[QMAudioPlayer audioPlayer] stop];
 }
+
+//- (void) registerNibs {
+//    // Register image attachment outgoing cell
+//    [DIFileAttachmentIncomingCell registerForReuseInView:self.collectionView];
+//    // Register image attachment incoming cell
+//    [DIFileAttachmentOutgoingCell registerForReuseInView:self.collectionView];
+//}
 
 // MARK: - Notification
 
@@ -817,6 +830,20 @@ QMUsersServiceDelegate
 }
 
 //MARK: - Cells view classes
+- (BOOL)isPdfAttachment:(NSArray <QBChatAttachment *> *)attachments {
+    
+    __block BOOL isPdfAttachment = NO;
+    
+    [attachments enumerateObjectsUsingBlock:^(QBChatAttachment * _Nonnull obj, NSUInteger __unused idx, BOOL * _Nonnull stop) {
+        
+        if ([obj.type containsString:kQMChatPdfMessageTypeName]) {
+            isPdfAttachment = YES;
+            *stop = YES;
+        }
+    }];
+    
+    return isPdfAttachment;
+}
 
 - (Class)viewClassForItem:(QBChatMessage *)message {
     
@@ -852,8 +879,8 @@ QMUsersServiceDelegate
             }
             else if ([message isAudioAttachment]) {
                 return  isIncomingMessage ? QMAudioIncomingCell.class : QMAudioOutgoingCell.class;
-                
             }
+            
             else if ([message isImageAttachment]) {
                 return  isIncomingMessage ? QMImageIncomingCell.class : QMImageOutgoingCell.class;
             }
@@ -1409,6 +1436,10 @@ QMUsersServiceDelegate
         [self.mediaController configureView:(id<QMMediaViewDelegate>)cell
                                 withMessage:message];
     }
+    
+//    if([cell conformsToProtocol:@protocol(QMChatAttachmentCell)]) {
+//        [self.mediaController configureViewForFileAttach:(id<QMChatAttachmentCell>) cell withMessage:message];
+//    }
     
     if ([cell isKindOfClass:[QMChatIncomingCell class]] ||
         [cell isKindOfClass:[QMChatOutgoingCell class]]) {
@@ -2028,7 +2059,6 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
         return;
     }
     else if ([cell conformsToProtocol:@protocol(QMChatLocationCell)]) {
-        
         QMLocationViewController *locationVC =
         [[QMLocationViewController alloc] initWithState:QMLocationVCStateView
                                      locationCoordinate:[message locationCoordinate]];
@@ -2043,7 +2073,7 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
         QMLog(@"size = %@", NSStringFromCGSize(size));
         QMLog(@"messageID = %@", message.ID);
         
-        [self.mediaController didTapContainer:(id<QMMediaViewDelegate>)cell];
+        [self.mediaController didTapContainer:(id<QMMediaViewDelegate>)cell inView:self];
     }
     else if ([cell isKindOfClass:[QMChatBaseLinkPreviewCell class]]) {
         
@@ -2056,6 +2086,11 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
         NSURL *linkURL = [NSURL URLWithString:og.baseUrl];
         [self openURL:linkURL];
     }
+//
+//    else if ([cell isKindOfClass:[QMChatAttachmentIncomingCell class]] || [cell isKindOfClass:[QMChatAttachmentOutgoingCell class]]) {
+//        [self.mediaController didTapFileContainer:(id<QMChatAttachmentCell>)cell];
+//    }
+    
     else if ([cell isKindOfClass:[QMChatOutgoingCell class]] ||
              [cell isKindOfClass:[QMChatIncomingCell class]]) {
         

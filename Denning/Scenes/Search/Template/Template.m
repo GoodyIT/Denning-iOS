@@ -264,7 +264,7 @@ ContactListWithDescSelectionDelegate>
     TemplateModel *model = self.listOfTemplates[indexPath.row];
     NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/v1/%@", [DataManager sharedManager].user.serverAPI, model.generateAPI];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    [self viewDocument:url withCompletion:^(NSURL *filePath) {
+    [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
         
     }];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

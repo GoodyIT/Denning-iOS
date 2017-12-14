@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cancelOperationsForMessage:(QBChatMessage *)message;
 - (void)didFinishPickingPhoto:(UIImage *)pickedPhoto;
-- (void)didTapContainer:(id<QMMediaViewDelegate>)view;
+- (void)didTapContainer:(id<QMMediaViewDelegate>)view inView:(UIViewController* _Nullable) viewController;
 
 @end
 

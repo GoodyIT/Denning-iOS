@@ -74,6 +74,10 @@
 		7912825B1FDEE826006E93E2 /* share_pdf.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282551FDEE58F006E93E2 /* share_pdf.png */; };
 		7912825C1FDEE826006E93E2 /* share_pdf@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282561FDEE590006E93E2 /* share_pdf@2x.png */; };
 		7912825D1FDEE826006E93E2 /* share_pdf@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282571FDEE590006E93E2 /* share_pdf@3x.png */; };
+		791282671FE0881E006E93E2 /* DIBaseFileAttachmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 791282651FE0881E006E93E2 /* DIBaseFileAttachmentCell.m */; };
+		7912826B1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912826A1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m */; };
+		7912826E1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912826D1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m */; };
+		791282721FE15861006E93E2 /* DIDocumentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 791282711FE15861006E93E2 /* DIDocumentManager.m */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -1266,6 +1270,14 @@
 		791282551FDEE58F006E93E2 /* share_pdf.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_pdf.png; sourceTree = "<group>"; };
 		791282561FDEE590006E93E2 /* share_pdf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_pdf@2x.png"; sourceTree = "<group>"; };
 		791282571FDEE590006E93E2 /* share_pdf@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_pdf@3x.png"; sourceTree = "<group>"; };
+		791282641FE0881E006E93E2 /* DIBaseFileAttachmentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIBaseFileAttachmentCell.h; sourceTree = "<group>"; };
+		791282651FE0881E006E93E2 /* DIBaseFileAttachmentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIBaseFileAttachmentCell.m; sourceTree = "<group>"; };
+		791282691FE0930F006E93E2 /* DIFileAttachmentIncomingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIFileAttachmentIncomingCell.h; sourceTree = "<group>"; };
+		7912826A1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIFileAttachmentIncomingCell.m; sourceTree = "<group>"; };
+		7912826C1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIFileAttachmentOutgoingCell.h; sourceTree = "<group>"; };
+		7912826D1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIFileAttachmentOutgoingCell.m; sourceTree = "<group>"; };
+		791282701FE15861006E93E2 /* DIDocumentManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIDocumentManager.h; sourceTree = "<group>"; };
+		791282711FE15861006E93E2 /* DIDocumentManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIDocumentManager.m; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -3286,6 +3298,28 @@
 				791282521FDEB193006E93E2 /* ContactPartyCell.xib */,
 			);
 			path = ContactPartyCell;
+			sourceTree = "<group>";
+		};
+		791282631FE08457006E93E2 /* DIFileAttachmentCell */ = {
+			isa = PBXGroup;
+			children = (
+				791282641FE0881E006E93E2 /* DIBaseFileAttachmentCell.h */,
+				791282651FE0881E006E93E2 /* DIBaseFileAttachmentCell.m */,
+				791282691FE0930F006E93E2 /* DIFileAttachmentIncomingCell.h */,
+				7912826A1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m */,
+				7912826C1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.h */,
+				7912826D1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m */,
+			);
+			path = DIFileAttachmentCell;
+			sourceTree = "<group>";
+		};
+		7912826F1FE15841006E93E2 /* DIDocumentManager */ = {
+			isa = PBXGroup;
+			children = (
+				791282701FE15861006E93E2 /* DIDocumentManager.h */,
+				791282711FE15861006E93E2 /* DIDocumentManager.m */,
+			);
+			path = DIDocumentManager;
 			sourceTree = "<group>";
 		};
 		791360411FCDB3480022E80F /* Root */ = {
@@ -5430,6 +5464,7 @@
 		79FBDEF51E30421A00448FE3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				7912826F1FE15841006E93E2 /* DIDocumentManager */,
 				79FBDEF61E30421A00448FE3 /* Datamanager */,
 				79FBDEFF1E30421A00448FE3 /* PushManager */,
 				79FBDF021E30421A00448FE3 /* QMCallManager */,
@@ -6278,6 +6313,7 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				791282631FE08457006E93E2 /* DIFileAttachmentCell */,
 				7912824F1FDEB180006E93E2 /* ContactPartyCell */,
 				79161D0C1FCBA5E00025BCB8 /* MatterNewLastCell */,
 				79161CF61FC959DB0025BCB8 /* AddLastThreeButtonsCell */,
@@ -9670,6 +9706,7 @@
 				79161CBD1FC754A30025BCB8 /* LeaveRecordsViewController.m in Sources */,
 				79FBDFA81E30421A00448FE3 /* UIImage+Base64.m in Sources */,
 				96CACE101EE24E500087E76B /* TaskCheckModel.m in Sources */,
+				7912826B1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m in Sources */,
 				79EC0E811E8B5B2700320A28 /* FirmURLModel.m in Sources */,
 				962082C51ED4828E00BB595C /* MatterLitigationViewController.m in Sources */,
 				7903CF481ECC00BB0090206C /* BirthdayCalendarViewController.m in Sources */,
@@ -9694,6 +9731,7 @@
 				96046F571EFDA0180048A58D /* iCarousel.m in Sources */,
 				96A73AA71F1C9BE100B97156 /* StaffOnline.m in Sources */,
 				79FBE0F61E304F5000448FE3 /* QMContactCell.m in Sources */,
+				791282671FE0881E006E93E2 /* DIBaseFileAttachmentCell.m in Sources */,
 				96A73AB81F1CA2FF00B97156 /* StaffOnlineCell.m in Sources */,
 				7903D07A1ECE7EFF0090206C /* AddMatterCell.m in Sources */,
 				79BC1EED1FCC8F4500E90B12 /* QMContactsDataSource.m in Sources */,
@@ -9799,6 +9837,7 @@
 				968E85E21EF19573001B442D /* IncreasingCell.m in Sources */,
 				79EC0DF21E88C7D100320A28 /* PartyGroupModel.m in Sources */,
 				79FBE07F1E304EAA00448FE3 /* QMSearchDataProvider.m in Sources */,
+				791282721FE15861006E93E2 /* DIDocumentManager.m in Sources */,
 				96A73A931F1B1DE000B97156 /* ProfitLossDetail.m in Sources */,
 				79D929EC1E8DDD8D000A53D2 /* UpdateModel.m in Sources */,
 				79D59A261E95245E00CD3821 /* QMMessageContactListViewController.m in Sources */,
@@ -9837,6 +9876,7 @@
 				79FBDFD71E30421A00448FE3 /* QMAlert.m in Sources */,
 				7954329E1FC65B8100FF9E57 /* QMAudioPlayer.m in Sources */,
 				79FBDFAB1E30421A00448FE3 /* UIView+Borders.m in Sources */,
+				7912826E1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m in Sources */,
 				7954327E1FC655BB00FF9E57 /* NSString+QMValidation.m in Sources */,
 				96BDA6211F02C72400084606 /* ThirdItemModel.m in Sources */,
 				7903CF9D1ECD5BD60090206C /* HQModel.m in Sources */,

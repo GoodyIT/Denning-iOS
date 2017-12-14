@@ -13,6 +13,5 @@
 - (void)addKeyboardObservers;
 - (void)removeKeyboardObservers;
 
-- (void) viewDocument:(NSURL*) Url withCompletion:(void(^)(NSURL *filePath)) completion;
 
 @end

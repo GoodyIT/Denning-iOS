@@ -18,7 +18,7 @@
 @property (strong, nonatomic) NSString* intPYL;
 @property (strong, nonatomic) NSString* intTaken;
 @property (strong, nonatomic) CodeDescription *clsLeaveStatus;
-@property (strong, nonatomic)AttendanceInfo * clsStaff;
+@property (strong, nonatomic) AttendanceInfo * clsStaff;
 @property (strong, nonatomic) CodeDescription* clsTypeOfLeave;
 
 +(instancetype) getLeaveRecordFromResponse: (NSDictionary*) response;

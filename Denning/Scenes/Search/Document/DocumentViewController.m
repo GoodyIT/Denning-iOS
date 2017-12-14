@@ -514,7 +514,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     }
     NSURL *url = [self getFileURL:file];
     
-    [self viewDocument:url withCompletion:^(NSURL *filePath) {
+    [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
         selectedDocument = filePath;
     }];
     
