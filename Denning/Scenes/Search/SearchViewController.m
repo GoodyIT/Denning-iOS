@@ -1030,6 +1030,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     }
     
     if ([segue.identifier isEqualToString:kFileUploadSegue]){
+        [DataManager sharedManager].documentView = @"nothing";
         UINavigationController* navC = segue.destinationViewController;
         FileUpload* vc = navC.viewControllers.firstObject;
         vc.titleValue = sender;

@@ -48,7 +48,12 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 - (void) configureAutocompleteSearch {
-    serverAPI = [DataManager sharedManager].tempServerURL;
+    if ([[DataManager sharedManager].documentView isEqualToString:@"upload"]) {
+         serverAPI = [DataManager sharedManager].tempServerURL;
+    } else {
+         serverAPI = [DataManager sharedManager].user.serverAPI;
+    }
+   
     sessionID = [DataManager sharedManager].user.sessionID;
     UIToolbar* _accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     _accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];

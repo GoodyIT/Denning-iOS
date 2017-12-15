@@ -78,6 +78,10 @@
 		7912826B1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912826A1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m */; };
 		7912826E1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912826D1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m */; };
 		791282721FE15861006E93E2 /* DIDocumentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 791282711FE15861006E93E2 /* DIDocumentManager.m */; };
+		791282761FE2DF25006E93E2 /* icon_attach_file@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282731FE2DF1E006E93E2 /* icon_attach_file@3x.png */; };
+		791282771FE2DF25006E93E2 /* icon_attach_file.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282741FE2DF1F006E93E2 /* icon_attach_file.png */; };
+		791282781FE2DF25006E93E2 /* icon_attach_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282751FE2DF22006E93E2 /* icon_attach_file@2x.png */; };
+		7912827D1FE2EE79006E93E2 /* ShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912827C1FE2EE79006E93E2 /* ShareHelper.m */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -1278,6 +1282,11 @@
 		7912826D1FE09326006E93E2 /* DIFileAttachmentOutgoingCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIFileAttachmentOutgoingCell.m; sourceTree = "<group>"; };
 		791282701FE15861006E93E2 /* DIDocumentManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DIDocumentManager.h; sourceTree = "<group>"; };
 		791282711FE15861006E93E2 /* DIDocumentManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DIDocumentManager.m; sourceTree = "<group>"; };
+		791282731FE2DF1E006E93E2 /* icon_attach_file@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_attach_file@3x.png"; sourceTree = "<group>"; };
+		791282741FE2DF1F006E93E2 /* icon_attach_file.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_attach_file.png; sourceTree = "<group>"; };
+		791282751FE2DF22006E93E2 /* icon_attach_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_attach_file@2x.png"; sourceTree = "<group>"; };
+		7912827B1FE2EE79006E93E2 /* ShareHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareHelper.h; sourceTree = "<group>"; };
+		7912827C1FE2EE79006E93E2 /* ShareHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareHelper.m; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -6676,6 +6685,9 @@
 		79FBE14B1E30F7F500448FE3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				791282741FE2DF1F006E93E2 /* icon_attach_file.png */,
+				791282751FE2DF22006E93E2 /* icon_attach_file@2x.png */,
+				791282731FE2DF1E006E93E2 /* icon_attach_file@3x.png */,
 				791282551FDEE58F006E93E2 /* share_pdf.png */,
 				791282561FDEE590006E93E2 /* share_pdf@2x.png */,
 				791282571FDEE590006E93E2 /* share_pdf@3x.png */,
@@ -7907,6 +7919,8 @@
 				9685EBF61F53D0610006C0E0 /* CustomShareViewController.m */,
 				79BC1ED31FCC7F0600E90B12 /* RequestObject.h */,
 				79BC1ED41FCC7F0600E90B12 /* RequestObject.m */,
+				7912827B1FE2EE79006E93E2 /* ShareHelper.h */,
+				7912827C1FE2EE79006E93E2 /* ShareHelper.m */,
 			);
 			path = DenningShare;
 			sourceTree = "<group>";
@@ -8869,6 +8883,7 @@
 				793FF12D1EBB78C9001F83A5 /* icon_chat_blue.png in Resources */,
 				79734FB31EBAACB800647215 /* icon_upload.png in Resources */,
 				96821F2B1F1D65D900F28708 /* AttendanceHeaderCell.xib in Resources */,
+				791282761FE2DF25006E93E2 /* icon_attach_file@3x.png in Resources */,
 				7931B4D11EA851B00090BDE0 /* menu_settings.png in Resources */,
 				79EC0D261E77013A00320A28 /* SF-UI-Text-RegularItalic.otf in Resources */,
 				960758921F012BBB008F9C69 /* MatterTwoColumn.xib in Resources */,
@@ -9006,6 +9021,7 @@
 				9636DCDB1F03C6C8008DDA41 /* icon_db_tax_invoice@3x.png in Resources */,
 				79EC0D611E85520700320A28 /* splash_logo@3x.png in Resources */,
 				79161D111FCBA5EE0025BCB8 /* MatterNewLastCell.xib in Resources */,
+				791282781FE2DF25006E93E2 /* icon_attach_file@2x.png in Resources */,
 				79FF35061E97D95B001BECFB /* logo_label.png in Resources */,
 				793FF2281EC3F75B001F83A5 /* expandableImage_reverse@2x.png in Resources */,
 				79FF35021E97D95B001BECFB /* icon_share@3x.png in Resources */,
@@ -9148,6 +9164,7 @@
 				79EC0E651E8B0E8300320A28 /* icon_doc@3x.png in Resources */,
 				79EC0DC71E874ED700320A28 /* shutterstock@2x.jpg in Resources */,
 				7931B5091EA9B1C50090BDE0 /* icon_search_gray@3x.png in Resources */,
+				791282771FE2DF25006E93E2 /* icon_attach_file.png in Resources */,
 				96A73A5C1F1A621600B97156 /* TrialBalanceHeaderCell.xib in Resources */,
 				96AA364D1FBCC343003D9A2C /* LeaveRecordCell.xib in Resources */,
 				79734F6B1EB98C5100647215 /* AddContact.storyboard in Resources */,
@@ -10001,6 +10018,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7912825B1FDEE826006E93E2 /* share_pdf.png in Sources */,
+				7912827D1FE2EE79006E93E2 /* ShareHelper.m in Sources */,
 				7912825C1FDEE826006E93E2 /* share_pdf@2x.png in Sources */,
 				7912825D1FDEE826006E93E2 /* share_pdf@3x.png in Sources */,
 				791B4FF21FCFA266003C30EC /* AddressModel.h in Sources */,

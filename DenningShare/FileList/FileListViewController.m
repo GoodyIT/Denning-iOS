@@ -13,6 +13,7 @@
 #import "CustomInfiniteIndicator.h"
 #import "UIScrollView+InfiniteScroll.h"
 #import "PropertyContactCell.h"
+#import "ShareHelper.h"
 
 @interface FileListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource>
 {
@@ -51,7 +52,7 @@
 }
 
 - (void) registerNib {
-    [PropertyContactCell registerForReuseInTableView:self.tableView];
+//    [PropertyContactCell registerForReuseInTableView:self.tableView];
     //    [SecondContactCell registerForReuseInTableView:self.tableView];
 }
 
@@ -99,25 +100,31 @@
     requestDataObject = [RequestObject new];
     [requestDataObject setIncompleteString:@""];
     __weak typeof(self) weakSelf = self;
-    [requestDataObject setCompletionBlock:^(NSArray *items) {
-        if (items > 0) {
-            weakSelf.page++;
-        }
-        NSArray* array = [SearchResultModel getSearchResultArrayFromResponse:items];
-        if (weakSelf.isAppending) {
-            _listOfFile = [[_listOfFile arrayByAddingObjectsFromArray:array] mutableCopy];
+    [requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
+        if (statusCode == 410) {
+            [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:weakSelf];
         } else {
-            _listOfFile = [array mutableCopy];
+            if (items > 0) {
+                weakSelf.page++;
+            }
+            NSArray* array = [SearchResultModel getSearchResultArrayFromResponse:items];
+            if (weakSelf.isAppending) {
+                _listOfFile = [[_listOfFile arrayByAddingObjectsFromArray:array] mutableCopy];
+            } else {
+                _listOfFile = [array mutableCopy];
+            }
+            
+            [weakSelf.tableView reloadData];
         }
         
-        [weakSelf.tableView reloadData];
         weakSelf.isAppending = NO;
         [weakSelf.tableView finishInfiniteScroll];
     }];
+    
     NSString* urlString = [NSString stringWithFormat:@"%@%@%@&page=%ld",[defaults valueForKey:@"api"], _url, _filter, _page];
     NSURL *downloadURL = [NSURL URLWithString:urlString];
     GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
-                                                          withCompletionBlock:requestDataObject.completionBlock];
+                                                          withCompletionBlock:requestDataObject.myCompletionBlock];
     [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
@@ -208,7 +215,6 @@
     [_searchBar resignFirstResponder];
     _searchBar.showsCancelButton = NO;
     searchBar.text = @"";
-    _page = 1;
     [self searchBarSearchButtonClicked:searchBar];
 }
 
@@ -230,6 +236,7 @@
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
 {
     self.filter = searchText;
+    _page = 1;
     [self getList];
 }
 

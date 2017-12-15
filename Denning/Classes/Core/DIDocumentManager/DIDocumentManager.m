@@ -9,6 +9,9 @@
 #import "DIDocumentManager.h"
 
 @interface DIDocumentManager()
+{
+    NSURL* selectedDocument;
+}
 
 @property (nonatomic, strong) AFURLSessionManager *manager;
 @property (nonatomic, strong) UIViewController* viewController;
@@ -132,6 +135,7 @@
         if (error == nil) {
             if  (filePath != nil) {
                 [self displayDocument:filePath inView:viewController];
+                selectedDocument = filePath;
                 completion(filePath);
             }
         } else {
@@ -154,5 +158,10 @@
     return _viewController;
 }
 
+- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
+{
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
+}
 
 @end

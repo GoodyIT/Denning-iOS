@@ -62,11 +62,11 @@ QMMediaHandler>
 }
 
 - (void) displayNotReadyImage:(id<QMChatAttachmentCell>) view {
-    [self displayFileAttachStatusImage:@"share_pdf" inView:view];
+    [self displayFileAttachStatusImage:@"icon_attach_file" inView:view];
 }
 
 - (void) displayReadyImage: (id<QMChatAttachmentCell>) view {
-    [self displayFileAttachStatusImage:@"share_pdf" inView:view];
+    [self displayFileAttachStatusImage:@"icon_attach_file" inView:view];
 }
 
 - (void) configureViewForFileAttach:(id<QMChatAttachmentCell>) view
@@ -180,7 +180,7 @@ QMMediaHandler>
         else {
             UIImage *cachedImage = nil;
             if  ([[DIDocumentManager shared] isAttachedFileExist:attachment.ID]) {
-                cachedImage = [UIImage imageNamed:@"share_pdf"];
+                cachedImage = [UIImage imageNamed:@"icon_attach_file"];
             }
             if (cachedImage) {
                 view.viewState = QMMediaViewStateReady;
@@ -197,7 +197,7 @@ QMMediaHandler>
                     // ready to open
                     if ([view.messageID isEqualToString:message.ID]) {
                         if (filePath != nil) {
-                            UIImage* transfomedImage = [UIImage imageNamed:@"share_pdf"];
+                            UIImage* transfomedImage = [UIImage imageNamed:@"icon_attach_file"];
                             view.viewState = QMMediaViewStateReady;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 view.image = transfomedImage;
@@ -371,6 +371,7 @@ QMMediaHandler>
             if (op.isCancelled) {
                 return;
             }
+            
             if (![view.messageID isEqualToString:message.ID]) {
                 return;
             }
@@ -533,7 +534,7 @@ didUpdateStatus:(QMAudioPlayerStatus *)status {
 
 - (BOOL) isImageFile:(QBChatAttachment*) attachment {
     BOOL isImage = NO;
-    
+    NSArray* signs = [attachment.type componentsSeparatedByString:@"/"];
     if ([attachment.type containsString:@""]) {
         
     }

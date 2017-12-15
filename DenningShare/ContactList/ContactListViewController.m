@@ -15,6 +15,7 @@
 #import "CustomInfiniteIndicator.h"
 #import "UIScrollView+InfiniteScroll.h"
 #import "PropertyContactCell.h"
+#import "ShareHelper.h"
 
 @interface ContactListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource>
 {
@@ -65,7 +66,7 @@
     _page = 1;
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.estimatedRowHeight = 150;
+    self.tableView.estimatedRowHeight = 250;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
@@ -99,28 +100,32 @@
     requestDataObject = [RequestObject new];
     [requestDataObject setIncompleteString:@""];
     __weak typeof(self) weakSelf = self;
-    [requestDataObject setCompletionBlock:^(NSArray *items) {
-        if (items == nil) {
-            return;
-        }
-        if (items > 0) {
-            weakSelf.page++;
-        }
-        NSArray* array = [SearchResultModel getSearchResultArrayFromResponse:items];
-        if (weakSelf.isAppending) {
-            _listOfContact = [[_listOfContact arrayByAddingObjectsFromArray:array] mutableCopy];
+    [requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
+        if (statusCode == 410) {
+            [ShareHelper showAlertWithMessage:@"Please log in again." actionSuccess:NO inViewController:weakSelf];
         } else {
-            _listOfContact = [array mutableCopy];
+            if (items != nil) {
+                if (items > 0) {
+                    weakSelf.page++;
+                }
+                NSArray* array = [SearchResultModel getSearchResultArrayFromResponse:items];
+                if (weakSelf.isAppending) {
+                    _listOfContact = [[_listOfContact arrayByAddingObjectsFromArray:array] mutableCopy];
+                } else {
+                    _listOfContact = [array mutableCopy];
+                }
+                
+                [weakSelf.tableView reloadData];
+            }
         }
-        
-        [weakSelf.tableView reloadData];
+       
         weakSelf.isAppending = NO;
         [weakSelf.tableView finishInfiniteScroll];
     }];
     NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%ld",[defaults valueForKey:@"api"], _url, _filter, _page];
     NSURL *downloadURL = [NSURL URLWithString:urlString];
     GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
-                                                            withCompletionBlock:requestDataObject.completionBlock];
+                                                            withCompletionBlock:requestDataObject.myCompletionBlock];
     [[NSOperationQueue mainQueue] addOperation:operation];
 }
 

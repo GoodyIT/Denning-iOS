@@ -497,7 +497,6 @@ didCompleteWithError:(NSError *)error{
     [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
-
 #pragma mark - MLPAutoCompleteTextField Delegate
 
 - (BOOL)autoCompleteTextField:(MLPAutoCompleteTextField *)textField

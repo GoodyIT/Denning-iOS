@@ -95,12 +95,18 @@
                              @"base64":[self.imagePreview.image encodeToBase64String]
                              };
     
-    self.url = [[DataManager sharedManager].tempServerURL stringByAppendingString:self.url];
+    NSString* uploadURL;
+    if ([[DataManager sharedManager].documentView isEqualToString:@"upload"]) {
+        uploadURL = [[DataManager sharedManager].tempServerURL stringByAppendingString:self.url];
+    } else {
+        uploadURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString:self.url];
+    }
+    
     
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] uploadFileWithUrl:self.url params:params WithCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] uploadFileWithUrl:uploadURL params:params WithCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         self->isLoading = NO;
         if (error == nil && [result[0] isEqualToString:@"200"]) {

@@ -96,24 +96,6 @@
     }];
 }
 
-
-- (void)displayDocument:(NSURL*)document {
-    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
-    documentInteractionController.delegate = self;
-    [documentInteractionController presentPreviewAnimated:YES];
-}
-
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controlle
-{
-    return self;
-}
-
-- (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
-{
-    NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
-}
-
 - (NSDictionary*) buildParam {
     NSDictionary* data = @{
                            @"documentNo":_model.documentNo,

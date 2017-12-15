@@ -6,7 +6,7 @@
 #import "Operation.h"
 
 
-typedef void (^JSONFetchCompletionBlock)(NSArray *items);
+typedef void (^JSONFetchCompletionBlock)(NSArray *items, NSString* statusCode);
 
 @interface FetchOperation : Operation
 

@@ -775,6 +775,9 @@ QMUsersServiceDelegate
     [UIAlertController alertControllerWithTitle:nil
                                         message:nil
                                  preferredStyle:UIAlertControllerStyleActionSheet];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"File Folder" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_TAKE_MEDIA", nil)
                                                         style:UIAlertActionStyleDefault
@@ -1437,10 +1440,6 @@ QMUsersServiceDelegate
                                 withMessage:message];
     }
     
-//    if([cell conformsToProtocol:@protocol(QMChatAttachmentCell)]) {
-//        [self.mediaController configureViewForFileAttach:(id<QMChatAttachmentCell>) cell withMessage:message];
-//    }
-    
     if ([cell isKindOfClass:[QMChatIncomingCell class]] ||
         [cell isKindOfClass:[QMChatOutgoingCell class]]) {
         
@@ -1605,7 +1604,7 @@ QMUsersServiceDelegate
 //    if (!isOnline) {
         NSString* myName = [QBSession currentSession].currentUser.fullName;
     
-        [QMNotification sendPushMessageToUser:[self.chatDialog opponentID] withUserName:myName withMessage:message];
+//        [QMNotification sendPushMessageToUser:[self.chatDialog opponentID] withUserName:myName withMessage:message];
 //    }
     
     [[QMCore.instance.chatService sendMessage:message
@@ -2075,6 +2074,7 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
         
         [self.mediaController didTapContainer:(id<QMMediaViewDelegate>)cell inView:self];
     }
+    
     else if ([cell isKindOfClass:[QMChatBaseLinkPreviewCell class]]) {
         
         CGSize cellSize = [self.collectionView.collectionViewLayout containerViewSizeForItemAtIndexPath:indexPath];
@@ -2084,12 +2084,12 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
         NSParameterAssert(og);
         
         NSURL *linkURL = [NSURL URLWithString:og.baseUrl];
-        [self openURL:linkURL];
+        if  ([linkURL.absoluteString containsString:@""]) {
+            [[DIDocumentManager shared] viewDocument:linkURL inViewController:self withCompletion:nil];
+        } else {
+             [self openURL:linkURL];
+        }
     }
-//
-//    else if ([cell isKindOfClass:[QMChatAttachmentIncomingCell class]] || [cell isKindOfClass:[QMChatAttachmentOutgoingCell class]]) {
-//        [self.mediaController didTapFileContainer:(id<QMChatAttachmentCell>)cell];
-//    }
     
     else if ([cell isKindOfClass:[QMChatOutgoingCell class]] ||
              [cell isKindOfClass:[QMChatIncomingCell class]]) {

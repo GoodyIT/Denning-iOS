@@ -54,7 +54,7 @@
     }
     
     if (_resultCompletionBlock) {
-        _resultCompletionBlock(result);
+        _resultCompletionBlock(result, @"200");
     }
 }
 

@@ -662,14 +662,20 @@
     [self showPopup:vc];
 }
 
-- (void) showDetailAutocomplete {
+- (void) showDetailAutocomplete:(NSString*) url {
     [self.view endEditing:YES];
     
     DetailWithAutocomplete *vc = [[UIStoryboard storyboardWithName:@
                                    "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
-    vc.url = COURT_HEARINGDETAIL_GET_URL;
+    vc.url = url;
     vc.updateHandler =  ^(CodeDescription* model) {
-        if  ([selectedDetails isEqualToString:@"First Details"]) {
+        if ([selectedDetails isEqualToString: @"Court Decision"]) {
+            _courtDecision.text = model.descriptionValue;
+            selectedDecisionCode = model.codeValue;
+        } else if ([selecteDetail isEqualToString:@"Attendant Type"]) {
+            _attendedStatus.text = model.descriptionValue;
+            selectedAttendedStatus = model.codeValue;
+        } else if ([selectedDetails isEqualToString:@"First Details"]) {
              self.details.text = model.descriptionValue;
         } else {
              self.nextDetails.text = model.descriptionValue;
@@ -687,12 +693,6 @@
     } else if ([name isEqualToString:@"nextNatureOfHearing"]) {
         self.nextNatureOfHearing.text = model.descriptionValue;
         selectedNatureOfHearing = model.codeValue;
-    } else if ([name isEqualToString:@"Attendant Status"]) {
-        self.attendedStatus.text = model.descriptionValue;
-        selectedAttendedStatus = model.codeValue;
-    } else if ([name isEqualToString:@"Court Decision"]) {
-        self.courtDecision.text = model.descriptionValue;
-        selectedDecisionCode = model.codeValue;
     } else if ([name isEqualToString:@"Next Date Type"]) {
         self.nextDateType.text = model.descriptionValue;
         selectedNextDateTypeCode = model.codeValue;
@@ -713,24 +713,22 @@
             [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_HEARINGTYPE_GET_URL];
         } else if (indexPath.row == 8) { // Details
             selectedDetails = @"First Details";
-            [self showDetailAutocomplete];
+            [self showDetailAutocomplete:COURT_HEARINGDETAIL_GET_URL];
         } else if (indexPath.row == 9) { // Assigned
             selectedStaff = @"Counsel Assigned";
             [self performSegueWithIdentifier:kStaffSegue sender:@"attest"];
         }
         if (_courtDiary != nil) {
             if (indexPath.row == 10) { // Attendant Type
-                titleOfList = @"Attendant Type";
-                nameOfField = @"Attendant Status";
-                [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_ATTENDED_STATUS_GET_URL];
+                selectedDetails = @"Attendant Type";
+                [self showDetailAutocomplete:COURT_ATTENDED_STATUS_GET_URL];
             } else if (indexPath.row == 11) { // Counsel Attended
                 [self showStaffAutocomplete];
             } else if (indexPath.row == 12) { // Coram
                 [self performSegueWithIdentifier:kCoramListSegue sender:nil];
             } else if (indexPath.row == 14) { // Decision
-                titleOfList = @"Court Decision";
-                nameOfField = @"Court Decision";
-                [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_DECISION_GET_URL];
+                selectedDetails = @"Court Decision";
+                [self showDetailAutocomplete:COURT_DECISION_GET_URL];
             } else if (indexPath.row == 15) { // Decision
                 titleOfList = @"Next Date Type";
                 nameOfField = @"Next Date Type";
@@ -745,7 +743,7 @@
             [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_HEARINGTYPE_GET_URL];
         } else if (indexPath.row == 3) { // Details
             selectedDetails = @"Next Details";
-            [self showDetailAutocomplete];
+            [self showDetailAutocomplete:COURT_HEARINGDETAIL_GET_URL];
         }
     }
     
