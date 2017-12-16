@@ -306,11 +306,11 @@ UITableViewDelegate, UITableViewDataSource>
     NSUInteger cellType = [DIHelpers detectItemType:model.form];
     NSString* url;
     if (cellType == DIContactCell) {
-        fileFolderTitle = @"File Folder";
-        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, model.key];
-    } else {
         fileFolderTitle = @"Contact Folder";
         url = [NSString stringWithFormat:@"%@denningwcf/v1/app/contactFolder/%@", [DataManager sharedManager].user.serverAPI, model.key];
+    } else {
+        fileFolderTitle = @"File Folder";
+        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, [model.key substringFromIndex:9]];
     }
     
     [self openDocument:url];

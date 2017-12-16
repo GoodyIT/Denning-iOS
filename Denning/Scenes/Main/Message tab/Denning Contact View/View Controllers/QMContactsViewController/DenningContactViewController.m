@@ -222,8 +222,7 @@ SWTableViewCellDelegate
     NSMutableArray *leftUtilityButtons = [NSMutableArray new];
     
     UIFont *font = [UIFont fontWithName:@"SFUIText-Medium" size:17.0f];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
-    NSAttributedString* callString = [[NSAttributedString alloc] initWithString:@"Call" attributes:attributes];
+    NSAttributedString* callString = [[NSAttributedString alloc] initWithString:@"Call" attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
     [leftUtilityButtons sw_addUtilityButtonWithColor:[UIColor redColor] attributedTitle:callString];
     

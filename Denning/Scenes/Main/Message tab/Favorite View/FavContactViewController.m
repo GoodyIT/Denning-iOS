@@ -222,8 +222,7 @@ SWTableViewCellDelegate
     NSMutableArray *leftUtilityButtons = [NSMutableArray new];
     
     UIFont *font = [UIFont fontWithName:@"SFUIText-Medium" size:17.0f];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
-    NSAttributedString* callString = [[NSAttributedString alloc] initWithString:@"Call" attributes:attributes];
+    NSAttributedString* callString = [[NSAttributedString alloc] initWithString:@"Call" attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName:[UIColor whiteColor]}];
 
     [leftUtilityButtons sw_addUtilityButtonWithColor:[UIColor redColor] attributedTitle:callString];
     
@@ -235,8 +234,7 @@ SWTableViewCellDelegate
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     
     UIFont *font = [UIFont fontWithName:@"SFUIText-Medium" size:17.0f];
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
-    NSAttributedString* delteString = [[NSAttributedString alloc] initWithString:@"Delete" attributes:attributes];
+    NSAttributedString* delteString = [[NSAttributedString alloc] initWithString:@"Delete" attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
                                       attributedTitle:delteString];
