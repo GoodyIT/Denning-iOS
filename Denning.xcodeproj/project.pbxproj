@@ -85,6 +85,7 @@
 		7912A57E1FE3C16400C8B9A5 /* FavContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A57D1FE3C16400C8B9A5 /* FavContactViewController.m */; };
 		7912A5821FE46D0900C8B9A5 /* FileSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A5811FE46D0900C8B9A5 /* FileSaveViewController.m */; };
 		7912A5881FE481DB00C8B9A5 /* FileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A5861FE481DA00C8B9A5 /* FileListViewController.m */; };
+		7912A58C1FE4B1C500C8B9A5 /* ChatFileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A58B1FE4B1C500C8B9A5 /* ChatFileListViewController.m */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -1294,6 +1295,8 @@
 		7912A5811FE46D0900C8B9A5 /* FileSaveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileSaveViewController.m; sourceTree = "<group>"; };
 		7912A5861FE481DA00C8B9A5 /* FileListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListViewController.m; sourceTree = "<group>"; };
 		7912A5871FE481DA00C8B9A5 /* FileListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListViewController.h; sourceTree = "<group>"; };
+		7912A58A1FE4B1C500C8B9A5 /* ChatFileListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatFileListViewController.h; sourceTree = "<group>"; };
+		7912A58B1FE4B1C500C8B9A5 /* ChatFileListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatFileListViewController.m; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -3352,6 +3355,15 @@
 			path = FileList;
 			sourceTree = "<group>";
 		};
+		7912A5891FE4B1B800C8B9A5 /* ChatFileList */ = {
+			isa = PBXGroup;
+			children = (
+				7912A58A1FE4B1C500C8B9A5 /* ChatFileListViewController.h */,
+				7912A58B1FE4B1C500C8B9A5 /* ChatFileListViewController.m */,
+			);
+			path = ChatFileList;
+			sourceTree = "<group>";
+		};
 		791360411FCDB3480022E80F /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -4094,6 +4106,7 @@
 		79556DBD1E9323B700A16CB8 /* Message tab */ = {
 			isa = PBXGroup;
 			children = (
+				7912A5891FE4B1B800C8B9A5 /* ChatFileList */,
 				7912A5851FE481DA00C8B9A5 /* FileList */,
 				7912A57F1FE46CF600C8B9A5 /* FileSaveView */,
 				7912824B1FDE749C006E93E2 /* Groups */,
@@ -9971,6 +9984,7 @@
 				7903D0841ECECBA10090206C /* PropertyListViewController.m in Sources */,
 				960A66231F0200D20063AB6C /* DashboardSecondHeaderCell.m in Sources */,
 				7903D0961ECF9B520090206C /* TypeValueModel.m in Sources */,
+				7912A58C1FE4B1C500C8B9A5 /* ChatFileListViewController.m in Sources */,
 				795DF25A1E6F04E0006D617D /* CategorySelectViewController.m in Sources */,
 				96A73A341F19C89600B97156 /* BankReconCell.m in Sources */,
 				7912A57E1FE3C16400C8B9A5 /* FavContactViewController.m in Sources */,

@@ -100,8 +100,8 @@
     _fileName.text = [[_fileURL.absoluteString lastPathComponent] stringByDeletingPathExtension];
     fileType = [_fileURL.absoluteString pathExtension];
     
+    [SVProgressHUD showWithStatus:@"Loading"];
     [[DIDocumentManager shared] downloadFileFromURL:_fileURL withProgress:^(CGFloat progress) {
-        [SVProgressHUD showProgress:progress maskType:SVProgressHUDMaskTypeClear];
     } completion:^(NSURL *filePath) {
         [SVProgressHUD dismiss];
         openedItem = filePath;
@@ -121,11 +121,13 @@
 }
 
 - (void) didTapImage {
-//    [[DIDocumentManager shared] displayDocument:openedItem inView:self];
-    
-    [[DIDocumentManager shared] viewDocument:_fileURL inViewController:self withCompletion:^(NSURL *filePath) {
-        openedItem = filePath;
-    }];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:openedItem.absoluteString isDirectory:nil]) {
+        [[DIDocumentManager shared] displayDocument:openedItem inView:self];
+    } else {
+        [[DIDocumentManager shared] viewDocument:_fileURL inViewController:self withCompletion:^(NSURL *filePath) {
+            openedItem = filePath;
+        }];
+    }
 }
 
 - (void) configureFileNameAutoComplete {
@@ -235,8 +237,17 @@
  
  // Create the request.
     NSString* saveURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString:_url];
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    @weakify(self);
     [[QMNetworkManager sharedManager] sendPrivatePostWithURL:saveURL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
-        
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:1.0];
+        } else {
+             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
+        }
     }];
 }
 

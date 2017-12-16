@@ -769,7 +769,7 @@ QMUsersServiceDelegate
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
     UIAlertController *alertController =
-    [UIAlertController alertControllerWithTitle:nil
+    [UIAlertController alertControllerWithTitle:@"Denning Attach File"
                                         message:nil
                                  preferredStyle:UIAlertControllerStyleActionSheet];
     [alertController addAction:[UIAlertAction actionWithTitle:@"File Folder" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -1556,6 +1556,7 @@ QMUsersServiceDelegate
     } else if ([segue.identifier isEqualToString:kSaveFileSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         FileSaveViewController *vc = (FileSaveViewController*)nav.topViewController;
+        
         vc.fileURL = sender;
     }
     

@@ -20,6 +20,7 @@ static NSString *const kQMSceneSegueFriendDetails           = @"SceneSegueFriend
 static NSString *const kQMSceneSegueProfile                 = @"SceneSegueProfile";
 static NSString *const kQMSceneSegueNewMessage              = @"SceneSegueNewMessage";
 static NSString *const kSaveFileSegue = @"SaveFileSegue";
+static NSString *const kOpenFileSegue = @"OpenFileSegue";
 static NSString *const kQMSceneSegueNewMessageContactList   = @"SceneSegueNewMessageContactList";
 static NSString *const kQMSceneSegueUserInfo                = @"SceneSegueUserInfo";
 static NSString *const KQMSceneSegueGroupInfo               = @"SceneSegueGroupInfo";

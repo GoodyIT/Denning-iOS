@@ -123,39 +123,6 @@
     return 33;
 }
 
-//-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
-//    return cell;
-//}
-
-- (NSArray*) separateNameIntoTwo:(NSString*) title
-{
-    NSMutableArray *items = [[title componentsSeparatedByString:@"("] mutableCopy];
-    if ([items count] > 1) {
-        items[1] = [items[1] substringToIndex:((NSString*)items[1]).length-1];
-    } else {
-        [items addObject:@""];
-    }
-    
-    return items;
-}
-
-- (NSString*) getDateInShortForm: (NSString*) date
-{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
-    
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
-    [formatter setTimeZone:timeZone];
-    
-    NSDate *creationDate = [formatter dateFromString:date];
-    [newFormatter setTimeZone:timeZone];
-    [newFormatter setDateFormat:@"d MMM yyyy"];
-    
-    return [newFormatter stringFromDate:creationDate];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchResultModel *model = self.listOfFile[indexPath.row];
     
@@ -165,12 +132,12 @@
     UILabel* thirdValue = (UILabel*)[cell viewWithTag:3];
     firstValue.text = model.key;
     if ([model.title containsString:@"File No."]) {
-        thirdValue.text = [self separateNameIntoTwo:[model.title substringFromIndex:10]][1];
+        thirdValue.text = [DIHelpers separateNameIntoTwo:[model.title substringFromIndex:10]][1];
     } else {
-        thirdValue.text = [self separateNameIntoTwo:model.title][1];
+        thirdValue.text = [DIHelpers separateNameIntoTwo:model.title][1];
     }
     
-    secondValue.text = [self getDateInShortForm:model.sortDate];
+    secondValue.text = [DIHelpers getDateInShortForm:model.sortDate];
     
     return cell;
 }
