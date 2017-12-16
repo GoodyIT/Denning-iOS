@@ -153,10 +153,14 @@
             if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(250)]) {
                 [self clientFirstLogin];
             } else {
-                if (doumentModel.folders.count == 0) {
-                    [QMAlert showAlertWithMessage:@"There is no shared folder for you" actionSuccess:NO inViewController:self];
+                if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
+                    [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
                 } else {
-                    [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
+                    if (doumentModel.folders.count == 0) {
+                        [QMAlert showAlertWithMessage:@"There is no shared folder for you" actionSuccess:NO inViewController:self];
+                    } else {
+                        [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
+                    }
                 }
             }
         } else {
@@ -173,7 +177,12 @@
         [SVProgressHUD dismiss];
         if (error == nil) {
             [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
-            [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
+            if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
+                [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
+            } else {
+                [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
+            }
+            
         } else {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }
