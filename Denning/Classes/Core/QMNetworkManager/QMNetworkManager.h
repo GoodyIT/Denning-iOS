@@ -158,7 +158,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 // Home Search
 
-- (void) getGlobalSearchFromKeyword: (NSString*) keyword searchURL:(NSString*)searchURL forCategory:(NSInteger)category searchType:(NSString*)searchType withPage:(NSNumber*)page withCompletion:(void(^)(NSArray* resultArray, NSError* error)) completion;
+- (void) getGlobalSearchFromKeyword: (NSString*) keyword searchURL:(NSString*)searchURL forCategory:(NSInteger)category searchType:(NSString*)searchType withPage:(NSNumber*)page withProgress:(void (^)(CGFloat progress))progressBlock withCompletion:(void(^)(NSArray* resultArray, NSError* error)) completion;
 
 // Updates
 - (void) getLatestUpdatesWithCompletion: (void(^)(NSArray* updatesArray, NSError* error)) completion;
@@ -358,6 +358,8 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
  */
 
 - (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
+
+- (void) sendProgressRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params withProgress:(void (^)(CGFloat progress))progressBlock  completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 
 - (void) sendGetWithURL:(NSString*) url completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion;
 

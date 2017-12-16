@@ -270,31 +270,23 @@
                                                                    @"firmCode": firmCode}];
     
     [self setPublicHTTPHeader];
-    
-    [self.manager POST:SIGNUP_URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        if  (completion != nil)
-        {
+    [self sendPostWithURL:SIGNUP_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        if (error == nil) {
             completion(YES, nil);
-        }
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        if  (completion != nil)
-        {
+        } else {
             NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
-            
-            NSLog(@"%@, %@", test.allHeaderFields, [NSHTTPURLResponse localizedStringForStatusCode:test.statusCode]);
             if (test.statusCode == 406) {
                 completion(NO, @"Email or phone number is already registered.");
             } else {
                 completion(NO, error.localizedDescription);
             }
-            
         }
     }];
 }
 
 // Home Search
 
-- (void) getGlobalSearchFromKeyword: (NSString*) keyword searchURL:(NSString*)searchURL forCategory:(NSInteger)category searchType:(NSString*)searchType withPage:(NSNumber*)page withCompletion:(void(^)(NSArray* resultArray, NSError* error)) completion
+- (void) getGlobalSearchFromKeyword: (NSString*) keyword searchURL:(NSString*)searchURL forCategory:(NSInteger)category searchType:(NSString*)searchType withPage:(NSNumber*)page withProgress:(void (^)(CGFloat progress))progressBlock withCompletion:(void(^)(NSArray* resultArray, NSError* error)) completion
 {
     NSString* urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%@", searchURL, keyword, (long)category, page];
     if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
@@ -308,7 +300,7 @@
         urlString = [urlString stringByAppendingString:@"&isAutoComplete=1"];
     }
     
-    [self sendGetWithURL:urlString completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [self sendProgressRequestWithType:@"Get" URL:urlString params:nil withProgress:progressBlock completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([SearchResultModel getSearchResultArrayFromResponse:(NSArray*)result], error);
     }];
 }
@@ -1120,6 +1112,34 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 /*
  Leave Application
  */
+- (void) sendProgressRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params withProgress:(void (^)(CGFloat progress))progressBlock  completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion {
+    
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
+    url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+
+    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:self.manager
+                                                               HTTPMethod:requestType
+                                                                URLString:url
+                                                               parameters:params
+                                                           uploadProgress:nil
+                                                         downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+                                                             progressBlock(downloadProgress.fractionCompleted);
+                                                         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
+                                                                      if (completion != nil) {                                 completion(responseObject, nil, task);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
+                                                                          if (((NSHTTPURLResponse *)task.response).statusCode == 410) { // Session expired.
+                                                                              [self displaySessionExpireMessage];
+                                                                              
+                                                                          }
+                                                                          if  (completion != nil)
+                                                                          {
+                                                                              completion(nil, error, task);
+                                                                          }
+                                                                      }];
+    [[NSOperationQueue mainQueue] addOperation:operation];
+}
+
 - (void) sendRequestWithType:(NSString*) requestType URL:(NSString*) url params:(nullable NSDictionary*) params completion:(void(^)(NSDictionary* result, NSError* error, NSURLSessionDataTask * _Nonnull task)) completion
 {
     if ([NSOperationQueue mainQueue].operationCount > 0) {

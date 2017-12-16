@@ -48,6 +48,7 @@ target 'Denning' do
   pod 'DLRadioButton', '~> 1.4'
   pod 'UITextView+Placeholder', '~> 1.2'
   pod 'UIScrollView-InfiniteScroll', '~> 1.0.0'
+  pod 'M13ProgressSuite'
   
   pod 'AFNetworking’
   

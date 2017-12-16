@@ -56,6 +56,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 }
 
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
+@property (weak, nonatomic) IBOutlet M13ProgressViewBar *topProgressBar;
 
 @end
 
@@ -144,6 +145,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     } else {
         [DataManager sharedManager].searchType = @"Public";
     }
+    
+    [_topProgressBar setProgressBarThickness:5];
+    [_topProgressBar setShowPercentage:NO];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EBEBF1"];
@@ -323,11 +327,15 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     if (isLoading) return;
     isLoading = YES;
     
+    [_topProgressBar performAction:M13ProgressViewActionNone animated:YES];
+    [_topProgressBar setProgress:0 animated:YES];
     @weakify(self)
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
+    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withProgress:^(CGFloat progress) {
+        [_topProgressBar setProgress:progress*100 animated:YES];
+    } withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
         
-        [SVProgressHUD dismiss];
+        [_topProgressBar performAction:M13ProgressViewActionSuccess animated:YES];
+        [_topProgressBar setProgress:0 animated:YES];
         @strongify(self);
         self->isLoading = NO;
         [self.tableView finishInfiniteScroll];
@@ -860,6 +868,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 - (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField willShowAutoCompleteTableView:(UITableView *)autoCompleteTableView {
     NSLog(@"Autocomplete table view will be added to the view hierarchy");
     self.selectionList.hidden = YES;
+    _topProgressBar.hidden = YES;
     // searchcontainer constraint
     self.searchContainerConstraint.constant = 165;
 }
@@ -868,6 +877,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     NSLog(@"Autocomplete table view ws removed from the view hierarchy");
    // [self.searchTextField resignFirstResponder];
     self.selectionList.hidden = NO;
+    _topProgressBar.hidden = NO;
 }
 
 - (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField didShowAutoCompleteTableView:(UITableView *)autoCompleteTableView {

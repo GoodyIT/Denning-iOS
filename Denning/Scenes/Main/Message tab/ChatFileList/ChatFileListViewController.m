@@ -45,6 +45,7 @@ UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) NSMutableArray* searchResultArray, *filteredArray;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchContainerConstraint;
 @property (weak, nonatomic) IBOutlet UIView *searchContainerView;
+@property (weak, nonatomic) IBOutlet M13ProgressViewBar *topProgressBar;
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 
@@ -128,14 +129,19 @@ UITableViewDelegate, UITableViewDataSource>
     selectedIndex = 0;
     self.page = @(1);
     category = 0;
-    self.searchTextField.placeholder = @"Denning Search";
-    self.searchTextField.text = keyword = _initialKeyword;
+   
     _searchResultArray = [NSMutableArray new];
     searchURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString: GENERAL_SEARCH_URL];
   
     _email = [DataManager sharedManager].user.email;
     _sessionID = [DataManager sharedManager].user.sessionID;
     [DataManager sharedManager].searchType = @"Denning";
+    
+    self.searchTextField.placeholder = @"Denning Search";
+    self.searchTextField.text = keyword = _initialKeyword;
+    
+    [_topProgressBar setProgressBarThickness:5];
+    [_topProgressBar setShowPercentage:NO];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.backgroundColor = [UIColor colorWithHexString:@"EBEBF1"];
@@ -213,11 +219,15 @@ UITableViewDelegate, UITableViewDataSource>
     if (isLoading) return;
     isLoading = YES;
     
+    [_topProgressBar performAction:M13ProgressViewActionNone animated:YES];
+    [_topProgressBar setProgress:0 animated:YES];
     @weakify(self)
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
+    [[QMNetworkManager sharedManager] getGlobalSearchFromKeyword:keyword searchURL:searchURL forCategory:category searchType:searchType withPage:_page withProgress:^(CGFloat progress) {
+        [_topProgressBar setProgress:progress*100 animated:YES];
+    } withCompletion:^(NSArray * _Nonnull resultArray, NSError* _Nonnull error) {
         
-        [SVProgressHUD dismiss];
+        [_topProgressBar performAction:M13ProgressViewActionSuccess animated:YES];
+        [_topProgressBar setProgress:0 animated:YES];
         @strongify(self);
         self->isLoading = NO;
         [self.tableView finishInfiniteScroll];
@@ -240,7 +250,6 @@ UITableViewDelegate, UITableViewDataSource>
         self->isAppending = NO;
     }];
 }
-
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -298,10 +307,10 @@ UITableViewDelegate, UITableViewDataSource>
     NSString* url;
     if (cellType == DIContactCell) {
         fileFolderTitle = @"File Folder";
-        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, [model.key substringToIndex:9]];
+        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, model.key];
     } else {
         fileFolderTitle = @"Contact Folder";
-        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/contactFolder/%@", [DataManager sharedManager].user.serverAPI, model.searchCode];
+        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/contactFolder/%@", [DataManager sharedManager].user.serverAPI, model.key];
     }
     
     [self openDocument:url];
@@ -414,12 +423,14 @@ UITableViewDelegate, UITableViewDataSource>
 - (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField willHideAutoCompleteTableView:(UITableView *)autoCompleteTableView {
     NSLog(@"Autocomplete table view will be removed from the view hierarchy");
     // searchcontainer constraint
+    _topProgressBar.hidden = NO;
     self.searchContainerConstraint.constant = 44 ;
 }
 
 - (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField willShowAutoCompleteTableView:(UITableView *)autoCompleteTableView {
     NSLog(@"Autocomplete table view will be added to the view hierarchy");
     // searchcontainer constraint
+    _topProgressBar.hidden = YES;
     self.searchContainerConstraint.constant = 165;
 }
 
