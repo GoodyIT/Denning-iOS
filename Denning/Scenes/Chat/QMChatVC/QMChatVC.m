@@ -24,6 +24,7 @@
 #import "QMSplitViewController.h"
 #import "QMMessagesHelper.h"
 #import "FileSaveViewController.h"
+#import "ChatFileListViewController.h"
 
 // helpers
 #import "QMChatButtonsFactory.h"
@@ -773,7 +774,11 @@ QMUsersServiceDelegate
                                         message:nil
                                  preferredStyle:UIAlertControllerStyleActionSheet];
     [alertController addAction:[UIAlertAction actionWithTitle:@"File Folder" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        NSString* keyword = @"";
+        if (_chatDialog.type == QBChatDialogTypeGroup) {
+            keyword = _chatDialog.name;
+        }
+        [self performSegueWithIdentifier:kOpenFileSegue sender:keyword];
     }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_TAKE_MEDIA", nil)
@@ -1558,6 +1563,18 @@ QMUsersServiceDelegate
         FileSaveViewController *vc = (FileSaveViewController*)nav.topViewController;
         
         vc.fileURL = sender;
+    } else if ([segue.identifier isEqualToString:kOpenFileSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        ChatFileListViewController *vc = (ChatFileListViewController*)nav.topViewController;
+        vc.initialKeyword = sender;
+        vc.updateHandler = ^(NSURL *url) {
+            QBChatMessage *message = [QMMessagesHelper chatMessageWithText:url.absoluteString
+                                                                  senderID:self.senderID
+                                                              chatDialogID:self.chatDialog.ID
+                                                                  dateSent:[NSDate date]];
+            // Sending message
+            [self _sendMessage:message];
+        };
     }
     
     if (self.inputToolbar.contentView.textView.isFirstResponder) {
@@ -1741,19 +1758,22 @@ QMUsersServiceDelegate
 - (void)configureGroupChatAvatar {
     
     self.imageBarButtonItem = [[QMImageBarButtonItem alloc] init];
+    [self.imageBarButtonItem setSize:CGSizeMake(40, 40)];
     
     __weak typeof(self) weakSelf = self;
     void(^onTapBlock)(QMImageView *) = ^(QMImageView __unused *imageView) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:strongSelf.chatDialog];
-//        [self groupCall];
     };
     
     self.imageBarButtonItem.onTapHandler = onTapBlock;
     
-    self.navigationItem.rightBarButtonItem = self.imageBarButtonItem;
+//    UIButton *audioButton = [QMChatButtonsFactory audioCall];
+//    [audioButton addTarget:self action:@selector(groupCall) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
     
-    [self updateGroupAvatarFrameForInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
+    self.navigationItem.rightBarButtonItems = @[self.imageBarButtonItem];
+    
     [self updateGroupAvatarImage];
 }
 

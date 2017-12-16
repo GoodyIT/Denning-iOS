@@ -129,6 +129,7 @@ SWTableViewCellDelegate
 
         default:
             // Denning support
+            originalContacts = [NSMutableArray new];
             break;
     }
     contactsArray = originalContacts;

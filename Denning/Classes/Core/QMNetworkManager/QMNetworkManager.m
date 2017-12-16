@@ -360,20 +360,9 @@
 // Updates
 - (void) getLatestUpdatesWithCompletion: (void(^)(NSArray* updatesArray, NSError* error)) completion
 {
-    [self.manager GET:UPATES_LATEST_URL parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [NewsModel getNewsArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
-        
-        // Error Message
+    [self setPublicHTTPHeader];
+    [self sendGetWithURL:UPDATES_LATEST_URL completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion([NewsModel getNewsArrayFromResponse:result], error);
     }];
 }
 

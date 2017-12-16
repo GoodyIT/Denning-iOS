@@ -21,16 +21,13 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    _avatarImageView.imageViewType = QMImageViewTypeCircle;
 }
 
 - (void) configureCellWithContact: (QBUUser*) user
 {
-    UIImage *placeholder = [QMPlaceholder placeholderWithFrame:self.avatarImageView.bounds title:user.fullName ID:user.ID];
-    
     [self.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]
-                              placeholder:placeholder
-                                  options:1
-                                 progress:nil
+                                    title:user.fullName
                            completedBlock:nil];
 
     self.userNameLabel.text = user.fullName;

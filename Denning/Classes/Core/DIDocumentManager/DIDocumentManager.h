@@ -18,6 +18,8 @@
 
 - (void) downloadFileFromURL: (NSURL *) ur withProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(NSURL *filePath))completionBlock onError:(void (^)(NSError *error))errorBlock;
 
-- (void)displayDocument:(NSURL*)document inView:(UIViewController*) viewController ;
+- (void)displayDocument:(NSURL*)document inView:(UIViewController*) viewController;
+
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion withCustomParam:(NSString*) custom;
 
 @end

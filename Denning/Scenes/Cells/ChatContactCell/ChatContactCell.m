@@ -13,6 +13,7 @@
 {
     QBUUser* curUser;
 }
+
 @property (weak, nonatomic) IBOutlet UIButton *favoriteBtn;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastSeenLabel;
@@ -24,6 +25,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.avatarImageView.imageViewType = QMImageViewTypeCircle;
     // Initialization code
 }
 
@@ -37,14 +39,10 @@
 {
     curUser = user;
     
-    UIImage *placeholder = [QMPlaceholder placeholderWithFrame:self.avatarImageView.bounds title:user.fullName ID:user.ID];
-    
     [self.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]
-                          placeholder:placeholder
-                              options:SDWebImageLowPriority
-                             progress:nil
+                                title:user.fullName
                        completedBlock:nil];
-
+    
     self.userNameLabel.text = user.fullName;
     self.lastSeenLabel.text = [[QMCore instance].contactManager onlineStatusForUser:user];
     if (![self isExistInFavoriteList:user]) {
@@ -60,7 +58,6 @@
         if ([newModel.users containsObject:user])
             return YES;
     }
-    
     
     return NO;
 }

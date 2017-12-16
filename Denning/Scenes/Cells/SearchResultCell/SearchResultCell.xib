@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue-Medium</string>
+        </array>
         <array key="SF-UI-Text-Semibold.otf">
             <string>SFUIText-Semibold</string>
         </array>
@@ -27,7 +31,7 @@
                         <rect key="frame" x="10" y="8" width="542" height="129.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avY-CP-Yhs">
-                                <rect key="frame" x="8" y="1" width="66.5" height="33.5"/>
+                                <rect key="frame" x="8" y="1" width="66.5" height="41.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                 <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -60,7 +64,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDP-m6-ta2">
-                                <rect key="frame" x="8" y="39.5" width="76.5" height="17.5"/>
+                                <rect key="frame" x="8" y="43.5" width="76.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -73,9 +77,9 @@
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="avY-CP-Yhs" secondAttribute="trailing" constant="12" id="Ilk-4X-4n4"/>
                             <constraint firstItem="avY-CP-Yhs" firstAttribute="top" secondItem="uuC-jd-efq" secondAttribute="top" constant="1" id="J9d-Ze-9l8"/>
                             <constraint firstItem="TJ9-mg-BhY" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="20" id="Q0L-gW-uHJ"/>
-                            <constraint firstItem="hDP-m6-ta2" firstAttribute="top" secondItem="avY-CP-Yhs" secondAttribute="bottom" constant="5" id="UR6-Wo-EzN"/>
+                            <constraint firstItem="hDP-m6-ta2" firstAttribute="top" secondItem="avY-CP-Yhs" secondAttribute="bottom" constant="1" id="UR6-Wo-EzN"/>
                             <constraint firstAttribute="bottom" secondItem="TJ9-mg-BhY" secondAttribute="bottom" constant="1" id="fFj-50-e9w"/>
-                            <constraint firstItem="GL8-NT-Xqf" firstAttribute="top" secondItem="hDP-m6-ta2" secondAttribute="bottom" constant="5" id="iDa-oD-dc9"/>
+                            <constraint firstItem="GL8-NT-Xqf" firstAttribute="top" secondItem="hDP-m6-ta2" secondAttribute="bottom" constant="1" id="iDa-oD-dc9"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GL8-NT-Xqf" secondAttribute="trailing" constant="20" id="m2s-AP-ptG"/>
                             <constraint firstItem="hDP-m6-ta2" firstAttribute="leading" secondItem="avY-CP-Yhs" secondAttribute="leading" id="m5F-Yc-Jdt"/>
                             <constraint firstItem="GL8-NT-Xqf" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="8" id="n8f-4S-TTW"/>

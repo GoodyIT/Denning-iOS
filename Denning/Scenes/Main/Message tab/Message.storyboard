@@ -278,7 +278,7 @@ out here.</string>
                         <segue destination="OKo-87-3Ut" kind="show" identifier="SceneSegueGroupInfo" id="MzG-w8-ccf"/>
                         <segue destination="Qvc-K1-hB5" kind="show" identifier="DocumentFileSegue" id="SM3-EO-DhO"/>
                         <segue destination="TFm-hd-fz7" kind="show" identifier="SaveFileSegue" id="Z4X-Wa-S7j"/>
-                        <segue destination="Bly-4V-Mhw" kind="show" identifier="OpenFileSegue" id="Hqh-6h-sTJ"/>
+                        <segue destination="Bly-4V-Mhw" kind="presentation" identifier="OpenFileSegue" id="Hqh-6h-sTJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xVF-0l-eNJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -347,13 +347,13 @@ out here.</string>
             </objects>
             <point key="canvasLocation" x="-1135" y="-7294"/>
         </scene>
-        <!--DocumentViewController-->
+        <!--DocumentView-->
         <scene sceneID="xgs-4g-19O">
             <objects>
-                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="DocumentViewController" id="RfV-cA-wN0" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="DocumentView" id="RfV-cA-wN0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujm-cL-ZxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1902" y="-7264"/>
+            <point key="canvasLocation" x="1912" y="-7145"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IUx-YH-HSL">
@@ -609,7 +609,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pcg-TA-5I2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="378" y="-6398"/>
+            <point key="canvasLocation" x="372" y="-6308"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fBd-RK-eOg">
@@ -937,10 +937,10 @@ out here.</string>
             </objects>
             <point key="canvasLocation" x="1988" y="-8183"/>
         </scene>
-        <!--Search View Controller-->
+        <!--Chat File List View Controller-->
         <scene sceneID="qp8-Bc-CPj">
             <objects>
-                <viewController id="z3o-ZD-cJW" customClass="SearchViewController" sceneMemberID="viewController">
+                <viewController id="z3o-ZD-cJW" customClass="ChatFileListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aM8-2s-58r"/>
                         <viewControllerLayoutGuide type="bottom" id="Cja-3F-iRH"/>
@@ -994,14 +994,20 @@ out here.</string>
                                                     <segment title="Contact Folder"/>
                                                 </segments>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <connections>
+                                                    <action selector="didChangeFolderType:" destination="z3o-ZD-cJW" eventType="valueChanged" id="jnx-7c-W1w"/>
+                                                </connections>
                                             </segmentedControl>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="50q-Q5-bp1">
-                                                <rect key="frame" x="245" y="96" width="118" height="33"/>
+                                                <rect key="frame" x="268" y="96" width="95" height="30"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
-                                                <state key="normal" title="Contact Folder">
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
+                                                <state key="normal" title="Transit Folder">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="didTapTransitFolder:" destination="z3o-ZD-cJW" eventType="touchUpInside" id="Ojm-OF-SwM"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1025,6 +1031,9 @@ out here.</string>
                                                 <color key="textColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="search"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="z3o-ZD-cJW" id="UDn-Dy-qEr"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

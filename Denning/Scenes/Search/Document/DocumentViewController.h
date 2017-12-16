@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^UpdateDocumentFile)(NSURL* url);
+
 @interface DocumentViewController : BaseTableViewController
 
 @property (strong, nonatomic) DocumentModel* documentModel;
 @property (strong, nonatomic) NSString* previousScreen;
 
-@property (strong, nonatomic) NSString* fromDashboard;
+@property (strong, nonatomic) NSString* custom;
+@property (strong, nonatomic) UpdateDocumentFile updateHandler;
 @end

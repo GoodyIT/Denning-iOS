@@ -7,10 +7,12 @@
 //
 
 #import "DIDocumentManager.h"
+#import <QuickLook/QuickLook.h>
 
-@interface DIDocumentManager()
+@interface DIDocumentManager()<QLPreviewControllerDelegate,QLPreviewControllerDataSource>
 {
     NSURL* selectedDocument;
+    BOOL isCustomPreview;
 }
 
 @property (nonatomic, strong) AFURLSessionManager *manager;
@@ -38,8 +40,37 @@
     return self;
 }
 
-- (void) initManager {
+-(void)initiateQuickLoookController{
     
+    QLPreviewController *previewController=[[QLPreviewController alloc]init];
+    
+    previewController.delegate=self;
+    
+    previewController.dataSource=self;
+    
+    [_viewController presentViewController:previewController animated:YES completion:nil];
+    
+}
+
+- (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController *)controller{
+    return 1;
+}
+
+- (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index{
+    return selectedDocument;
+}
+
+#pragma mark – delegate methods
+
+- (BOOL)previewController:(QLPreviewController *)controller shouldOpenURL:(NSURL *)url forPreviewItem:(id <QLPreviewItem>)item
+
+{
+    return YES;
+    
+}
+
+- (void) initManager {
+    isCustomPreview = NO;
 }
 
 - (NSURL*) isAttachedFileExist:(NSString*) fileName
@@ -117,6 +148,15 @@
     [downloadTask resume];
 }
 
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion withCustomParam:(NSString*) custom
+{
+    if ([custom isEqualToString:@"custom"]) {
+        isCustomPreview = YES;
+    }
+    
+    [self viewDocument:Url inViewController:viewController withCompletion:completion];
+}
+
 - (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion {
     _viewController = viewController;
     
@@ -156,12 +196,20 @@
     
     UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
     documentInteractionController.delegate = self;
-    [documentInteractionController presentPreviewAnimated:_viewController];
+    [documentInteractionController presentPreviewAnimated:YES];
+ //  _viewController.navigationItem.rightBarButtonItem = nil;
+    
+//    [self initiateQuickLoookController];
 }
 
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
 {
-    return _viewController;
+    return _viewController.navigationController;
+}
+
+- (void)documentInteractionController:(UIDocumentInteractionController *)controller willBeginSendingToApplication:(nullable NSString *)application
+{
+    NSLog(@"%@", application);
 }
 
 - (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller

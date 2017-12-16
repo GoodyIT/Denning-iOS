@@ -162,6 +162,7 @@ UIGestureRecognizerDelegate
             
         case 3:
             // Denning support
+            _items = _originItems = [NSMutableArray new];
             break;
     }
 }
@@ -366,9 +367,6 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-//MARK: - UISearchControllerDelegate
-
-
 //MARK: - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -390,12 +388,7 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
         [self.tableView reloadData];
         return;
     }
-    
-    // dialogs local search
-//    NSSortDescriptor *dialogsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:kQMDialogsSearchDescriptorKey ascending:NO];
-//    NSArray *dialogs = [QMCore.instance.chatService.dialogsMemoryStorage dialogsWithSortDescriptors:@[dialogsSortDescriptor]];
-//
-//    NSPredicate *dialogsSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.name CONTAINS[cd] %@", searchText];
+
     NSMutableArray *dialogsSearchResult = [NSMutableArray new];
     for (QBChatDialog* dialog in _originItems) {
         if ([dialog.name containsString:_filter.lowercaseString]) {

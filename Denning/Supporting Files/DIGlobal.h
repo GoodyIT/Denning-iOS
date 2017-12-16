@@ -29,6 +29,18 @@ typedef NS_ENUM(NSInteger, DIPublicSearchFilter) {
     PublicGovernmentOffices = 512
 };
 
+typedef NS_ENUM(NSInteger, DISearchCellType) {
+    DIContactCell = 1,
+    DIRelatedMatterCell = 2,
+    DIPropertyCell = 4,
+    DIBankCell = 8,
+    DIGovernmentLandOfficesCell = 16,
+    DIGovernmentPTGOfficesCell = 17,
+    DILegalFirmCell = 32,
+    DIDocumentCell = 128,
+};
+
+
 static NSString * const kQMChatPdfMessageTypeName = @"pdf";
 static NSString * const kQMChatWordMessageTypeName = @"word";
 static NSString * const kQMChatFileMessageTypeName = @"file";
@@ -105,7 +117,7 @@ static NSString * const kQMChatFileMessageTypeName = @"file";
 
 #define PUBLIC_SEARCH_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/publicSearch?search="
 
-#define UPATES_LATEST_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/DenningUpdate"
+#define UPDATES_LATEST_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/DenningUpdate"
 
 #define NEWS_LATEST_URL        @"http://denningsoft.dlinkddns.com/denningwcf/v1/DenningNews"
 

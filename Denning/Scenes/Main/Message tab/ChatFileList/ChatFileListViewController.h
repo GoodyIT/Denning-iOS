@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatFileListViewController : UIViewController
+typedef void(^UpdateDocumentFile)(NSURL* url);
+
+@interface ChatFileListViewController : BaseViewController
+
+@property (strong, nonatomic) NSString* initialKeyword;
+
+@property (strong, nonatomic) UpdateDocumentFile updateHandler;
 
 @end

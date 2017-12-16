@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DIGeneralCell.h"
+#import "GeneralContactCell.h"
 
-@interface DocumentCell : DIGeneralCell
+@interface DocumentCell : GeneralContactCell
 
 - (void) configureCellWithFileModel: (FileModel*) model;
 @end

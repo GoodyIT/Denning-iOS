@@ -582,4 +582,29 @@
     [button setBadgeString:badgeString];
     [button setBadgeBackgroundColor:color];
 }
+
++ (NSUInteger) detectItemType: (NSString*) form
+{
+    if ([form isEqualToString:@"200customer"]) // Contact
+    {
+        return DIContactCell;
+    } else if ([form isEqualToString:@"500file"]){ // Related Matter
+        return DIRelatedMatterCell;
+    } else if ([form isEqualToString:@"800property"]){ // Property
+        return DIPropertyCell;
+    } else if ([form isEqualToString:@"400bankbranch"]){ // Bank
+        return DIBankCell;
+    } else if ([form isEqualToString:@"310landoffice"] || [form isEqualToString:@"310landregdist"]){ // Government Office
+        return DIGovernmentLandOfficesCell;
+    } else if ([form isEqualToString:@"320PTG"]){ // Government Office
+        return DIGovernmentPTGOfficesCell;
+    } else if ([form isEqualToString:@"300lawyer"]){ // Legal firm
+        return DILegalFirmCell;
+    } else if ([form isEqualToString:@"950docfile"] || [form isEqualToString:@"900book"]){ // Document
+        return DIDocumentCell;
+    }
+    
+    return 0;
+}
+
 @end

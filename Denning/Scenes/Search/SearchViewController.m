@@ -32,17 +32,6 @@
 #import "ClientFileFolder.h"
 #import "FileUpload.h"
 
-typedef NS_ENUM(NSInteger, DISearchCellType) {
-    DIContactCell = 1,
-    DIRelatedMatterCell = 2,
-    DIPropertyCell = 4,
-    DIBankCell = 8,
-    DIGovernmentLandOfficesCell = 16,
-    DIGovernmentPTGOfficesCell = 17,
-    DILegalFirmCell = 32,
-    DIDocumentCell = 128,
-};
-
 @interface SearchViewController ()<UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource,
 UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource, HTHorizontalSelectionListDelegate, UIScrollViewDelegate, SearchDelegate, SearchMatterDelegate, SearchDocumentDelegate>
 {
@@ -64,25 +53,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     __block BOOL isFirstLoading;
     __block BOOL isLoading;
     __block BOOL isAppending;
-    BOOL initCall;
 }
 
-@property (weak, nonatomic) IBOutlet MLPAutoCompleteTextField *searchTextField;
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIView *searchView;
 @property (nonatomic, strong) HTHorizontalSelectionList *selectionList;
-@property (nonatomic, strong) NSDictionary *generalSearchFilters;
-@property (nonatomic, strong) NSDictionary *publicSearchFilters;
-@property (weak, nonatomic) IBOutlet UIButton *searchTypeBtn;
-
-@property (strong, nonatomic) NSMutableArray* searchResultArray;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchContainerConstraint;
-@property (weak, nonatomic) IBOutlet UIView *searchContainerView;
-
-@property (strong, nonatomic) UIRefreshControl *refreshControl;
-
-@property (strong, nonatomic) NSNumber* page;
 
 @end
 
@@ -94,7 +67,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     
     [self registerNibs];
     [self prepareUI];
-//    [self addTapGesture];
     [self prepareSearchTextField];
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -165,10 +137,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 {
     self.page = @(1);
     _searchResultArray = [NSMutableArray new];
-    isDenningUser = [[DataManager sharedManager].user.userType isEqualToString:@"denning"];
     _email = [DataManager sharedManager].user.email;
     _sessionID = [DataManager sharedManager].user.sessionID;
-    if (isDenningUser) {
+    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
         [DataManager sharedManager].searchType = @"Denning";
     } else {
         [DataManager sharedManager].searchType = @"Public";
@@ -197,7 +168,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 69, self.view.frame.size.width, 44)];
+    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 82, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
     self.selectionList.dataSource = self;
     
@@ -485,7 +456,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 
 #pragma mark - Search delegate
 
-
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self buildSearchURL];
@@ -514,22 +484,20 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 {
     NSString *sectionName;
     SearchResultModel* model = self.searchResultArray[section];
-    if ([model.form isEqualToString:@"200customer"]) // Contact
-    {
+    NSUInteger cellType = [DIHelpers detectItemType:model.form];
+    if (cellType == DIContactCell) { // Contact
         sectionName = @"Contact";
-    } else if ([model.form isEqualToString:@"500file"]){ // Related Matter
+    } else if (cellType == DIRelatedMatterCell){ // Related Matter
         sectionName = @"Matter";
-    } else if ([model.form isEqualToString:@"800property"]){ // Property
+    } else if (cellType == DIPropertyCell){ // Property
         sectionName = @"Property";
-    } else if ([model.form isEqualToString:@"400bankbranch"]){ // Bank
+    } else if (cellType == DIBankCell){ // Bank
         sectionName = @"Bank";
-    } else if ([model.form isEqualToString:@"310landoffice"]  || [model.form isEqualToString:@"310landregdist"]){ // Government Office
+    } else if (cellType == DIGovernmentPTGOfficesCell || cellType == DIGovernmentLandOfficesCell){ // Government Office
         sectionName = @"Government Office";
-    } else if ([model.form isEqualToString:@"320PTG"]){ // Government Office
-        sectionName = @"Government Office";
-    } else if ([model.form isEqualToString:@"300lawyer"]){ // Legal firm
+    } else if (cellType == DILegalFirmCell){ // Legal firm
         sectionName = @"Legal Firm";
-    } else if ([model.form isEqualToString:@"950docfile"]){ // Document
+    } else if (cellType == DIDocumentCell){ // Document
         sectionName = @"Document";
     }
     return sectionName;
@@ -540,14 +508,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     return 30;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 10;
-//}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SearchResultModel* model = self.searchResultArray[indexPath.section];
-    NSUInteger cellType = [self detectItemType:model.form];
+    NSUInteger cellType = [DIHelpers detectItemType:model.form];
 
     if (cellType == DIContactCell) {
         SearchContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SearchContactCell cellIdentifier] forIndexPath:indexPath];
@@ -599,30 +562,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     }
     
     return nil;
-}
-
-- (NSUInteger) detectItemType: (NSString*) form
-{
-    if ([form isEqualToString:@"200customer"]) // Contact
-    {
-        return DIContactCell;
-    } else if ([form isEqualToString:@"500file"]){ // Related Matter
-        return DIRelatedMatterCell;
-    } else if ([form isEqualToString:@"800property"]){ // Property
-        return DIPropertyCell;
-    } else if ([form isEqualToString:@"400bankbranch"]){ // Bank
-        return DIBankCell;
-    } else if ([form isEqualToString:@"310landoffice"] || [form isEqualToString:@"310landregdist"]){ // Government Office
-        return DIGovernmentLandOfficesCell;
-    } else if ([form isEqualToString:@"320PTG"]){ // Government Office
-        return DIGovernmentPTGOfficesCell;
-    } else if ([form isEqualToString:@"300lawyer"]){ // Legal firm
-        return DILegalFirmCell;
-    } else if ([form isEqualToString:@"950docfile"] || [form isEqualToString:@"900book"]){ // Document
-        return DIDocumentCell;
-    }
-    
-    return 0;
 }
 
 - (void) openRelatedMatter: (SearchResultModel*) model {
@@ -796,7 +735,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 {
     if (isLoading) return;
     isLoading = YES;
-    NSUInteger cellType = [self detectItemType:model.form];
+    NSUInteger cellType = [DIHelpers detectItemType:model.form];
     if (cellType == DIContactCell){ // Contact
         [self openContact:model];
     } else if (cellType  == DIRelatedMatterCell){ // Related Matter
@@ -879,15 +818,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     if (offsetY > 10) {
         
         [self.view endEditing:YES];
-    }
-}
-
-// Search
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == self.searchResultArray.count-1 && initCall) {
-        isFirstLoading = NO;
-        initCall = NO;
     }
 }
 

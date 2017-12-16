@@ -147,7 +147,6 @@ MEVFloatingButtonDelegate
     [self performSearch];
 }
 
-
 -(void) filterDialogInArray:(NSArray*) contacts
 {
     NSArray* tempSource = [QMCore.instance.chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO];
@@ -192,6 +191,7 @@ MEVFloatingButtonDelegate
             
         case 3:
             // Denning support
+            _items = _originItems = [NSMutableArray new];
             break;
     }
 }

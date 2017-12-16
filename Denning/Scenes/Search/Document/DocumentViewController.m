@@ -15,9 +15,9 @@
 #import "DemoDownloadItem.h"
 #import "DemoDownloadNotifications.h"
 #import "HWIFileDownloader.h"
+#import <QuickLook/QuickLook.h>
 
-@interface DocumentViewController () <
-UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate>
+@interface DocumentViewController () < UISearchBarDelegate, UISearchControllerDelegate, SWTableViewCellDelegate>
 {
     NSString* email, *sessionID;
     NSMutableArray* downloadedURLs;
@@ -329,7 +329,11 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController  dismissViewControllerAnimated:YES completion:nil];
+    if ([_custom isEqualToString:@"custom"]) {
+        [self.navigationController  popViewControllerAnimated:YES];
+    } else {
+        [self.navigationController  dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)registerNibs {
@@ -402,7 +406,7 @@ UIDocumentInteractionControllerDelegate, UISearchBarDelegate, UISearchController
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    
+    [self searchBar:searchBar textDidChange:searchBar.text];
 }
 
 #pragma mark - Table view data source
@@ -479,6 +483,10 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         return cell;
     } else if (indexPath.section == 1) {
         DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
+        if ([_custom isEqualToString:@"custom"]) {
+            cell.delegate = self;
+            cell.leftUtilityButtons = [self leftButtons];
+        }
         FileModel* file = self.documentModel.documents[indexPath.row];
         [cell configureCellWithFileModel:file
          ];
@@ -488,6 +496,10 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
+    if ([_custom isEqualToString:@"custom"]) {
+        cell.delegate = self;
+        cell.leftUtilityButtons = [self leftButtons];
+    }
     DocumentModel* model = self.documentModel.folders[indexPath.section-2];
     FileModel* file = model.documents[indexPath.row];
     [cell configureCellWithFileModel:file
@@ -495,6 +507,47 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
 
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
+}
+
+
+- (NSArray *)leftButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+    UIFont *font = [UIFont fontWithName:@"SFUIText-Medium" size:17.0f];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
+    NSAttributedString* callString = [[NSAttributedString alloc] initWithString:@"Select" attributes:attributes];
+    
+    [leftUtilityButtons sw_addUtilityButtonWithColor:[UIColor redColor] attributedTitle:callString];
+    
+    return leftUtilityButtons;
+}
+
+#pragma mark - SWTableViewDelegate
+
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
+{
+    return YES;
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
+    [cell hideUtilityButtonsAnimated:YES];
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    FileModel* file;
+    if (indexPath.section == 1){
+        file = self.documentModel.documents[indexPath.row];
+    } else if (indexPath.section == 2){
+        DocumentModel* model = self.documentModel.folders[indexPath.section-2];
+        file = model.documents[indexPath.row];
+    }
+    NSURL* path =  [self getFileURL:file];
+    switch (index) {
+        case 0:
+            [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                _updateHandler(path);
+            }];
+            break;
+    }
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

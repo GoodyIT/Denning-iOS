@@ -104,4 +104,6 @@
 + (NSString*) formatDecimal:(NSString*) text;
 
 + (void) configureButton:(MIBadgeButton *) button withBadge:(NSString *) badgeString withColor:(UIColor*) color;
+
++ (NSUInteger) detectItemType: (NSString*) form;
 @end
