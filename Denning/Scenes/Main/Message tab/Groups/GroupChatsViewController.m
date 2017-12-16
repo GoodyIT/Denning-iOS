@@ -46,6 +46,9 @@ UIGestureRecognizerDelegate,
 
 MEVFloatingButtonDelegate
 >
+{
+    NSInteger selectedIndex;
+}
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) QMSearchResultsController *searchResultsController;
 
@@ -56,7 +59,8 @@ MEVFloatingButtonDelegate
 @property (strong, nonatomic) id observerWillEnterForeground;
 
 @property (strong, nonatomic) NSMutableArray* items, *originItems;
-
+@property (strong, nonatomic) NSString* filter;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *userTypeSegment;
 @end
 
 @implementation GroupChatsViewController
@@ -73,6 +77,8 @@ MEVFloatingButtonDelegate
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    selectedIndex = 0;
     
     // Subscribing delegates
     [QMCore.instance.chatService addDelegate:self];
@@ -137,6 +143,32 @@ MEVFloatingButtonDelegate
 }
 
 - (void) updateDialogSource {
+    [self updateDataSourceByScope:selectedIndex];
+    [self performSearch];
+}
+
+
+-(void) filterDialogInArray:(NSArray*) contacts
+{
+    NSArray* tempSource = [QMCore.instance.chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO];
+    for (ChatFirmModel *chatFirmModel in contacts) {
+        for (ChatUserModel* chatUserModel in chatFirmModel.users) {
+            for (QBChatDialog* dialog in tempSource) {
+                NSArray* users = [[QMCore instance].contactManager friendsByIDs:dialog.occupantIDs];
+                for (QBUUser* user in users) {
+                    if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
+                        [_items removeObject:dialog];
+                        [_originItems removeObject:dialog];
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+- (void) updateDataSourceByScope:(NSInteger) index {
+    selectedIndex = index;
     NSArray* temp =  [QMCore.instance.chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO];
     
     NSMutableArray* filtered = [NSMutableArray new];
@@ -147,6 +179,27 @@ MEVFloatingButtonDelegate
     }
     
     _items = _originItems = filtered;
+    switch (index) {
+        case 0:
+            // same as above
+            break;
+        case 1:
+            [self filterDialogInArray:[DataManager sharedManager].staffContactsArray];
+            break;
+        case 2:
+            [self filterDialogInArray:[DataManager sharedManager].clientContactsArray];
+            break;
+            
+        case 3:
+            // Denning support
+            break;
+    }
+}
+
+- (IBAction)didChangeUserType:(UISegmentedControl *)sender {
+    [self updateDataSourceByScope:sender.selectedSegmentIndex];
+    
+    [self performSearch];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -231,8 +284,20 @@ MEVFloatingButtonDelegate
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.definesPresentationContext = YES;
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 45)];
+    [containerView addSubview:_searchController.searchBar];
+    [containerView addSubview:_userTypeSegment];
+    
+    self.tableView.tableHeaderView =  containerView;
+    
+    [_userTypeSegment mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_searchController.searchBar.mas_bottom).offset(8); //with is an optional semantic filler
+        make.centerX.equalTo(containerView.mas_centerX);
+        make.bottom.equalTo(containerView.mas_bottom).offset(-8);
+    }];
 }
+
+
 
 //MARK: - MevFloatingButton Delegate
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button
@@ -338,33 +403,28 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
 //MARK: - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
-    [self performSearch:searchController.searchBar.text];
+    _filter = searchController.searchBar.text;
+    [self performSearch];
 }
 
 - (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
 {
-    [self performSearch:searchText];
+    _filter = searchText;
+    [self performSearch];
 }
 
-
-- (void)performSearch:(NSString *)searchText {
+- (void)performSearch {
     
-    if (searchText.length == 0) {
+    if (_filter == 0) {
         
         _items = _originItems;
         [self.tableView reloadData];
         return;
     }
     
-    // dialogs local search
-//    NSSortDescriptor *dialogsSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:kQMDialogsSearchDescriptorKey ascending:NO];
-//    NSArray *dialogs = [QMCore.instance.chatService.dialogsMemoryStorage dialogsWithSortDescriptors:@[dialogsSortDescriptor]];
-//
-//    NSPredicate *dialogsSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.name CONTAINS[cd] %@", searchText];
     NSMutableArray *dialogsSearchResult = [NSMutableArray new];
     for (QBChatDialog* dialog in _originItems) {
-        if ([dialog.name containsString:searchText.lowercaseString]) {
+        if ([dialog.name containsString:_filter.lowercaseString]) {
             [dialogsSearchResult addObject:dialog];
         }
     }
@@ -375,7 +435,6 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 //MARK: - QMSearchResultsControllerDelegate
-
 
 - (void)willPresentSearchController:(UISearchController *)__unused searchController {
     
@@ -392,8 +451,9 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     messageVC.navigationController.navigationBarHidden = NO;
     self.tabBarController.tabBar.hidden = NO;
     searchController.searchBar.text = @"";
+    _filter = @"";
     
-    [self performSearch:@""];
+    [self performSearch];
 }
 
 - (void)searchResultsController:(QMSearchResultsController *)__unused searchResultsController
@@ -462,6 +522,7 @@ didDeleteChatDialogWithIDFromMemoryStorage:(NSString *)__unused chatDialogID {
     }
     
     [(MessageViewController*)self.parentViewController updateBadge];
+    [self updateDialogSource];
     [self.tableView reloadData];
 }
 

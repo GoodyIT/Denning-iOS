@@ -80,7 +80,10 @@
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
     //Most URLs I come across are in string format so to convert them into an NSURL and then instantiate the actual request
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
+    [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     
     //Watch the manager to see how much of the file it's downloaded
     [manager setDownloadTaskDidWriteDataBlock:^(NSURLSession *session, NSURLSessionDownloadTask *downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
@@ -102,6 +105,7 @@
         
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         if (!error) {
+            selectedDocument = filePath;
             //If there's no error, return the completion block
             completionBlock(filePath);
         } else {
@@ -132,7 +136,9 @@
         return [newPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", [DIHelpers randomTime],[response suggestedFilename]]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
-        if (error == nil) {
+        if (((NSHTTPURLResponse *)response).statusCode == 410) {
+            [QMAlert showAlertWithMessage:@"Session expired. Please log in again." actionSuccess:NO inViewController:viewController];
+        } else if (error == nil) {
             if  (filePath != nil) {
                 [self displayDocument:filePath inView:viewController];
                 selectedDocument = filePath;

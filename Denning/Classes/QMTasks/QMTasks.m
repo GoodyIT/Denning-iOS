@@ -223,11 +223,11 @@ static const NSUInteger kQMUsersPageLimit = 100;
     
     while (range.location < contactsIDs.count) {
         
-        NSArray *subArray = [contactsIDs subarrayWithRange:range];
+//        NSArray *subArray = [contactsIDs subarrayWithRange:range];
         QBGeneralResponsePage *page =
         [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:range.length];
         
-        BFTask *task = [core.usersService searchUsersWithExtendedRequest:filterForUsersFetch(subArray, dateFilter)
+        BFTask *task = [core.usersService searchUsersWithExtendedRequest:filterForUsersFetch(@[], dateFilter)
                                                                     page:page];
         [tasks addObject:task];
         
@@ -235,6 +235,9 @@ static const NSUInteger kQMUsersPageLimit = 100;
         NSUInteger diff = contactsIDs.count - range.location;
         range.length = diff > kQMUsersPageLimit ? kQMUsersPageLimit : diff;
     }
+    
+    BFTask* getContactsFromDenning = [[QMNetworkManager sharedManager] getChatContacts];
+    [tasks addObject:getContactsFromDenning];
     
     BFTask *task = [[BFTask taskForCompletionOfAllTasks:[tasks copy]] continueWithSuccessBlock:^id(BFTask * __unused t) {
         core.currentProfile.lastUserFetchDate = [NSDate date];

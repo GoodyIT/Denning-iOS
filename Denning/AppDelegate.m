@@ -128,7 +128,7 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     }
     
     if ([QMCore instance].currentProfile != nil) {
-        [[QMCore instance].currentProfile clearLastDialogsFetchingDate];
+        [[QMCore instance].currentProfile clearLastFetchingDate];
     }
     
     return [[FBSDKApplicationDelegate sharedInstance] application:application

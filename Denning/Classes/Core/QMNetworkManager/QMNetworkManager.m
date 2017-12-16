@@ -504,8 +504,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) uploadFileWithUrl:(NSString*) url params:(NSDictionary*) params WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-//    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:url];
-    [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [self sendPrivatePostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion((NSArray*)result, error);
     }];
 }
@@ -613,79 +612,64 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }];
 }
 
-- (void) getChatContactsWithCompletion:(void(^)(void)) completion
+- (void) buildContactsFrom:(NSArray*) contacts for:(NSMutableArray*) dest withFriends:(NSArray*) friends{
+    for (ChatFirmModel *chatFirmModel in contacts) {
+        ChatFirmModel* newModel = [ChatFirmModel new];
+        newModel.firmName = chatFirmModel.firmName;
+        newModel.firmCode = chatFirmModel.firmCode;
+        NSMutableArray* userArray = [NSMutableArray new];
+        for (ChatUserModel* chatUserModel in chatFirmModel.users) {
+            for (QBUUser* user in friends) {
+                if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
+                    [userArray addObject:user];
+                }
+            }
+        }
+        newModel.users = [userArray copy];
+        [dest addObject:newModel];
+    }
+}
+
+- (BFTask *) getChatContacts
 {
-    
-    NSString* url = [GET_CHAT_CONTACT_URL stringByAppendingString:[DataManager sharedManager].user.email];
-    [self setPublicHTTPHeader];
-    __block ChatContactModel* chatContacts;
-    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
-        chatContacts = [ChatContactModel getChatContactFromResponse:result];
-        QBGeneralResponsePage *page = [QBGeneralResponsePage responsePageWithCurrentPage:1 perPage:100];
-        [QBRequest usersForPage:page successBlock:^(QBResponse *response, QBGeneralResponsePage *pageInformation, NSArray *users) {
-            // Favorite Contact
-            [DataManager sharedManager].favoriteContactsArray = [NSMutableArray new];
-            for (ChatFirmModel *chatFirmModel in chatContacts.favoriteContacts) {
-                ChatFirmModel* newModel = [ChatFirmModel new];
-                newModel.firmName = chatFirmModel.firmName;
-                newModel.firmCode = chatFirmModel.firmCode;
-                NSMutableArray* userArray = [NSMutableArray new];
-                for (ChatUserModel* chatUserModel in chatFirmModel.users) {
-                    for (QBUUser* user in users) {
-                        if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
-                            [userArray addObject:user];
-                        }
-                    }
-                }
-                newModel.users = [userArray copy];
-                [[DataManager sharedManager].favoriteContactsArray addObject:newModel];
+    NSString* url = GET_CHAT_CONTACT_URL;
+
+    return make_task(^(BFTaskCompletionSource * _Nonnull source) {
+        NSString* _url = [url stringByAppendingString:[DataManager sharedManager].user.email];
+        [self setPublicHTTPHeader];
+        __block ChatContactModel* chatContacts;
+        [self sendGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            if (error == nil) {
+                chatContacts = [ChatContactModel getChatContactFromResponse:result];
+                NSArray *friends = [[QMCore instance].usersService.usersMemoryStorage unsortedUsers];
+                
+                // Client Contact
+                [DataManager sharedManager].clientContactsArray = [NSMutableArray new];
+                [self buildContactsFrom:chatContacts.clientContacts for:[DataManager sharedManager].clientContactsArray withFriends:friends];
+                
+                // Staff Contact
+                [DataManager sharedManager].staffContactsArray = [NSMutableArray new];
+                [self buildContactsFrom:chatContacts.staffContacts for:[DataManager sharedManager].staffContactsArray withFriends:friends];
+                
+                // favorite client
+                [DataManager sharedManager].favClientContactsArray = [NSMutableArray new];
+                [self buildContactsFrom:chatContacts.favClientContacts for:[DataManager sharedManager].favClientContactsArray withFriends:friends];
+                
+                // favorite Staff Contact
+                [DataManager sharedManager].favStaffContactsArray = [NSMutableArray new];
+                [self buildContactsFrom:chatContacts.favStaffContacts for:[DataManager sharedManager].favStaffContactsArray withFriends:friends];
+                
+                NSMutableArray* contactsArray = [NSMutableArray new];
+                [contactsArray addObjectsFromArray:[DataManager sharedManager].staffContactsArray];
+                [contactsArray addObjectsFromArray:[DataManager sharedManager].staffContactsArray];
+                
+                [source setResult:contactsArray];
+            } else {
+                [source setError:error];
             }
             
-            // Client Contact
-            [DataManager sharedManager].clientContactsArray = [NSMutableArray new];
-            for (ChatFirmModel *chatFirmModel in chatContacts.clientContacts) {
-                ChatFirmModel* newModel = [ChatFirmModel new];
-                newModel.firmName = chatFirmModel.firmName;
-                newModel.firmCode = chatFirmModel.firmCode;
-                NSMutableArray* userArray = [NSMutableArray new];
-                for (ChatUserModel* chatUserModel in chatFirmModel.users) {
-                    for (QBUUser* user in users) {
-                        if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
-                            [userArray addObject:user];
-                        }
-                    }
-                }
-                newModel.users = [userArray copy];
-                [[DataManager sharedManager].clientContactsArray addObject:newModel];
-            }
-            
-            // Staff Contact
-            [DataManager sharedManager].staffContactsArray = [NSMutableArray new];
-            for (ChatFirmModel *chatFirmModel in chatContacts.staffContacts) {
-                ChatFirmModel* newModel = [ChatFirmModel new];
-                newModel.firmName = chatFirmModel.firmName;
-                newModel.firmCode = chatFirmModel.firmCode;
-                NSMutableArray* userArray = [NSMutableArray new];
-                for (ChatUserModel* chatUserModel in chatFirmModel.users) {
-                    for (QBUUser* user in users) {
-                        if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
-                            [userArray addObject:user];
-                        }
-                    }
-                }
-                newModel.users = [userArray copy];
-                [[DataManager sharedManager].staffContactsArray addObject:newModel];
-            }
-            
-            if (completion != nil) {
-                completion();
-            }
-            
-        } errorBlock:^(QBResponse *response) {
-            // Handle error
-            NSLog(@"Retrieve user error%@", response.error);
         }];
-    }];
+    });
 }
 
 - (void) addFavoriteContact: (QBUUser*) user withCompletion:(void(^)(NSError* error)) completion

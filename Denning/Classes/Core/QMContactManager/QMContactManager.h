@@ -137,6 +137,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)isUserOnlineWithID:(NSUInteger)userID;
 
+- (NSArray *)friendsByIDs:(NSArray *)userIDs;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -317,29 +317,27 @@
 {
     // Go to message
     if (![QMCore instance].callManager.hasActiveCall && [QMCore instance].currentProfile != nil) {
-        [[QMNetworkManager sharedManager] getChatContactsWithCompletion:^{
-            
-            NSArray* contactArray = [[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray];
-            QBUUser* __user = nil;
-            for (ChatFirmModel* firmModel in contactArray) {
-                for(QBUUser* user in firmModel.users) {
-                    if ([user.email  isEqualToString:self.contactModel.email]) {
-                        __user = user;
-                        break;
-                    }
+        
+        NSArray* contactArray = [[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray];
+        QBUUser* __user = nil;
+        for (ChatFirmModel* firmModel in contactArray) {
+            for(QBUUser* user in firmModel.users) {
+                if ([user.email  isEqualToString:self.contactModel.email]) {
+                    __user = user;
+                    break;
                 }
             }
-            
-            if (__user == nil) {
-                [QMAlert showConfirmDialog:@"Do you want to invite this client?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
-                    if  ([action.title isEqualToString:@"OK"]) {
-                       [self inviteUserToDenning:self.contactModel.email];
-                    }
-                }];
-            } else {
-                [self revokeChat:__user];
-            }
-        }];
+        }
+        
+        if (__user == nil) {
+            [QMAlert showConfirmDialog:@"Do you want to invite this client?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+                if  ([action.title isEqualToString:@"OK"]) {
+                    [self inviteUserToDenning:self.contactModel.email];
+                }
+            }];
+        } else {
+            [self revokeChat:__user];
+        }
     }
 }
 

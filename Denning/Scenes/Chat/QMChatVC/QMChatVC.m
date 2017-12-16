@@ -23,10 +23,7 @@
 #import "QMHelpers.h"
 #import "QMSplitViewController.h"
 #import "QMMessagesHelper.h"
-//
-//#import "DIBaseFileAttachmentCell.h"
-//#import "DIFileAttachmentIncomingCell.h"
-//#import "DIFileAttachmentOutgoingCell.h"
+#import "FileSaveViewController.h"
 
 // helpers
 #import "QMChatButtonsFactory.h"
@@ -1552,11 +1549,14 @@ QMUsersServiceDelegate
         
         QMUserInfoViewController *userInfoVC = segue.destinationViewController;
         userInfoVC.user = sender;
-    }
-    else if ([segue.identifier isEqualToString:KQMSceneSegueGroupInfo]) {
+    } else if ([segue.identifier isEqualToString:KQMSceneSegueGroupInfo]) {
         
         QMGroupInfoViewController *groupInfoVC = segue.destinationViewController;
         groupInfoVC.chatDialog = sender;
+    } else if ([segue.identifier isEqualToString:kSaveFileSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        FileSaveViewController *vc = (FileSaveViewController*)nav.topViewController;
+        vc.fileURL = sender;
     }
     
     if (self.inputToolbar.contentView.textView.isFirstResponder) {
@@ -2084,11 +2084,7 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
         NSParameterAssert(og);
         
         NSURL *linkURL = [NSURL URLWithString:og.baseUrl];
-        if  ([linkURL.absoluteString containsString:@""]) {
-            [[DIDocumentManager shared] viewDocument:linkURL inViewController:self withCompletion:nil];
-        } else {
-             [self openURL:linkURL];
-        }
+        [self openURL:linkURL];
     }
     
     else if ([cell isKindOfClass:[QMChatOutgoingCell class]] ||
@@ -2112,7 +2108,7 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
     
     if (self.chatDialog.type == QBChatDialogTypePrivate) {
         
-        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
+//        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
     }
     else {
         
@@ -2128,8 +2124,12 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
     switch (textCheckingResult.resultType) {
             
         case NSTextCheckingTypeLink: {
+            if  ([textCheckingResult.URL.absoluteString containsString:@"/denningwcf/"]) {
+                [self performSegueWithIdentifier:kSaveFileSegue sender:textCheckingResult.URL];
+            } else {
+                [self openURL:textCheckingResult.URL];
+            }
             
-            [self openURL:textCheckingResult.URL];
             
             break;
         }

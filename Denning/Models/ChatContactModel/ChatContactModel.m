@@ -15,9 +15,13 @@
 {
     ChatContactModel* chatContactModel = [ChatContactModel new];
     
-    chatContactModel.favoriteContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"favourite"]];
+    chatContactModel.dtExpire = [response valueForKeyNotNull:@"dtExpire"];
+    chatContactModel.isExpire = [response valueForKeyNotNull:@"isExpire"];
+    
     chatContactModel.clientContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"client"]];
     chatContactModel.staffContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"staff"]];
+    chatContactModel.favClientContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"favourite_client"]];
+    chatContactModel.favStaffContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"favourite_staff"]];
     
     return chatContactModel;
 }

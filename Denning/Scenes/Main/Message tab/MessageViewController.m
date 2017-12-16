@@ -11,7 +11,7 @@
 #import "DenningContactViewController.h"
 #import "QMNewMessageViewController.h"
 #import "GroupChatsViewController.h"
-#import "FavoriteViewController.h"
+#import "FavContactViewController.h"
 #import "MainTabBarController.h"
 
 typedef NS_ENUM(NSInteger, DIChatTabIndex) {
@@ -93,12 +93,12 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 {
     [self configureBackBtnWithImageName:nil withSelector:@selector(popupScreen:)];
     
-    self.viewControllerIdentifiers = @[@"DenningContactViewController", @"FavoriteViewController",
+    self.viewControllerIdentifiers = @[@"DenningContactViewController", @"FavContactViewController",
         @"GroupChatsViewController", @"QMDialogsViewController"];
     
     QMDialogsViewController* recentVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"QMDialogsViewController"];
     
-    FavoriteViewController *favVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"FavoriteViewController"];
+    FavContactViewController *favVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"FavContactViewController"];
     
     GroupChatsViewController *groupVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatsViewController"];
     

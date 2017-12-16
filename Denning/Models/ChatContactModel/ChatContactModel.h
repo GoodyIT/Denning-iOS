@@ -12,11 +12,16 @@
 
 @interface ChatContactModel : NSObject
 
-@property (strong, nonatomic) NSArray<ChatFirmModel*>* favoriteContacts;
+@property (strong, nonatomic) NSString* dtExpire;
+@property (strong, nonatomic) NSString* isExpire;
 
 @property (strong, nonatomic) NSArray<ChatFirmModel*>* staffContacts;
 
 @property (strong, nonatomic) NSArray<ChatFirmModel*>* clientContacts;
+
+@property (strong, nonatomic) NSArray<ChatFirmModel*>* favStaffContacts;
+
+@property (strong, nonatomic) NSArray<ChatFirmModel*>* favClientContacts;
 
 + (ChatContactModel*) getChatContactFromResponse: (NSDictionary*) response;
 

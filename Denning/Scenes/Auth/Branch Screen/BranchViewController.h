@@ -10,5 +10,5 @@
 
 @interface BranchViewController : BaseTableViewController
 
-@property (strong, nonatomic) NSArray* firmArray;
+@property (strong, nonatomic) NSArray<FirmURLModel*>* firmArray;
 @end

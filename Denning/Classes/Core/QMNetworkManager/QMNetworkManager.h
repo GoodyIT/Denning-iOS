@@ -249,7 +249,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
  */
 
 // Get the contacts
-- (void) getChatContactsWithCompletion:(void(^)(void)) completion;
+- (BFTask *) getChatContacts;
 
 - (void) addFavoriteContact: (QBUUser*) user withCompletion:(void(^)(NSError* error)) completion;
 

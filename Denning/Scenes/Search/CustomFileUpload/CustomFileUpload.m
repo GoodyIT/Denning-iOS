@@ -14,7 +14,6 @@
 @interface CustomFileUpload ()< UIImagePickerControllerDelegate, UINavigationControllerDelegate,
 NYTPhotosViewControllerDelegate>
 
-
 @end
 
 @implementation CustomFileUpload

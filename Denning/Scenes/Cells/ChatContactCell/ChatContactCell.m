@@ -55,7 +55,8 @@
 }
 
 - (BOOL) isExistInFavoriteList: (QBUUser*) user {
-    for (ChatFirmModel* newModel in [DataManager sharedManager].favoriteContactsArray) {
+    NSArray* favArray = [[DataManager sharedManager].favClientContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].favStaffContactsArray];
+    for (ChatFirmModel* newModel in favArray) {
         if ([newModel.users containsObject:user])
             return YES;
     }

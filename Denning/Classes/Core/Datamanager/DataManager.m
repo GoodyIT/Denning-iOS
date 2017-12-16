@@ -154,4 +154,5 @@
     return user.email.length > 0;
 }
 
+
 @end

@@ -334,13 +334,13 @@ UIColor *QMSecondaryApplicationColor() {
     }
     
     if (self.segmented.selectedSegmentIndex == 2 && fileNo1.length == 0) {
-        [self showAlertWithMessage:@"Please slect the correct contact." actionSuccess:NO inViewController:self];
+        [self showAlertWithMessage:@"Please select the correct contact." actionSuccess:NO inViewController:self];
         self.segmented.selectedSegmentIndex = 0;
         self.uploadToValue.text = @"Transit Folder";
         return;
     }
     if (self.segmented.selectedSegmentIndex == 1 && fileNo1.length == 0) {
-        [self showAlertWithMessage:@"Please slect the correct contact." actionSuccess:NO inViewController:self];
+        [self showAlertWithMessage:@"Please select the correct contact." actionSuccess:NO inViewController:self];
         self.segmented.selectedSegmentIndex = 0;
         self.uploadToValue.text = @"Transit Folder";
         return;
@@ -405,7 +405,7 @@ UIColor *QMSecondaryApplicationColor() {
     
     NSDictionary* params = @{@"fileNo1":fileNo1,
                              @"FileName":name,
-                             @"MimeType":@"jpg",
+                             @"MimeType": fileType,
                              @"dateCreate":[self todayWithTime],
                              @"dateModify":[self todayWithTime],
                              @"fileLength":fileLength,

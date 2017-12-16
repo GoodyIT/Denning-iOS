@@ -843,35 +843,11 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
  possibleCompletionsForString:(NSString *)string
             completionHandler:(void (^)(NSArray *))handler
 {
-    if ([NSOperationQueue mainQueue].operationCount > 0) {
-        [[NSOperationQueue mainQueue] cancelAllOperations];
-    }
-    
-    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
-        [[QMNetworkManager sharedManager].manager.requestSerializer setValue:_sessionID forHTTPHeaderField:@"webuser-sessionid"];
-        [[QMNetworkManager sharedManager].manager.requestSerializer setValue:_email forHTTPHeaderField:@"webuser-id"];
-        
-    } else {
-        [[QMNetworkManager sharedManager].manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}" forHTTPHeaderField:@"webuser-sessionid"];
-        [[QMNetworkManager sharedManager].manager.requestSerializer setValue:_email forHTTPHeaderField:@"webuser-id"];
-        
-    }
-    
-    NSString* url = [searchKeywordURL stringByAppendingString:[string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    NSOperation *operation = [AFHTTPSessionOperation operationWithManager:[QMNetworkManager sharedManager].manager
-                                                               HTTPMethod:@"GET"
-                                                                URLString:url
-                                                               parameters:nil
-                                                           uploadProgress:nil
-                                                         downloadProgress:nil
-                                                                  success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
-                                                                      NSLog(@"%@", responseObject);
-                                                                      
-                                                                      handler([self parseResponse:responseObject]);                     } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                          NSLog(@"%@", error);
-                                                                      }];
-    [[NSOperationQueue mainQueue] addOperation:operation];
-    
+    NSString* url = [searchKeywordURL stringByAppendingString:string];
+    [[QMNetworkManager sharedManager] setPublicHTTPHeader];
+    [[QMNetworkManager sharedManager] sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+         handler([self parseResponse:(NSArray*)result]);
+    }];
 }
 
 #pragma mark - ScrollView Delegate

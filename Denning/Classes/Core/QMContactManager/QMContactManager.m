@@ -142,21 +142,30 @@
 
 - (NSArray *)friends {
     
-    NSArray *allContactListItems = [self.serviceManager.contactListService.contactListMemoryStorage allContactListItems];
-    NSMutableArray *friends = [NSMutableArray arrayWithCapacity:allContactListItems.count];
+    NSArray *users = [self.serviceManager.usersService.usersMemoryStorage unsortedUsers];
+    NSMutableArray* friends = [NSMutableArray new];
     
-    for (QBContactListItem *item in allContactListItems) {
-        
-//        if (item.subscriptionState != QBPresenceSubscriptionStateNone) {
-        
-            QBUUser *user = [self.serviceManager.usersService.usersMemoryStorage userWithID:item.userID];
-            if (user) {
-                
-                [friends addObject:user];
+    for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].clientContactsArray) {
+        for (ChatUserModel* chatUserModel in chatFirmModel.users) {
+            for (QBUUser* user in users) {
+                if ([chatUserModel.email localizedCaseInsensitiveCompare: user.email] == NSOrderedSame) {
+                    [friends addObject:user];
+                }
             }
-//        }
+        }
     }
     
+    // Staff Contact
+    for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].staffContactsArray) {
+        for (ChatUserModel* chatUserModel in chatFirmModel.users) {
+            for (QBUUser* user in users) {
+                if ([chatUserModel.email localizedCaseInsensitiveCompare:user.email] == NSOrderedSame) {
+                    [friends addObject:user];
+                }
+            }
+        }
+    }
+
     return [friends copy];
 }
 
@@ -170,6 +179,22 @@
         if ([userIDs containsObject:@(user.ID)]) {
             
             [mutableUsers removeObject:user];
+        }
+    }
+    
+    return [mutableUsers copy];
+}
+
+- (NSArray *)friendsByIDs:(NSArray *)userIDs {
+    
+    NSArray *friends = [self friends];
+    NSMutableArray *mutableUsers = [NSMutableArray new];
+    
+    for (QBUUser *user in friends) {
+        
+        if ([userIDs containsObject:@(user.ID)]) {
+            
+            [mutableUsers addObject:user];
         }
     }
     

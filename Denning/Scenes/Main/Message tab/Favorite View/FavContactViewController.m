@@ -1,13 +1,13 @@
 //
-//  FavoriteViewController.m
-//  Denning
+//  QMContactsViewController.m
+//  Q-municate
 //
-//  Created by DenningIT on 06/04/2017.
-//  Copyright © 2017 DenningIT. All rights reserved.
+//  Created by Vitaliy Gorbachov on 5/16/16.
+//  Copyright © 2016 Quickblox. All rights reserved.
 //
 
-#import "FavoriteViewController.h"
-#import "FavContactsDataSource.h"
+#import "FavContactViewController.h"
+//#import "QMContactsDataSource.h"
 //#import "QMContactsSearchDataSource.h"
 //#import "QMGlobalSearchDataSource.h"
 //#import "QMContactsSearchDataProvider.h"
@@ -22,11 +22,8 @@
 #import "QMNoContactsCell.h"
 #import "QMNoResultsCell.h"
 #import "FavContactCell.h"
-
-@interface FavoriteViewController ()
+@interface FavContactViewController ()
 <
-FavContactDataSourceDelegate,
-
 UISearchControllerDelegate,
 UISearchBarDelegate,
 
@@ -39,14 +36,16 @@ SWTableViewCellDelegate
     NSMutableArray* originalContacts;
     NSMutableArray<ChatFirmModel*>* contactsArray;
     NSString* selectedFirmCode;
+    NSInteger selectedIndex;
 }
 
 @property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *userTypeSegment;
 
 /**
  *  Data sources
  */
-@property (strong, nonatomic) FavContactsDataSource *dataSource;
+//@property (strong, nonatomic) QMContactsDataSource *dataSource;
 
 @property (strong, nonatomic) NSString* filter;
 
@@ -56,83 +55,89 @@ SWTableViewCellDelegate
 
 @end
 
-@implementation FavoriteViewController
+@implementation FavContactViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     // Hide empty separators
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    selectedIndex = 0;
     
     // search implementation
     [self configureSearch];
     
-    [self registerNibs];
-    
-    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    
-    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     // filling data source
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateItemsFromContactListWithCompletion:^{
-            // setting up data source
-            [navigationController dismissNotificationPanel];
-            // registering nibs for current VC and search results VC
-            
-            
-            [self updateFriendList];
-        }];
-    });
+    [self updateFriendList];
+    
+    [self registerNibs];
     
     // subscribing for delegates
     [[QMCore instance].contactListService addDelegate:self];
     [[QMCore instance].usersService addDelegate:self];
     
-    self.refreshControl = nil;
     // adding refresh control task
-//    if (self.refreshControl) {
-//
-//        self.refreshControl.backgroundColor = [UIColor whiteColor];
-//        [self.refreshControl addTarget:self
-//                                action:@selector(updateContactsAndEndRefreshing)
-//                      forControlEvents:UIControlEventValueChanged];
-//    }
-    
-    // Update the tableview whenever the user add/remove favorite
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTableView) name:CHANGE_FAVORITE_CONTACT object:nil];
+    if (self.refreshControl) {
+
+        self.refreshControl.backgroundColor = [UIColor whiteColor];
+        [self.refreshControl addTarget:self
+                                action:@selector(updateContactsAndEndRefreshing)
+                      forControlEvents:UIControlEventValueChanged];
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateContactsAndEndRefreshing) name:CHANGE_FAVORITE_CONTACT object:nil];
 }
 
-- (void) updateTableView {
-    [self.tableView reloadData];
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self removeFromParentViewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (self.searchController.isActive) {
-        
-        self.tabBarController.tabBar.hidden = YES;
-    }
-    else {
-        
-        // smooth rows deselection
-        [self qm_smoothlyDeselectRowsForTableView:self.tableView];
+    [self qm_smoothlyDeselectRowsForTableView:self.tableView];
+    
+    if (self.refreshControl.isRefreshing) {
+        // fix for freezing refresh control after tab bar switch
+        // if it is still active
+        CGPoint offset = self.tableView.contentOffset;
+        [self.refreshControl endRefreshing];
+        [self.refreshControl beginRefreshing];
+        self.tableView.contentOffset = offset;
     }
     
-//    if (self.refreshControl.isRefreshing) {
-//        // fix for freezing refresh control after tab bar switch
-//        // if it is still active
-//        CGPoint offset = self.tableView.contentOffset;
-//        [self.refreshControl endRefreshing];
-//        [self.refreshControl beginRefreshing];
-//        self.tableView.contentOffset = offset;
-//    }
+    [self updateContactsAndEndRefreshing];
+}
+
+- (void) updateDataSourceByScope:(NSInteger) index {
+    selectedIndex = index;
+    switch (index) {
+        case 0:
+            originalContacts = [[[DataManager sharedManager].favStaffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].favClientContactsArray] mutableCopy];
+            break;
+        case 1:
+            originalContacts = [[DataManager sharedManager].favStaffContactsArray copy];
+            break;
+        case 2:
+            originalContacts = [[DataManager sharedManager].favClientContactsArray copy];
+            break;
+
+        default:
+            // Denning support
+            break;
+    }
+    contactsArray = originalContacts;
+//    [self.tableView reloadData];
 }
 
 - (void) updateFriendList {
-    originalContacts = [[DataManager sharedManager].favoriteContactsArray copy];
-    contactsArray = originalContacts;
-//    [self filterContactList];
+    [self updateDataSourceByScope:selectedIndex];
+    [self filterContactList];
 }
 
 - (void) configureSearch
@@ -145,42 +150,20 @@ SWTableViewCellDelegate
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.definesPresentationContext = YES;
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 45)];
+    [containerView addSubview:_searchController.searchBar];
+    [containerView addSubview:_userTypeSegment];
+    
+     self.tableView.tableHeaderView =  containerView;
+    
+    [_userTypeSegment mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_searchController.searchBar.mas_bottom).offset(8); //with is an optional semantic filler
+        make.centerX.equalTo(containerView.mas_centerX);
+        make.bottom.equalTo(containerView.mas_bottom).offset(-8);
+    }];
 }
 
-#pragma mark - FavoriteContactDataSource Delegate.
-- (void)favContactDataSource:(FavContactsDataSource *)contactDataShource commitDeleteDialog:(QBUUser *)user
-{
-    UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:nil
-                                          message: @"Are You Sure?"
-                                          preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
-                                                        style:UIAlertActionStyleCancel
-                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
-                                                          
-                                                          [self.tableView setEditing:NO animated:YES];
-                                                      }]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_DELETE", nil)
-                                                        style:UIAlertActionStyleDestructive
-                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
-                                                          [SVProgressHUD show];
-                                                          [[QMNetworkManager sharedManager] removeFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
-                                                              [SVProgressHUD dismiss];
-                                                              if (error == nil) {
-                                                                  [QMAlert showAlertWithMessage:@"Successfully deleted" actionSuccess:YES inViewController:self];
-                                                              } else {
-                                                                  [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
-                                                                  [self.tableView setEditing:NO animated:YES];
-                                                              }
-                                                          }];
-                                            
-                                                      }]];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-}
 #pragma mark - UITableView Datasource
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     return contactsArray.count;
@@ -213,7 +196,6 @@ SWTableViewCellDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (contactsArray.count == 0) {
-        
         QMNoContactsCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMNoContactsCell cellIdentifier] forIndexPath:indexPath];
         [cell setTitle:NSLocalizedString(@"QM_STR_NO_CONTACTS", nil)];
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -221,7 +203,6 @@ SWTableViewCellDelegate
     }
     
     tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    
     FavContactCell *cell = (FavContactCell *)[self.tableView dequeueReusableCellWithIdentifier:[FavContactCell cellIdentifier]
                                                                                   forIndexPath:indexPath];
     cell.leftUtilityButtons = [self leftButtons];
@@ -242,7 +223,7 @@ SWTableViewCellDelegate
     UIFont *font = [UIFont fontWithName:@"SFUIText-Medium" size:17.0f];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
     NSAttributedString* callString = [[NSAttributedString alloc] initWithString:@"Call" attributes:attributes];
-    
+
     [leftUtilityButtons sw_addUtilityButtonWithColor:[UIColor redColor] attributedTitle:callString];
     
     return leftUtilityButtons;
@@ -261,6 +242,8 @@ SWTableViewCellDelegate
     
     return rightUtilityButtons;
 }
+
+#pragma mark - SWTableViewDelegate
 
 - (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
 {
@@ -283,6 +266,63 @@ SWTableViewCellDelegate
         default:
             break;
     }
+}
+
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
+    [cell hideUtilityButtonsAnimated:YES];
+    NSInteger section = cell.tag / 1000;
+    NSInteger row = cell.tag  - section * 1000;
+    QBUUser* user = contactsArray[section].users[row];
+    switch (index) {
+        case 0:
+        {
+            // Delete button was pressed
+            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+            
+            [self removeUserFromList:user cellIndexPath:cellIndexPath];
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void) removeUserFromList:(QBUUser*) user cellIndexPath:(NSIndexPath*) cellIndexPath
+{
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:nil
+                                          message: @"Are You Sure?"
+                                          preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
+                                                          
+                                                          [self.tableView setEditing:NO animated:YES];
+                                                      }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_DELETE", nil)
+                                                        style:UIAlertActionStyleDestructive
+                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
+                                                          [SVProgressHUD show];
+                                                          [[QMNetworkManager sharedManager] removeFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
+                                                              [SVProgressHUD dismiss];
+                                                              if (error == nil) {
+                                                                  [QMAlert showAlertWithMessage:@"Successfully deleted" actionSuccess:YES inViewController:self];
+                                                                  
+                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:CHANGE_FAVORITE_CONTACT object:nil];
+                                                                 
+                                                              } else {
+                                                                      [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
+                                                                      [self.tableView setEditing:NO animated:YES];
+                                                                  }
+                                                          }];
+                                                          
+                                                      }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (BOOL)callsAllowed:(QBUUser*) selectedUser {
@@ -329,70 +369,31 @@ SWTableViewCellDelegate
     return YES;
 }
 
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index {
-    [cell hideUtilityButtonsAnimated:YES];
-    NSInteger section = cell.tag / 1000;
-    NSInteger row = cell.tag  - section * 1000;
-    QBUUser* user = contactsArray[section].users[row];
-    switch (index) {
-        case 0:
-        {
-            // Delete button was pressed
-            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-//
-//            QBUUser *user = (QBUUser *) (contactsArray[cellIndexPath.section].users[cellIndexPath.row]);
-//
-            [self removeUserFromList:user cellIndexPath:cellIndexPath];
-            
-            break;
+- (void) removeContactFromFavoriteList:(QBUUser*) user {
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    [[QMNetworkManager sharedManager] removeFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
+        
+        [navigationController dismissNotificationPanel];
+        if (error == nil) {
+            [self updateContactsAndEndRefreshing];
+        } else {
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
         }
-        default:
-            break;
-    }
+    }];
 }
 
-- (void) removeUserFromList:(QBUUser*) user cellIndexPath:(NSIndexPath*) cellIndexPath
-{
-    UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:nil
-                                          message: @"Are You Sure?"
-                                          preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
-                                                        style:UIAlertActionStyleCancel
-                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
-                                                          
-                                                          [self.tableView setEditing:NO animated:YES];
-                                                      }]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_DELETE", nil)
-                                                        style:UIAlertActionStyleDestructive
-                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
-                                                          [SVProgressHUD show];
-                                                          [[QMNetworkManager sharedManager] removeFavoriteContact:user withCompletion:^(NSError * _Nonnull error) {
-                                                              [SVProgressHUD dismiss];
-                                                              if (error == nil) {
-                                                                  [QMAlert showAlertWithMessage:@"Successfully deleted" actionSuccess:YES inViewController:self];
-                                         
-                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:CHANGE_FAVORITE_CONTACT object:user];
-                                                                  [contactsArray removeObjectAtIndex:cellIndexPath.row];
-                                                                  [originalContacts removeObjectAtIndex:cellIndexPath.row];
-                                                                  [self.tableView deleteRowsAtIndexPaths:@[cellIndexPath]
-                                                                                        withRowAnimation:UITableViewRowAnimationAutomatic];               } else {
-                                                                      [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
-                                                                      [self.tableView setEditing:NO animated:YES];
-                                                                  }
-                                                          }];
-                                                          
-                                                      }]];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
+
+- (IBAction)didChangeUserType:(UISegmentedControl*)sender {
+    [self updateDataSourceByScope:sender.selectedSegmentIndex];
+    [self filterContactList];
 }
 
-#pragma mark - Search Delegate
 - (void)willPresentSearchController:(UISearchController *)searchController
 {
     MessageViewController* messageVC = (MessageViewController*)self.parentViewController;
+    
     messageVC.navigationController.navigationBarHidden = YES;
 }
 
@@ -403,7 +404,6 @@ SWTableViewCellDelegate
     self.filter = @"";
     searchController.searchBar.text = @"";
     [self updateFriendList];
-    [self.tableView reloadData];
 }
 
 #pragma mark - searchbar delegate
@@ -411,24 +411,19 @@ SWTableViewCellDelegate
 {
     NSMutableArray* newArray = [NSMutableArray new];
     if (self.filter.length == 0) {
-        [self updateFriendList];
+        contactsArray = originalContacts;
     } else {
         for (ChatFirmModel* firmModel in originalContacts) {
             ChatFirmModel* newModel = [ChatFirmModel new];
             newModel.firmName = firmModel.firmName;
             newModel.firmCode = firmModel.firmCode;
-            if ([firmModel.firmName localizedCaseInsensitiveContainsString:self.filter]) {
-                newModel.users = firmModel.users;
-            } else {
-                NSMutableArray* userArray = [NSMutableArray new];
-                for(QBUUser* user in firmModel.users) {
-                    if ([user.fullName localizedCaseInsensitiveContainsString:self.filter]) {
-                        [userArray addObject:user];
-                    }
+            NSMutableArray* userArray = [NSMutableArray new];
+            for(QBUUser* user in firmModel.users) {
+                if ([user.fullName localizedCaseInsensitiveContainsString:self.filter]) {
+                    [userArray addObject:user];
                 }
-                newModel.users = [userArray copy];
             }
-            
+            newModel.users = [userArray copy];
             [newArray addObject:newModel];
         }
         contactsArray = [newArray copy];
@@ -437,8 +432,7 @@ SWTableViewCellDelegate
     [self.tableView reloadData];
 }
 
-- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
-{
+- (void) didChangeSearchBar:(NSString*) searchText {
     self.filter = searchText;
     if (self.filter.length == 0) {
         [self updateFriendList];
@@ -447,11 +441,11 @@ SWTableViewCellDelegate
     }
 }
 
-#pragma mark - Update items
-
-- (void)updateItemsFromContactListWithCompletion:(void(^)(void)) completion {
-    [[QMNetworkManager sharedManager] getChatContactsWithCompletion:completion];
+- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
+{
+    [self didChangeSearchBar:searchText];
 }
+
 
 #pragma mark - UITableViewDelegate
 
@@ -463,7 +457,7 @@ SWTableViewCellDelegate
     selectedFirmCode = firmModel.firmCode;
     QBUUser *user = firmModel.users[indexPath.row];
     BOOL isRequestSent = [[QMCore instance].contactManager isContactListItemExistentForUserWithID:user.ID];
-    
+ 
     if (![[QMCore instance].contactManager isFriendWithUserID: user.ID] && !isRequestSent) {
         @weakify(self);
         [self addToContact:user withCompletion:^{
@@ -472,7 +466,8 @@ SWTableViewCellDelegate
         }];
     } else {
         [self gotoChat:user];
-    }}
+    }
+}
 
 - (IBAction)addToContact:(QBUUser*) user withCompletion:(void(^)(void)) completion {
     
@@ -554,13 +549,15 @@ SWTableViewCellDelegate
 }
 
 - (void)updateContactsAndEndRefreshing {
-    
+
     @weakify(self);
     [[QMTasks taskUpdateContacts] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
         
         @strongify(self);
         
         [self.refreshControl endRefreshing];
+        
+        [self updateFriendList];
         
         return nil;
     }];
@@ -589,32 +586,24 @@ SWTableViewCellDelegate
 
 - (void)contactListService:(QMContactListService *)__unused contactListService contactListDidChange:(QBContactList *)__unused contactList {
     
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+   [self updateFriendList];
     
 }
 
 #pragma mark - QMUsersServiceDelegate
 
 - (void)usersService:(QMUsersService *)__unused usersService didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+   [self updateFriendList];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService didAddUsers:(NSArray<QBUUser *> *)__unused users {
     
-//    [self updateItemsFromContactListWithCompletion:^{
-//        [self updateFriendList];
-//    }];
+    [self updateFriendList];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService didUpdateUsers:(NSArray<QBUUser *> *)__unused users {
     
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+    [self updateFriendList];
 }
 
 #pragma mark - QMSearchProtocol
@@ -629,6 +618,8 @@ SWTableViewCellDelegate
 - (void)registerNibs {
     
     [FavContactCell registerForReuseInTableView:self.tableView];
+    
+    [QMContactCell registerForReuseInTableView:self.tableView];
     
     [QMNoContactsCell registerForReuseInTableView:self.tableView];
 }

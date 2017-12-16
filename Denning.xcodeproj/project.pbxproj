@@ -82,6 +82,9 @@
 		791282771FE2DF25006E93E2 /* icon_attach_file.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282741FE2DF1F006E93E2 /* icon_attach_file.png */; };
 		791282781FE2DF25006E93E2 /* icon_attach_file@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 791282751FE2DF22006E93E2 /* icon_attach_file@2x.png */; };
 		7912827D1FE2EE79006E93E2 /* ShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912827C1FE2EE79006E93E2 /* ShareHelper.m */; };
+		7912A57E1FE3C16400C8B9A5 /* FavContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A57D1FE3C16400C8B9A5 /* FavContactViewController.m */; };
+		7912A5821FE46D0900C8B9A5 /* FileSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A5811FE46D0900C8B9A5 /* FileSaveViewController.m */; };
+		7912A5881FE481DB00C8B9A5 /* FileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A5861FE481DA00C8B9A5 /* FileListViewController.m */; };
 		791360471FCDB3480022E80F /* QMLicenseAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */; };
 		791360481FCDB3480022E80F /* Root.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791360461FCDB3480022E80F /* Root.storyboard */; };
 		7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7913604D1FCDB7F80022E80F /* QMLicenseAgreement.m */; };
@@ -450,7 +453,6 @@
 		79BC1ECD1FCC6FA800E90B12 /* DEMOCustomAutoCompleteObject.h in Sources */ = {isa = PBXBuildFile; fileRef = 79F7321A1E96A929004F88DF /* DEMOCustomAutoCompleteObject.h */; };
 		79BC1ECE1FCC6FA800E90B12 /* DEMOCustomAutoCompleteObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7321B1E96A929004F88DF /* DEMOCustomAutoCompleteObject.m */; };
 		79BC1ED51FCC7F0600E90B12 /* RequestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BC1ED41FCC7F0600E90B12 /* RequestObject.m */; };
-		79BC1ED91FCC8EBB00E90B12 /* FavContactsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BC1ED71FCC8EBA00E90B12 /* FavContactsDataSource.m */; };
 		79BC1EEB1FCC8F4500E90B12 /* QMGlobalSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BC1EDD1FCC8F4400E90B12 /* QMGlobalSearchDataSource.m */; };
 		79BC1EEC1FCC8F4500E90B12 /* QMContactsSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BC1EE01FCC8F4400E90B12 /* QMContactsSearchDataSource.m */; };
 		79BC1EED1FCC8F4500E90B12 /* QMContactsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 79BC1EE21FCC8F4400E90B12 /* QMContactsDataSource.m */; };
@@ -468,7 +470,6 @@
 		79D59A261E95245E00CD3821 /* QMMessageContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A221E95245E00CD3821 /* QMMessageContactListViewController.m */; };
 		79D59A271E95245E00CD3821 /* QMNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A241E95245E00CD3821 /* QMNewMessageViewController.m */; };
 		79D59A2B1E953B0400CD3821 /* ChatContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2A1E953B0400CD3821 /* ChatContactModel.m */; };
-		79D59A311E955B6D00CD3821 /* FavoriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A301E955B6D00CD3821 /* FavoriteViewController.m */; };
 		79D929CC1E8DA27A000A53D2 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929C91E8DA27A000A53D2 /* icon_add.png */; };
 		79D929CD1E8DA27A000A53D2 /* icon_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */; };
 		79D929CE1E8DA27A000A53D2 /* icon_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */; };
@@ -1287,6 +1288,12 @@
 		791282751FE2DF22006E93E2 /* icon_attach_file@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_attach_file@2x.png"; sourceTree = "<group>"; };
 		7912827B1FE2EE79006E93E2 /* ShareHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareHelper.h; sourceTree = "<group>"; };
 		7912827C1FE2EE79006E93E2 /* ShareHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareHelper.m; sourceTree = "<group>"; };
+		7912A57C1FE3C16300C8B9A5 /* FavContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavContactViewController.h; sourceTree = "<group>"; };
+		7912A57D1FE3C16400C8B9A5 /* FavContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavContactViewController.m; sourceTree = "<group>"; };
+		7912A5801FE46D0900C8B9A5 /* FileSaveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileSaveViewController.h; sourceTree = "<group>"; };
+		7912A5811FE46D0900C8B9A5 /* FileSaveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileSaveViewController.m; sourceTree = "<group>"; };
+		7912A5861FE481DA00C8B9A5 /* FileListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListViewController.m; sourceTree = "<group>"; };
+		7912A5871FE481DA00C8B9A5 /* FileListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListViewController.h; sourceTree = "<group>"; };
 		791360431FCDB3480022E80F /* QMLicenseAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMLicenseAgreementViewController.m; sourceTree = "<group>"; };
 		791360441FCDB3480022E80F /* QMLicenseAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMLicenseAgreementViewController.h; sourceTree = "<group>"; };
 		791360461FCDB3480022E80F /* Root.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Root.storyboard; sourceTree = "<group>"; };
@@ -1742,8 +1749,6 @@
 		79BC1EC21FCC6C4000E90B12 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		79BC1ED31FCC7F0600E90B12 /* RequestObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestObject.h; sourceTree = "<group>"; };
 		79BC1ED41FCC7F0600E90B12 /* RequestObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RequestObject.m; sourceTree = "<group>"; };
-		79BC1ED71FCC8EBA00E90B12 /* FavContactsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavContactsDataSource.m; sourceTree = "<group>"; };
-		79BC1ED81FCC8EBA00E90B12 /* FavContactsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavContactsDataSource.h; sourceTree = "<group>"; };
 		79BC1EDC1FCC8F4400E90B12 /* QMGlobalSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMGlobalSearchDataSource.h; sourceTree = "<group>"; };
 		79BC1EDD1FCC8F4400E90B12 /* QMGlobalSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMGlobalSearchDataSource.m; sourceTree = "<group>"; };
 		79BC1EDF1FCC8F4400E90B12 /* QMContactsSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMContactsSearchDataSource.h; sourceTree = "<group>"; };
@@ -1777,8 +1782,6 @@
 		79D59A241E95245E00CD3821 /* QMNewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNewMessageViewController.m; sourceTree = "<group>"; };
 		79D59A291E953B0400CD3821 /* ChatContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContactModel.h; sourceTree = "<group>"; };
 		79D59A2A1E953B0400CD3821 /* ChatContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactModel.m; sourceTree = "<group>"; };
-		79D59A2F1E955B6D00CD3821 /* FavoriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteViewController.h; sourceTree = "<group>"; };
-		79D59A301E955B6D00CD3821 /* FavoriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteViewController.m; sourceTree = "<group>"; };
 		79D929C91E8DA27A000A53D2 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
 		79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@2x.png"; sourceTree = "<group>"; };
 		79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@3x.png"; sourceTree = "<group>"; };
@@ -3331,6 +3334,24 @@
 			path = DIDocumentManager;
 			sourceTree = "<group>";
 		};
+		7912A57F1FE46CF600C8B9A5 /* FileSaveView */ = {
+			isa = PBXGroup;
+			children = (
+				7912A5801FE46D0900C8B9A5 /* FileSaveViewController.h */,
+				7912A5811FE46D0900C8B9A5 /* FileSaveViewController.m */,
+			);
+			path = FileSaveView;
+			sourceTree = "<group>";
+		};
+		7912A5851FE481DA00C8B9A5 /* FileList */ = {
+			isa = PBXGroup;
+			children = (
+				7912A5861FE481DA00C8B9A5 /* FileListViewController.m */,
+				7912A5871FE481DA00C8B9A5 /* FileListViewController.h */,
+			);
+			path = FileList;
+			sourceTree = "<group>";
+		};
 		791360411FCDB3480022E80F /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -4073,6 +4094,8 @@
 		79556DBD1E9323B700A16CB8 /* Message tab */ = {
 			isa = PBXGroup;
 			children = (
+				7912A5851FE481DA00C8B9A5 /* FileList */,
+				7912A57F1FE46CF600C8B9A5 /* FileSaveView */,
 				7912824B1FDE749C006E93E2 /* Groups */,
 				79D599EB1E94735000CD3821 /* Recent View */,
 				79D599EA1E94735000CD3821 /* Favorite View */,
@@ -4354,15 +4377,6 @@
 			path = supporting;
 			sourceTree = "<group>";
 		};
-		79BC1ED61FCC8EBA00E90B12 /* FavoriteDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				79BC1ED71FCC8EBA00E90B12 /* FavContactsDataSource.m */,
-				79BC1ED81FCC8EBA00E90B12 /* FavContactsDataSource.h */,
-			);
-			path = FavoriteDataSource;
-			sourceTree = "<group>";
-		};
 		79BC1EDA1FCC8F4400E90B12 /* Data sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -4449,9 +4463,8 @@
 		79D599EA1E94735000CD3821 /* Favorite View */ = {
 			isa = PBXGroup;
 			children = (
-				79BC1ED61FCC8EBA00E90B12 /* FavoriteDataSource */,
-				79D59A2F1E955B6D00CD3821 /* FavoriteViewController.h */,
-				79D59A301E955B6D00CD3821 /* FavoriteViewController.m */,
+				7912A57C1FE3C16300C8B9A5 /* FavContactViewController.h */,
+				7912A57D1FE3C16400C8B9A5 /* FavContactViewController.m */,
 			);
 			path = "Favorite View";
 			sourceTree = "<group>";
@@ -9621,7 +9634,6 @@
 				790B23A91E373A140037A187 /* FirmModel.m in Sources */,
 				79F7322B1E96A929004F88DF /* DEMODataSource.m in Sources */,
 				79CE7C821EA78E20001A8101 /* NewLedgerModel.m in Sources */,
-				79BC1ED91FCC8EBB00E90B12 /* FavContactsDataSource.m in Sources */,
 				79161CED1FC8E59A0025BCB8 /* StaffAutoComplete.m in Sources */,
 				96C7AF4A1EE6957D00EF0A37 /* MukimModel.m in Sources */,
 				79161CC51FC776590025BCB8 /* StaffLeaveModel.m in Sources */,
@@ -9708,6 +9720,7 @@
 				79FBDF9F1E30421A00448FE3 /* NSArray+Intersection.m in Sources */,
 				7912824E1FDE749C006E93E2 /* GroupChatsViewController.m in Sources */,
 				962082B71ED3D03800BB595C /* AddDiaryViewController.m in Sources */,
+				7912A5821FE46D0900C8B9A5 /* FileSaveViewController.m in Sources */,
 				79FBDFE61E30421A00448FE3 /* REMessageUI.m in Sources */,
 				7993767A1FC0D3DE007E35CE /* CaseTypeModel.m in Sources */,
 				7954329B1FC65B8100FF9E57 /* QMAudioRecorder.m in Sources */,
@@ -9733,6 +9746,7 @@
 				9607F97B1F06E2D20012ABCD /* AddMatterPropertyCell.m in Sources */,
 				7954326E1FC6392B00FF9E57 /* UIScreen+QMLock.m in Sources */,
 				79FBDFB11E30421A00448FE3 /* QMCallManager.m in Sources */,
+				7912A5881FE481DB00C8B9A5 /* FileListViewController.m in Sources */,
 				9607F9751F06C2750012ABCD /* SolicitorHeaderCell.m in Sources */,
 				795432501FC5CD4200FF9E57 /* TodayEventViewController.m in Sources */,
 				79FBDFD81E30421A00448FE3 /* QMColors.m in Sources */,
@@ -9910,7 +9924,6 @@
 				9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */,
 				79A6AFAA1E9DBE12007AA24D /* ChatContactCell.m in Sources */,
 				79FBDFD21E30421A00448FE3 /* QMPhoto.m in Sources */,
-				79D59A311E955B6D00CD3821 /* FavoriteViewController.m in Sources */,
 				79161CE91FC896710025BCB8 /* PresetCodeModel.m in Sources */,
 				79F9FC801E4184AC0097CB23 /* NewsCell.m in Sources */,
 				79EC0E051E89655A00320A28 /* GovernmentOfficesViewController.m in Sources */,
@@ -9960,6 +9973,7 @@
 				7903D0961ECF9B520090206C /* TypeValueModel.m in Sources */,
 				795DF25A1E6F04E0006D617D /* CategorySelectViewController.m in Sources */,
 				96A73A341F19C89600B97156 /* BankReconCell.m in Sources */,
+				7912A57E1FE3C16400C8B9A5 /* FavContactViewController.m in Sources */,
 				79FBDFA61E30421A00448FE3 /* UIColor+CustomColors.m in Sources */,
 				962082FF1ED9149700BB595C /* ItemModel.m in Sources */,
 				9620831E1EDBBD5F00BB595C /* TwoColumnSecondCell.m in Sources */,

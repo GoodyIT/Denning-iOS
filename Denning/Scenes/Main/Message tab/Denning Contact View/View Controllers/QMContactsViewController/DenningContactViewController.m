@@ -65,38 +65,37 @@ SWTableViewCellDelegate
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     selectedIndex = 0;
     
-    
     // search implementation
     [self configureSearch];
-    [self registerNibs];
+    
     // filling data source
-    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    [self updateFriendList];
     
-    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    [self registerNibs];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateItemsFromContactListWithCompletion:^{
-            // registering nibs for current VC and search results VC
-            [navigationController dismissNotificationPanel];
-            
-            
-            [self updateFriendList];
-        }];
-    });
- 
-    // subscribing for delegates
-    [[QMCore instance].contactListService addDelegate:self];
-    [[QMCore instance].usersService addDelegate:self];
+    [[QMCore instance].contactListService removeDelegate:self];
+    [[QMCore instance].usersService removeDelegate:self];
     
-    self.refreshControl = nil;
     // adding refresh control task
-//    if (self.refreshControl) {
-//
-//        self.refreshControl.backgroundColor = [UIColor whiteColor];
-//        [self.refreshControl addTarget:self
-//                                action:@selector(updateContactsAndEndRefreshing)
-//                      forControlEvents:UIControlEventValueChanged];
-//    }
+    if (self.refreshControl) {
+
+        self.refreshControl.backgroundColor = [UIColor whiteColor];
+        [self.refreshControl addTarget:self
+                                action:@selector(updateContactsAndEndRefreshing)
+                      forControlEvents:UIControlEventValueChanged];
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateContactsAndEndRefreshing) name:CHANGE_FAVORITE_CONTACT object:nil];
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self removeFromParentViewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,14 +103,16 @@ SWTableViewCellDelegate
     
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
     
-//    if (self.refreshControl.isRefreshing) {
-//        // fix for freezing refresh control after tab bar switch
-//        // if it is still active
-//        CGPoint offset = self.tableView.contentOffset;
-//        [self.refreshControl endRefreshing];
-//        [self.refreshControl beginRefreshing];
-//        self.tableView.contentOffset = offset;
-//    }
+    if (self.refreshControl.isRefreshing) {
+        // fix for freezing refresh control after tab bar switch
+        // if it is still active
+        CGPoint offset = self.tableView.contentOffset;
+        [self.refreshControl endRefreshing];
+        [self.refreshControl beginRefreshing];
+        self.tableView.contentOffset = offset;
+    }
+    
+    [self updateContactsAndEndRefreshing];
 }
 
 - (void) updateDataSourceByScope:(NSInteger) index {
@@ -128,17 +129,13 @@ SWTableViewCellDelegate
             break;
 
         default:
+            // Denning support
             break;
     }
     contactsArray = originalContacts;
-    
-    [self.tableView reloadData];
 }
 
 - (void) updateFriendList {
-//    originalContacts = [[[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray] mutableCopy];
-//    contactsArray = [originalContacts copy];
-//    [self.tableView reloadData];
     [self updateDataSourceByScope:selectedIndex];
     [self filterContactList];
 }
@@ -206,8 +203,7 @@ SWTableViewCellDelegate
     }
     
     tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    ChatContactCell *cell = (ChatContactCell *)[self.tableView dequeueReusableCellWithIdentifier:[ChatContactCell cellIdentifier]
-                                                                                           forIndexPath:indexPath];
+    ChatContactCell *cell = (ChatContactCell *)[self.tableView dequeueReusableCellWithIdentifier:[ChatContactCell cellIdentifier] forIndexPath:indexPath];
     cell.leftUtilityButtons = [self leftButtons];
     cell.delegate = self;
     cell.tag = indexPath.section * 1000 + indexPath.row;
@@ -310,8 +306,7 @@ SWTableViewCellDelegate
         
         [navigationController dismissNotificationPanel];
         if (error == nil) {
-            [[DataManager sharedManager].favoriteContactsArray addObject:user];
-            [[NSNotificationCenter defaultCenter] postNotificationName:CHANGE_FAVORITE_CONTACT object:user];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CHANGE_FAVORITE_CONTACT object:nil];
         } else {
             [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
         }
@@ -326,8 +321,7 @@ SWTableViewCellDelegate
         
         [navigationController dismissNotificationPanel];
         if (error == nil) {
-            [[DataManager sharedManager].favoriteContactsArray removeObject:user];
-            [[NSNotificationCenter defaultCenter] postNotificationName:CHANGE_FAVORITE_CONTACT object:user];
+            [[NSNotificationCenter defaultCenter] postNotificationName:CHANGE_FAVORITE_CONTACT object:nil];
         } else {
             [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
         }
@@ -362,7 +356,6 @@ SWTableViewCellDelegate
     self.filter = @"";
     searchController.searchBar.text = @"";
     [self updateFriendList];
-    [self.tableView reloadData];
 }
 
 #pragma mark - searchbar delegate
@@ -405,11 +398,6 @@ SWTableViewCellDelegate
     [self didChangeSearchBar:searchText];
 }
 
-#pragma mark - Update items
-
-- (void)updateItemsFromContactListWithCompletion:(void(^)(void)) completion {
-    [[QMNetworkManager sharedManager] getChatContactsWithCompletion:completion];
-}
 
 #pragma mark - UITableViewDelegate
 
@@ -513,13 +501,15 @@ SWTableViewCellDelegate
 }
 
 - (void)updateContactsAndEndRefreshing {
-    
+  
     @weakify(self);
     [[QMTasks taskUpdateContacts] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
         
         @strongify(self);
         
         [self.refreshControl endRefreshing];
+        
+        [self updateFriendList];
         
         return nil;
     }];
@@ -548,32 +538,24 @@ SWTableViewCellDelegate
 
 - (void)contactListService:(QMContactListService *)__unused contactListService contactListDidChange:(QBContactList *)__unused contactList {
     
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+   [self updateFriendList];
     
 }
 
 #pragma mark - QMUsersServiceDelegate
 
 - (void)usersService:(QMUsersService *)__unused usersService didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+   [self updateFriendList];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService didAddUsers:(NSArray<QBUUser *> *)__unused users {
     
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+    [self updateFriendList];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService didUpdateUsers:(NSArray<QBUUser *> *)__unused users {
     
-    [self updateItemsFromContactListWithCompletion:^{
-        [self updateFriendList];
-    }];
+    [self updateFriendList];
 }
 
 #pragma mark - QMSearchProtocol

@@ -13,10 +13,10 @@
 @property (strong, nonatomic) NSString* leaveCode;
 @property (strong, nonatomic) NSString* dtEndDate;
 @property (strong, nonatomic) NSString* dtStartDate;
-@property (strong, nonatomic) NSString* strLeaveLength;
 @property (strong, nonatomic) NSString* intAL;
 @property (strong, nonatomic) NSString* intPYL;
 @property (strong, nonatomic) NSString* intTaken;
+@property (strong, nonatomic) CodeDescription* clsLeaveLength;
 @property (strong, nonatomic) CodeDescription *clsLeaveStatus;
 @property (strong, nonatomic) AttendanceInfo * clsStaff;
 @property (strong, nonatomic) CodeDescription* clsTypeOfLeave;

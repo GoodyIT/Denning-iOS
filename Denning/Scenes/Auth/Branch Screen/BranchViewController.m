@@ -101,11 +101,6 @@
     return cell;
 }
 
-- (void) gotoUpload:(FirmURLModel*)urlModel  {
-    [DataManager sharedManager].tempServerURL = urlModel.firmServerURL;
-    [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
-}
-
 - (void) proceedLogin:(FirmURLModel*)urlModel {
     [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
     [self staffLogin:urlModel];
@@ -113,11 +108,6 @@
 
 - (void) gotoMain {
     [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-}
-
-- (void) gotoSharedFolder:(FirmURLModel*)urlModel  {
-    [DataManager sharedManager].tempServerURL = urlModel.firmServerURL;
-    [self clientLogin];
 }
 
 - (void) staffLogin:(FirmURLModel*)urlModel {
@@ -192,10 +182,9 @@
 
 - (IBAction) gotoPasswordConfirm: (UIButton*) sender
 {
-    if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
-        [self gotoUpload:self.firmArray[sender.tag]];
-    } else if ([[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
-        [self gotoSharedFolder:self.firmArray[sender.tag]];
+    if ([[DataManager sharedManager].documentView isEqualToString: @"upload"] || [[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
+        [DataManager sharedManager].tempServerURL = self.firmArray[sender.tag].firmServerURL;
+        [self clientLogin];
     } else {
         [self proceedLogin:self.firmArray[sender.tag]];
     }
