@@ -19,6 +19,7 @@
 #import "QMSettingsFooterView.h"
 
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
+#import "QMPhoto.h"
 #import "QMImagePreview.h"
 
 static const CGFloat kQMDefaultSectionHeaderHeight = 24.0f;
@@ -27,7 +28,6 @@ static const CGFloat kQMStatusSectionHeaderHeight = 40.0f;
 typedef NS_ENUM(NSUInteger, QMSettingsSection) {
     
     QMSettingsSectionFullName,
-    QMSettingsSectionStatus,
     QMSettingsSectionUserInfo,
     QMSettingsSectionExtra,
     QMSettingsSectionSocial,
@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, QMSettingsSection) {
 };
 
 typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
-    
+    QMUserInfoSectionUserName,
     QMUserInfoSectionPhone,
     QMUserInfoSectionEmail,
     QMUserInfoSectionChangePassword
@@ -88,15 +88,20 @@ NYTPhotosViewControllerDelegate
     self.tableView.backgroundColor = QMTableViewBackgroundColor();
     
     // configure user data
-    [self configureUserData:core.currentProfile.userData];
-    self.pushNotificationSwitch.on = core.currentProfile.pushNotificationsEnabled;
+    [self configureUserData:[DataManager sharedManager].user];
+    
+    if ([[QBChat instance] isConnected]) {
+        self.pushNotificationSwitch.on = core.currentProfile.pushNotificationsEnabled;
+    } else {
+        self.pushNotificationSwitch.enabled = NO;
+    }
     
     // determine account type
-    if (core.currentProfile.accountType != QMAccountTypeEmail) {
-        
-        [self.hiddenUserInfoCells addIndex:QMUserInfoSectionEmail];
-        [self.hiddenUserInfoCells addIndex:QMUserInfoSectionChangePassword];
-    }
+//    if (core.currentProfile.accountType != QMAccountTypeEmail) {
+//
+//        [self.hiddenUserInfoCells addIndex:QMUserInfoSectionEmail];
+//        [self.hiddenUserInfoCells addIndex:QMUserInfoSectionChangePassword];
+//    }
     
     // subscribe to delegates
     core.currentProfile.delegate = self;
@@ -108,34 +113,30 @@ NYTPhotosViewControllerDelegate
     // smooth rows deselection
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
+- (IBAction)dismissScreen:(id)sender {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
-- (void)configureUserData:(QBUUser *)userData {
+- (void)configureUserData:(UserModel*)userData {
     
     [self.avatarImageView setImageWithURL:[NSURL URLWithString:userData.avatarUrl]
-                                    title:userData.fullName
+                                    title:userData.username
                            completedBlock:nil];
     
-    self.fullNameLabel.text = userData.fullName;
+    self.fullNameLabel.text = userData.username;
     
-    if (userData.phone.length > 0) {
-        
-        self.phoneLabel.text = userData.phone;
-    }
-    else {
-        
-        [self.hiddenUserInfoCells addIndex:QMUserInfoSectionPhone];
-    }
+    self.phoneLabel.text = userData.phoneNumber;
     
     self.emailLabel.text = userData.email.length > 0 ? userData.email : NSLocalizedString(@"QM_STR_NONE", nil);
     
-    BOOL hasStatus = userData.status.length > 0;
-    
-    self.statusLabel.text =
-    hasStatus ? userData.status : NSLocalizedString(@"QM_STR_NO_STATUS_MESSAGE", nil);
-    
-    self.statusLabel.textColor =
-    hasStatus ? [UIColor darkGrayColor] : [UIColor lightGrayColor];
-    
+//    BOOL hasStatus = userData.status.length > 0;
+//
+//    self.statusLabel.text =
+//    hasStatus ? userData.status : NSLocalizedString(@"QM_STR_NO_STATUS_MESSAGE", nil);
+//
+//    self.statusLabel.textColor =
+//    hasStatus ? [UIColor darkGrayColor] : [UIColor lightGrayColor];
+//
 }
 
 //MARK: - Actions
@@ -240,18 +241,21 @@ NYTPhotosViewControllerDelegate
     switch (indexPath.section) {
             
         case QMSettingsSectionFullName:
-            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldFullName)];
+            
             break;
             
-        case QMSettingsSectionStatus:
-            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldStatus)];
-            break;
-            
+//        case QMSettingsSectionStatus:
+//            [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldStatus)];
+//            break;
+//
         case QMSettingsSectionUserInfo:
             
             switch (indexPath.row) {
-                    
+                case QMUserInfoSectionUserName:
+                    [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUpdateUserFieldUserName)];
+                    break;
                 case QMUserInfoSectionPhone:
+                    [self performSegueWithIdentifier:kQMSceneSegueUpdateUser sender:@(QMUserInfoSectionPhone)];
                     break;
                     
                 case QMUserInfoSectionEmail:
@@ -268,25 +272,6 @@ NYTPhotosViewControllerDelegate
         case QMSettingsSectionExtra:
             break;
             
-        case QMSettingsSectionSocial:
-            
-            switch (indexPath.row) {
-                    
-                case QMSocialSectionTellFriend: {
-                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                    
-                    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-                    [self showShareControllerInCell:cell];
-                    break;
-                }
-                    
-                case QMSocialSectionGiveFeedback:
-                    [self performSegueWithIdentifier:kQMSceneSegueFeedback sender:nil];
-                    break;
-            }
-            
-            break;
-            
         case QMSettingsSectionLogout:
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             
@@ -297,19 +282,19 @@ NYTPhotosViewControllerDelegate
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
-    if (section == QMSettingsSectionStatus) {
-        
-        QMTableSectionHeaderView *headerView = [[QMTableSectionHeaderView alloc]
-                                                initWithFrame:CGRectMake(0,
-                                                                         0,
-                                                                         CGRectGetWidth(tableView.frame),
-                                                                         kQMStatusSectionHeaderHeight)];
-        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        headerView.title = [NSLocalizedString(@"QM_STR_STATUS", nil) uppercaseString];
-        
-        return headerView;
-    }
-    
+//    if (section == QMSettingsSectionStatus) {
+//
+//        QMTableSectionHeaderView *headerView = [[QMTableSectionHeaderView alloc]
+//                                                initWithFrame:CGRectMake(0,
+//                                                                         0,
+//                                                                         CGRectGetWidth(tableView.frame),
+//                                                                         kQMStatusSectionHeaderHeight)];
+//        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//        headerView.title = [NSLocalizedString(@"QM_STR_STATUS", nil) uppercaseString];
+//
+//        return headerView;
+//    }
+//
     return [super tableView:tableView viewForHeaderInSection:section];
 }
 
@@ -319,11 +304,11 @@ NYTPhotosViewControllerDelegate
         
         return CGFLOAT_MIN;
     }
-    
-    if (section == QMSettingsSectionStatus) {
-        
-        return kQMStatusSectionHeaderHeight;
-    }
+//
+//    if (section == QMSettingsSectionStatus) {
+//
+//        return kQMStatusSectionHeaderHeight;
+//    }
     
     return kQMDefaultSectionHeaderHeight;
 }

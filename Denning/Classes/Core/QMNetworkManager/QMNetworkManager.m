@@ -185,15 +185,10 @@
     [self setPublicHTTPHeader];
     [self.manager.requestSerializer setValue:email forHTTPHeaderField:@"webuser-id"];
     
-    [self.manager POST:FORGOT_PASSWORD_REQUEST_URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completion != nil) {
+    [self sendPostWithURL:FORGOT_PASSWORD_REQUEST_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        if (error == nil) {
             completion(YES, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
+        } else {
             completion(NO, error.localizedDescription);
         }
     }];
@@ -203,18 +198,11 @@
 {
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": email, @"password": password}];
     
-    [self setPrivateHTTPHeader];
-    
-    [self.manager POST:CHANGE_PASSWORD_URL parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        if (completion != nil) {
-            completion(YES, nil, responseObject);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(NO, error.localizedDescription, nil);
+    [self sendPrivatePostWithURL:CHANGE_PASSWORD_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        if (error == nil) {
+            completion(YES, nil, result);
+        } else {
+            completion(NO, error.localizedDescription, result);
         }
     }];
 }
@@ -225,18 +213,8 @@
     
     NSString* url = [NSString stringWithFormat:@"%@?page=%@", SIGNUP_FIRM_LIST_URL, page];
     
-    [self.manager GET:url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSArray* result = [FirmModel getFirmArrayFromResponse:responseObject];
-        if (completion != nil) {
-            completion(result, nil);
-        }
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        if (completion != nil) {
-            completion(nil, error);
-        }
+    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        completion([FirmModel getFirmArrayFromResponse:result], error);
     }];
 }
 
@@ -600,12 +578,12 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         newModel.firmCode = chatFirmModel.firmCode;
         NSMutableArray* userArray = [NSMutableArray new];
         for (ChatUserModel* chatUserModel in chatFirmModel.users) {
-            for (QBUUser* user in friends) {
-                if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
-                    [userArray addObject:user];
-                }
+            QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage usersWithEmails:@[chatUserModel.email]].firstObject;
+            if (user != nil) {
+                [userArray addObject:user];
             }
         }
+        
         newModel.users = [userArray copy];
         [dest addObject:newModel];
     }
@@ -632,6 +610,10 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
                 [DataManager sharedManager].staffContactsArray = [NSMutableArray new];
                 [self buildContactsFrom:chatContacts.staffContacts for:[DataManager sharedManager].staffContactsArray withFriends:friends];
                 
+                // Denning Contact
+                [DataManager sharedManager].denningContactArray = [NSMutableArray new];
+                [self buildContactsFrom:chatContacts.denningContacts for:[DataManager sharedManager].denningContactArray withFriends:friends];
+                
                 // favorite client
                 [DataManager sharedManager].favClientContactsArray = [NSMutableArray new];
                 [self buildContactsFrom:chatContacts.favClientContacts for:[DataManager sharedManager].favClientContactsArray withFriends:friends];
@@ -640,11 +622,11 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
                 [DataManager sharedManager].favStaffContactsArray = [NSMutableArray new];
                 [self buildContactsFrom:chatContacts.favStaffContacts for:[DataManager sharedManager].favStaffContactsArray withFriends:friends];
                 
-                NSMutableArray* contactsArray = [NSMutableArray new];
-                [contactsArray addObjectsFromArray:[DataManager sharedManager].staffContactsArray];
-                [contactsArray addObjectsFromArray:[DataManager sharedManager].staffContactsArray];
+                // Set Expire values
+                [DataManager sharedManager].isExpire = (BOOL)chatContacts.isExpire;
+                [DataManager sharedManager].dtExpire =chatContacts.dtExpire;
                 
-                [source setResult:contactsArray];
+                [source setResult:chatContacts.favStaffContacts];
             } else {
                 [source setError:error];
             }

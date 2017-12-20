@@ -16,7 +16,7 @@
 #import <FirebaseAuth/FirebaseAuth.h>
 #import <Bolts/Bolts.h>
 
-static const NSUInteger kQMDialogsPageLimit = 10;
+static const NSUInteger kQMDialogsPageLimit = 100;
 static const NSUInteger kQMUsersPageLimit = 100;
 
 @implementation QMTasks

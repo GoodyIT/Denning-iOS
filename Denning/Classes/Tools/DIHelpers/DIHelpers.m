@@ -8,6 +8,7 @@
 
 #import "DIHelpers.h"
 
+@import SafariServices;
 
 @implementation DIHelpers
 
@@ -607,4 +608,35 @@
     return 0;
 }
 
++ (UIViewController*) topMostController
+{
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
+}
+
++ (void)openURL:(NSURL *)url {
+    
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        
+        if ([SFSafariViewController class] != nil
+            // SFSafariViewController supporting only http and https schemes
+            && ([url.scheme.lowercaseString isEqualToString:@"http"]
+                || [url.scheme.lowercaseString isEqualToString:@"https"])) {
+                
+                SFSafariViewController *controller =
+                [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:false];
+                [[self topMostController] presentViewController:controller animated:true completion:nil];
+            }
+        else {
+            
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
+}
 @end

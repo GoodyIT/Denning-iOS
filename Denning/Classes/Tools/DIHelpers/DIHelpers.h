@@ -106,4 +106,8 @@
 + (void) configureButton:(MIBadgeButton *) button withBadge:(NSString *) badgeString withColor:(UIColor*) color;
 
 + (NSUInteger) detectItemType: (NSString*) form;
+
++ (UIViewController*) topMostController;
+
++ (void)openURL:(NSURL *)url;
 @end

@@ -127,37 +127,52 @@ UIGestureRecognizerDelegate
     [self performSearch];
 }
 
--(void) filterDialogInArray:(NSArray*) contacts
+-(NSArray*) filterDialogInArray:(NSArray*) contacts
 {
+    NSMutableArray* clientDialgs = [NSMutableArray new];
+    NSMutableArray* staffDialgs = [NSMutableArray new];
     NSArray* tempSource = [QMCore.instance.chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO];
     for (ChatFirmModel *chatFirmModel in contacts) {
         for (ChatUserModel* chatUserModel in chatFirmModel.users) {
             for (QBChatDialog* dialog in tempSource) {
                 NSArray* users = [[QMCore instance].contactManager friendsByIDs:dialog.occupantIDs];
+                BOOL isExist = NO;
                 for (QBUUser* user in users) {
                     if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
-                        [_items removeObject:dialog];
-                        [_originItems removeObject:dialog];
+                        isExist = YES;
                         break;
                     }
+                }
+                
+                if (isExist) {
+                    [clientDialgs addObject:dialog];
+                } else {
+                    [staffDialgs addObject:dialog];
                 }
             }
         }
     }
+    
+    if (clientDialgs.count == 0) {
+        staffDialgs = [tempSource copy];
+    }
+    
+    return @[staffDialgs, clientDialgs];
 }
 
 - (void) updateDataSourceByScope:(NSInteger) index {
     selectedIndex = index;
     _items = _originItems = [[QMCore.instance.chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO] mutableCopy];
+    NSArray* filteredArray = [self filterDialogInArray:[DataManager sharedManager].clientContactsArray];
     switch (index) {
         case 0:
             // same as above
             break;
         case 1:
-            [self filterDialogInArray:[DataManager sharedManager].staffContactsArray];
+            _items = _originItems = filteredArray[0];
             break;
         case 2:
-            [self filterDialogInArray:[DataManager sharedManager].clientContactsArray];
+            _items = _originItems = filteredArray[1];
             break;
             
         case 3:
@@ -250,14 +265,14 @@ UIGestureRecognizerDelegate
     self.definesPresentationContext = YES;
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
     
-    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 45)];
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 35)];
     [containerView addSubview:_searchController.searchBar];
     [containerView addSubview:_userTypeSegment];
     
     self.tableView.tableHeaderView =  containerView;
     
     [_userTypeSegment mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_searchController.searchBar.mas_bottom).offset(8); //with is an optional semantic filler
+        make.top.equalTo(_searchController.searchBar.mas_bottom).offset(-5); //with is an optional semantic filler
         make.centerX.equalTo(containerView.mas_centerX);
         make.bottom.equalTo(containerView.mas_bottom).offset(-8);
     }];
@@ -459,6 +474,7 @@ didAddMessagesToMemoryStorage:(NSArray<QBChatMessage *> *)__unused messages
         forDialogID:(NSString *)__unused dialogID {
     
     [(MessageViewController*)self.parentViewController updateBadge];
+    [self updateDialogSource];
     [self.tableView reloadData];
 }
 
@@ -467,6 +483,7 @@ didAddMessageToMemoryStorage:(QBChatMessage *)__unused message
         forDialogID:(NSString *)__unused dialogID {
     
     [(MessageViewController*)self.parentViewController updateBadge];
+    [self updateDialogSource];
     [self.tableView reloadData];
 }
 
@@ -636,7 +653,6 @@ didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
 - (void)updateDataAndEndRefreshing {
     
     @weakify(self);
-    
     BFTask *fetchAllDataTask = [QMTasks taskFetchAllData];
     BFTask *fetchContactsTask = [QMTasks taskUpdateContacts];
     [[BFTask taskForCompletionOfAllTasks:@[fetchAllDataTask, fetchContactsTask]]

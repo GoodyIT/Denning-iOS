@@ -24,7 +24,7 @@
 {
     _startDate.text =model.dtStartDate;
     _endDate.text = model.dtEndDate;
-    _no.text = model.clsLeaveLength.descriptionValue;
+    _no.text = model.decLeaveLength;
     _type.text = model.clsTypeOfLeave.descriptionValue;
     _status.text = model.clsLeaveStatus.descriptionValue;
 }

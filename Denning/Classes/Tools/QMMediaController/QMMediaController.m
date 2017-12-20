@@ -645,7 +645,8 @@ didUpdateStatus:(QMAudioPlayerStatus *)status {
     } else { // Custom file attachment
         NSURL *fileURL = [[DIDocumentManager shared] isAttachedFileExist:attachment.ID];
         if (fileURL != nil) {
-            [[DIDocumentManager shared] displayDocument:fileURL inView:viewController];
+//            [[DIDocumentManager shared] displayDocument:fileURL inView:viewController];
+            [viewController performSegueWithIdentifier:kSaveFileSegue sender:fileURL];
         }
     }
 }

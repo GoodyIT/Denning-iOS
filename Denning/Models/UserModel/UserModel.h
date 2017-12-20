@@ -32,6 +32,7 @@
 @property   NSString    *serverURL;
 @property   NSInteger    activationCode;
 @property   NSString    *firmName;
+@property   NSString    *avatarUrl;
 
 @end
 

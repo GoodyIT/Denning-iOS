@@ -21,7 +21,7 @@
     NSInteger selectedPage;
     NSString *startDate, *endDate;
     NSString* typeOfLeaveCode, *typeOfLeave;
-    NSString* noOfDaysCode, *noOfDays;
+    NSString *noOfDays;
     NSString* staffRemarks;
     NSString* submittedBy, *submittedByCode;
     
@@ -134,7 +134,7 @@
 }
 
 - (void) prepareUI {
-    typeOfLeaveCode = submittedByCode = noOfDaysCode = @"";
+    typeOfLeaveCode = submittedByCode = @"";
     _staffName.text = [DataManager sharedManager].user.username;
     _listOfValsForApp = @[@"Start Date", @"End Date", @"Type Of Leave", @"No. of Days", @"Staff Remarks", @"Submitted By"];
     _page = @(1);
@@ -233,7 +233,7 @@
     [params addEntriesFromDictionary:@{@"dtEndDate":[DIHelpers convertDateToMySQLFormatWithTime:endDate]}];
     [params addEntriesFromDictionary:@{@"dtStartDate":[DIHelpers convertDateToMySQLFormatWithTime:startDate]}];
     [params addEntriesFromDictionary:@{@"dtDateSubmitted":[DIHelpers todayWithTime]}];
-    [params addEntriesFromDictionary:@{@"strLeaveLength":noOfDaysCode}];
+    [params addEntriesFromDictionary:@{@"decLeaveLength":noOfDays}];
     [params addEntriesFromDictionary:@{@"strStaffRemarks":staffRemarks}];
     
     return [params copy];
@@ -353,7 +353,6 @@
             break;
         case 3:
             noOfDays = @"";
-            noOfDaysCode = @"";
             break;
         case 4:
             staffRemarks = @"";
@@ -407,6 +406,8 @@
              cell.floatingTextField.text = typeOfLeave;
         } else if (indexPath.row == 3)  { // No Of Days
             cell.floatingTextField.text = noOfDays;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.floatingTextField.userInteractionEnabled = YES;
         } else if (indexPath.row == 4)  { // Staff Remarks
             cell.accessoryType = UITableViewCellAccessoryNone;
              cell.floatingTextField.userInteractionEnabled = YES;
@@ -439,10 +440,6 @@
             titleOfList = @"Leave Type";
             nameOfField = @"Leave Type";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:LEAVE_TYPE_GET_URL];
-        } else if (selectedRow == 3) {
-            titleOfList = @"No. Of Days";
-            nameOfField = @"No. Of Days";
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:LEAVE_NUMBER_OF_DAYS_URL];
         }
     } else {
         
@@ -482,7 +479,12 @@
     if (textField.text.length == 0) {
         return;
     }
-    staffRemarks = textField.text;
+    
+    if (textField.tag == 3) {
+        noOfDays = textField.text;
+    } else {
+        staffRemarks = textField.text;
+    }
     
     if ([textField.superview.superview isKindOfClass:[UITableViewCell class]])
     {
@@ -510,10 +512,8 @@
     if ([name isEqualToString:@"Leave Type"]) {
         typeOfLeaveCode = model.codeValue;
         typeOfLeave = model.descriptionValue;
-    } else {
-        noOfDaysCode = model.codeValue;
-        noOfDays = model.descriptionValue;
-    }
+    } 
+    
     [self.tableView reloadData];
 }
 

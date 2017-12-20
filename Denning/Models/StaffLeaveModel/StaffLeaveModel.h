@@ -24,7 +24,7 @@
 @property (strong, nonatomic) NSString* dtDateUpdated;
 @property (strong, nonatomic) NSString* dtEndDate;
 @property (strong, nonatomic) NSString* dtStartDate;
-@property (strong, nonatomic) CodeDescription* strLeaveLength;
+@property (strong, nonatomic) NSString* decLeaveLength;
 @property (strong, nonatomic) NSString* strLogBalancedLeave;
 @property (strong, nonatomic) NSString* strLogEntitlement;
 @property (strong, nonatomic) NSString* strLogUsedToDate;

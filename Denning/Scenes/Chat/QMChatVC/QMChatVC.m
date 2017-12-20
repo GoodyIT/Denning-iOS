@@ -322,7 +322,11 @@ QMUsersServiceDelegate
     // load messages from cache if needed and from REST
     [self refreshMessages];
     
-    self.inputToolbar.audioRecordingEnabled = YES;
+    if (![DataManager sharedManager].isExpire) {
+        self.inputToolbar.audioRecordingEnabled = YES;
+    } else {
+        self.inputToolbar.audioRecordingEnabled = NO;
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(navigationBarHeightChanged)
@@ -531,17 +535,21 @@ QMUsersServiceDelegate
 
 - (BOOL)messageSendingAllowed {
     
-    if (self.chatDialog.type == QBChatDialogTypePrivate) {
-        
-        if (![QMCore.instance.contactManager isFriendWithUserID:[self.chatDialog opponentID]]) {
-            
-//            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_SEND_MESSAGES", nil)
-//                            actionSuccess:NO
-//                         inViewController:self];
-            return YES;
-        }
-    }
+//    if (self.chatDialog.type == QBChatDialogTypePrivate) {
+//
+//        if (![QMCore.instance.contactManager isFriendWithUserID:[self.chatDialog opponentID]]) {
+//
+////            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_SEND_MESSAGES", nil)
+////                            actionSuccess:NO
+////                         inViewController:self];
+//            return YES;
+//        }
+//    }
     
+    if ([DataManager sharedManager].isExpire) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) actionSuccess:NO  inViewController:self];
+        return NO;
+    }
     
     return [self.deferredQueueManager shouldSendMessagesInDialogWithID:self.chatDialog.ID];
 }
@@ -750,6 +758,7 @@ QMUsersServiceDelegate
         return;
     }
     
+    
     QBChatMessage *message = [QMMessagesHelper chatMessageWithText:text
                                                           senderID:senderId
                                                       chatDialogID:self.chatDialog.ID
@@ -770,15 +779,11 @@ QMUsersServiceDelegate
     [self.inputToolbar.contentView.textView resignFirstResponder];
     
     UIAlertController *alertController =
-    [UIAlertController alertControllerWithTitle:@"Denning Attach File"
+    [UIAlertController alertControllerWithTitle:@"Denning"
                                         message:nil
                                  preferredStyle:UIAlertControllerStyleActionSheet];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"File Folder" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString* keyword = @"";
-        if (_chatDialog.type == QBChatDialogTypeGroup) {
-            keyword = _chatDialog.name;
-        }
-        [self performSegueWithIdentifier:kOpenFileSegue sender:keyword];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Denning Files" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:kOpenFileSegue sender:_chatDialog.name];
     }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_TAKE_MEDIA", nil)

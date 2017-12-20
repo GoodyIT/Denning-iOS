@@ -45,7 +45,7 @@
         user = [UserModel allObjects].firstObject;
         if (!user) {
             [[RLMRealm defaultRealm] transactionWithBlock:^{
-                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @0, @"Public"]];
+                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @0, @"Public", @""]];
             }];
         }
     }
@@ -145,7 +145,6 @@
 }
 
 - (BOOL) isClient {
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return (BOOL)[defaults boolForKey:@"isClient"];
 }
@@ -154,5 +153,12 @@
     return user.email.length > 0;
 }
 
+- (BOOL) isPublicUser {
+    return user.userType.length > 0;
+}
+
+- (BOOL) isDenningUser {
+    return [user.email isEqualToString:@"jingpiow@hotmail.com"] || [user.email isEqualToString:@"tmho@hotmail.com"];
+}
 
 @end

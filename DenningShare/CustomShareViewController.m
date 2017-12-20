@@ -22,6 +22,7 @@
 #import "NSString+URLEncoding.h"
 #import "RequestObject.h"
 
+
 @interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource, UIDocumentInteractionControllerDelegate>
 {
     NSString* fileNo1, *contactKey, *fileKey;
@@ -39,13 +40,14 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet MLPAutoCompleteTextField *fileName;
 @property (weak, nonatomic) IBOutlet UITextView *remarks;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activity;
 @property (weak, nonatomic) IBOutlet UILabel *uploadToLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmented;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sendBtn;
 @property (weak, nonatomic) IBOutlet UILabel *uploadToValue;
+
+@property (strong, nonatomic) UIAlertController *uploadingIndicator;
 
 @property (strong, nonatomic) NSString* url;
 @property RequestObject *requestDataObject;
@@ -185,11 +187,19 @@ UIColor *QMSecondaryApplicationColor() {
         if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage]) {
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypeImage options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
                 [self getDataFromItem:(NSURL*)item];
-                self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:(NSString*)item ]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // When the task has completed.
+                     self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:(NSString*)item ]];
+                });
+               
                 fileType = [(NSString*)item pathExtension];
             }];
         } else if ([itemProvider hasItemConformingToTypeIdentifier:(NSString*)kUTTypePDF]){
-            self.imageView.image = [UIImage imageNamed:@"share_pdf"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // When the task has completed.
+                self.imageView.image = [UIImage imageNamed:@"share_pdf"];
+            });
+            
             [itemProvider loadItemForTypeIdentifier:(NSString*)kUTTypePDF options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
                 openedItem = (NSURL*)item;
                 [self getDataFromItem:(NSURL*)item];
@@ -199,14 +209,13 @@ UIColor *QMSecondaryApplicationColor() {
     }
     
     fileNo1 = @"Transit Folder";
-    _activity.hidesWhenStopped = YES;
-    _activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    _activity.backgroundColor = [UIColor grayColor];
-    
+
     self.sendBtn.enabled = YES;
     self.segmented.hidden = YES;
     NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
     userType = [defaults valueForKey:@"userType"];
+    
+    self.url = MATTER_STAFF_TRANSIT_FOLDER;
     
     if (userType == nil) {
         [self showAlertWithMessage:@"You cannot upload file. please login into Denning." actionSuccess:NO inViewController:self];
@@ -327,11 +336,7 @@ UIColor *QMSecondaryApplicationColor() {
     if ([userType isEqualToString:@""]) {
         [self showAlertWithMessage:@"You cannot upload file. please login" actionSuccess:NO inViewController:self];
         return;
-    } else if ([userType isEqualToString:@"denning"]) {
-        self.url = MATTER_STAFF_TRANSIT_FOLDER;
-    } else {
-        self.url = MATTER_CLIENT_FILEFOLDER;
-    }
+    } 
     
     if (self.segmented.selectedSegmentIndex == 2 && fileNo1.length == 0) {
         [self showAlertWithMessage:@"Please select the correct contact." actionSuccess:NO inViewController:self];
@@ -347,8 +352,6 @@ UIColor *QMSecondaryApplicationColor() {
     }
     
     [self.view endEditing:YES];
-    self.activity.hidden = NO;
-    [self.activity startAnimating];
     [self didSelectPost];
 }
 
@@ -401,6 +404,18 @@ UIColor *QMSecondaryApplicationColor() {
         return;
     }
     
+    self.uploadingIndicator = [UIAlertController
+                                          alertControllerWithTitle:@""
+                                          message:@"Uploading..."
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    [self.uploadingIndicator addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull __unused action) {
+        
+    }]];
+    
+    [self presentViewController:self.uploadingIndicator animated:YES completion:nil];
+
+  
     NSString* name = [NSString stringWithFormat:@"%@.%@", self.fileName.text, fileType];
     
     NSDictionary* params = @{@"fileNo1":fileNo1,
@@ -458,10 +473,11 @@ didReceiveData:(NSData *)data{
               task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error{
     NSLog(@"%s",__func__);
-    [self.activity stopAnimating];
+
     isLoading = NO;
     if (!error) {
-        [self showAlertWithMessage:@"Successfully uploaded." actionSuccess:YES inViewController:self];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [self showAlertWithMessage:@"Success" actionSuccess:YES inViewController:self];
     }
 }
 
@@ -488,9 +504,8 @@ didCompleteWithError:(NSError *)error{
     self.requestDataObject = [RequestObject new];
     [self.requestDataObject setIncompleteString:[string urlEncodeUsingEncoding:NSUTF8StringEncoding]];
     [self.requestDataObject setCompletionBlock:handler];
-    //Postpone the search request
-//    NSString *urlString = [NSString stringWithFormat:@"https://www.googleapis.com/customsearch/v1?key=%@&q=%@&cx=%@",apiKey,self.requestDataObject.incompleteString, engineID];
     NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/v1/table/cboDocumentName?search=%@", [defaults valueForKey:@"api"], string];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *downloadURL = [NSURL URLWithString:urlString];
     GetJSONOperation *operation = [[GetJSONOperation alloc] initWithDownloadURL:downloadURL
                                                             withCompletionBlock:self.requestDataObject.completionBlock];

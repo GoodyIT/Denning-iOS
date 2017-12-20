@@ -204,7 +204,7 @@
 
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
 {
-    return _viewController.navigationController;
+    return _viewController;
 }
 
 - (void)documentInteractionController:(UIDocumentInteractionController *)controller willBeginSendingToApplication:(nullable NSString *)application

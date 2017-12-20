@@ -26,7 +26,7 @@
 @property (strong, nonatomic) NSMutableArray* favStaffContactsArray;
 @property (strong, nonatomic) NSMutableArray* clientContactsArray;
 @property (strong, nonatomic) NSMutableArray* staffContactsArray;
-
+@property (strong, nonatomic) NSMutableArray* denningContactArray;
 @property (assign, nonatomic) BOOL userAgreementAccepted;
 
 @property (strong, nonatomic) NSString* tempServerURL;
@@ -34,6 +34,9 @@
 @property (strong, nonatomic) NSString* isFirstLoading;
 
 @property (strong, nonatomic) NSString* badgeValue;
+
+@property (strong, nonatomic) NSString* dtExpire;
+@property (assign, nonatomic) BOOL isExpire;
 
 + (DataManager *)sharedManager;
 
@@ -55,5 +58,8 @@
 
 - (BOOL) isLoggedIn;
 
+- (BOOL) isPublicUser;
+
+- (BOOL) isDenningUser;
 
 @end

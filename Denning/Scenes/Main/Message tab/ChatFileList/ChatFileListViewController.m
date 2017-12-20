@@ -198,9 +198,9 @@ UITableViewDelegate, UITableViewDataSource>
     NSMutableArray* temp = [NSMutableArray new];
     for (SearchResultModel* model in _searchResultArray) {
         NSUInteger cellType = [DIHelpers detectItemType:model.form];
-        if (cellType == DIRelatedMatterCell && selectedIndex == 1) { // Contact
+        if (cellType == DIContactCell && selectedIndex == 1) { // Contact
             [temp addObject:model];
-        } else if (cellType == DIContactCell && selectedIndex == 0) { // Contact
+        } else if (cellType == DIRelatedMatterCell && selectedIndex == 0) { // File
             [temp addObject:model];
         }
     }

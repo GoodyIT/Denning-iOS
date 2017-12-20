@@ -39,13 +39,16 @@ static const NSUInteger kQMPasswordMinChar = 8;
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     self.navigationItem.leftItemsSupplementBackButton = YES;
     
     // subscribing for delegate
     self.passwordOldField.delegate = self;
     self.passwordNewField.delegate = self;
     self.passwordConfirmField.delegate = self;
+}
+
+- (IBAction)dismissScreen:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -56,9 +59,40 @@ static const NSUInteger kQMPasswordMinChar = 8;
 
 //MARK: - Actions
 
+
+- (void)changePassword:(id)sender {
+    [self.view endEditing:YES];
+    
+    NSString *password1 = self.passwordNewField.text;
+    NSString *password2 = self.passwordConfirmField.text;
+    
+    if (password1.length == 0 || password2.length == 0) {
+        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"QM_STR_FILL_IN_ALL_THE_FIELDS", nil)];
+        return;
+    } else if (![password1 isEqualToString:password2]){
+        [SVProgressHUD showErrorWithStatus:@"Password should be matching"];
+        return;
+    }
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    @weakify(self);
+    
+    [[QMNetworkManager sharedManager] changePasswordAfterLoginWithEmail:[DataManager sharedManager].user.email password:password1 withCompletion:^(BOOL success, NSString * _Nonnull error, NSDictionary * _Nonnull response) {
+        @strongify(self)
+        [SVProgressHUD dismiss];
+        if (success){
+            [[DataManager sharedManager] setUserInfoFromChangePassword:response];
+            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+        }
+        
+        [SVProgressHUD showErrorWithStatus:error];
+    }];
+}
+
 - (IBAction)changeButtonPressed:(UIBarButtonItem *)__unused sender {
     
-    if (![self.passwordOldField.text isEqualToString:QMCore.instance.currentProfile.userData.password]) {
+    if (![self.passwordOldField.text isEqualToString:[DataManager sharedManager].user.password]) {
         
         [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:NSLocalizedString(@"QM_STR_WRONG_OLD_PASSWORD", nil) duration:kQMDefaultNotificationDismissTime];
         
@@ -71,27 +105,22 @@ static const NSUInteger kQMPasswordMinChar = 8;
         
         return;
     }
-    
-    QBUpdateUserParameters *params = [QBUpdateUserParameters new];
-    params.oldPassword = self.passwordOldField.text;
-    params.password = self.passwordNewField.text;
-    
+
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     @weakify(self);
-    [[QMTasks taskUpdateCurrentUser:params] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
-        
-        @strongify(self);
+    [[QMNetworkManager sharedManager] changePasswordAfterLoginWithEmail:[DataManager sharedManager].user.email password:self.passwordNewField.text withCompletion:^(BOOL success, NSString * _Nonnull error, NSDictionary * _Nonnull response) {
+        @strongify(self)
         [navigationController dismissNotificationPanel];
-        
-        if (!task.isFaulted) {
-            
-            [self.navigationController popViewControllerAnimated:YES];
+        if (success){
+            [[DataManager sharedManager] setUserInfoFromChangePassword:response];
+            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+        } else {
+             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error duration:kQMDefaultNotificationDismissTime];
         }
-        
-        return nil;
     }];
 }
 
@@ -114,8 +143,7 @@ static const NSUInteger kQMPasswordMinChar = 8;
 
 - (void)updateChangeButtonState {
     
-    if (self.passwordOldField.text.length < kQMPasswordMinChar
-        || self.passwordNewField.text.length < kQMPasswordMinChar
+    if (self.passwordNewField.text.length < kQMPasswordMinChar
         || self.passwordConfirmField.text.length < kQMPasswordMinChar) {
         
         self.navigationItem.rightBarButtonItem.enabled = NO;

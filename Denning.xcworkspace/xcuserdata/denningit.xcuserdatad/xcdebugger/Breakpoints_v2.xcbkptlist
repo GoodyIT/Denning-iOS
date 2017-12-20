@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
-            timestampString = "535143100.826423"
+            timestampString = "535476104.664532"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1273"
-            endingLineNumber = "1273"
+            startingLineNumber = "1255"
+            endingLineNumber = "1255"
             landmarkName = "-getDashboardItemModelWithURL:withPage:withFilter:withCompletion:"
             landmarkType = "7">
             <Locations>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Dashboard/Details/LeavePendingApproval/LeavePendingApproval.m"
-            timestampString = "534988917.009736"
+            timestampString = "535476104.664914"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "417"
-            endingLineNumber = "417"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
             landmarkName = "-textFieldShouldBeginEditing:"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,28 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Dashboard/Details/StaffLeave/StaffLeaveViewController.m"
-            timestampString = "534963433.791221"
+            timestampString = "535309935.213025"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
             endingLineNumber = "115"
             landmarkName = "-loadTableData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Denning/Scenes/Main/Dashboard/Details/LeavePendingApproval/LeavePendingApproval.m"
-            timestampString = "534988917.009914"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "-keyboardWillShow:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -250,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
-            timestampString = "535143100.827134"
+            timestampString = "535476104.665347"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1051"
-            endingLineNumber = "1051"
+            startingLineNumber = "1033"
+            endingLineNumber = "1033"
             landmarkName = "-saveBillorQuotationWithParams:inURL:WithCompletion:"
             landmarkType = "7">
             <Locations>
@@ -298,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
-            timestampString = "535143100.827346"
+            timestampString = "535476104.665595"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
@@ -314,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/MainTabBarController/MainTabBarController.m"
-            timestampString = "534671148.573505"
+            timestampString = "535476104.665813"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
             landmarkName = "-chatService:didAddMessagesToMemoryStorage:forDialogID:"
             landmarkType = "7">
          </BreakpointContent>
@@ -481,38 +465,6 @@
             endingLineNumber = "357"
             landmarkName = "-viewTaxInvoice"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[AddBillViewController viewTaxInvoice]"
-                  moduleName = "Denning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Main/AddContact/Add%20Bill/AddBillViewController.m"
-                  timestampString = "535143101.143159"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "357"
-                  endingLineNumber = "357"
-                  offsetFromSymbolStart = "639">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__39-[AddBillViewController viewTaxInvoice]_block_invoke"
-                  moduleName = "Denning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Main/AddContact/Add%20Bill/AddBillViewController.m"
-                  timestampString = "535143101.148878"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "357"
-                  endingLineNumber = "357"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -618,12 +570,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.833304"
+            timestampString = "535476104.666489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "573"
-            endingLineNumber = "573"
-            landmarkName = "-messagesInputToolbarAudioRecordingShouldStart:"
+            startingLineNumber = "581"
+            endingLineNumber = "581"
+            landmarkName = "-callsAllowed"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -698,12 +650,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.83371"
+            timestampString = "535476104.666801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "660"
-            endingLineNumber = "660"
-            landmarkName = "-startAudioRecording"
+            startingLineNumber = "668"
+            endingLineNumber = "668"
+            landmarkName = "-inputPanelAudioRecordingDuration:"
             landmarkType = "7">
             <Locations>
                <Location
@@ -906,12 +858,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.834265"
+            timestampString = "535476104.667411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "744"
-            endingLineNumber = "744"
-            landmarkName = "-didPressSendButton:withMessageText:senderId:senderDisplayName:date:"
+            startingLineNumber = "752"
+            endingLineNumber = "752"
+            landmarkName = "-didPressSendButton:withTextAttachments:senderId:senderDisplayName:date:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -922,12 +874,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.834403"
+            timestampString = "535476104.667525"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "534"
-            endingLineNumber = "534"
-            landmarkName = "-messageSendingAllowed"
+            startingLineNumber = "553"
+            endingLineNumber = "553"
+            landmarkName = "-connectionExists"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -970,13 +922,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.834623"
+            timestampString = "535476104.667738"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "917"
-            endingLineNumber = "917"
-            landmarkName = "-attributedStringForItem:"
-            landmarkType = "7">
+            startingLineNumber = "922"
+            endingLineNumber = "922"
+            landmarkName = "QMChatVC"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1002,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.834805"
+            timestampString = "535476104.66793"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "948"
-            endingLineNumber = "948"
+            startingLineNumber = "953"
+            endingLineNumber = "953"
             landmarkName = "-attributedStringForItem:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1018,13 +970,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.834954"
+            timestampString = "535476104.66806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
-            landmarkName = "-deferredQueueManager:didAddMessageLocally:"
-            landmarkType = "7">
+            startingLineNumber = "406"
+            endingLineNumber = "406"
+            landmarkName = "QMChatVC"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1386,7 +1338,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/QMTasks/QMTasks.m"
-            timestampString = "535080692.663531"
+            timestampString = "535476104.668969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "242"
@@ -1498,11 +1450,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Groups/GroupChatsViewController.m"
-            timestampString = "535143100.837017"
+            timestampString = "535476104.669307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1562,11 +1514,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Groups/GroupChatsViewController.m"
-            timestampString = "535143100.83718"
+            timestampString = "535476104.669447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "-tableView:heightForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1578,11 +1530,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Groups/GroupChatsViewController.m"
-            timestampString = "535143100.837248"
+            timestampString = "535476104.669554"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1626,7 +1578,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Models/StaffLeaveModel/StaffLeaveModel.m"
-            timestampString = "534691121.258335"
+            timestampString = "535476104.66979"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
@@ -1642,7 +1594,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Dashboard/Details/StaffLeave/StaffLeaveViewController.m"
-            timestampString = "534963433.865525"
+            timestampString = "535309935.217553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "193"
@@ -1690,11 +1642,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DenningShare/CustomShareViewController.m"
-            timestampString = "535080692.66439"
+            timestampString = "535476104.669909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "509"
-            endingLineNumber = "509"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "-autoCompleteTextField:shouldConfigureCell:withAutoCompleteString:withAttributedString:forAutoCompleteObject:forRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1722,11 +1674,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DenningShare/CustomShareViewController.m"
-            timestampString = "535080692.664515"
+            timestampString = "535476104.670548"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "-prepareUI"
             landmarkType = "7">
          </BreakpointContent>
@@ -1738,11 +1690,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DenningShare/CustomShareViewController.m"
-            timestampString = "535080692.664589"
+            timestampString = "535476104.670919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "-keyboardWasShown:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1754,28 +1706,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DenningShare/CustomShareViewController.m"
-            timestampString = "535080692.664665"
+            timestampString = "535476104.671283"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "-prepareUI"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DenningShare/CustomShareViewController.m"
-            timestampString = "535080692.664741"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "461"
-            endingLineNumber = "461"
-            landmarkName = "-URLSession:task:didCompleteWithError:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1802,11 +1738,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.837617"
+            timestampString = "535476104.671681"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "880"
-            endingLineNumber = "880"
+            startingLineNumber = "885"
+            endingLineNumber = "885"
             landmarkName = "-viewClassForItem:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1898,12 +1834,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.837822"
+            timestampString = "535476104.672019"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "476"
-            endingLineNumber = "476"
-            landmarkName = "-readMessage:"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
+            landmarkName = "-refreshMessages"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1914,11 +1850,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.837961"
+            timestampString = "535476104.672182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1448"
-            endingLineNumber = "1448"
+            startingLineNumber = "1453"
+            endingLineNumber = "1453"
             landmarkName = "-collectionView:configureCell:forIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1962,7 +1898,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/QMServices/QMChatService/QMChatService/QMChatService.m"
-            timestampString = "534806643.126566"
+            timestampString = "535400437.466543"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "656"
@@ -2010,11 +1946,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.838229"
+            timestampString = "535476104.672541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "467"
-            endingLineNumber = "467"
+            startingLineNumber = "471"
+            endingLineNumber = "471"
             landmarkName = "-refreshMessages"
             landmarkType = "7">
          </BreakpointContent>
@@ -2026,11 +1962,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.838358"
+            timestampString = "535476104.67267"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1444"
-            endingLineNumber = "1444"
+            startingLineNumber = "1449"
+            endingLineNumber = "1449"
             landmarkName = "-collectionView:configureCell:forIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2042,11 +1978,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.838461"
+            timestampString = "535476104.672769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1444"
-            endingLineNumber = "1444"
+            startingLineNumber = "1449"
+            endingLineNumber = "1449"
             landmarkName = "-collectionView:configureCell:forIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2122,11 +2058,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.843216"
+            timestampString = "535476104.67307"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1439"
-            endingLineNumber = "1439"
+            startingLineNumber = "1444"
+            endingLineNumber = "1444"
             landmarkName = "-collectionView:configureCell:forIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2138,7 +2074,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/DIDocumentManager/DIDocumentManager.m"
-            timestampString = "535143100.843636"
+            timestampString = "535476104.673311"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "174"
@@ -2170,7 +2106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.76689"
+            timestampString = "535476104.673505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "92"
@@ -2186,7 +2122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.766972"
+            timestampString = "535476104.673652"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
@@ -2202,11 +2138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767054"
+            timestampString = "535476104.673724"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "706"
-            endingLineNumber = "706"
+            startingLineNumber = "707"
+            endingLineNumber = "707"
             landmarkName = "-chatAttachmentService:didChangeAttachmentStatus:forMessage:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2218,7 +2154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767119"
+            timestampString = "535476104.673897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "103"
@@ -2234,7 +2170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767183"
+            timestampString = "535476104.673976"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "127"
@@ -2250,7 +2186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767245"
+            timestampString = "535476104.674072"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "216"
@@ -2266,7 +2202,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767311"
+            timestampString = "535476104.674142"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
@@ -2282,7 +2218,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767377"
+            timestampString = "535476104.674234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "201"
@@ -2298,7 +2234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767443"
+            timestampString = "535476104.67431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "206"
@@ -2314,7 +2250,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767506"
+            timestampString = "535476104.674394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "210"
@@ -2346,23 +2282,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.76763"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "648"
-            endingLineNumber = "648"
-            landmarkName = "-didTapContainer:inView:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767701"
+            timestampString = "535476104.674526"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "443"
@@ -2378,7 +2298,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767763"
+            timestampString = "535476104.674622"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "194"
@@ -2394,7 +2314,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767826"
+            timestampString = "535476104.674735"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
@@ -2410,7 +2330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
-            timestampString = "535078147.767891"
+            timestampString = "535476104.67484"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "131"
@@ -2506,11 +2426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DenningShare/CustomShareViewController.m"
-            timestampString = "535080692.667046"
+            timestampString = "535476104.675164"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "-prepareUI"
             landmarkType = "7">
             <Locations>
@@ -2545,22 +2465,6 @@
                   offsetFromSymbolStart = "593">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DenningShare/ContactList/ContactListViewController.m"
-            timestampString = "534988917.021599"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "-getList"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2657,38 +2561,6 @@
             endingLineNumber = "113"
             landmarkName = "-didTapSend:"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[FileUpload didTapSend:]"
-                  moduleName = "Denning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Search/FileUpload/FileUpload.m"
-                  timestampString = "535143101.176419"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "113"
-                  endingLineNumber = "113"
-                  offsetFromSymbolStart = "2751">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__25-[FileUpload didTapSend:]_block_invoke"
-                  moduleName = "Denning"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Search/FileUpload/FileUpload.m"
-                  timestampString = "535143101.179183"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "114"
-                  endingLineNumber = "114"
-                  offsetFromSymbolStart = "78">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2746,7 +2618,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/QMTasks/QMTasks.m"
-            timestampString = "535080692.667669"
+            timestampString = "535476104.675949"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
@@ -2761,24 +2633,8 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
-            timestampString = "535143100.846011"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "623"
-            endingLineNumber = "623"
-            landmarkName = "-getChatContacts"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Denning Contact View/View Controllers/QMContactsViewController/DenningContactViewController.m"
-            timestampString = "535143100.846658"
+            timestampString = "535476104.676058"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
@@ -2794,7 +2650,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Denning Contact View/View Controllers/QMContactsViewController/DenningContactViewController.m"
-            timestampString = "535143100.847032"
+            timestampString = "535476104.676144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "65"
@@ -2810,7 +2666,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Favorite View/FavContactViewController.m"
-            timestampString = "535143100.847323"
+            timestampString = "535476104.676271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "557"
@@ -2826,7 +2682,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Favorite View/FavContactViewController.m"
-            timestampString = "535143100.847608"
+            timestampString = "535476104.676389"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "553"
@@ -2874,7 +2730,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Denning Contact View/View Controllers/QMContactsViewController/DenningContactViewController.m"
-            timestampString = "535143100.8478"
+            timestampString = "535476104.676474"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "506"
@@ -2922,7 +2778,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Denning Contact View/View Controllers/QMContactsViewController/DenningContactViewController.m"
-            timestampString = "535143100.847951"
+            timestampString = "535476104.676592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "510"
@@ -2938,11 +2794,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
-            timestampString = "535143100.848267"
+            timestampString = "535476104.676698"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "-tableView:commitEditingStyle:forRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2954,11 +2810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
-            timestampString = "535143100.848377"
+            timestampString = "535476104.676808"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "586"
-            endingLineNumber = "586"
+            startingLineNumber = "603"
+            endingLineNumber = "603"
             landmarkName = "-dialogsDataSource:commitDeleteDialog:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2970,7 +2826,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/QMContactManager/QMContactManager.m"
-            timestampString = "535080692.668563"
+            timestampString = "535452881.693338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "193"
@@ -2986,7 +2842,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/QMContactManager/QMContactManager.m"
-            timestampString = "535080692.668638"
+            timestampString = "535452881.693578"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "148"
@@ -3002,7 +2858,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMContactManager/QMContactManager.m"
-                  timestampString = "535059630.335607"
+                  timestampString = "535442455.667148"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "148"
@@ -3017,7 +2873,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMContactManager/QMContactManager.m"
-                  timestampString = "535059630.337743"
+                  timestampString = "535442455.672164"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "148"
@@ -3034,7 +2890,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/QMContactManager/QMContactManager.m"
-            timestampString = "535080692.66871"
+            timestampString = "535452881.693744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "201"
@@ -3050,11 +2906,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
-            timestampString = "535143100.848653"
+            timestampString = "535476104.677026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "135"
+            endingLineNumber = "135"
             landmarkName = "-filterDialogInArray:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3066,11 +2922,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
-            timestampString = "535143100.848785"
+            timestampString = "535476104.677154"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "-updateDataSourceByScope:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3081,24 +2937,8 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
-            timestampString = "535143100.848907"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-filterDialogInArray:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Favorite View/FavContactViewController.m"
-            timestampString = "535143100.849033"
+            timestampString = "535476104.677312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "135"
@@ -3114,11 +2954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/Groups/GroupChatsViewController.m"
-            timestampString = "535143100.849179"
+            timestampString = "535476104.677397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "655"
-            endingLineNumber = "655"
+            startingLineNumber = "665"
+            endingLineNumber = "665"
             landmarkName = "-dialogsDataSource:commitDeleteDialog:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3130,11 +2970,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.849268"
+            timestampString = "535476104.677515"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1423"
-            endingLineNumber = "1423"
+            startingLineNumber = "1428"
+            endingLineNumber = "1428"
             landmarkName = "-collectionView:configureCell:forIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3146,11 +2986,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.849462"
+            timestampString = "535476104.677609"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1089"
-            endingLineNumber = "1089"
+            startingLineNumber = "1094"
+            endingLineNumber = "1094"
             landmarkName = "-collectionView:dynamicSizeAtIndexPath:maxWidth:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3162,7 +3002,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/DIDocumentManager/DIDocumentManager.m"
-            timestampString = "535143100.849624"
+            timestampString = "535476104.677775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "184"
@@ -3178,7 +3018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/DIDocumentManager/DIDocumentManager.m"
-            timestampString = "535143100.849758"
+            timestampString = "535476104.677864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "181"
@@ -3194,11 +3034,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/FileSaveView/FileSaveViewController.m"
-            timestampString = "535080692.669451"
+            timestampString = "535476104.677983"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3210,12 +3050,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.850011"
+            timestampString = "535476104.67807"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2149"
-            endingLineNumber = "2149"
-            landmarkName = "-chatCell:didTapOnTextCheckingResult:"
+            startingLineNumber = "2154"
+            endingLineNumber = "2154"
+            landmarkName = "-chatCellDidTapAvatar:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3226,11 +3066,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/FileSaveView/FileSaveViewController.m"
-            timestampString = "535080692.670117"
+            timestampString = "535476104.678223"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "-prepareUI"
             landmarkType = "7">
          </BreakpointContent>
@@ -3242,7 +3082,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/DIDocumentManager/DIDocumentManager.m"
-            timestampString = "535143100.850222"
+            timestampString = "535476104.678319"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
@@ -3258,7 +3098,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Core/DIDocumentManager/DIDocumentManager.m"
-            timestampString = "535143100.850406"
+            timestampString = "535476104.678439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "212"
@@ -3274,11 +3114,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.850512"
+            timestampString = "535476104.678502"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1571"
-            endingLineNumber = "1571"
+            startingLineNumber = "1576"
+            endingLineNumber = "1576"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3290,7 +3130,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/ChatFileList/ChatFileListViewController.m"
-            timestampString = "535143100.850684"
+            timestampString = "535476104.678633"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "199"
@@ -3338,11 +3178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
-            timestampString = "535143100.850848"
+            timestampString = "535476104.678768"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1576"
-            endingLineNumber = "1576"
+            startingLineNumber = "1581"
+            endingLineNumber = "1581"
             landmarkName = "-prepareForSegue:sender:"
             landmarkType = "7">
          </BreakpointContent>
@@ -3386,7 +3226,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/ChatFileList/ChatFileListViewController.m"
-            timestampString = "535143100.851137"
+            timestampString = "535476104.679009"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "305"
@@ -3402,12 +3242,620 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Message tab/ChatFileList/ChatFileListViewController.m"
-            timestampString = "535143100.851249"
+            timestampString = "535476104.679152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "316"
             endingLineNumber = "316"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/HomeViewController/EventViewController/EventViewController.m"
+            timestampString = "535476104.679288"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
+            landmarkName = "-scrollViewDidScroll:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Chat/QMChatVC/QMLocationViewController.m"
+            timestampString = "535476104.679538"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "-_openGoogleMap"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
+            timestampString = "535476104.679669"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2076"
+            endingLineNumber = "2076"
+            landmarkName = "-chatContactRequestDidAccept:sender:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
+            timestampString = "535476104.679766"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "-filterDialogInArray:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Message tab/Recent View/QMDialogsViewController.m"
+            timestampString = "535476104.679897"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "-filterDialogInArray:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Dashboard/Details/LeavePendingApproval/LeavePendingApproval.m"
+            timestampString = "535476104.680054"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "-reject"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/QMTasks/QMTasks.m"
+            timestampString = "535476104.680181"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "+taskFetchAllData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/QMServices/QMChatService/QMChatService/QMChatService.m"
+            timestampString = "535400437.473369"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "651"
+            endingLineNumber = "651"
+            landmarkName = "-allDialogsWithPageLimit:extendedRequest:iterationBlock:completion:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Message tab/Recent View/Data providers/QMDialogsSearchDataProvider/QMDialogsSearchDataProvider.m"
+            timestampString = "535325517.382342"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "QMDialogsSearchDataProvider"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Dashboard/Details/LeavePendingApproval/LeavePendingApproval.m"
+            timestampString = "535476104.680408"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
+            landmarkName = "-tableView:numberOfRowsInSection:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Dashboard/Details/LeavePendingApproval/LeavePendingApproval.m"
+            timestampString = "535476104.68055"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Dashboard/Details/LeavePendingApproval/LeavePendingApproval.m"
+            timestampString = "535476104.680669"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "-configureActionCellWithApprovalTitle:approvalState:rejectTitle:rejectState:inTableView:inIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Dashboard/Details/LeavePendingApproval/LeavePendingApproval.m"
+            timestampString = "535476104.680762"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "430"
+            endingLineNumber = "430"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Message tab/FileSaveView/FileSaveViewController.m"
+            timestampString = "535476104.680816"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "-didSelectPost"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Tools/QMMediaController/QMMediaController.m"
+            timestampString = "535476104.680883"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "649"
+            endingLineNumber = "649"
+            landmarkName = "-didTapContainer:inView:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Chat/QMChatVC/QMChatVC.m"
+            timestampString = "535476104.680951"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1568"
+            endingLineNumber = "1568"
+            landmarkName = "-prepareForSegue:sender:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Settings/QMUpdateUserViewController/QMUpdateUserViewController.m"
+            timestampString = "535476104.681045"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "unknown"
+            landmarkType = "0">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QMUpdateUserViewController textField]"
+                  moduleName = "Denning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Settings/QMUpdateUserViewController/QMUpdateUserViewController.m"
+                  timestampString = "535408696.87365"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QMUpdateUserViewController setTextField:]"
+                  moduleName = "Denning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Settings/QMUpdateUserViewController/QMUpdateUserViewController.m"
+                  timestampString = "535408696.877207"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "49">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Settings/QMSettingsViewController/QMSettingsViewController.m"
+            timestampString = "535476104.681254"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "-pushNotificationSwitchPressed:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Settings/QMSettingsViewController/QMSettingsViewController.m"
+            timestampString = "535476104.681369"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "-pushNotificationSwitchPressed:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Settings/QMSettingsViewController/QMSettingsViewController.m"
+            timestampString = "535476104.681454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "-pushNotificationSwitchPressed:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Settings/QMChangePasswordViewController/QMChangePasswordViewController.m"
+            timestampString = "535476104.681566"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "-updateChangeButtonState"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Settings/QMChangePasswordViewController/QMChangePasswordViewController.m"
+            timestampString = "535476104.681636"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-changeButtonPressed:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Core/QMContactManager/QMContactManager.m"
+            timestampString = "535452881.710803"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "-friends"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Core/QMContactManager/QMContactManager.m"
+            timestampString = "535452881.710883"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-friends"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QMContactManager friends]"
+                  moduleName = "Denning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMContactManager/QMContactManager.m"
+                  timestampString = "535447579.652108"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "159"
+                  endingLineNumber = "159"
+                  offsetFromSymbolStart = "1680">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QMContactManager friends]"
+                  moduleName = "Denning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMContactManager/QMContactManager.m"
+                  timestampString = "535447579.654571"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "159"
+                  endingLineNumber = "159"
+                  offsetFromSymbolStart = "1688">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
+            timestampString = "535476104.681837"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "611"
+            endingLineNumber = "611"
+            landmarkName = "-getChatContacts"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
+            timestampString = "535476104.681931"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "589"
+            endingLineNumber = "589"
+            landmarkName = "-buildContactsFrom:for:withFriends:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QMNetworkManager buildContactsFrom:for:withFriends:]"
+                  moduleName = "Denning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
+                  timestampString = "535453354.982373"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "590"
+                  endingLineNumber = "590"
+                  offsetFromSymbolStart = "1878">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[QMNetworkManager buildContactsFrom:for:withFriends:]"
+                  moduleName = "Denning"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
+                  timestampString = "535453354.987398"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "590"
+                  endingLineNumber = "590"
+                  offsetFromSymbolStart = "1907">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
+            timestampString = "535476104.682004"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "582"
+            endingLineNumber = "582"
+            landmarkName = "-buildContactsFrom:for:withFriends:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/QMServices/QMUsersService/QMUsersService/QMUsersMemoryStorage/QMUsersMemoryStorage.m"
+            timestampString = "535476104.682107"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "-usersWithEmails:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/QMServices/QMUsersService/QMUsersService/QMUsersMemoryStorage/QMUsersMemoryStorage.m"
+            timestampString = "535476104.682239"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "-usersForKeypath:withValues:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Core/QMNetworkManager/QMNetworkManager.m"
+            timestampString = "535476104.68231"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "587"
+            endingLineNumber = "587"
+            landmarkName = "-buildContactsFrom:for:withFriends:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Message tab/Denning Contact View/View Controllers/QMContactsViewController/DenningContactViewController.m"
+            timestampString = "535476104.682379"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "-updateDataSourceByScope:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DenningShare/ContactList/ContactListViewController.m"
+            timestampString = "535476104.682453"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "-getList"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

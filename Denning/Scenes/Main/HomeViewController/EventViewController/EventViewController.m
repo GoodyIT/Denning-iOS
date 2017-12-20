@@ -20,10 +20,12 @@
     NSString* curYear, *curMonth;
     __block BOOL isLoading, isAppending;
     NSString* startDate, *endDate;
+    
+    CGFloat lastContentOffset;
 }
 @property (weak, nonatomic) IBOutlet UIView *calendarView;
 
-@property (strong  , nonatomic) FSCalendar *calendar;
+@property (weak, nonatomic) FSCalendar *calendar;
 @property (strong, nonatomic) NSMutableArray<NSString *> *datesWithEvent;
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter2;
@@ -62,12 +64,17 @@
     // Do any additional setup after loading the view.
 
     [self prepareUI];
-    [self configureCalendar];
+   
     [self setupTopBottomFilters];
     [self getMonthlySummaryWithCompletion:nil];
     [self registerNibs];
-//    [self configureSearch];
     [self presetDateRange];
+}
+
+- (void) loadView
+{
+    [super loadView];
+     [self configureCalendar];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -101,14 +108,18 @@
 
 - (void) configureCalendar
 {
-    _calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 0, self.calendarView.frame.size.width, self.calendarView.frame.size.height)];
-    _calendar.dataSource = self;
-    _calendar.delegate = self;
     //  calendar.allowsMultipleSelection = YES;
-    _calendar.swipeToChooseGesture.enabled = YES;
-    _calendar.backgroundColor = [UIColor whiteColor];
-    _calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase|FSCalendarCaseOptionsWeekdayUsesSingleUpperCase;
-    [self.calendarView addSubview:_calendar];
+    FSCalendar* calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 0, _calendarView.frame.size.width-50, _calendarView.frame.size.height)];
+    calendar.dataSource = self;
+    calendar.delegate = self;
+    calendar.swipeToChooseGesture.enabled = YES;
+    calendar.backgroundColor = [UIColor whiteColor];
+    calendar.appearance.caseOptions = FSCalendarCaseOptionsHeaderUsesUpperCase|FSCalendarCaseOptionsWeekdayUsesSingleUpperCase;
+    calendar.appearance.titleWeekendColor = [UIColor babyRed];
+    calendar.appearance.headerTitleColor = [UIColor babyRed];
+    [_calendarView addSubview:calendar];
+    _calendar = calendar;
+    [_calendar layoutIfNeeded];
 }
 
 - (void) prepareUI
@@ -361,6 +372,12 @@
 
 #pragma mark - Calenar Datasource
 
+- (void)calendar:(FSCalendar *)calendar boundingRectWillChange:(CGRect)bounds animated:(BOOL)animated
+{
+    // Do other updates here
+    [self.view layoutIfNeeded];
+}
+
 - (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date
 {
     if ([self.datesWithEvent containsObject:[self.dateFormatter2 stringFromDate:date]]) {
@@ -409,13 +426,23 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    CGFloat offsetY = scrollView.contentOffset.y;
-    //    CGFloat contentHeight = scrollView.contentSize.height;
-    if (offsetY > 10) {
-        
-        [self.searchBar endEditing:YES];
-        _searchBar.showsCancelButton = NO;
+   lastContentOffset = scrollView.contentOffset.y;
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.searchBar endEditing:YES];
+    _searchBar.showsCancelButton = NO;
+    
+    if (lastContentOffset < scrollView.contentOffset.y) {
+        // up
+    } else if (lastContentOffset > scrollView.contentOffset.y) {
+        // moved to bottom
+       
+    } else {
+        // didn't move
     }
+    
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar

@@ -97,6 +97,7 @@
 
 - (void) prepareUI {
     fileNo1 = @"Transit Folder";
+    self.url = MATTER_STAFF_TRANSIT_FOLDER;
     _fileName.text = [[_fileURL.absoluteString lastPathComponent] stringByDeletingPathExtension];
     fileType = [_fileURL.absoluteString pathExtension];
     
@@ -236,7 +237,7 @@
                           };
  
  // Create the request.
-    NSString* saveURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString:_url];
+    NSString* saveURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString:self.url];
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);

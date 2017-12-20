@@ -10,6 +10,8 @@
 
 @interface ChatUserModel : NSObject
 
+@property (strong, nonatomic) NSString* avatar_url;
+
 @property (strong, nonatomic) NSString* email;
 
 @property (strong, nonatomic) NSString* firm;

@@ -8,7 +8,7 @@
 
 #import "LeavePendingApproval.h"
 #import "FloatingTextCell.h"
-#import "AddLastOneButtonCell.h"
+#import "TwoButtonsCell.h"
 #import "DateTimeViewController.h"
 #import "ListWithCodeTableViewController.h"
 #import "ListWithDescriptionViewController.h"
@@ -75,7 +75,7 @@ enum SECTIONS {
 }
 
 - (void) registerNibs {
-    [AddLastOneButtonCell registerForReuseInTableView:self.tableView];
+    [TwoButtonsCell registerForReuseInTableView:self.tableView];
     [FloatingTextCell registerForReuseInTableView:self.tableView];
     
     [self.tableView reloadData];
@@ -143,24 +143,37 @@ enum SECTIONS {
      ];
 }
 
-- (void) prepareUI {
-    startDate = [DIHelpers getDateInShortForm:_model.dtStartDate];
-    endDate = [DIHelpers getDateInShortForm:_model.dtEndDate];
-    typeOfLeaveApproved = typeOfLeave = _model.clsTypeOfLeave.descriptionValue;
-    typeOfLeaveApprovedCode = typeOfLeaveCode = _model.clsTypeOfLeave.codeValue;
-    staffRemarks = _model.strStaffRemarks;
-    noOfDays = _model.strLeaveLength.descriptionValue;
-    noOfDaysCode = _model.strLeaveLength.codeValue;
+- (BOOL) isApproved {
+    return [_model.clsLeaveStatus.descriptionValue.localizedLowercaseString isEqualToString:@"approved"];
+}
+
+- (BOOL) isRejected {
+    return [_model.clsLeaveStatus.descriptionValue.localizedLowercaseString isEqualToString:@"rejected"];
+}
+
+- (void) updateBelowInfo {
     status = _model.clsLeaveStatus.descriptionValue;
     statusCode = _model.clsLeaveStatus.codeValue;
     reason = _model.strManagerRemarks;
     dateApproved = [DIHelpers getDateInShortForm:[DIHelpers todayWithTime]];
     approvedBy = _model.clsApprovedBy.strName;
     approvedByCode = _model.clsApprovedBy.attendanceCode;
-    
+    typeOfLeaveApproved = _model.clsLeaveStatus.descriptionValue;
+    typeOfLeaveApprovedCode = _model.clsLeaveStatus.codeValue;
+}
+
+- (void) prepareUI {
+    startDate = [DIHelpers getDateInShortForm:_model.dtStartDate];
+    endDate = [DIHelpers getDateInShortForm:_model.dtEndDate];
+    typeOfLeave = _model.clsTypeOfLeave.descriptionValue;
+    typeOfLeaveCode = _model.clsTypeOfLeave.codeValue;
+    staffRemarks = _model.strStaffRemarks;
+    noOfDays = _model.decLeaveLength;
     _staffName.text = _submittedBy;
     
-    _listOfValsForApp = @[@[@"Start Date", @"End Date", @"Type Of Leave", @"No. of Days", @"Staff Remarks", @"Submitted By"], @[@"Status", @"Reason", @"Approved By", @"Date Approved", @"Type of Leave Approved", @"Submit"]];
+    [self updateBelowInfo];
+    
+    _listOfValsForApp = @[@[@"Start Date", @"End Date", @"Type Of Leave", @"No. of Days", @"Staff Remarks", @"Submitted By"], @[@"Status", @"Reason", @"Approved By", @"Date Approved", @"Approve & Reject"]];
     _headers = @[@"Application Details", @"Approval Details"];
     _page = @(1);
     
@@ -277,29 +290,56 @@ enum SECTIONS {
     }
 }
 
-- (NSDictionary*) buildParams {
+- (NSDictionary*) buildParams:(NSString*) leaveStatusCode {
     NSMutableDictionary* params = [NSMutableDictionary new] ;
     
-    [params addEntriesFromDictionary:@{@"clsLeaveStatus":@{@"code":statusCode}}];
-    [params addEntriesFromDictionary:@{@"code":_submittedByCode}];
-    [params addEntriesFromDictionary:@{@"clsTypeOfLeave":@{@"code":typeOfLeaveApprovedCode}}];
-    [params addEntriesFromDictionary:@{@"dtDateApproved":[DIHelpers convertDateToMySQLFormat:dateApproved]}];
-    [params addEntriesFromDictionary:@{@"clsApprovedBy":approvedByCode}];
-    [params addEntriesFromDictionary:@{@"strManagerRemarks":reason}];
-    
+    [params addEntriesFromDictionary:@{@"clsLeaveStatus":@{@"code":leaveStatusCode}}];
+    [params addEntriesFromDictionary:@{@"code":_model.codeValue}];
+
     return [params copy];
 }
 
-- (void) save {
+- (void) reject {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Reject" message:@"Please input the reason to reject." preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        NSMutableDictionary* params = [[self buildParams:@"2"] mutableCopy];
+        [params addEntriesFromDictionary:@{@"strManagerRemarks":_model.strStaffRemarks}];
+        [self manageApplicationWithParams:[params copy]];
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+        [self.tableView reloadData];
+    }];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:cancelAction];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Reason...";
+        _model.strStaffRemarks = textField.text;
+    }];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void) approve {
+    [self manageApplicationWithParams:[self buildParams:@"1"]];
+}
+
+- (void) manageApplicationWithParams:(NSDictionary*) params{
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:STAFF_LEAVE_SAVE_URL];
     if (isLoading) return;
     isLoading = YES;
     [SVProgressHUD showWithStatus:@"Saving"];
     @weakify(self);
-    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:[self buildParams] completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         @strongify(self)
         self->isLoading = NO;
         if (error == nil) {
+            _model = [StaffLeaveModel getStaffLeaveFromResponse:result];
+            [self updateBelowInfo];
+            [self.tableView reloadData];
             [SVProgressHUD showSuccessWithStatus:@"Successfully saved"];
             
         } else {
@@ -308,15 +348,39 @@ enum SECTIONS {
     }];
 }
 
+- (TwoButtonsCell*) configureActionCellWithApprovalTitle:(NSString*) approvalTitle approvalState:(BOOL) approvalState rejectTitle:(NSString*) rejectTitle rejectState:(BOOL) rejectState inTableView:(UITableView*) tableView inIndexPath:(NSIndexPath*) indexPath{
+    TwoButtonsCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoButtonsCell cellIdentifier] forIndexPath:indexPath];
+    
+    [cell.leftBtn setTitle:approvalTitle forState:UIControlStateNormal];
+    cell.leftBtn.enabled = approvalState;
+    cell.leftHandler  = ^ { // Approve
+        [self approve];
+    };
+    
+    [cell.rightBtn setTitle:rejectTitle forState:UIControlStateNormal];
+    cell.rightBtn.enabled = rejectState;
+    cell.rightHandler = ^ { // Reject
+        [self reject];
+    };
+    
+    return cell;
+}
+
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    if (indexPath.section == 1 && indexPath.row == 5) {
-        AddLastOneButtonCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddLastOneButtonCell cellIdentifier] forIndexPath:indexPath];
-        [cell.calculateBtn setTitle:@"Submit" forState:UIControlStateNormal];
-        cell.calculateHandler = ^ {
-            [self save];
-        };
-        
-        return cell;
+    if (indexPath.section == 1) {
+        if  ([self isApproved]) {
+            if (indexPath.row == 3) {
+              return  [self configureActionCellWithApprovalTitle:@"Approved" approvalState:NO rejectTitle:@"Reject" rejectState:NO inTableView:tableView inIndexPath:indexPath];
+            }
+        } else if  ([self isRejected]) {
+            if (indexPath.row == 4) {
+              return  [self configureActionCellWithApprovalTitle:@"Approve" approvalState:NO rejectTitle:@"Rejected" rejectState:NO inTableView:tableView inIndexPath:indexPath];
+            }
+        } else {
+            if (indexPath.row == 0) {
+             return   [self configureActionCellWithApprovalTitle:@"Approve" approvalState:YES rejectTitle:@"Reject" rejectState:YES inTableView:tableView inIndexPath:indexPath];
+            }
+        }
     }
     
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
@@ -350,6 +414,7 @@ enum SECTIONS {
             cell.floatingTextField.text = typeOfLeave;
         } else if (indexPath.row == 3)  { // No Of Days
             cell.floatingTextField.text = noOfDays;
+            cell.floatingTextField.userInteractionEnabled = YES;
         } else if (indexPath.row == 4)  { // Staff Remarks
             cell.floatingTextField.userInteractionEnabled = YES;
             cell.floatingTextField.text = staffRemarks;
@@ -358,19 +423,29 @@ enum SECTIONS {
             cell.delegate = nil;
         }
     } else {
-        if (indexPath.row == 0) {
-            cell.floatingTextField.text = status;
-        } else if (indexPath.row == 1) {
-            cell.floatingTextField.text = reason;
-            cell.floatingTextField.userInteractionEnabled = YES;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        } else if (indexPath.row == 2) {
-            cell.floatingTextField.text = approvedBy;
-        } else if (indexPath.row == 3) {
-            cell.floatingTextField.text = dateApproved;
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        } else if (indexPath.row == 4) {
-            cell.floatingTextField.text = typeOfLeaveApproved;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.floatingTextField.userInteractionEnabled = NO;
+        
+        if  ([self isApproved]) {
+            if (indexPath.row == 0) {
+                cell.floatingTextField.text = status;
+            } else if (indexPath.row == 1) {
+                cell.floatingTextField.text = approvedBy;
+                cell.floatingTextField.placeholder = @"Approved By";
+            } else if (indexPath.row == 2) {
+                cell.floatingTextField.placeholder = @"Date Approved";
+                cell.floatingTextField.text = dateApproved;
+            }
+        } else if ([self isRejected]) {
+            if (indexPath.row == 0) {
+                cell.floatingTextField.text = status;
+            } else if (indexPath.row == 1) {
+                cell.floatingTextField.text = reason;
+            } else if (indexPath.row == 2) {
+                cell.floatingTextField.text = approvedBy;
+            } else if (indexPath.row == 3) {
+                cell.floatingTextField.text = dateApproved;
+            }
         }
     }
     
@@ -380,22 +455,6 @@ enum SECTIONS {
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    selectedRow = indexPath.row;
-    if (indexPath.section == 0) {
-        
-    } else {
-        if (selectedRow == 0) {
-            titleOfList = @"Leave Status";
-            nameOfField = @"Leave Status";
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:LEAVE_STATUS_GET_URL];
-        } else if (selectedRow == 2) {
-            [self performSegueWithIdentifier:kContactGetListSegue sender:GENERAL_CONTACT_URL];
-        } else if (selectedRow == 4) {
-            titleOfList = @"Leave Type Approved";
-            nameOfField = @"Leave Type Approved";
-            [self performSegueWithIdentifier:kListWithCodeSegue sender:LEAVE_TYPE_GET_URL];
-        }
-    }
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -408,7 +467,13 @@ enum SECTIONS {
         return _listOfValsForApp[section].count;
     }
     
-    return _listOfValsForApp[section].count;
+    if ([self isApproved]) {
+        return _listOfValsForApp[section].count - 1;
+    } else if ([self isRejected]) {
+        return _listOfValsForApp[section].count;
+    }
+    
+    return 1;
 }
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {

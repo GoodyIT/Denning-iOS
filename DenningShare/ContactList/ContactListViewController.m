@@ -123,6 +123,7 @@
         [weakSelf.tableView finishInfiniteScroll];
     }];
     NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%ld",[defaults valueForKey:@"api"], _url, _filter, _page];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *downloadURL = [NSURL URLWithString:urlString];
     GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
                                                             withCompletionBlock:requestDataObject.myCompletionBlock];

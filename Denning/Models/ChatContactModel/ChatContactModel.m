@@ -20,6 +20,7 @@
     
     chatContactModel.clientContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"client"]];
     chatContactModel.staffContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"staff"]];
+    chatContactModel.denningContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"denningPeople"]];
     chatContactModel.favClientContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"favourite_client"]];
     chatContactModel.favStaffContacts = [ChatFirmModel getChatFirmModelArrayFromResponse:[response objectForKey:@"favourite_staff"]];
     

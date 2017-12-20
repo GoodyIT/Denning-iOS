@@ -31,7 +31,6 @@
     eventModel.caseNo = [response valueForKeyNotNull:@"caseNo"];
     eventModel.URL = [response valueForKeyNotNull:@"URL"];
     eventModel.eventCode = [response valueForKeyNotNull:@"code"];
-    eventModel.descriptionValue = [response valueForKeyNotNull:@"description"];
     eventModel.eventStart = [response valueForKeyNotNull:@"eventStart"];
     eventModel.eventEnd = [response valueForKeyNotNull:@"eventEnd"];
     eventModel.eventType = [response valueForKeyNotNull:@"eventType"];

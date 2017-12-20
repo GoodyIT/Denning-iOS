@@ -25,6 +25,8 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
     
     CLLocationManager *_locationManager;
     
+    CLLocationCoordinate2D targetLocation;
+    
     BOOL _initialPin;
     BOOL _userLocationChanged;
     BOOL _regionChanged;
@@ -59,6 +61,7 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
         switch (state) {
                 
             case QMLocationVCStateView:
+                [self configureMapButtons];
                 break;
                 
             case QMLocationVCStateSend:
@@ -91,6 +94,79 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
     _mapView.delegate = self;
     
     [self.view addSubview:_mapView];
+}
+
+- (void) configureMapButtons {
+    UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mapButton setTitle:@"Maps" forState:UIControlStateNormal];
+    [mapButton addTarget:self action:@selector(_openNavigation:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:mapButton];
+}
+
+- (void) _openAppleMap {
+    MKPlacemark* placeMark = [[MKPlacemark alloc] initWithCoordinate:targetLocation];
+
+    MKMapItem* mapItem = [[MKMapItem alloc] initWithPlacemark:placeMark];
+    
+    mapItem.name = @"Target location";
+    
+    NSDictionary* launchOptions = @{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving};
+    
+    MKMapItem* currentLocationMapItem = [MKMapItem mapItemForCurrentLocation];
+    [MKMapItem openMapsWithItems:@[currentLocationMapItem, mapItem] launchOptions:launchOptions];
+}
+
+- (void) _openGoogleMap {
+    if ([[UIApplication sharedApplication] canOpenURL:
+         [NSURL URLWithString:@"comgooglemaps://"]]) {
+        NSString* googleMapString = [NSString stringWithFormat:@"comgooglemaps://?center=%lf,%lf&zoom=14&views=traffic", targetLocation.latitude, targetLocation.longitude];
+        [[UIApplication sharedApplication] openURL:
+         [NSURL URLWithString:googleMapString]];
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL
+                                                    URLWithString:@"https://itunes.apple.com/us/app/google-maps-gps-navigation/id585027354"]];
+    }
+}
+
+- (void) _openWaze {
+    if ([[UIApplication sharedApplication]
+         canOpenURL:[NSURL URLWithString:@"waze://"]]) {
+        // Waze is installed. Launch Waze and start navigation
+        NSString *urlStr =
+        [NSString stringWithFormat:@"https://waze.com/ul?ll=%f,%f&navigate=yes",
+         targetLocation.latitude, targetLocation.longitude];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+    } else {
+        // Waze is not installed. Launch AppStore to install Waze app
+        [[UIApplication sharedApplication] openURL:[NSURL
+                                                    URLWithString:@"http://itunes.apple.com/us/app/id323229106"]];
+    }
+}
+
+- (void) _openNavigation:(UIButton*) sender {
+    UIAlertController *alertController =
+    [UIAlertController alertControllerWithTitle:@"Denning"
+                                        message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Open in Maps" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self _openAppleMap];
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Open in Google Maps" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self _openGoogleMap];
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Open in Waze" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self _openWaze];
+    }]];
+    
+    if (alertController.popoverPresentationController) {
+        // iPad support
+        alertController.popoverPresentationController.sourceView = sender;
+        alertController.popoverPresentationController.sourceRect = sender.bounds;
+    }
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)configureSendState {
@@ -128,6 +204,7 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
 
 - (void)setLocationCoordinate:(CLLocationCoordinate2D)locationCoordinate {
     
+    targetLocation = locationCoordinate;
     [_mapView markCoordinate:locationCoordinate animated:NO];
 }
 

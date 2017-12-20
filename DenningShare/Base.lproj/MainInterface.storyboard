@@ -102,10 +102,6 @@
                                     <constraint firstAttribute="width" secondItem="wse-rP-nAM" secondAttribute="height" multiplier="12:8" id="oS6-NP-bQB"/>
                                 </constraints>
                             </imageView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="4ua-k8-CBr">
-                                <rect key="frame" x="177" y="133" width="20" height="20"/>
-                                <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </activityIndicatorView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="E5q-5P-F5J">
                                 <rect key="frame" x="16" y="249" width="343" height="29"/>
                                 <segments>
@@ -127,7 +123,6 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="4ua-k8-CBr" firstAttribute="centerX" secondItem="wse-rP-nAM" secondAttribute="centerX" id="1pw-8O-ax5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5jf-sr-Keo" secondAttribute="trailing" constant="20" id="4f5-Ol-b3V"/>
                             <constraint firstItem="E5q-5P-F5J" firstAttribute="leading" secondItem="SRi-nb-NaM" secondAttribute="leading" id="5yx-d6-r3q"/>
                             <constraint firstItem="wse-rP-nAM" firstAttribute="top" secondItem="Ecv-Sf-7Wt" secondAttribute="bottom" constant="15" id="9B8-bZ-88H"/>
@@ -136,7 +131,6 @@
                             <constraint firstItem="q88-1R-321" firstAttribute="leading" secondItem="5jf-sr-Keo" secondAttribute="leading" id="GBC-OC-oST"/>
                             <constraint firstItem="6pL-kG-L8k" firstAttribute="top" secondItem="q88-1R-321" secondAttribute="top" id="GvI-rX-zJi"/>
                             <constraint firstItem="5jf-sr-Keo" firstAttribute="leading" secondItem="5oY-1V-okM" secondAttribute="trailing" constant="17" id="Opl-ae-Tly"/>
-                            <constraint firstItem="4ua-k8-CBr" firstAttribute="centerY" secondItem="wse-rP-nAM" secondAttribute="centerY" id="OyA-VK-rCl"/>
                             <constraint firstItem="q88-1R-321" firstAttribute="trailing" secondItem="5jf-sr-Keo" secondAttribute="trailing" id="VqE-of-6dT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="E5q-5P-F5J" secondAttribute="trailing" id="XIj-8N-1Kn"/>
                             <constraint firstItem="wse-rP-nAM" firstAttribute="centerX" secondItem="YsX-MP-nAE" secondAttribute="centerX" id="ZaE-fs-EYl"/>
@@ -166,7 +160,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="activity" destination="4ua-k8-CBr" id="c7Z-w8-wnR"/>
                         <outlet property="bottomConstraint" destination="puM-CF-jtD" id="uSW-Ie-N2R"/>
                         <outlet property="fileName" destination="5jf-sr-Keo" id="296-AS-ad7"/>
                         <outlet property="imageView" destination="wse-rP-nAM" id="8ny-hW-yjp"/>

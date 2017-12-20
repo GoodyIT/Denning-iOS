@@ -13,6 +13,7 @@
 @interface QMGroupNameViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *groupNameField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *tagSegment;
 
 @end
 
@@ -29,6 +30,12 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
     self.groupNameField.text = self.chatDialog.name;
+    
+    if  ([[DataManager sharedManager] isDenningUser]) {
+        [_tagSegment insertSegmentWithTitle:@"Denning" atIndex:2 animated:YES];
+    } else {
+        [_tagSegment removeSegmentAtIndex:2 animated:YES];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -73,6 +80,25 @@
     }
     
     self.navigationItem.rightBarButtonItem.enabled = YES;
+}
+
+- (void) updateGroupTag:(NSInteger) index {
+    
+}
+
+- (IBAction)tagSelected:(UISegmentedControl*) sender {
+    
+    if (sender.selectedSegmentIndex == 0) {
+        
+    } else if (sender.selectedSegmentIndex == 1) {
+        
+    }
+    
+    if  ([[DataManager sharedManager] isDenningUser]) {
+        if (sender.selectedSegmentIndex == 2) {
+            
+        }
+    }
 }
 
 @end

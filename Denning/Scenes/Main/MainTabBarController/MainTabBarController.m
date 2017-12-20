@@ -114,7 +114,7 @@ shouldSelectViewController:(UIViewController *)viewController
         }
     }
     if ([viewController.childViewControllers[0] isKindOfClass:[MessageViewController class]]) {
-        if ([QBSession currentSession].currentUser.email.length == 0) {
+        if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) && ![[DataManager sharedManager] isLoggedIn]) {
             [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
             self.tabBarController.selectedIndex = 0;
             return NO;
@@ -125,7 +125,7 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 - (BOOL) checkPublicUser {
-    if ([DataManager sharedManager].user.userType.length == 0) {
+    if ([[DataManager sharedManager] isPublicUser]) {
         [QMAlert showAlertWithMessage:@"You are not allow for this. Please subscribe the denning." actionSuccess:NO inViewController:self];
         return YES;
     }
@@ -171,15 +171,15 @@ shouldSelectViewController:(UIViewController *)viewController
           }],
           
           [RWDropdownMenuItem itemWithText:@"Our Products" image:[UIImage imageNamed:@"menu_our_product"] action:^{
-            
+              [self tapProduct];
           }],
           
           [RWDropdownMenuItem itemWithText:@"Help" image:[UIImage imageNamed:@"menu_help"] action:^{
-              
+              [self tapHelp];
           }],
           
           [RWDropdownMenuItem itemWithText:@"Settings" image:[UIImage imageNamed:@"menu_settings"] action:^{
-              
+              [self tapSetting];
           }],
           
           [RWDropdownMenuItem itemWithText:@"Contact Us" image:[UIImage imageNamed:@"menu_contact_us"] action:^{
@@ -198,9 +198,31 @@ shouldSelectViewController:(UIViewController *)viewController
     return _menuItems;
 }
 
-
 - (IBAction)tapMenu:(id)sender {
     [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:RWDropdownMenuCellAlignmentRight style:RWDropdownMenuStyleBlackGradient navBarImage:[(UIBarItem*)sender image] completion:nil];
+}
+
+- (void) tapSetting {
+    [self performSegueWithIdentifier:kQMSceneSegueSetting sender:nil];
+}
+
+- (void) tapProduct {
+    [DIHelpers openURL:[NSURL URLWithString:@"http://www.denning.com.my"]];
+}
+
+- (void) tapHelp {
+    [DIHelpers openURL:[NSURL URLWithString:@"http://denning.com.my/?page_id=198"]];
+}
+
+- (void) tapContactUs {
+    if (![self checkPublicUser]) {
+        if (![[QBChat instance] isConnected]) {
+            [QMAlert showAlertWithMessage:@"Please subscribe the denning chat." actionSuccess:NO inViewController:self];
+        } else {
+            // Go to denning care group chat
+        }
+    }
+    
 }
 
 - (IBAction)tapLogin:(id)sender {

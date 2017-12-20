@@ -48,7 +48,7 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
 
 - (void)viewDidLoad {
     
-    NSAssert(_updateUserField != QMUpdateUserFieldNone, @"Must be a valid update field.");
+//    NSAssert(_updateUserField != QMUpdateUserFieldNone, @"Must be a valid update field.");
     [super viewDidLoad];
     
     // automatic self-sizing cells
@@ -56,7 +56,6 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
     self.tableView.estimatedRowHeight = kQMCellMinHeight;
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     self.navigationItem.leftItemsSupplementBackButton = YES;
     
     self.textField.delegate = self;
@@ -65,6 +64,9 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
     [QMValidationCell registerForReuseInTableView:self.tableView];
     // configure appearance
     [self configureAppearance];
+}
+- (IBAction)dismissScreen:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,7 +81,7 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
     
     switch (self.updateUserField) {
             
-        case QMUpdateUserFieldFullName:
+        case QMUpdateUserFieldUserName:
             [self configureWithKeyPath:@keypath(QBUUser.new, fullName)
                                  title:NSLocalizedString(@"QM_STR_FULLNAME", nil)
                                   text:currentUser.fullName
@@ -104,7 +106,11 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
             self.textField.keyboardType = UIKeyboardTypeAlphabet;
             break;
             
-        case QMUpdateUserFieldNone:
+        case QMUpdateUserFieldPhone:
+            [self configureWithKeyPath:@keypath(QBUUser.new, phone)
+                                 title:NSLocalizedString(@"QM_STR_PHONE", nil)
+                                  text:currentUser.phone
+                            bottomText:NSLocalizedString(@"QM_STR_STATUS_DESCRIPTION", nil)];
             break;
     }
 }
@@ -121,6 +127,7 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
     self.textField.text = text;
     self.bottomText = bottomText;
 }
+
 
 //MARK: - Actions
 
@@ -189,7 +196,7 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
 shouldChangeCharactersInRange:(NSRange)__unused range
 replacementString:(NSString *)string  {
     
-    if (self.updateUserField == QMUpdateUserFieldFullName) {
+    if (self.updateUserField == QMUpdateUserFieldUserName) {
         NSError *validationError = nil;
         BOOL textIsValid = [string qm_validateForNotAcceptableCharacters:kQMNotAcceptableCharacters
                                                                    error:&validationError];
@@ -234,7 +241,7 @@ replacementString:(NSString *)string  {
 - (BOOL)validateText:(NSString *)text
                error:(NSError **)error {
     
-    if (self.updateUserField == QMUpdateUserFieldFullName) {
+    if (self.updateUserField == QMUpdateUserFieldUserName) {
         
         return [text qm_validateForCharactersCountWithMinLength:kQMFullNameFieldMinLength
                                                       maxLength:kQMFullNameFieldMaxLength

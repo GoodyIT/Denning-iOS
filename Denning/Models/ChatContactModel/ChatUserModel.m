@@ -12,10 +12,11 @@
 
 + (ChatUserModel*) getChatUserModelFromResponse: (NSDictionary*) response {
     ChatUserModel* userModel = [ChatUserModel new];
-    userModel.email = [response objectForKey:@"email"];
-    userModel.firm = [response objectForKey:@"firm"];
-    userModel.firmCode = [response objectForKey:@"firmCode"];
-    userModel.position = [response objectForKey:@"position"];
+    userModel.email = [response valueForKeyNotNull:@"email"];
+    userModel.avatar_url = [response valueForKeyNotNull:@"avatar_url"];
+    userModel.firm = [response valueForKeyNotNull:@"firm"];
+    userModel.firmCode = [response valueForKeyNotNull:@"firmCode"];
+    userModel.position = [response valueForKeyNotNull:@"position"];
     return userModel;
 }
 

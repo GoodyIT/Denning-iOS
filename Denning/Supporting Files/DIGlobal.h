@@ -137,6 +137,8 @@ static NSString * const kQMChatFileMessageTypeName = @"file";
 
 #define GET_CHAT_FAV_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v2/chat/favcontact?userid="
 
+#define CHANGE_AVATAR_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/photo"
+
 #define PUBLIC_ADD_FAVORITE_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/fav"
 
 #define INVITE_DENNING_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/invite"

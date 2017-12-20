@@ -27,9 +27,9 @@
 {
     ChatFirmModel* result = [ChatFirmModel new];
     
-    result.firmCode = [response objectForKey:@"firmCode"];
-    result.firmName = [response objectForKey:@"firmName"];
-    result.users = [ChatUserModel getChatUserModelArrayFromResponse:[response objectForKey:@"users"]];
+    result.firmCode = [response valueForKeyNotNull:@"firmCode"];
+    result.firmName = [response valueForKeyNotNull:@"firmName"];
+    result.users = [ChatUserModel getChatUserModelArrayFromResponse:[response objectForKeyNotNull:@"users"]];
     
     return result;
 }

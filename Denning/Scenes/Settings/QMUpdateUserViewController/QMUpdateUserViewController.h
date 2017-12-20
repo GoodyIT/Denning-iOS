@@ -11,8 +11,8 @@
 
 typedef NS_ENUM(NSUInteger, QMUpdateUserField) {
     
-    QMUpdateUserFieldNone,
-    QMUpdateUserFieldFullName,
+    QMUpdateUserFieldUserName,
+    QMUpdateUserFieldPhone,
     QMUpdateUserFieldEmail,
     QMUpdateUserFieldStatus
 };

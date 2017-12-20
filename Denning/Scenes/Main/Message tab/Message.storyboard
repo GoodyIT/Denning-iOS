@@ -37,7 +37,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="419.66666666666669"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oY7-W3-4Ed">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oY7-W3-4Ed">
                                             <rect key="frame" x="104" y="43" width="167" height="61"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="oY7-W3-4Ed" secondAttribute="height" multiplier="173:63" id="lx0-4e-hGx"/>
@@ -415,7 +415,7 @@ out here.</string>
                         <segment title="All"/>
                         <segment title="Colleagues"/>
                         <segment title="Clients"/>
-                        <segment title="Denning"/>
+                        <segment title="Matters"/>
                     </segments>
                     <color key="tintColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
@@ -518,7 +518,7 @@ out here.</string>
                         <segment title="All"/>
                         <segment title="Colleagues"/>
                         <segment title="Clients"/>
-                        <segment title="Denning"/>
+                        <segment title="Matters"/>
                     </segments>
                     <color key="tintColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
@@ -534,7 +534,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Auth" id="9Ir-rv-S3M" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cMC-bX-PLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2046" y="-8771"/>
+            <point key="canvasLocation" x="-1762" y="-8691"/>
         </scene>
         <!--Create Group-->
         <scene sceneID="HaZ-ei-WPo">
@@ -633,7 +633,7 @@ out here.</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FY9-Je-Dwu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1510" y="-6298"/>
+            <point key="canvasLocation" x="-1562" y="-6277"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EFo-f2-PZm">
@@ -1113,6 +1113,6 @@ out here.</string>
         <image name="m_empty_dialogs" width="180" height="265"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yFu-Ld-5fp"/>
+        <segue reference="Frh-IH-JRA"/>
     </inferredMetricsTieBreakers>
 </document>

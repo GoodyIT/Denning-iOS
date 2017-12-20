@@ -27,6 +27,8 @@
 "QM_STR_CANT_MAKE_CALLS" = "Sorry, you can't make a call until the invitation is accepted";
 "QM_STR_CANT_SEND_MESSAGES" = "Sorry, you can't send messages until the invitation is accepted";
 
+"QM_STR_CHAT_EXPIRED" = "Sorry, your subscribtion is expired.";
+
 //  ********** Contact requests notification text: ***************
 "QM_STR_FRIEND_REQUEST_DID_SEND_FOR_ME" = "Your request has been sent";
 "QM_STR_FRIEND_REQUEST_DID_SEND_FOR_OPPONENT" = "would like to chat with you";
@@ -127,6 +129,13 @@
 "QM_STR_LOCATION_ERROR" = "Location services error";
 "QM_STR_NO_PERMISSIONS_TO_LOCATION" = "The app doesn't have access to the location services, please go to settings and enable it";
 
+//Validation Errors
+"QM_STR_VALIDATION_ERROR_EMAIL" = "Email format is invalid";
+"QM_STR_VALIDATION_ERROR_NOT_ALLOWED_CHARACTER_SINGLE" = "\"%@\" is not allowed";
+"QM_STR_VALIDATION_ERROR_NOT_ALLOWED_CHARACTER_PLURAL" = "\"%@\" are not allowed";
+"QM_STR_VALIDATION_ERROR_LENGTH_MIN" = "Minimum length for this field is %ld symbol(s)";
+"QM_STR_VALIDATION_ERROR_LENGTH_MAX" = "Maximum length for this field is %ld symbols";
+
 // *********** User info ***********
 "QM_STR_NONE" = "None";
 "QM_STR_CONFIRM_DELETE_CONTACT" = "Do you really want to delete %@ from your contact list?";
@@ -151,9 +160,10 @@
 // *********** Update user ***********
 "QM_STR_EMAIL" = "Email";
 "QM_STR_EMAIL_DESCRIPTION" = "Email should look like an email address\n3-∞ characters\nMandatory";
-"QM_STR_FULLNAME" = "Full name";
+"QM_STR_FULLNAME" = "User name";
 "QM_STR_FULLNAME_DESCRIPTION" = "Full name is text/numeric field, could contain everything except '<', '>', ';'.\n3-50 characters.\nMandatory.";
 "QM_STR_STATUS" = "Status";
+"QM_STR_PHONE" = "Mobile Phone";
 "QM_STR_STATUS_DESCRIPTION" = "Short text message that will be displayed in your profile.";
 "QM_STR_PASSWORD_DESCRIPTION" = "Text, numeric or symbolic field.\n8-40 characters.\nMandatory.";
 "QM_STR_WRONG_OLD_PASSWORD" = "Wrong old password";

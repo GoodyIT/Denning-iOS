@@ -16,7 +16,7 @@
 @property (strong, nonatomic) NSString* intAL;
 @property (strong, nonatomic) NSString* intPYL;
 @property (strong, nonatomic) NSString* intTaken;
-@property (strong, nonatomic) CodeDescription* clsLeaveLength;
+@property (strong, nonatomic) NSString* decLeaveLength;
 @property (strong, nonatomic) CodeDescription *clsLeaveStatus;
 @property (strong, nonatomic) AttendanceInfo * clsStaff;
 @property (strong, nonatomic) CodeDescription* clsTypeOfLeave;
