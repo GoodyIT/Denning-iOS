@@ -35,6 +35,7 @@ QMUsersServiceDelegate
 
 @property (weak, nonatomic) BFTask *leaveTask;
 @property (weak, nonatomic) BFTask *addUserTask;
+@property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
 
 @end
 
@@ -140,6 +141,44 @@ QMUsersServiceDelegate
         QMGroupAddUsersViewController *addUsersVC = segue.destinationViewController;
         addUsersVC.chatDialog = sender;
     }
+}
+
+- (void)updateNotificationsSettingsForDialog:(NSString *)dialogID enabled:(BOOL)enabled {
+    
+    NSURLSessionConfiguration *configuration =
+    [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configuration];
+    
+    NSString *path = [NSString stringWithFormat:@"https://api.quickblox.com/chat/Dialog/%@/notifications.json", dialogID];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:path]];
+    request.HTTPMethod = @"PUT";
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:QBSession.currentSession.sessionDetails.token forHTTPHeaderField:@"QB-Token"];
+    
+    NSString *data = [NSString stringWithFormat:@"{\"enabled\":\"%tu\"}", enabled ? 1 : 0];
+    
+    [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSURLSessionDataTask *dataTask =
+    [defaultSession dataTaskWithRequest:request
+                      completionHandler:^(NSData* data, NSURLResponse *response, NSError *error)
+    {
+        
+        if (!error) {
+            NSError *serializationError = nil;
+            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&serializationError];
+            NSLog(@"%@", json);
+        }
+    }];
+    
+    [dataTask resume];
+}
+
+- (IBAction)notificationSetting:(UISwitch *)sender {
+    [self updateNotificationsSettingsForDialog:_chatDialog.ID enabled:sender.on];
 }
 
 //MARK: - UITableViewDelegate

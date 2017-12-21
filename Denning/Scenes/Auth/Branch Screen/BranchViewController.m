@@ -80,6 +80,7 @@
     if (indexPath.row == 0) {
         return 140;
     }
+    
     return 71;
 }
 

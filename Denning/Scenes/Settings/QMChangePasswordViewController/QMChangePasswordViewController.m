@@ -59,37 +59,6 @@ static const NSUInteger kQMPasswordMinChar = 8;
 
 //MARK: - Actions
 
-
-- (void)changePassword:(id)sender {
-    [self.view endEditing:YES];
-    
-    NSString *password1 = self.passwordNewField.text;
-    NSString *password2 = self.passwordConfirmField.text;
-    
-    if (password1.length == 0 || password2.length == 0) {
-        [SVProgressHUD showErrorWithStatus:NSLocalizedString(@"QM_STR_FILL_IN_ALL_THE_FIELDS", nil)];
-        return;
-    } else if (![password1 isEqualToString:password2]){
-        [SVProgressHUD showErrorWithStatus:@"Password should be matching"];
-        return;
-    }
-    
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-    @weakify(self);
-    
-    [[QMNetworkManager sharedManager] changePasswordAfterLoginWithEmail:[DataManager sharedManager].user.email password:password1 withCompletion:^(BOOL success, NSString * _Nonnull error, NSDictionary * _Nonnull response) {
-        @strongify(self)
-        [SVProgressHUD dismiss];
-        if (success){
-            [[DataManager sharedManager] setUserInfoFromChangePassword:response];
-            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
-        }
-        
-        [SVProgressHUD showErrorWithStatus:error];
-    }];
-}
-
 - (IBAction)changeButtonPressed:(UIBarButtonItem *)__unused sender {
     
     if (![self.passwordOldField.text isEqualToString:[DataManager sharedManager].user.password]) {
@@ -116,8 +85,7 @@ static const NSUInteger kQMPasswordMinChar = 8;
         [navigationController dismissNotificationPanel];
         if (success){
             [[DataManager sharedManager] setUserInfoFromChangePassword:response];
-            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+            [self dismissViewControllerAnimated:YES completion:nil];
         } else {
              [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error duration:kQMDefaultNotificationDismissTime];
         }

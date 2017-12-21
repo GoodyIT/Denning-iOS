@@ -22,6 +22,7 @@
 @synthesize documentView;
 @synthesize userAgreementAccepted;
 @synthesize tempServerURL;
+@synthesize isExpire;
 
 + (DataManager *)sharedManager {
     static DataManager *manager = nil;
@@ -42,6 +43,7 @@
         documentView = @"nothing";
         userAgreementAccepted = NO;
         tempServerURL = @"";
+        isExpire = NO;
         user = [UserModel allObjects].firstObject;
         if (!user) {
             [[RLMRealm defaultRealm] transactionWithBlock:^{
@@ -103,6 +105,7 @@
     [self _setInfoWithValue:[self determineUserType] for:@"userType"];
     
     [[RLMRealm defaultRealm] transactionWithBlock:^{
+        user.password = [response valueForKeyNotNull:@"password"];
         user.status = [response objectForKeyNotNull:@"status"];
         user.userType = [self determineUserType];
     }];
@@ -150,7 +153,7 @@
 }
 
 - (BOOL) isLoggedIn {
-    return user.email.length > 0;
+    return user.email.length > 0 && user.password.length > 0;
 }
 
 - (BOOL) isPublicUser {
@@ -159,6 +162,22 @@
 
 - (BOOL) isDenningUser {
     return [user.email isEqualToString:@"jingpiow@hotmail.com"] || [user.email isEqualToString:@"tmho@hotmail.com"];
+}
+
+- (void) clearData {
+    [self _setInfoWithValue:@"" for:@"email"];
+    [self _setInfoWithValue:@"" for:@"userType"];
+    [[RLMRealm defaultRealm] transactionWithBlock:^{
+        user.email = @"";
+        user.phoneNumber = @"";
+        user.sessionID = @"";
+        user.status = @"";
+        user.username = @"";
+        user.userType = @"";
+        user.serverAPI = @"";
+        user.firmName = @"Public";
+        user.firmCity = @"";
+    }];
 }
 
 @end

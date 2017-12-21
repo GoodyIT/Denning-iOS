@@ -13,8 +13,9 @@
 #import "QMAddMemberCell.h"
 #import "QMLeaveChatCell.h"
 #import "QMSeparatorCell.h"
+#import "NotificationCell.h"
 
-static const NSUInteger kQMStaticCellsCount = 3;
+static const NSUInteger kQMStaticCellsCount = 5;
 static const NSUInteger kQMNumberOfStaticCellsBeforeOccupantsList = 1;
 static const NSUInteger kQMNumberOfSections = 1;
 
@@ -38,9 +39,18 @@ static const NSUInteger kQMNumberOfSections = 1;
     return self.items.count > 0 ? self.items.count + kQMNumberOfStaticCellsBeforeOccupantsList : 1;
 }
 
-- (NSInteger)leaveChatCellIndex {
+- (NSInteger) notificationCellIndex {
     
     return self.separatorCellIndex + 1;
+}
+
+- (NSInteger)separatorCellIndex1 {
+     return self.notificationCellIndex + 1;
+}
+
+- (NSInteger)leaveChatCellIndex {
+    
+    return self.separatorCellIndex1 + 1;
 }
 
 //MARK: - Methods
@@ -72,9 +82,19 @@ static const NSUInteger kQMNumberOfSections = 1;
         QMSeparatorCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMSeparatorCell cellIdentifier] forIndexPath:indexPath];
         return cell;
     }
+    else if ( indexPath.row == self.separatorCellIndex1) {
+        
+        QMSeparatorCell *cell = [tableView dequeueReusableCellWithIdentifier:@"QMSeparatorCell" forIndexPath:indexPath];
+        return cell;
+    }
     else if (indexPath.row == self.leaveChatCellIndex) {
         
         QMLeaveChatCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMLeaveChatCell cellIdentifier] forIndexPath:indexPath];
+        return cell;
+    }
+    else if ( indexPath.row == self.notificationCellIndex) {
+        
+        NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:[NotificationCell cellIdentifier] forIndexPath:indexPath];
         return cell;
     }
     else {
@@ -117,7 +137,7 @@ static const NSUInteger kQMNumberOfSections = 1;
         
         return [QMAddMemberCell height];
     }
-    else if (indexPath.row == self.separatorCellIndex) {
+    else if (indexPath.row == self.separatorCellIndex || indexPath.row == self.separatorCellIndex1) {
         
         return [QMSeparatorCell height];
     }

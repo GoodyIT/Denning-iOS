@@ -17,7 +17,6 @@
 @property (strong, nonatomic) NSString  *searchType;
 @property (strong, nonatomic) UserModel *user;
 @property (strong, nonatomic) NSArray* denningArray;
-//@property (strong, nonatomic) NSArray* bussinessArray;
 @property (strong, nonatomic) NSArray* personalArray;
 @property (strong, nonatomic) NSString* seletedUserType;
 @property (strong, nonatomic) NSNumber* statusCode;
@@ -61,5 +60,7 @@
 - (BOOL) isPublicUser;
 
 - (BOOL) isDenningUser;
+
+- (void) clearData;
 
 @end

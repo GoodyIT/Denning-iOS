@@ -90,7 +90,6 @@
         [self.selectedUsers addObject:selectedUser];
     }
     else {
-        
         [self.selectedUsers removeObject:selectedUser];
     }
 }

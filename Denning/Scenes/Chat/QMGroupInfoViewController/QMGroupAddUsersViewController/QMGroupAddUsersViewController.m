@@ -77,6 +77,8 @@ UISearchResultsUpdating
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.definesPresentationContext = YES;
+    UITextField* textFieldInsideSearchBar = [self.searchController.searchBar valueForKey:@"searchField"];
+    textFieldInsideSearchBar.textColor = [UIColor whiteColor];
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
     
 #ifdef __IPHONE_11_0

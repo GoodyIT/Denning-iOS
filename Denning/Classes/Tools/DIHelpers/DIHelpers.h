@@ -110,4 +110,6 @@
 + (UIViewController*) topMostController;
 
 + (void)openURL:(NSURL *)url;
+
++ (void)logout:(UIViewController*) viewController;
 @end

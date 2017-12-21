@@ -10,4 +10,5 @@
 
 @interface QMLeaveChatCell : QMTableViewCell
 
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "DIHelpers.h"
+#import "MainTabBarController.h"
 
 @import SafariServices;
 
@@ -638,5 +639,67 @@
             [[UIApplication sharedApplication] openURL:url];
         }
     }
+}
+
+
++ (BFTask*) logoutWithCompletion{
+    return make_task(^(BFTaskCompletionSource * _Nonnull source) {
+        NSDictionary* params = @{@"email":[DataManager sharedManager].user.email};
+        [[QMNetworkManager sharedManager] setPublicHTTPHeader];
+        [[QMNetworkManager sharedManager] sendPutWithURL:LOGOUT_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            
+            if (error != nil) {
+                [source setError:error];
+            } else {
+                [source setResult:result];
+                [[DataManager sharedManager] clearData];
+            }
+        }];
+    });
+}
+
++ (void)logout:(UIViewController*) viewController {
+    
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:nil
+                                          message:NSLocalizedString(@"QM_STR_LOGOUT_CONFIRMATION", nil)
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
+                                                      }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_LOGOUT", nil)
+                                                        style:UIAlertActionStyleDestructive
+                                                      handler:^(UIAlertAction * _Nonnull __unused action) {
+                                                          
+                                                          
+                                                          [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil) ];
+                                                          
+                                                          BFTask* logoutTask = [QMCore.instance logout];
+                                                          
+                                                          BFTask* secondLogout = [self logoutWithCompletion];
+                                                          NSArray* tasks = @[logoutTask, secondLogout];
+                                                          
+                                                          [[BFTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+                                                              
+                                                              if (!t.isFaulted) {
+                                                                  [SVProgressHUD dismiss];
+                                                                  
+                                                                  if ([viewController isKindOfClass:[MainTabBarController class]]) {
+                                                                      
+                                                                  } else {
+                                                                      [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
+                                                                  }
+                                                                  
+                                                              } else {
+                                                                  [SVProgressHUD showErrorWithStatus:t.error.localizedDescription];
+                                                              }
+                                                              return nil;
+                                                          }];
+                                                      }]];
+    
+    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 @end

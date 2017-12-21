@@ -58,7 +58,7 @@
     [self.manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [self.manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [self.manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}" forHTTPHeaderField:@"webuser-sessionid"];
-    [self.manager.requestSerializer setValue:@" iPhone@denning.com.my" forHTTPHeaderField:@"webuser-id"];
+    [self.manager.requestSerializer setValue:@"iPhone@denning.com.my" forHTTPHeaderField:@"webuser-id"];
     
     self.session = [NSURLSession sharedSession];
     
@@ -73,7 +73,7 @@
 
 - (AFHTTPSessionManager*) setPublicHTTPHeader {
     [self.manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}"  forHTTPHeaderField:@"webuser-sessionid"];
-    [self.manager.requestSerializer setValue:@"SkySea@denning.com.my" forHTTPHeaderField:@"webuser-id"];
+    [self.manager.requestSerializer setValue:@"iPhone@denning.com.my" forHTTPHeaderField:@"webuser-id"];
     
     return _manager;
 }
@@ -183,7 +183,6 @@
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": email, @"hpNumber": phoneNumber, @"activationCode": activationCode}];
     
     [self setPublicHTTPHeader];
-    [self.manager.requestSerializer setValue:email forHTTPHeaderField:@"webuser-id"];
     
     [self sendPostWithURL:FORGOT_PASSWORD_REQUEST_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         if (error == nil) {
@@ -198,7 +197,9 @@
 {
     NSDictionary* params = [self buildRquestParamsFromDictionary:@{@"email": email, @"password": password}];
     
-    [self sendPrivatePostWithURL:CHANGE_PASSWORD_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [self setPublicHTTPHeader];
+    [self.manager.requestSerializer setValue:[DataManager sharedManager].user.email forHTTPHeaderField:@"webuser-id"];
+    [self sendPostWithURL:CHANGE_PASSWORD_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         if (error == nil) {
             completion(YES, nil, result);
         } else {
@@ -623,8 +624,8 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
                 [self buildContactsFrom:chatContacts.favStaffContacts for:[DataManager sharedManager].favStaffContactsArray withFriends:friends];
                 
                 // Set Expire values
-                [DataManager sharedManager].isExpire = (BOOL)chatContacts.isExpire;
-                [DataManager sharedManager].dtExpire =chatContacts.dtExpire;
+                [[DataManager sharedManager] setIsExpire:[chatContacts.isExpire boolValue]];
+                [DataManager sharedManager].dtExpire = chatContacts.dtExpire;
                 
                 [source setResult:chatContacts.favStaffContacts];
             } else {

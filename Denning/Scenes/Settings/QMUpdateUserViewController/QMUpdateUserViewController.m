@@ -128,6 +128,22 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
     self.bottomText = bottomText;
 }
 
+- (BFTask*) changeUserData:(NSString*) key value:(NSString*) value {
+    return make_task(^(BFTaskCompletionSource * _Nonnull source) {
+        NSDictionary* params = @{@"email":[DataManager sharedManager].user.email, @"name":value, @"hpNumber":[DataManager sharedManager].user.phoneNumber};
+        
+        [[QMNetworkManager sharedManager] setPublicHTTPHeader];
+       
+        [[QMNetworkManager sharedManager] sendPutWithURL:CHANGE_NICKNAME_URL params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            if (error != nil) {
+                [source setError:error];
+            } else {
+                [[DataManager sharedManager] setUserInfoFromLogin:result];
+                [source setResult:result];
+            }
+        }];
+    });
+}
 
 //MARK: - Actions
 
@@ -148,17 +164,20 @@ static NSString *const kQMNotAcceptableCharacters = @"<>;";
     
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
+    BFTask* qbTask = [QMTasks taskUpdateCurrentUser:updateUserParams];
+    BFTask* denningTask = [self changeUserData:self.keyPath value:self.textField.text];
+    NSArray* tasks = @[qbTask, denningTask];
     @weakify(self);
-    [[QMTasks taskUpdateCurrentUser:updateUserParams] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
-        
+    [[BFTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
         @strongify(self);
         [navigationController dismissNotificationPanel];
         
-        if (!task.isFaulted) {
+        if (!t.isFaulted) {
             
-            [self.navigationController popViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:t.error.localizedDescription duration:kQMDefaultNotificationDismissTime];
         }
-        
         return nil;
     }];
 }

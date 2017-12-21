@@ -135,66 +135,67 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (NSArray *)menuItems
 {
-    if (!_menuItems)
-    {
-        NSString* userInfo = [DataManager sharedManager].user.username;
-        if (userInfo.length == 0) {
-            userInfo = @"Login";
-        }
-        
-        _menuItems =
-        @[
-          [RWDropdownMenuItem itemWithText:userInfo image:[UIImage imageNamed:@"menu_user"] action:^{
-              [self tapLogin:nil];
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Home" image:[UIImage imageNamed:@"menu_home"] action:^{
-              self.selectedViewController = self.viewControllers[0];
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Add" image:[UIImage imageNamed:@"menu_add"] action:^{
-              if ([self checkPublicUser] != YES) {
-                  self.selectedViewController = self.viewControllers[1];
-              }
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Overview" image:[UIImage imageNamed:@"menu_overview"] action:^{
-              if (![self checkPublicUser]) {
-                  self.selectedViewController = self.viewControllers[2];
-              }
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Chats" image:[UIImage imageNamed:@"icon_message"] action:^{
-              if (![self checkPublicUser]) {
-                  self.selectedViewController = self.viewControllers[3];
-              }
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Our Products" image:[UIImage imageNamed:@"menu_our_product"] action:^{
-              [self tapProduct];
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Help" image:[UIImage imageNamed:@"menu_help"] action:^{
-              [self tapHelp];
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Settings" image:[UIImage imageNamed:@"menu_settings"] action:^{
-              [self tapSetting];
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Contact Us" image:[UIImage imageNamed:@"menu_contact_us"] action:^{
-              
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Terms of Uses" image:[UIImage imageNamed:@"menu_terms_of_uses"] action:^{
-              [self tapLicense];
-          }],
-          
-          [RWDropdownMenuItem itemWithText:@"Log out" image:[UIImage imageNamed:@"menu_logout"] action:^{
-              
-          }],
-        ];
+    
+    NSString* userInfo = [DataManager sharedManager].user.username;
+    if (userInfo.length == 0) {
+        userInfo = @"Login";
     }
+    
+    _menuItems =
+    @[
+      [RWDropdownMenuItem itemWithText:userInfo image:[UIImage imageNamed:@"menu_user"] action:^{
+          [self tapLogin:nil];
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Home" image:[UIImage imageNamed:@"menu_home"] action:^{
+          self.selectedViewController = self.viewControllers[0];
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Add" image:[UIImage imageNamed:@"menu_add"] action:^{
+          if ([self checkPublicUser] != YES) {
+              self.selectedViewController = self.viewControllers[1];
+          }
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Overview" image:[UIImage imageNamed:@"menu_overview"] action:^{
+          if (![self checkPublicUser]) {
+              self.selectedViewController = self.viewControllers[2];
+          }
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Chats" image:[UIImage imageNamed:@"icon_message"] action:^{
+          if (![self checkPublicUser]) {
+              self.selectedViewController = self.viewControllers[3];
+          }
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Our Products" image:[UIImage imageNamed:@"menu_our_product"] action:^{
+          [self tapProduct];
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Help" image:[UIImage imageNamed:@"menu_help"] action:^{
+          [self tapHelp];
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Settings" image:[UIImage imageNamed:@"menu_settings"] action:^{
+          [self tapSetting];
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Contact Us" image:[UIImage imageNamed:@"menu_contact_us"] action:^{
+          
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Terms of Uses" image:[UIImage imageNamed:@"menu_terms_of_uses"] action:^{
+          [self tapLicense];
+      }],
+      
+      [RWDropdownMenuItem itemWithText:@"Log out" image:[UIImage imageNamed:@"menu_logout"] action:^{
+          if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
+              [DIHelpers logout:self];
+          }
+      }],
+    ];
+   
     return _menuItems;
 }
 
@@ -203,7 +204,11 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 - (void) tapSetting {
-    [self performSegueWithIdentifier:kQMSceneSegueSetting sender:nil];
+    if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
+        [self performSegueWithIdentifier:kQMSceneSegueSetting sender:nil];
+    } else {
+        [QMAlert showAlertWithMessage:@"Please login first" actionSuccess:NO inViewController:self];
+    }
 }
 
 - (void) tapProduct {
@@ -230,6 +235,7 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 - (void) tapLicense {
+    [DataManager sharedManager].userAgreementAccepted = YES;
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
     [[QMNetworkManager sharedManager] setPublicHTTPHeader];
     [[QMNetworkManager sharedManager] sendGetWithURL:kDIAgreementUrl completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {

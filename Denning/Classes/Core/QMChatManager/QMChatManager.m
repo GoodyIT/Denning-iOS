@@ -54,7 +54,7 @@
 //MARK: - Notifications
 
 - (BFTask *)addUsers:(NSArray *)users toGroupChatDialog:(QBChatDialog *)chatDialog {
-    NSAssert(chatDialog.type == QBChatDialogTypeGroup, @"Chat dialog must be group type!");
+    NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
     NSArray *userIDs = [self.serviceManager.contactManager idsOfUsers:users];
     
@@ -73,7 +73,7 @@
 }
 
 - (BFTask *)changeAvatar:(UIImage *)avatar forGroupChatDialog:(QBChatDialog *)chatDialog {
-    NSAssert(chatDialog.type == QBChatDialogTypeGroup, @"Chat dialog must be group type!");
+    NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
     @weakify(self);
     return [[[QMContent uploadPNGImage:avatar progress:nil] continueWithSuccessBlock:^id _Nullable(BFTask<QBCBlob *> * _Nonnull task) {
@@ -91,7 +91,7 @@
 }
 
 - (BFTask *)changeName:(NSString *)name forGroupChatDialog:(QBChatDialog *)chatDialog {
-    NSAssert(chatDialog.type == QBChatDialogTypeGroup, @"Chat dialog must be group type!");
+    NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
     @weakify(self);
     return [[self.serviceManager.chatService changeDialogName:name forChatDialog:chatDialog] continueWithSuccessBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
@@ -103,7 +103,7 @@
 }
 
 - (BFTask *)leaveChatDialog:(QBChatDialog *)chatDialog {
-    NSAssert(chatDialog.type == QBChatDialogTypeGroup, @"Chat dialog must be group type!");
+    NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
     @weakify(self);
     
@@ -135,6 +135,33 @@
     }];
     
     return source.task;
+}
+
+// Customization for Group chat tag
+
+- (BFTask*) changeTag:(NSString*) tag forGroupChatDialog :(QBChatDialog *)chatDialog {
+    NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
+    chatDialog.data = @{@"tag": tag};
+     return make_task(^(BFTaskCompletionSource *source) {
+         @weakify(self);
+         [QBRequest updateDialog:chatDialog successBlock:^(QBResponse *response, QBChatDialog *updatedDialog) {
+             
+             @strongify(self)
+             [self.serviceManager.chatService.dialogsMemoryStorage addChatDialog:updatedDialog
+                                                  andJoin:YES
+                                               completion:^(QBChatDialog *addedDialog, NSError *error)
+              {
+                  
+                  [source setResult:updatedDialog];
+              }];
+             
+         } errorBlock:^(QBResponse *response) {
+             
+             [self.serviceManager handleErrorResponse:response];
+             
+            [source setError:response.error.error];
+         }];
+     });
 }
 
 @end

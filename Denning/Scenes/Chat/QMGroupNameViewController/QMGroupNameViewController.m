@@ -11,6 +11,10 @@
 #import "QMNavigationController.h"
 
 @interface QMGroupNameViewController ()
+{
+    BOOL nameChanged, tagChanged;
+    NSString* selectedTag;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField *groupNameField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tagSegment;
@@ -24,6 +28,11 @@
     ILog(@"%@ - %@",  NSStringFromSelector(_cmd), self);
 }
 
+- (NSString*) getTag {
+    NSString* tag = [_chatDialog.data valueForKeyNotNull:@"tag"];
+    return tag.length == 0 ? @"Colleagues" : tag;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -31,10 +40,12 @@
     
     self.groupNameField.text = self.chatDialog.name;
     
+    selectedTag = [self getTag];
+    
     if  ([[DataManager sharedManager] isDenningUser]) {
         [_tagSegment insertSegmentWithTitle:@"Denning" atIndex:2 animated:YES];
     } else {
-        [_tagSegment removeSegmentAtIndex:2 animated:YES];
+        [_tagSegment removeSegmentAtIndex:3 animated:YES];
     }
 }
 
@@ -48,24 +59,33 @@
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)__unused sender {
     
-    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    BFTask* changeNameTask = [QMCore.instance.chatManager changeName:self.groupNameField.text forGroupChatDialog:self.chatDialog];
+    BFTask* changeTagTask = [QMCore.instance.chatManager changeTag:selectedTag forGroupChatDialog:self.chatDialog];
+    NSMutableArray* tasks = [NSMutableArray new];
+    if (nameChanged) {
+        [tasks addObject:changeTagTask];
+    }
+    if (tagChanged) {
+        [tasks addObject:changeNameTask];
+    }
     
-    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
-    
-    @weakify(self);
-    [[QMCore.instance.chatManager changeName:self.groupNameField.text forGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+    if (tasks.count > 0) {
+        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
         
-        @strongify(self);
+        __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
         
-        [(QMNavigationController *)navigationController dismissNotificationPanel];
-        
-        if (!task.isFaulted) {
+        @weakify(self);
+        [[BFTask taskForCompletionOfAllTasks:tasks] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            [(QMNavigationController *)navigationController dismissNotificationPanel];
             
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        
-        return nil;
-    }];
+            @strongify(self)
+            if (!t.isFaulted) {
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            return nil;
+        }];
+    }
 }
 
 - (IBAction)groupNameFieldEditingChanged:(UITextField *)sender {
@@ -73,12 +93,12 @@
     NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
     if ([sender.text stringByTrimmingCharactersInSet:whiteSpaceSet].length == 0
         || [sender.text isEqualToString:self.chatDialog.name]) {
-        
+        nameChanged = NO;
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        
         return;
     }
     
+    nameChanged = YES;
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
@@ -89,15 +109,25 @@
 - (IBAction)tagSelected:(UISegmentedControl*) sender {
     
     if (sender.selectedSegmentIndex == 0) {
-        
+        selectedTag = @"Colleagues";
     } else if (sender.selectedSegmentIndex == 1) {
-        
+        selectedTag = @"Clients";
+    } else if (sender.selectedSegmentIndex == 2) {
+        selectedTag = @"Matters";
     }
     
-    if  ([[DataManager sharedManager] isDenningUser]) {
-        if (sender.selectedSegmentIndex == 2) {
-            
+    if ([[DataManager sharedManager] isDenningUser]) {
+        if (sender.selectedSegmentIndex == 3) {
+            selectedTag = @"Denning";
         }
+    }
+    
+    if  ([selectedTag isEqualToString:[self getTag]]) {
+        tagChanged = NO;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    } else {
+        tagChanged = YES;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }
 }
 

@@ -181,7 +181,7 @@ MEVFloatingButtonDelegate
     
     NSMutableArray* groupDialogs = [NSMutableArray new];
     for (QBChatDialog *dialog in temp) {
-        if (dialog.type != QBChatDialogTypePrivate) {
+        if (dialog.type == QBChatDialogTypeGroup) {
             [groupDialogs addObject:dialog];
         }
     }

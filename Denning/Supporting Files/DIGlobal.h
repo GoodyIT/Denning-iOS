@@ -77,6 +77,10 @@ static NSString * const kQMChatFileMessageTypeName = @"file";
 
 #define CHANGE_PASSWORD_URL     @"http://denningsoft.dlinkddns.com/denningwcf/v1/password/new"
 
+#define CHANGE_NICKNAME_URL @"http://denningsoft.dlinkddns.com/denningwcf/v1/nickName"
+
+#define LOGOUT_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/logout"
+
 #define LOGIN_SEND_SMS_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/SMS/request"
 
 #define NEW_DEVICE_SEND_SMS_URL     @"http://denningsoft.dlinkddns.com/denningwcf/v1/SMS/newDevice"
@@ -137,7 +141,7 @@ static NSString * const kQMChatFileMessageTypeName = @"file";
 
 #define GET_CHAT_FAV_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v2/chat/favcontact?userid="
 
-#define CHANGE_AVATAR_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/photo"
+#define CHANGE_AVATAR_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/avatar"
 
 #define PUBLIC_ADD_FAVORITE_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/fav"
 

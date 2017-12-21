@@ -104,8 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  The dictionary with custom data.
  *
  *  @see https://quickblox.com/developers/SimpleSample-chat_users-ios#Custom_parameters
- */
-@property (nonatomic, copy, nullable) NSDictionary<NSString *, id> *data;
+ */@property (nonatomic, copy, nullable) NSDictionary<NSString *, id> *data;
 
 /**
  *  Chat dialog owner user ID.

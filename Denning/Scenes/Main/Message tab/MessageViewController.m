@@ -61,9 +61,13 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     [self changeTitle];
    
     [self configureBackBtnWithImageName:@"Back" withSelector:@selector(popupScreen:)];
-    self.tabBarController.navigationItem.rightBarButtonItem = nil;
+    [self configureMenuRightBtnWithImagename:@"support" withSelector:@selector(denningSupport)];
  
     [self hideTabBar];
+}
+
+- (void) denningSupport {
+    
 }
 
 - (void) updateBadge {

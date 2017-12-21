@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (assign, nonatomic, readonly) NSInteger addMemberCellIndex;
 
+@property (assign, nonatomic, readonly) NSInteger notificationCellIndex;
+
 /**
  *  Leave chat static cell index.
  */
