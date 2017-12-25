@@ -146,6 +146,10 @@ NYTPhotosViewControllerDelegate
     }
 }
 
+- (IBAction)dismissScreen:(id)sender {
+    [self.navigationController  popViewControllerAnimated:YES];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -229,27 +233,30 @@ NYTPhotosViewControllerDelegate
 
 - (void)updateStatus {
     // Status
-    NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
-    if ([self.user.status stringByTrimmingCharactersInSet:whiteSpaceSet].length > 0) {
-        
-        self.statusLabel.text = self.user.status;
-    }
-    else {
-        
-        [self.hiddenSections addIndex:QMUserInfoSectionStatus];
-    }
+//    NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
+//    if ([self.user.status stringByTrimmingCharactersInSet:whiteSpaceSet].length > 0) {
+//
+//        self.statusLabel.text = self.user.status;
+//    }
+//    else {
+//
+//        [self.hiddenSections addIndex:QMUserInfoSectionStatus];
+//    }
+     [self.hiddenSections addIndex:QMUserInfoSectionStatus];
 }
 
 - (void)updateInfo {
     // Phone
-    if (self.user.phone.length > 0) {
-        
-        self.phoneLabel.text = self.user.phone;
-    }
-    else {
-        
-        [self.hiddenSections addIndex:QMUserInfoSectionInfoPhone];
-    }
+//    if (self.user.phone.length > 0) {
+//
+//        self.phoneLabel.text = self.user.phone;
+//    }
+//    else {
+//
+//        [self.hiddenSections addIndex:QMUserInfoSectionInfoPhone];
+//    }
+    
+    [self.hiddenSections addIndex:QMUserInfoSectionInfoPhone];
     
     // Email
     if (self.user.email.length > 0) {
@@ -260,6 +267,7 @@ NYTPhotosViewControllerDelegate
         
         [self.hiddenSections addIndex:QMUserInfoSectionInfoEmail];
     }
+
 }
 
 //MARK: - Actions

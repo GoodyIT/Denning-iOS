@@ -1761,7 +1761,7 @@ QMUsersServiceDelegate
 //    UIButton *videoButton = [QMChatButtonsFactory videoCall];
 //    [videoButton addTarget:self action:@selector(videoCallAction) forControlEvents:UIControlEventTouchUpInside];
 //
-//    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
+////    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
     UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
     
     [self.navigationItem setRightBarButtonItems:@[audioCallBarButtonItem] animated:YES];
@@ -2145,7 +2145,7 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
     
     if (self.chatDialog.type == QBChatDialogTypePrivate) {
         
-//        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
+        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
     }
     else {
         

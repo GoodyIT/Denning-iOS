@@ -13,6 +13,7 @@
 #import "GroupChatsViewController.h"
 #import "FavContactViewController.h"
 #import "MainTabBarController.h"
+#import "DenningSupportViewController.h"
 
 typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     DIChatRecentTab,
@@ -70,7 +71,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 }
 
 - (void) denningSupport {
-    
+    [self performSegueWithIdentifier:kDenningSupportSegue sender:nil];
 }
 
 - (void) updateBadge {

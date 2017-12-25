@@ -16,6 +16,7 @@
 #import <NYTPhotoViewer/NYTPhotosViewController.h>
 #import "QMImagePreview.h"
 
+
 @interface QMGroupInfoViewController ()
 
 < QMGroupHeaderViewDelegate, QMImagePickerResultHandler, QMChatServiceDelegate,
@@ -24,6 +25,8 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
 @property (weak, nonatomic) QMGroupOccupantsViewController *groupOccupantsViewController;
 @property (weak, nonatomic) IBOutlet QMGroupHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerViewTopConstraint;
+
+@property (strong, nonatomic) NSMutableIndexSet *hiddenRows;
 
 @end
 
@@ -42,12 +45,23 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
     self.headerView.delegate = self;
     [self updateGroupHeaderView];
     
+    [self prepareForDenningSupport];
+    
     // subscribing for delegates
     [QMCore.instance.chatService addDelegate:self];
 }
 
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) prepareForDenningSupport {
+    self.hiddenRows = [NSMutableIndexSet indexSet];
+    
+    NSString* tag = [_chatDialog.data valueForKeyNotNull:@"tag"];
+    if (tag != nil && [tag isEqualToString:@"Denning"]) {
+        
+    }
 }
 
 - (void)updateGroupHeaderView {

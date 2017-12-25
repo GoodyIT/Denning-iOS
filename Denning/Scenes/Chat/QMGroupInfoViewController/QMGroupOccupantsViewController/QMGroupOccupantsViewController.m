@@ -110,15 +110,48 @@ QMUsersServiceDelegate
 
 //MARK: - Methods
 
+- (BOOL) isSupportChat {
+    BOOL isCorrect = NO;
+    NSString* tag = [_chatDialog.data valueForKey:@"tag"];
+    if (tag != nil && [tag isEqualToString:@"Denning"]) {
+        isCorrect = YES;
+    }
+    
+    return isCorrect;
+}
+
+- (NSMutableArray*) filterItems:(NSArray*) items {
+    NSMutableArray* newItems = [NSMutableArray new];
+    
+    if ([self isSupportChat]) {
+        NSArray* users = [QMCore.instance.usersService.usersMemoryStorage usersWithIDs:_chatDialog.occupantIDs];
+        for (QBUUser* user in users) {
+            for (ChatFirmModel* firmModel in [DataManager sharedManager].denningContactArray) {
+                NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", user.email];
+                NSArray *filteredUsers = [firmModel.users filteredArrayUsingPredicate:usersSearchPredicate];
+                if (filteredUsers.count == 0 && ![user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
+                    [newItems addObject:user];
+                }
+            }
+        }
+        
+    } else {
+        newItems = [items mutableCopy];
+    }
+    
+    return [newItems mutableCopy];
+}
+
 - (void)updateOccupants {
     
     [[QMCore.instance.usersService getUsersWithIDs:self.chatDialog.occupantIDs] continueWithBlock:^id _Nullable(BFTask<NSArray<QBUUser *> *> * _Nonnull t) {
         if (t.result) {
             
-            self.dataSource.items = [[t.result sortedArrayUsingComparator:^NSComparisonResult(QBUUser *u1, QBUUser *u2) {
+            NSArray* items = [[t.result sortedArrayUsingComparator:^NSComparisonResult(QBUUser *u1, QBUUser *u2) {
                 return [u1.fullName caseInsensitiveCompare:u2.fullName];
             }] mutableCopy];
             
+            self.dataSource.items = [self filterItems:items];
             [self.tableView reloadData];
         }
         
@@ -186,8 +219,13 @@ QMUsersServiceDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.row == self.dataSource.addMemberCellIndex) {
-        
-        [self performSegueWithIdentifier:kQMSceneSegueGroupAddUsers sender:self.chatDialog];
+        if ([self isSupportChat]) {
+            if  ([DataManager sharedManager].isDenningUser) {
+                [self performSegueWithIdentifier:kQMSceneSegueGroupAddUsers sender:self.chatDialog];
+            }
+        } else {
+            
+        }
     }
     else if (indexPath.row == self.dataSource.leaveChatCellIndex) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

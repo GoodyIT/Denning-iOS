@@ -515,6 +515,7 @@
 		79D59A261E95245E00CD3821 /* QMMessageContactListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A221E95245E00CD3821 /* QMMessageContactListViewController.m */; };
 		79D59A271E95245E00CD3821 /* QMNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A241E95245E00CD3821 /* QMNewMessageViewController.m */; };
 		79D59A2B1E953B0400CD3821 /* ChatContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2A1E953B0400CD3821 /* ChatContactModel.m */; };
+		79D799D31FF197820084FCE4 /* DenningSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D799D21FF197820084FCE4 /* DenningSupportViewController.m */; };
 		79D929CC1E8DA27A000A53D2 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929C91E8DA27A000A53D2 /* icon_add.png */; };
 		79D929CD1E8DA27A000A53D2 /* icon_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */; };
 		79D929CE1E8DA27A000A53D2 /* icon_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */; };
@@ -1909,6 +1910,8 @@
 		79D59A241E95245E00CD3821 /* QMNewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMNewMessageViewController.m; sourceTree = "<group>"; };
 		79D59A291E953B0400CD3821 /* ChatContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatContactModel.h; sourceTree = "<group>"; };
 		79D59A2A1E953B0400CD3821 /* ChatContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactModel.m; sourceTree = "<group>"; };
+		79D799D11FF197820084FCE4 /* DenningSupportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DenningSupportViewController.h; sourceTree = "<group>"; };
+		79D799D21FF197820084FCE4 /* DenningSupportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DenningSupportViewController.m; sourceTree = "<group>"; };
 		79D929C91E8DA27A000A53D2 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
 		79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@2x.png"; sourceTree = "<group>"; };
 		79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@3x.png"; sourceTree = "<group>"; };
@@ -4454,6 +4457,7 @@
 				7912A5851FE481DA00C8B9A5 /* FileList */,
 				7912A57F1FE46CF600C8B9A5 /* FileSaveView */,
 				7912824B1FDE749C006E93E2 /* Groups */,
+				79D799CD1FF197240084FCE4 /* Denning Support */,
 				79D599EB1E94735000CD3821 /* Recent View */,
 				79D599EA1E94735000CD3821 /* Favorite View */,
 				79D599E91E94735000CD3821 /* Denning Contact View */,
@@ -4938,6 +4942,15 @@
 				7920E7B01EA0129F002FEFF3 /* ChatUserModel.m */,
 			);
 			path = ChatContactModel;
+			sourceTree = "<group>";
+		};
+		79D799CD1FF197240084FCE4 /* Denning Support */ = {
+			isa = PBXGroup;
+			children = (
+				79D799D11FF197820084FCE4 /* DenningSupportViewController.h */,
+				79D799D21FF197820084FCE4 /* DenningSupportViewController.m */,
+			);
+			path = "Denning Support";
 			sourceTree = "<group>";
 		};
 		79D929E11E8DCF66000A53D2 /* LedgerCell */ = {
@@ -10330,6 +10343,7 @@
 				7954327E1FC655BB00FF9E57 /* NSString+QMValidation.m in Sources */,
 				96BDA6211F02C72400084606 /* ThirdItemModel.m in Sources */,
 				7903CF9D1ECD5BD60090206C /* HQModel.m in Sources */,
+				79D799D31FF197820084FCE4 /* DenningSupportViewController.m in Sources */,
 				79FBE1111E304F5000448FE3 /* QMFeedbackViewController.m in Sources */,
 				797ED5031EAED9F2009C20C4 /* NewContactHeaderCell.m in Sources */,
 				960758A81F015C63008F9C69 /* MasterTitleView.m in Sources */,

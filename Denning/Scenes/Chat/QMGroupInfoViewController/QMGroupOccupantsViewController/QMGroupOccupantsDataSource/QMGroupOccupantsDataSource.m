@@ -19,6 +19,14 @@ static const NSUInteger kQMStaticCellsCount = 5;
 static const NSUInteger kQMNumberOfStaticCellsBeforeOccupantsList = 1;
 static const NSUInteger kQMNumberOfSections = 1;
 
+typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
+    
+    DIGroupHeaderInfoSection,
+    DIGroupUsersInfoSection,
+    DIGroupNotificationSection,
+    DIGroupLeaveRemoveChatSection
+};
+
 @interface QMGroupOccupantsDataSource ()
 
 @property (assign, nonatomic, readonly) NSInteger separatorCellIndex;

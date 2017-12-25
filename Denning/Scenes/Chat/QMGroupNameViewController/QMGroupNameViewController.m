@@ -10,6 +10,12 @@
 #import "QMCore.h"
 #import "QMNavigationController.h"
 
+typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
+    
+    DIGroupNameSection,
+    DIGroupTypeSection
+};
+
 @interface QMGroupNameViewController ()
 {
     BOOL nameChanged, tagChanged;
@@ -19,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *groupNameField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tagSegment;
 
+@property (strong, nonatomic) NSMutableIndexSet *hiddenSections;
 @end
 
 @implementation QMGroupNameViewController
@@ -45,11 +52,11 @@
     
     self.groupNameField.text = self.chatDialog.name;
     
+    [self updateGroupType];
+    
     selectedTag = [self getTag];
     
-    if  (![[DataManager sharedManager] isDenningUser]) {
-        [_tagSegment removeSegmentAtIndex:3 animated:YES];
-    }
+    
     
     _tagSegment.selectedSegmentIndex = [self getTagAsIndex:selectedTag];
 }
@@ -58,6 +65,27 @@
     [super viewDidAppear:animated];
     
     [self.groupNameField becomeFirstResponder];
+}
+
+- (BOOL) isSupportChat {
+    BOOL isCorrect = NO;
+    NSString* tag = [_chatDialog.data valueForKey:@"tag"];
+    if (tag != nil && [tag isEqualToString:@"Denning"]) {
+        isCorrect = YES;
+    }
+    
+    return isCorrect;
+}
+
+- (void) updateGroupType {
+    self.hiddenSections = [NSMutableIndexSet indexSet];
+    
+    if  (![[DataManager sharedManager] isDenningUser]) {
+        [_tagSegment removeSegmentAtIndex:3 animated:YES];
+        if ([self isSupportChat]) {
+            [self.hiddenSections addIndex:DIGroupTypeSection];
+        }
+    }
 }
 
 //MARK: - Actions

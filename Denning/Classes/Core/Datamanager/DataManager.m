@@ -18,6 +18,7 @@
 @synthesize user;
 @synthesize denningArray;
 @synthesize personalArray;
+@synthesize denningContactArray;
 @synthesize searchType;
 @synthesize documentView;
 @synthesize userAgreementAccepted;
@@ -161,7 +162,17 @@
 }
 
 - (BOOL) isDenningUser {
-    return [user.email isEqualToString:@"jingpiow@hotmail.com"] || [user.email isEqualToString:@"tmho@hotmail.com"];
+    BOOL isSupportMemember = NO;
+    for (ChatFirmModel* firmModel in denningContactArray) {
+        NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", user.email];
+        NSArray *filteredUsers = [firmModel.users filteredArrayUsingPredicate:usersSearchPredicate];
+        if (filteredUsers.count > 0) {
+            isSupportMemember = YES;
+            break;
+        }
+    }
+    
+    return isSupportMemember;
 }
 
 - (void) clearData {
