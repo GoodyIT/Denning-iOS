@@ -45,6 +45,9 @@ static NSString * const kQMChatPdfMessageTypeName = @"pdf";
 static NSString * const kQMChatWordMessageTypeName = @"word";
 static NSString * const kQMChatFileMessageTypeName = @"file";
 
+static NSString* const kGoogleMapAPIKey = @"AIzaSyAxOQtqe1t0TkVgmYV1t7Y_JWFERGEpcuU";
+static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8EkmaZZnko";
+
 #define kCountryName        @"name"
 #define kCountryCallingCode @"dial_code"
 #define kCountryCode        @"code"
@@ -68,6 +71,8 @@ static NSString * const kQMChatFileMessageTypeName = @"file";
 #define ANIMATION_DURATION 1.5f
 
 #define header_height 0
+
+#define GOOGLE_MAP_REVERSE_URL  @"https://maps.googleapis.com/maps/api/geocode/json?latlng=%lf,%lf&key=%@"
 
 #define kDIAgreementUrl @"http://denningsoft.dlinkddns.com/denningwcf/v1/table/eulaAPP"
 

@@ -14,8 +14,8 @@
 {
     DocumentModel *documentModel = [DocumentModel new];
     
-    documentModel.date = [response objectForKey:@"date"];
-    documentModel.name = [response objectForKey:@"name"];
+    documentModel.date = [response valueForKeyNotNull:@"date"];
+    documentModel.name = [response valueForKeyNotNull:@"name"];
     documentModel.folders = [DocumentModel getDocumentArrayFromResponse: [response objectForKey:@"folders"]];
     documentModel.documents = [FileModel getFileArrayFromResponse: [response objectForKey:@"documents"]];
     

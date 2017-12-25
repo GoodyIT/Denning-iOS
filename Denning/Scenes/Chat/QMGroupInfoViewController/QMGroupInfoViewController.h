@@ -10,9 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^UpdateChatDialog)(QBChatDialog *chatDialog);
+
 @interface QMGroupInfoViewController : QMViewController
 
 @property (strong, nonatomic) QBChatDialog *chatDialog;
+
+@property (strong, nonatomic) UpdateChatDialog updateChatDialog;
 
 @end
 

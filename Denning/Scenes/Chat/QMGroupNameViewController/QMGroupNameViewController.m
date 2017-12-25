@@ -33,6 +33,11 @@
     return tag.length == 0 ? @"Colleagues" : tag;
 }
 
+- (NSInteger) getTagAsIndex:(NSString*) tag {
+    NSArray* tagArray = @[@"Colleagues", @"Clients", @"Matters", @"Denning"];
+    return [tagArray indexOfObject:tag];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,11 +47,11 @@
     
     selectedTag = [self getTag];
     
-    if  ([[DataManager sharedManager] isDenningUser]) {
-        [_tagSegment insertSegmentWithTitle:@"Denning" atIndex:2 animated:YES];
-    } else {
+    if  (![[DataManager sharedManager] isDenningUser]) {
         [_tagSegment removeSegmentAtIndex:3 animated:YES];
     }
+    
+    _tagSegment.selectedSegmentIndex = [self getTagAsIndex:selectedTag];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

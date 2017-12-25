@@ -396,7 +396,6 @@
     }];
 }
 
-
 - (void) showPopup: (UIViewController*) vc {
     STPopupController *popupController = [[STPopupController alloc] initWithRootViewController:vc];
     [STPopupNavigationBar appearance].barTintColor = [UIColor blackColor];

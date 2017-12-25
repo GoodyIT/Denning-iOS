@@ -31,13 +31,18 @@
 
 @implementation StaffLeaveViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     // Do any additional setup after loading the view.
-    [self parseURL];
+     _page = @(1);
+    [self loadTableData];
+}
+
+- (void) viewDidLoad {
+    [super viewDidLoad];
     [self prepareUI];
     [self registerNibs];
-    [self loadTableData];
+    [self parseURL];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -233,6 +238,7 @@
         LeavePendingApproval *vc = segue.destinationViewController;
         vc.submittedBy = clsStaff.strName;
         vc.submittedByCode = clsStaff.attendanceCode;
+        vc.fromDashboard = @"dashboard";
         vc.model = sender;
     }
     // Get the new view controller using [segue destinationViewController].

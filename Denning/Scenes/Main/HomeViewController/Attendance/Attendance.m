@@ -78,6 +78,8 @@
     if (!isBreaking) {
         [_btnBreak setTitle:@"Start Break" forState:UIControlStateNormal];
     }
+    
+    _btnBreak.enabled = isAttended;
 }
 
 - (void) prepareUI {
@@ -95,6 +97,7 @@
 }
 
 - (void) handleResponse:(AttendanceModel*) result error:(NSError*) error {
+     [SVProgressHUD dismiss];
     if (!error) {
         _attendanceModel = result;
         [self updateHeader];
@@ -104,28 +107,14 @@
     }
 }
 
-- (void) getAttendanceModel {
-    [SVProgressHUD show];
-    
-    [[QMNetworkManager sharedManager] getAttendanceListWithCompletion:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
-        [SVProgressHUD dismiss];
-        [self handleResponse:result error:error];
-    }];
-}
-
 - (IBAction)didTapClock:(id)sender {
     [SVProgressHUD show];
     if (!isAttended) {
         [[QMNetworkManager sharedManager] attendanceClockIn:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
             [self handleResponse:result error:error];
-            isAttended = YES;
         }];
     } else {
         [[QMNetworkManager sharedManager] attendanceClockOut:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
-            isBreaking = NO;
-            isAttended = NO;
             [self handleResponse:result error:error];
         }];
     }
@@ -135,20 +124,15 @@
     if (_attendanceModel && _attendanceModel.btnRight.length != 0 && !isBreaking) {
         [SVProgressHUD show];
         [[QMNetworkManager sharedManager] attendanceStartBreak:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
             [self handleResponse:result error:error];
-            isBreaking = YES;
         }];
     } else if (_attendanceModel && isBreaking) {
         [SVProgressHUD show];
         [[QMNetworkManager sharedManager] attendanceEndBreak:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
             [self handleResponse:result error:error];
-            isBreaking = NO;
         }];
     }
 }
-
 
 #pragma mark - Table view data source
 

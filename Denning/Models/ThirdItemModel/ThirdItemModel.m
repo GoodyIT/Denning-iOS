@@ -17,6 +17,7 @@
     item.api = [response valueForKeyNotNull:@"api"];
     item.label = [response valueForKeyNotNull:@"label"];
     item.value = [response valueForKeyNotNull:@"value"];
+    item.formName = [response valueForKeyNotNull:@"formName"];
     item.nextLevelForm = [response valueForKeyNotNull:@"nextLevelForm"];
     
     return item;

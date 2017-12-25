@@ -42,7 +42,7 @@
 
 - (void)addKeyboardObservers{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)removeKeyboardObservers {
@@ -53,7 +53,7 @@
   
 }
 
-- (void)keyboardWillHide:(NSNotification *) __unused notification{
+- (void)keyboardWillBeHidden:(NSNotification *) __unused notification{
     
 }
 

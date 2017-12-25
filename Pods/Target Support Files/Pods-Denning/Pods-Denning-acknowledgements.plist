@@ -947,6 +947,26 @@ SOFTWARE.</string>
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2017 Google</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>GoogleMaps</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright 2017 Google</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>GooglePlaces</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>
                                  Apache License
                            Version 2.0, January 2004
@@ -1785,7 +1805,7 @@ Copyright (c) 2017 QuickBlox
 			<string>
 QuickBlox iOS SDK is licensed under the QuickBlox SDK License.
 
-Copyright (c) 2014 QuickBlox
+Copyright (c) 2017 QuickBlox
 
 </string>
 			<key>License</key>

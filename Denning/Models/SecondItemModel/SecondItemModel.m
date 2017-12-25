@@ -21,6 +21,7 @@
     model.deposited = [response valueForKeyNotNull:@"deposited"];
     model.itemId = [response valueForKeyNotNull:@"itemId"];
     model.label = [response valueForKeyNotNull:@"label"];
+    model.formName = [response valueForKeyNotNull:@"formName"];
     
     return model;
 }

@@ -13,4 +13,6 @@
 @property (strong, nonatomic) NSString* submittedBy, *submittedByCode;
 @property (strong, nonatomic) StaffLeaveModel* model;
 
+@property (strong, nonatomic) NSString* fromDashboard;
+
 @end

@@ -784,6 +784,14 @@ SOFTWARE.
    limitations under the License.
 
 
+## GoogleMaps
+
+Copyright 2017 Google
+
+## GooglePlaces
+
+Copyright 2017 Google
+
 ## GoogleToolboxForMac
 
 
@@ -1522,7 +1530,7 @@ Copyright (c) 2017 QuickBlox
 
 QuickBlox iOS SDK is licensed under the QuickBlox SDK License.
 
-Copyright (c) 2014 QuickBlox
+Copyright (c) 2017 QuickBlox
 
 
 

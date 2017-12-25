@@ -95,6 +95,12 @@ static const NSUInteger kQMNumberOfSections = 1;
     else if ( indexPath.row == self.notificationCellIndex) {
         
         NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:[NotificationCell cellIdentifier] forIndexPath:indexPath];
+        NSNumber* enable = [_chatDialog.data valueForKey:@"notifications"];
+        if (enable == nil || [enable integerValue] == 1) {
+            cell.notificationSwitch.on = YES;
+        } else {
+            cell.notificationSwitch.on = NO;
+        }
         return cell;
     }
     else {

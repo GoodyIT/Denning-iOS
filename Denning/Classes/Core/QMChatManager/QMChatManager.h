@@ -74,6 +74,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BFTask *)sendBackgroundMessageWithText:(NSString *)text toDialogWithID:(NSString *)chatDialogID;
 
 - (BFTask*) changeTag:(NSString*) tag forGroupChatDialog :(QBChatDialog *)chatDialog;
+
+- (BFTask*) changeCustomData:(NSDictionary*) data forGroupChatDialog:(QBChatDialog *)chatDialog;
 @end
 
 NS_ASSUME_NONNULL_END

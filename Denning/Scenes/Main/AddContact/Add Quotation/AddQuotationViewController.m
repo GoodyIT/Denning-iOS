@@ -116,7 +116,7 @@ NSMutableDictionary* keyValue;
                      }];
 }
 
-- (void)keyboardWillHide:(NSNotification *) __unused notification{
+- (void)keyboardWillBeHidden:(NSNotification *) __unused notification{
     // Get the duration of the animation.
     NSValue *animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;

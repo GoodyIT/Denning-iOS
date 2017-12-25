@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Denning</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconName</key>
@@ -19,7 +21,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.14.31</string>
+	<string>1.14.34</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -52,7 +54,9 @@
 		<string>com.adobe.adobe-reader</string>
 		<string>ms-word</string>
 		<string>waze</string>
+		<string>googlechromes</string>
 		<string>comgooglemaps</string>
+        <string>comgooglemaps-x-callback</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

@@ -400,19 +400,20 @@ NSMutableDictionary* keyValue;
     if (indexPath.section == 0) {
         
     } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+        FirstItemModel *firstItem = _mainModel.s1.items[indexPath.row];
+        if ([firstItem.formName isEqualToString:@"new_matters"]) {
             [self performSegueWithIdentifier:kFileListingSegue sender:_mainModel.s1.items[indexPath.row].mainAPI];
-        } else if (indexPath.row == 1) {
+        } else if ([firstItem.formName isEqualToString:@"court_today"]) {
             [self geteventsArrayWithCompletion:^(NSArray *array) {
                 [self performSegueWithIdentifier:kEventSegue sender:array];
             }];
-        } else if (indexPath.row == 2){
+        } else if ([firstItem.formName isEqualToString:@"my_due_tasks"]){
             [self performSegueWithIdentifier:kMyDueTaskSegue sender:_mainModel.s1.items[indexPath.row]];
-        } else if (indexPath.row == 3){
+        } else if ([firstItem.formName isEqualToString:@"leave_pending_approval"]){ // Leave pending approval
             [self performSegueWithIdentifier:kStaffLeaveSegue sender:_mainModel.s1.items[indexPath.row].mainAPI];
-        } else if (indexPath.row == 4){ // Transit folder
+        } else if ([firstItem.formName isEqualToString:@"transit_folder"]){ // Transit folder
             [self openTransitFolder:_mainModel.s1.items[indexPath.row].mainAPI];
-        } else if (indexPath.row == 5){ // Contact folder
+        } else if ([firstItem.formName isEqualToString:@"contact_folder"]){ // Contact folder
             [self performSegueWithIdentifier:kDashboardContactFolderSegue sender:_mainModel.s1.items[indexPath.row].mainAPI];
         }
     } else if (indexPath.section == 2) {
@@ -423,32 +424,33 @@ NSMutableDictionary* keyValue;
         {
         [self performSegueWithIdentifier:kCompletionTrackingSegue sender:_mainModel.s3.items[indexPath.row-1]];
     } else if (indexPath.section == 4) {
+        FirstItemModel* thirdItem = _mainModel.s4.items[indexPath.row];
         NSString* url = _mainModel.s4.items[indexPath.row].mainAPI;
-        if (indexPath.row == 0) {
+        if ([thirdItem.formName isEqualToString:@"contacts"]) {
            [self performSegueWithIdentifier:kContactGetListSegue sender:url];
-        } else if (indexPath.row == 1) {
+        } else if ([thirdItem.formName isEqualToString:@"bank_recon"]) {
             [self performSegueWithIdentifier:kBankReconSegue sender:url];
-        } else if (indexPath.row == 2) {
+        } else if ([thirdItem.formName isEqualToString:@"task_checklist_alert"]) {
             [self performSegueWithIdentifier:kDueTaskSegue sender:_mainModel.s1.items[indexPath.row].mainAPI];
-        } else if (indexPath.row == 3) {
+        } else if ([thirdItem.formName isEqualToString:@"file_ledgers"]) {
             [self performSegueWithIdentifier:kFileLedgerSegue sender:url];
-        } else if (indexPath.row == 4) {
+        } else if ([thirdItem.formName isEqualToString:@"bank_cash_balance"]) {
             [self performSegueWithIdentifier:kBankAndCashBalanceSegue sender:url];
-        } else if (indexPath.row == 5) {
+        } else if ([thirdItem.formName isEqualToString:@"trial_balance"]) {
             [self performSegueWithIdentifier:kTrialBalanceSegue sender:url];
-        } else if (indexPath.row == 6) {
+        } else if ([thirdItem.formName isEqualToString:@"tax_invoice"]) {
             [self performSegueWithIdentifier:kTaxInvoiceSegue sender:url];
-        } else if (indexPath.row == 7) {
+        } else if ([thirdItem.formName isEqualToString:@"fees_transfer"]) {
             [self performSegueWithIdentifier:kFeesTransferSegue sender:url];
-        } else if (indexPath.row == 8) {
+        } else if ([thirdItem.formName isEqualToString:@"profit_loss"]) {
             [self performSegueWithIdentifier:kProfitLossSegue sender:url];
-        } else if (indexPath.row == 9) {
+        } else if ([thirdItem.formName isEqualToString:@"staff_online"]) {
             [self performSegueWithIdentifier:kStaffOnlineSegue sender:url];
-        } else if (indexPath.row == 10) {
+        } else if ([thirdItem.formName isEqualToString:@"attendance"]) {
             [self performSegueWithIdentifier:kAttendanceSegue sender:url];
-        } else if (indexPath.row == 11) {
+        } else if ([thirdItem.formName isEqualToString:@"fee_matter_growth"]) {
             [self performSegueWithIdentifier:kFeeMatterGrowthSegue sender:url];
-        } else if (indexPath.row == 12) {
+        } else if ([thirdItem.formName isEqualToString:@"quotation"]) {
             [self performSegueWithIdentifier:kDashboardQuotationSegue sender:url];
         }
     }
@@ -549,6 +551,7 @@ NSMutableDictionary* keyValue;
     if ([segue.identifier isEqualToString:kTaxInvoiceSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         TaxInvoice* vc = nav.viewControllers.firstObject;
+        vc.fileNo = @"";
         vc.url = sender;
     }
 

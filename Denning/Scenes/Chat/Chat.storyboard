@@ -87,7 +87,14 @@
                             <constraint firstAttribute="trailingMargin" secondItem="0lG-wj-ShG" secondAttribute="trailing" constant="-20" id="aWR-4D-VfL"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Group info" id="LsS-tY-OPd"/>
+                    <navigationItem key="navigationItem" title="Group info" id="LsS-tY-OPd">
+                        <barButtonItem key="leftBarButtonItem" image="Back.png" id="gm3-XG-Vmh">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="dismissScreen:" destination="ARw-Zn-w7d" id="mUY-En-ejO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="headerView" destination="F1F-NO-Qdt" id="lvH-Hq-cos"/>
                         <segue destination="y4a-Rd-aBj" kind="show" identifier="SceneSegueGroupName" id="QzZ-jK-9d2"/>
@@ -556,7 +563,7 @@
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <outlet property="notificaitonSwitch" destination="4j0-yi-eO0" id="EQZ-T1-7o6"/>
+                                    <outlet property="notificationSwitch" destination="4j0-yi-eO0" id="Z56-kp-D2a"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="QMSeparatorCell1" rowHeight="32" id="3Ze-so-oKC" customClass="QMSeparatorCell">

@@ -112,7 +112,8 @@
         cell.thirdValue.text = [section1[indexPath.row] valueForKeyNotNull:@"decAmount"];
         return cell;
     }
-        PaymentRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:[PaymentRecordCell cellIdentifier] forIndexPath:indexPath];
+    
+    PaymentRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:[PaymentRecordCell cellIdentifier] forIndexPath:indexPath];
     if (indexPath.section == 1) {
        NSArray* section2 = [_payment objectForKeyNotNull:@"section2"];
         cell.firstLabel.text = [section2[indexPath.row] valueForKeyNotNull:@"strDescription"];
@@ -128,5 +129,9 @@
     return cell;
 }
 
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 @end

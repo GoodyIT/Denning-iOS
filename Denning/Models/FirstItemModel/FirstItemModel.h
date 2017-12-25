@@ -14,6 +14,7 @@
 @property(strong, nonatomic) NSString*  footerDescription;
 @property(strong, nonatomic) NSString* footerDescriptionColor;
 @property(strong, nonatomic) NSString* icon;
+@property(strong, nonatomic) NSString* formName;
 @property(strong, nonatomic) NSString* itemId;
 @property(strong, nonatomic) NSString* mainAPI;
 @property(strong, nonatomic) NSString* mainValue;

@@ -14,12 +14,16 @@
 #import "QMHelpers.h"
 #import "QMNetworkManager.h"
 #import "QMChatVC.h"
+#import "DIGlobal.h"
 #import "DataManager.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "LocationManager.h"
 #import <FirebaseCore/FirebaseCore.h>
 #import <FirebaseAuth/FirebaseAuth.h>
+@import Contacts;
+@import GoogleMaps;
+@import GooglePlaces;
 
 #import "UIScreen+QMLock.h"
 #import "UIImage+Cropper.h"
@@ -30,7 +34,7 @@ static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
 static NSString * const kQMAppGroupIdentifier = @"group.com.quickblox.qmunicate";
 
-#define DEVELOPMENT 0
+#define DEVELOPMENT 1
 
 #if DEVELOPMENT == 1
 
@@ -122,6 +126,10 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     // Configuring external frameworks
     [Fabric with:@[CrashlyticsKit,  [Answers class]]];
     
+    // Google Map
+    [GMSServices provideAPIKey:kGoogleMapAPIKey];
+    [GMSPlacesClient provideAPIKey:kGoogleMapPlaceAPIKey];
+    
     if (launchOptions != nil) {
         NSDictionary *pushNotification = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
         [QMCore instance].pushNotificationManager.pushNotification = pushNotification;
@@ -180,12 +188,9 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [FBSDKAppEvents activateApp];
 }
 
-
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
-
 
 #pragma mark - Push notification registration
 
@@ -244,6 +249,7 @@ forRemoteNotification:(NSDictionary *)userInfo
         _locationManager = [[CLLocationManager alloc] init];
         (self.locationManager).delegate = self;
         self.locationManager.distanceFilter = 10.0f; // we don't need to be any more accurate than 10m
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     }
     
     // for iOS 8 and later, specific user level permission is required,
@@ -363,7 +369,6 @@ forRemoteNotification:(NSDictionary *)userInfo
 
 -(void)locationManager:(CLLocationManager *)__unused manager didUpdateLocations:(NSArray *)locations{
     
-    
     if([DataManager sharedManager].user.userType.length == 0) return;
     
     CLLocation* location = [locations lastObject];
@@ -381,32 +386,45 @@ forRemoteNotification:(NSDictionary *)userInfo
         [LocationManager sharedManager].lastLoggedDateTime = eventDate;
         [LocationManager sharedManager].oldLocation = location.coordinate;
         
-        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
-         {
-             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-             if ([placemark.country length] != 0) {
-                 [LocationManager sharedManager].countryName = placemark.country;
-             } else {
-                 [LocationManager sharedManager].countryName = @"";
-             }
-             
-             if ([placemark.locality length] != 0) {
-                 [LocationManager sharedManager].cityName = placemark.locality;
-             }
-             
-             if ([placemark.administrativeArea length] != 0) {
-                 [LocationManager sharedManager].stateName = placemark.administrativeArea;
-             } else {
-                 [LocationManager sharedManager].cityName = @"";
-             }
-             
-             [LocationManager sharedManager].streetName = @"";
-             if ([placemark.thoroughfare length] != 0) {
-                 [LocationManager sharedManager].streetName = [NSString stringWithFormat:@"%@ %@", placemark.thoroughfare, placemark.subThoroughfare];
-             }
-             
-         }];
+        GMSGeocoder *geocode= [GMSGeocoder geocoder];
+        GMSReverseGeocodeCallback handler=^(GMSReverseGeocodeResponse *response,NSError *error)
+        {
+            GMSAddress *address=response.firstResult;
+            if (address)
+            {
+                [LocationManager sharedManager].countryName = address.country;
+                [LocationManager sharedManager].cityName = address.locality;
+                [LocationManager sharedManager].streetName = address.lines.firstObject;
+            }
+        };
+        [geocode reverseGeocodeCoordinate:location.coordinate completionHandler:handler];
+        
+//        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+//        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
+//         {
+//             CLPlacemark *placemark = [placemarks objectAtIndex:0];
+//             if ([placemark.country length] != 0) {
+//                 [LocationManager sharedManager].countryName = placemark.country;
+//             } else {
+//                 [LocationManager sharedManager].countryName = @"";
+//             }
+//
+//             if ([placemark.locality length] != 0) {
+//                 [LocationManager sharedManager].cityName = placemark.locality;
+//             }
+//
+//             if ([placemark.administrativeArea length] != 0) {
+//                 [LocationManager sharedManager].stateName = placemark.administrativeArea;
+//             } else {
+//                 [LocationManager sharedManager].cityName = @"";
+//             }
+//
+//             [LocationManager sharedManager].streetName = [[placemark addressDictionary] objectForKeyNotNull:(NSString *)CNPostalAddressStreetKey];
+////             if ([placemark.thoroughfare length] != 0) {
+////                 [LocationManager sharedManager].streetName = [NSString stringWithFormat:@"%@ %@", placemark.thoroughfare, placemark.subThoroughfare];
+////             }
+//
+//         }];
     }
 }
 

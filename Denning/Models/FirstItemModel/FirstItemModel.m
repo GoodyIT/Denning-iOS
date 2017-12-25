@@ -20,6 +20,7 @@
     model.footerValue = [response valueForKeyNotNull:@"footerValue"];
     model.footerValueColor = [response valueForKeyNotNull:@"footerValueColor"];
     model.icon = [response valueForKeyNotNull:@"icon"];
+    model.formName = [response valueForKeyNotNull:@"formName"];
     model.itemId = [response valueForKeyNotNull:@"itemId"];
     model.mainAPI = [response valueForKeyNotNull:@"mainAPI"];
     model.mainValue = [response valueForKeyNotNull:@"mainValue"];

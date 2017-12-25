@@ -46,6 +46,10 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
     [QMCore.instance.chatService addDelegate:self];
 }
 
+- (IBAction)dismissScreen:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)updateGroupHeaderView {
     
     [self.headerView setTitle:self.chatDialog.name avatarUrl:self.chatDialog.photo];

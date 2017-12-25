@@ -11,6 +11,8 @@
 #import "QMMapView.h"
 #import "QMLocationButton.h"
 #import "QMLocationPinView.h"
+@import GoogleMaps;
+#import <GooglePlaces/GooglePlaces.h>
 
 static const CGFloat kQMLocationButtonSize = 44.0f;
 static const CGFloat kQMLocationButtonSpacing = 16.0f;
@@ -116,16 +118,43 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
     [MKMapItem openMapsWithItems:@[currentLocationMapItem, mapItem] launchOptions:launchOptions];
 }
 
+
+// not used
+- (void) googleAutocomplete:(NSString*) hint {
+    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+    filter.type = kGMSPlacesAutocompleteTypeFilterNoFilter;
+    
+    GMSPlacesClient *placeClient = [GMSPlacesClient sharedClient];
+    [placeClient autocompleteQuery:hint
+                            bounds:nil
+                            filter:filter
+                          callback:^(NSArray *results, NSError *error) {
+                              if (error != nil) {
+                                  NSLog(@"Autocomplete error %@", [error localizedDescription]);
+                                  return;
+                              }
+                              
+//                              GMSAutocompletePrediction* result = results.firstObject;
+                              
+                          }];
+}
+
 - (void) _openGoogleMap {
-    if ([[UIApplication sharedApplication] canOpenURL:
-         [NSURL URLWithString:@"comgooglemaps://"]]) {
-        NSString* googleMapString = [NSString stringWithFormat:@"comgooglemaps://?center=%lf,%lf&zoom=14&views=traffic", targetLocation.latitude, targetLocation.longitude];
-        [[UIApplication sharedApplication] openURL:
-         [NSURL URLWithString:googleMapString]];
-    } else {
-        [[UIApplication sharedApplication] openURL:[NSURL
-                                                    URLWithString:@"https://itunes.apple.com/us/app/google-maps-gps-navigation/id585027354"]];
-    }
+
+    NSString* url = [NSString stringWithFormat:GOOGLE_MAP_REVERSE_URL, targetLocation.latitude, targetLocation.longitude, kGoogleMapAPIKey];
+    [[QMNetworkManager sharedManager] sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        NSString* addr = [((NSArray*)[result objectForKeyNotNull:@"results"]).firstObject valueForKeyNotNull:@"formatted_address"];
+        NSString* addrForMap = [[addr componentsSeparatedByString:@" "] componentsJoinedByString:@"+"];
+        if ([[UIApplication sharedApplication] canOpenURL:
+             [NSURL URLWithString:@"comgooglemaps-x-callback:://"]]) {
+            NSString* googleMapString = [NSString stringWithFormat:@"comgooglemaps-x-callback://?f=d&daddr=%@&sll=%lf,%lf&sspn=0.2,0.1&nav=1&x-success=sourceapp://?resume=true&x-source=DenningApp", addrForMap, targetLocation.latitude, targetLocation.longitude];
+            [[UIApplication sharedApplication] openURL:
+             [NSURL URLWithString:googleMapString]];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL
+                                                        URLWithString:@"https://itunes.apple.com/us/app/google-maps-gps-navigation/id585027354"]];
+        }
+    }];
 }
 
 - (void) _openWaze {
@@ -148,6 +177,11 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
     [UIAlertController alertControllerWithTitle:@"Denning"
                                         message:nil
                                  preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:nil]];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"Open in Maps" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self _openAppleMap];
     }]];

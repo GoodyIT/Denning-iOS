@@ -40,6 +40,7 @@
 #import "UIScreen+QMLock.h"
 #import "QMImageBarButtonItem.h"
 
+
 // external
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AVKit/AVKit.h>
@@ -141,6 +142,9 @@ QMUsersServiceDelegate
  *  Group avatar bar button item. Is used for right bar button item.
  */
 @property (strong, nonatomic)  QMImageBarButtonItem *imageBarButtonItem;
+
+@property (strong, nonatomic) UINavigationController *nav;
+@property (weak, nonatomic) QBRTCSession *session;
 
 @end
 
@@ -1563,6 +1567,9 @@ QMUsersServiceDelegate
         
         QMGroupInfoViewController *groupInfoVC = segue.destinationViewController;
         groupInfoVC.chatDialog = sender;
+        groupInfoVC.updateChatDialog = ^(QBChatDialog * _Nonnull chatDialog) {
+            _chatDialog = chatDialog;
+        };
     } else if ([segue.identifier isEqualToString:kSaveFileSegue]) {
         UINavigationController* nav = segue.destinationViewController;
         FileSaveViewController *vc = (FileSaveViewController*)nav.topViewController;
@@ -1593,6 +1600,10 @@ QMUsersServiceDelegate
         
         return;
     }
+    
+//    NSArray* opponentIDs = @[@([self.chatDialog opponentID])];
+    
+//    [QMCore.instance.callManager callToUserWithIDs:[opponentIDs mutableCopy] conferenceType:QBRTCConferenceTypeAudio];
     
     [QMCore.instance.callManager callToUserWithID:[self.chatDialog opponentID]
                                    conferenceType:QBRTCConferenceTypeAudio];

@@ -35,7 +35,6 @@ QMUsersServiceDelegate
 
 @property (weak, nonatomic) BFTask *leaveTask;
 @property (weak, nonatomic) BFTask *addUserTask;
-@property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
 
 @end
 
@@ -51,7 +50,7 @@ QMUsersServiceDelegate
     
     // configure data sources
     [self configureDataSource];
-    
+  
     // subscribe for delegates
     [QMCore.instance.chatService addDelegate:self];
     [QMCore.instance.contactListService addDelegate:self];
@@ -67,12 +66,12 @@ QMUsersServiceDelegate
     // smooth rows deselection
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
-
 - (void)configureDataSource {
     
     self.dataSource = [[QMGroupOccupantsDataSource alloc] init];
     self.tableView.dataSource = self.dataSource;
     
+    self.dataSource.chatDialog = _chatDialog;
     @weakify(self);
     self.dataSource.didAddUserBlock = ^(UITableViewCell *cell) {
         
@@ -170,7 +169,8 @@ QMUsersServiceDelegate
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:kNilOptions
                                                                    error:&serializationError];
-            NSLog(@"%@", json);
+            NSNumber* enable = [[json objectForKeyNotNull:@"notifications"] valueForKeyNotNull:@"enabled"];
+            [QMCore.instance.chatManager changeCustomData:@{@"notifications":enable} forGroupChatDialog:_chatDialog];
         }
     }];
     

@@ -68,6 +68,13 @@ PODS:
   - FSCalendar (2.7.9)
   - FZAccordionTableView (0.2.3)
   - GLCalendarView (1.0.3)
+  - GoogleMaps (2.5.0):
+    - GoogleMaps/Maps (= 2.5.0)
+  - GoogleMaps/Base (2.5.0)
+  - GoogleMaps/Maps (2.5.0):
+    - GoogleMaps/Base
+  - GooglePlaces (2.5.0):
+    - GoogleMaps/Base (= 2.5.0)
   - GoogleToolboxForMac/DebugUtils (2.1.3):
     - GoogleToolboxForMac/Defines (= 2.1.3)
   - GoogleToolboxForMac/Defines (2.1.3)
@@ -163,7 +170,7 @@ PODS:
     - Bolts (>= 1.8.4)
     - QuickBlox (>= 2.11)
   - QuickBlox (2.14)
-  - Quickblox-WebRTC (2.5):
+  - Quickblox-WebRTC (2.6.3):
     - QuickBlox (>= 2.7)
   - Reachability (3.2)
   - Realm (3.0.2):
@@ -211,6 +218,8 @@ DEPENDENCIES:
   - FSCalendar
   - FZAccordionTableView (~> 0.2.3)
   - GLCalendarView (~> 1.0.0)
+  - GoogleMaps
+  - GooglePlaces
   - HMSegmentedControl
   - HTHorizontalSelectionList (~> 0.7.4)
   - JVFloatLabeledTextField
@@ -229,7 +238,7 @@ DEPENDENCIES:
   - QMChatViewController
   - QMServices
   - QuickBlox
-  - Quickblox-WebRTC (= 2.5)
+  - Quickblox-WebRTC (= 2.6.3)
   - Reachability (~> 3.2)
   - Realm
   - RWDropdownMenu (~> 1.0.0)
@@ -285,6 +294,8 @@ SPEC CHECKSUMS:
   FSCalendar: a04b09f16f811bc92e82f3cf852a15225233b9d5
   FZAccordionTableView: e64f49c71c32d750feda14025b088bcd25d1a71f
   GLCalendarView: f3a71aca59f456b81abad9667dc5985c46810996
+  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
+  GooglePlaces: dd70d9d71ea1c7944846afe67de3712c99b30a77
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
   HMSegmentedControl: b25bc4ec44766e073d62c473188fb354ee244b76
@@ -307,7 +318,7 @@ SPEC CHECKSUMS:
   QMChatViewController: eba84344fa542f905033bb49492d7abccd80e9c7
   QMServices: 4aa2f43bf2700cda436a30c5d82bfe200cd394ea
   QuickBlox: d40cd742985908ce7809058e5a63f1e3581165a0
-  Quickblox-WebRTC: 79a88793ce090d2516963fe207f4d8eeecdb8b4f
+  Quickblox-WebRTC: 1838368795c479dd61796a3423ce9e74a90fe939
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
   RWDropdownMenu: c7fda4b7adf4f3f63a46d96359c2f490a7713795
@@ -329,6 +340,6 @@ SPEC CHECKSUMS:
   UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
 
-PODFILE CHECKSUM: e5faf21c437ffdc8814a5f9da6a6aff079851ff8
+PODFILE CHECKSUM: 23587da8cd8c4611321f6cd7675fcbdc9a3f43da
 
 COCOAPODS: 1.3.1

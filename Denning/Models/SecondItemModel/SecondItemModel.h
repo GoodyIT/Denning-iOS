@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString* OR;
 @property (strong, nonatomic) NSString* RM;
 @property (strong, nonatomic) NSString* api;
+@property (strong, nonatomic) NSString* formName;
 @property (strong, nonatomic) NSString* deposited;
 @property (strong, nonatomic) NSString* itemId;
 @property (strong, nonatomic) NSString* label;

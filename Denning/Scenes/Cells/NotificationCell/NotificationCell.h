@@ -10,5 +10,5 @@
 #import "QMTableViewCell.h"
 
 @interface NotificationCell : QMTableViewCell
-@property (weak, nonatomic) IBOutlet UISwitch *notificaitonSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *notificationSwitch;
 @end

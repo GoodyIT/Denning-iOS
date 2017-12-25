@@ -345,7 +345,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMGroupInfoViewController" id="OKo-87-3Ut" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehM-fF-IK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1135" y="-7294"/>
+            <point key="canvasLocation" x="-308" y="-7295"/>
         </scene>
         <!--DocumentView-->
         <scene sceneID="xgs-4g-19O">
@@ -380,7 +380,7 @@ out here.</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eJH-aZ-1qy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1508.5" y="-7935.5"/>
+            <point key="canvasLocation" x="-1351" y="-7935"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="zvx-HP-U4G">
@@ -415,7 +415,6 @@ out here.</string>
                         <segment title="All"/>
                         <segment title="Colleagues"/>
                         <segment title="Clients"/>
-                        <segment title="Matters"/>
                     </segments>
                     <color key="tintColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
@@ -431,7 +430,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMUserInfoNavigation" id="Vi6-Ys-ZwG" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wlL-qq-ZCQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1797" y="-7294"/>
+            <point key="canvasLocation" x="-736" y="-7295"/>
         </scene>
         <!--DashboardContactNavigation-->
         <scene sceneID="qVU-b2-jG2">
@@ -474,7 +473,6 @@ out here.</string>
                         <segment title="All"/>
                         <segment title="Colleagues"/>
                         <segment title="Clients"/>
-                        <segment title="Matters"/>
                     </segments>
                     <color key="tintColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
@@ -482,7 +480,7 @@ out here.</string>
                     </connections>
                 </segmentedControl>
             </objects>
-            <point key="canvasLocation" x="-2547" y="-7023"/>
+            <point key="canvasLocation" x="-2359" y="-7023"/>
         </scene>
         <!--Groups-->
         <scene sceneID="Zfk-rC-Hpf">
@@ -512,7 +510,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aIF-hn-5zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Vcw-rZ-14B">
-                    <rect key="frame" x="0.0" y="0.0" width="324" height="30"/>
+                    <rect key="frame" x="0.0" y="-1" width="324" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="All"/>
@@ -526,7 +524,7 @@ out here.</string>
                     </connections>
                 </segmentedControl>
             </objects>
-            <point key="canvasLocation" x="-2519" y="-6246"/>
+            <point key="canvasLocation" x="-2343" y="-6299"/>
         </scene>
         <!--Auth-->
         <scene sceneID="rgS-VI-1Ze">
@@ -633,7 +631,7 @@ out here.</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FY9-Je-Dwu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1562" y="-6277"/>
+            <point key="canvasLocation" x="-1481" y="-6299"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EFo-f2-PZm">

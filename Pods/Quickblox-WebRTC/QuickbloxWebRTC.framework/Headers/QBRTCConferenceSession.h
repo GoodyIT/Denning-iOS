@@ -25,17 +25,26 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @see QBRTCConferenceClientDelegate
  */
-@property (nonatomic, strong, readonly, nullable) NSNumber *ID;
+@property (strong, nonatomic, readonly, nullable) NSNumber *ID;
 
 /**
  *  Session chat dialog ID.
  */
-@property (nonatomic, strong, readonly) NSString *chatDialogID;
+@property (strong, nonatomic, readonly) NSString *chatDialogID;
 
 /**
  *  Session current active publishers list.
  */
-@property (nonatomic, strong, readonly) NSArray <NSNumber *> *publishersList;
+@property (strong, nonatomic, readonly) NSArray <NSNumber *> *publishersList;
+
+/**
+ *  Request list of online participants in current room.
+ *
+ *  @note Session must receive session created callback first from server.
+ *
+ *  @param completionBlock completion block with publishers and listeners list
+ */
+- (void)listOnlineParticipantsWithCompletionBlock:(void(^)(NSArray <NSNumber *> *publishers, NSArray <NSNumber *> *listeners))completionBlock;
 
 /**
  *  Perform join room as publisher.

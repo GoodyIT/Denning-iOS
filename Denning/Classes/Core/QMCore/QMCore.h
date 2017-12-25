@@ -20,6 +20,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define Core [QMCore instance]
+
 /**
  *  This class represents basic control on QMServices.
  */

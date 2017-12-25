@@ -141,27 +141,41 @@
 
 - (BFTask*) changeTag:(NSString*) tag forGroupChatDialog :(QBChatDialog *)chatDialog {
     NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
-    chatDialog.data = @{@"tag": tag};
-     return make_task(^(BFTaskCompletionSource *source) {
-         @weakify(self);
-         [QBRequest updateDialog:chatDialog successBlock:^(QBResponse *response, QBChatDialog *updatedDialog) {
-             
-             @strongify(self)
-             [self.serviceManager.chatService.dialogsMemoryStorage addChatDialog:updatedDialog
-                                                  andJoin:YES
-                                               completion:^(QBChatDialog *addedDialog, NSError *error)
-              {
-                  
-                  [source setResult:updatedDialog];
-              }];
-             
-         } errorBlock:^(QBResponse *response) {
-             
-             [self.serviceManager handleErrorResponse:response];
-             
+    
+    NSDictionary* tagData = @{@"tag": tag};
+    return [self changeCustomData:tagData forGroupChatDialog:chatDialog];
+}
+
+- (BFTask*) changeCustomData:(NSDictionary*) data forGroupChatDialog:(QBChatDialog *)chatDialog {
+    NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
+    NSMutableDictionary* customData = [@{@"class_name":@"dialog_data"} mutableCopy];
+    [customData addEntriesFromDictionary:data];
+    chatDialog.data = [customData copy];
+    return make_task(^(BFTaskCompletionSource *source) {
+        @weakify(self);
+        [QBRequest updateDialog:chatDialog successBlock:^(QBResponse *response, QBChatDialog *updatedDialog) {
+            
+            @strongify(self)
+            [self.serviceManager.chatService.dialogsMemoryStorage addChatDialog:updatedDialog
+                                                                        andJoin:YES
+                                                                     completion:^(QBChatDialog *addedDialog, NSError *error)
+             {
+                 [QMCore.instance.chatService.dialogsMemoryStorage addChatDialog:updatedDialog
+                                                      andJoin:YES
+                                                   completion:^(QBChatDialog *addedDialog, NSError *error)
+                  {
+                      [source setResult:updatedDialog];
+                  }];
+                 
+             }];
+            
+        } errorBlock:^(QBResponse *response) {
+            
+            [self.serviceManager handleErrorResponse:response];
+            
             [source setError:response.error.error];
-         }];
-     });
+        }];
+    });
 }
 
 @end

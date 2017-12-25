@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return Current opponent user if session exists
  */
-- (nullable QBUUser *)opponentUser;
+- (NSArray<QBUUser*>*)opponentUsers;
 
 /**
  *  Stop all active sounds and its timers.

@@ -12,15 +12,26 @@
 #import "QMSoundManager.h"
 #import "QMPermissions.h"
 #import "QMNotification.h"
+#import "SessionSettingsViewController.h"
+#import "CallViewController.h"
+#import "IncomingCallViewController.h"
+#import "CallKitManager.h"
 
 static const NSTimeInterval kQMAnswerTimeInterval = 60.0f;
 static const NSTimeInterval kQMDialingTimeInterval = 5.0f;
 static const NSTimeInterval kQMCallViewControllerEndScreenDelay = 1.0f;
 
+const NSUInteger kQBPageSize = 50;
+static NSString * const kAps = @"aps";
+static NSString * const kAlert = @"alert";
+static NSString * const kVoipEvent = @"VOIPCall";
+
 @interface QMCallManager ()
 
 <
-QBRTCClientDelegate
+QBRTCClientDelegate,
+IncomingCallViewControllerDelegate,
+PKPushRegistryDelegate
 >
 
 @property (weak, nonatomic) QMCore <QMServiceManagerProtocol>*serviceManager;
@@ -31,6 +42,11 @@ QBRTCClientDelegate
 @property (strong, nonatomic) NSTimer *soundTimer;
 
 @property (strong, nonatomic) UIWindow *callWindow;
+
+@property (strong, nonatomic) PKPushRegistry *voipRegistry;
+@property (strong, nonatomic) NSUUID *callUUID;
+@property (assign, nonatomic) UIBackgroundTaskIdentifier backgroundTask;
+
 
 @end
 
@@ -46,6 +62,10 @@ QBRTCClientDelegate
     _multicastDelegate = (id<QMCallManagerDelegate>)[[QBMulticastDelegate alloc] init];
     
     [[QBRTCClient instance] addDelegate:self];
+    
+    self.voipRegistry = [[PKPushRegistry alloc] initWithQueue:dispatch_get_main_queue()];
+    self.voipRegistry.delegate = self;
+    self.voipRegistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
 }
 
 //MARK: - Call managing
@@ -82,11 +102,6 @@ QBRTCClientDelegate
             return;
         }
         
-        [self startPlayingCallingSound];
-        
-        // instantiating view controller
-        QMCallState callState = conferenceType == QBRTCConferenceTypeVideo ? QMCallStateOutgoingVideoCall : QMCallStateOutgoingAudioCall;
-        
         QBUUser *opponentUser = [self.serviceManager.usersService.usersMemoryStorage userWithID:[opponentsIDs.firstObject integerValue]];
         QBUUser *currentUser = self.serviceManager.currentProfile.userData;
 
@@ -95,12 +110,46 @@ QBRTCClientDelegate
 
         [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
         
+        NSUUID *uuid = nil;
+        if (CallKitManager.isCallKitAvailable) {
+            uuid = [NSUUID UUID];
+            [CallKitManager.instance startCallWithUserIDs:opponentsIDs session:self.session uuid:uuid];
+        }
+        
+        CallViewController *callViewController = [[UIStoryboard storyboardWithName:@"Call" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewController"];
+        callViewController.session = self.session;
+        callViewController.callUUID = uuid;
         
         [self prepareCallWindow];
         
-        self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
+        self.callWindow.rootViewController = callViewController;
+
+        NSDictionary *payload = @{
+                                  @"message"  : [NSString stringWithFormat:@"%@ is calling you.", [QBSession currentSession].currentUser.fullName],
+                                  @"ios_voip" : @"1",
+                                  kVoipEvent  : @"1",
+                                  };
+        NSData *data =
+        [NSJSONSerialization dataWithJSONObject:payload
+                                        options:NSJSONWritingPrettyPrinted
+                                          error:nil];
+        NSString *message =
+        [[NSString alloc] initWithData:data
+                              encoding:NSUTF8StringEncoding];
         
-        [self.session startCall:nil];
+        QBMEvent *event = [QBMEvent event];
+        event.notificationType = QBMNotificationTypePush;
+        event.usersIDs = [opponentsIDs componentsJoinedByString:@","];
+        event.type = QBMEventTypeOneShot;
+        event.message = message;
+        
+        [QBRequest createEvent:event
+                  successBlock:^(QBResponse *response, NSArray<QBMEvent *> *events) {
+                      NSLog(@"Send voip push - Success");
+                  } errorBlock:^(QBResponse * _Nonnull response) {
+                      NSLog(@"Send voip push - Error");
+                  }];
+        
         self.hasActiveCall = YES;
     }];
 }
@@ -189,28 +238,28 @@ QBRTCClientDelegate
 
 //MARK: - Getters
 
-- (QBUUser *)opponentUser {
+- (NSArray*)opponentUsers {
     
     if (self.session == nil) {
         // no active session
         return nil;
     }
     
-    NSUInteger opponentID;
+    NSArray* opponentID;
     
     NSUInteger initiatorID = self.session.initiatorID.unsignedIntegerValue;
     if (initiatorID == self.serviceManager.currentProfile.userData.ID) {
         
-        opponentID = [self.session.opponentsIDs.firstObject unsignedIntegerValue];
+        opponentID = [self.session.opponentsIDs copy];
     }
     else {
         
-        opponentID = initiatorID;
+        opponentID = @[@(initiatorID)];
     }
     
-    QBUUser *opponentUser = [self.serviceManager.usersService.usersMemoryStorage userWithID:opponentID];
+    NSArray<QBUUser *> *opponentUsers = [self.serviceManager.usersService.usersMemoryStorage usersWithIDs:opponentID];
     
-    return opponentUser;
+    return opponentUsers;
 }
 
 //MARK: - QBRTCClientDelegate
@@ -219,7 +268,7 @@ QBRTCClientDelegate
     
     if (self.session != nil) {
         // session in progress
-        [session rejectCall:nil];
+        [session rejectCall:@{@"reject" : @"busy"}];
         // sending appropriate notification
         QBChatMessage *message = [self _callNotificationMessageForSession:session state:QMCallNotificationStateMissedNoAnswer];
         [self _sendNotificationMessage:message];
@@ -236,11 +285,40 @@ QBRTCClientDelegate
     
     [self startPlayingRingtoneSound];
     
-    // initializing controller
-    QMCallState callState = session.conferenceType == QBRTCConferenceTypeVideo ? QMCallStateIncomingVideoCall : QMCallStateIncomingAudioCall;
+//    // initializing controller
+//    QMCallState callState = session.conferenceType == QBRTCConferenceTypeVideo ? QMCallStateIncomingVideoCall : QMCallStateIncomingAudioCall;
     
     [self prepareCallWindow];
-    self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
+//    self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
+    
+    if (CallKitManager.isCallKitAvailable) {
+        self.callUUID = [NSUUID UUID];
+        NSMutableArray *opponentIDs = [@[session.initiatorID] mutableCopy];
+        for (NSNumber *userID in session.opponentsIDs) {
+            if ([userID integerValue] != [QMCore instance].currentUser.ID) {
+                [opponentIDs addObject:userID];
+            }
+        }
+        __weak __typeof(self)weakSelf = self;
+        [CallKitManager.instance reportIncomingCallWithUserIDs:[opponentIDs copy] session:session uuid:self.callUUID onAcceptAction:^{
+            __typeof(weakSelf)strongSelf = weakSelf;
+            CallViewController *callViewController =
+            [[UIStoryboard storyboardWithName:@"Call" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewController"];;
+            
+            callViewController.session = session;
+            callViewController.callUUID = strongSelf.callUUID;
+            strongSelf.callWindow.rootViewController = callViewController;
+            
+        } completion:nil];
+    }
+    else {
+        
+        IncomingCallViewController *incomingViewController =
+        [[UIStoryboard storyboardWithName:@"Call" bundle:nil] instantiateViewControllerWithIdentifier:@"IncomingCallViewController"];
+        incomingViewController.delegate = self;
+        incomingViewController.session = session;
+        
+    }
 }
 
 - (void)session:(QBRTCSession *)__unused session updatedStatsReport:(QBRTCStatsReport *)__unused report forUserID:(NSNumber *)__unused userID {
@@ -278,6 +356,67 @@ QBRTCClientDelegate
         self.session = nil;
     });
 }
+
+- (void)incomingCallViewController:(IncomingCallViewController *)vc didAcceptSession:(QBRTCSession *)session {
+    
+    CallViewController *callViewController =
+    [[UIStoryboard storyboardWithName:@"Call" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewController"];
+    
+    callViewController.session = session;
+    self.callWindow.rootViewController = callViewController;
+}
+
+- (void)incomingCallViewController:(IncomingCallViewController *)vc didRejectSession:(QBRTCSession *)session {
+    
+    [session rejectCall:nil];
+}
+
+// MARK: - PKPushRegistryDelegate protocol
+
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials:(PKPushCredentials *)pushCredentials forType:(PKPushType)type {
+    
+    //  New way, only for updated backend
+    NSString *deviceIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    QBMSubscription *subscription = [QBMSubscription subscription];
+    subscription.notificationChannel = QBMNotificationChannelAPNSVOIP;
+    subscription.deviceUDID = deviceIdentifier;
+    subscription.deviceToken = [self.voipRegistry pushTokenForType:PKPushTypeVoIP];
+    
+    [QBRequest createSubscription:subscription successBlock:^(QBResponse *response, NSArray *objects) {
+        NSLog(@"Create Subscription request - Success");
+    } errorBlock:^(QBResponse *response) {
+        NSLog(@"Create Subscription request - Error");
+    }];
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didInvalidatePushTokenForType:(PKPushType)type {
+    NSString *deviceIdentifier = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    [QBRequest unregisterSubscriptionForUniqueDeviceIdentifier:deviceIdentifier successBlock:^(QBResponse * _Nonnull response) {
+        NSLog(@"Unregister Subscription request - Success");
+    } errorBlock:^(QBError * _Nonnull error) {
+        NSLog(@"Unregister Subscription request - Error");
+    }];
+}
+
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type {
+    if (CallKitManager.isCallKitAvailable) {
+        if ([payload.dictionaryPayload objectForKey:kVoipEvent] != nil) {
+            UIApplication *application = [UIApplication sharedApplication];
+            if (application.applicationState == UIApplicationStateBackground
+                && _backgroundTask == UIBackgroundTaskInvalid) {
+                _backgroundTask = [application beginBackgroundTaskWithExpirationHandler:^{
+                    [application endBackgroundTask:_backgroundTask];
+                    _backgroundTask = UIBackgroundTaskInvalid;
+                }];
+            }
+            if (![QBChat instance].isConnected) {
+                [[QMCore instance] login];
+            }
+        }
+    }
+}
+
 
 //MARK: - Multicast delegate
 

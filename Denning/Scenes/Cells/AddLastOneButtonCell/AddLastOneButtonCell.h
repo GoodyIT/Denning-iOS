@@ -15,5 +15,4 @@ typedef void (^CalculateHandler)(void);
 @property (weak, nonatomic) IBOutlet UIButton *calculateBtn;
 @property (strong, nonatomic) CalculateHandler calculateHandler;
 
-
 @end

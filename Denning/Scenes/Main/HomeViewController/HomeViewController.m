@@ -339,7 +339,7 @@ iCarouselDataSource, iCarouselDelegate>
     }
 }
 
-- (void) getAttendanceModel {
+- (void) getAttendance {
     if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
         [QMAlert showAlertWithMessage:@"This function is revserved for only Staff." actionSuccess:NO inViewController:self];
     } else if ([CLLocationManager locationServicesEnabled] == NO) {
@@ -386,7 +386,7 @@ iCarouselDataSource, iCarouselDelegate>
         [self showComingSoon];
         
     } else if (indexPath.row == 8) { // Attendance
-        [self getAttendanceModel];
+        [self getAttendance];
     } else if (indexPath.row == 9) { // File Upload
         [self gotoUpload];
     } else if (indexPath.row == 10) { // Calendar

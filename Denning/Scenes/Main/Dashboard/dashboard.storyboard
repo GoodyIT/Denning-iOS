@@ -3392,7 +3392,7 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BwY-NX-0YN">
                                         <rect key="frame" x="322.5" y="20.5" width="44.5" height="48"/>
-                                        <state key="normal" image="ic_history">
+                                        <state key="normal" image="ic_history_white">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -3464,7 +3464,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TH9-uV-uQ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7230" y="6242"/>
+            <point key="canvasLocation" x="7225" y="6213"/>
         </scene>
         <!--CodeDescriptionNavigation-->
         <scene sceneID="8bY-69-7JY">
@@ -4217,7 +4217,7 @@
     </scenes>
     <resources>
         <image name="Back.png" width="18" height="18"/>
-        <image name="ic_history" width="48" height="48"/>
+        <image name="ic_history_white" width="48" height="48"/>
         <image name="icon_next" width="16" height="16"/>
         <image name="icon_overview" width="16" height="16"/>
         <image name="icon_prev.png" width="13" height="22"/>

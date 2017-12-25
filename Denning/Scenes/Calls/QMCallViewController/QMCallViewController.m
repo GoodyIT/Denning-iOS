@@ -153,7 +153,7 @@ QBRTCAudioSessionDelegate
 
 - (void)configureCallInfoView {
     
-    QBUUser *opponentUser = [QMCore.instance.callManager opponentUser];
+    QBUUser *opponentUser = [QMCore.instance.callManager opponentUsers].firstObject;
     
     if (self.callInfoView == nil) {
         // base call info view configuration

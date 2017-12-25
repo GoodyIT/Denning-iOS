@@ -15,6 +15,7 @@
 @property (strong, nonatomic) NSString* itemID;
 @property (strong, nonatomic) NSString* value;
 @property (strong, nonatomic) NSString* nextLevelForm;
+@property (strong, nonatomic) NSString* formName;
 
 + (ThirdItemModel*) getThirdItemFromResponse: (NSDictionary*) response;
 

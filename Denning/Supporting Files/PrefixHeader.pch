@@ -17,6 +17,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <Quickblox/Quickblox.h>
 #import <QuickbloxWebRTC/QuickbloxWebRTC.h>
+#import <PushKit/PushKit.h>
 
 #import "QBUpdateUserParameters+CustomData.h"
 #import "UIViewController+SmartDeselection.h"

@@ -476,6 +476,7 @@ didCompleteWithError:(NSError *)error{
 
     isLoading = NO;
     if (!error) {
+//        [self.uploadingIndicator removeFromParentViewController];
         [self dismissViewControllerAnimated:YES completion:nil];
         [self showAlertWithMessage:@"Success" actionSuccess:YES inViewController:self];
     }

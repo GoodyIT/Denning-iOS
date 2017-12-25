@@ -79,7 +79,7 @@
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
-- (void)keyboardWillHide:(NSNotification*)aNotification
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;

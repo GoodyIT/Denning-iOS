@@ -15,6 +15,9 @@
 #import "QMAlert.h"
 
 @interface QMLogInViewController ()
+{
+    __block BOOL isLoading;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
@@ -140,9 +143,36 @@
 
 - (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
     [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-    });
+    [self staffLogin:firmURLModel];
+}
+
+- (void) staffLogin:(FirmURLModel*)urlModel {
+    if (isLoading) return;
+    isLoading = YES;
+    
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_SIGNIN_URL];
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] staffSignIn:url password:[DataManager sharedManager].user.password withCompletion:^(NSDictionary * _Nonnull responseObject, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
+                [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
+                [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+                });
+            } else {
+                [QMAlert showAlertWithMessage:@"You have no access privilege to this firm." actionSuccess:NO inViewController:self];
+            }
+            
+        } else {
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
+        }
+    }];
 }
 
 - (void) manageFirmURL: (NSArray*) firmURLArray {
@@ -165,7 +195,6 @@
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-            
         });
     }
 }

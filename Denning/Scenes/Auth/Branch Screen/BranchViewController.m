@@ -133,7 +133,7 @@
             }
             
         } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
         }
     }];
 }

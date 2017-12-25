@@ -32,7 +32,6 @@
     
     __block Boolean isLoading, isAppending;
     
-    CGPoint originalContentOffset;
     CGRect originalFrame;
 }
 
@@ -53,6 +52,8 @@
     [self prepareUI];
     [self registerNibs];
     [self fillUpSubmittedBy];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,8 +70,6 @@
     [LeaveRecordCell registerForReuseInTableView:self.tableView];
     [FloatingTextCell registerForReuseInTableView:self.tableView];
     [LeaveRecordHeaderCell registerForReuseInTableView:self.tableView];
-    
-    [self.tableView reloadData];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification{
@@ -78,10 +77,7 @@
     CGRect keyboardFrame = [keyboardFrameValue CGRectValue];
     keyboardFrame = [self.view convertRect:keyboardFrame fromView:nil];
     
-    CGFloat tableViewHeight = CGRectGetMinY(keyboardFrame) - CGRectGetMinY(self.view.bounds);
-    
-    originalContentOffset = _tableView.contentOffset;
-    originalFrame = _tableView.frame;
+    CGFloat tableViewHeight = CGRectGetMinY(keyboardFrame) - CGRectGetMinY(self.view.bounds) - 50;
     
     // Get the duration of the animation.
     NSValue* animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -89,8 +85,8 @@
     [animationDurationValue getValue:&animationDuration];
     
     CGRect cellRect = [self.tableView rectForRowAtIndexPath:self.textFieldIndexPath];
-    CGFloat minCellOffsetY = CGRectGetMaxY(cellRect) - tableViewHeight + 10.0; // Add a small margin below the row
-    CGFloat maxCellOffsetY = CGRectGetMinY(cellRect) - 10.0; // Add a small margin above the row
+    CGFloat minCellOffsetY = CGRectGetMaxY(cellRect) - tableViewHeight + 60.0; // Add a small margin below the row
+    CGFloat maxCellOffsetY = CGRectGetMinY(cellRect); // Add a small margin above the row
     maxCellOffsetY = MAX(0.0, maxCellOffsetY);
     CGFloat maxContentOffsetY = self.tableView.contentSize.height - tableViewHeight;
     CGFloat scrollOffsetY = self.tableView.contentOffset.y;
@@ -103,7 +99,7 @@
         scrollOffsetY = maxCellOffsetY;
     }
     scrollOffsetY = MIN(scrollOffsetY, maxContentOffsetY);
-    CGPoint updatedContentOffset = CGPointMake(self.tableView.contentOffset.x, scrollOffsetY+50);
+    CGPoint updatedContentOffset = CGPointMake(self.tableView.contentOffset.x, scrollOffsetY);
     
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     [UIView animateWithDuration:animationDuration
@@ -116,7 +112,7 @@
                      }];
 }
 
-- (void)keyboardWillHide:(NSNotification *) __unused notification{
+- (void)keyboardWillBeHidden:(NSNotification *) __unused notification{
     // Get the duration of the animation.
     NSValue *animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration;
@@ -127,13 +123,51 @@
                      animations:^{
                      }
                      completion:^(BOOL finished) {
-                        self.tableView.frame = originalFrame;
-                         self.tableView.contentOffset = originalContentOffset;
+                         self.tableView.frame = originalFrame;
+                         self.tableView.contentOffset = CGPointZero;
+                         [self.tableView setNeedsLayout];
+                         [self.tableView layoutIfNeeded];
+                         [self loadViewIfNeeded];
                      }
      ];
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+     originalFrame = _tableView.frame;
+    [super viewWillAppear:animated];
+   
+    if (selectedPage == 0) {
+        [self.tableView removeInfiniteScroll];
+    } else {
+        CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+        // Set custom indicator
+        self.tableView.infiniteScrollIndicatorView = indicator;
+        // Set custom indicator margin
+        self.tableView.infiniteScrollIndicatorMargin = 40;
+        
+        // Set custom trigger offset
+        self.tableView.infiniteScrollTriggerOffset = 150;
+        
+        // Add infinite scroll handler
+        @weakify(self)
+        [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+            @strongify(self)
+            [self appendList];
+        }];
+    }
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    FloatingTextCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
+    
+    [cell.floatingTextField becomeFirstResponder];
+}
+
 - (void) prepareUI {
+   
+    
     typeOfLeaveCode = submittedByCode = @"";
     _staffName.text = [DataManager sharedManager].user.username;
     _listOfValsForApp = @[@"Start Date", @"End Date", @"Type Of Leave", @"No. of Days", @"Staff Remarks", @"Submitted By"];
@@ -144,22 +178,6 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
-    
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    // Set custom indicator
-    self.tableView.infiniteScrollIndicatorView = indicator;
-    // Set custom indicator margin
-    self.tableView.infiniteScrollIndicatorMargin = 40;
-    
-    // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 150;
-    
-    // Add infinite scroll handler
-    @weakify(self)
-    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
-        @strongify(self)
-        [self appendList];
-    }];
     
     // Tying up the segmented control to a scroll view
     HMSegmentedControl *selectionList = [[HMSegmentedControl alloc] initWithFrame:CGRectMake(0, 86, self.view.frame.size.width, 34)];
@@ -378,7 +396,7 @@
             return cell;
         }
         
-        UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
+        UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 40)];
         accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
         accessoryView.tintColor = [UIColor babyRed];
         
@@ -407,11 +425,13 @@
         } else if (indexPath.row == 3)  { // No Of Days
             cell.floatingTextField.text = noOfDays;
             cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
             cell.floatingTextField.userInteractionEnabled = YES;
         } else if (indexPath.row == 4)  { // Staff Remarks
             cell.accessoryType = UITableViewCellAccessoryNone;
              cell.floatingTextField.userInteractionEnabled = YES;
             cell.floatingTextField.text = staffRemarks;
+            
         } else if (indexPath.row == 5)  { // Submitted By
             cell.floatingTextField.text = submittedBy;
             cell.floatingTextField.userInteractionEnabled = NO;
@@ -486,14 +506,14 @@
         staffRemarks = textField.text;
     }
     
-    if ([textField.superview.superview isKindOfClass:[UITableViewCell class]])
-    {
-        CGPoint buttonPosition = [textField convertPoint:CGPointZero
-                                                  toView: _tableView];
-        NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:buttonPosition];
-        
-        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:TRUE];
-    }
+//    if ([textField.superview.superview isKindOfClass:[UITableViewCell class]])
+//    {
+//        CGPoint buttonPosition = [textField convertPoint:CGPointZero
+//                                                  toView: _tableView];
+//        NSIndexPath *indexPath = [_tableView indexPathForRowAtPoint:buttonPosition];
+//
+//        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:TRUE];
+//    }
 }
 
 #pragma mark - ContactListWithDescriptionDelegate

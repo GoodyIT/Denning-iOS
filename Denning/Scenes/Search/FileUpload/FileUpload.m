@@ -74,7 +74,7 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search=letter&pagesize=5"];
+    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search="];
 }
 
 - (IBAction)didTapSend:(id)sender {
@@ -82,11 +82,11 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
     isLoading = YES;
 
     if (self.imagePreview.image == nil) {
-        [QMAlert showAlertWithMessage:@"Please select the file to upload" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please select the file to upload." actionSuccess:NO inViewController:self];
         return;
     }
     if (self.renameFile.text.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please input the file name" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please input the file name." actionSuccess:NO inViewController:self];
         return;
     }
     NSData* imageData = UIImageJPEGRepresentation(self.imagePreview.image, 0.5);

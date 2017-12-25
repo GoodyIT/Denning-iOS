@@ -147,32 +147,28 @@ MEVFloatingButtonDelegate
     [self performSearch];
 }
 
--(NSArray*) filterDialogInArray:(NSArray*) contacts inDialogs:(NSMutableArray*) groupDialogs
+- (NSString*) getTag:(QBChatDialog*) dialog {
+    NSString* tag = [dialog.data valueForKeyNotNull:@"tag"];
+    return tag.length == 0 ? @"Colleagues" : tag;
+}
+
+-(NSArray*) filterDialogInArray:(NSMutableArray*) groupDialogs
 {
     NSMutableArray* clientDialgs = [NSMutableArray new];
     NSMutableArray* staffDialgs = [NSMutableArray new];
-    for (ChatFirmModel *chatFirmModel in contacts) {
-        for (ChatUserModel* chatUserModel in chatFirmModel.users) {
-            for (QBChatDialog* dialog in groupDialogs) {
-                NSArray* users = [[QMCore instance].contactManager friendsByIDs:dialog.occupantIDs];
-                BOOL isExist = NO;
-                for (QBUUser* user in users) {
-                    if ([[chatUserModel.email lowercaseString] isEqualToString:user.email]) {
-                        isExist = YES;
-                        break;
-                    }
-                }
-                
-                if (isExist) {
-                    [clientDialgs addObject:dialog];
-                } else {
-                    [staffDialgs addObject:dialog];
-                }
-            }
+    NSMutableArray* matterDialgs = [NSMutableArray new];
+    for (QBChatDialog* dialog in groupDialogs) {
+        
+        if ([[self getTag:dialog] isEqualToString:@"Colleagues"]) {
+            [staffDialgs addObject:dialog];
+        } else if ([[self getTag:dialog] isEqualToString:@"Clients"]) {
+            [clientDialgs addObject:dialog];
+        } else if ([[self getTag:dialog] isEqualToString:@"Matters"]){
+            [matterDialgs addObject:dialog];
         }
     }
     
-    return @[staffDialgs, clientDialgs];
+    return @[staffDialgs, clientDialgs, matterDialgs];
 }
 
 - (void) updateDataSourceByScope:(NSInteger) index {
@@ -187,7 +183,7 @@ MEVFloatingButtonDelegate
     }
     
     _items = _originItems = groupDialogs;
-    NSArray* filteredArray = [self filterDialogInArray:[DataManager sharedManager].clientContactsArray inDialogs:groupDialogs];
+    NSArray* filteredArray = [self filterDialogInArray:groupDialogs];
     switch (index) {
         case 0:
             // same as above
@@ -199,9 +195,8 @@ MEVFloatingButtonDelegate
             _items = _originItems = filteredArray[1];
             break;
             
-        case 3:
-            // Denning support
-            _items = _originItems = [NSMutableArray new];
+        case 3:// Denning support
+            _items = _originItems = filteredArray[2];
             break;
     }
 }
@@ -294,14 +289,14 @@ MEVFloatingButtonDelegate
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.definesPresentationContext = YES;
     [self.searchController.searchBar sizeToFit]; // iOS8 searchbar sizing
-    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 35)];
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 38)];
     [containerView addSubview:_searchController.searchBar];
     [containerView addSubview:_userTypeSegment];
     
     self.tableView.tableHeaderView =  containerView;
     
     [_userTypeSegment mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_searchController.searchBar.mas_bottom).offset(-5); //with is an optional semantic filler
+        make.top.equalTo(_searchController.searchBar.mas_bottom); //with is an optional semantic filler
         make.centerX.equalTo(containerView.mas_centerX);
         make.bottom.equalTo(containerView.mas_bottom).offset(-8);
     }];
@@ -425,7 +420,7 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)performSearch {
     
-    if (_filter == 0) {
+    if (_filter.length == 0) {
         
         _items = _originItems;
         [self.tableView reloadData];

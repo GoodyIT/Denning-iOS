@@ -42,9 +42,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     [self prepareUI];
-    [self addView:self.viewControllers[0]];
     [self setDefaultImageForButtons];
     [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"]
                         forState:UIControlStateNormal];
@@ -55,11 +53,16 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self addView:self.viewControllers[0]];
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self changeTitle];
-   
     [self configureBackBtnWithImageName:@"Back" withSelector:@selector(popupScreen:)];
     [self configureMenuRightBtnWithImagename:@"support" withSelector:@selector(denningSupport)];
  

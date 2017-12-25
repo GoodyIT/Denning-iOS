@@ -58,7 +58,7 @@ target 'Denning' do
   
   pod 'Realm'
   
-  pod 'Quickblox-WebRTC', ‘2.5’
+  pod 'Quickblox-WebRTC', ‘2.6.3’
   pod 'QuickBlox'
   pod 'QMChatViewController’
   pod 'QMServices'
@@ -66,6 +66,9 @@ target 'Denning' do
   pod 'FirebaseUI/Phone', '~> 4.0'
   
   pod 'ActionSheetPicker-3.0'
+  
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
   
   pod 'Fabric'
   pod 'Digits’, ‘1.15.3’

@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (copy, nonatomic) void (^didAddUserBlock)(UITableViewCell *cell);
 
+@property (strong, nonatomic) QBChatDialog* chatDialog;
+
 /**
  *  Index for user at index path.
  *
