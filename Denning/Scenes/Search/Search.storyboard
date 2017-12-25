@@ -1270,7 +1270,7 @@
                         <outlet property="backBtn" destination="FOf-Hy-V0O" id="V4R-s8-cp5"/>
                         <outlet property="cancelBtn" destination="8Eo-lY-203" id="Wip-Vh-jOE"/>
                         <outlet property="selectBtn" destination="OhZ-Na-XT6" id="5lo-hT-5bP"/>
-                        <outlet property="shareBtn" destination="SQX-4r-Omq" id="T3V-fr-fEy"/>
+                        <outlet property="sendBtn" destination="SQX-4r-Omq" id="Fzn-Ca-ZZj"/>
                         <segue destination="o56-L1-MzY" kind="show" identifier="DocumentPreviewSegue" id="X9J-I5-H0L"/>
                     </connections>
                 </tableViewController>

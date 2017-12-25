@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^UpdateDocumentFile)(NSURL* url);
+typedef void(^UpdateDocumentFile)(NSString* url);
 
 @interface DocumentViewController : BaseTableViewController
 

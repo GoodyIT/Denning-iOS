@@ -27,7 +27,7 @@
 
 @property (strong, nonatomic) UIImageView *postView;
 @property (strong, nonatomic) DocumentModel* originalDocumentModel;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareBtn;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *sendBtn;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelBtn;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *backBtn;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *selectBtn;
@@ -54,7 +54,12 @@
     if (self.previousScreen.length != 0) {
         [self prepareUI];
     }
-    [self updateButtonsToMatchTableState];
+    
+    if ([_custom isEqualToString:@"custom"]) {
+        self.navigationItem.rightBarButtonItem = self.selectBtn;
+        [self updateButtonsToMatchTableState];
+    }
+    
     [self setNeedsStatusBarAppearanceUpdate];
     
     self.originalDocumentModel = self.documentModel;
@@ -132,23 +137,28 @@
 }
 
 - (IBAction)didTapShare:(id)sender {
-//    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
 //    NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
-//    NSMutableArray* urlArray = [NSMutableArray new];
-//    for (NSIndexPath *selectionIndex in selectedRows)
-//    {
-//        if (selectionIndex.section == 0) {
-//            continue;
-//        }
-//        if (selectionIndex.section == 1) {
-//            FileModel* file = self.documentModel.documents[selectionIndex.row];
-//            [urlArray addObject:[self getFileURL:file]];
-//        } else {
-//            DocumentModel* model = self.documentModel.folders[selectionIndex.section-2];
-//            FileModel* file = model.documents[selectionIndex.row];
-//            [urlArray addObject:[self getFileURL:file]];
-//        }
-//    }
+    NSMutableArray* urlArray = [NSMutableArray new];
+    for (NSIndexPath *selectionIndex in selectedRows)
+    {
+        if (selectionIndex.section == 0) {
+            continue;
+        }
+        if (selectionIndex.section == 1) {
+            FileModel* file = self.documentModel.documents[selectionIndex.row];
+            [urlArray addObject:[self getFileURL:file]];
+        } else {
+            DocumentModel* model = self.documentModel.folders[selectionIndex.section-2];
+            FileModel* file = model.documents[selectionIndex.row];
+            [urlArray addObject:[self getFileURL:file]];
+        }
+    }
+    
+    NSString* sendString = [urlArray componentsJoinedByString:@"\n"];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        _updateHandler(sendString);
+    }];
 //
 //    NSMutableArray* localURLArray = [NSMutableArray new];
 //    for (NSURL* url in urlArray) {
@@ -296,7 +306,7 @@
 //        [self updateDeleteButtonTitle];
         
         // Show the delete button.
-        self.navigationItem.leftBarButtonItem = self.shareBtn;
+        self.navigationItem.leftBarButtonItem = self.sendBtn;
     }
     else
     {
@@ -321,7 +331,7 @@
         self.navigationItem.rightBarButtonItem = self.selectBtn;
     }
     
-    self.navigationItem.rightBarButtonItem = nil;
+//    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void) popupScreen:(id)sender {
@@ -483,10 +493,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         return cell;
     } else if (indexPath.section == 1) {
         DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
-        if ([_custom isEqualToString:@"custom"]) {
-            cell.delegate = self;
-            cell.leftUtilityButtons = [self leftButtons];
-        }
+       
         FileModel* file = self.documentModel.documents[indexPath.row];
         [cell configureCellWithFileModel:file
          ];
@@ -496,10 +503,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     }
     
     DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
-    if ([_custom isEqualToString:@"custom"]) {
-        cell.delegate = self;
-        cell.leftUtilityButtons = [self leftButtons];
-    }
+    
     DocumentModel* model = self.documentModel.folders[indexPath.section-2];
     FileModel* file = model.documents[indexPath.row];
     [cell configureCellWithFileModel:file
@@ -507,46 +511,6 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
 
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
-}
-
-
-- (NSArray *)leftButtons
-{
-    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
-    
-    UIFont *font = [UIFont fontWithName:@"SFUIText-Medium" size:17.0f];
-    NSAttributedString* callString = [[NSAttributedString alloc] initWithString:@"Select" attributes:@{NSFontAttributeName: font, NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
-    [leftUtilityButtons sw_addUtilityButtonWithColor:[UIColor redColor] attributedTitle:callString];
-    
-    return leftUtilityButtons;
-}
-
-#pragma mark - SWTableViewDelegate
-
-- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
-{
-    return YES;
-}
-
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index {
-    [cell hideUtilityButtonsAnimated:YES];
-    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-    FileModel* file;
-    if (indexPath.section == 1){
-        file = self.documentModel.documents[indexPath.row];
-    } else if (indexPath.section == 2){
-        DocumentModel* model = self.documentModel.folders[indexPath.section-2];
-        file = model.documents[indexPath.row];
-    }
-    NSURL* path =  [self getFileURL:file];
-    switch (index) {
-        case 0:
-            [self.navigationController dismissViewControllerAnimated:YES completion:^{
-                _updateHandler(path);
-            }];
-            break;
-    }
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

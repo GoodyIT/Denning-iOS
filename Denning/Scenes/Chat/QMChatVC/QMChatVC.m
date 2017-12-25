@@ -1579,8 +1579,8 @@ QMUsersServiceDelegate
         UINavigationController* nav = segue.destinationViewController;
         ChatFileListViewController *vc = (ChatFileListViewController*)nav.topViewController;
         vc.initialKeyword = sender;
-        vc.updateHandler = ^(NSURL *url) {
-            QBChatMessage *message = [QMMessagesHelper chatMessageWithText:url.absoluteString
+        vc.updateHandler = ^(NSString *url) {
+            QBChatMessage *message = [QMMessagesHelper chatMessageWithText:url
                                                                   senderID:self.senderID
                                                               chatDialogID:self.chatDialog.ID
                                                                   dateSent:[NSDate date]];
