@@ -197,9 +197,6 @@
     UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
     documentInteractionController.delegate = self;
     [documentInteractionController presentPreviewAnimated:YES];
- //  _viewController.navigationItem.rightBarButtonItem = nil;
-    
-//    [self initiateQuickLoookController];
 }
 
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
