@@ -25,7 +25,6 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 @property (weak, nonatomic) IBOutlet UITextField *groupNameField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tagSegment;
 
-@property (strong, nonatomic) NSMutableIndexSet *hiddenSections;
 @end
 
 @implementation QMGroupNameViewController
@@ -56,8 +55,6 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
     
     selectedTag = [self getTag];
     
-    
-    
     _tagSegment.selectedSegmentIndex = [self getTagAsIndex:selectedTag];
 }
 
@@ -78,12 +75,10 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 }
 
 - (void) updateGroupType {
-    self.hiddenSections = [NSMutableIndexSet indexSet];
-    
     if  (![[DataManager sharedManager] isDenningUser]) {
         [_tagSegment removeSegmentAtIndex:3 animated:YES];
         if ([self isSupportChat]) {
-            [self.hiddenSections addIndex:DIGroupTypeSection];
+            
         }
     }
 }
@@ -162,6 +157,18 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
         tagChanged = YES;
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (![[DataManager sharedManager] isDenningUser]) {
+        [_tagSegment removeSegmentAtIndex:3 animated:YES];
+        if ([self isSupportChat]) {
+            return 1;
+        }
+    }
+    
+    return 2;
 }
 
 @end
