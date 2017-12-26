@@ -335,7 +335,7 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSMutableArray *dialogsSearchResult = [NSMutableArray new];
     for (QBChatDialog* dialog in _originItems) {
-        if ([dialog.name containsString:_filter.lowercaseString]) {
+        if ([dialog.name localizedCaseInsensitiveContainsString:_filter]) {
             [dialogsSearchResult addObject:dialog];
         }
     }

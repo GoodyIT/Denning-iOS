@@ -370,6 +370,7 @@ PKPushRegistryDelegate
 - (void)incomingCallViewController:(IncomingCallViewController *)vc didRejectSession:(QBRTCSession *)session {
     
     [session rejectCall:nil];
+    [QMCore.instance.callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
 }
 
 // MARK: - PKPushRegistryDelegate protocol

@@ -243,6 +243,7 @@ static const NSInteger QBDefaultMaximumCallGroups = 1;
         }
         else {
             [session rejectCall:nil];
+            [QMCore.instance.callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
         }
         
         [action fulfillWithDateEnded:[NSDate date]];
@@ -294,16 +295,16 @@ static const NSInteger QBDefaultMaximumCallGroups = 1;
 - (CXHandle *)handleForUserIDs:(NSArray *)userIDs outCallerName:(NSString **)outCallerName {
     // handle user from whatever database here
     if (outCallerName != NULL) {
-        NSArray *opponentNames = [QMCore.instance.usersService.usersMemoryStorage usersWithIDs:userIDs];
-        *outCallerName = [opponentNames componentsJoinedByString:@", "];
+        NSArray *opponentUsers = [QMCore.instance.usersService.usersMemoryStorage usersWithIDs:userIDs];
+        *outCallerName = [QMCore.instance.usersService.usersMemoryStorage joinedNamesbyUsers:opponentUsers];
     }
     
-    if (userIDs.count == 1) {
-        QBUUser *user = [QMCore.instance.usersService.usersMemoryStorage userWithID:[[userIDs firstObject] integerValue]];
-        if (user.phone.length > 0) {
-            return [[CXHandle alloc] initWithType:CXHandleTypePhoneNumber value:user.phone];
-        }
-    }
+//    if (userIDs.count == 1) {
+//        QBUUser *user = [QMCore.instance.usersService.usersMemoryStorage userWithID:[[userIDs firstObject] integerValue]];
+//        if (user.phone.length > 0) {
+//            return [[CXHandle alloc] initWithType:CXHandleTypePhoneNumber value:user.phone];
+//        }
+//    }
     
     return [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[userIDs componentsJoinedByString:@", "]];
 }

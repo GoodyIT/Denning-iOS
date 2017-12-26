@@ -18,7 +18,6 @@
 #import "QMCore.h"
 #import "QMTasks.h"
 
-#import "QMContactCell.h"
 #import "QMNoContactsCell.h"
 #import "QMNoResultsCell.h"
 #import "ChatContactCell.h"
@@ -570,8 +569,6 @@ SWTableViewCellDelegate
 - (void)registerNibs {
     
     [ChatContactCell registerForReuseInTableView:self.tableView];
-    
-    [QMContactCell registerForReuseInTableView:self.tableView];
     
     [QMNoContactsCell registerForReuseInTableView:self.tableView];
 }

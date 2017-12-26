@@ -87,7 +87,6 @@
 		7912A5921FE4F04D00C8B9A5 /* FileSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7912A5901FE4F04D00C8B9A5 /* FileSearchCell.xib */; };
 		7912A5941FE5066B00C8B9A5 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7912A5931FE5066B00C8B9A5 /* QuickLook.framework */; };
 		7912A5951FE7608B00C8B9A5 /* share_pdf.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282551FDEE58F006E93E2 /* share_pdf.png */; };
-		7912A5961FE7608B00C8B9A5 /* share_pdf@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282561FDEE590006E93E2 /* share_pdf@2x.png */; };
 		7912A5971FE7608B00C8B9A5 /* share_pdf@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282571FDEE590006E93E2 /* share_pdf@3x.png */; };
 		7912A5A11FE8306E00C8B9A5 /* TwoButtonsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A59F1FE8306E00C8B9A5 /* TwoButtonsCell.m */; };
 		7912A5A21FE8306E00C8B9A5 /* TwoButtonsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7912A5A01FE8306E00C8B9A5 /* TwoButtonsCell.xib */; };
@@ -517,6 +516,9 @@
 		79D59A2B1E953B0400CD3821 /* ChatContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2A1E953B0400CD3821 /* ChatContactModel.m */; };
 		79D799D31FF197820084FCE4 /* DenningSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D799D21FF197820084FCE4 /* DenningSupportViewController.m */; };
 		79D799D51FF1DC340084FCE4 /* PushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79D799D41FF1DC330084FCE4 /* PushKit.framework */; };
+		79D799D61FF1FB690084FCE4 /* share_pdf@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282561FDEE590006E93E2 /* share_pdf@2x.png */; };
+		79D799DB1FF284550084FCE4 /* GroupInfoContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D799D91FF284550084FCE4 /* GroupInfoContactCell.m */; };
+		79D799DC1FF284550084FCE4 /* GroupInfoContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79D799DA1FF284550084FCE4 /* GroupInfoContactCell.xib */; };
 		79D929CC1E8DA27A000A53D2 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929C91E8DA27A000A53D2 /* icon_add.png */; };
 		79D929CD1E8DA27A000A53D2 /* icon_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */; };
 		79D929CE1E8DA27A000A53D2 /* icon_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */; };
@@ -1914,6 +1916,9 @@
 		79D799D11FF197820084FCE4 /* DenningSupportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DenningSupportViewController.h; sourceTree = "<group>"; };
 		79D799D21FF197820084FCE4 /* DenningSupportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DenningSupportViewController.m; sourceTree = "<group>"; };
 		79D799D41FF1DC330084FCE4 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
+		79D799D81FF284550084FCE4 /* GroupInfoContactCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GroupInfoContactCell.h; sourceTree = "<group>"; };
+		79D799D91FF284550084FCE4 /* GroupInfoContactCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GroupInfoContactCell.m; sourceTree = "<group>"; };
+		79D799DA1FF284550084FCE4 /* GroupInfoContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupInfoContactCell.xib; sourceTree = "<group>"; };
 		79D929C91E8DA27A000A53D2 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
 		79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@2x.png"; sourceTree = "<group>"; };
 		79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@3x.png"; sourceTree = "<group>"; };
@@ -4956,6 +4961,16 @@
 			path = "Denning Support";
 			sourceTree = "<group>";
 		};
+		79D799D71FF2835C0084FCE4 /* GroupInfoContactCell */ = {
+			isa = PBXGroup;
+			children = (
+				79D799D81FF284550084FCE4 /* GroupInfoContactCell.h */,
+				79D799D91FF284550084FCE4 /* GroupInfoContactCell.m */,
+				79D799DA1FF284550084FCE4 /* GroupInfoContactCell.xib */,
+			);
+			path = GroupInfoContactCell;
+			sourceTree = "<group>";
+		};
 		79D929E11E8DCF66000A53D2 /* LedgerCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -6822,6 +6837,7 @@
 				79F9FC7B1E4184600097CB23 /* NewsCell */,
 				79FBE2121E3197AD00448FE3 /* SearchResultCell */,
 				79FBE09C1E304F5000448FE3 /* QMAddMemberCell */,
+				79D799D71FF2835C0084FCE4 /* GroupInfoContactCell */,
 				79A6AFA61E9DBDFA007AA24D /* ChatContactCell */,
 				79FF35271E9C5597001BECFB /* GeneralContactCell */,
 				79F732391E9741AD004F88DF /* FavContactCell */,
@@ -9208,6 +9224,7 @@
 				793FF23D1EC4D117001F83A5 /* AddLastOneButtonCell.xib in Resources */,
 				7920E7A41E9FA747002FEFF3 /* icon_message_selected@2x.png in Resources */,
 				96CACE061EE243500087E76B /* TaskCheckCell.xib in Resources */,
+				79D799DC1FF284550084FCE4 /* GroupInfoContactCell.xib in Resources */,
 				7931B5021EA9B1C50090BDE0 /* icon_forum@2x.png in Resources */,
 				79EC0D151E77013A00320A28 /* SF-UI-Display-Bold.otf in Resources */,
 				960A661E1F0200570063AB6C /* DashboardSecondCell.xib in Resources */,
@@ -10251,6 +10268,7 @@
 				79EC0E1D1E89CFEE00320A28 /* LedgerViewController.m in Sources */,
 				79FBDFBD1E30421A00448FE3 /* OnboardingViewController.m in Sources */,
 				7912A6331FEBA25100C8B9A5 /* BaseSettingsViewController.m in Sources */,
+				79D799DB1FF284550084FCE4 /* GroupInfoContactCell.m in Sources */,
 				96D176701F1EFD9E008734DA /* BankReconDetailCell.m in Sources */,
 				7912A5DC1FEB9F5C00C8B9A5 /* QBButton.m in Sources */,
 				79F7322D1E96A929004F88DF /* NSString+Levenshtein.m in Sources */,
@@ -10475,8 +10493,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79D799D61FF1FB690084FCE4 /* share_pdf@2x.png in Sources */,
 				7912A5951FE7608B00C8B9A5 /* share_pdf.png in Sources */,
-				7912A5961FE7608B00C8B9A5 /* share_pdf@2x.png in Sources */,
 				7912A5971FE7608B00C8B9A5 /* share_pdf@3x.png in Sources */,
 				7912827D1FE2EE79006E93E2 /* ShareHelper.m in Sources */,
 				791B4FF21FCFA266003C30EC /* AddressModel.h in Sources */,

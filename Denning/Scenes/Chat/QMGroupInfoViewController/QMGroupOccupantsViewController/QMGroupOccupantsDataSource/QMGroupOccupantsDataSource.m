@@ -125,7 +125,7 @@ typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
             isRequestRequired = NO;
         }
         
-        [cell setAddButtonVisible:isRequestRequired];
+        [cell setAddButtonVisible:NO];
         
         [cell setBody:[QMCore.instance.contactManager onlineStatusForUser:user]];
         

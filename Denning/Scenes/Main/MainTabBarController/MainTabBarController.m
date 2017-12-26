@@ -182,7 +182,7 @@ shouldSelectViewController:(UIViewController *)viewController
       }],
       
       [RWDropdownMenuItem itemWithText:@"Contact Us" image:[UIImage imageNamed:@"menu_contact_us"] action:^{
-          
+          [self contactUs];
       }],
       
       [RWDropdownMenuItem itemWithText:@"Terms of Uses" image:[UIImage imageNamed:@"menu_terms_of_uses"] action:^{
@@ -203,11 +203,19 @@ shouldSelectViewController:(UIViewController *)viewController
     [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:RWDropdownMenuCellAlignmentRight style:RWDropdownMenuStyleBlackGradient navBarImage:[(UIBarItem*)sender image] completion:nil];
 }
 
+- (void) contactUs {
+    if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
+        [self performSegueWithIdentifier:kDenningSupportSegue sender:nil];
+    } else {
+        [QMAlert showAlertWithMessage:@"Please login first." actionSuccess:NO inViewController:self];
+    }
+}
+
 - (void) tapSetting {
     if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
         [self performSegueWithIdentifier:kQMSceneSegueSetting sender:nil];
     } else {
-        [QMAlert showAlertWithMessage:@"Please login first" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please login first." actionSuccess:NO inViewController:self];
     }
 }
 

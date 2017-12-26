@@ -364,13 +364,13 @@ out here.</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Le5-X1-1ff" customClass="QMNavigationBar">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="19"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="19"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
@@ -527,7 +527,7 @@ out here.</string>
             </objects>
             <point key="canvasLocation" x="-2343" y="-6299"/>
         </scene>
-        <!--Groups-->
+        <!--Denning Support-->
         <scene sceneID="27M-I0-X63">
             <objects>
                 <tableViewController id="qMd-6c-QCh" customClass="DenningSupportViewController" sceneMemberID="viewController">
@@ -540,7 +540,7 @@ out here.</string>
                             <outlet property="delegate" destination="qMd-6c-QCh" id="7zB-EQ-Uhf"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Groups" id="yGG-dz-Jkg">
+                    <navigationItem key="navigationItem" title="Denning Support" id="yGG-dz-Jkg">
                         <barButtonItem key="leftBarButtonItem" image="Back.png" id="cer-Bv-8K0">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -569,7 +569,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Auth" id="9Ir-rv-S3M" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cMC-bX-PLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1762" y="-8691"/>
+            <point key="canvasLocation" x="-1527" y="-8691"/>
         </scene>
         <!--Create Group-->
         <scene sceneID="HaZ-ei-WPo">

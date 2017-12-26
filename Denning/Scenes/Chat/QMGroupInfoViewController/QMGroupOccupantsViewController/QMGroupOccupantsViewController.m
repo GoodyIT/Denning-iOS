@@ -217,19 +217,18 @@ QMUsersServiceDelegate
 //MARK: - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == self.dataSource.addMemberCellIndex) {
         if ([self isSupportChat]) {
             if  ([DataManager sharedManager].isDenningUser) {
                 [self performSegueWithIdentifier:kQMSceneSegueGroupAddUsers sender:self.chatDialog];
             }
         } else {
-            
+            [self performSegueWithIdentifier:kQMSceneSegueGroupAddUsers sender:self.chatDialog];
         }
     }
     else if (indexPath.row == self.dataSource.leaveChatCellIndex) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
+       
         if (self.leaveTask) {
             // task in progress
             return;
@@ -299,7 +298,7 @@ QMUsersServiceDelegate
                                                                                                       CGRectGetWidth(tableView.frame),
                                                                                                       kQMSectionHeaderHeight)];
     
-    headerView.title = [NSString stringWithFormat:@"%tu %@", self.chatDialog.occupantIDs.count, NSLocalizedString(@"QM_STR_MEMBERS", nil)];
+    headerView.title = [NSString stringWithFormat:@"%tu %@", self.dataSource.items.count, NSLocalizedString(@"QM_STR_MEMBERS", nil)];
     
     return headerView;
 }
