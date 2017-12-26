@@ -20,6 +20,8 @@
 
 @property (strong, nonatomic) NSString* position;
 
+@property (strong, nonatomic) NSString* tag;
+
 + (ChatUserModel*) getChatUserModelFromResponse: (NSDictionary*) response;
 
 + (NSArray*) getChatUserModelArrayFromResponse: (NSArray*) response;

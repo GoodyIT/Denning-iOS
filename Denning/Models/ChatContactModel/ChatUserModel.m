@@ -17,6 +17,7 @@
     userModel.firm = [response valueForKeyNotNull:@"firm"];
     userModel.firmCode = [response valueForKeyNotNull:@"firmCode"];
     userModel.position = [response valueForKeyNotNull:@"position"];
+    userModel.tag = [response valueForKeyNotNull:@"tag"];
     return userModel;
 }
 

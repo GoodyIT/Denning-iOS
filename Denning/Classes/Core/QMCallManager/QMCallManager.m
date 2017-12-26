@@ -102,13 +102,13 @@ PKPushRegistryDelegate
             return;
         }
         
-        QBUUser *opponentUser = [self.serviceManager.usersService.usersMemoryStorage userWithID:[opponentsIDs.firstObject integerValue]];
-        QBUUser *currentUser = self.serviceManager.currentProfile.userData;
+//        QBUUser *opponentUser = [self.serviceManager.usersService.usersMemoryStorage userWithID:[opponentsIDs.firstObject integerValue]];
+//        QBUUser *currentUser = self.serviceManager.currentProfile.userData;
 
-        NSString *callerName = currentUser.fullName ?: [NSString stringWithFormat:@"%tu", currentUser.ID];
-        NSString *pushText = [NSString stringWithFormat:@"%@ %@", callerName, NSLocalizedString(@"QM_STR_IS_CALLING_YOU", nil)];
-
-        [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
+//        NSString *callerName = currentUser.fullName ?: [NSString stringWithFormat:@"%tu", currentUser.ID];
+//        NSString *pushText = [NSString stringWithFormat:@"%@ %@", callerName, NSLocalizedString(@"QM_STR_IS_CALLING_YOU", nil)];
+//
+//        [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
         
         NSUUID *uuid = nil;
         if (CallKitManager.isCallKitAvailable) {
@@ -122,7 +122,8 @@ PKPushRegistryDelegate
         
         [self prepareCallWindow];
         
-        self.callWindow.rootViewController = callViewController;
+        UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:callViewController];
+        self.callWindow.rootViewController = nav;
 
         NSDictionary *payload = @{
                                   @"message"  : [NSString stringWithFormat:@"%@ is calling you.", [QBSession currentSession].currentUser.fullName],
