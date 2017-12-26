@@ -489,15 +489,15 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getTemplateCategoryWithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cbotemplatecategory/only", [DataManager sharedManager].user.serverAPI];
+    NSString* url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, SEARCH_TEMPLATE_CATEGORY_GET];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion((NSArray*)result, error);
     }];
 }
 
-- (void) getTemplateTypeWithFilter:(NSString*) filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
+- (void) getTemplateTypeWithFilter:(NSString*) filter inCategory:(NSString*) category page:page withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cbotemplatecategory?filter=%@", [DataManager sharedManager].user.serverAPI, filter];
+    NSString* url = [NSString stringWithFormat:@"%@%@%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, SEARCH_TYPE_CATEGORY_GET, category, filter, page];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion((NSArray*)result, error);
     }];

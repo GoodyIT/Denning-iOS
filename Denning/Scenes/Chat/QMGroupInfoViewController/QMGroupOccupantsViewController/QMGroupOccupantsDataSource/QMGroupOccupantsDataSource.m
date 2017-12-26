@@ -9,7 +9,7 @@
 #import "QMGroupOccupantsDataSource.h"
 #import "QMCore.h"
 
-#import "QMContactCell.h"
+#import "GroupInfoContactCell.h"
 #import "QMAddMemberCell.h"
 #import "QMLeaveChatCell.h"
 #import "QMSeparatorCell.h"
@@ -113,24 +113,19 @@ typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
     }
     else {
         
-        QMContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[QMContactCell cellIdentifier] forIndexPath:indexPath];
+        GroupInfoContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[GroupInfoContactCell cellIdentifier] forIndexPath:indexPath];
         
         QBUUser *user = self.items[indexPath.row - kQMNumberOfStaticCellsBeforeOccupantsList];
-        [cell setTitle:user.fullName avatarUrl:user.avatarUrl];
+        [cell configureCellWithContact:user inChatDialog:_chatDialog];
         
-        BOOL isRequestRequired = ![QMCore.instance.contactManager isContactListItemExistentForUserWithID:user.ID];
-        
-        if (QMCore.instance.currentProfile.userData.ID == user.ID) {
-            
-            isRequestRequired = NO;
-        }
-        
-        [cell setAddButtonVisible:NO];
-        
-        [cell setBody:[QMCore.instance.contactManager onlineStatusForUser:user]];
-        
-        cell.didAddUserBlock = self.didAddUserBlock;
-        
+//        BOOL isRequestRequired = ![QMCore.instance.contactManager isContactListItemExistentForUserWithID:user.ID];
+//
+//        if (QMCore.instance.currentProfile.userData.ID == user.ID) {
+//
+//            isRequestRequired = NO;
+//        }
+//
+//
         return cell;
     }
 }
@@ -161,7 +156,7 @@ typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
     }
     else {
         
-        return [QMContactCell height];
+        return [GroupInfoContactCell height];
     }
 }
 

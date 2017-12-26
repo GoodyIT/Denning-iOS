@@ -194,10 +194,10 @@ ContactListWithDescSelectionDelegate>
 
 - (IBAction)didTapType:(id)sender {
     if (curCategory.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select a category first" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please select a category first." actionSuccess:NO inViewController:self];
         return;
     }
-    [self performSegueWithIdentifier:kTemplateTypeSegue sender:SEARCH_TEMPLATE_CATEGORY_GET];
+    [self performSegueWithIdentifier:kTemplateTypeSegue sender:nil];
 }
 
 - (void) getList{
@@ -325,9 +325,6 @@ ContactListWithDescSelectionDelegate>
     if ([name isEqualToString:@"Category"]) {
         [self.btnCategory setTitle:description forState:UIControlStateNormal];
         curCategory = description;
-    } else {
-        [self.btnType setTitle:description forState:UIControlStateNormal];
-        curType = description;
     }
 }
 

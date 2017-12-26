@@ -96,7 +96,7 @@
     @weakify(self)
     self->isLoading = NO;
     [self.tableView finishInfiniteScroll];
-    [[QMNetworkManager sharedManager] getTemplateTypeWithFilter:_category withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] getTemplateTypeWithFilter:_filter inCategory:_category page:_page withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         if (error == nil) {
             if (result.count != 0) {

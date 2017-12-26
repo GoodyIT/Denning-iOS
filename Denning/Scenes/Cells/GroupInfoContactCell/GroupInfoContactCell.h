@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *roleLabel;
 @property (weak, nonatomic) IBOutlet QMImageView *avatarImageView;
 
-- (void) configureCellWithContact: (QBUUser*) user;
+- (void) configureCellWithContact: (QBUUser*) user inChatDialog:(QBChatDialog*) chatDialog;
 
 
 @end

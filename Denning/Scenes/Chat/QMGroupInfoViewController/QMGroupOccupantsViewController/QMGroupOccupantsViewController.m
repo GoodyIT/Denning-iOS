@@ -11,6 +11,7 @@
 #import "QMGroupAddUsersViewController.h"
 #import "QMTableSectionHeaderView.h"
 #import "QMContactCell.h"
+#import "GroupInfoContactCell.h"
 #import "QMColors.h"
 #import "QMCore.h"
 #import "QMAlert.h"
@@ -387,7 +388,8 @@ QMUsersServiceDelegate
 
 - (void)registerNibs {
     
-    [QMContactCell registerForReuseInTableView:self.tableView];
+//    [QMContactCell registerForReuseInTableView:self.tableView];
+    [GroupInfoContactCell registerForReuseInTableView:self.tableView];
 }
 
 @end

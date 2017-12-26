@@ -226,7 +226,7 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 - (void) getTemplateCategoryWithCompletion:(void(^)(NSArray* result, NSError* error)) completion;
 
-- (void) getTemplateTypeWithFilter:(NSString*) filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion;
+- (void) getTemplateTypeWithFilter:(NSString*) filter inCategory:(NSString*) category page:page withCompletion:(void(^)(NSArray* result, NSError* error)) completion;
 
 // Legal firm (Solicitor)
 - (void) loadLegalFirmWithCode: (NSString*) code completion: (void(^)(LegalFirmModel* legalFirmModel, NSError* error)) completion;
