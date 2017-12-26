@@ -1543,14 +1543,14 @@ QMUsersServiceDelegate
 
 - (IBAction)onlineTitlePressed {
     
-//    if (self.chatDialog.type == QBChatDialogTypePrivate) {
-//
-//        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
-//    }
-//    else {
-//
-//        [self performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:self.chatDialog];
-//    }
+    if (self.chatDialog.type == QBChatDialogTypePrivate) {
+
+        [self performInfoViewControllerForUserID:[self.chatDialog opponentID]];
+    }
+    else {
+
+        [self performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:self.chatDialog];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -1601,12 +1601,12 @@ QMUsersServiceDelegate
         return;
     }
     
-//    NSArray* opponentIDs = @[@([self.chatDialog opponentID])];
+    NSArray* opponentIDs = @[@([self.chatDialog opponentID])];
     
-//    [QMCore.instance.callManager callToUserWithIDs:[opponentIDs mutableCopy] conferenceType:QBRTCConferenceTypeAudio];
+    [QMCore.instance.callManager callToUserWithIDs:[opponentIDs mutableCopy] conferenceType:QBRTCConferenceTypeAudio];
     
-    [QMCore.instance.callManager callToUserWithID:[self.chatDialog opponentID]
-                                   conferenceType:QBRTCConferenceTypeAudio];
+//    [QMCore.instance.callManager callToUserWithID:[self.chatDialog opponentID]
+//  conferenceType:QBRTCConferenceTypeAudio];
 }
 
 - (void)videoCallAction {
@@ -1616,7 +1616,7 @@ QMUsersServiceDelegate
         return;
     }
     
-    [QMCore.instance.callManager callToUserWithID:[self.chatDialog opponentID]
+    [QMCore.instance.callManager callToUserWithIDs:[@[@([self.chatDialog opponentID])] mutableCopy]
                                    conferenceType:QBRTCConferenceTypeVideo];
 }
 
@@ -1758,13 +1758,13 @@ QMUsersServiceDelegate
     UIButton *audioButton = [QMChatButtonsFactory audioCall];
     [audioButton addTarget:self action:@selector(audioCallAction) forControlEvents:UIControlEventTouchUpInside];
     
-//    UIButton *videoButton = [QMChatButtonsFactory videoCall];
-//    [videoButton addTarget:self action:@selector(videoCallAction) forControlEvents:UIControlEventTouchUpInside];
-//
-////    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
+    UIButton *videoButton = [QMChatButtonsFactory videoCall];
+    [videoButton addTarget:self action:@selector(videoCallAction) forControlEvents:UIControlEventTouchUpInside];
+
+    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
     UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
     
-    [self.navigationItem setRightBarButtonItems:@[audioCallBarButtonItem] animated:YES];
+    [self.navigationItem setRightBarButtonItems:@[videoCallBarButtonItem, audioCallBarButtonItem] animated:YES];
 }
 
 - (void) groupCall {

@@ -516,6 +516,7 @@
 		79D59A271E95245E00CD3821 /* QMNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A241E95245E00CD3821 /* QMNewMessageViewController.m */; };
 		79D59A2B1E953B0400CD3821 /* ChatContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D59A2A1E953B0400CD3821 /* ChatContactModel.m */; };
 		79D799D31FF197820084FCE4 /* DenningSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79D799D21FF197820084FCE4 /* DenningSupportViewController.m */; };
+		79D799D51FF1DC340084FCE4 /* PushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79D799D41FF1DC330084FCE4 /* PushKit.framework */; };
 		79D929CC1E8DA27A000A53D2 /* icon_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929C91E8DA27A000A53D2 /* icon_add.png */; };
 		79D929CD1E8DA27A000A53D2 /* icon_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */; };
 		79D929CE1E8DA27A000A53D2 /* icon_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */; };
@@ -1912,6 +1913,7 @@
 		79D59A2A1E953B0400CD3821 /* ChatContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatContactModel.m; sourceTree = "<group>"; };
 		79D799D11FF197820084FCE4 /* DenningSupportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DenningSupportViewController.h; sourceTree = "<group>"; };
 		79D799D21FF197820084FCE4 /* DenningSupportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DenningSupportViewController.m; sourceTree = "<group>"; };
+		79D799D41FF1DC330084FCE4 /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
 		79D929C91E8DA27A000A53D2 /* icon_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_add.png; sourceTree = "<group>"; };
 		79D929CA1E8DA27A000A53D2 /* icon_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@2x.png"; sourceTree = "<group>"; };
 		79D929CB1E8DA27A000A53D2 /* icon_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_add@3x.png"; sourceTree = "<group>"; };
@@ -2929,6 +2931,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79D799D51FF1DC340084FCE4 /* PushKit.framework in Frameworks */,
 				7912A6421FEBFD2C00C8B9A5 /* libxml2.2.tbd in Frameworks */,
 				7912A6401FEBFD2100C8B9A5 /* libresolv.tbd in Frameworks */,
 				7912A5941FE5066B00C8B9A5 /* QuickLook.framework in Frameworks */,
@@ -6258,6 +6261,7 @@
 		79FBDFE91E304A6200448FE3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79D799D41FF1DC330084FCE4 /* PushKit.framework */,
 				7912A6411FEBFD2C00C8B9A5 /* libxml2.2.tbd */,
 				7912A63F1FEBFD2000C8B9A5 /* libresolv.tbd */,
 				7912A5931FE5066B00C8B9A5 /* QuickLook.framework */,

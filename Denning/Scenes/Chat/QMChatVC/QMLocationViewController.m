@@ -99,10 +99,7 @@ static const CGFloat kQMLocationPinXShift = 3.5f;
 }
 
 - (void) configureMapButtons {
-    UIButton *mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [mapButton setTitle:@"Maps" forState:UIControlStateNormal];
-    [mapButton addTarget:self action:@selector(_openNavigation:) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:mapButton];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Maps" style:UIBarButtonItemStylePlain target:self action:@selector(_openNavigation:)];
 }
 
 - (void) _openAppleMap {
