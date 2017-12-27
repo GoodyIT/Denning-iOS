@@ -9,7 +9,7 @@
     attachment.name = self.name;
     attachment.ID = self.id;
     attachment.url = self.url;
-    attachment.type = self.mimeType;
+    attachment.type = [attachment.customParameters valueForKey:@"content-type"];
 
     NSDictionary *customParameters = [self objectsWithBinaryData:self.customParameters];
     [customParameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -23,7 +23,7 @@
     self.name = attachment.name;
     self.id = attachment.ID;
     self.url = attachment.url;
-    self.mimeType = attachment.type;
+    self.mimeType = [attachment.customParameters valueForKey:@"content-type"];
 
     self.customParameters = [self binaryDataWithObject:attachment.customParameters];
 }

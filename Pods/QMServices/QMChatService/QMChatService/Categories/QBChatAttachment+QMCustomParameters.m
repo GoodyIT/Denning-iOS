@@ -211,6 +211,7 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
             return YES;
             break;
         default:
+            return NO;
             break;
     }
 }
@@ -228,9 +229,12 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
         attachmentType = QMAttachmentContentTypeVideo;
     }
     else if ([self.type isEqualToString:@"image"] ||
-             [self.type isEqualToString:@"photo"]) {
+             [self.type isEqualToString:@"photo"] ||
+             [self.type isEqualToString:@"image/png"] ) {
         
         attachmentType = QMAttachmentContentTypeImage;
+    } else {
+        attachmentType = QMAttachmentContentTypeCustom;
     }
     
     return attachmentType;

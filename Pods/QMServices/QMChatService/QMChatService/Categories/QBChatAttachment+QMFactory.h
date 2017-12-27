@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)audioAttachmentWithFileURL:(NSURL *)fileURL;
 + (instancetype)imageAttachmentWithImage:(UIImage *)image;
 
++ (instancetype) fileAttachmentWithFileURL:(NSURL *)fileURL contentType:(NSString*)contentType;
+
 @end
 
 NS_ASSUME_NONNULL_END

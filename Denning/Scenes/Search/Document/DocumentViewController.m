@@ -151,13 +151,13 @@
         } else {
             DocumentModel* model = self.documentModel.folders[selectionIndex.section-2];
             FileModel* file = model.documents[selectionIndex.row];
-            [urlArray addObject:[self getFileURL:file]];
+            [urlArray addObject:@[[self getFileURL:file], file.name]];
         }
     }
     
-    NSString* sendString = [urlArray componentsJoinedByString:@"\n"];
+//    NSString* sendString = [urlArray componentsJoinedByString:@"\n"];
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        _updateHandler(sendString);
+        _updateHandler(urlArray);
     }];
 //
 //    NSMutableArray* localURLArray = [NSMutableArray new];

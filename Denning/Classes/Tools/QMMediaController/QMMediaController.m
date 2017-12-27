@@ -57,40 +57,6 @@ QMMediaHandler>
 
 //MARK: - Interface
 
-- (void) displayFileAttachStatusImage:(NSString*) name inView:(id<QMChatAttachmentCell>) view {
-    [view setAttachmentImage:[UIImage imageNamed:name]];
-}
-
-- (void) displayNotReadyImage:(id<QMChatAttachmentCell>) view {
-    [self displayFileAttachStatusImage:@"icon_attach_file" inView:view];
-}
-
-- (void) displayReadyImage: (id<QMChatAttachmentCell>) view {
-    [self displayFileAttachStatusImage:@"icon_attach_file" inView:view];
-}
-
-- (void) configureViewForFileAttach:(id<QMChatAttachmentCell>) view
-                        withMessage:(QBChatMessage*) message
-{
-    QBChatAttachment *attachment = [message.attachments firstObject];
-    NSParameterAssert(attachment != nil);
-
-    
-    if (attachment.ID) {
-        
-//        if (view.messageID != nil && ![view.messageID isEqualToString:message.ID]) {
-//
-//            QBChatMessage *messageToCancel = [[QMCore instance].chatService.messagesMemoryStorage messageWithID:view.messageID
-//                                                                                                   fromDialogID:self.viewController.dialogID];
-//            [self cancelOperationsForMessage:messageToCancel];
-//        }
-    }
-    
-//    [self updateViewForFileAttach:view
-//      withAttachment:attachment
-//             message:message];
-}
-
 - (void)configureView:(id<QMMediaViewDelegate>)view
           withMessage:(QBChatMessage *)message {
     
@@ -166,6 +132,18 @@ QMMediaHandler>
     }
 }
 
+- (UIImage*) tempImage:(QBChatAttachment *)attachment {
+    UIImage* cachedImage = nil;
+    if ([DIHelpers isPdfFileFromContentType:[attachment.customParameters valueForKey:@"content-type"]]) {
+        cachedImage = [UIImage imageNamed:@"icon_attach_pdf"];
+    } else if ([DIHelpers isWordFileFromContentType:[attachment.customParameters valueForKey:@"content-type"]]) {
+        cachedImage = [UIImage imageNamed:@"icon_attach_word"];
+    } else {
+        cachedImage = [UIImage imageNamed:@"icon_attach_file"];
+    }
+    return cachedImage;
+}
+
 - (void)loadAttachment:(QBChatAttachment *)attachment
             forMessage:(QBChatMessage *)message
               withView:(id<QMMediaViewDelegate>)view {
@@ -180,7 +158,7 @@ QMMediaHandler>
         else {
             UIImage *cachedImage = nil;
             if  ([[DIDocumentManager shared] isAttachedFileExist:attachment.ID]) {
-                cachedImage = [UIImage imageNamed:@"icon_attach_file"];
+                cachedImage = [self tempImage:attachment];
             }
             if (cachedImage) {
                 view.viewState = QMMediaViewStateReady;
@@ -197,7 +175,7 @@ QMMediaHandler>
                     // ready to open
                     if ([view.messageID isEqualToString:message.ID]) {
                         if (filePath != nil) {
-                            UIImage* transfomedImage = [UIImage imageNamed:@"icon_attach_file"];
+                            UIImage* transfomedImage = [self tempImage:attachment];;
                             view.viewState = QMMediaViewStateReady;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 view.image = transfomedImage;

@@ -13,6 +13,8 @@ typedef NS_ENUM(NSInteger, QMAttachmentType) {
     QMAttachmentContentTypeAudio = 1,
     QMAttachmentContentTypeVideo,
     QMAttachmentContentTypeImage,
+    QMAttachmentContentTypePdf,
+    QMAttachmentContentTypeDoc,
     QMAttachmentContentTypeCustom = 999
 };
 

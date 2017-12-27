@@ -14,6 +14,8 @@
 
 - (NSURL*) isAttachedFileExist:(NSString*) fileName;
 
+- (NSURL*) createNewDir:(NSString*) subDir;
+
 - (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion;
 
 - (void) downloadFileFromURL: (NSURL *) ur withProgress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(NSURL *filePath))completionBlock onError:(void (^)(NSError *error))errorBlock;

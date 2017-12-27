@@ -111,5 +111,17 @@
 
 + (void)openURL:(NSURL *)url;
 
++ (BOOL) isPdfFileFromContentType:(NSString*) contentType;
+
++ (BOOL) isWordFileFromContentType:(NSString*) contentType;
+
++ (BOOL) isImageFileFromContentType: (NSString*) contentType;
+
++ (BOOL) isVideoFileFromContentType: (NSString*) contentType;
+
++ (BOOL) isAudioFileFromContentType: (NSString*) contentType;
+
 + (void)logout:(UIViewController*) viewController;
+
++ (NSString *)mimeTypeForData:(NSData *)data;
 @end

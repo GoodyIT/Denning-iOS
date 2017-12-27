@@ -11,6 +11,8 @@
 static NSString *const kQMAttachmentTypeAudio = @"audio";
 static NSString *const kQMAttachmentTypeImage = @"image";
 static NSString *const kQMAttachmentTypeVideo = @"video";
+static NSString *const kQMAttachmentTypePdf = @"pdf";
+static NSString *const kQMAttachmentTypeDoc = @"doc";
 
 static NSString *const kQMAttachmentContentTypeAudio = @"audio/mp4";
 static NSString *const kQMAttachmentContentTypeVideo = @"video/mp4";
@@ -50,6 +52,14 @@ static NSString *const kQMAttachmentContentTypeVideo = @"video/mp4";
                       fileURL:fileURL
                   contentType:kQMAttachmentContentTypeAudio
                attachmentType:kQMAttachmentTypeAudio];
+}
+
++ (instancetype) fileAttachmentWithFileURL:(NSURL *)fileURL contentType:(NSString*)contentType {
+    NSParameterAssert(fileURL);
+    return [self initWithName:@"File message"
+                      fileURL:fileURL
+                  contentType:contentType
+               attachmentType:@"file"];
 }
 
 + (instancetype)imageAttachmentWithImage:(UIImage *)image {

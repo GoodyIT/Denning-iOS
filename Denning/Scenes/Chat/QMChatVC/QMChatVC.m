@@ -1579,13 +1579,40 @@ QMUsersServiceDelegate
         UINavigationController* nav = segue.destinationViewController;
         ChatFileListViewController *vc = (ChatFileListViewController*)nav.topViewController;
         vc.initialKeyword = sender;
-        vc.updateHandler = ^(NSString *url) {
-            QBChatMessage *message = [QMMessagesHelper chatMessageWithText:url
-                                                                  senderID:self.senderID
-                                                              chatDialogID:self.chatDialog.ID
-                                                                  dateSent:[NSDate date]];
-            // Sending message
-            [self _sendMessage:message];
+        vc.updateHandler = ^(NSArray *urls) {
+            for (NSArray* urlAndName in urls) {
+                NSURL* url = urlAndName[0];
+                [[DIDocumentManager shared] downloadFileFromURL:url withProgress:^(CGFloat progress) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [SVProgressHUD showProgress:progress];
+                    });
+                } completion:^(NSURL *filePath) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSString* contentType =[DIHelpers mimeTypeForData:[NSData dataWithContentsOfURL:filePath]];
+                        QBChatAttachment *attachment = nil;
+                        if ([DIHelpers isAudioFileFromContentType:contentType]) {
+                            attachment = [QBChatAttachment audioAttachmentWithFileURL:filePath];
+                            AVURLAsset *audioAsset = [AVURLAsset URLAssetWithURL:filePath options:nil];
+                            NSTimeInterval duration = CMTimeGetSeconds(audioAsset.duration);
+                            attachment.duration = lround(duration);
+                        } else if ([DIHelpers isVideoFileFromContentType:contentType]) {
+                            [self imagePicker:nil didFinishPickingVideo:filePath];
+                        } else if ([DIHelpers isImageFileFromContentType:contentType]) {
+                            UIImage *resizedImage = [self resizedImageFromImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:filePath]]];
+                            attachment = [QBChatAttachment imageAttachmentWithImage:resizedImage];
+                        } else {
+                            attachment = [QBChatAttachment fileAttachmentWithFileURL:filePath contentType:contentType];
+                        }
+                        [SVProgressHUD dismiss];
+                        [self sendMessageWithAttachment:attachment]; 
+                   });
+                } onError:^(NSError *error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+                    });
+                }];
+            }
+            
         };
     }
     
@@ -1784,11 +1811,11 @@ QMUsersServiceDelegate
     
     self.imageBarButtonItem.onTapHandler = onTapBlock;
     
-//    UIButton *audioButton = [QMChatButtonsFactory audioCall];
-//    [audioButton addTarget:self action:@selector(groupCall) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
+    UIButton *audioButton = [QMChatButtonsFactory audioCall];
+    [audioButton addTarget:self action:@selector(groupCall) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
     
-    self.navigationItem.rightBarButtonItems = @[self.imageBarButtonItem];
+    self.navigationItem.rightBarButtonItems = @[audioCallBarButtonItem, self.imageBarButtonItem];
     
     [self updateGroupAvatarImage];
 }
