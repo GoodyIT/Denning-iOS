@@ -110,7 +110,14 @@
     [[QMNetworkManager sharedManager] sendSMSRequestWithEmail:[DataManager sharedManager].user.email phoneNumber:[DataManager sharedManager].user.phoneNumber reason:@"from new device login" withCompletion:^(BOOL success, NSInteger statusCode, NSString * _Nonnull error, NSDictionary * _Nonnull response) {
 
         if (!success) {
-            [SVProgressHUD showErrorWithStatus:error];
+            if ([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) {
+                [[QMCore.instance logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [SVProgressHUD showErrorWithStatus:error];
+                    });
+                    return nil;
+                }];
+            }
         }
         else {
             [[DataManager sharedManager] setUserInfoFromNewDeviceLogin:response];

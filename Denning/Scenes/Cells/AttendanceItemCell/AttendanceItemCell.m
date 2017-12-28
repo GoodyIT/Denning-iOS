@@ -27,7 +27,7 @@
     UIColor* typeColor;
     if ([model.theType isEqualToString:@"Clock-in"]) {
         imageName = @"blue_circle";
-        typeColor = [UIColor babyBule];
+        typeColor = [UIColor babyBlue];
     } else if ([model.theType isEqualToString:@"Clock-out"]){
         imageName = @"red_circle";
         typeColor = [UIColor redColor];

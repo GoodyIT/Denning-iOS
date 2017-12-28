@@ -243,7 +243,6 @@ static const NSInteger QBDefaultMaximumCallGroups = 1;
         }
         else {
             [session rejectCall:nil];
-            [QMCore.instance.callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
         }
         
         [action fulfillWithDateEnded:[NSDate date]];

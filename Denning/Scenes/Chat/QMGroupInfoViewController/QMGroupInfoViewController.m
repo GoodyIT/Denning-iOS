@@ -45,8 +45,6 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
     self.headerView.delegate = self;
     [self updateGroupHeaderView];
     
-    [self prepareForDenningSupport];
-    
     // subscribing for delegates
     [QMCore.instance.chatService addDelegate:self];
 }
@@ -55,25 +53,21 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) prepareForDenningSupport {
-    self.hiddenRows = [NSMutableIndexSet indexSet];
-    
-    NSString* tag = [_chatDialog.data valueForKeyNotNull:@"tag"];
-    if (tag != nil && [tag isEqualToString:@"Denning"]) {
-        
-    }
-}
-
 - (void)updateGroupHeaderView {
     
     [self.headerView setTitle:self.chatDialog.name avatarUrl:self.chatDialog.photo];
 }
 
 //MARK: - Actions
-
 - (IBAction)didPressGroupHeader {
-    
-    [self performSegueWithIdentifier:kQMSceneSegueGroupName sender:self.chatDialog];
+    if ([DIHelpers isSupportChat:self.chatDialog]) {
+        if ([DataManager sharedManager].isDenningUser) {
+            // Only Denning user can change the name for Denning support
+            [self performSegueWithIdentifier:kQMSceneSegueGroupName sender:self.chatDialog];
+        }
+    } else {
+        [self performSegueWithIdentifier:kQMSceneSegueGroupName sender:self.chatDialog];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -93,6 +87,13 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
 //MARK: - QMGroupHeaderViewDelegate
 
 - (void)groupHeaderView:(QMGroupHeaderView *)__unused groupHeaderView didTapAvatar:(QMImageView *)avatarImageView {
+    
+    if ([DIHelpers isSupportChat:self.chatDialog]) {
+        if (![DataManager sharedManager].isDenningUser) {
+            // Only Denning user can change the avatar for Denning support
+            return;
+        }
+    }
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     

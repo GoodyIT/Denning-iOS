@@ -36,6 +36,7 @@ QMUsersServiceDelegate
 
 @property (weak, nonatomic) BFTask *leaveTask;
 @property (weak, nonatomic) BFTask *addUserTask;
+@property (weak, nonatomic) BFTask *updateRoleTask;
 
 @end
 
@@ -67,6 +68,28 @@ QMUsersServiceDelegate
     // smooth rows deselection
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
+
+- (void) updateUserRole:(NSString*) role userID:(NSInteger) userID inIndexPath:(NSIndexPath*) indexPath{
+    
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+    self.updateRoleTask = [[[QMCore instance].chatManager changeUserWithID:userID toRole:role forGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+        [SVProgressHUD dismiss];
+        
+        if (!t.isFaulted) {
+            
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        else {
+            
+            if (![QBChat instance].isConnected) {
+                
+                [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) actionSuccess:NO inViewController:self];
+            }
+        }
+        return nil;
+    }];
+}
+
 - (void)configureDataSource {
     
     self.dataSource = [[QMGroupOccupantsDataSource alloc] init];
@@ -75,56 +98,97 @@ QMUsersServiceDelegate
     self.dataSource.chatDialog = _chatDialog;
     @weakify(self);
     self.dataSource.didAddUserBlock = ^(UITableViewCell *cell) {
-        
+
         @strongify(self);
         if (self.addUserTask) {
             // task in progress
             return;
         }
-        
+
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
+
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        NSUInteger userIndex = [self.dataSource userIndexForIndexPath:indexPath];
+        QBUUser *user = self.dataSource.items[userIndex];
+
+        self.addUserTask = [[QMCore.instance.contactManager addUserToContactList:user] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+
+            [SVProgressHUD dismiss];
+
+            if (!task.isFaulted) {
+
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+            else {
+
+                if (![QBChat instance].isConnected) {
+
+                    [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) actionSuccess:NO inViewController:self];
+                }
+            }
+
+            return nil;
+        }];
+    };
+    
+    self.dataSource.updateRoleBlock = ^(UITableViewCell *cell) {
+        @strongify(self);
+        if (self.updateRoleTask) {
+            // task in progress
+            return;
+        }
         
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         NSUInteger userIndex = [self.dataSource userIndexForIndexPath:indexPath];
         QBUUser *user = self.dataSource.items[userIndex];
         
-        self.addUserTask = [[QMCore.instance.contactManager addUserToContactList:user] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
-            
-            [SVProgressHUD dismiss];
-            
-            if (!task.isFaulted) {
-                
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            }
-            else {
-                
-                if (![QBChat instance].isConnected) {
-                    
-                    [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) actionSuccess:NO inViewController:self];
-                }
-            }
-            
-            return nil;
+        NSString* role = [DIHelpers getCurrentUserRole:user.ID fromChatDialog:self.chatDialog];
+        
+        if (!([role isEqualToString:kRoleAdminTag]) || [DataManager sharedManager].isDenningUser) {
+            // Only Denning Staff & Admin can assign the role.
+            return;
+        }
+        
+        UIAlertController *customActionSheet = [UIAlertController alertControllerWithTitle:@"User Role" message:@"Please select role to assign." preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *firstButton = [UIAlertAction actionWithTitle:@"Admin" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [self updateUserRole:kRoleAdminTag userID:user.ID inIndexPath:indexPath];
         }];
+        [firstButton setValue:[UIColor babyRed] forKey:@"titleTextColor"];
+        [firstButton setValue:@(role == kRoleAdminTag) forKey:@"checked"];
+        
+        UIAlertAction *secondButton = [UIAlertAction actionWithTitle:@"Normal" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            [self updateUserRole:kRoleNormalTag userID:user.ID inIndexPath:indexPath];
+        }];
+        [secondButton setValue:[UIColor babyBlue] forKey:@"titleTextColor"];
+        [secondButton setValue:@(role == kRoleNormalTag) forKey:@"checked"];
+        
+        UIAlertAction *thirdButton = [UIAlertAction actionWithTitle:@"Reader" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+           [self updateUserRole:kRoleReaderTag userID:user.ID inIndexPath:indexPath];
+        }];
+        [thirdButton setValue:[UIColor babyGreen] forKey:@"titleTextColor"];
+        [thirdButton setValue:@(role == kRoleReaderTag) forKey:@"checked"];
+        
+        UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+            //cancel
+        }];
+        [cancelButton setValue:[UIColor darkGrayColor] forKey:@"titleTextColor"];
+        
+        [customActionSheet addAction:firstButton];
+        [customActionSheet addAction:secondButton];
+        [customActionSheet addAction:thirdButton];
+        [customActionSheet addAction:cancelButton];
+        
+        [self presentViewController:customActionSheet animated:YES completion:nil];
     };
 }
 
 //MARK: - Methods
 
-- (BOOL) isSupportChat {
-    BOOL isCorrect = NO;
-    NSString* tag = [_chatDialog.data valueForKey:@"tag"];
-    if (tag != nil && [tag isEqualToString:@"Denning"]) {
-        isCorrect = YES;
-    }
-    
-    return isCorrect;
-}
-
 - (NSMutableArray*) filterItems:(NSArray*) items {
     NSMutableArray* newItems = [NSMutableArray new];
     
-    if ([self isSupportChat]) {
+    if ([DIHelpers isSupportChat:self.chatDialog]) {
         NSArray* users = [QMCore.instance.usersService.usersMemoryStorage usersWithIDs:_chatDialog.occupantIDs];
         for (QBUUser* user in users) {
             for (ChatFirmModel* firmModel in [DataManager sharedManager].denningContactArray) {
@@ -220,8 +284,9 @@ QMUsersServiceDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == self.dataSource.addMemberCellIndex) {
-        if ([self isSupportChat]) {
-            if  ([DataManager sharedManager].isDenningUser) {
+        if ([DIHelpers isSupportChat:self.chatDialog]) {
+           NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser.ID fromChatDialog:self.chatDialog];
+            if  ([DataManager sharedManager].isDenningUser || [role isEqualToString:kRoleAdminTag]) {
                 [self performSegueWithIdentifier:kQMSceneSegueGroupAddUsers sender:self.chatDialog];
             }
         } else {

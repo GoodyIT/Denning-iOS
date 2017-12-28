@@ -1287,7 +1287,7 @@
                         <action selector="didTapSelect:" destination="Siy-4G-Oqb" id="of5-pB-iHL"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem systemItem="action" id="SQX-4r-Omq">
+                <barButtonItem title="Send" style="plain" id="SQX-4r-Omq">
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <action selector="didTapShare:" destination="Siy-4G-Oqb" id="48Z-5P-9uT"/>

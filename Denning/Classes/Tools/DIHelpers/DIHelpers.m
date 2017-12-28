@@ -791,4 +791,58 @@
     return isPdfFileFromContentType;
 }
 
++ (NSString*) getUserPosition:(NSString*) email
+{
+    NSString* position = @"";
+    NSArray* userArray = [[[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray] arrayByAddingObjectsFromArray:[DataManager sharedManager].denningContactArray];
+    
+    for (ChatFirmModel* chatFirmModel in userArray) {
+        for (QBUUser* user in chatFirmModel.users) {
+            if ([user.email isEqualToString:email]) {
+                position = user.twitterDigitsID;
+                break;
+            }
+        }
+    }
+    
+    return position;
+}
+
++ (NSString*) getTag:(QBChatDialog*) dialog {
+    NSString* tag = [dialog.data valueForKeyNotNull:@"tag"];
+    return tag.length == 0 ? @"Colleagues" : tag;
+}
+
++ (NSString*) getCurrentUserRole:(NSInteger) userID fromChatDialog:(QBChatDialog*) chatDialog
+{
+    NSString* role = kRoleNormalTag;
+    NSArray* adminRoles = [chatDialog.data objectForKey:kRoleAdminTag];
+    NSArray* readerRoles = [chatDialog.data objectForKey:kRoleReaderTag];
+    NSArray* normalRoles = [chatDialog.data objectForKey:kRoleNormalTag];
+    
+    if (adminRoles != nil && adminRoles.count > 0 && [adminRoles containsObject:@(userID)]) {
+        role = kRoleAdminTag;
+    } else if (readerRoles != nil && readerRoles.count > 0 && [readerRoles containsObject:@(userID)]) {
+        role = kRoleReaderTag;
+    } else if (normalRoles != nil && normalRoles.count > 0 && [normalRoles containsObject:@(userID)]) {
+        role = kRoleNormalTag;
+    }
+    
+    return role;
+}
+
++ (BOOL) isSupportChat:(QBChatDialog*) chatDialog {
+    BOOL isCorrect = NO;
+    NSString* tag = [chatDialog.data valueForKey:@"tag"];
+    if (tag != nil && [tag isEqualToString:@"Denning"]) {
+        isCorrect = YES;
+    }
+    
+    return isCorrect;
+}
+
++ (NSString*) getGroupPosition:(QBChatDialog*) chatDialog {
+    return [chatDialog.data valueForKeyNotNull:@"position"];
+}
+
 @end

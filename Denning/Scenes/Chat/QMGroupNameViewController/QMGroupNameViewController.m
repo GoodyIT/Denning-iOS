@@ -18,11 +18,12 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 
 @interface QMGroupNameViewController ()
 {
-    BOOL nameChanged, tagChanged;
+    BOOL nameChanged, tagChanged, positionChanged;
     NSString* selectedTag;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *groupNameField;
+@property (weak, nonatomic) IBOutlet UITextField *groupPositionField;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tagSegment;
 
 @end
@@ -32,11 +33,6 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 - (void)dealloc {
     
     ILog(@"%@ - %@",  NSStringFromSelector(_cmd), self);
-}
-
-- (NSString*) getTag {
-    NSString* tag = [_chatDialog.data valueForKeyNotNull:@"tag"];
-    return tag.length == 0 ? @"Colleagues" : tag;
 }
 
 - (NSInteger) getTagAsIndex:(NSString*) tag {
@@ -50,10 +46,11 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
     self.groupNameField.text = self.chatDialog.name;
+    self.groupPositionField.text = [self.chatDialog.data valueForKeyNotNull:kGroupPositionTag];
     
     [self updateGroupType];
     
-    selectedTag = [self getTag];
+    selectedTag = [DIHelpers getTag:self.chatDialog];
     
     _tagSegment.selectedSegmentIndex = [self getTagAsIndex:selectedTag];
 }
@@ -87,14 +84,18 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 
 - (IBAction)saveButtonPressed:(UIBarButtonItem *)__unused sender {
     
-    BFTask* changeNameTask = [QMCore.instance.chatManager changeName:self.groupNameField.text forGroupChatDialog:self.chatDialog];
-    BFTask* changeTagTask = [QMCore.instance.chatManager changeTag:selectedTag forGroupChatDialog:self.chatDialog];
     NSMutableArray* tasks = [NSMutableArray new];
     if (nameChanged) {
-        [tasks addObject:changeTagTask];
+        BFTask* changeNameTask = [QMCore.instance.chatManager changeName:self.groupNameField.text forGroupChatDialog:self.chatDialog];
+        [tasks addObject:changeNameTask];
     }
     if (tagChanged) {
-        [tasks addObject:changeNameTask];
+        BFTask* changeTagTask = [QMCore.instance.chatManager changeTag:selectedTag forGroupChatDialog:self.chatDialog];
+        [tasks addObject:changeTagTask];
+    }
+    if (positionChanged) {
+        BFTask* positionTask = [QMCore.instance.chatManager changeCustomData:@{kGroupPositionTag:_groupNameField.text} forGroupChatDialog:self.chatDialog];
+        [tasks addObject:positionTask];
     }
     
     if (tasks.count > 0) {
@@ -130,9 +131,19 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
-- (void) updateGroupTag:(NSInteger) index {
+- (IBAction)groupPositionFieldEditingChanged:(UITextField *)sender {
+    NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
+    if ([sender.text stringByTrimmingCharactersInSet:whiteSpaceSet].length == 0
+        || [sender.text isEqualToString:[self.chatDialog.data valueForKeyNotNull:kGroupPositionTag]]) {
+        positionChanged = NO;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        return;
+    }
     
+    positionChanged = YES;
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 }
+
 
 - (IBAction)tagSelected:(UISegmentedControl*) sender {
     
@@ -150,7 +161,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
         }
     }
     
-    if  ([selectedTag isEqualToString:[self getTag]]) {
+    if  ([selectedTag isEqualToString:[DIHelpers getTag:self.chatDialog]]) {
         tagChanged = NO;
         self.navigationItem.rightBarButtonItem.enabled = NO;
     } else {
@@ -168,7 +179,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
         }
     }
     
-    return 2;
+    return 3;
 }
 
 @end

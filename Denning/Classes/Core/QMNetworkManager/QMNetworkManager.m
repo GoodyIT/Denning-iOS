@@ -170,10 +170,10 @@
     [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * error,  NSURLSessionDataTask * _Nonnull task) {
                 NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
                 if (error == nil) {
-                        completion(YES, test.statusCode, error.localizedDescription, result);
+                        completion(YES, [[result valueForKeyNotNull:@"statusCode"] integerValue], error.localizedDescription, result);
                     } else {
                 
-                completion(NO, test.statusCode, error.localizedDescription, nil);
+                completion(NO, [[result valueForKeyNotNull:@"statusCode"] integerValue], error.localizedDescription, nil);
             }
     }];
 }
@@ -581,6 +581,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         for (ChatUserModel* chatUserModel in chatFirmModel.users) {
             QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage usersWithEmails:@[chatUserModel.email]].firstObject;
             if (user != nil) {
+                user.twitterDigitsID = chatUserModel.position;
                 [userArray addObject:user];
             }
         }

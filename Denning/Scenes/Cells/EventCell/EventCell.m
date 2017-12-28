@@ -50,10 +50,10 @@
         _eventStartTimeLabel.textColor = [UIColor babyRed];
         _sideBar.backgroundColor = [UIColor babyRed];
     } else if ([event.eventType isEqualToString:@"2office"]) {
-        _eventStartDatelabel.textColor = [UIColor babyBule];
-        _dayLabel.textColor = [UIColor babyBule];
-        _eventStartTimeLabel.textColor = [UIColor babyBule];
-        _sideBar.backgroundColor = [UIColor babyBule];
+        _eventStartDatelabel.textColor = [UIColor babyBlue];
+        _dayLabel.textColor = [UIColor babyBlue];
+        _eventStartTimeLabel.textColor = [UIColor babyBlue];
+        _sideBar.backgroundColor = [UIColor babyBlue];
     } else if ([event.eventType isEqualToString:@"3personal"]) {
         _eventStartDatelabel.textColor = [UIColor orangeColor];
         _dayLabel.textColor = [UIColor orangeColor];

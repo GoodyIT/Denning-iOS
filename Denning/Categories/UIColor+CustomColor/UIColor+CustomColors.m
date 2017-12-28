@@ -38,7 +38,7 @@
     return [UIColor colorWithRed:15/255.0f green:55/255.0f blue:106/255.0f alpha:1.0f];
 }
 
-+(UIColor*) babyBule {
++(UIColor*) babyBlue {
     return [UIColor colorWithHexString:@"4285F4"];
 }
 

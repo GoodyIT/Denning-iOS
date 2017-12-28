@@ -18,7 +18,7 @@
 
 +(UIColor*) gradeintBackStart;
 +(UIColor*) gradeintBackEnd;
-+(UIColor*) babyBule;
++(UIColor*) babyBlue;
 + (UIColor*) babyRed;
 
 + (UIColor*) babyGreen;

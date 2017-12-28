@@ -124,4 +124,14 @@
 + (void)logout:(UIViewController*) viewController;
 
 + (NSString *)mimeTypeForData:(NSData *)data;
+
++ (NSString*) getUserPosition:(NSString*) email;
+
++ (NSString*) getTag:(QBChatDialog*) dialog;
+
++ (NSString*) getCurrentUserRole:(NSInteger) userID fromChatDialog:(QBChatDialog*) chatDialog;
+
++ (BOOL) isSupportChat:(QBChatDialog*) chatDialog;
+
++ (NSString*) getGroupPosition:(QBChatDialog*) chatDialog;
 @end

@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet QMBadgeView *badgeView;
 
+
 @property (copy, nonatomic) NSString *time;
 
 @end

@@ -268,7 +268,7 @@
         @strongify(self)
         if (error == nil){
             [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-            if ([QMCore instance].currentUser.email != nil) {
+            if ([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) {
                 [[QMCore.instance logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {
                     [self loginToQB:statusCode response:responseObject];
                     return nil;

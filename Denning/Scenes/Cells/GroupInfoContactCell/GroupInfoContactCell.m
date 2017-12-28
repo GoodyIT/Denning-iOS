@@ -8,6 +8,12 @@
 
 #import "GroupInfoContactCell.h"
 
+@interface GroupInfoContactCell() {
+    QBUUser* _user;
+}
+
+@end
+
 @implementation GroupInfoContactCell
 
 - (void)awakeFromNib {
@@ -18,13 +24,11 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void) configureCellWithContact: (QBUUser*) user inChatDialog:(QBChatDialog*) chatDialog
 {
-    
+    _user = user;
     [self.avatarImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]
                                     title:user.fullName
                            completedBlock:nil];
@@ -32,23 +36,33 @@
     self.userNameLabel.text = user.fullName;
     self.lastSeenLabel.text = [[QMCore instance].contactManager onlineStatusForUser:user];
     
-    NSArray* adminRoles = [chatDialog.data objectForKey:@"role_admin"];
-    NSArray* readerRoles = [chatDialog.data objectForKey:@"role"];
-    self.roleLabel.textColor = [UIColor flatBlackColorDark];
-    self.roleLabel.text = @"---";
-    if (adminRoles != nil && adminRoles.count > 0) {
-        if  ([adminRoles containsObject:@(user.ID)]) {
-            self.roleLabel.text = @"Admin";
-            self.roleLabel.textColor = [UIColor babyRed];
+    if ([DIHelpers isSupportChat:chatDialog]) {
+        
+        NSString *role = [DIHelpers getCurrentUserRole:user.ID fromChatDialog:chatDialog];
+        NSString* btnTitle = @"Normal";
+        UIColor *color = [UIColor babyBlue];
+        
+        if ([role isEqualToString:kRoleAdminTag]) {
+            btnTitle = @"Admin";
+            color = [UIColor babyBlue];
+        } else if ([role isEqualToString:kRoleNormalTag]) {
+            btnTitle = @"Normal";
+            color = [UIColor babyBlue];
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            btnTitle = @"Reader";
+            color = [UIColor babyGreen];
         }
+        
+        self.roleBtn.hidden = NO;
+        [self.roleBtn setTitle:btnTitle forState:UIControlStateNormal];
+        [self.roleBtn setTitleColor:color forState:UIControlStateNormal];
+    } else {
+        self.roleBtn.hidden = YES;
     }
-    
-    if (readerRoles != nil && readerRoles.count > 0) {
-        if ([readerRoles containsObject:@(user.ID)]) {
-            self.roleLabel.text = @"Reader";
-            self.roleLabel.textColor = [UIColor babyBule];
-        }
-    }
+}
+
+- (IBAction)updateUser:(id)sender {
+    _updateRoleBlock(self);
 }
 
 @end

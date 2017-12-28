@@ -21,6 +21,13 @@
 
 static NSString *const kQBPassword = @"denningIT";
 
+// Chat Dialog
+static NSString* const kRoleAdminTag = @"role_admin";
+static NSString* const kRoleReaderTag = @"role_reader";
+static NSString* const kRoleNormalTag = @"role_normal";
+
+static NSString* const kGroupPositionTag = @"position";
+
 // storyboards
 static NSString *const kQMMainStoryboard = @"Main";
 static NSString *const kLicenseSegue = @"LicenseSegue";
@@ -34,6 +41,7 @@ static NSString *const kQMDialogsUpdateNotificationMessage = @"Notification mess
 static NSString *const kQMContactRequestNotificationMessage = @"Contact request";
 static NSString *const kQMLocationNotificationMessage = @"Location";
 static NSString *const kQMCallNotificationMessage = @"Call notification";
+static NSString *const kQMGroupTypeChangeNotificationMessage = @"Change group type";
 
 /**
  *  EditDialogTableViewController

@@ -310,7 +310,7 @@ UITableViewDelegate, UITableViewDataSource>
         url = [NSString stringWithFormat:@"%@denningwcf/v1/app/contactFolder/%@", [DataManager sharedManager].user.serverAPI, model.key];
     } else {
         fileFolderTitle = @"File Folder";
-        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, [model.key substringFromIndex:9]];
+        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, model.key];
     }
     
     [self openDocument:url];

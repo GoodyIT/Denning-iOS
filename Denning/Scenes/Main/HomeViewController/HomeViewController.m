@@ -179,8 +179,10 @@ iCarouselDataSource, iCarouselDelegate>
             } else if ([DataManager sharedManager].personalArray.count > 0) {
                 [self performSegueWithIdentifier:kChangeBranchSegue sender:[DataManager sharedManager].personalArray];
             } else {
-                [QMAlert showAlertWithMessage:@"No more branches" actionSuccess:NO inViewController:self];
+                [SVProgressHUD showErrorWithStatus:@"No more branches"];
             }
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"Only subscribed denning user can access it."];
         }
     }];
 }

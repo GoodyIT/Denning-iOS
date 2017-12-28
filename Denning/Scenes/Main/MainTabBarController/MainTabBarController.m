@@ -90,7 +90,7 @@ QMPushNotificationManagerDelegate>
     }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
 
         if (!task.isCancelled) {
-            [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
         }
 
         return nil;

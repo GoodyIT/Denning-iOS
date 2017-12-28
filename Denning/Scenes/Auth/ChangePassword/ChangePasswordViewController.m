@@ -103,6 +103,36 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
+    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+    });
+}
+
+- (void) manageFirmURL: (NSArray*) firmURLArray {
+    if (firmURLArray.count == 1) {
+        [self registerURLAndGotoMain:firmURLArray[0]];
+    } else {
+        [self performSegueWithIdentifier:kBranchSegue sender:firmURLArray];
+    }
+}
+
+- (void) manageUserType {
+    // Initialize the option for shared folder
+    [DataManager sharedManager].documentView = @"nothing";
+    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+        [self manageFirmURL:[DataManager sharedManager].denningArray];
+    } else if ([DataManager sharedManager].personalArray.count > 0) {
+        [self manageFirmURL:[DataManager sharedManager].personalArray];
+        
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+        });
+    }
+}
+
 - (IBAction)changePassword:(id)sender {
     [self.view endEditing:YES];
     
@@ -125,11 +155,18 @@
         [SVProgressHUD dismiss];
         if (success){
             [[DataManager sharedManager] setUserInfoFromChangePassword:response];
+            [[DataManager sharedManager] setUserPassword:password1];
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
             [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
         }
-        
-        [SVProgressHUD showErrorWithStatus:error];
+        if ([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) {
+            [[QMCore.instance logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SVProgressHUD showErrorWithStatus:error];
+                });
+                return nil;
+            }];
+        }
     }];
 }
 

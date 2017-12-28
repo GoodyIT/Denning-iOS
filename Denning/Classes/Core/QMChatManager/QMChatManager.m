@@ -142,44 +142,73 @@
     NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
     NSDictionary* tagData = @{@"tag": tag};
-    return [self changeCustomData:tagData forGroupChatDialog:chatDialog];
+    @weakify(self);
+    return [[self changeCustomData:tagData forGroupChatDialog:chatDialog] continueWithSuccessBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
+        @strongify(self);
+        
+        return [self sendNotificationMessageAboutDialogUpdateWithText:kQMGroupTypeChangeNotificationMessage forChatDialog:task.result];
+    }];
 }
 
-- (BFTask*) changeUserRoleToAdmin:(NSInteger) userID forGroupChatDialog :(QBChatDialog *)chatDialog {
+- (NSMutableArray*) updateRoleIDs:(NSMutableArray*) IDArray withRole:(NSString*)role comparedRole:(NSString*)kRole forID:(NSInteger) userID {
+     if ([role isEqualToString:kRole]) {
+         if (IDArray != nil) {
+             if (![IDArray containsObject:@(userID)]) {
+                 [IDArray addObject:@(userID)];
+             }
+         } else {
+             IDArray = [NSMutableArray new];
+             [IDArray addObject:@(userID)];
+         }
+     } else {
+         if (IDArray != nil) {
+             [IDArray removeObject:@(userID)];
+         } else {
+             IDArray = [NSMutableArray new];
+         }
+     }
+    return IDArray;
+}
+
+- (BFTask*) changeUserWithID:(NSInteger) userID toRole:(NSString*)role forGroupChatDialog :(QBChatDialog *)chatDialog {
     NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
-    NSMutableArray* originAdminIDs = [chatDialog.data objectForKey:@"role_admin"];
-    NSMutableArray* originReaderIDs = [chatDialog.data objectForKey:@"role"];
+    NSMutableArray* originAdminIDs = [chatDialog.data objectForKeyNotNull:kRoleAdminTag];
+    NSMutableArray* originReaderIDs = [chatDialog.data objectForKeyNotNull:kRoleReaderTag];
+    NSMutableArray* originNormalIDs = [chatDialog.data objectForKeyNotNull:kRoleNormalTag];
     
-    if (originReaderIDs != nil) {
-        [originReaderIDs removeObject:@(userID)];
-    }
+    originAdminIDs = [self updateRoleIDs:originAdminIDs withRole:role comparedRole:kRoleAdminTag forID:userID];
+    originReaderIDs = [self updateRoleIDs:originReaderIDs withRole:role comparedRole:kRoleReaderTag forID:userID];
+    originNormalIDs = [self updateRoleIDs:originNormalIDs withRole:role comparedRole:kRoleNormalTag forID:userID];
     
-    if (originAdminIDs != nil) {
-        if (![originAdminIDs containsObject:@(userID)]) {
-            [originAdminIDs addObject:@(userID)];
-        }
-    }
-    
-    NSDictionary* roleData = @{@"role_admin": originAdminIDs, @"role": originReaderIDs};
+    NSDictionary* roleData = @{kRoleAdminTag: originAdminIDs, kRoleReaderTag: originReaderIDs, kRoleNormalTag:originNormalIDs};
     return [self changeCustomData:roleData forGroupChatDialog:chatDialog];
 }
 
-- (BFTask*) changeUserRoleToReader:(NSInteger) userID forGroupChatDialog :(QBChatDialog *)chatDialog {
-     NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
-    NSMutableArray* originAdminIDs = [chatDialog.data objectForKey:@"role_admin"];
-    NSMutableArray* originReaderIDs = [chatDialog.data objectForKey:@"role"];
-    if (originAdminIDs != nil) {
-        [originAdminIDs removeObject:@(userID)];
-    }
-    if (originReaderIDs != nil) {
-        if (![originReaderIDs containsObject:@(userID)]) {
-            [originReaderIDs addObject:@(userID)];
-        }
-    }
+- (BFTask*) sendNotificationMessageAboutDialogUpdateWithText:(NSString*) notificationText forChatDialog:(QBChatDialog*) chatDialog{
     
-    NSDictionary* roleData = @{@"role_admin": originAdminIDs, @"role": originReaderIDs};
-    return [self changeCustomData:roleData forGroupChatDialog:chatDialog];
+    return make_task(^(BFTaskCompletionSource *source) {
+        QBChatMessage *notificationMessage = [QBChatMessage message];
+        notificationMessage.senderID = self.serviceManager.currentUser.ID;
+        notificationMessage.text = notificationText;
+        notificationMessage.dialogUpdateType = QMDialogUpdateTypeType;
+        notificationMessage.dialogUpdatedAt = chatDialog.updatedAt;
+        notificationMessage.dialogName = chatDialog.name;
+        
+        [self.serviceManager.chatService sendMessage:notificationMessage
+                     type:QMMessageTypeUpdateGroupDialog
+                 toDialog:chatDialog
+            saveToHistory:YES
+            saveToStorage:YES
+                                          completion:^(NSError * _Nullable error) {
+                                              if (error == nil) {
+                                                  [source setResult:nil];
+                                              }
+                                              else {
+                                                  [source setError:error];
+                                              }
+                                          }];
+    });
 }
 
 - (BFTask*) changeCustomData:(NSDictionary*) data forGroupChatDialog:(QBChatDialog *)chatDialog {

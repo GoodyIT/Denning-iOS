@@ -147,23 +147,17 @@ MEVFloatingButtonDelegate
     [self performSearch];
 }
 
-- (NSString*) getTag:(QBChatDialog*) dialog {
-    NSString* tag = [dialog.data valueForKeyNotNull:@"tag"];
-    return tag.length == 0 ? @"Colleagues" : tag;
-}
-
 -(NSArray*) filterDialogInArray:(NSMutableArray*) groupDialogs
 {
     NSMutableArray* clientDialgs = [NSMutableArray new];
     NSMutableArray* staffDialgs = [NSMutableArray new];
     NSMutableArray* matterDialgs = [NSMutableArray new];
     for (QBChatDialog* dialog in groupDialogs) {
-        
-        if ([[self getTag:dialog] isEqualToString:@"Colleagues"]) {
+        if ([[DIHelpers getTag:dialog] isEqualToString:@"Colleagues"]) {
             [staffDialgs addObject:dialog];
-        } else if ([[self getTag:dialog] isEqualToString:@"Clients"]) {
+        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Clients"]) {
             [clientDialgs addObject:dialog];
-        } else if ([[self getTag:dialog] isEqualToString:@"Matters"]){
+        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Matters"]){
             [matterDialgs addObject:dialog];
         }
     }
@@ -268,7 +262,7 @@ MEVFloatingButtonDelegate
     }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
         
         if (!task.isCancelled) {
-            [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
         }
         
         return nil;

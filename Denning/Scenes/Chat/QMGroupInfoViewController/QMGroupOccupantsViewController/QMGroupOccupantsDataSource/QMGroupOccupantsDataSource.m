@@ -116,7 +116,11 @@ typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
         GroupInfoContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[GroupInfoContactCell cellIdentifier] forIndexPath:indexPath];
         
         QBUUser *user = self.items[indexPath.row - kQMNumberOfStaticCellsBeforeOccupantsList];
+        
+        
         [cell configureCellWithContact:user inChatDialog:_chatDialog];
+        
+        cell.updateRoleBlock = _updateRoleBlock;
         
 //        BOOL isRequestRequired = ![QMCore.instance.contactManager isContactListItemExistentForUserWithID:user.ID];
 //

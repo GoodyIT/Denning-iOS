@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bodyLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *positionLabel;
+
 @end
 
 @implementation QMTableViewCell
@@ -99,13 +101,16 @@
 }
 
 - (void)setTitle:(NSString *)title {
-    
     self.titleLabel.text = title;
 }
 
 - (void)setBody:(NSString *)body {
-    
     self.bodyLabel.text = body;
+}
+
+- (void) setPosition:(NSString*) position
+{
+    self.positionLabel.text = position;
 }
 
 @end

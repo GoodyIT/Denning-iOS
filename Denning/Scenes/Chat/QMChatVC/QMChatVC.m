@@ -786,6 +786,10 @@ QMUsersServiceDelegate
     [UIAlertController alertControllerWithTitle:@"Denning"
                                         message:nil
                                  preferredStyle:UIAlertControllerStyleActionSheet];
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:nil]];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"Denning Files" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self performSegueWithIdentifier:kOpenFileSegue sender:_chatDialog.name];
     }]];
@@ -830,9 +834,7 @@ QMUsersServiceDelegate
                                     [self presentViewController:navController animated:YES completion:nil];
                                 }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CANCEL", nil)
-                                                        style:UIAlertActionStyleCancel
-                                                      handler:nil]];
+    
     
     if (alertController.popoverPresentationController) {
         // iPad support
@@ -1798,6 +1800,10 @@ QMUsersServiceDelegate
     [QMCore.instance.callManager callToUserWithIDs:[_chatDialog.occupantIDs mutableCopy] conferenceType:QBRTCConferenceTypeAudio];
 }
 
+- (void) groupVideoCall {
+    [QMCore.instance.callManager callToUserWithIDs:[_chatDialog.occupantIDs mutableCopy] conferenceType:QBRTCConferenceTypeVideo];
+}
+
 - (void)configureGroupChatAvatar {
     
     self.imageBarButtonItem = [[QMImageBarButtonItem alloc] init];
@@ -1814,8 +1820,12 @@ QMUsersServiceDelegate
     UIButton *audioButton = [QMChatButtonsFactory audioCall];
     [audioButton addTarget:self action:@selector(groupCall) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *audioCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:audioButton];
+    UIButton *videoButton = [QMChatButtonsFactory videoCall];
+    [videoButton addTarget:self action:@selector(groupVideoCall) forControlEvents:UIControlEventTouchUpInside];
     
-    self.navigationItem.rightBarButtonItems = @[audioCallBarButtonItem, self.imageBarButtonItem];
+    UIBarButtonItem *videoCallBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:videoButton];
+    
+    self.navigationItem.rightBarButtonItems = @[videoCallBarButtonItem, audioCallBarButtonItem, self.imageBarButtonItem];
     
     [self updateGroupAvatarImage];
 }

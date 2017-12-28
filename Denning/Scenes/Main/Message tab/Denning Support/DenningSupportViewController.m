@@ -117,17 +117,12 @@ UIGestureRecognizerDelegate
     [self performSearch];
 }
 
-- (NSString*) getTag:(QBChatDialog*) dialog {
-    NSString* tag = [dialog.data valueForKeyNotNull:@"tag"];
-    return tag.length == 0 ? @"Colleagues" : tag;
-}
-
 - (void) updateDataSource {
     NSArray* temp =  [QMCore.instance.chatService.dialogsMemoryStorage dialogsSortByLastMessageDateWithAscending:NO];
     
     NSMutableArray* groupDialogs = [NSMutableArray new];
     for (QBChatDialog *dialog in temp) {
-        if (dialog.type == QBChatDialogTypeGroup && [[self getTag:dialog] isEqualToString:@"Denning"]) {
+        if (dialog.type == QBChatDialogTypeGroup && [[DIHelpers getTag:dialog] isEqualToString:@"Denning"]) {
             NSArray* users = [QMCore.instance.usersService.usersMemoryStorage usersWithIDs:dialog.occupantIDs];
             NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", [QBSession currentSession].currentUser.email];
             NSArray *filteredUsers = [users filteredArrayUsingPredicate:usersSearchPredicate];
@@ -200,7 +195,7 @@ UIGestureRecognizerDelegate
     }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
         
         if (!task.isCancelled) {
-            [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
         }
         
         return nil;

@@ -49,26 +49,30 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Admin" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j3D-Vl-hZj">
-                        <rect key="frame" x="284" y="26.5" width="80" height="18"/>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRg-IN-8Di">
+                        <rect key="frame" x="313" y="20" width="55" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="80" id="8VQ-So-hZL"/>
+                            <constraint firstAttribute="width" constant="55" id="wWj-Q7-0FB"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
-                        <color key="textColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <state key="normal" title="Normal">
+                            <color key="titleColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="updateUser:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cPJ-yI-0gz"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="j3D-Vl-hZj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="66J-YF-oKU" secondAttribute="trailing" constant="12" id="7XT-Wv-mtl"/>
+                    <constraint firstItem="xRg-IN-8Di" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JKa-pW-eU5" secondAttribute="trailing" constant="12" id="Frx-dn-VCr"/>
                     <constraint firstItem="LV1-jy-nDb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Goa-Ak-yPC"/>
+                    <constraint firstItem="xRg-IN-8Di" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-8" id="NR5-ZY-McB"/>
                     <constraint firstItem="LV1-jy-nDb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="NU9-7h-maU"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="j3D-Vl-hZj" secondAttribute="trailing" constant="12" id="VrS-gB-cyG"/>
                     <constraint firstItem="JKa-pW-eU5" firstAttribute="leading" secondItem="LV1-jy-nDb" secondAttribute="trailing" constant="8" id="WxQ-Up-2Wf"/>
-                    <constraint firstItem="j3D-Vl-hZj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JKa-pW-eU5" secondAttribute="trailing" constant="12" id="ZHa-Sf-OhQ"/>
+                    <constraint firstItem="xRg-IN-8Di" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="66J-YF-oKU" secondAttribute="trailing" constant="12" id="Z7g-op-reW"/>
                     <constraint firstItem="66J-YF-oKU" firstAttribute="leading" secondItem="LV1-jy-nDb" secondAttribute="trailing" constant="8" id="cN3-vm-9Wh"/>
                     <constraint firstItem="66J-YF-oKU" firstAttribute="top" secondItem="LV1-jy-nDb" secondAttribute="top" id="ip2-sU-hgn"/>
-                    <constraint firstItem="j3D-Vl-hZj" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="oJN-lO-GPj"/>
+                    <constraint firstItem="xRg-IN-8Di" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qU9-vE-PDS"/>
                     <constraint firstItem="JKa-pW-eU5" firstAttribute="top" secondItem="66J-YF-oKU" secondAttribute="bottom" constant="1" id="rdr-ue-e8e"/>
                 </constraints>
             </tableViewCellContentView>
@@ -76,7 +80,7 @@
             <connections>
                 <outlet property="avatarImageView" destination="LV1-jy-nDb" id="FjZ-rH-QVj"/>
                 <outlet property="lastSeenLabel" destination="JKa-pW-eU5" id="jDC-yR-CkZ"/>
-                <outlet property="roleLabel" destination="j3D-Vl-hZj" id="8qD-kc-egg"/>
+                <outlet property="roleBtn" destination="xRg-IN-8Di" id="rRr-dV-QDt"/>
                 <outlet property="userNameLabel" destination="66J-YF-oKU" id="bvW-KQ-Agu"/>
             </connections>
             <point key="canvasLocation" x="72" y="67"/>

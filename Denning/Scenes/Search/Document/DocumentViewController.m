@@ -11,11 +11,6 @@
 #import "NewContactHeaderCell.h"
 
 #import "AppDelegate.h"
-#import "DemoDownloadStore.h"
-#import "DemoDownloadItem.h"
-#import "DemoDownloadNotifications.h"
-#import "HWIFileDownloader.h"
-#import <QuickLook/QuickLook.h>
 
 @interface DocumentViewController () < UISearchBarDelegate, UISearchControllerDelegate, SWTableViewCellDelegate>
 {
@@ -74,18 +69,7 @@
     
     email = [DataManager sharedManager].user.email;
     sessionID = [DataManager sharedManager].user.sessionID;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDownloadDidComplete:) name:downloadDidCompleteNotification object:nil];
     downloadedURLs = [NSMutableArray new];
-}
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:downloadDidCompleteNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:downloadProgressChangedNotification object:nil];
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:totalDownloadProgressChangedNotification object:nil];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -138,7 +122,6 @@
 
 - (IBAction)didTapShare:(id)sender {
     NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
-//    NSMutableIndexSet *indicesOfItemsToDelete = [NSMutableIndexSet new];
     NSMutableArray* urlArray = [NSMutableArray new];
     for (NSIndexPath *selectionIndex in selectedRows)
     {
@@ -155,40 +138,9 @@
         }
     }
     
-//    NSString* sendString = [urlArray componentsJoinedByString:@"\n"];
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         _updateHandler(urlArray);
     }];
-//
-//    NSMutableArray* localURLArray = [NSMutableArray new];
-//    for (NSURL* url in urlArray) {
-//        // Add a task to the group
-//        [self downloadDocumentForURL:url withCompletion:^(NSURL *filePath, NSError *error) {
-//            NSLog(@"%@ -----", url);
-//            [localURLArray addObject:filePath];
-//            if (localURLArray.count == urlArray.count) {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [self shareDocument:localURLArray];
-//                });
-//            }
-//        }];
-//    }
-//
-    //    AppDelegate *theAppDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    [theAppDelegate.demoDownloadStore setupDownloadItems:urlArray];
-//    for (DemoDownloadItem *aDownloadItem in [theAppDelegate demoDownloadStore].downloadItemsArray) {
-//        [theAppDelegate.demoDownloadStore startDownloadWithDownloadItem:aDownloadItem];
-//    }
-
-    //    UIImage *image = [UIImage imageWithData:[chart getImage]];
-//    NSArray *activityItems = @[image];
-//    UIActivityViewController *activityViewControntroller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-//    activityViewControntroller.excludedActivityTypes = @[];
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//        activityViewControntroller.popoverPresentationController.sourceView = self.view;
-//        activityViewControntroller.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/4, 0, 0);
-//    }
-//    [self presentViewController:activityViewControntroller animated:true completion:nil];
 }
 
 - (void) shareDocument:(NSArray*) urls {

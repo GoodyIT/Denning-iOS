@@ -126,11 +126,6 @@ UIGestureRecognizerDelegate
     [self performSearch];
 }
 
-- (NSString*) getTag:(QBChatDialog*) dialog {
-    NSString* tag = [dialog.data valueForKeyNotNull:@"tag"];
-    return tag.length == 0 ? @"Colleagues" : tag;
-}
-
 -(NSArray*) filterDialogInArray:(NSMutableArray*) groupDialogs
 {
     NSMutableArray* clientDialgs = [NSMutableArray new];
@@ -138,11 +133,11 @@ UIGestureRecognizerDelegate
     NSMutableArray* matterDialgs = [NSMutableArray new];
     for (QBChatDialog* dialog in groupDialogs) {
         
-        if ([[self getTag:dialog] isEqualToString:@"Colleagues"]) {
+        if ([[DIHelpers getTag:dialog] isEqualToString:@"Colleagues"]) {
             [staffDialgs addObject:dialog];
-        } else if ([[self getTag:dialog] isEqualToString:@"Clients"]) {
+        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Clients"]) {
             [clientDialgs addObject:dialog];
-        } else if ([[self getTag:dialog] isEqualToString:@"Matters"]){
+        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Matters"]){
             [matterDialgs addObject:dialog];
         }
     }
@@ -164,7 +159,6 @@ UIGestureRecognizerDelegate
         case 2:
             _items = _originItems = filteredArray[1];
             break;
-            
         case 3:
             // Denning support
             _items = _originItems = filteredArray[2];
@@ -235,7 +229,7 @@ UIGestureRecognizerDelegate
     }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
         
         if (!task.isCancelled) {
-            [self performSegueWithIdentifier:kQMSceneSegueAuth sender:nil];
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
         }
         
         return nil;
@@ -309,9 +303,10 @@ UIGestureRecognizerDelegate
             
             [cell setTitle:NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil) avatarUrl:nil];
         }
-        //        [cell configureCellWithUser:recipient];
-    } else {
         
+        [cell setPosition:[DIHelpers getUserPosition:recipient.email]];
+    } else {
+        [cell setPosition:[DIHelpers getGroupPosition:chatDialog]];
         [cell setTitle:chatDialog.name avatarUrl:chatDialog.photo];
         //        [cell configureCellWithChatDialog:chatDialog];
     }

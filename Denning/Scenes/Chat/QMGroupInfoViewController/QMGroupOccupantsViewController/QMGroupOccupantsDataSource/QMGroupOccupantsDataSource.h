@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (copy, nonatomic) void (^didAddUserBlock)(UITableViewCell *cell);
 
+@property (copy, nonatomic) void (^updateRoleBlock)(UITableViewCell *cell);
+
 @property (strong, nonatomic) QBChatDialog* chatDialog;
 
 /**

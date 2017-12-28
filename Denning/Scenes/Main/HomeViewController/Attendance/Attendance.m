@@ -68,10 +68,10 @@
     if ([_attendanceModel.btnLeft isEqualToString:@"CLOCK-OUT"]) {
         isAttended = YES;
         [_btnClock setBackgroundColor:[UIColor redColor]];
-        _headerBackground.backgroundColor = [UIColor babyBule];
+        _headerBackground.backgroundColor = [UIColor babyBlue];
     } else {
         isAttended = NO;
-        [_btnClock setBackgroundColor:[UIColor babyBule]];
+        [_btnClock setBackgroundColor:[UIColor babyBlue]];
         _headerBackground.backgroundColor = [UIColor redColor];
     }
     

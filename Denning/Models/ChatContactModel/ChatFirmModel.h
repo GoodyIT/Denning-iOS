@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class ChatUserModel;
 @interface ChatFirmModel : NSObject
 
 @property (strong, nonatomic) NSString* firmCode;

@@ -426,12 +426,12 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
             cell.connectionState = [self.session connectionStateForUser:userID];
         }];
         
-        if (![self.session.initiatorID isEqualToNumber:userID]) {
-            // there is QBRTC bug, when userID is always opponents iD
-            // even  for user, who did not answer, this delegate will be called
-            // with opponent user ID
-            [QMCore.instance.callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
-        }
+//        if (![self.session.initiatorID isEqualToNumber:userID]) {
+//            // there is QBRTC bug, when userID is always opponents iD
+//            // even  for user, who did not answer, this delegate will be called
+//            // with opponent user ID
+//            [QMCore.instance.callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
+//        }
     }
 }
 

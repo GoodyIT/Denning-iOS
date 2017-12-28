@@ -102,14 +102,6 @@ PKPushRegistryDelegate
             return;
         }
         
-//        QBUUser *opponentUser = [self.serviceManager.usersService.usersMemoryStorage userWithID:[opponentsIDs.firstObject integerValue]];
-//        QBUUser *currentUser = self.serviceManager.currentProfile.userData;
-
-//        NSString *callerName = currentUser.fullName ?: [NSString stringWithFormat:@"%tu", currentUser.ID];
-//        NSString *pushText = [NSString stringWithFormat:@"%@ %@", callerName, NSLocalizedString(@"QM_STR_IS_CALLING_YOU", nil)];
-//
-//        [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
-        
         NSUUID *uuid = nil;
         if (CallKitManager.isCallKitAvailable) {
             uuid = [NSUUID UUID];
@@ -123,6 +115,7 @@ PKPushRegistryDelegate
         [self prepareCallWindow];
         
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:callViewController];
+        nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.callWindow.rootViewController = nav;
 
         NSDictionary *payload = @{
@@ -158,51 +151,8 @@ PKPushRegistryDelegate
 // Private call
 
 - (void)callToUserWithID:(NSUInteger)userID conferenceType:(QBRTCConferenceType)conferenceType {
-    [self callToUserWithIDs:@[@(userID)] conferenceType:conferenceType];
-//    @weakify(self);
-//    [self checkPermissionsWithConferenceType:conferenceType completion:^(BOOL granted) {
-//
-//        @strongify(self);
-//
-//        if (!granted) {
-//            // no permissions
-//            return;
-//        }
-//
-//        if (self.session != nil) {
-//            // session in progress
-//            return;
-//        }
-//
-//        self.session = [[QBRTCClient instance] createNewSessionWithOpponents:@[@(userID)]
-//                                                          withConferenceType:conferenceType];
-//
-//        if (self.session == nil) {
-//            // failed to create session
-//            return;
-//        }
-//
-//        [self startPlayingCallingSound];
-//
-//        // instantiating view controller
-//        QMCallState callState = conferenceType == QBRTCConferenceTypeVideo ? QMCallStateOutgoingVideoCall : QMCallStateOutgoingAudioCall;
-//
-//        QBUUser *opponentUser = [self.serviceManager.usersService.usersMemoryStorage userWithID:userID];
-//        QBUUser *currentUser = self.serviceManager.currentProfile.userData;
-//
-//        NSString *callerName = currentUser.fullName ?: [NSString stringWithFormat:@"%tu", currentUser.ID];
-//        NSString *pushText = [NSString stringWithFormat:@"%@ %@", callerName, NSLocalizedString(@"QM_STR_IS_CALLING_YOU", nil)];
-//
-//        [QMNotification sendPushNotificationToUser:opponentUser withText:pushText];
-//
-//
-//        [self prepareCallWindow];
-//
-//        self.callWindow.rootViewController = [QMCallViewController callControllerWithState:callState];
-//
-//        [self.session startCall:nil];
-//        self.hasActiveCall = YES;
-//    }];
+    [self callToUserWithIDs:[@[@(userID)] mutableCopy] conferenceType:conferenceType];
+
 }
 
 - (void)prepareCallWindow {
@@ -270,9 +220,6 @@ PKPushRegistryDelegate
     if (self.session != nil) {
         // session in progress
         [session rejectCall:@{@"reject" : @"busy"}];
-        // sending appropriate notification
-        QBChatMessage *message = [self _callNotificationMessageForSession:session state:QMCallNotificationStateMissedNoAnswer];
-        [self _sendNotificationMessage:message];
         return;
     }
     
@@ -308,7 +255,9 @@ PKPushRegistryDelegate
             
             callViewController.session = session;
             callViewController.callUUID = strongSelf.callUUID;
-            strongSelf.callWindow.rootViewController = callViewController;
+            UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:callViewController];
+            nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            strongSelf.callWindow.rootViewController = nav;
             
         } completion:nil];
     }
@@ -345,6 +294,22 @@ PKPushRegistryDelegate
     
     self.hasActiveCall = NO;
     
+    if (_backgroundTask != UIBackgroundTaskInvalid) {
+        [[UIApplication sharedApplication] endBackgroundTask:_backgroundTask];
+        _backgroundTask = UIBackgroundTaskInvalid;
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground
+            && _backgroundTask == UIBackgroundTaskInvalid) {
+            // dispatching chat disconnect in 1 second so message about call end
+            // from webrtc does not cut mid sending
+            // checking for background task being invalid though, to avoid disconnecting
+            // from chat when another call has already being received in background
+            [QBChat.instance disconnectWithCompletionBlock:nil];
+        }
+    });
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kQMCallViewControllerEndScreenDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         [QMSoundManager playEndOfCallSound];
@@ -353,8 +318,13 @@ PKPushRegistryDelegate
         
         self.callWindow.rootViewController = nil;
         self.callWindow = nil;
-        
         self.session = nil;
+        
+        if (CallKitManager.isCallKitAvailable) {
+            [CallKitManager.instance endCallWithUUID:self.callUUID completion:nil];
+            self.callUUID = nil;
+        }
+       
     });
 }
 
@@ -364,7 +334,9 @@ PKPushRegistryDelegate
     [[UIStoryboard storyboardWithName:@"Call" bundle:nil] instantiateViewControllerWithIdentifier:@"CallViewController"];
     
     callViewController.session = session;
-    self.callWindow.rootViewController = callViewController;
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:callViewController];
+    nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    self.callWindow.rootViewController = nav;
 }
 
 - (void)incomingCallViewController:(IncomingCallViewController *)vc didRejectSession:(QBRTCSession *)session {
