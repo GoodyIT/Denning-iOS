@@ -123,9 +123,6 @@
     [DataManager sharedManager].documentView = @"nothing";
     if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
         [self manageFirmURL:[DataManager sharedManager].denningArray];
-    } else if ([DataManager sharedManager].personalArray.count > 0) {
-        [self manageFirmURL:[DataManager sharedManager].personalArray];
-        
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];

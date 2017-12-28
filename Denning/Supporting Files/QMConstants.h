@@ -19,6 +19,7 @@
 
 #endif
 
+
 static NSString *const kQBPassword = @"denningIT";
 
 // Chat Dialog

@@ -119,7 +119,7 @@
 
 - (void) _setInfoWithValue:(NSString*) value for:(NSString*) key
 {
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
     [defaults setValue:value forKey:key];
     [defaults synchronize];
 }

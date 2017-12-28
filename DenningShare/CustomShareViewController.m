@@ -63,7 +63,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
 
     [self prepareUI];
 
@@ -212,7 +212,7 @@ UIColor *QMSecondaryApplicationColor() {
 
     self.sendBtn.enabled = YES;
     self.segmented.hidden = YES;
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
     userType = [defaults valueForKey:@"userType"];
     
     self.url = MATTER_STAFF_TRANSIT_FOLDER;
@@ -385,9 +385,9 @@ UIColor *QMSecondaryApplicationColor() {
 
 - (NSURLSession *) configureMySession {
     if (!mySession) {
-        NSURLSessionConfiguration* config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"group.denningshare.extension"];
+        NSURLSessionConfiguration* config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:kGroupShareIdentifier];
         // To access the shared container you set up, use the sharedContainerIdentifier property on your configuration object.
-        config.sharedContainerIdentifier = @"group.denningshare.extension";
+        config.sharedContainerIdentifier = kGroupShareIdentifier;
         mySession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
     }
     return mySession;

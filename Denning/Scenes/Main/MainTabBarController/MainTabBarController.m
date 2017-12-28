@@ -35,7 +35,7 @@ QMPushNotificationManagerDelegate>
     [super viewDidLoad];
     
     self.delegate = self;
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge) name:@"updateBadge" object:nil];
+//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge) name:@"updateBadge" object:nil];
     [self setNeedsStatusBarAppearanceUpdate];
 }
 

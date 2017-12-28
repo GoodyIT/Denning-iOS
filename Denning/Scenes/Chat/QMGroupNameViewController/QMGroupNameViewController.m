@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
     self.groupNameField.text = self.chatDialog.name;
-    self.groupPositionField.text = [self.chatDialog.data valueForKeyNotNull:kGroupPositionTag];
+    self.groupPositionField.text = [DIHelpers getGroupPosition:self.chatDialog];
     
     [self updateGroupType];
     
@@ -134,7 +134,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 - (IBAction)groupPositionFieldEditingChanged:(UITextField *)sender {
     NSCharacterSet *whiteSpaceSet = [NSCharacterSet whitespaceCharacterSet];
     if ([sender.text stringByTrimmingCharactersInSet:whiteSpaceSet].length == 0
-        || [sender.text isEqualToString:[self.chatDialog.data valueForKeyNotNull:kGroupPositionTag]]) {
+        || [sender.text isEqualToString:[DIHelpers getGroupPosition:self.chatDialog]]) {
         positionChanged = NO;
         self.navigationItem.rightBarButtonItem.enabled = NO;
         return;

@@ -189,9 +189,6 @@
     
     if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
         [self manageFirmURL:[DataManager sharedManager].denningArray];
-    } else if ([DataManager sharedManager].personalArray.count > 0) {
-        [self manageFirmURL:[DataManager sharedManager].personalArray];
-       
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
@@ -201,7 +198,6 @@
 
 - (void) manageSuccessResult: (NSInteger) statusCode response:(NSDictionary*) response {
     [[DataManager sharedManager] setUserInfoFromLogin:response];
-    [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
     if (statusCode == 250) { // New Device login
         [DataManager sharedManager].statusCode = [NSNumber numberWithInteger:statusCode];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -244,10 +240,9 @@
         [SVProgressHUD dismiss];
         
         if (!task.isFaulted) {
-            
             [QMCore instance].currentProfile.accountType = QMAccountTypeEmail;
             [[QMCore instance].currentProfile synchronizeWithUserData:task.result];
-            
+            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
             [self manageSuccessResult:statusCode response:responseObject];
         } else {
             [QMAlert showAlertWithMessage:task.error.localizedDescription actionSuccess:NO inViewController:self];

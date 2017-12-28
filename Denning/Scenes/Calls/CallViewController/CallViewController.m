@@ -360,7 +360,9 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
     if (user.ID != [QBSession currentSession].currentUser.ID) {
         
         NSString *title = user.fullName ?: kUnknownUserLabel;
-        reusableCell.placeholderImageView.image = [PlaceholderGenerator placeholderWithSize:reusableCell.placeholderImageView.bounds.size title:title];
+        [reusableCell.placeholderImageView setImageWithURL:[NSURL URLWithString:user.avatarUrl]
+                                    title:title
+                           completedBlock:nil];
     }
     
     return reusableCell;
@@ -425,13 +427,6 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
         [self performUpdateUserID:userID block:^(OpponentCollectionViewCell *cell) {
             cell.connectionState = [self.session connectionStateForUser:userID];
         }];
-        
-//        if (![self.session.initiatorID isEqualToNumber:userID]) {
-//            // there is QBRTC bug, when userID is always opponents iD
-//            // even  for user, who did not answer, this delegate will be called
-//            // with opponent user ID
-//            [QMCore.instance.callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
-//        }
     }
 }
 

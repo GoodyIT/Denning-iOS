@@ -308,7 +308,6 @@ UIGestureRecognizerDelegate
     } else {
         [cell setPosition:[DIHelpers getGroupPosition:chatDialog]];
         [cell setTitle:chatDialog.name avatarUrl:chatDialog.photo];
-        //        [cell configureCellWithChatDialog:chatDialog];
     }
     
     // there was a time when updated at didn't exist
@@ -562,10 +561,7 @@ didReceiveNotificationMessage:(QBChatMessage *)message
 - (void)usersService:(QMUsersService *)__unused usersService
 didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
     
-    if (!_searchController.isActive) {
-        
-        [self.tableView reloadData];
-    }
+   [self.tableView reloadData];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService
@@ -647,7 +643,7 @@ didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
          @strongify(self);
          
          [self.refreshControl endRefreshing];
-         
+         [self.tableView reloadData];
          return nil;
      }];
 }

@@ -418,39 +418,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Group Position" id="4xg-Hn-zlh">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="67" id="moC-9Q-qko">
-                                        <rect key="frame" x="0.0" y="178.5" width="375" height="67"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="moC-9Q-qko" id="xvh-wR-LL3">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="66.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XU2-H9-3vS">
-                                                    <rect key="frame" x="27" y="19" width="321" height="29"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <action selector="groupNameFieldEditingChanged:" destination="y4a-Rd-aBj" eventType="editingChanged" id="A4I-h3-Imx"/>
-                                                        <action selector="groupPositionFieldEditingChanged:" destination="y4a-Rd-aBj" eventType="editingDidEnd" id="N0v-aw-cdu"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="XU2-H9-3vS" secondAttribute="bottom" constant="8" id="A9q-fc-bC5"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="XU2-H9-3vS" secondAttribute="trailing" constant="11" id="RUg-zO-mxw"/>
-                                                <constraint firstItem="XU2-H9-3vS" firstAttribute="top" secondItem="xvh-wR-LL3" secondAttribute="topMargin" constant="8" id="szW-p9-kU0"/>
-                                                <constraint firstItem="XU2-H9-3vS" firstAttribute="leading" secondItem="xvh-wR-LL3" secondAttribute="leadingMargin" constant="11" id="uYW-RN-OWm"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Group Type" id="OCp-Q1-25H">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="64" id="wOt-QP-ggY">
-                                        <rect key="frame" x="0.0" y="301.5" width="375" height="64"/>
+                                        <rect key="frame" x="0.0" y="178.5" width="375" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wOt-QP-ggY" id="ZZY-rh-o14">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
@@ -475,6 +446,34 @@
                                                 <constraint firstItem="KCS-dN-cND" firstAttribute="top" secondItem="ZZY-rh-o14" secondAttribute="topMargin" constant="5" id="ANN-qe-b1d"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="KCS-dN-cND" secondAttribute="trailing" id="Sju-t6-gOg"/>
                                                 <constraint firstItem="KCS-dN-cND" firstAttribute="leading" secondItem="ZZY-rh-o14" secondAttribute="leadingMargin" id="mGu-Go-H8H"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Group Position" id="4xg-Hn-zlh">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="67" id="moC-9Q-qko">
+                                        <rect key="frame" x="0.0" y="298.5" width="375" height="67"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="moC-9Q-qko" id="xvh-wR-LL3">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="66.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XU2-H9-3vS">
+                                                    <rect key="frame" x="27" y="19" width="321" height="29"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="groupPositionFieldEditingChanged:" destination="y4a-Rd-aBj" eventType="editingChanged" id="E68-gP-sNT"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="XU2-H9-3vS" secondAttribute="bottom" constant="8" id="A9q-fc-bC5"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="XU2-H9-3vS" secondAttribute="trailing" constant="11" id="RUg-zO-mxw"/>
+                                                <constraint firstItem="XU2-H9-3vS" firstAttribute="top" secondItem="xvh-wR-LL3" secondAttribute="topMargin" constant="8" id="szW-p9-kU0"/>
+                                                <constraint firstItem="XU2-H9-3vS" firstAttribute="leading" secondItem="xvh-wR-LL3" secondAttribute="leadingMargin" constant="11" id="uYW-RN-OWm"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

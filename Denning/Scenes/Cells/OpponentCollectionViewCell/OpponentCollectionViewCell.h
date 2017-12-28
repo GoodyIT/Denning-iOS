@@ -21,6 +21,6 @@
 
 @property (assign, nonatomic) QBRTCConnectionState connectionState;
 
-@property (weak, nonatomic, readonly) UIImageView *placeholderImageView;
+@property (weak, nonatomic, readonly) QMImageView *placeholderImageView;
 
 @end

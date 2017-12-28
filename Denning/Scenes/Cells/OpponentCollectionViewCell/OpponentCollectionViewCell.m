@@ -31,7 +31,7 @@ static UIImage *mutedImage() {
 
 @interface OpponentCollectionViewCell()
 
-@property (weak, nonatomic) IBOutlet UIImageView *placeholderImageView;
+@property (weak, nonatomic) IBOutlet QMImageView *placeholderImageView;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UIButton *muteButton;
@@ -51,6 +51,8 @@ static UIImage *mutedImage() {
     [self.muteButton setImage:unmutedImage() forState:UIControlStateNormal];
     [self.muteButton setImage:mutedImage() forState:UIControlStateSelected];
     self.muteButton.hidden = YES;
+    
+    self.placeholderImageView.imageViewType = QMImageViewTypeCircle;
 }
 
 - (void)setVideoView:(UIView *)videoView {

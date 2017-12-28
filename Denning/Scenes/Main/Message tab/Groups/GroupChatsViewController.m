@@ -345,6 +345,7 @@ MEVFloatingButtonDelegate
     NSString *time = [QMDateUtils formattedShortDateString:date];
     [cell setTime:time];
     [cell setBody:chatDialog.lastMessageText];
+    [cell setPosition:[DIHelpers getGroupPosition:chatDialog]];
     [cell setBadgeNumber:chatDialog.unreadMessagesCount];
     
     return cell;
@@ -590,10 +591,7 @@ didReceiveNotificationMessage:(QBChatMessage *)message
 - (void)usersService:(QMUsersService *)__unused usersService
 didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
     
-    if (!_searchController.isActive) {
-        
-        [self.tableView reloadData];
-    }
+    [self.tableView reloadData];
 }
 
 - (void)usersService:(QMUsersService *)__unused usersService
@@ -676,7 +674,7 @@ didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
          @strongify(self);
          
          [self.refreshControl endRefreshing];
-         
+         [self.tableView reloadData];
          return nil;
      }];
 }

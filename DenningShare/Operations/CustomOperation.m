@@ -8,6 +8,7 @@
 //
 
 #import "CustomOperation.h"
+#import "DIGlobal.h"
 
 @interface CustomOperation()
 
@@ -39,7 +40,7 @@
 - (void)main {
     if (self.isCancelled) return;
     
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url];
     [request setHTTPMethod:  @"GET"];

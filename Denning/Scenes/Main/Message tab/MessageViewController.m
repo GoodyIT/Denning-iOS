@@ -35,18 +35,22 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 @property (weak, nonatomic) IBOutlet UIButton *groupChatBtn;
 @property (weak, nonatomic) IBOutlet UIButton *staffBtn;
 
-
+@property (strong, nonatomic) id observerWillEnterForeground;
 @end
 
 @implementation MessageViewController
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:_observerWillEnterForeground];
+    
+    ILog(@"%@ - %@",  NSStringFromSelector(_cmd), self);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self prepareUI];
-    [self setDefaultImageForButtons];
-    [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"]
-                        forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,7 +61,9 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self addView:self.viewControllers[0]];
+    // Set the recent chat to default
+    selectedIndex = DIChatRecentTab;
+    [self _recentTabClicked];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -113,12 +119,19 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     DenningContactViewController *denningContactVC = [[UIStoryboard storyboardWithName:@"Message" bundle:nil] instantiateViewControllerWithIdentifier:@"DenningContactViewController"];
     self.viewControllers = @[recentVC, favVC, groupVC, denningContactVC];
     
-    // Set the recent chat to default
-    selectedIndex = DIChatRecentTab;
-    [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"] forState:UIControlStateNormal];
-    
     self.navigationController.tabBarItem.image = [UIImage imageNamed:@"icon_chat"];
     self.navigationController.tabBarItem.selectedImage = [UIImage imageNamed:@"icon_chat_selected"];
+    
+    @weakify(self)
+    
+    self.observerWillEnterForeground = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification * _Nonnull __unused note)
+     {
+         @strongify(self);
+         [self hideTabBar];
+     }];
 }
 
 - (IBAction)didTapCompanyList:(id)sender {
@@ -134,12 +147,16 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 
 - (IBAction)recentTabClicked:(id)sender {
     if (selectedIndex == DIChatRecentTab) return;
+    [self _recentTabClicked];
+    [self removeView:self.viewControllers[selectedIndex]];
+    selectedIndex = DIChatRecentTab;
+}
+
+- (void) _recentTabClicked {
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_CONNECTING", nil) duration:0];
     
     [self addView:self.viewControllers[DIChatRecentTab]];
-    [self removeView:self.viewControllers[selectedIndex]];
     [(QMNavigationController*)self.navigationController dismissNotificationPanel];
-    selectedIndex = DIChatRecentTab;
     [self setDefaultImageForButtons];
     [self.chatRecentBtn setImage:[UIImage imageNamed:@"icon_message_selected"] forState:UIControlStateNormal];
 }

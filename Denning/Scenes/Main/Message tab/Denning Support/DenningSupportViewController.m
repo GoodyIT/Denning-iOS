@@ -256,6 +256,7 @@ UIGestureRecognizerDelegate
     [cell setTime:time];
     [cell setBody:chatDialog.lastMessageText];
     [cell setBadgeNumber:chatDialog.unreadMessagesCount];
+    [cell setPosition:[DIHelpers getGroupPosition:chatDialog]];
     
     return cell;
 }

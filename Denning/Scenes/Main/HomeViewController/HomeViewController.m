@@ -45,16 +45,25 @@ iCarouselDataSource, iCarouselDelegate>
 @property (nonatomic, strong) NSArray<AdsModel*> *items;
 @property (weak, nonatomic) IBOutlet UITextField_LeftView *searchTextField;
 @property (strong, nonatomic) UISearchController *searchController;
+
+@property (strong, nonatomic) id observerWillEnterForeground;
+
 @end
 
 @implementation HomeViewController
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:_observerWillEnterForeground];
+    
+    ILog(@"%@ - %@",  NSStringFromSelector(_cmd), self);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self loadsAds];
     [self prepareUI];
-    [self showTabBar];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,7 +103,7 @@ iCarouselDataSource, iCarouselDelegate>
     [super viewWillAppear:animated];
     [self changeTitle];
     [self displayBranchInfo];
-    [self setTabBarVisible:YES animated:NO completion:nil];
+    [self showTabBar];
     [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
     [self configureMenuRightBtnWithImagename:@"icon_menu" withSelector:@selector(gotoMenu)];
 }
@@ -150,7 +159,15 @@ iCarouselDataSource, iCarouselDelegate>
     branchTap.numberOfTapsRequired = 1;
     [self.headerWrapper addGestureRecognizer:branchTap];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar) name:UIApplicationDidBecomeActiveNotification object:nil];
+    @weakify(self)
+    self.observerWillEnterForeground = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification
+                                                                                         object:nil
+                                                                                          queue:nil
+                                                                                     usingBlock:^(NSNotification * _Nonnull __unused note)
+                                        {
+                                            @strongify(self);
+                                            [self showTabBar];
+                                        }];
 }
 
 - (void) runMethod {
@@ -224,12 +241,11 @@ iCarouselDataSource, iCarouselDelegate>
                   [NSString stringWithFormat:@"data:application/octet-stream;base64,%@",
                    _items[index].imgData]];
     NSData* imageData = [NSData dataWithContentsOfURL:URL];
+    UIImage* image = [UIImage imageNamed:@"law-firm.jpg"];
     if (imageData != nil) {
-        imageView.image = [UIImage imageWithData:imageData];
-    } else {
-        imageView.image = [UIImage imageNamed:@"law-firm.jpg"];
+        image = [UIImage imageWithData:imageData];
     }
-    
+    imageView.image = image;
     return view;
 }
 

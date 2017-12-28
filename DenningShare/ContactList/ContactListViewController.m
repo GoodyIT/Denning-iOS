@@ -16,6 +16,7 @@
 #import "UIScrollView+InfiniteScroll.h"
 #import "PropertyContactCell.h"
 #import "ShareHelper.h"
+#import "DIGlobal.h"
 
 @interface ContactListViewController ()<UISearchBarDelegate, UISearchControllerDelegate,UITableViewDelegate, UITableViewDataSource>
 {
@@ -93,7 +94,7 @@
 }
 
 - (void) getList{
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.denningshare.extension"];
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
     if ([NSOperationQueue mainQueue].operationCount > 0) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }

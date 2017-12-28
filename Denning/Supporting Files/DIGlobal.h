@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, DISearchCellType) {
     DIDocumentCell = 128,
 };
 
+static NSString* const kGroupShareIdentifier = @"group.denningitshare.extension";
+
 static NSString * const kQMChatPdfMessageTypeName = @"pdf";
 static NSString * const kQMChatWordMessageTypeName = @"word";
 static NSString * const kQMChatFileMessageTypeName = @"file";

@@ -845,4 +845,20 @@
     return [chatDialog.data valueForKeyNotNull:@"position"];
 }
 
++ (UIImage *)resizedImageFromImage:(UIImage *)image {
+    
+    CGFloat largestSide = image.size.width > image.size.height ? image.size.width : image.size.height;
+    CGFloat scaleCoefficient = largestSide / 560.0f;
+    CGSize newSize = CGSizeMake(image.size.width / scaleCoefficient, image.size.height / scaleCoefficient);
+    
+    UIGraphicsBeginImageContext(newSize);
+    
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return resizedImage;
+}
+
 @end

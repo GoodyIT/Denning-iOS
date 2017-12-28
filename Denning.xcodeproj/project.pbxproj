@@ -3581,10 +3581,10 @@
 				7912A5E91FEB9F6E00C8B9A5 /* OpponentsFlowLayout.h */,
 				7912A5EA1FEB9F6E00C8B9A5 /* StatsView.m */,
 				7912A5EB1FEB9F6E00C8B9A5 /* LocalVideoView.m */,
-				7912A5EC1FEB9F6E00C8B9A5 /* CallViewController.h */,
 				7912A5ED1FEB9F6E00C8B9A5 /* OpponentsFlowLayout.m */,
 				7912A5EE1FEB9F6E00C8B9A5 /* StatsView.h */,
 				7912A5EF1FEB9F6E00C8B9A5 /* LocalVideoView.h */,
+				7912A5EC1FEB9F6E00C8B9A5 /* CallViewController.h */,
 				7912A5F01FEB9F6E00C8B9A5 /* CallViewController.m */,
 			);
 			path = CallViewController;
@@ -9079,7 +9079,7 @@
 				TargetAttributes = {
 					79FBDE6E1E302F6600448FE3 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 6ATV26A86Y;
+						DevelopmentTeam = MJB3YZG9SN;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -9110,7 +9110,7 @@
 					};
 					9685EBDC1F51F8E80006C0E0 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 6ATV26A86Y;
+						DevelopmentTeam = MJB3YZG9SN;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -10672,11 +10672,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Denning/Denning.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Thong Mee Ho (FR83CC98GQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 6ATV26A86Y;
+				DEVELOPMENT_TEAM = MJB3YZG9SN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -10852,7 +10852,7 @@
 					"-ObjC",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning;
+				PRODUCT_BUNDLE_IDENTIFIER = denning.it;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -10866,10 +10866,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Denning/Denning.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Thong Mee Ho (6ATV26A86Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Denning IT Sdn Bhd (MJB3YZG9SN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Denning IT Sdn Bhd (MJB3YZG9SN)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6ATV26A86Y;
+				DEVELOPMENT_TEAM = MJB3YZG9SN;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -11045,7 +11045,7 @@
 					"-ObjC",
 				);
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning;
+				PRODUCT_BUNDLE_IDENTIFIER = denning.it;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -11104,13 +11104,13 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = DenningShare/DenningShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Thong Mee Ho (FR83CC98GQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6ATV26A86Y;
+				DEVELOPMENT_TEAM = MJB3YZG9SN;
 				INFOPLIST_FILE = DenningShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning.DenningShare;
+				PRODUCT_BUNDLE_IDENTIFIER = denning.it;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -11121,13 +11121,13 @@
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = DenningShare/DenningShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Thong Mee Ho (6ATV26A86Y)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6ATV26A86Y;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Denning IT Sdn Bhd (MJB3YZG9SN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Denning IT Sdn Bhd (MJB3YZG9SN)";
+				DEVELOPMENT_TEAM = MJB3YZG9SN;
 				INFOPLIST_FILE = DenningShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = IT.Denning.DenningShare;
+				PRODUCT_BUNDLE_IDENTIFIER = denning.it;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
