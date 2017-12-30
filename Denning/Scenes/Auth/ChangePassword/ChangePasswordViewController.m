@@ -154,7 +154,7 @@
             [[DataManager sharedManager] setUserInfoFromChangePassword:response];
             [[DataManager sharedManager] setUserPassword:password1];
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+//            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
         }
         if ([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) {
             [[QMCore.instance logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {

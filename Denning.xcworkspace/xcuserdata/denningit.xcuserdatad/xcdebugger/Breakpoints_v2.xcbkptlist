@@ -410,7 +410,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Main/AddContact/Add%20Bill/AddBillViewController.m"
-                  timestampString = "536288590.578721"
+                  timestampString = "536298131.927258"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "357"
@@ -425,7 +425,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Main/AddContact/Add%20Bill/AddBillViewController.m"
-                  timestampString = "536288590.582978"
+                  timestampString = "536298131.933758"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "357"
@@ -2026,7 +2026,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Search/FileUpload/FileUpload.m"
-                  timestampString = "536288590.602427"
+                  timestampString = "536298131.952925"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "113"
@@ -2041,7 +2041,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Scenes/Search/FileUpload/FileUpload.m"
-                  timestampString = "536288590.605167"
+                  timestampString = "536298131.955622"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "114"
@@ -4330,12 +4330,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/HomeViewController/HomeViewController.m"
-            timestampString = "536288590.448169"
+            timestampString = "536298131.569864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "235"
             endingLineNumber = "235"
-            landmarkName = "-changeBranch:"
+            landmarkName = "-carousel:viewForItemAtIndex:reusingView:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4490,7 +4490,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMChatManager/QMChatManager.m"
-                  timestampString = "536288590.658425"
+                  timestampString = "536298132.014529"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "97"
@@ -4505,7 +4505,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/denning-ios/Denning/Classes/Core/QMChatManager/QMChatManager.m"
-                  timestampString = "536288590.661739"
+                  timestampString = "536298132.017331"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "99"
@@ -4682,7 +4682,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Auth/NewDeviceLogin/NewDeviceLoginViewController.m"
-            timestampString = "536288590.450134"
+            timestampString = "536298131.574723"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
@@ -4890,12 +4890,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/HomeViewController/HomeViewController.m"
-            timestampString = "536288590.451559"
+            timestampString = "536298131.574955"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "160"
             endingLineNumber = "160"
-            landmarkName = "-loadsAds"
+            landmarkName = "-prepareUI"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -4938,12 +4938,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/HomeViewController/HomeViewController.m"
-            timestampString = "536288590.452337"
+            timestampString = "536298131.575326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "190"
             endingLineNumber = "190"
-            landmarkName = "-displayBranchInfo"
+            landmarkName = "-changeBranch:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5178,28 +5178,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/HomeViewController/HomeViewController.m"
-            timestampString = "536288590.457928"
+            timestampString = "536298131.575794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
             endingLineNumber = "118"
-            landmarkName = "-changeHomeScreenBasedOnUsertype"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Denning/Scenes/Main/HomeViewController/HomeViewController.m"
-            timestampString = "536288590.458288"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "-changeHomeScreenBasedOnUsertype"
+            landmarkName = "-loadsAds"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5226,12 +5210,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/HomeViewController/HomeViewController.m"
-            timestampString = "536288590.458488"
+            timestampString = "536298131.576291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
             endingLineNumber = "119"
-            landmarkName = "-changeHomeScreenBasedOnUsertype"
+            landmarkName = "-loadsAds"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
