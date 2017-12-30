@@ -61,35 +61,27 @@
     self.personalArray = [FirmURLModel getFirmArrayFromResponse:[response objectForKey:@"catPersonal"]];
 }
 
-- (NSString*) determineUserType
+- (void) determineUserType
 {
     [[NSUserDefaults standardUserDefaults] setBool:personalArray.count > 0 forKey:@"isClient"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    NSString* type;
-    if (self.denningArray.count > 0) {
-        type = @"denning";
-    } else if (self.personalArray.count > 0) {
-        type = @"client";
-    } else {
-        type = @"";
-    }
-    return type;
 }
 
 - (void) setUserInfoFromLogin: (NSDictionary*) response
 {
     [self getFirmServerArrayFromResponse:response];
     
-    [self _setInfoWithValue:[response objectForKeyNotNull:@"email"] for:@"email"];
-    [self _setInfoWithValue:[self determineUserType] for:@"userType"];
+    [self _setInfoWithValue:[response valueForKeyNotNull:@"email"] for:@"email"];
+    [self determineUserType];
+    [self _setInfoWithValue:[response valueForKeyNotNull:@"userType"] for:@"userType"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
-        user.email = [response objectForKeyNotNull:@"email"];
-        user.phoneNumber = [response objectForKeyNotNull:@"hpNumber"];
-        user.sessionID = [response objectForKeyNotNull:@"sessionID"];
-        user.status = [response objectForKeyNotNull:@"status"];
-        user.username = [response objectForKeyNotNull:@"name"];
-        user.userType = [self determineUserType];
+        user.email = [response valueForKeyNotNull:@"email"];
+        user.avatarUrl = [response valueForKeyNotNull:@"avatarUrl"];
+        user.phoneNumber = [response valueForKeyNotNull:@"hpNumber"];
+        user.sessionID = [response valueForKeyNotNull:@"sessionID"];
+        user.status = [response valueForKeyNotNull:@"status"];
+        user.username = [response valueForKeyNotNull:@"name"];
+        user.userType = [response valueForKeyNotNull:@"userType"];
     }];
 }
 
@@ -103,12 +95,13 @@
 - (void) setUserInfoFromNewDeviceLogin: (NSDictionary*) response
 {
     [self getFirmServerArrayFromResponse:response];
-    [self _setInfoWithValue:[self determineUserType] for:@"userType"];
+    [self determineUserType];
+    [self _setInfoWithValue:[response valueForKeyNotNull:@"userType"] for:@"userType"];
     
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.password = [response valueForKeyNotNull:@"password"];
         user.status = [response objectForKeyNotNull:@"status"];
-        user.userType = [self determineUserType];
+        user.userType = [response valueForKeyNotNull:@"userType"];
     }];
 }
 
@@ -158,7 +151,11 @@
 }
 
 - (BOOL) isPublicUser {
-    return user.userType.length > 0;
+    return user.userType.length > 0 && [user.userType isEqualToString:@"public"];
+}
+
+- (BOOL) isStaff {
+    return [user.userType isEqualToString:@"denning"];
 }
 
 - (BOOL) isDenningUser {

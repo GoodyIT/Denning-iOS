@@ -14,6 +14,10 @@
     
     NSString *title = success ? NSLocalizedString(@"QM_STR_SUCCESS", nil) : NSLocalizedString(@"QM_STR_ERROR", nil);
     
+    [self showAlertWithMessage:message withTitle:title actionSuccess:success inViewController:viewController];
+}
+
++ (void)showAlertWithMessage:(NSString *)message withTitle:(NSString*)title actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:title
                                           message:message
@@ -42,10 +46,10 @@
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
-+(void)showConfirmDialog:(NSString*) message inViewController:(UIViewController *)viewController completion:(void(^)(UIAlertAction * _Nonnull action))completion
++ (void) showConfirmDialog:(NSString *)message withTitle:(NSString*)title inViewController:(UIViewController *)viewController completion:(void (^)(UIAlertAction * _Nonnull))completion
 {
     UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"Information"
+                                          alertControllerWithTitle:title
                                           message:message
                                           preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -62,6 +66,11 @@
     [alertController.view layoutIfNeeded];
     
     [viewController presentViewController:alertController animated:YES completion:nil];
+}
+
++(void)showConfirmDialog:(NSString*) message inViewController:(UIViewController *)viewController completion:(void(^)(UIAlertAction * _Nonnull action))completion
+{
+    [self showConfirmDialog:message withTitle:@"information" inViewController:viewController completion:completion];
 }
 
 @end

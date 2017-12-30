@@ -114,14 +114,14 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) prepareUI {
-    selectedCourtDiaryCode = selectedSARCode = selectedJudgeCode= selectedCaseTypeCode = @"";
-    
+    selectedCourtDiaryCode = selectedSARCode = selectedJudgeCode= selectedCaseTypeCode =
+    selectedLACode = selectedClerkCode = selectedFileStatusCode = selectedPartnerCode = selectedPrimaryClientCode = selectedMatterCode = selectedBranchCode = @"";
     
     self.keyValue = [@{
                        @(0): @(1)
                        } mutableCopy];
     NSArray* temp = @[
-                      @[@[@"File No (Auto Assigned)", @""], @[@"Ref 2", @""], @[@"Primary Client", @""], @[@"File Status", @""], @[@"Partner-in-Charge", @""], @[@"LA-in-Charge", @""], @[@"Clerk-in-Charge", @""], @[@"Matter", @""], @[@"Branch", @""], @[@"Location Box", @""], @[@"Location Physical", @""], @[@"Location Pocket No", @""],
+                      @[@[@"File No (Auto Assigned)", @""], @[@"Ref 2", @""], @[@"Primary Client", @""], @[@"File Status", @""], @[@"Partner-in-Charge", @""], @[@"LA-in-Charge", @""], @[@"Clerk-in-Charge", @""], @[@"Matter", @""], @[@"Branch", @""], @[@"Storage Location", @""], @[@"File Location", @""], @[@"Location", @""],
                           @[@"Save", @""]
                         ]
                       ];
@@ -352,7 +352,7 @@ NSMutableDictionary* keyValue;
 - (IBAction)dismissScreen:(id)sender {
     
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        if ([_updateHandler isKindOfClass:[NSNull class]] && !_matterModel) {
+        if (![_updateHandler isKindOfClass:[NSNull class]] && _matterModel) {
             _updateHandler(_matterModel);
         }
     }];
@@ -472,15 +472,16 @@ NSMutableDictionary* keyValue;
     
     // Case Detail
     newArray[index] = [NSMutableArray new];
-    [newArray[index] addObject:@[@"Case NO.", _matterModel.court.caseNumber]];
-    [newArray[index] addObject:@[@"Court", _matterModel.court.court]];
-    [newArray[index] addObject:@[@"Judge", _matterModel.court.judge]];
-    [newArray[index] addObject:@[@"Party Type", _matterModel.court.partyType]];
-    [newArray[index] addObject:@[@"Place", _matterModel.court.place]];
-    [newArray[index] addObject:@[@"SAR", _matterModel.court.SAR]];
     [newArray[index] addObject:@[@"Type Case", _matterModel.court.partyType]];
+    [newArray[index] addObject:@[@"Party Type", _matterModel.court.partyType]];
+    [newArray[index] addObject:@[@"Court", _matterModel.court.place]];
+    [newArray[index] addObject:@[@"Place", _matterModel.court.court]];
+    [newArray[index] addObject:@[@"Case NO.", _matterModel.court.caseNumber]];
+    [newArray[index] addObject:@[@"Judge", _matterModel.court.judge]];
+    [newArray[index] addObject:@[@"SAR", _matterModel.court.SAR]];
+    
     index += 1;
-    [_headers addObject:@"Case Detail"];
+    [_headers addObject:@"Case Details"];
     
     // Price
     // Nothing
@@ -730,9 +731,11 @@ NSMutableDictionary* keyValue;
 - (NSDictionary*) buildUpdateParams {
     NSMutableDictionary* data = [NSMutableDictionary new];
     
-    [data addEntriesFromDictionary:@{@"dateOpen": [DIHelpers todayWithTime]}];
+//    [data addEntriesFromDictionary:@{@"dateOpen": [DIHelpers todayWithTime]}];
     
-    [data addEntriesFromDictionary:@{@"Branch": @{@"code": selectedBranchCode}}];
+    if (selectedBranchCode.length > 0 && ![selectedBranchCode isEqualToString:_matterModel.branch.codeValue]) {
+        [data addEntriesFromDictionary:@{@"branch": @{@"code": selectedBranchCode}}];
+    }
     
     if (selectedPrimaryClientCode.length > 0 && ![selectedPrimaryClientCode isEqualToString:_matterModel.primaryClient.clientCode]) {
         [data addEntriesFromDictionary:@{@"primaryClient": @{
@@ -952,7 +955,7 @@ NSMutableDictionary* keyValue;
     [self checkStatus];
     
     if (!isSaveMode) {
-        [QMAlert showConfirmDialog:@"Do you want to update contact?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
                 [self updateMatter];
             }
@@ -1024,7 +1027,8 @@ NSMutableDictionary* keyValue;
             cell.label.text = _contents[indexPath.section][indexPath.row][0];
             cell.subLabel.hidden = YES;
             cell.lastLabel.hidden = YES;
-            cell.addNew = ^{
+            cell.addNew = ^(AddMatterCell *cell) {
+                NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
                 [self addParty:indexPath];
             };
             
@@ -1036,6 +1040,7 @@ NSMutableDictionary* keyValue;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.leftUtilityButtons = [self leftButtons];
             cell.delegate = self;
+            
             return cell;
         }
     } else if (indexPath.section == SOLICITORS_SECTION) { // Solicitor
@@ -1054,8 +1059,9 @@ NSMutableDictionary* keyValue;
         cell.leftUtilityButtons = [self leftButtons];
         cell.delegate = self;
         
-        cell.addNew = ^{
-            
+        cell.addNew = ^(AddMatterCell *cell) {
+            NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+            [self addSolicitor:indexPath];
         };
         return cell;
     } else if (indexPath.section == PROPERTIES_SECTION) { // Property
@@ -1066,9 +1072,10 @@ NSMutableDictionary* keyValue;
             cell.subLabel.hidden = YES;
             cell.lastLabel.hidden = YES;
             
-            cell.addNew = ^{
+            cell.addNew = ^(AddMatterCell *cell) {
+                NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+                [self addProperty:indexPath];
             };
-            
             return cell;
         }
         
@@ -1094,8 +1101,9 @@ NSMutableDictionary* keyValue;
         cell.delegate = self;
         cell.leftUtilityButtons = [self leftButtons];
         
-        cell.addNew = ^{
-            
+        cell.addNew = ^(AddMatterCell *cell) {
+            NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+            [self addBank:indexPath];
         };
         
         return cell;
@@ -1449,13 +1457,13 @@ NSMutableDictionary* keyValue;
         number--;
         code = partyVendorCodeList[number];
     } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+2) {
-        number -= partyVendorCodeList.count - 2;
+        number = number - partyVendorCodeList.count - 2;
         code = partyPurchaserCodeList[number];
     } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + 3) {
-        number -= partyVendorCodeList.count+partyPurchaserCodeList.count - 3;
+        number = number - partyVendorCodeList.count - partyPurchaserCodeList.count - 3;
         code = partyCustomerGroup3CodeList[number];
-    } else if (partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4) {
-        number -= partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4;
+    } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4) {
+        number = number - partyVendorCodeList.count - partyPurchaserCodeList.count - partyCustomerGroup3CodeList.count - 4;
         code = partyCustomerGroup4CodeList[number];
     }
     if (code.length == 0) {
@@ -1555,6 +1563,28 @@ NSMutableDictionary* keyValue;
     }
 }
 
+- (void) addBank:(NSIndexPath*) indexPath {
+    isAddNew = NO;
+    selectedContactRow = indexPath.row;
+    [self performSegueWithIdentifier:kBankBranchSegue sender:nil];
+}
+
+- (void) addProperty:(NSIndexPath*) indexPath {
+    if (indexPath.row == 0) {
+        isAddNew = YES;
+        selectedContactRow = indexPath.row;
+        [self performSegueWithIdentifier:kPropertyListSegue sender:PROPERTY_GET_LIST_URL];
+    } else {
+        [self loadProperty:indexPath.row-1];
+    }
+}
+
+- (void) addSolicitor:(NSIndexPath*) indexPath {
+    isAddNew = NO;
+    selectedContactRow = indexPath.row;
+    [self performSegueWithIdentifier:kSolicitorListSegue sender:nil];
+}
+
 - (void) addParty: (NSIndexPath*) indexPath
 {
     if (indexPath.row == 0 || indexPath.row == partyVendorCodeList.count+1 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+2 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + 3 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4 ) {
@@ -1595,36 +1625,26 @@ NSMutableDictionary* keyValue;
             [self performSegueWithIdentifier:kMatterBranchSegue sender:MATTER_BRANCH_GET_URL];
         }
     } else if (indexPath.section == CASEDETAIL_SECTION) {
-        if  (indexPath.row == 1 || indexPath.row == 4) {
+        if  (indexPath.row == 2 || indexPath.row == 3) {
             [self performSegueWithIdentifier:kCourtDiarySegue sender:nil];
-        } else if  (indexPath.row == 2 || indexPath.row == 5) {
+        } else if  (indexPath.row == 6 || indexPath.row == 5) {
             selectedContactRow = indexPath.row;
             [self performSegueWithIdentifier:kCoramListSegue sender:nil];
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == 1) {
             titleOfList = @"Select Party Type";
-            nameOfField = self.contents[CASEDETAIL_SECTION][4][0];
+            nameOfField = self.contents[CASEDETAIL_SECTION][1][0];
             [self performSegueWithIdentifier:kListWithDescriptionSegue sender:COURT_PARTY_TYPE_GET_URL];
-        } else if (indexPath.row == 6) {
+        } else if (indexPath.row == 4) {
             [self performSegueWithIdentifier:kCaseTypeSegue sender:nil];
         }
     }  else if (indexPath.section == PARTYGROUP_SECTION) { // Party Group
         [self addParty:indexPath];
     } else if (indexPath.section == SOLICITORS_SECTION) { // Solicitor
-        isAddNew = NO;
-        selectedContactRow = indexPath.row;
-        [self performSegueWithIdentifier:kSolicitorListSegue sender:nil];
+        [self addSolicitor:indexPath];
     } else if (indexPath.section == PROPERTIES_SECTION) { // Property Group
-        if (indexPath.row == 0) {
-            isAddNew = YES;
-            selectedContactRow = indexPath.row;
-            [self performSegueWithIdentifier:kPropertyListSegue sender:PROPERTY_GET_LIST_URL];
-        } else {
-            [self loadProperty:indexPath.row-1];
-        }
+        [self addProperty:indexPath];
     } else if (indexPath.section == BANKS_SECTION) { // Bank Group
-        isAddNew = NO;
-        selectedContactRow = indexPath.row;
-        [self performSegueWithIdentifier:kBankBranchSegue sender:nil];
+        [self addBank:indexPath];
     } else if (indexPath.section == IMPORTANT_RM_SECTION) { // Important RM
         
     } else if (indexPath.section == IMPORTANT_DATE_SECTION) { // Date Group
@@ -1804,14 +1824,14 @@ NSMutableDictionary* keyValue;
     } else if ([segue.identifier isEqualToString:kCourtDiarySegue]) {
         CourtDiaryListViewController* courtVC = segue.destinationViewController;
         courtVC.updateHandler = ^(CourtDiaryModel *model) {
-            [self replaceContentForSection:CASEDETAIL_SECTION InRow:4 withValue:model.typeE];
-            [self replaceContentForSection:CASEDETAIL_SECTION InRow:1 withValue:model.place];
+            [self replaceContentForSection:CASEDETAIL_SECTION InRow:2 withValue:model.typeE];
+            [self replaceContentForSection:CASEDETAIL_SECTION InRow:3 withValue:model.place];
             selectedCourtDiaryCode = model.courtDiaryCode;
         };
     } else if ([segue.identifier isEqualToString:kCoramListSegue]) {
         CoramListViewController* coramVC = segue.destinationViewController;
         coramVC.updateHandler = ^(CoramModel *model) {
-            if (selectedContactRow == 2) {
+            if (selectedContactRow == 5) {
                 selectedJudgeCode = model.coramCode;
             } else {
                 selectedSARCode = model.coramCode;
@@ -1821,7 +1841,7 @@ NSMutableDictionary* keyValue;
     } else if ([segue.identifier isEqualToString:kCaseTypeSegue]) {
         CaseTypeViewController *vc = segue.destinationViewController;
         vc.updateHandler = ^(CaseTypeModel *model) {
-            [self replaceContentForSection:CASEDETAIL_SECTION InRow:6 withValue:model.strBahasa];
+            [self replaceContentForSection:CASEDETAIL_SECTION InRow:4 withValue:model.strBahasa];
             selectedCaseTypeCode = model.caseCode;
         };
     } else if ([segue.identifier isEqualToString:kListWithDescriptionSegue]) {

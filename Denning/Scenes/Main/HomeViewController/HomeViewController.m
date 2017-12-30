@@ -47,6 +47,7 @@ iCarouselDataSource, iCarouselDelegate>
 @property (nonatomic, strong) NSMutableArray<AdsModel*> *items;
 @property (weak, nonatomic) IBOutlet UITextField_LeftView *searchTextField;
 @property (strong, nonatomic) UISearchController *searchController;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *branchHeightContraint;
 
 @property (strong, nonatomic) id observerWillEnterForeground;
 
@@ -101,9 +102,26 @@ iCarouselDataSource, iCarouselDelegate>
 }
 
 - (void) changeUIBasedOnUserType {
-    if ([DataManager sharedManager].isClient || [DataManager sharedManager].isPublicUser) {
-        
+    CGFloat branchHeight = 50;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat searchBarHeight = 56;
+    CGFloat bottomBarHeight = self.tabBarController.tabBar.frame.size.height;
+    if ([DataManager sharedManager].isStaff) {
+        branchHeight = 50;
+        homeIconArray = @[@"icon_news", @"icon_updates", @"icon_market", @"icon_delivery", @"icon_calculator", @"icon_shared", @"icon_forum", @"icon_products", @"icon_attendance", @"icon_upload", @"icon_calendar", @"icon_topup"];
+        homeLabelArray = @[@"News", @"Updates", @"Market", @"Delivery", @"Calculators", @"Shared", @"Forum", @"Products", @"Attendance", @"Upload", @"Calendar", @"Top-Up"];
+    } else {
+        branchHeight = 0;
+        homeIconArray = @[@"icon_news", @"icon_calculator", @"icon_shared", @"icon_forum", @"icon_products",  @"icon_upload"];
+        homeLabelArray = @[@"News", @"Calculators", @"Shared", @"Forum", @"Products", @"Upload",];
     }
+    
+    CGFloat menuContainerHeight = (self.view.frame.size.width/4-2) * (homeLabelArray.count/4) + 2;
+    CGFloat intrinsicHeight = self.view.frame.size.height  - statusBarHeight - navHeight - searchBarHeight - bottomBarHeight;
+    
+    _heightOfCarousel.constant = intrinsicHeight - MAX(menuContainerHeight, intrinsicHeight/2);
+    _branchHeightContraint.constant = branchHeight;
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -162,14 +180,10 @@ iCarouselDataSource, iCarouselDelegate>
 
 - (void) prepareUI
 {
-    CGFloat width = (self.view.frame.size.width/4-2) * 3 + 2;
-    _heightOfCarousel.constant = self.view.frame.size.height - width - 46 - 44 - 66 - 10 - 60;
-    
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
    
-    homeIconArray = @[@"icon_news", @"icon_updates", @"icon_market", @"icon_delivery", @"icon_calculator", @"icon_shared", @"icon_forum", @"icon_products", @"icon_attendance", @"icon_upload", @"icon_calendar", @"icon_topup"];
-    homeLabelArray = @[@"News", @"Updates", @"Market", @"Delivery", @"Calculators", @"Shared", @"Forum", @"Products", @"Attendance", @"Upload", @"Calendar", @"Top-Up"];
+    
     
     self.searchTextField.leftViewMode = UITextFieldViewModeAlways;
     UIImageView* searchImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_search_gray"]];
@@ -200,7 +214,7 @@ iCarouselDataSource, iCarouselDelegate>
 }
 
 - (IBAction)changeBranch:(id)sender {
-    if ([DataManager sharedManager].user.userType.length == 0) {
+    if ([DataManager sharedManager].isPublicUser) {
         [QMAlert showAlertWithMessage:@"You cannot access this function. please subscribe dening user" actionSuccess:NO inViewController:self];
         return;
     }
@@ -211,7 +225,7 @@ iCarouselDataSource, iCarouselDelegate>
         [SVProgressHUD dismiss];
         if (success){
            [[DataManager sharedManager] setUserInfoFromLogin:responseObject];
-            if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+            if ([DataManager sharedManager].isStaff){
                  [self performSegueWithIdentifier:kChangeBranchSegue sender:[DataManager sharedManager].denningArray];
             } else if ([DataManager sharedManager].personalArray.count > 0) {
                 [self performSegueWithIdentifier:kChangeBranchSegue sender:[DataManager sharedManager].personalArray];
@@ -370,8 +384,8 @@ iCarouselDataSource, iCarouselDelegate>
 }
 
 - (void) getAttendance {
-    if (![[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
-        [QMAlert showAlertWithMessage:@"This function is revserved for only Staff." actionSuccess:NO inViewController:self];
+    if (![DataManager sharedManager].isStaff){
+        [QMAlert showAlertWithMessage:@"This function is reserved for registered business user only." withTitle:@"RESTRICTED" actionSuccess:NO inViewController:self];
     } else if ([CLLocationManager locationServicesEnabled] == NO) {
         [(AppDelegate*)[UIApplication sharedApplication] showDeniedLocation];
     } else {
@@ -391,48 +405,53 @@ iCarouselDataSource, iCarouselDelegate>
 {
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor greenColor];
-    if (indexPath.row == 0) {
+    NSString* menu = homeLabelArray[indexPath.row];
+    if ([menu isEqualToString:@"News"]) {
         [self getLatestNewsWithCompletion:^(NSArray *array) {
             [self performSegueWithIdentifier:kNewsSegue sender:array];
         }];
-    } else if (indexPath.row == 1) {
+    } else if ([menu isEqualToString:@"Updates"]) {
         [self getLatestUpdatesWithCompletion:^(NSArray *array) {
             [self performSegueWithIdentifier:kUpdateSegue sender:array];
         }];
-    } else if (indexPath.row == 2) {
+    } else if ([menu isEqualToString:@"Market"]) {
         [self showComingSoon];
 
-    } else if (indexPath.row == 3) {
+    } else if ([menu isEqualToString:@"Delivery"]) {
         [self showComingSoon];
         
-    } else if (indexPath.row == 4) {
+    } else if ([menu isEqualToString:@"Calculators"]) {
         [self performSegueWithIdentifier:kCalculateSegue sender:nil];
-    } else if (indexPath.row == 5) {
+    } else if ([menu isEqualToString:@"Shared"]) {
         [self getSharedFolder];
-    } else if (indexPath.row == 6) {
+    } else if ([menu isEqualToString:@"Forum"]) {
         [self showComingSoon];
         
-    } else if (indexPath.row == 7) {
+    } else if ([menu isEqualToString:@"Products"]) {
         [self showComingSoon];
         
-    } else if (indexPath.row == 8) { // Attendance
+    } else if ([menu isEqualToString:@"Attendance"]) {
         [self getAttendance];
-    } else if (indexPath.row == 9) { // File Upload
+    } else if ([menu isEqualToString:@"Upload"]) {
         [self gotoUpload];
-    } else if (indexPath.row == 10) { // Calendar
-        if (![[DataManager sharedManager].user.userType isEqualToString:@""]) {
-            [self geteventsArrayWithCompletion:^(NSArray * array) {
-                [self performSegueWithIdentifier:kEventSegue sender:array];
-            }];
-        } else {
-            [QMAlert showAlertWithMessage:@"You cannot access this folder. please subscribe dening user" actionSuccess:NO inViewController:self];
-        }
+    } else if ([menu isEqualToString:@"Calendar"]) {
+        [self gotoCalendar];
         
-    } else if (indexPath.row == 11) {
+    } else if ([menu isEqualToString:@"Top-Up"]) {
         [self showComingSoon];
         
     }
     cell.backgroundColor = [UIColor whiteColor];
+}
+
+- (void) gotoCalendar {
+    if ([DataManager sharedManager].isStaff){
+        [self geteventsArrayWithCompletion:^(NSArray * array) {
+            [self performSegueWithIdentifier:kEventSegue sender:array];
+        }];
+    } else {
+        [QMAlert showAlertWithMessage:@"This function is reserved for registered business user only." withTitle:@"RESTRICTED" actionSuccess:NO inViewController:self];
+    }
 }
 
 - (void) loginAndGotoBranch {

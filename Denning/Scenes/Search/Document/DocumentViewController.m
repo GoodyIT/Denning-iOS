@@ -130,7 +130,7 @@
         }
         if (selectionIndex.section == 1) {
             FileModel* file = self.documentModel.documents[selectionIndex.row];
-            [urlArray addObject:[self getFileURL:file]];
+            [urlArray addObject:@[[self getFileURL:file], file.name]];
         } else {
             DocumentModel* model = self.documentModel.folders[selectionIndex.section-2];
             FileModel* file = model.documents[selectionIndex.row];

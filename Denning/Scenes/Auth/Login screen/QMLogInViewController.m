@@ -187,7 +187,7 @@
     // Initialize the option for shared folder
     [DataManager sharedManager].documentView = @"nothing";
     
-    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+    if ([DataManager sharedManager].denningArray.count > 0) {
         [self manageFirmURL:[DataManager sharedManager].denningArray];
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -197,6 +197,8 @@
 }
 
 - (void) manageSuccessResult: (NSInteger) statusCode response:(NSDictionary*) response {
+    [SVProgressHUD dismiss];
+    [[DataManager sharedManager] setUserPassword:self.passwordField.text];
     [[DataManager sharedManager] setUserInfoFromLogin:response];
     if (statusCode == 250) { // New Device login
         [DataManager sharedManager].statusCode = [NSNumber numberWithInteger:statusCode];
@@ -237,14 +239,13 @@
     self.task = [[[QMCore instance].authService loginWithUser:user] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
         
         @strongify(self);
-        [SVProgressHUD dismiss];
-        
         if (!task.isFaulted) {
             [QMCore instance].currentProfile.accountType = QMAccountTypeEmail;
             [[QMCore instance].currentProfile synchronizeWithUserData:task.result];
             [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
             [self manageSuccessResult:statusCode response:responseObject];
         } else {
+            [SVProgressHUD dismiss];
             [QMAlert showAlertWithMessage:task.error.localizedDescription actionSuccess:NO inViewController:self];
         }
         return nil;
@@ -255,7 +256,6 @@
 {
     [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
     // Save the user password for the shared folder use
-    [[DataManager sharedManager] setUserPassword:password];
     
     @weakify(self);
     [[QMNetworkManager sharedManager] userSignInWithEmail:email password:password withCompletion:^(BOOL success, NSError * _Nonnull error, NSInteger statusCode, NSDictionary* responseObject) {

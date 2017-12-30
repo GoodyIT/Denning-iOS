@@ -110,7 +110,6 @@
                 [SVProgressHUD showErrorWithStatus:error.localizedDescription];
             }
         }];
-        
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

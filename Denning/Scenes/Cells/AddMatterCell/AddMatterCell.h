@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "DIGeneralCell.h"
 #import "GeneralContactCell.h"
-typedef void(^AddNewHandler)(void);
-
 
 @interface AddMatterCell : GeneralContactCell
 
@@ -18,6 +16,6 @@ typedef void(^AddNewHandler)(void);
 @property (weak, nonatomic) IBOutlet UILabel *subLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastLabel;
 
-@property (strong, nonatomic) AddNewHandler addNew;
+@property (strong, nonatomic) void(^addNew)(AddMatterCell* cell);
 
 @end

@@ -10,10 +10,14 @@
 
 @interface QMAlert : NSObject
 
-+ (void)showAlertWithMessage:(NSString *)message actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController;
++ (void)showAlertWithMessage:(NSString *_Nonnull)message withTitle:(NSString*_Nonnull)title actionSuccess:(BOOL)success inViewController:(UIViewController *_Nonnull)view_NonnullController;
 
-+ (void)showInformationWithMessage:(NSString *)message inViewController:(UIViewController *)viewController;
++ (void) showConfirmDialog:(NSString *_Nonnull)message withTitle:(NSString* _Nonnull)_Nonnulltitle inViewController:(UIViewController *_Nonnull)viewController completion:(void (^)(UIAlertAction * _Nonnull))completion;
 
-+(void)showConfirmDialog:(NSString*) message inViewController:(UIViewController *)viewController completion:(void(^)(UIAlertAction * _Nonnull action))completion;
++ (void)showAlertWithMessage:(NSString *_Nonnull)message actionSuccess:(BOOL)success inViewController:(UIViewController *_Nonnull)viewController;
+
++ (void)showInformationWithMessage:(NSString *_Nonnull)message inViewController:(UIViewController *_Nonnull)viewController;
+
++(void)showConfirmDialog:(NSString*_Nonnull) message inViewController:(UIViewController *_Nonnull)viewController completion:(void(^)(UIAlertAction * _Nonnull action))completion;
 
 @end

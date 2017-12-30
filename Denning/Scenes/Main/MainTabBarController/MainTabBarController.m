@@ -24,8 +24,11 @@ static const NSInteger kQMUnauthorizedErrorCode = -1011;
 <QMChatServiceDelegate,
 QMChatConnectionDelegate,
 QMPushNotificationManagerDelegate>
+
 @property (nonatomic, strong) NSArray *menuItems;
 @property (nonatomic, strong) id badgeObserver;
+
+@property (strong, nonatomic) NSMutableArray* originControllers;
 
 @end
 
@@ -34,9 +37,22 @@ QMPushNotificationManagerDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.originControllers = [self.viewControllers mutableCopy];
     self.delegate = self;
 //     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge) name:@"updateBadge" object:nil];
     [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (void) removeTabbarBasedOnUserType {
+    NSMutableArray* temp = [self.originControllers mutableCopy];
+    if ([DataManager sharedManager].isStaff) {
+        temp = [self.originControllers mutableCopy];
+    } else {
+        [temp removeObjectAtIndex:1];
+        [temp removeObjectAtIndex:1];
+    }
+    
+    [self setViewControllers:temp];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -45,6 +61,8 @@ QMPushNotificationManagerDelegate>
     [[QMCore instance].chatService addDelegate:self];
     [QMCore.instance.chatService addDelegate:self];
     [self performAutoLoginAndFetchData];
+    
+    [self removeTabbarBasedOnUserType];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -147,8 +165,8 @@ shouldSelectViewController:(UIViewController *)viewController
         userInfo = @"Login";
     }
     
-    _menuItems =
-    @[
+    NSMutableArray* temp =
+    [@[
       [RWDropdownMenuItem itemWithText:userInfo image:[UIImage imageNamed:@"menu_user"] action:^{
           [self tapLogin:nil];
       }],
@@ -163,16 +181,21 @@ shouldSelectViewController:(UIViewController *)viewController
           }
       }],
       
-      [RWDropdownMenuItem itemWithText:@"Overview" image:[UIImage imageNamed:@"menu_overview"] action:^{
+      [RWDropdownMenuItem itemWithText:@"Dashboard" image:[UIImage imageNamed:@"menu_overview"] action:^{
           if (![self checkPublicUser]) {
               self.selectedViewController = self.viewControllers[2];
           }
       }],
       
       [RWDropdownMenuItem itemWithText:@"Chats" image:[UIImage imageNamed:@"icon_message"] action:^{
-          if (![self checkPublicUser]) {
-              self.selectedViewController = self.viewControllers[3];
-          }
+        if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) && ![[DataManager sharedManager] isLoggedIn]) {
+            [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
+            self.tabBarController.selectedIndex = 0;
+            return;
+        }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_RECENT_VIEW object:nil];
+          self.selectedViewController = self.viewControllers[3];
       }],
       
       [RWDropdownMenuItem itemWithText:@"Our Products" image:[UIImage imageNamed:@"menu_our_product"] action:^{
@@ -200,8 +223,15 @@ shouldSelectViewController:(UIViewController *)viewController
               [DIHelpers logout:self];
           }
       }],
-    ];
-   
+    ] mutableCopy];
+    
+    if ([DataManager sharedManager].isStaff) {
+        _menuItems = [temp copy];
+    } else {
+        [temp removeObjectAtIndex:2];
+        [temp removeObjectAtIndex:2];
+    }
+    
     return _menuItems;
 }
 
@@ -390,16 +420,17 @@ didAddMessageToMemoryStorage:(QBChatMessage *)message
 // MARK: - Update badge for tabbar item
 
 - (void) updateBadge {
-    NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
-    
-    if (unreadDialogs.count == 0) {
-        [DataManager sharedManager].badgeValue = @"0";
-        self.childViewControllers.lastObject.tabBarItem.badgeValue = nil;
-    } else {
-        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
-        self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
-    }
-    
-    [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+ 
+//    NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
+//
+//    if (unreadDialogs.count == 0) {
+//        [DataManager sharedManager].badgeValue = @"0";
+//        self.childViewControllers.lastObject.tabBarItem.badgeValue = nil;
+//    } else {
+//        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
+//        self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
+//    }
+//
+//    [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
 }
 @end

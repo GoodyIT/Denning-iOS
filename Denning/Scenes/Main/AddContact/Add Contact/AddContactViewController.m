@@ -390,7 +390,7 @@
 
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        if ([_updateHandler isKindOfClass:[NSNull class]] && !_contactModel) {
+        if (![_updateHandler isKindOfClass:[NSNull class]] && _contactModel) {
             _updateHandler(_contactModel);
         }
     }];
@@ -593,7 +593,7 @@
     if (self.viewType == nil || self.viewType.length == 0) {
         [self _save];
     } else {
-        [QMAlert showConfirmDialog:@"Do you want to update contact?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+        [QMAlert showConfirmDialog:@"Do you want to update contact?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
                 [self _update];
             }

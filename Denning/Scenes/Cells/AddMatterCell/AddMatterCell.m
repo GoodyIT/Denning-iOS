@@ -22,7 +22,7 @@
 }
 
 - (IBAction)didTapAdd:(id)sender {
-    [self addNew];
+    self.addNew(self);
 }
 
 

@@ -307,12 +307,7 @@ MEVFloatingButtonDelegate
 //MARK: - MevFloatingButton Delegate
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
-    
-    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
-        [self performSegueWithIdentifier:kGroupChatSegue sender:nil];
-    } else {
-        [QMAlert showAlertWithMessage:@"You can create a new group" actionSuccess:NO inViewController:self];
-    }
+     [self performSegueWithIdentifier:kGroupChatSegue sender:nil];
 }
 
 //MARK: - UITableViewDelegate

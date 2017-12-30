@@ -49,7 +49,7 @@
                                 <rect key="frame" x="88.5" y="70" width="119" height="94"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wnx-DS-2Kg">
-                                <rect key="frame" x="64" y="194" width="192" height="44"/>
+                                <rect key="frame" x="32" y="194" width="256" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Ioy-Ky-nPf"/>
@@ -61,7 +61,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wdG-TY-50t">
-                                <rect key="frame" x="64" y="250" width="192" height="44"/>
+                                <rect key="frame" x="32" y="250" width="256" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
@@ -70,7 +70,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUE-FT-NW7">
-                                <rect key="frame" x="64" y="309" width="192" height="44"/>
+                                <rect key="frame" x="32" y="309" width="256" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Sign in">
@@ -93,7 +93,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pqa-KD-q1n">
-                                <rect key="frame" x="64" y="389" width="192" height="44"/>
+                                <rect key="frame" x="32" y="389" width="256" height="44"/>
                                 <color key="backgroundColor" red="0.25882352939999997" green="0.52156862749999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Sign up">
@@ -162,7 +162,7 @@
                             <constraint firstItem="aUE-FT-NW7" firstAttribute="height" secondItem="wnx-DS-2Kg" secondAttribute="height" id="rL0-1t-fhq"/>
                             <constraint firstItem="koL-Fj-qCJ" firstAttribute="leading" secondItem="neg-i6-5kS" secondAttribute="leadingMargin" id="t26-5S-nHK"/>
                             <constraint firstItem="wdG-TY-50t" firstAttribute="centerX" secondItem="neg-i6-5kS" secondAttribute="centerX" id="yDD-QN-Xds"/>
-                            <constraint firstItem="wnx-DS-2Kg" firstAttribute="width" secondItem="neg-i6-5kS" secondAttribute="width" multiplier="3:5" id="yfb-wW-RdM"/>
+                            <constraint firstItem="wnx-DS-2Kg" firstAttribute="width" secondItem="neg-i6-5kS" secondAttribute="width" multiplier="4:5" id="yfb-wW-RdM"/>
                             <constraint firstItem="Pqa-KD-q1n" firstAttribute="leading" secondItem="wnx-DS-2Kg" secondAttribute="leading" id="zgE-ly-sMI"/>
                         </constraints>
                     </view>
@@ -195,7 +195,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gED-F4-FOC">
-                                <rect key="frame" x="64" y="260" width="192" height="44"/>
+                                <rect key="frame" x="32" y="260" width="256" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
@@ -211,10 +211,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LL3-IC-tdX">
-                                <rect key="frame" x="64" y="316" width="192" height="44"/>
+                                <rect key="frame" x="32" y="316" width="256" height="44"/>
+                                <color key="backgroundColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Request SMS">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -240,7 +241,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5i-Jn-Ulh">
-                                <rect key="frame" x="64" y="208" width="60" height="44"/>
+                                <rect key="frame" x="32" y="208" width="60" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="1Lw-TB-Akl"/>
@@ -253,8 +254,8 @@
                                     <action selector="didTapCountryCode:" destination="MH6-BP-rah" eventType="touchUpInside" id="RTJ-ed-V9I"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="TAC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LHF-xQ-5rO">
-                                <rect key="frame" x="64" y="380" width="86" height="44"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="TAC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LHF-xQ-5rO">
+                                <rect key="frame" x="32" y="380" width="118" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
@@ -264,7 +265,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="44y-y0-UT0">
-                                <rect key="frame" x="170" y="380" width="86" height="44"/>
+                                <rect key="frame" x="170" y="380" width="118" height="44"/>
                                 <color key="backgroundColor" red="0.25882352941176467" green="0.52156862745098043" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Continue">
@@ -288,7 +289,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nLo-iB-ZcR">
-                                <rect key="frame" x="124" y="208" width="132" height="44"/>
+                                <rect key="frame" x="92" y="208" width="196" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="b1Y-sr-rXJ"/>
@@ -332,7 +333,7 @@
                             <constraint firstItem="gED-F4-FOC" firstAttribute="height" secondItem="nLo-iB-ZcR" secondAttribute="height" id="mBC-5E-T6h"/>
                             <constraint firstItem="44y-y0-UT0" firstAttribute="trailing" secondItem="LL3-IC-tdX" secondAttribute="trailing" id="oau-Bp-Sbo"/>
                             <constraint firstItem="nLo-iB-ZcR" firstAttribute="height" secondItem="I5i-Jn-Ulh" secondAttribute="height" id="owI-I2-iLk"/>
-                            <constraint firstItem="gED-F4-FOC" firstAttribute="width" secondItem="MwI-Ge-RE9" secondAttribute="width" multiplier="3:5" id="tbs-bd-7mY"/>
+                            <constraint firstItem="gED-F4-FOC" firstAttribute="width" secondItem="MwI-Ge-RE9" secondAttribute="width" multiplier="4:5" id="tbs-bd-7mY"/>
                             <constraint firstItem="gED-F4-FOC" firstAttribute="trailing" secondItem="nLo-iB-ZcR" secondAttribute="trailing" id="uCP-5X-Kie"/>
                             <constraint firstItem="gED-F4-FOC" firstAttribute="centerX" secondItem="MwI-Ge-RE9" secondAttribute="centerX" id="xpS-q1-SaW"/>
                         </constraints>
@@ -361,7 +362,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YtN-Xr-FF8">
-                                <rect key="frame" x="64" y="228" width="192" height="44"/>
+                                <rect key="frame" x="32" y="228" width="256" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="3O7-x2-hBa"/>
@@ -373,7 +374,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Re-enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TLp-mD-s0C">
-                                <rect key="frame" x="64" y="284" width="192" height="44"/>
+                                <rect key="frame" x="32" y="284" width="256" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
@@ -382,7 +383,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eb3-Jj-gaK">
-                                <rect key="frame" x="64" y="353" width="192" height="44"/>
+                                <rect key="frame" x="32" y="353" width="256" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Continue">
@@ -415,7 +416,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="TLp-mD-s0C" firstAttribute="trailing" secondItem="YtN-Xr-FF8" secondAttribute="trailing" id="0zw-c0-B04"/>
-                            <constraint firstItem="YtN-Xr-FF8" firstAttribute="width" secondItem="1Bx-7I-30H" secondAttribute="width" multiplier="3:5" id="1GR-WW-NCv"/>
+                            <constraint firstItem="YtN-Xr-FF8" firstAttribute="width" secondItem="1Bx-7I-30H" secondAttribute="width" multiplier="4:5" id="1GR-WW-NCv"/>
                             <constraint firstItem="YtN-Xr-FF8" firstAttribute="centerX" secondItem="1Bx-7I-30H" secondAttribute="centerX" id="57W-Td-942"/>
                             <constraint firstItem="YsX-gL-fjk" firstAttribute="leading" secondItem="1Bx-7I-30H" secondAttribute="leading" constant="20" id="BBm-VL-Hco"/>
                             <constraint firstItem="TLp-mD-s0C" firstAttribute="leading" secondItem="YtN-Xr-FF8" secondAttribute="leading" id="CNQ-IZ-Eyw"/>
@@ -459,7 +460,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bhs-3q-L4I">
-                                <rect key="frame" x="64" y="136" width="192" height="40"/>
+                                <rect key="frame" x="32" y="136" width="256" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="icP-2h-eCC"/>
@@ -472,7 +473,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="azc-gf-rC5">
-                                <rect key="frame" x="64" y="188" width="192" height="40"/>
+                                <rect key="frame" x="32" y="188" width="256" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
@@ -482,7 +483,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stq-nN-bar">
-                                <rect key="frame" x="64" y="394" width="192" height="40"/>
+                                <rect key="frame" x="32" y="394" width="256" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Continue">
@@ -518,20 +519,20 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you a lawyer?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Oy-FC-GnV">
-                                <rect key="frame" x="64" y="290" width="136" height="32"/>
+                                <rect key="frame" x="32" y="290" width="136" height="32"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iL8-tG-bXB">
-                                <rect key="frame" x="207" y="291" width="51" height="31"/>
+                                <rect key="frame" x="239" y="291" width="51" height="31"/>
                                 <connections>
                                     <action selector="selectLaywer:" destination="gwc-aJ-hDk" eventType="valueChanged" id="XOY-zV-jvh"/>
                                 </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdu-ad-4SN">
-                                <rect key="frame" x="64" y="334" width="192" height="40"/>
+                                <rect key="frame" x="32" y="334" width="256" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -543,14 +544,14 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MhD-sE-dID">
-                                <rect key="frame" x="124" y="240" width="132" height="40"/>
+                                <rect key="frame" x="92" y="240" width="196" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="next"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q6t-Bz-f0b">
-                                <rect key="frame" x="64" y="240" width="60" height="40"/>
+                                <rect key="frame" x="32" y="240" width="60" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="kRg-ed-4Oo"/>
@@ -579,7 +580,7 @@
                             <constraint firstItem="0Oy-FC-GnV" firstAttribute="leading" secondItem="Bhs-3q-L4I" secondAttribute="leading" id="BMz-YH-xf8"/>
                             <constraint firstItem="azc-gf-rC5" firstAttribute="height" secondItem="Bhs-3q-L4I" secondAttribute="height" id="BTm-TN-qE9"/>
                             <constraint firstItem="iL8-tG-bXB" firstAttribute="centerY" secondItem="0Oy-FC-GnV" secondAttribute="centerY" id="Ck9-q2-khG"/>
-                            <constraint firstItem="Bhs-3q-L4I" firstAttribute="width" secondItem="e7D-3S-cVR" secondAttribute="width" multiplier="3:5" id="Dxw-l0-h4e"/>
+                            <constraint firstItem="Bhs-3q-L4I" firstAttribute="width" secondItem="e7D-3S-cVR" secondAttribute="width" multiplier="4:5" id="Dxw-l0-h4e"/>
                             <constraint firstItem="Bhs-3q-L4I" firstAttribute="centerX" secondItem="e7D-3S-cVR" secondAttribute="centerX" id="EX1-Vl-47u"/>
                             <constraint firstItem="MhD-sE-dID" firstAttribute="trailing" secondItem="Bhs-3q-L4I" secondAttribute="trailing" id="IR8-2g-JHo"/>
                             <constraint firstItem="MhD-sE-dID" firstAttribute="leading" secondItem="q6t-Bz-f0b" secondAttribute="trailing" id="KSr-2X-32F"/>
@@ -658,7 +659,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lw-vp-uJt">
-                                <rect key="frame" x="64" y="272.5" width="192" height="44"/>
+                                <rect key="frame" x="32" y="257" width="256" height="44"/>
                                 <color key="backgroundColor" red="0.25882352939999997" green="0.52156862749999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Continue">
@@ -687,7 +688,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please input the confirm code you got from" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PZ-3w-DIo">
-                                <rect key="frame" x="54" y="131" width="212" height="31.5"/>
+                                <rect key="frame" x="22" y="131" width="276" height="16"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -700,13 +701,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+6017XXXXXXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tpf-XT-Dzl">
-                                <rect key="frame" x="110" y="162.5" width="100.5" height="16"/>
+                                <rect key="frame" x="110" y="147" width="100.5" height="16"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TAC code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f3h-Zg-FqS">
-                                <rect key="frame" x="64" y="208.5" width="192" height="44"/>
+                                <rect key="frame" x="32" y="193" width="256" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="piC-JI-SKX"/>
@@ -718,7 +719,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QKj-vG-Sex">
-                                <rect key="frame" x="57" y="336.5" width="206" height="30"/>
+                                <rect key="frame" x="57" y="321" width="206" height="30"/>
                                 <state key="normal" title=" Click here to resend the code">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -742,7 +743,7 @@
                             <constraint firstItem="f3h-Zg-FqS" firstAttribute="trailing" secondItem="6PZ-3w-DIo" secondAttribute="trailing" constant="-10" id="hrN-Ng-8II"/>
                             <constraint firstItem="A6P-Xs-51A" firstAttribute="centerX" secondItem="HAr-nf-bxV" secondAttribute="centerX" id="iTy-bn-aEI"/>
                             <constraint firstItem="3lw-vp-uJt" firstAttribute="trailing" secondItem="f3h-Zg-FqS" secondAttribute="trailing" id="nUc-fN-CQa"/>
-                            <constraint firstItem="f3h-Zg-FqS" firstAttribute="width" secondItem="HAr-nf-bxV" secondAttribute="width" multiplier="3:5" id="oJR-Rt-EXF"/>
+                            <constraint firstItem="f3h-Zg-FqS" firstAttribute="width" secondItem="HAr-nf-bxV" secondAttribute="width" multiplier="4:5" id="oJR-Rt-EXF"/>
                             <constraint firstItem="Tpf-XT-Dzl" firstAttribute="centerX" secondItem="HAr-nf-bxV" secondAttribute="centerX" id="qrf-lG-mXo"/>
                             <constraint firstItem="f3h-Zg-FqS" firstAttribute="top" secondItem="Tpf-XT-Dzl" secondAttribute="bottom" constant="30" id="t45-y5-1hc"/>
                             <constraint firstItem="f3h-Zg-FqS" firstAttribute="leading" secondItem="6PZ-3w-DIo" secondAttribute="leading" constant="10" id="v6o-hj-87f"/>
@@ -1190,6 +1191,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="2bt-gq-iwV"/>
         <segue reference="cqB-uN-mxx"/>
-        <segue reference="lHY-Ch-f8A"/>
+        <segue reference="7Mr-nR-sFA"/>
     </inferredMetricsTieBreakers>
 </document>

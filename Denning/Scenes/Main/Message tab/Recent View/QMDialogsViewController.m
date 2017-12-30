@@ -142,9 +142,9 @@ UIGestureRecognizerDelegate
             }
         } else if (dialog.type == QBChatDialogTypePrivate) {
             QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage userWithID:dialog.opponentID];
-            if ([user.twitterID isEqualToString:@"colleague"]) {
+            if ([user.twitterID.lowercaseString isEqualToString:@"colleague"]) {
                 [staffDialgs addObject:dialog];
-            } else if ([user.twitterID isEqualToString:@"client"]) {
+            } else if ([user.twitterID.lowercaseString isEqualToString:@"client"]) {
                 [clientDialgs addObject:dialog];
             }
         }

@@ -61,6 +61,8 @@
 
 - (BOOL) isDenningUser;
 
+- (BOOL) isStaff;
+
 - (void) clearData;
 
 @end

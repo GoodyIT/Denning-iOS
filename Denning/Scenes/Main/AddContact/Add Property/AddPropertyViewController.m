@@ -548,7 +548,7 @@ NSMutableDictionary* keyValue;
     NSMutableDictionary* params = [self buildParams];
     if ([_viewType isEqualToString:@"view"]) {
         [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
-        [QMAlert showConfirmDialog:@"Do you want to update contact?" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
                 if ([self checkValidation]) {
                     [self _update:params];

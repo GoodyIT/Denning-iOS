@@ -140,7 +140,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     _searchResultArray = [NSMutableArray new];
     _email = [DataManager sharedManager].user.email;
     _sessionID = [DataManager sharedManager].user.sessionID;
-    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+    if ([DataManager sharedManager].isStaff){
         [DataManager sharedManager].searchType = @"Denning";
     } else {
         [DataManager sharedManager].searchType = @"Public";

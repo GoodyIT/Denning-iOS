@@ -121,7 +121,7 @@
 - (void) manageUserType {
     // Initialize the option for shared folder
     [DataManager sharedManager].documentView = @"nothing";
-    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+    if ([DataManager sharedManager].denningArray.count > 0) {
         [self manageFirmURL:[DataManager sharedManager].denningArray];
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -191,7 +191,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yCW-D0-QmI">
-                                <rect key="frame" x="0.0" y="170" width="375" height="407"/>
+                                <rect key="frame" x="0.0" y="170" width="375" height="417"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="7WV-1m-3ZM">
                                     <size key="itemSize" width="131" height="117"/>
@@ -295,7 +295,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="LCu-gp-J0O" customClass="iCarousel">
-                                <rect key="frame" x="0.0" y="582" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="587" width="375" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="hOP-3p-nj3"/>
@@ -315,13 +315,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="00u-4m-90B" firstAttribute="top" secondItem="LCu-gp-J0O" secondAttribute="bottom" constant="5" id="A4h-9n-sy0"/>
+                            <constraint firstItem="00u-4m-90B" firstAttribute="top" secondItem="LCu-gp-J0O" secondAttribute="bottom" id="A4h-9n-sy0"/>
                             <constraint firstAttribute="trailing" secondItem="Rrg-ay-2bM" secondAttribute="trailing" id="Bdl-vn-s7r"/>
                             <constraint firstItem="MM1-Ph-TBu" firstAttribute="top" secondItem="lIw-KD-onQ" secondAttribute="bottom" id="EYE-jW-uws"/>
                             <constraint firstItem="LCu-gp-J0O" firstAttribute="leading" secondItem="eAU-aF-ps9" secondAttribute="leading" id="MXS-9V-1du"/>
                             <constraint firstAttribute="trailing" secondItem="MM1-Ph-TBu" secondAttribute="trailing" id="Mko-WS-CNe"/>
                             <constraint firstAttribute="trailing" secondItem="LCu-gp-J0O" secondAttribute="trailing" id="ZQP-vs-Plq"/>
-                            <constraint firstItem="LCu-gp-J0O" firstAttribute="top" secondItem="yCW-D0-QmI" secondAttribute="bottom" constant="5" id="aM6-dH-c08"/>
+                            <constraint firstItem="LCu-gp-J0O" firstAttribute="top" secondItem="yCW-D0-QmI" secondAttribute="bottom" id="aM6-dH-c08"/>
                             <constraint firstItem="Rrg-ay-2bM" firstAttribute="top" secondItem="MM1-Ph-TBu" secondAttribute="bottom" id="cCA-Vl-pYX"/>
                             <constraint firstItem="MM1-Ph-TBu" firstAttribute="leading" secondItem="eAU-aF-ps9" secondAttribute="leading" id="iMc-Lc-gzV"/>
                             <constraint firstItem="Rrg-ay-2bM" firstAttribute="leading" secondItem="eAU-aF-ps9" secondAttribute="leading" id="jqx-tq-udy"/>
@@ -334,6 +334,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="branchHeightContraint" destination="xXb-UV-e9v" id="AcJ-8J-uFo"/>
                         <outlet property="carousel" destination="LCu-gp-J0O" id="3q2-Qk-SLj"/>
                         <outlet property="collectionView" destination="yCW-D0-QmI" id="aoL-K8-Xty"/>
                         <outlet property="firmCity" destination="5eE-R2-UtC" id="Eww-vh-lVr"/>

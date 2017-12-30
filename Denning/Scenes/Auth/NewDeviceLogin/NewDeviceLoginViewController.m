@@ -91,7 +91,7 @@
 }
 
 - (void) manageUserType {
-    if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+    if ([DataManager sharedManager].denningArray.count > 0) {
         [self manageFirmURL:[DataManager sharedManager].denningArray];
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{

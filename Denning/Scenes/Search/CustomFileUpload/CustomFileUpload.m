@@ -97,7 +97,7 @@ NYTPhotosViewControllerDelegate>
 
 
 - (void)changeBranch {
-    if ([DataManager sharedManager].user.userType.length == 0) {
+    if ([DataManager sharedManager].isPublicUser) {
         [QMAlert showAlertWithMessage:@"You cannot access this folder. please subscribe dening user" actionSuccess:NO inViewController:self];
         return;
     }
@@ -109,7 +109,7 @@ NYTPhotosViewControllerDelegate>
         if (success){
             [[DataManager sharedManager] setUserInfoFromLogin:responseObject];
             
-            if ([[DataManager sharedManager].user.userType isEqualToString:@"denning"]) {
+            if ([DataManager sharedManager].isStaff){
                 [self performSegueWithIdentifier:kChangeBranchSegue sender:[DataManager sharedManager].denningArray];
             } else if ([DataManager sharedManager].personalArray.count > 0) {
                 [self performSegueWithIdentifier:kChangeBranchSegue sender:[DataManager sharedManager].personalArray];

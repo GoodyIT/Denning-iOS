@@ -141,7 +141,7 @@ enum MATTERSECTION {
             return 1;
             break;
         case MAIN_SECTION:
-            return 5;
+            return 7;
             break;
         case COURTCASE_SECTION:
             if (relatedMatterModel.court == nil) {
@@ -379,6 +379,10 @@ enum MATTERSECTION {
         } else if (indexPath.row == 4) {
             NSString *string = [NSString stringWithFormat:@"%@ / %@ / %@", relatedMatterModel.partner.nickName, relatedMatterModel.legalAssistant.nickName, relatedMatterModel.clerk.nickName];
             [cell configureCellWithContact:@"Partner / LA / Clerk" text:string];
+        } else if (indexPath.row == 5) { // branch
+             [cell configureCellWithContact:@"Branch" text:relatedMatterModel.branch.city];
+        } else if (indexPath.row == 6)  { // remarks
+             [cell configureCellWithContact:@"Remarks" text:relatedMatterModel.remarks];
         }
     } else if (indexPath.section == COURTCASE_SECTION) { // Court Case information
         if (indexPath.row == 0) {
