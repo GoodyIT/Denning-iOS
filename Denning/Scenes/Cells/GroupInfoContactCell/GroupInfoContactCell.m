@@ -33,18 +33,22 @@
                                     title:user.fullName
                            completedBlock:nil];
     
-    self.userNameLabel.text = user.fullName;
+    NSString* userName = user.fullName;
+    if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
+        userName = @"You";
+    }
+    
+    self.userNameLabel.text = userName;
     self.lastSeenLabel.text = [[QMCore instance].contactManager onlineStatusForUser:user];
     
     if ([DIHelpers isSupportChat:chatDialog]) {
-        
         NSString *role = [DIHelpers getCurrentUserRole:user.ID fromChatDialog:chatDialog];
         NSString* btnTitle = @"Normal";
         UIColor *color = [UIColor babyBlue];
         
         if ([role isEqualToString:kRoleAdminTag]) {
             btnTitle = @"Admin";
-            color = [UIColor babyBlue];
+            color = [UIColor babyRed];
         } else if ([role isEqualToString:kRoleNormalTag]) {
             btnTitle = @"Normal";
             color = [UIColor babyBlue];

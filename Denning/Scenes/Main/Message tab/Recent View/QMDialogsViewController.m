@@ -132,13 +132,21 @@ UIGestureRecognizerDelegate
     NSMutableArray* staffDialgs = [NSMutableArray new];
     NSMutableArray* matterDialgs = [NSMutableArray new];
     for (QBChatDialog* dialog in groupDialogs) {
-        
-        if ([[DIHelpers getTag:dialog] isEqualToString:@"Colleagues"]) {
-            [staffDialgs addObject:dialog];
-        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Clients"]) {
-            [clientDialgs addObject:dialog];
-        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Matters"]){
-            [matterDialgs addObject:dialog];
+        if (dialog.type == QBChatDialogTypeGroup) {
+            if ([[DIHelpers getTag:dialog] isEqualToString:@"Colleagues"]) {
+                [staffDialgs addObject:dialog];
+            } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Clients"]) {
+                [clientDialgs addObject:dialog];
+            } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Matters"]){
+                [matterDialgs addObject:dialog];
+            }
+        } else if (dialog.type == QBChatDialogTypePrivate) {
+            QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage userWithID:dialog.opponentID];
+            if ([user.twitterDigitsID isEqualToString:@"Colleague"]) {
+                [staffDialgs addObject:dialog];
+            } else if ([user.twitterDigitsID isEqualToString:@"Client"]) {
+                [clientDialgs addObject:dialog];
+            }
         }
     }
     

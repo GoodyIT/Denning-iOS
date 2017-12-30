@@ -62,8 +62,8 @@ iCarouselDataSource, iCarouselDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self loadsAds];
     [self prepareUI];
+    [self loadsAds];
 }
 
 - (void)didReceiveMemoryWarning {

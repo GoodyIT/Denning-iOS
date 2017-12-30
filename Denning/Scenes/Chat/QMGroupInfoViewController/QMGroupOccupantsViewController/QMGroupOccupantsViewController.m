@@ -144,8 +144,13 @@ QMUsersServiceDelegate
         
         NSString* role = [DIHelpers getCurrentUserRole:user.ID fromChatDialog:self.chatDialog];
         
-        if (!([role isEqualToString:kRoleAdminTag]) || [DataManager sharedManager].isDenningUser) {
+        if (!([role isEqualToString:kRoleAdminTag] || [DataManager sharedManager].isDenningUser)) {
             // Only Denning Staff & Admin can assign the role.
+            return;
+        }
+        
+        if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
+            // User cannot change his role
             return;
         }
         
@@ -189,12 +194,11 @@ QMUsersServiceDelegate
     NSMutableArray* newItems = [NSMutableArray new];
     
     if ([DIHelpers isSupportChat:self.chatDialog]) {
-        NSArray* users = [QMCore.instance.usersService.usersMemoryStorage usersWithIDs:_chatDialog.occupantIDs];
-        for (QBUUser* user in users) {
+        for (QBUUser* user in items) {
             for (ChatFirmModel* firmModel in [DataManager sharedManager].denningContactArray) {
                 NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", user.email];
                 NSArray *filteredUsers = [firmModel.users filteredArrayUsingPredicate:usersSearchPredicate];
-                if (filteredUsers.count == 0 && ![user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
+                if (filteredUsers.count == 0) {
                     [newItems addObject:user];
                 }
             }
