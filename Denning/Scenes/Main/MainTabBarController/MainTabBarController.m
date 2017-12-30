@@ -55,6 +55,10 @@ QMPushNotificationManagerDelegate>
 }
 
 - (void)performAutoLoginAndFetchData {
+    if ([QBSession currentSession].currentUser == nil) {
+        return;
+    }
+    
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
                                                                           message:NSLocalizedString(@"QM_STR_CONNECTING", nil)
                                                                          duration:0];
@@ -119,6 +123,8 @@ shouldSelectViewController:(UIViewController *)viewController
             self.tabBarController.selectedIndex = 0;
             return NO;
         }
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_RECENT_VIEW object:nil];
     }
     
     return YES;

@@ -48,7 +48,7 @@
         user = [UserModel allObjects].firstObject;
         if (!user) {
             [[RLMRealm defaultRealm] transactionWithBlock:^{
-                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @0, @"Public", @""]];
+                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @0, @"", @""]];
             }];
         }
     }
@@ -186,7 +186,7 @@
         user.username = @"";
         user.userType = @"";
         user.serverAPI = @"";
-        user.firmName = @"Public";
+        user.firmName = @"";
         user.firmCity = @"";
     }];
 }

@@ -94,7 +94,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
         [tasks addObject:changeTagTask];
     }
     if (positionChanged) {
-        BFTask* positionTask = [QMCore.instance.chatManager changeCustomData:@{kGroupPositionTag:_groupNameField.text} forGroupChatDialog:self.chatDialog];
+        BFTask* positionTask = [QMCore.instance.chatManager changeCustomData:@{kGroupPositionTag:_groupPositionField.text} forGroupChatDialog:self.chatDialog];
         [tasks addObject:positionTask];
     }
     

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *favoriteBtn;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastSeenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *positionLabel;
 @property (weak, nonatomic) IBOutlet QMImageView *avatarImageView;
 
 @end
@@ -45,6 +46,7 @@
     
     self.userNameLabel.text = user.fullName;
     self.lastSeenLabel.text = [[QMCore instance].contactManager onlineStatusForUser:user];
+    self.positionLabel.text = user.twitterDigitsID;
     if (![self isExistInFavoriteList:user]) {
         [self.favoriteBtn setImage:[UIImage imageNamed:@"icon_favorite"] forState:UIControlStateNormal];
     } else {

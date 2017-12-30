@@ -193,7 +193,7 @@ QMUsersServiceDelegate
 - (NSMutableArray*) filterItems:(NSArray*) items {
     NSMutableArray* newItems = [NSMutableArray new];
     
-    if ([DIHelpers isSupportChat:self.chatDialog]) {
+    if ([DIHelpers isSupportChat:self.chatDialog] && ![DataManager sharedManager].isDenningUser) {
         for (QBUUser* user in items) {
             for (ChatFirmModel* firmModel in [DataManager sharedManager].denningContactArray) {
                 NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", user.email];

@@ -17,15 +17,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatContactCell" rowHeight="65" id="KGk-i7-Jjw" customClass="ChatContactCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatContactCell" rowHeight="73" id="KGk-i7-Jjw" customClass="ChatContactCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="73"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="72.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m9l-uN-U96" customClass="QMImageView">
-                        <rect key="frame" x="28" y="12.5" width="40" height="40"/>
+                        <rect key="frame" x="28" y="16.5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="lWG-io-z6T"/>
                             <constraint firstAttribute="height" constant="40" id="q3S-py-lhN"/>
@@ -37,19 +37,19 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Adam44" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="klr-9F-SUf">
-                        <rect key="frame" x="76" y="12.5" width="67.5" height="20"/>
-                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                        <rect key="frame" x="76" y="16.5" width="63.5" height="20"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="16"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Last seen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjP-YT-fs4">
-                        <rect key="frame" x="76" y="33.5" width="54.5" height="14.5"/>
-                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                        <rect key="frame" x="76" y="53" width="59" height="16"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                         <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VxF-2O-jgY">
-                        <rect key="frame" x="254" y="13.5" width="38" height="38"/>
+                        <rect key="frame" x="254" y="17.5" width="38" height="38"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="38" id="i2X-2a-NdI"/>
                             <constraint firstAttribute="height" constant="38" id="zmH-gx-CAO"/>
@@ -59,19 +59,27 @@
                             <action selector="didTapFavBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5gS-C4-j04"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Last seen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6pq-m8-aP1">
+                        <rect key="frame" x="76" y="37.5" width="54.5" height="14.5"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="12"/>
+                        <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="m9l-uN-U96" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2Pt-Bm-2RT"/>
                     <constraint firstItem="m9l-uN-U96" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="9TG-9G-Ch3"/>
-                    <constraint firstItem="ZjP-YT-fs4" firstAttribute="top" secondItem="klr-9F-SUf" secondAttribute="bottom" constant="1" id="F3L-Sv-8zv"/>
                     <constraint firstAttribute="trailingMargin" secondItem="VxF-2O-jgY" secondAttribute="trailing" constant="12" id="J7v-Yn-1Fk"/>
+                    <constraint firstItem="6pq-m8-aP1" firstAttribute="top" secondItem="klr-9F-SUf" secondAttribute="bottom" constant="1" id="Qdo-Hy-df0"/>
+                    <constraint firstItem="6pq-m8-aP1" firstAttribute="leading" secondItem="klr-9F-SUf" secondAttribute="leading" id="XAx-WG-Jyc"/>
                     <constraint firstItem="VxF-2O-jgY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="klr-9F-SUf" secondAttribute="trailing" constant="12" id="ZsF-k2-nah"/>
                     <constraint firstItem="klr-9F-SUf" firstAttribute="top" secondItem="m9l-uN-U96" secondAttribute="top" id="eV2-BQ-DaB"/>
                     <constraint firstItem="klr-9F-SUf" firstAttribute="leading" secondItem="m9l-uN-U96" secondAttribute="trailing" constant="8" id="o1S-Aq-ip8"/>
                     <constraint firstItem="VxF-2O-jgY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pCB-tc-KSq"/>
                     <constraint firstItem="VxF-2O-jgY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZjP-YT-fs4" secondAttribute="trailing" constant="12" id="sBG-e4-01s"/>
                     <constraint firstItem="ZjP-YT-fs4" firstAttribute="leading" secondItem="m9l-uN-U96" secondAttribute="trailing" constant="8" id="sIM-tb-Quz"/>
+                    <constraint firstItem="ZjP-YT-fs4" firstAttribute="top" secondItem="6pq-m8-aP1" secondAttribute="bottom" constant="1" id="yU6-OI-B7A"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -79,9 +87,10 @@
                 <outlet property="avatarImageView" destination="m9l-uN-U96" id="8nz-vd-2Kw"/>
                 <outlet property="favoriteBtn" destination="VxF-2O-jgY" id="btR-sG-RQv"/>
                 <outlet property="lastSeenLabel" destination="ZjP-YT-fs4" id="frk-9Z-h9A"/>
+                <outlet property="positionLabel" destination="6pq-m8-aP1" id="y7b-rH-myq"/>
                 <outlet property="userNameLabel" destination="klr-9F-SUf" id="NWO-PT-Dcy"/>
             </connections>
-            <point key="canvasLocation" x="-116" y="-110"/>
+            <point key="canvasLocation" x="-116" y="-106.5"/>
         </tableViewCell>
     </objects>
     <resources>

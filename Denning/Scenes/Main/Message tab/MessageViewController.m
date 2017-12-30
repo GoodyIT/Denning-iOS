@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 @interface MessageViewController ()
 {
     NSInteger   selectedIndex;
+    BOOL isRecentShow;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *myPageViwer;
@@ -44,13 +45,19 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     
     [[NSNotificationCenter defaultCenter] removeObserver:_observerWillEnterForeground];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     ILog(@"%@ - %@",  NSStringFromSelector(_cmd), self);
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self registerNotificationForRecentView];
     [self prepareUI];
+    
+    [self _recentTabClicked];
+    selectedIndex = DIChatRecentTab;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,12 +65,22 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     // Dispose of any resources that can be recreated.
 }
 
+- (void) registerNotificationForRecentView {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showRecentView) name:SHOW_RECENT_VIEW object:nil];
+}
+
+- (void) showRecentView {
+    isRecentShow = YES;
+}
+
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    // Set the recent chat to default
-    selectedIndex = DIChatRecentTab;
-    [self _recentTabClicked];
+    if (isRecentShow) {
+        [self _recentTabClicked];
+        selectedIndex = DIChatRecentTab;
+        isRecentShow = NO;
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -153,8 +170,6 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
 }
 
 - (void) _recentTabClicked {
-    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_CONNECTING", nil) duration:0];
-    
     [self addView:self.viewControllers[DIChatRecentTab]];
     [(QMNavigationController*)self.navigationController dismissNotificationPanel];
     [self setDefaultImageForButtons];

@@ -14,6 +14,8 @@
 @property (strong, nonatomic) NSString* adsCode;
 @property (strong, nonatomic) NSString* imgData;
 
+@property (strong, nonatomic) UIImage* image;
+
 + (AdsModel*) getAdsFromResponse:(NSDictionary*) response;
 
 + (NSArray*) getAdsArrayFromResponse:(NSArray*) response;

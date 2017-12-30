@@ -162,7 +162,9 @@
          }
      } else {
          if (IDArray != nil) {
-             [IDArray removeObject:@(userID)];
+             if ([IDArray containsObject:@(userID)]) {
+                 [IDArray removeObject:@(userID)];
+             }
          } else {
              IDArray = [NSMutableArray new];
          }

@@ -142,9 +142,9 @@ UIGestureRecognizerDelegate
             }
         } else if (dialog.type == QBChatDialogTypePrivate) {
             QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage userWithID:dialog.opponentID];
-            if ([user.twitterDigitsID isEqualToString:@"Colleague"]) {
+            if ([user.twitterID isEqualToString:@"colleague"]) {
                 [staffDialgs addObject:dialog];
-            } else if ([user.twitterDigitsID isEqualToString:@"Client"]) {
+            } else if ([user.twitterID isEqualToString:@"client"]) {
                 [clientDialgs addObject:dialog];
             }
         }
@@ -172,6 +172,12 @@ UIGestureRecognizerDelegate
             _items = _originItems = filteredArray[2];
             break;
     }
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.searchController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

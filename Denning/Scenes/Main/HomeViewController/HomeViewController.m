@@ -32,6 +32,8 @@ iCarouselDataSource, iCarouselDelegate>
     NSArray* homeLabelArray;
     __block BOOL isLoading;
     NSInteger sliderCount;
+    
+    CGSize adsSize;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
@@ -42,7 +44,7 @@ iCarouselDataSource, iCarouselDelegate>
 @property (weak, nonatomic) IBOutlet iCarousel *carousel;
 @property (strong, nonatomic) NSTimer *carouselTimer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightOfCarousel;
-@property (nonatomic, strong) NSArray<AdsModel*> *items;
+@property (nonatomic, strong) NSMutableArray<AdsModel*> *items;
 @property (weak, nonatomic) IBOutlet UITextField_LeftView *searchTextField;
 @property (strong, nonatomic) UISearchController *searchController;
 
@@ -98,6 +100,12 @@ iCarouselDataSource, iCarouselDelegate>
     } completion:completion];
 }
 
+- (void) changeUIBasedOnUserType {
+    if ([DataManager sharedManager].isClient || [DataManager sharedManager].isPublicUser) {
+        
+    }
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -106,6 +114,7 @@ iCarouselDataSource, iCarouselDelegate>
     [self showTabBar];
     [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
     [self configureMenuRightBtnWithImagename:@"icon_menu" withSelector:@selector(gotoMenu)];
+    [self changeUIBasedOnUserType];
 }
 
 - (void) loadsAds {
@@ -117,7 +126,18 @@ iCarouselDataSource, iCarouselDelegate>
         
         self.carouselTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(runMethod) userInfo:nil repeats:YES];
         
-        _items = result;
+        _items = [result mutableCopy];
+        for (int i = 0; i < result.count; i++) {
+            NSURL *URL = [NSURL URLWithString:
+                          [NSString stringWithFormat:@"data:application/octet-stream;base64,%@",
+                           _items[i].imgData]];
+            NSData* imageData = [NSData dataWithContentsOfURL:URL];
+            UIImage* image = [UIImage imageNamed:@"law-firm.jpg"];
+            if (imageData != nil) {
+                image = [UIImage imageWithData:imageData];
+            }
+            _items[i].image = image;
+        }
         
         [_carousel reloadData];
     }];
@@ -237,15 +257,7 @@ iCarouselDataSource, iCarouselDelegate>
         imageView = (UIImageView *)[view viewWithTag:1];
     }
     
-    NSURL *URL = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"data:application/octet-stream;base64,%@",
-                   _items[index].imgData]];
-    NSData* imageData = [NSData dataWithContentsOfURL:URL];
-    UIImage* image = [UIImage imageNamed:@"law-firm.jpg"];
-    if (imageData != nil) {
-        image = [UIImage imageWithData:imageData];
-    }
-    imageView.image = image;
+    imageView.image = _items[index].image;
     return view;
 }
 

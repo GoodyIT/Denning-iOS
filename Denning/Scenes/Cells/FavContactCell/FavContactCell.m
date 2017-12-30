@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet QMImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastseenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *positionLabel;
 
 @end
 
@@ -32,6 +33,7 @@
 
     self.userNameLabel.text = user.fullName;
     self.lastseenLabel.text = [[QMCore instance].contactManager onlineStatusForUser:user];
+    self.positionLabel.text = user.twitterDigitsID;
 }
 
 @end

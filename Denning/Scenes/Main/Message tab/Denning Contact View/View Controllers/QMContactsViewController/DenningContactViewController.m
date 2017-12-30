@@ -94,7 +94,7 @@ SWTableViewCellDelegate
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self removeFromParentViewController];
+    [self.searchController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

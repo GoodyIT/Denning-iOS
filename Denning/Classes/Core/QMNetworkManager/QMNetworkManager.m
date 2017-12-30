@@ -582,6 +582,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
             QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage usersWithEmails:@[chatUserModel.email]].firstObject;
             if (user != nil) {
                 user.twitterDigitsID = chatUserModel.position;
+                user.twitterID = chatUserModel.tag;
                 [userArray addObject:user];
             }
         }

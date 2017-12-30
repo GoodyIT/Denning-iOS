@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Text-Regular.otf">
+            <string>SFUIText-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavContactCell" id="Gzq-2t-4JZ" customClass="FavContactCell">
-            <rect key="frame" x="0.0" y="0.0" width="359" height="50"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavContactCell" rowHeight="64" id="Gzq-2t-4JZ" customClass="FavContactCell">
+            <rect key="frame" x="0.0" y="0.0" width="359" height="64"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gzq-2t-4JZ" id="AB1-l3-Ybk">
-                <rect key="frame" x="0.0" y="0.0" width="359" height="49.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="359" height="63.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mI0-nD-uKI" customClass="QMImageView">
-                        <rect key="frame" x="16" y="5" width="40" height="40"/>
+                        <rect key="frame" x="24" y="12" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="LeL-bU-zsJ"/>
                             <constraint firstAttribute="height" constant="40" id="MXj-Pm-QkZ"/>
@@ -32,23 +37,31 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Adam44" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7e-0a-s8r">
-                        <rect key="frame" x="64" y="8" width="65.5" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="72" y="11" width="67.5" height="20.5"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Last seen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BKP-fP-zv6">
-                        <rect key="frame" x="64" y="30" width="54.5" height="15"/>
+                        <rect key="frame" x="72" y="48" width="58.5" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Last seen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQi-fK-SpR">
+                        <rect key="frame" x="72" y="32.5" width="54.5" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.56078431370000004" green="0.5568627451" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="oQi-fK-SpR" firstAttribute="top" secondItem="F7e-0a-s8r" secondAttribute="bottom" constant="1" id="5UX-4K-0W7"/>
+                    <constraint firstItem="BKP-fP-zv6" firstAttribute="top" secondItem="oQi-fK-SpR" secondAttribute="bottom" constant="1" id="6ef-ip-zBZ"/>
+                    <constraint firstItem="oQi-fK-SpR" firstAttribute="leading" secondItem="F7e-0a-s8r" secondAttribute="leading" id="9hs-Au-huI"/>
                     <constraint firstItem="F7e-0a-s8r" firstAttribute="leading" secondItem="mI0-nD-uKI" secondAttribute="trailing" constant="8" id="Kd2-wG-0LU"/>
                     <constraint firstItem="BKP-fP-zv6" firstAttribute="leading" secondItem="mI0-nD-uKI" secondAttribute="trailing" constant="8" id="T54-W1-xSQ"/>
                     <constraint firstAttribute="topMargin" secondItem="F7e-0a-s8r" secondAttribute="top" id="i4t-Nh-0Qp"/>
-                    <constraint firstItem="BKP-fP-zv6" firstAttribute="top" secondItem="F7e-0a-s8r" secondAttribute="bottom" constant="1" id="lOP-1E-uEe"/>
                     <constraint firstItem="mI0-nD-uKI" firstAttribute="centerY" secondItem="AB1-l3-Ybk" secondAttribute="centerY" id="qvs-rN-3dx"/>
                     <constraint firstItem="mI0-nD-uKI" firstAttribute="leading" secondItem="AB1-l3-Ybk" secondAttribute="leadingMargin" constant="8" id="t1F-nG-Fom"/>
                 </constraints>
@@ -57,9 +70,10 @@
             <connections>
                 <outlet property="avatarImageView" destination="mI0-nD-uKI" id="XNT-uF-3LE"/>
                 <outlet property="lastseenLabel" destination="BKP-fP-zv6" id="wBh-Pk-TSe"/>
+                <outlet property="positionLabel" destination="oQi-fK-SpR" id="zDc-7D-0SP"/>
                 <outlet property="userNameLabel" destination="F7e-0a-s8r" id="XiV-QD-NYs"/>
             </connections>
-            <point key="canvasLocation" x="327.5" y="472"/>
+            <point key="canvasLocation" x="327.5" y="479"/>
         </tableViewCell>
     </objects>
 </document>

@@ -361,4 +361,6 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define CHANGE_FAVORITE_CONTACT    @"ChangeFavorite"
 
+#define SHOW_RECENT_VIEW    @"Recent View"
+
 #endif /* PreHeader_h */

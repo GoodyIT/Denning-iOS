@@ -311,14 +311,18 @@
     NSMutableArray* newFolders = [NSMutableArray new];
     for (DocumentModel* model in self.originalDocumentModel.folders) {
         DocumentModel* newDocumentModel = [DocumentModel new];
+        newDocumentModel.name = model.name;
+        newDocumentModel.date = model.date;
         NSMutableArray *fileArray =[NSMutableArray new];
         for (FileModel* file in model.documents) {
             if ([file.name localizedCaseInsensitiveContainsString:self.filter]) {
                 [fileArray addObject:file];
             }
         }
-        newDocumentModel.documents = [fileArray copy];
-        [newFolders addObject:newDocumentModel];
+        if (fileArray.count > 0) {
+            newDocumentModel.documents = [fileArray copy];
+            [newFolders addObject:newDocumentModel];
+        }
     }
     
     NSMutableArray *fileArray =[NSMutableArray new];
@@ -418,6 +422,12 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (section == 0) {
         return 10.0;
+    }
+    
+    if (section == 1 && self.documentModel.documents.count == 0) {
+        return 0;
+    } else if (section > 1 && self.documentModel.folders[section-2].folders.count == 0) {
+        return 0;
     }
     return 30;
 }
