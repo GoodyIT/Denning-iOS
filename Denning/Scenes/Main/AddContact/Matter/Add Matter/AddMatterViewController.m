@@ -925,6 +925,14 @@ NSMutableDictionary* keyValue;
     return @{@"bankGroup":bankArray};
 }
 
+- (void) askAndUpdateMatter {
+    [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self updateMatter];
+        }
+    }];
+}
+
 - (void) updateMatter {
     
     if (isLoading) return;
@@ -946,6 +954,8 @@ NSMutableDictionary* keyValue;
     }];
 }
 
+
+
 - (IBAction)saveMatter:(id)sender {
     
     if (![self checkValidate]) {
@@ -955,11 +965,7 @@ NSMutableDictionary* keyValue;
     [self checkStatus];
     
     if (!isSaveMode) {
-        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
-            if  ([action.title isEqualToString:@"OK"]) {
-                [self updateMatter];
-            }
-        }];
+        [self askAndUpdateMatter];
         
         return;
     }
@@ -1012,7 +1018,7 @@ NSMutableDictionary* keyValue;
             [cell.calculateBtn setTitle:@"Save" forState:UIControlStateNormal];
         } else {
             cell.calculateHandler = ^{
-                [self updateMatter];
+                [self askAndUpdateMatter];
             };
             [cell.calculateBtn setTitle:@"Update" forState:UIControlStateNormal];
         }

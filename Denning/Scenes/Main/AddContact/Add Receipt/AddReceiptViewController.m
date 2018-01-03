@@ -273,7 +273,11 @@ enum PAYMENT_MODE_ROWS {
     if (![_isUpdate isEqualToString:@"update"]) {
         [self _save];
     } else {
-        [self _update];
+        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+            if  ([action.title isEqualToString:@"OK"]) {
+                [self _update];
+            }
+        }];
     }
 }
 

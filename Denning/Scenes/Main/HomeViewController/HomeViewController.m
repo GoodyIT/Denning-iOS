@@ -214,7 +214,7 @@ iCarouselDataSource, iCarouselDelegate>
 }
 
 - (IBAction)changeBranch:(id)sender {
-    if ([DataManager sharedManager].isPublicUser) {
+    if ([DataManager sharedManager].isStaff) {
         [QMAlert showAlertWithMessage:@"You cannot access this function. please subscribe dening user" actionSuccess:NO inViewController:self];
         return;
     }

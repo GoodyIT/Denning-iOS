@@ -22,6 +22,7 @@
 #import "NSString+URLEncoding.h"
 #import "RequestObject.h"
 
+static NSString* const kUTTypeWord = @"com.microsoft.word.doc";
 
 @interface CustomShareViewController ()<NSURLSessionDelegate, UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource, UIDocumentInteractionControllerDelegate>
 {
@@ -205,6 +206,30 @@ UIColor *QMSecondaryApplicationColor() {
                 [self getDataFromItem:(NSURL*)item];
                 fileType = [(NSString*)item pathExtension];
             }];
+        } else if ([itemProvider hasItemConformingToTypeIdentifier:kUTTypeWord]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // When the task has completed.
+                self.imageView.image = [UIImage imageNamed:@"icon_attach_word"];
+            });
+            
+            [itemProvider loadItemForTypeIdentifier:kUTTypeWord options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
+                openedItem = (NSURL*)item;
+                [self getDataFromItem:(NSURL*)item];
+                fileType = [(NSString*)item pathExtension];
+            }];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // When the task has completed.
+                self.imageView.image = [UIImage imageNamed:@"icon_attach_file"];
+            });
+            
+            NSString* typeIdenfier = itemProvider.registeredTypeIdentifiers[0];
+            
+            [itemProvider loadItemForTypeIdentifier:typeIdenfier options:nil completionHandler:^(id<NSSecureCoding>  _Nullable item, NSError * _Null_unspecified error) {
+                openedItem = (NSURL*)item;
+                [self getDataFromItem:(NSURL*)item];
+                fileType = [(NSString*)item pathExtension];
+            }];
         }
     }
     
@@ -241,9 +266,7 @@ UIColor *QMSecondaryApplicationColor() {
 }
 
 - (void) didTapImage {
-    if ([fileType isEqualToString:@"pdf"]) {
-        [self displayDocument:openedItem];
-    }
+    [self displayDocument:openedItem];
 }
 
 - (void) configureFileNameAutoComplete {
@@ -251,6 +274,7 @@ UIColor *QMSecondaryApplicationColor() {
     _fileName.delegate = self;
     _fileName.autoCompleteDelegate = self;
     _fileName.backgroundColor = [UIColor whiteColor];
+    _fileName.textColor = [UIColor grayColor];
     [_fileName registerAutoCompleteCellClass:[DEMOCustomAutoCompleteCell class]
                       forCellReuseIdentifier:@"CustomCellId"];
     _fileName.maximumNumberOfAutoCompleteRows = 3;
@@ -259,7 +283,7 @@ UIColor *QMSecondaryApplicationColor() {
     _fileName.disableAutoCompleteTableUserInteractionWhileFetching = YES;
     [_fileName setAutoCompleteRegularFontName:@"Helvetica"];
     [_fileName setAutoCompleteBoldFontName:@"Helvetica-Bold"];
-    [_fileName setAutoCompleteFontSize:13];
+    [_fileName setAutoCompleteFontSize:12];
     
     UIToolbar* _accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     _accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];

@@ -621,6 +621,17 @@ didUpdateStatus:(QMAudioPlayerStatus *)status {
             [self playAttachment:attachment forMessage:message];
         }
     } else { // Custom file attachment
+        if (attachmentStatus == QMMessageAttachmentStatusPreparing || attachmentStatus == QMMessageAttachmentStatusError) {
+            return;
+        } else if (attachmentStatus == QMMessageAttachmentStatusLoading) {
+            view.viewState = QMMediaViewStateNotReady;
+            [self.attachmentsService cancelOperationsWithMessageID:messageID];
+        } else if (attachmentStatus == QMMessageAttachmentStatusNotLoaded) {
+            if (!attachment.ID) {
+                return;
+            }
+        }
+        
         NSURL *fileURL = [[DIDocumentManager shared] isAttachedFileExist:attachment.ID];
         if (fileURL != nil) {
             [[DIDocumentManager shared] displayDocument:fileURL inView:viewController];

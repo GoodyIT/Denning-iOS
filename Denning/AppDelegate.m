@@ -34,7 +34,7 @@ static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
 static NSString * const kQMAppGroupIdentifier = @"group.com.quickblox.qmunicate";
 
-#define DEVELOPMENT 0
+#define DEVELOPMENT 1
 
 #if DEVELOPMENT == 1
 
@@ -381,7 +381,7 @@ forRemoteNotification:(NSDictionary *)userInfo
     }
     
     NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[LocationManager sharedManager].lastLoggedDateTime];
-    if (fabs(howRecent) > defaultTolerate || [[LocationManager sharedManager].cityName isEqualToString:@""]) {
+    if (fabs(howRecent) > defaultTolerate || [[LocationManager sharedManager].streetName isEqualToString:@""]) {
         
         [LocationManager sharedManager].lastLoggedDateTime = eventDate;
         [LocationManager sharedManager].oldLocation = location.coordinate;

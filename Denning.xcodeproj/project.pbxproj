@@ -688,6 +688,12 @@
 		79F732321E96B833004F88DF /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 79F7322E1E96B6B3004F88DF /* libz.tbd */; };
 		79F7323D1E9741CE004F88DF /* FavContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F7323B1E9741CE004F88DF /* FavContactCell.m */; };
 		79F7323E1E9741CE004F88DF /* FavContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79F7323C1E9741CE004F88DF /* FavContactCell.xib */; };
+		79F73CAE1FFB44F200E37A17 /* icon_attach_word.png in Sources */ = {isa = PBXBuildFile; fileRef = 79E5B1B01FF3334200CE0943 /* icon_attach_word.png */; };
+		79F73CAF1FFB44F200E37A17 /* icon_attach_word@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 79E5B1B41FF3334400CE0943 /* icon_attach_word@2x.png */; };
+		79F73CB01FFB44F200E37A17 /* icon_attach_word@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 79E5B1B11FF3334300CE0943 /* icon_attach_word@3x.png */; };
+		79F73CB11FFB44F900E37A17 /* icon_attach_file.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282741FE2DF1F006E93E2 /* icon_attach_file.png */; };
+		79F73CB21FFB44F900E37A17 /* icon_attach_file@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282751FE2DF22006E93E2 /* icon_attach_file@2x.png */; };
+		79F73CB31FFB44F900E37A17 /* icon_attach_file@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282731FE2DF1E006E93E2 /* icon_attach_file@3x.png */; };
 		79F9A8211E6D4CD500E17629 /* NewDeviceLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F9A8201E6D4CD500E17629 /* NewDeviceLoginViewController.m */; };
 		79F9FC751E41834A0097CB23 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79F9FC721E41834A0097CB23 /* Search.storyboard */; };
 		79F9FC761E41834A0097CB23 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FC741E41834A0097CB23 /* SearchViewController.m */; };
@@ -10467,6 +10473,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79F73CB11FFB44F900E37A17 /* icon_attach_file.png in Sources */,
+				79F73CB21FFB44F900E37A17 /* icon_attach_file@2x.png in Sources */,
+				79F73CB31FFB44F900E37A17 /* icon_attach_file@3x.png in Sources */,
+				79F73CAE1FFB44F200E37A17 /* icon_attach_word.png in Sources */,
+				79F73CAF1FFB44F200E37A17 /* icon_attach_word@2x.png in Sources */,
+				79F73CB01FFB44F200E37A17 /* icon_attach_word@3x.png in Sources */,
 				79D799D61FF1FB690084FCE4 /* share_pdf@2x.png in Sources */,
 				7912A5951FE7608B00C8B9A5 /* share_pdf.png in Sources */,
 				7912A5971FE7608B00C8B9A5 /* share_pdf@3x.png in Sources */,

@@ -27,9 +27,11 @@ static NSString *const kQMAttachmentContentTypeVideo = @"video/mp4";
     QBChatAttachment *attachment = [QBChatAttachment new];
     
     attachment.type = type;
-    attachment.name = name;
+    attachment.name = @"Test Image";
     attachment.localFileURL = fileURL;
     attachment.contentType = contentType;
+    attachment.size = 12345;
+//    attachment.width = 255;
     
     return attachment;
 }

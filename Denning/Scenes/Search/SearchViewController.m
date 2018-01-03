@@ -292,9 +292,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 }
 
 - (IBAction)toggleSearchType:(UIButton*)sender {
-//    if (!isDenningUser) {
-//        return;
-//    }
+    if (![DataManager sharedManager].isStaff) {
+        return;
+    }
     
     if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
         self.searchTextField.placeholder = @"Public Search";

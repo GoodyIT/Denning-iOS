@@ -236,7 +236,9 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 - (IBAction)tapMenu:(id)sender {
-    [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:RWDropdownMenuCellAlignmentRight style:RWDropdownMenuStyleBlackGradient navBarImage:[(UIBarItem*)sender image] completion:nil];
+    [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:RWDropdownMenuCellAlignmentRight style:RWDropdownMenuStyleBlackGradient navBarImage:[(UIBarItem*)sender image] completion:^{
+        NSLog(@"complete");
+    }];
 }
 
 - (void) contactUs {

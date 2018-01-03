@@ -186,6 +186,9 @@
         user.firmName = @"";
         user.firmCity = @"";
     }];
+    
+    personalArray = [NSMutableArray new];
+    [self determineUserType];
 }
 
 @end

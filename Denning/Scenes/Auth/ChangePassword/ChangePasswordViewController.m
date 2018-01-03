@@ -104,10 +104,7 @@
 }
 
 - (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
-    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-    });
+    [self staffLogin:firmURLModel];
 }
 
 - (void) manageFirmURL: (NSArray*) firmURLArray {
@@ -118,16 +115,29 @@
     }
 }
 
-- (void) manageUserType {
-    // Initialize the option for shared folder
-    [DataManager sharedManager].documentView = @"nothing";
-    if ([DataManager sharedManager].denningArray.count > 0) {
-        [self manageFirmURL:[DataManager sharedManager].denningArray];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-        });
-    }
+- (void) staffLogin:(FirmURLModel*)urlModel {
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_SIGNIN_URL];
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] staffSignIn:url password:[DataManager sharedManager].user.password withCompletion:^(NSDictionary * _Nonnull responseObject, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        @strongify(self)
+        if (error == nil) {
+            if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
+                [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
+                [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+                });
+            } else {
+                [QMAlert showAlertWithMessage:@"You have no access privilege to this firm." actionSuccess:NO inViewController:self];
+            }
+            
+        } else {
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
+        }
+    }];
 }
 
 - (IBAction)changePassword:(id)sender {

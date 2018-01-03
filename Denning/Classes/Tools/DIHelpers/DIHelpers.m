@@ -688,7 +688,7 @@
                                                                   [SVProgressHUD dismiss];
                                                                   
                                                                   if ([viewController isKindOfClass:[MainTabBarController class]]) {
-                                                                      
+                                                                      [viewController loadViewIfNeeded];
                                                                   } else {
                                                                       [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
                                                                   }
@@ -730,6 +730,9 @@
             break;
         case 0x46:
             return @"text/plain";
+            break;
+        case 'P':
+            return @"application/vnd.openxmlformats-officedocument.wordprocessingml.document";
             break;
         default:
             return @"application/octet-stream";
