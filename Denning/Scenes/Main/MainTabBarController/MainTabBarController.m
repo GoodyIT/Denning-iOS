@@ -130,15 +130,15 @@ shouldSelectViewController:(UIViewController *)viewController
 {
     if ([viewController.childViewControllers[0] isKindOfClass:[DashboardViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[MainContactViewController class]]) {
         if ([DataManager sharedManager].user.username.length == 0) {
-            [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
             self.tabBarController.selectedIndex = 0;
+            [self alertAndLogin];
             return NO;
         }
     }
     if ([viewController.childViewControllers[0] isKindOfClass:[MessageViewController class]]) {
         if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) && ![[DataManager sharedManager] isLoggedIn]) {
-            [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
             self.tabBarController.selectedIndex = 0;
+            [self alertAndLogin];
             return NO;
         }
         
@@ -189,8 +189,8 @@ shouldSelectViewController:(UIViewController *)viewController
       
       [RWDropdownMenuItem itemWithText:@"Chats" image:[UIImage imageNamed:@"icon_message"] action:^{
         if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) && ![[DataManager sharedManager] isLoggedIn]) {
-            [QMAlert showAlertWithMessage:@"Please login first to use this function" actionSuccess:NO inViewController:self];
             self.tabBarController.selectedIndex = 0;
+            [self alertAndLogin];
             return;
         }
         
@@ -225,19 +225,23 @@ shouldSelectViewController:(UIViewController *)viewController
       }],
     ] mutableCopy];
     
-    if ([DataManager sharedManager].isStaff) {
-        _menuItems = [temp copy];
-    } else {
+    if (![DataManager sharedManager].isStaff) {
         [temp removeObjectAtIndex:2];
         [temp removeObjectAtIndex:2];
     }
+    
+     _menuItems = [temp copy];
     
     return _menuItems;
 }
 
 - (IBAction)tapMenu:(id)sender {
-    [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:RWDropdownMenuCellAlignmentRight style:RWDropdownMenuStyleBlackGradient navBarImage:[(UIBarItem*)sender image] completion:^{
-        NSLog(@"complete");
+    [RWDropdownMenu presentFromViewController:self withItems:self.menuItems align:RWDropdownMenuCellAlignmentRight style:RWDropdownMenuStyleBlackGradient navBarImage:[(UIBarItem*)sender image] completion:nil];
+}
+
+- (void) alertAndLogin {
+    [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_DENIED_REGISTER", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self withCallback:^{
+        [self performSegueWithIdentifier:kAuthSegue sender:nil];
     }];
 }
 
@@ -245,7 +249,7 @@ shouldSelectViewController:(UIViewController *)viewController
     if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
         [self performSegueWithIdentifier:kDenningSupportSegue sender:nil];
     } else {
-        [QMAlert showAlertWithMessage:@"Please login first." actionSuccess:NO inViewController:self];
+        [self alertAndLogin];
     }
 }
 
@@ -253,7 +257,7 @@ shouldSelectViewController:(UIViewController *)viewController
     if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
         [self performSegueWithIdentifier:kQMSceneSegueSetting sender:nil];
     } else {
-        [QMAlert showAlertWithMessage:@"Please login first." actionSuccess:NO inViewController:self];
+        [self alertAndLogin];
     }
 }
 

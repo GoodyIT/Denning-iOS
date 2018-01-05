@@ -27,4 +27,29 @@
     
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
+
++ (NSArray*) separateNameIntoTwo:(NSString*) title
+{
+    NSMutableArray *items = [[title componentsSeparatedByString:@"("] mutableCopy];
+    if ([items count] > 1) {
+        items[1] = [items[1] substringToIndex:((NSString*)items[1]).length-1];
+    } else {
+        [items addObject:@""];
+    }
+    
+    
+    return items;
+}
+
++ (NSString*) todayWithTime {
+    NSString* date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    [formatter setTimeZone:timeZone];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    date = [formatter stringFromDate:[NSDate date]];
+    return date;
+}
 @end

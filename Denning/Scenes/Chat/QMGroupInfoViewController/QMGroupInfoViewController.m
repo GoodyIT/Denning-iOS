@@ -49,6 +49,13 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
     [QMCore.instance.chatService addDelegate:self];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+}
+
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -65,7 +72,7 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
             // Only Denning user can change the name for Denning support
             [self performSegueWithIdentifier:kQMSceneSegueGroupName sender:self.chatDialog];
         }
-    } else {
+    } else if ([DataManager sharedManager].isStaff) {
         [self performSegueWithIdentifier:kQMSceneSegueGroupName sender:self.chatDialog];
     }
 }
@@ -93,6 +100,10 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
             // Only Denning user can change the avatar for Denning support
             return;
         }
+    } else if (![DataManager sharedManager].isStaff) {
+        return;
+    } else if (![DIHelpers hasAdminRole:self.chatDialog]){
+        return;
     }
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];

@@ -11,4 +11,8 @@
 
 @interface HomeViewController : DICustomViewController //UITableViewController
 
+- (void) changeUIBasedOnUserType;
+
+- (void) displayBranchInfo;
+
 @end

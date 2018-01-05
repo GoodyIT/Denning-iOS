@@ -104,6 +104,7 @@
 }
 
 - (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
+    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
     [self staffLogin:firmURLModel];
 }
 
@@ -112,6 +113,16 @@
         [self registerURLAndGotoMain:firmURLArray[0]];
     } else {
         [self performSegueWithIdentifier:kBranchSegue sender:firmURLArray];
+    }
+}
+
+- (void) manageUserType {
+    if ([DataManager sharedManager].denningArray.count > 0) {
+        [self manageFirmURL:[DataManager sharedManager].denningArray];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
+        });
     }
 }
 
@@ -164,7 +175,6 @@
             [[DataManager sharedManager] setUserInfoFromChangePassword:response];
             [[DataManager sharedManager] setUserPassword:password1];
             [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
-//            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
         }
         if ([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) {
             [[QMCore.instance logout] continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused logoutTask) {
@@ -180,6 +190,7 @@
 #pragma mark - TextField Delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self.view endEditing:YES];
     [self changePassword:nil];
     return YES;
 }

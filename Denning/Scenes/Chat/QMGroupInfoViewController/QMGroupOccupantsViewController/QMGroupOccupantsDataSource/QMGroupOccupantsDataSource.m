@@ -141,7 +141,18 @@ typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
 
 - (NSInteger)tableView:(UITableView *)__unused tableView numberOfRowsInSection:(NSInteger)__unused section {
     
-    return self.items.count + kQMStaticCellsCount;
+    NSInteger count = self.items.count + kQMStaticCellsCount;
+    
+    if ([DIHelpers isSupportChat:self.chatDialog]) {
+        if (![DataManager sharedManager].isDenningUser) {
+            // Only Denning user can change the avatar for Denning support
+            count -= 1;
+        }
+    } else if (![DataManager sharedManager].isStaff) {
+        count -= 1;
+    }
+    
+    return count;
 }
 
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -91,7 +91,9 @@ MEVFloatingButtonDelegate
     // registering nibs for current VC and search results VC
     [self registerNibs];
     
-    [self prepareUI];
+    if ([DataManager sharedManager].isStaff && [DataManager sharedManager].isDenningUser) {
+        [self prepareUI];
+    }
     
     [self performAutoLoginAndFetchData];
     

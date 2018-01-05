@@ -95,7 +95,7 @@ QMTagFieldViewDelegate
         __block QBChatDialog *chatDialog = nil;
         
         @weakify(self);
-        self.dialogCreationTask = [[[[QMCore instance].chatService createGroupChatDialogWithName:name photo:nil occupants:tagIDs] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
+        self.dialogCreationTask = [[[[[QMCore instance].chatService createGroupChatDialogWithName:name photo:nil occupants:tagIDs] continueWithBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull task) {
             
             @strongify(self);
             [navigationController dismissNotificationPanel];
@@ -107,7 +107,6 @@ QMTagFieldViewDelegate
                 [self removeControllerFromStack];
                 
                 return [[QMCore instance].chatService sendSystemMessageAboutAddingToDialog:chatDialog toUsersIDs:occupantsIDs withText:kQMDialogsUpdateNotificationMessage];
-                
             }
 
             return [BFTask cancelledTask];
@@ -115,6 +114,9 @@ QMTagFieldViewDelegate
         }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
             
             return task.isCancelled ? nil : [[QMCore instance].chatService sendNotificationMessageAboutAddingOccupants:occupantsIDs toDialog:chatDialog withNotificationText:kQMDialogsUpdateNotificationMessage];
+        }] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            
+            return t.isCancelled ? nil : [[QMCore instance].chatManager updateRoleOfUsers:occupantsIDs forGroupChatDialog:chatDialog];
         }];
     }
     else {

@@ -151,7 +151,7 @@ static NSString *const kQMOpenGraphCacheNameKey = @"q-municate-open-graph";
 }
 
 - (NSString *)appGroupIdentifier {
-    return @"group.com.quickblox.qmunicate";
+    return QBSettings.applicationGroupIdentifier;
 }
 
 - (void)handleErrorResponse:(QBResponse *)response {

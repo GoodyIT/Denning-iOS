@@ -85,6 +85,8 @@ UIGestureRecognizerDelegate
     // search implementation
     [self configureSearch];
     
+    [self hideFilter];
+    
     // registering nibs for current VC and search results VC
     [self registerNibs];
     
@@ -113,7 +115,20 @@ UIGestureRecognizerDelegate
                                                                                    message:NSLocalizedString(@"QM_STR_CONNECTING", nil)
                                                                                   duration:0];
          }
+         
+         [self hideFilter];
      }];
+}
+
+- (void) hideFilter {
+    CGRect rectForFilter = CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height + 38);
+    _userTypeSegment.hidden = NO;
+    if (![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
+        rectForFilter = CGRectMake(0, 0, self.view.frame.size.width, _searchController.searchBar.frame.size.height-8);
+        _userTypeSegment.hidden = YES;
+    }
+    
+    [self.tableView.tableHeaderView setFrame:rectForFilter];
 }
 
 - (void) updateDialogSource {
@@ -188,13 +203,11 @@ UIGestureRecognizerDelegate
     [self updateDialogSource];
     
     if (self.searchController.isActive) {
-        
         self.tabBarController.tabBar.hidden = YES;
         // smooth rows deselection
         [self qm_smoothlyDeselectRowsForTableView:self.searchResultsController.tableView];
     }
     else {
-        
         // smooth rows deselection
         [self qm_smoothlyDeselectRowsForTableView:self.tableView];
     }
@@ -278,6 +291,20 @@ UIGestureRecognizerDelegate
     }];
 }
 
+- (void)performInfoViewControllerForUserID:(NSUInteger)userID {
+    
+    QBUUser *opponentUser = [QMCore.instance.usersService.usersMemoryStorage userWithID:userID];
+    
+    if (opponentUser == nil) {
+        
+        opponentUser = [QBUUser user];
+        opponentUser.ID = userID;
+        opponentUser.fullName = NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil);
+    }
+    
+    [self performSegueWithIdentifier:kQMSceneSegueUserInfo sender:opponentUser];
+}
+
 //MARK: - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -324,6 +351,27 @@ UIGestureRecognizerDelegate
         [cell setTitle:chatDialog.name avatarUrl:chatDialog.photo];
     }
     
+    cell.didTapAvatar = ^(QMTableViewCell *cell) {
+        NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+         QBChatDialog *chatDialog = self.items[indexPath.row];
+        if (![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
+            return;
+        }
+        
+        if (![DIHelpers hasAdminRole:chatDialog]) {
+            // Only admin can view the profile
+            return;
+        }
+        
+        if (chatDialog.type == QBChatDialogTypePrivate) {
+            
+            [self performInfoViewControllerForUserID:[chatDialog opponentID]];
+        }
+        else {
+            
+        }
+    };
+    
     // there was a time when updated at didn't exist
     // in order to support old dialogs, showing their date as last message date
     NSDate *date = chatDialog.updatedAt ?: chatDialog.lastMessageDate;
@@ -338,7 +386,10 @@ UIGestureRecognizerDelegate
 
 - (BOOL)tableView:(UITableView *)__unused tableView canEditRowAtIndexPath:(NSIndexPath *)__unused indexPath {
     
-    return YES;
+    if ([DataManager sharedManager].isStaff && [DataManager sharedManager].isDenningUser) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)tableView:(UITableView *)__unused tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

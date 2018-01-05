@@ -694,6 +694,22 @@
 		79F73CB11FFB44F900E37A17 /* icon_attach_file.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282741FE2DF1F006E93E2 /* icon_attach_file.png */; };
 		79F73CB21FFB44F900E37A17 /* icon_attach_file@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282751FE2DF22006E93E2 /* icon_attach_file@2x.png */; };
 		79F73CB31FFB44F900E37A17 /* icon_attach_file@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 791282731FE2DF1E006E93E2 /* icon_attach_file@3x.png */; };
+		79F73CB71FFD86CC00E37A17 /* FirmPasswordConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F73CB61FFD86CC00E37A17 /* FirmPasswordConfirmViewController.m */; };
+		79F73CBA1FFE8FA800E37A17 /* DenningShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F73CB91FFE8FA800E37A17 /* DenningShareViewController.m */; };
+		79F73CBB1FFEB2D500E37A17 /* DocumentModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E271E89E45D00320A28 /* DocumentModel.h */; };
+		79F73CBC1FFEB2D500E37A17 /* DocumentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E281E89E45D00320A28 /* DocumentModel.m */; };
+		79F73CBD1FFEB3E500E37A17 /* FileModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E2B1E89E75E00320A28 /* FileModel.h */; };
+		79F73CBE1FFEB3E500E37A17 /* FileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E2C1E89E75E00320A28 /* FileModel.m */; };
+		79F73CBF1FFEB46200E37A17 /* FileSearchCell.h in Sources */ = {isa = PBXBuildFile; fileRef = 7912A58E1FE4F04D00C8B9A5 /* FileSearchCell.h */; };
+		79F73CC01FFEB46200E37A17 /* FileSearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7912A58F1FE4F04D00C8B9A5 /* FileSearchCell.m */; };
+		79F73CC11FFEB46200E37A17 /* FileSearchCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 7912A5901FE4F04D00C8B9A5 /* FileSearchCell.xib */; };
+		79F73CC21FFEBB6800E37A17 /* icon_search_gray.png in Sources */ = {isa = PBXBuildFile; fileRef = 7931B4FE1EA9B1C50090BDE0 /* icon_search_gray.png */; };
+		79F73CC31FFEBB6800E37A17 /* icon_search_gray@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 7931B4FF1EA9B1C50090BDE0 /* icon_search_gray@2x.png */; };
+		79F73CC41FFEBB6800E37A17 /* icon_search_gray@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 7931B5001EA9B1C50090BDE0 /* icon_search_gray@3x.png */; };
+		79F73CC51FFEBB7700E37A17 /* Back.png in Sources */ = {isa = PBXBuildFile; fileRef = 795DF24A1E6E563B006D617D /* Back.png */; };
+		79F73CC61FFEBB7700E37A17 /* Back@2x.png in Sources */ = {isa = PBXBuildFile; fileRef = 795DF24B1E6E563B006D617D /* Back@2x.png */; };
+		79F73CC71FFEBB7700E37A17 /* Back@3x.png in Sources */ = {isa = PBXBuildFile; fileRef = 795DF24C1E6E563B006D617D /* Back@3x.png */; };
+		79F73CCC1FFEDCED00E37A17 /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 79FBE14C1E30F7F500448FE3 /* Images.xcassets */; };
 		79F9A8211E6D4CD500E17629 /* NewDeviceLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F9A8201E6D4CD500E17629 /* NewDeviceLoginViewController.m */; };
 		79F9FC751E41834A0097CB23 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79F9FC721E41834A0097CB23 /* Search.storyboard */; };
 		79F9FC761E41834A0097CB23 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F9FC741E41834A0097CB23 /* SearchViewController.m */; };
@@ -2153,6 +2169,10 @@
 		79F7323A1E9741CE004F88DF /* FavContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavContactCell.h; sourceTree = "<group>"; };
 		79F7323B1E9741CE004F88DF /* FavContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavContactCell.m; sourceTree = "<group>"; };
 		79F7323C1E9741CE004F88DF /* FavContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavContactCell.xib; sourceTree = "<group>"; };
+		79F73CB51FFD86CC00E37A17 /* FirmPasswordConfirmViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmPasswordConfirmViewController.h; sourceTree = "<group>"; };
+		79F73CB61FFD86CC00E37A17 /* FirmPasswordConfirmViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirmPasswordConfirmViewController.m; sourceTree = "<group>"; };
+		79F73CB81FFE8FA800E37A17 /* DenningShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DenningShareViewController.h; sourceTree = "<group>"; };
+		79F73CB91FFE8FA800E37A17 /* DenningShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DenningShareViewController.m; sourceTree = "<group>"; };
 		79F9A81F1E6D4CD500E17629 /* NewDeviceLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewDeviceLoginViewController.h; sourceTree = "<group>"; };
 		79F9A8201E6D4CD500E17629 /* NewDeviceLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewDeviceLoginViewController.m; sourceTree = "<group>"; };
 		79F9FC721E41834A0097CB23 /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
@@ -5422,6 +5442,15 @@
 			path = FavContactCell;
 			sourceTree = "<group>";
 		};
+		79F73CB41FFD86B900E37A17 /* FirmPasswordConfirmViewController */ = {
+			isa = PBXGroup;
+			children = (
+				79F73CB51FFD86CC00E37A17 /* FirmPasswordConfirmViewController.h */,
+				79F73CB61FFD86CC00E37A17 /* FirmPasswordConfirmViewController.m */,
+			);
+			path = FirmPasswordConfirmViewController;
+			sourceTree = "<group>";
+		};
 		79F9A81D1E6D4CBD00E17629 /* ChangePassword */ = {
 			isa = PBXGroup;
 			children = (
@@ -7496,6 +7525,7 @@
 		79FBE1EA1E31600F00448FE3 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				79F73CB41FFD86B900E37A17 /* FirmPasswordConfirmViewController */,
 				795DF2571E6F04CE006D617D /* Category Select */,
 				79F9A81D1E6D4CBD00E17629 /* ChangePassword */,
 				79F9A81E1E6D4CBD00E17629 /* NewDeviceLogin */,
@@ -8349,6 +8379,8 @@
 				79BC1ED41FCC7F0600E90B12 /* RequestObject.m */,
 				7912827B1FE2EE79006E93E2 /* ShareHelper.h */,
 				7912827C1FE2EE79006E93E2 /* ShareHelper.m */,
+				79F73CB81FFE8FA800E37A17 /* DenningShareViewController.h */,
+				79F73CB91FFE8FA800E37A17 /* DenningShareViewController.m */,
 			);
 			path = DenningShare;
 			sourceTree = "<group>";
@@ -9123,7 +9155,7 @@
 								enabled = 1;
 							};
 							com.apple.Keychain = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Push = {
 								enabled = 0;
@@ -10382,6 +10414,7 @@
 				96CACE141EE252E00087E76B /* DashboardLedgerModel.m in Sources */,
 				790DD4971ECBBD38009D5634 /* ProjectHousingModel.m in Sources */,
 				9636DCE21F03DBB7008DDA41 /* DashboardForthCell.m in Sources */,
+				79F73CB71FFD86CC00E37A17 /* FirmPasswordConfirmViewController.m in Sources */,
 				79FBDFB21E30421A00448FE3 /* QMChatManager.m in Sources */,
 				796BBF9F1EA7B3CE001DA47F /* NewLedgerDetailCell.m in Sources */,
 				7903CFAB1ECDCB240090206C /* AddReceiptViewController.m in Sources */,
@@ -10473,6 +10506,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79F73CCC1FFEDCED00E37A17 /* Images.xcassets in Sources */,
+				79F73CC51FFEBB7700E37A17 /* Back.png in Sources */,
+				79F73CC61FFEBB7700E37A17 /* Back@2x.png in Sources */,
+				79F73CC71FFEBB7700E37A17 /* Back@3x.png in Sources */,
+				79F73CC21FFEBB6800E37A17 /* icon_search_gray.png in Sources */,
+				79F73CC31FFEBB6800E37A17 /* icon_search_gray@2x.png in Sources */,
+				79F73CC41FFEBB6800E37A17 /* icon_search_gray@3x.png in Sources */,
+				79F73CBF1FFEB46200E37A17 /* FileSearchCell.h in Sources */,
+				79F73CC01FFEB46200E37A17 /* FileSearchCell.m in Sources */,
+				79F73CC11FFEB46200E37A17 /* FileSearchCell.xib in Sources */,
+				79F73CBD1FFEB3E500E37A17 /* FileModel.h in Sources */,
+				79F73CBE1FFEB3E500E37A17 /* FileModel.m in Sources */,
+				79F73CBB1FFEB2D500E37A17 /* DocumentModel.h in Sources */,
+				79F73CBC1FFEB2D500E37A17 /* DocumentModel.m in Sources */,
 				79F73CB11FFB44F900E37A17 /* icon_attach_file.png in Sources */,
 				79F73CB21FFB44F900E37A17 /* icon_attach_file@2x.png in Sources */,
 				79F73CB31FFB44F900E37A17 /* icon_attach_file@3x.png in Sources */,
@@ -10515,6 +10562,7 @@
 				79BC1E9D1FCC6A2900E90B12 /* RequestOperation.m in Sources */,
 				79BC1EBC1FCC6B1B00E90B12 /* JSONItem.m in Sources */,
 				791B4FEA1FCF975C003C30EC /* UIScrollView+InfiniteScroll.m in Sources */,
+				79F73CBA1FFE8FA800E37A17 /* DenningShareViewController.m in Sources */,
 				79BC1EBE1FCC6B1B00E90B12 /* JSONGenerator.m in Sources */,
 				79BC1E9A1FCC6A2900E90B12 /* Operation.m in Sources */,
 				791B4FE41FCF8E41003C30EC /* CustomOperation.m in Sources */,

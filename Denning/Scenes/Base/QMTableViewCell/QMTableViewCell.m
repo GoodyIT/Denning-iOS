@@ -42,14 +42,8 @@
     return NSStringFromClass([self class]);
 }
 
-
 + (CGFloat)height {
     return 0;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
- //   _avatarImage.frame = CGRectMake(20, 20, 40, 40);
 }
 
 - (void)awakeFromNib {
@@ -59,6 +53,15 @@
     
     _titleLabel.text = nil;
     _bodyLabel.text = nil;
+
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
+    tap.cancelsTouchesInView = NO;
+    [self.avatarImage addGestureRecognizer:tap];
+}
+
+- (void) handleTap {
+    _didTapAvatar(self);
 }
 
 //MARK: - Setters

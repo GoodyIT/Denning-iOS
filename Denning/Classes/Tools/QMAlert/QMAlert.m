@@ -17,14 +17,21 @@
     [self showAlertWithMessage:message withTitle:title actionSuccess:success inViewController:viewController];
 }
 
-+ (void)showAlertWithMessage:(NSString *)message withTitle:(NSString*)title actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController {
++ (void)showAlertWithMessage:(NSString *)message withTitle:(NSString*)title actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController
+{
+    [self showAlertWithMessage:message withTitle:title actionSuccess:success inViewController:viewController withCallback:nil];
+}
+
++ (void)showAlertWithMessage:(NSString *)message withTitle:(NSString*)title actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController withCallback:(void (^)(void))completion {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:title
                                           message:message
                                           preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull __unused action) {
-        
+        if (completion != nil) {
+            completion();
+        }
     }]];
     [alertController.view layoutIfNeeded];
     

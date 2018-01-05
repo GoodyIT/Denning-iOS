@@ -27,7 +27,8 @@
 "QM_STR_CANT_MAKE_CALLS" = "Sorry, you can't make a call until the invitation is accepted";
 "QM_STR_CANT_SEND_MESSAGES" = "Sorry, you can't send messages until the invitation is accepted";
 
-"QM_STR_CHAT_EXPIRED" = "Access Restricted, please contact your business service provider.";
+"QM_STR_CHAT_EXPIRED" = "Please contact your business service provider.";
+"STR_ACCESS_DENIED_REGISTER" = "The function is only accessible by registered Denning User, please register.";
 
 //  ********** Contact requests notification text: ***************
 "QM_STR_FRIEND_REQUEST_DID_SEND_FOR_ME" = "Your request has been sent";

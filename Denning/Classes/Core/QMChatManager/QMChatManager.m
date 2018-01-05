@@ -175,15 +175,40 @@
 - (BFTask*) changeUserWithID:(NSInteger) userID toRole:(NSString*)role forGroupChatDialog :(QBChatDialog *)chatDialog {
     NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
-    NSMutableArray* originAdminIDs = [chatDialog.data objectForKeyNotNull:kRoleAdminTag];
-    NSMutableArray* originReaderIDs = [chatDialog.data objectForKeyNotNull:kRoleReaderTag];
-    NSMutableArray* originNormalIDs = [chatDialog.data objectForKeyNotNull:kRoleNormalTag];
+    NSMutableArray* originAdminIDs = [[chatDialog.data objectForKeyNotNull:kRoleAdminTag] mutableCopy];
+    NSMutableArray* originReaderIDs = [[chatDialog.data objectForKeyNotNull:kRoleReaderTag] mutableCopy];
+    NSMutableArray* originNormalIDs = [[chatDialog.data objectForKeyNotNull:kRoleNormalTag] mutableCopy];
     
     originAdminIDs = [self updateRoleIDs:originAdminIDs withRole:role comparedRole:kRoleAdminTag forID:userID];
     originReaderIDs = [self updateRoleIDs:originReaderIDs withRole:role comparedRole:kRoleReaderTag forID:userID];
     originNormalIDs = [self updateRoleIDs:originNormalIDs withRole:role comparedRole:kRoleNormalTag forID:userID];
     
     NSDictionary* roleData = @{kRoleAdminTag: originAdminIDs, kRoleReaderTag: originReaderIDs, kRoleNormalTag:originNormalIDs};
+    return [self changeCustomData:roleData forGroupChatDialog:chatDialog];
+}
+
+- (BFTask*) updateRoleOfUsers:(NSArray*)userIDs forGroupChatDialog :(QBChatDialog *)chatDialog {
+    
+    NSArray* users = [QMCore.instance.contactManager friendsByIDs:userIDs];
+    
+    NSMutableArray* originDenningIDs = [NSMutableArray new];
+    NSMutableArray* originAdminIDs = [NSMutableArray new];
+    NSMutableArray* originReaderIDs = [NSMutableArray new];
+    NSMutableArray* originNormalIDs = [NSMutableArray new];
+    
+    for (QBUUser* user in users) {
+        if  ([user.twitterID isEqualToString:kDenningPeople]) {
+            [originDenningIDs addObject:@(user.ID)];
+        } else if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
+            [originAdminIDs addObject:@(user.ID)];
+        } else if  ([user.twitterID isEqualToString:kColleague]) {
+            [originNormalIDs addObject:@(user.ID)];
+        } else if  ([user.twitterID isEqualToString:kClient] || [user.twitterID isEqualToString:kPublicUser]) {
+            [originReaderIDs addObject:@(user.ID)];
+        } 
+    }
+    
+    NSDictionary* roleData = @{kRoleDenningTag: originDenningIDs, kRoleAdminTag: originAdminIDs, kRoleReaderTag: originReaderIDs, kRoleNormalTag:originNormalIDs};
     return [self changeCustomData:roleData forGroupChatDialog:chatDialog];
 }
 

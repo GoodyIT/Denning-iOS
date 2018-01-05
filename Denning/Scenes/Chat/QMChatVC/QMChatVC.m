@@ -551,7 +551,7 @@ QMUsersServiceDelegate
 //    }
     
     if ([DataManager sharedManager].isExpire) {
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) actionSuccess:NO  inViewController:self];
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restricted" actionSuccess:NO  inViewController:self];
         return NO;
     }
     
@@ -790,9 +790,11 @@ QMUsersServiceDelegate
                                                         style:UIAlertActionStyleCancel
                                                       handler:nil]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Denning Files" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self performSegueWithIdentifier:kOpenFileSegue sender:_chatDialog.name];
-    }]];
+    if ([DataManager sharedManager].isDenningUser && [DataManager sharedManager].isStaff) {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Denning Files" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self performSegueWithIdentifier:kOpenFileSegue sender:_chatDialog.name];
+        }]];
+    }
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_TAKE_MEDIA", nil)
                                                         style:UIAlertActionStyleDefault
@@ -1812,6 +1814,9 @@ QMUsersServiceDelegate
     __weak typeof(self) weakSelf = self;
     void(^onTapBlock)(QMImageView *) = ^(QMImageView __unused *imageView) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (![DataManager sharedManager].isStaff || ![DataManager sharedManager].isDenningUser) {
+            return;
+        }
         [strongSelf performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:strongSelf.chatDialog];
     };
     
@@ -2179,6 +2184,10 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
 }
 
 - (void)chatCellDidTapAvatar:(QMChatCell *)cell {
+    
+    if (![DataManager sharedManager].isStaff || ![DataManager sharedManager].isDenningUser) {
+        return;
+    }
     
     if (self.chatDialog.type == QBChatDialogTypePrivate) {
         

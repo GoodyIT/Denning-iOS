@@ -40,29 +40,32 @@
     
     self.userNameLabel.text = userName;
     self.lastSeenLabel.text = [[QMCore instance].contactManager onlineStatusForUser:user];
+    self.positionLabel.text = user.twitterDigitsID;
     
-    if ([DIHelpers isSupportChat:chatDialog]) {
-        NSString *role = [DIHelpers getCurrentUserRole:user.ID fromChatDialog:chatDialog];
-        NSString* btnTitle = @"Normal";
-        UIColor *color = [UIColor babyBlue];
-        
-        if ([role isEqualToString:kRoleAdminTag]) {
-            btnTitle = @"Admin";
-            color = [UIColor babyRed];
-        } else if ([role isEqualToString:kRoleNormalTag]) {
-            btnTitle = @"Normal";
-            color = [UIColor babyBlue];
-        } else if ([role isEqualToString:kRoleReaderTag]) {
-            btnTitle = @"Reader";
-            color = [UIColor babyGreen];
-        }
-        
-        self.roleBtn.hidden = NO;
-        [self.roleBtn setTitle:btnTitle forState:UIControlStateNormal];
-        [self.roleBtn setTitleColor:color forState:UIControlStateNormal];
+    NSString *role = [DIHelpers getCurrentUserRole:user fromChatDialog:chatDialog];
+    NSString* btnTitle = @"Normal";
+    UIColor *color = [UIColor babyBlue];
+    
+    if ([role isEqualToString:kRoleDenningTag]) {
+        btnTitle = @"Denning";
+        color = [UIColor purpleColor];
+    } else if ([role isEqualToString:kRoleAdminTag]) {
+        btnTitle = @"Admin";
+        color = [UIColor babyRed];
+    } else if ([role isEqualToString:kRoleNormalTag]) {
+        btnTitle = @"Staff";
+        color = [UIColor babyBlue];
+    } else if ([role isEqualToString:kRoleReaderTag]) {
+        btnTitle = @"Reader";
+        color = [UIColor babyGreen];
     } else {
-        self.roleBtn.hidden = YES;
+        btnTitle = @"Client";
+        color = [UIColor yellowGreen];
     }
+    
+    self.roleBtn.hidden = NO;
+    [self.roleBtn setTitle:btnTitle forState:UIControlStateNormal];
+    [self.roleBtn setTitleColor:color forState:UIControlStateNormal];
 }
 
 - (IBAction)updateUser:(id)sender {

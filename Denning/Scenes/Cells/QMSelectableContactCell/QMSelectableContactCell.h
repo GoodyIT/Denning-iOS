@@ -14,4 +14,6 @@
 
 - (void)setChecked:(BOOL)checked animated:(BOOL)animated;
 
+- (void) setPosition:(NSString*) position;
+
 @end

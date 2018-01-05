@@ -5,6 +5,7 @@
 
 
 #import "RequestOperation.h"
+#import "DIGlobal.h"
 
 @interface RequestOperation()
 
@@ -34,6 +35,7 @@
 
 - (void)main {
     if (self.isCancelled) return;
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url];
     [request setHTTPMethod:  @"GET"];
@@ -41,8 +43,8 @@
     // This is how we set header fields
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"testdenningSkySea" forHTTPHeaderField:@"webuser-sessionid"];
-    [request setValue:@"park@postman" forHTTPHeaderField:@"webuser-id"];
+    [request setValue:[defaults valueForKey:@"sessionID"] forHTTPHeaderField:@"webuser-sessionid"];
+    [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
     
     self.response = nil;
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];

@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.7</string>
+	<string>1.0.9</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
@@ -27,15 +27,15 @@
 			<key>NSExtensionActivationRule</key>
 			<dict>
 				<key>NSExtensionActivationSupportsAttachmentsWithMaxCount</key>
-				<integer>1</integer>
+				<integer>100</integer>
 				<key>NSExtensionActivationSupportsFileWithMaxCount</key>
-				<integer>1</integer>
+				<integer>100</integer>
 				<key>NSExtensionActivationSupportsImageWithMaxCount</key>
-				<integer>1</integer>
+				<integer>100</integer>
 				<key>NSExtensionActivationSupportsMovieWithMaxCount</key>
-				<integer>1</integer>
+				<integer>100</integer>
 				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-				<integer>1</integer>
+				<integer>100</integer>
 			</dict>
 			<key>NSExtensionJavaScriptPreprocessingFile</key>
 			<string>MyJavaScriptFile</string>

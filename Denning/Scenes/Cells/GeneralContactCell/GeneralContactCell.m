@@ -7,6 +7,7 @@
 //
 
 #import "GeneralContactCell.h"
+#import "SWTableViewCell.h"
 
 @implementation GeneralContactCell
 

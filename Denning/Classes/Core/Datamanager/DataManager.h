@@ -61,6 +61,8 @@
 
 - (BOOL) isDenningUser;
 
+- (BOOL) checkDenningUser:(NSString*) email;
+
 - (BOOL) isStaff;
 
 - (void) clearData;

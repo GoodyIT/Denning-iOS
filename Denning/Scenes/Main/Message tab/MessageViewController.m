@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
     BOOL isRecentShow;
 }
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topBarHeightContraint;
 @property (weak, nonatomic) IBOutlet UIView *myPageViwer;
 @property (strong, nonatomic) NSArray* viewControllers;
 @property (strong, nonatomic) NSArray* viewControllerIdentifiers;
@@ -80,6 +81,12 @@ typedef NS_ENUM(NSInteger, DIChatTabIndex) {
         [self _recentTabClicked];
         selectedIndex = DIChatRecentTab;
         isRecentShow = NO;
+    }
+    
+    if (![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
+        _topBarHeightContraint.constant = 0;
+    } else {
+        _topBarHeightContraint.constant = 44;
     }
 }
 

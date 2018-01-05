@@ -22,6 +22,7 @@
 + (UIColor*) babyRed;
 
 + (UIColor*) babyGreen;
++ (UIColor*) yellowGreen;
 
 + (UIColor*) babyOrange;
 

@@ -48,6 +48,8 @@ static NSString* const kChangeEmailSegue                    = @"ChangeEmailSegue
 static NSString* const kChangePasswordSegue                 = @"ChangePasswordSegue";
 static NSString* const kInstagramSegue                      = @"InstagramSegue";
 
+static NSString* const kFirmPasswordSegue = @"FirmPasswordSegue";
+
 static NSString* const kPrivacyPolicy                       = @"PrivacyPolicy";
 
 static NSString* const kAuthSegue = @"AuthSegue";

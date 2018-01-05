@@ -140,6 +140,15 @@
     return sortedUsers;
 }
 
+- (BOOL) isUserExist:(NSInteger)userID inArray:(NSArray*) users {
+    NSArray* IDs = [self idsOfUsers:users];
+    if ([IDs containsObject:@(userID)]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (NSArray *)friends {
     
     NSArray *users = [self.serviceManager.usersService.usersMemoryStorage unsortedUsers];
@@ -148,7 +157,7 @@
     for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].clientContactsArray) {
         for (ChatUserModel* chatUserModel in chatFirmModel.users) {
             for (QBUUser* user in users) {
-                if ([chatUserModel.email localizedCaseInsensitiveCompare: user.email] == NSOrderedSame) {
+                if ([chatUserModel.email localizedCaseInsensitiveCompare: user.email] == NSOrderedSame && ![self isUserExist:user.ID inArray:friends] && user.ID != [QBSession currentSession].currentUser.ID) {
                     [friends addObject:user];
                 }
             }
@@ -159,13 +168,13 @@
     for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].staffContactsArray) {
         for (ChatUserModel* chatUserModel in chatFirmModel.users) {
             for (QBUUser* user in users) {
-                if ([chatUserModel.email localizedCaseInsensitiveCompare:user.email] == NSOrderedSame) {
+                if ([chatUserModel.email localizedCaseInsensitiveCompare:user.email] == NSOrderedSame && ![self isUserExist:user.ID inArray:friends] && user.ID != [QBSession currentSession].currentUser.ID) {
                     [friends addObject:user];
                 }
             }
         }
     }
-
+    
     return [friends copy];
 }
 

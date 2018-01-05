@@ -26,7 +26,7 @@ target 'Denning' do
   pod 'DZNEmptyDataSet'
   pod 'HTHorizontalSelectionList', '~> 0.7.4'
   pod 'HMSegmentedControl'
-  pod 'RWDropdownMenu', '~> 1.0.0'
+  pod 'RWDropdownMenu', '~> 1.0.3'
   pod 'libPhoneNumber-iOS', '~> 0.8'
   pod 'MBProgressHUD', '~> 1.0.0'
   pod 'SWTableViewCell', '~> 0.3.7'

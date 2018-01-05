@@ -297,6 +297,7 @@ UITableViewDelegate, UITableViewDataSource>
     SearchResultModel* model = self.filteredArray[indexPath.section];
     FileSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:[FileSearchCell cellIdentifier] forIndexPath:indexPath];
     [cell configureCell:model];
+    cell.checkmarkImageView.hidden = YES;
     
     return cell;
 }

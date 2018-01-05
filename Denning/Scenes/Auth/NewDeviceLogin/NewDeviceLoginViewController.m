@@ -75,6 +75,7 @@
 }
 
 - (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
+    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
     [self staffLogin:firmURLModel];
 }
 
@@ -148,6 +149,7 @@
 #pragma mark - TextField Delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [self.view endEditing:YES];
     [self confirmTAC:nil];
     return YES;
 }

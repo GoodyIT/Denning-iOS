@@ -6,5 +6,9 @@
 	<array>
 		<string>group.denningitshare.extension</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)denning.it.DenningShare</string>
+	</array>
 </dict>
 </plist>

@@ -117,22 +117,29 @@ iCarouselDataSource, iCarouselDelegate>
         homeLabelArray = @[@"News", @"Calculators", @"Shared", @"Forum", @"Products", @"Upload",];
     }
     
-    CGFloat menuContainerHeight = (self.view.frame.size.width/4-2) * (homeLabelArray.count/4) + 2;
-    CGFloat intrinsicHeight = self.view.frame.size.height  - statusBarHeight - navHeight - searchBarHeight - bottomBarHeight;
+    CGFloat menuContainerHeight = (self.view.frame.size.width/4-2) * (homeLabelArray.count/4);
+    CGFloat intrinsicHeight = self.view.frame.size.height  - statusBarHeight - navHeight - branchHeight - searchBarHeight - bottomBarHeight;
     
     _heightOfCarousel.constant = intrinsicHeight - MAX(menuContainerHeight, intrinsicHeight/2);
     _branchHeightContraint.constant = branchHeight;
+    [self.collectionView reloadData];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self showTabBar];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self changeTitle];
-    [self displayBranchInfo];
-    [self showTabBar];
+    
     [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
     [self configureMenuRightBtnWithImagename:@"icon_menu" withSelector:@selector(gotoMenu)];
     [self changeUIBasedOnUserType];
+    [self displayBranchInfo];
 }
 
 - (void) loadsAds {
@@ -213,9 +220,15 @@ iCarouselDataSource, iCarouselDelegate>
     }
 }
 
+- (void) alertAndLogin {
+    [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_DENIED_REGISTER", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self withCallback:^{
+        [self performSegueWithIdentifier:kAuthSegue sender:nil];
+    }];
+}
+
 - (IBAction)changeBranch:(id)sender {
     if ([DataManager sharedManager].isStaff) {
-        [QMAlert showAlertWithMessage:@"You cannot access this function. please subscribe dening user" actionSuccess:NO inViewController:self];
+        [self alertAndLogin];
         return;
     }
     
@@ -477,7 +490,7 @@ iCarouselDataSource, iCarouselDelegate>
 
 - (BOOL) checkPossibility {
     if (![[DataManager sharedManager] isLoggedIn]) {
-        [QMAlert showAlertWithMessage:@"You cannot access this function. please subscribe dening user" actionSuccess:NO inViewController:self];
+        [self alertAndLogin];
         return NO;
     }
     

@@ -7,6 +7,7 @@
 //
 
 #import "FileModel.h"
+#import "NSDictionary+NotNull.h"
 
 @implementation FileModel
 
@@ -14,12 +15,12 @@
 {
     FileModel *fileModel = [FileModel new];
     
-    fileModel.URL = [response objectForKey:@"URL"];
-    fileModel.date = [response objectForKey:@"date"];
-    fileModel.ext = [response objectForKey:@"ext"];
-    fileModel.name = [response objectForKey:@"name"];
-    fileModel.size = [response objectForKey:@"size"];
-    fileModel.type = [response objectForKey:@"type"];
+    fileModel.URL = [response valueForKeyNotNull:@"URL"];
+    fileModel.date = [response valueForKeyNotNull:@"date"];
+    fileModel.ext = [response valueForKeyNotNull:@"ext"];
+    fileModel.name = [response valueForKeyNotNull:@"name"];
+    fileModel.size = [response valueForKeyNotNull:@"size"];
+    fileModel.type = [response valueForKeyNotNull:@"type"];
     
     return fileModel;
 }

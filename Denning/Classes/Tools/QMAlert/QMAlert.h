@@ -12,6 +12,8 @@
 
 + (void)showAlertWithMessage:(NSString *_Nonnull)message withTitle:(NSString*_Nonnull)title actionSuccess:(BOOL)success inViewController:(UIViewController *_Nonnull)view_NonnullController;
 
++ (void)showAlertWithMessage:(NSString *)message withTitle:(NSString*)title actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController withCallback:(void (^)(void))completion;
+
 + (void) showConfirmDialog:(NSString *_Nonnull)message withTitle:(NSString* _Nonnull)_Nonnulltitle inViewController:(UIViewController *_Nonnull)viewController completion:(void (^)(UIAlertAction * _Nonnull))completion;
 
 + (void)showAlertWithMessage:(NSString *_Nonnull)message actionSuccess:(BOOL)success inViewController:(UIViewController *_Nonnull)viewController;

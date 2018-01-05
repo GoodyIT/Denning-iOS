@@ -14,4 +14,6 @@
 
 - (IBAction)tapLogin:(id)sender;
 
+- (void) removeTabbarBasedOnUserType;
+
 @end

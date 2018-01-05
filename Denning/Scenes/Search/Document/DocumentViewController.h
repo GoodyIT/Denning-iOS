@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
 typedef void(^UpdateDocumentFile)(NSArray* urls);
 
+@class DocumentModel;
 @interface DocumentViewController : BaseTableViewController
 
 @property (strong, nonatomic) DocumentModel* documentModel;

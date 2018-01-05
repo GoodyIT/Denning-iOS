@@ -205,7 +205,7 @@
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forget Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3D-Wz-P0P">
-                                <rect key="frame" x="67.5" y="50" width="185.5" height="26"/>
+                                <rect key="frame" x="68" y="50" width="185.5" height="26"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="22"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -394,7 +394,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MqF-3F-Y1O">
-                                <rect key="frame" x="61.5" y="50" width="197.5" height="26"/>
+                                <rect key="frame" x="62" y="50" width="197.5" height="26"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="22"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -506,7 +506,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKv-ig-OYz">
-                                <rect key="frame" x="119" y="50" width="83" height="26"/>
+                                <rect key="frame" x="119.5" y="50" width="83" height="26"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="22"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -762,21 +762,21 @@
             </objects>
             <point key="canvasLocation" x="-3949" y="-6609"/>
         </scene>
-        <!--Firm Password View Controller-->
+        <!--Password Confirmation-->
         <scene sceneID="V4W-oB-8bP">
             <objects>
-                <viewController id="PVn-Bg-VPa" customClass="FirmPasswordViewController" sceneMemberID="viewController">
+                <viewController id="PVn-Bg-VPa" customClass="FirmPasswordConfirmViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hvj-g0-7I8"/>
                         <viewControllerLayoutGuide type="bottom" id="nSY-Ff-5eK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eTg-e5-jiy">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pni-OL-4le">
-                                <rect key="frame" x="36" y="269" width="248" height="44"/>
-                                <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="36" y="180" width="248" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
                                 <state key="normal" title="Continue">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -794,34 +794,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="confirmTAC:" destination="PVn-Bg-VPa" eventType="touchUpInside" id="xRu-Lo-q6Q"/>
+                                    <action selector="confirmPassword:" destination="PVn-Bg-VPa" eventType="touchUpInside" id="yaT-2j-Nea"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password Confirmation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcZ-HN-hzA">
-                                <rect key="frame" x="43" y="50" width="234.5" height="24"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="20"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your email to get the password" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61f-nU-AJ6">
-                                <rect key="frame" x="26" y="129" width="268" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please input the passcode you got from" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61f-nU-AJ6">
+                                <rect key="frame" x="26" y="40" width="268" height="36"/>
                                 <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="15"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uXR-Pk-Ekg">
-                                <rect key="frame" x="6" y="40" width="30" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="1X4-Ja-7xy"/>
-                                    <constraint firstAttribute="width" constant="30" id="u9f-0N-bty"/>
-                                </constraints>
-                                <state key="normal" image="Back_gray.png"/>
-                                <connections>
-                                    <action selector="dismissScreen:" destination="PVn-Bg-VPa" eventType="touchUpInside" id="HLb-A5-U8f"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="TAC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="97t-Vp-3bq">
-                                <rect key="frame" x="36" y="205" width="248" height="44"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Passcode" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="97t-Vp-3bq">
+                                <rect key="frame" x="36" y="116" width="248" height="44"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="R55-jq-juo"/>
@@ -833,40 +816,59 @@
                                     <outlet property="delegate" destination="PVn-Bg-VPa" id="fLr-Me-NcJ"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mnd-Jj-OQs">
+                                <rect key="frame" x="57" y="236" width="206" height="30"/>
+                                <state key="normal" title=" Click here to resend the code">
+                                    <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="resendCode:" destination="PVn-Bg-VPa" eventType="touchUpInside" id="J7p-Sd-bnL"/>
+                                    <action selector="resendSMSTAC:" destination="08q-Ns-XbJ" eventType="touchUpInside" id="9sq-0d-MgL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="97t-Vp-3bq" secondAttribute="trailing" constant="20" id="3rf-TA-yWO"/>
-                            <constraint firstItem="DcZ-HN-hzA" firstAttribute="centerY" secondItem="uXR-Pk-Ekg" secondAttribute="centerY" id="6Fx-QF-LYe"/>
+                            <constraint firstItem="mnd-Jj-OQs" firstAttribute="top" secondItem="pni-OL-4le" secondAttribute="bottom" constant="12" id="4jS-6E-MIh"/>
+                            <constraint firstItem="61f-nU-AJ6" firstAttribute="top" secondItem="Hvj-g0-7I8" secondAttribute="bottom" constant="40" id="9iU-aD-Nps"/>
                             <constraint firstItem="pni-OL-4le" firstAttribute="trailing" secondItem="97t-Vp-3bq" secondAttribute="trailing" id="FgV-xq-zPD"/>
-                            <constraint firstItem="DcZ-HN-hzA" firstAttribute="top" secondItem="Hvj-g0-7I8" secondAttribute="bottom" constant="30" id="HuE-WB-Caq"/>
-                            <constraint firstItem="DcZ-HN-hzA" firstAttribute="centerX" secondItem="eTg-e5-jiy" secondAttribute="centerX" id="Iqa-YC-AED"/>
                             <constraint firstItem="97t-Vp-3bq" firstAttribute="trailing" secondItem="61f-nU-AJ6" secondAttribute="trailing" constant="-10" id="KHp-fw-J78"/>
-                            <constraint firstItem="61f-nU-AJ6" firstAttribute="top" secondItem="DcZ-HN-hzA" secondAttribute="bottom" constant="55" id="KUm-Vo-X23"/>
-                            <constraint firstItem="uXR-Pk-Ekg" firstAttribute="leading" secondItem="eTg-e5-jiy" secondAttribute="leadingMargin" constant="-10" id="Lz2-Xp-9Zz"/>
                             <constraint firstItem="pni-OL-4le" firstAttribute="top" secondItem="97t-Vp-3bq" secondAttribute="bottom" constant="20" id="Uzk-xY-R26"/>
                             <constraint firstItem="97t-Vp-3bq" firstAttribute="top" secondItem="61f-nU-AJ6" secondAttribute="bottom" constant="40" id="Yzg-xl-sfj"/>
                             <constraint firstItem="pni-OL-4le" firstAttribute="height" secondItem="97t-Vp-3bq" secondAttribute="height" id="crv-bv-qjN"/>
                             <constraint firstItem="97t-Vp-3bq" firstAttribute="leading" secondItem="eTg-e5-jiy" secondAttribute="leadingMargin" constant="20" id="nJR-5c-W7P"/>
+                            <constraint firstItem="mnd-Jj-OQs" firstAttribute="centerX" secondItem="eTg-e5-jiy" secondAttribute="centerX" id="now-np-9ay"/>
                             <constraint firstItem="97t-Vp-3bq" firstAttribute="leading" secondItem="61f-nU-AJ6" secondAttribute="leading" constant="10" id="sHI-8p-K8r"/>
                             <constraint firstItem="97t-Vp-3bq" firstAttribute="centerX" secondItem="eTg-e5-jiy" secondAttribute="centerX" id="spu-Jv-fPr"/>
                             <constraint firstItem="pni-OL-4le" firstAttribute="leading" secondItem="97t-Vp-3bq" secondAttribute="leading" id="tk9-hj-2qH"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Password Confirmation" id="O18-4G-IMv">
+                        <barButtonItem key="leftBarButtonItem" image="Back_gray.png" id="c27-U1-ZPc">
+                            <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="dismissScreen:" destination="PVn-Bg-VPa" id="oEc-g0-oj7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="TACTextField" destination="97t-Vp-3bq" id="l1P-cO-b4a"/>
+                        <outlet property="firmPasswordTextField" destination="97t-Vp-3bq" id="NNc-RT-zai"/>
+                        <outlet property="infoLabel" destination="61f-nU-AJ6" id="2bn-Xc-jLa"/>
+                        <segue destination="TYK-rG-DsM" kind="show" identifier="PersonalFolderSegue" id="Nuf-Db-vAG"/>
+                        <segue destination="b65-dt-lUt" kind="show" identifier="FileUploadSegue" id="Kve-m2-lWv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="740-La-Qrc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="896" y="-6030"/>
+            <point key="canvasLocation" x="754" y="-6735"/>
         </scene>
-        <!--Branch View Controller-->
+        <!--Select Firm-->
         <scene sceneID="JI3-mo-vie">
             <objects>
                 <tableViewController storyboardIdentifier="BranchViewController" id="Iwe-8x-Rs1" customClass="BranchViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="61" sectionHeaderHeight="28" sectionFooterHeight="28" id="ElJ-kh-eW3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -912,71 +914,24 @@
                             <outlet property="delegate" destination="Iwe-8x-Rs1" id="fZC-cz-xv8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="MqU-Fm-hEb"/>
-                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationItem key="navigationItem" title="Select Firm" id="MqU-Fm-hEb">
+                        <barButtonItem key="leftBarButtonItem" image="Back_gray.png" id="DF4-Bw-9C0">
+                            <color key="tintColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="dismissScreen:" destination="Iwe-8x-Rs1" id="Wbl-eO-RCS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="LAN-DZ-jv6" kind="custom" identifier="SceneSegueMain" customClass="QMRootViewControllerSegue" id="lHY-Ch-f8A"/>
                         <segue destination="b65-dt-lUt" kind="show" identifier="FileUploadSegue" id="hH5-HS-vSY"/>
                         <segue destination="TYK-rG-DsM" kind="show" identifier="PersonalFolderSegue" id="PlG-JC-BXq"/>
+                        <segue destination="hU0-40-sNf" kind="show" identifier="FirmPasswordSegue" id="UVk-D4-cOi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HjI-dn-nRp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-984.05797101449286" y="-6720.652173913044"/>
-        </scene>
-        <!--Folder View Controller-->
-        <scene sceneID="9sO-Ii-irM">
-            <objects>
-                <tableViewController id="SZu-GE-wQm" customClass="FolderViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="2Ai-EB-RL7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" rowHeight="71" id="lyC-5Z-Axe">
-                                <rect key="frame" x="0.0" y="28" width="320" height="71"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lyC-5Z-Axe" id="WnI-lg-bB1">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="71"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dcy-B8-mZC">
-                                            <rect key="frame" x="30" y="8" width="260" height="55"/>
-                                            <color key="backgroundColor" red="0.25882352939999997" green="0.52156862749999999" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                            <state key="normal" title="Button">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                    <integer key="value" value="5"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="gotoDocument:" destination="SZu-GE-wQm" eventType="touchUpInside" id="T2w-Em-kiV"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Dcy-B8-mZC" firstAttribute="top" secondItem="WnI-lg-bB1" secondAttribute="top" constant="8" id="5Q8-yd-Aqy"/>
-                                        <constraint firstAttribute="trailing" secondItem="Dcy-B8-mZC" secondAttribute="trailing" constant="30" id="akv-Wq-91y"/>
-                                        <constraint firstItem="Dcy-B8-mZC" firstAttribute="leading" secondItem="WnI-lg-bB1" secondAttribute="leading" constant="30" id="gYk-q9-NNM"/>
-                                        <constraint firstAttribute="bottom" secondItem="Dcy-B8-mZC" secondAttribute="bottom" constant="8" id="nBQ-wT-769"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="SZu-GE-wQm" id="Yve-mU-fZb"/>
-                            <outlet property="delegate" destination="SZu-GE-wQm" id="YM1-xs-zUg"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="USO-mx-ehC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1526" y="-6029"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="y0K-ls-vtC">
@@ -1030,7 +985,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="NXY-aM-6WL">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1047,7 +1002,7 @@
                 <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="ClientUploadNavigation" id="b65-dt-lUt" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Mc-lZ-QXX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-957" y="-6144"/>
+            <point key="canvasLocation" x="-146" y="-5901"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zDH-S8-guj">
@@ -1061,7 +1016,7 @@
                         <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="21"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1072,6 +1027,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Owf-Lg-uCb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-291" y="-7659"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="QbO-X1-Pdf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hU0-40-sNf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="h8e-mP-dEh">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="19"/>
+                            <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PVn-Bg-VPa" kind="relationship" relationship="rootViewController" id="ljf-QA-rYP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y49-FV-Q2c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-62" y="-6735"/>
         </scene>
         <!--Select Folder-->
         <scene sceneID="Cbq-O9-fGa">
@@ -1189,8 +1168,10 @@
         <image name="splash_logo.png" width="119" height="94"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2bt-gq-iwV"/>
-        <segue reference="cqB-uN-mxx"/>
-        <segue reference="7Mr-nR-sFA"/>
+        <segue reference="PlG-JC-BXq"/>
+        <segue reference="hH5-HS-vSY"/>
+        <segue reference="T5P-mp-1U6"/>
+        <segue reference="QgY-oX-Ext"/>
+        <segue reference="lHY-Ch-f8A"/>
     </inferredMetricsTieBreakers>
 </document>

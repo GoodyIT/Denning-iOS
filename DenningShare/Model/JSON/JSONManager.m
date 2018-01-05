@@ -55,7 +55,7 @@
     if ([JSON isKindOfClass:[NSArray class]]) {
         NSArray *items = (NSArray*)JSON;
         for (id item in items) {
-            [responseItems addObject:[item valueForKey:@"strSuggestedFilename"]];
+            [responseItems addObject:[item valueForKey:@"keyword"]];
         }
     }
     

@@ -58,6 +58,14 @@ UISearchResultsUpdating
     [self configureSearch];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor darkGrayColor]}];
+}
+
 - (void)configureDataSource {
     
     self.dataProvider = [[QMGroupAddUsersSearchDataProvider alloc] initWithExcludedUserIDs:self.cachedOccupantIDs];

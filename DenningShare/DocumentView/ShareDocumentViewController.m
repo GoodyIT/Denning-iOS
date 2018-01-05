@@ -1,24 +1,26 @@
-    //
-//  DocumentViewController.m
-//  Denning
 //
-//  Created by DenningIT on 28/03/2017.
-//  Copyright © 2017 DenningIT. All rights reserved.
+//  ShareDocumentViewController.m
+//  DenningShare
+//
+//  Created by Denning IT on 2018-01-05.
+//  Copyright © 2018 DenningIT. All rights reserved.
 //
 
-#import "DocumentViewController.h"
+#import "ShareDocumentViewController.h"
 #import "DocumentCell.h"
 #import "NewContactHeaderCell.h"
+#import "DIGlobal.h"
 #import "DocumentModel.h"
+#import "FileModel.h"
+#import "ShareHelper.h"
 
+static int THE_CELL_HEIGHT = 450;
 
-@interface DocumentViewController () < UISearchBarDelegate, UISearchControllerDelegate, SWTableViewCellDelegate>
+@interface ShareDocumentViewController ()< UISearchBarDelegate, UISearchControllerDelegate, UIDocumentInteractionControllerDelegate>
 {
-    NSString* email, *sessionID;
-    NSMutableArray* downloadedURLs;
-    NSInteger totalSelectedDocs;
-    NSURL* selectedDocument;
+    NSUserDefaults* defaults;
 }
+@property (strong, nonatomic) DocumentModel* documentModel;
 
 @property (strong, nonatomic) UIImageView *postView;
 @property (strong, nonatomic) DocumentModel* originalDocumentModel;
@@ -29,47 +31,17 @@
 
 @property (strong, nonatomic) UISearchController *searchController;
 @property (copy, nonatomic) NSString *filter;
-
-@property (nonatomic, strong) UIView *headerView;
-@property (nonatomic, weak) UIProgressView *totalProgressView;
-@property (nonatomic, weak) UILabel *totalProgressLocalizedDescriptionLabel;
-
-@property (nonatomic, strong, nullable) NSDate *lastProgressChangedUpdate;
-
 @end
 
-@implementation DocumentViewController
+@implementation ShareDocumentViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self initMultipleDownloader];
+    // Do any additional setup after loading the view.
     [self registerNibs];
     [self configureSearch];
-    if (self.previousScreen.length != 0) {
-        [self prepareUI];
-    }
     
-    if ([_custom isEqualToString:@"custom"]) {
-        self.navigationItem.rightBarButtonItem = self.selectBtn;
-        [self updateButtonsToMatchTableState];
-    }
-    
-    [self setNeedsStatusBarAppearanceUpdate];
-    
-    self.originalDocumentModel = self.documentModel;
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
-- (void) initMultipleDownloader {
-    
-    email = [DataManager sharedManager].user.email;
-    sessionID = [DataManager sharedManager].user.sessionID;
-    downloadedURLs = [NSMutableArray new];
+     defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,14 +49,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void) prepareUI {
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popupScreen:)];
-    [backButtonItem setTintColor:[UIColor whiteColor]];
-    
-    [self.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
-    
-    self.tableView.delegate = self;
-}
 
 - (void) configureSearch
 {
@@ -113,7 +77,7 @@
 {
     NSURL *url = [NSURL URLWithString: file.URL];
     if (![file.ext isEqualToString:@".url"]) {
-        NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, file.URL];
+        NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [defaults valueForKey:@"api"], file.URL];
         url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     }
     
@@ -137,10 +101,6 @@
             [urlArray addObject:@[[self getFileURL:file], file.name]];
         }
     }
-    
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        _updateHandler(urlArray);
-    }];
 }
 
 - (void) shareDocument:(NSArray*) urls {
@@ -149,16 +109,16 @@
         [activityItems addObject:[NSData dataWithContentsOfURL:url]];
     }
     
-        UIActivityViewController *activityViewControntroller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-        activityViewControntroller.excludedActivityTypes = @[];
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            activityViewControntroller.popoverPresentationController.sourceView = self.view;
-            activityViewControntroller.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/4, 0, 0);
-        }
-        activityViewControntroller.completionWithItemsHandler = ^(NSString *activityType,
-                                    BOOL completed,
-                                    NSArray *returnedItems,
-                                    NSError *error){
+    UIActivityViewController *activityViewControntroller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    activityViewControntroller.excludedActivityTypes = @[];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        activityViewControntroller.popoverPresentationController.sourceView = self.view;
+        activityViewControntroller.popoverPresentationController.sourceRect = CGRectMake(self.view.bounds.size.width/2, self.view.bounds.size.height/4, 0, 0);
+    }
+    activityViewControntroller.completionWithItemsHandler = ^(NSString *activityType,
+                                                              BOOL completed,
+                                                              NSArray *returnedItems,
+                                                              NSError *error){
         // react to the completion
         if (completed) {
             
@@ -174,77 +134,10 @@
         if (error) {
             NSLog(@"An Error occured: %@, %@", error.localizedDescription, error.localizedFailureReason);
         }
-        };
-        [self presentViewController:activityViewControntroller animated:true completion:nil];
+    };
+    [self presentViewController:activityViewControntroller animated:true completion:nil];
 }
 
-#pragma mark - Download notification
-
-- (void)onProgressDidChange:(NSNotification *)aNotification
-{
-    NSTimeInterval aLastProgressChangedUpdateDelta = 0.0;
-    if (self.lastProgressChangedUpdate)
-    {
-        aLastProgressChangedUpdateDelta = [[NSDate date] timeIntervalSinceDate:self.lastProgressChangedUpdate];
-    }
-    // refresh progress display about four times per second
-    if ((aLastProgressChangedUpdateDelta == 0.0) || (aLastProgressChangedUpdateDelta > 0.25))
-    {
-        [self.tableView reloadData];
-        self.lastProgressChangedUpdate = [NSDate date];
-    }
-}
-
-- (void)onDownloadDidComplete:(NSNotification *)aNotification
-{
-    
-//    DemoDownloadItem *aDownloadedDownloadItem = (DemoDownloadItem *)aNotification.object;
-//    
-//    AppDelegate *theAppDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//    
-//    NSUInteger aFoundDownloadItemIndex = [[theAppDelegate demoDownloadStore].downloadItemsArray indexOfObjectPassingTest:^BOOL(DemoDownloadItem *aDemoDownloadItem, NSUInteger anIndex, BOOL *aStopFlag) {
-//        if ([aDemoDownloadItem.downloadIdentifier isEqualToString:aDownloadedDownloadItem.downloadIdentifier])
-//        {
-//            return YES;
-//        }
-//        return NO;
-//    }];
-//    if (aFoundDownloadItemIndex != NSNotFound)
-//    {
-////        NSData* aData = [NSData dataWithContentsOfURL:aDownloadedDownloadItem.localURL];
-//        [self displayDocument:aDownloadedDownloadItem.localURL];
-//    }
-//    else
-//    {
-//        NSLog(@"WARN: Completed download item not found (%@, %d)", [NSString stringWithUTF8String:__FILE__].lastPathComponent, __LINE__);
-//    }
-}
-
-
-- (void)onTotalProgressDidChange:(NSNotification *)aNotification
-{
-    NSProgress *aProgress = aNotification.object;
-    self.totalProgressView.progress = (float)aProgress.fractionCompleted;
-    if (aProgress.completedUnitCount != aProgress.totalUnitCount)
-    {
-        self.totalProgressLocalizedDescriptionLabel.text = aProgress.localizedDescription;
-    }
-    else
-    {
-        self.totalProgressLocalizedDescriptionLabel.text = @"";
-    }
-}
-
-#pragma mark - Utilities
-+ (nonnull NSString *)displayStringForRemainingTime:(NSTimeInterval)aRemainingTime
-{
-    NSNumberFormatter *aNumberFormatter = [[NSNumberFormatter alloc] init];
-    [aNumberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [aNumberFormatter setMinimumFractionDigits:1];
-    [aNumberFormatter setMaximumFractionDigits:1];
-    [aNumberFormatter setDecimalSeparator:@"."];
-    return [NSString stringWithFormat:@"Estimated remaining time: %@ seconds", [aNumberFormatter stringFromNumber:@(aRemainingTime)]];
-}
 
 #pragma mark - Updating button state
 
@@ -255,7 +148,7 @@
         // Show the option to cancel the edit.
         self.navigationItem.rightBarButtonItem = self.cancelBtn;
         
-//        [self updateDeleteButtonTitle];
+        //        [self updateDeleteButtonTitle];
         
         // Show the delete button.
         self.navigationItem.leftBarButtonItem = self.sendBtn;
@@ -283,19 +176,12 @@
         self.navigationItem.rightBarButtonItem = self.selectBtn;
     }
     
-//    self.navigationItem.rightBarButtonItem = nil;
+    //    self.navigationItem.rightBarButtonItem = nil;
 }
 
-- (void) popupScreen:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
 
 - (IBAction)dismissScreen:(id)sender {
-    if ([_custom isEqualToString:@"custom"]) {
-        [self.navigationController  popViewControllerAnimated:YES];
-    } else {
-        [self.navigationController  dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)registerNibs {
@@ -397,7 +283,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     } else if (section == 1) {
         return self.documentModel.documents.count;
     }
-
+    
     DocumentModel* model = self.documentModel.folders[section-2];
     
     return model.documents.count;
@@ -444,7 +330,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     
     if (indexPath.section == 0) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
-        NSArray *info = [DIHelpers separateNameIntoTwo: self.documentModel.name];
+        NSArray *info = [ShareHelper separateNameIntoTwo: self.documentModel.name];
         [cell configureCellWithInfo:info[0] number:info[1] image:nil];
         cell.editBtn.hidden = YES;
         cell.chatBtn.hidden = YES;
@@ -455,7 +341,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         return cell;
     } else if (indexPath.section == 1) {
         DocumentCell *cell = [tableView dequeueReusableCellWithIdentifier:[DocumentCell cellIdentifier] forIndexPath:indexPath];
-       
+        
         FileModel* file = self.documentModel.documents[indexPath.row];
         [cell configureCellWithFileModel:file
          ];
@@ -469,8 +355,8 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     DocumentModel* model = self.documentModel.folders[indexPath.section-2];
     FileModel* file = model.documents[indexPath.row];
     [cell configureCellWithFileModel:file
-         ];
-
+     ];
+    
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -492,14 +378,24 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     }
     NSURL *url = [self getFileURL:file];
     
-    [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
-        selectedDocument = filePath;
-    }];
+    [self displayDocument:url];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (void) displayDocument:(NSURL*) document
+{
+    UIDocumentInteractionController *documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:document];
+    documentInteractionController.delegate = self;
+    [documentInteractionController presentPreviewAnimated:YES];
+}
 
+- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
+{
+    return self;
+}
+
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -507,6 +403,6 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-
+*/
 
 @end

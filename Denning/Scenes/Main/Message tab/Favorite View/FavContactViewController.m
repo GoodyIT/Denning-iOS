@@ -132,8 +132,7 @@ SWTableViewCellDelegate
             originalContacts = [NSMutableArray new];
             break;
     }
-    contactsArray = originalContacts;
-//    [self.tableView reloadData];
+    contactsArray = [DIHelpers filterMeout:originalContacts];
 }
 
 - (void) updateFriendList {
@@ -410,7 +409,7 @@ SWTableViewCellDelegate
 {
     NSMutableArray* newArray = [NSMutableArray new];
     if (self.filter.length == 0) {
-        contactsArray = originalContacts;
+        contactsArray = [DIHelpers filterMeout:originalContacts];
     } else {
         for (ChatFirmModel* firmModel in originalContacts) {
             ChatFirmModel* newModel = [ChatFirmModel new];

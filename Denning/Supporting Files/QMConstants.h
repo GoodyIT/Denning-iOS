@@ -19,13 +19,19 @@
 
 #endif
 
+static NSString* const kDenningPeople = @"denningpeople";
+static NSString* const kColleague = @"colleague";
+static NSString* const kClient = @"client";
+static NSString* const kPublicUser = @"public user";
 
 static NSString *const kQBPassword = @"denningIT";
 
 // Chat Dialog
+static NSString* const kRoleDenningTag = @"role_denning";
 static NSString* const kRoleAdminTag = @"role_admin";
 static NSString* const kRoleReaderTag = @"role_reader";
 static NSString* const kRoleNormalTag = @"role_normal";
+static NSString* const kRoleClientTag = @"role_client";
 
 static NSString* const kGroupPositionTag = @"position";
 

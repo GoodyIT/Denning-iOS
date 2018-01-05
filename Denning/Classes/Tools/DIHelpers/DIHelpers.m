@@ -8,6 +8,7 @@
 
 #import "DIHelpers.h"
 #import "MainTabBarController.h"
+#import "HomeViewController.h"
 
 @import SafariServices;
 
@@ -686,9 +687,14 @@
                                                               
                                                               if (!t.isFaulted) {
                                                                   [SVProgressHUD dismiss];
+                                                                  // Clear the push badge
+                                                                  [DataManager sharedManager].badgeValue = nil;
                                                                   
                                                                   if ([viewController isKindOfClass:[MainTabBarController class]]) {
-                                                                      [viewController loadViewIfNeeded];
+                                                                      [(MainTabBarController*)viewController removeTabbarBasedOnUserType];
+                                                                      HomeViewController* home = [(MainTabBarController*)viewController viewControllers].firstObject;
+
+                                                                      [home viewWillAppear:YES];
                                                                   } else {
                                                                       [viewController.navigationController dismissViewControllerAnimated:YES completion:nil];
                                                                   }
@@ -816,22 +822,38 @@
     return tag.length == 0 ? @"Colleagues" : tag;
 }
 
-+ (NSString*) getCurrentUserRole:(NSInteger) userID fromChatDialog:(QBChatDialog*) chatDialog
++ (NSString*) getCurrentUserRole:(QBUUser*) user fromChatDialog:(QBChatDialog*) chatDialog
 {
     NSString* role = kRoleNormalTag;
     NSArray* adminRoles = [chatDialog.data objectForKey:kRoleAdminTag];
     NSArray* readerRoles = [chatDialog.data objectForKey:kRoleReaderTag];
     NSArray* normalRoles = [chatDialog.data objectForKey:kRoleNormalTag];
     
-    if (adminRoles != nil && adminRoles.count > 0 && [adminRoles containsObject:@(userID)]) {
+    NSInteger userID = user.ID;
+    if ([[DataManager sharedManager] checkDenningUser:user.email]) {
+        role = kRoleDenningTag;
+    } else if (adminRoles != nil && adminRoles.count > 0 && [adminRoles containsObject:@(userID)]) {
         role = kRoleAdminTag;
     } else if (readerRoles != nil && readerRoles.count > 0 && [readerRoles containsObject:@(userID)]) {
         role = kRoleReaderTag;
     } else if (normalRoles != nil && normalRoles.count > 0 && [normalRoles containsObject:@(userID)]) {
         role = kRoleNormalTag;
+    } else {
+        role = kRoleClientTag;
     }
     
     return role;
+}
+
++ (BOOL) hasAdminRole:(QBChatDialog*) chatDialog
+{
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [DIHelpers getCurrentUserRole:user fromChatDialog:chatDialog];
+    if ([role isEqualToString:kRoleAdminTag]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 + (BOOL) isSupportChat:(QBChatDialog*) chatDialog {
@@ -862,6 +884,26 @@
     UIGraphicsEndImageContext();
     
     return resizedImage;
+}
+
++ (NSMutableArray*) filterMeout:(NSMutableArray*) contacts {
+    NSMutableArray* dest = [NSMutableArray new];
+    for (ChatFirmModel *chatFirmModel in contacts) {
+        ChatFirmModel* newModel = [ChatFirmModel new];
+        newModel.firmName = chatFirmModel.firmName;
+        newModel.firmCode = chatFirmModel.firmCode;
+        NSMutableArray* userArray = [NSMutableArray new];
+        for (QBUUser* chatUserModel in chatFirmModel.users) {
+            if (![chatUserModel.email isEqualToString:[QBSession currentSession].currentUser.email]) {
+                [userArray addObject:chatUserModel];
+            }
+        }
+        
+        newModel.users = [userArray copy];
+        [dest addObject:newModel];
+    }
+    
+    return dest;
 }
 
 @end

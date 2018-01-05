@@ -64,7 +64,13 @@
 - (void) determineUserType
 {
     [[NSUserDefaults standardUserDefaults] setBool:personalArray.count > 0 forKey:@"isClient"];
+    [[NSUserDefaults standardUserDefaults] setBool:denningArray.count > 0 forKey:@"isStaff"];
+    [[NSUserDefaults standardUserDefaults] setBool:personalArray.count == 0 && denningArray.count == 0 forKey:@"isPublicUser"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self _setInfoWithValue:(NSString*)@(personalArray.count > 0) for:@"isClient"];
+    [self _setInfoWithValue:(NSString*)@(denningArray.count > 0) for:@"isStaff"];
+    [self _setInfoWithValue:(NSString*)@(personalArray.count == 0 && denningArray.count == 0) for:@"isPublicUser"];
 }
 
 - (void) setUserInfoFromLogin: (NSDictionary*) response
@@ -99,7 +105,6 @@
     [self _setInfoWithValue:[response valueForKeyNotNull:@"userType"] for:@"userType"];
     
     [[RLMRealm defaultRealm] transactionWithBlock:^{
-        user.password = [response valueForKeyNotNull:@"password"];
         user.status = [response objectForKeyNotNull:@"status"];
         user.userType = [response valueForKeyNotNull:@"userType"];
     }];
@@ -142,8 +147,7 @@
 }
 
 - (BOOL) isClient {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return (BOOL)[defaults boolForKey:@"isClient"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isClient"];
 }
 
 - (BOOL) isLoggedIn {
@@ -151,17 +155,17 @@
 }
 
 - (BOOL) isPublicUser {
-    return user.userType.length > 0 && [user.userType isEqualToString:@"public"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPublicUser"];
 }
 
 - (BOOL) isStaff {
-    return [user.userType isEqualToString:@"denning"];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isStaff"];
 }
 
-- (BOOL) isDenningUser {
+- (BOOL) checkDenningUser:(NSString*) email {
     BOOL isSupportMemember = NO;
     for (ChatFirmModel* firmModel in denningContactArray) {
-        NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", user.email];
+        NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", email];
         NSArray *filteredUsers = [firmModel.users filteredArrayUsingPredicate:usersSearchPredicate];
         if (filteredUsers.count > 0) {
             isSupportMemember = YES;
@@ -170,6 +174,10 @@
     }
     
     return isSupportMemember;
+}
+
+- (BOOL) isDenningUser {
+   return [self checkDenningUser:user.email] || [user.email.lowercaseString containsString:@"denning.com.my"];
 }
 
 - (void) clearData {
@@ -188,6 +196,7 @@
     }];
     
     personalArray = [NSMutableArray new];
+    denningArray = [NSMutableArray new];
     [self determineUserType];
 }
 

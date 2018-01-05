@@ -30,12 +30,15 @@ typedef void (^FetchCompletionBlock)(NSArray *items);
     return self;
 }
 
-
-
 - (instancetype)initWithCustomURL:(NSURL*)url withCompletionBlock:(FetchMyCompletionBlock)completion
 {
+    return [self initWithCustomURL:url withCompletionBlock:completion params:nil];
+}
+
+- (instancetype)initWithCustomURL:(NSURL*)url withCompletionBlock:(FetchMyCompletionBlock)completion params:(NSDictionary*) params
+{
     if (self = [super init]) {
-        CustomOperation *downloadOperation = [[CustomOperation alloc] initWithUrl:url completion:^(NSURL *url, NSURLResponse *response, NSData *data, NSError *error) {
+        CustomOperation *downloadOperation = [[CustomOperation alloc] initWithUrl:url completion:^(NSURL *url, NSURLResponse *response, NSData *data, NSError *error){
             if (error == nil) {
                 NSArray *JSON = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingMutableContainers error: &error];
                 
@@ -43,7 +46,7 @@ typedef void (^FetchCompletionBlock)(NSArray *items);
                     completion(JSON, ((NSHTTPURLResponse *)response).statusCode);
                 }
             }
-        }];
+        }  params:params ];
         
         [[NSOperationQueue mainQueue] addOperation:downloadOperation];
         

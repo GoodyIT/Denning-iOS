@@ -18,23 +18,28 @@
 @property (nonatomic) NSURLResponse *response;
 @property (nonatomic) BOOL terminated;
 @property (nonatomic, copy) CustomCompletionBlock completion;
-
+@property (nonatomic, copy) NSDictionary* params;
 @end
 
 @implementation CustomOperation
 
 
 - (id) initWithUrl:(NSURL*)url completion:(CustomCompletionBlock)completion {
+    
+    return [self initWithUrl:url completion:completion params:nil];
+}
+
+- (id) initWithUrl:(NSURL*)url completion:(CustomCompletionBlock)completion params:(NSDictionary*) params {
     self = [super init];
     
     if (self) {
         self.url = url;
         self.completion = completion;
+        self.params = params;
     }
     
     return self;
 }
-
 #pragma mark - NSOperation
 
 - (void)main {
@@ -50,6 +55,14 @@
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:[defaults valueForKey:@"sessionID"]  forHTTPHeaderField:@"webuser-sessionid"];
     [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
+    if (_params != nil) {
+        [request setHTTPMethod: @"POST"];
+        NSError* error;
+        NSData* jsondata = [NSJSONSerialization dataWithJSONObject:_params
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&error];
+        [request setHTTPBody:jsondata];
+    }
     
     self.response = nil;
     self.connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];

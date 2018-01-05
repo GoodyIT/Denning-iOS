@@ -104,6 +104,15 @@ QMUsersServiceDelegate
             // task in progress
             return;
         }
+        
+        if ([DIHelpers isSupportChat:self.chatDialog]) {
+            if (![DataManager sharedManager].isDenningUser) {
+                // Only Denning user can change the avatar for Denning support
+                return;
+            }
+        } else if (![DataManager sharedManager].isStaff) {
+            return;
+        }
 
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
 
@@ -142,15 +151,25 @@ QMUsersServiceDelegate
         NSUInteger userIndex = [self.dataSource userIndexForIndexPath:indexPath];
         QBUUser *user = self.dataSource.items[userIndex];
         
-        NSString* role = [DIHelpers getCurrentUserRole:user.ID fromChatDialog:self.chatDialog];
+        NSString* role = [DIHelpers getCurrentUserRole:user fromChatDialog:self.chatDialog];
         
         if (!([role isEqualToString:kRoleAdminTag] || [DataManager sharedManager].isDenningUser)) {
             // Only Denning Staff & Admin can assign the role.
             return;
         }
         
+        if ([[DataManager sharedManager] checkDenningUser:user.email]) {
+            // Cannot change the role of Denning User.
+            return;
+        }
+        
         if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
             // User cannot change his role
+            return;
+        }
+        
+        if ([role isEqualToString:kRoleClientTag]) {
+            // Cannot change the client role
             return;
         }
         
@@ -162,7 +181,7 @@ QMUsersServiceDelegate
         [firstButton setValue:[UIColor babyRed] forKey:@"titleTextColor"];
         [firstButton setValue:@(role == kRoleAdminTag) forKey:@"checked"];
         
-        UIAlertAction *secondButton = [UIAlertAction actionWithTitle:@"Normal" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        UIAlertAction *secondButton = [UIAlertAction actionWithTitle:@"Staff" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [self updateUserRole:kRoleNormalTag userID:user.ID inIndexPath:indexPath];
         }];
         [secondButton setValue:[UIColor babyBlue] forKey:@"titleTextColor"];
@@ -245,27 +264,32 @@ QMUsersServiceDelegate
 }
 
 - (void)updateNotificationsSettingsForDialog:(NSString *)dialogID enabled:(BOOL)enabled {
+    [QBRequest updateNotificationsSettingsForDialogID:dialogID enable:enabled successBlock:^(BOOL enabled) {
+        [QMCore.instance.chatManager changeCustomData:@{@"notifications":@(enabled)} forGroupChatDialog:_chatDialog];
+    } errorBlock:^(QBResponse * _Nonnull response) {
+        [QMAlert showAlertWithMessage:response.error.error.localizedDescription actionSuccess:NO inViewController:self];
+    }];
     
     NSURLSessionConfiguration *configuration =
     [NSURLSessionConfiguration defaultSessionConfiguration];
-    
+
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configuration];
-    
+
     NSString *path = [NSString stringWithFormat:@"https://api.quickblox.com/chat/Dialog/%@/notifications.json", dialogID];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:path]];
     request.HTTPMethod = @"PUT";
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:QBSession.currentSession.sessionDetails.token forHTTPHeaderField:@"QB-Token"];
-    
+
     NSString *data = [NSString stringWithFormat:@"{\"enabled\":\"%tu\"}", enabled ? 1 : 0];
-    
+
     [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
-    
+
     NSURLSessionDataTask *dataTask =
     [defaultSession dataTaskWithRequest:request
                       completionHandler:^(NSData* data, NSURLResponse *response, NSError *error)
     {
-        
+
         if (!error) {
             NSError *serializationError = nil;
             NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
@@ -275,7 +299,7 @@ QMUsersServiceDelegate
             [QMCore.instance.chatManager changeCustomData:@{@"notifications":enable} forGroupChatDialog:_chatDialog];
         }
     }];
-    
+
     [dataTask resume];
 }
 
@@ -289,7 +313,7 @@ QMUsersServiceDelegate
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == self.dataSource.addMemberCellIndex) {
         if ([DIHelpers isSupportChat:self.chatDialog]) {
-           NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser.ID fromChatDialog:self.chatDialog];
+           NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:self.chatDialog];
             if  ([DataManager sharedManager].isDenningUser || [role isEqualToString:kRoleAdminTag]) {
                 [self performSegueWithIdentifier:kQMSceneSegueGroupAddUsers sender:self.chatDialog];
             }

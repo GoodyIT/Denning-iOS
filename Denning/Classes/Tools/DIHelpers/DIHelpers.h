@@ -129,9 +129,13 @@
 
 + (NSString*) getTag:(QBChatDialog*) dialog;
 
-+ (NSString*) getCurrentUserRole:(NSInteger) userID fromChatDialog:(QBChatDialog*) chatDialog;
++ (NSString*) getCurrentUserRole:(QBUUser*) user fromChatDialog:(QBChatDialog*) chatDialog;
+
++ (BOOL) hasAdminRole:(QBChatDialog*) chatDialog;
 
 + (BOOL) isSupportChat:(QBChatDialog*) chatDialog;
 
 + (NSString*) getGroupPosition:(QBChatDialog*) chatDialog;
+
++ (NSMutableArray*) filterMeout:(NSMutableArray*) contacts;
 @end

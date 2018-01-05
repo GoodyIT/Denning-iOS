@@ -9,6 +9,7 @@
 #import "BranchViewController.h"
 #import "BranchHeaderCell.h"
 #import "FolderViewController.h"
+#import "FirmPasswordConfirmViewController.h"
 
 @interface BranchViewController ()<BranchHeaderDelegate>
 {
@@ -28,7 +29,7 @@
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,12 +39,6 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
 }
 
 - (void) prepareUI {
@@ -72,32 +67,38 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return self.firmArray.count + 1;
+    return self.firmArray.count;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 140;
-    }
-    
     return 71;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        BranchHeaderCell *branchCell = [tableView dequeueReusableCellWithIdentifier:[BranchHeaderCell cellIdentifier] forIndexPath:indexPath];
-        [branchCell configureCellWithTitle:@"Select firm"];
-        branchCell.delegate = self;
-        return branchCell;
-    }
+//    if (indexPath.row == 0) {
+//        BranchHeaderCell *branchCell = [tableView dequeueReusableCellWithIdentifier:[BranchHeaderCell cellIdentifier] forIndexPath:indexPath];
+//        [branchCell configureCellWithTitle:@"Select firm"];
+//        branchCell.delegate = self;
+//        return branchCell;
+//    }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BranchCell" forIndexPath:indexPath];
     
     UIButton *firmBtn = [cell viewWithTag:1];
-    firmBtn.tag = indexPath.row - 1;
-    FirmURLModel* urlModel = self.firmArray[indexPath.row-1];
-    [firmBtn setTitle:urlModel.name forState:UIControlStateNormal];
+    firmBtn.titleLabel.minimumScaleFactor = 0.5f;
+    firmBtn.titleLabel.numberOfLines = 0;
+    firmBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    firmBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    firmBtn.tag = indexPath.row;
+    FirmURLModel* urlModel = self.firmArray[indexPath.row];
+    NSString* buttonTitle = [NSString stringWithFormat:@"%@\n%@", urlModel.name, urlModel.city];
+    [firmBtn setTitle:buttonTitle forState:UIControlStateNormal];
     
     return cell;
 }
@@ -138,7 +139,7 @@
     }];
 }
 
-- (void) clientLogin {
+- (void) clientLogin:(FirmURLModel*)urlModel  {
     if (isLoading) return;
     isLoading = YES;
     NSString* url = [[DataManager sharedManager].tempServerURL stringByAppendingString:DENNING_CLIENT_SIGNIN];
@@ -152,7 +153,7 @@
         if (error == nil) {
             [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
             if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(250)]) {
-                [self clientFirstLogin];
+                [self performSegueWithIdentifier:kFirmPasswordSegue sender:urlModel];
             } else {
                 if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
                     [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
@@ -165,36 +166,18 @@
                 }
             }
         } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
         }
     }];
 }
 
-- (void) clientFirstLogin {
-    NSString* url = [[DataManager sharedManager].tempServerURL stringByAppendingString:DENNING_CLIENT_FIRST_SIGNIN];
-    
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
-    [[QMNetworkManager sharedManager] clientSignIn:url password:@"5566" withCompletion:^(BOOL success, NSDictionary * _Nonnull responseObject, NSError * _Nonnull error, DocumentModel * _Nonnull doumentModel) {
-        [SVProgressHUD dismiss];
-        if (error == nil) {
-            [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
-            if ([[DataManager sharedManager].documentView isEqualToString: @"upload"]) {
-                [self performSegueWithIdentifier:kFileUploadSegue sender:nil];
-            } else {
-                [self performSegueWithIdentifier:kPersonalFolderSegue sender:doumentModel];
-            }
-            
-        } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
-        }
-    }];
-}
+
 
 - (IBAction) gotoPasswordConfirm: (UIButton*) sender
 {
     if ([[DataManager sharedManager].documentView isEqualToString: @"upload"] || [[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
         [DataManager sharedManager].tempServerURL = self.firmArray[sender.tag].firmServerURL;
-        [self clientLogin];
+        [self clientLogin:self.firmArray[sender.tag]];
     } else {
         [self proceedLogin:self.firmArray[sender.tag]];
     }
@@ -207,6 +190,12 @@
         UINavigationController* nav = segue.destinationViewController;
         FolderViewController* folderVC = (FolderViewController*)nav.topViewController;
         folderVC.documentModel = sender;
+    } else if ([segue.identifier isEqualToString:kFirmPasswordSegue]) {
+        UINavigationController* nav = segue.destinationViewController;
+        FirmPasswordConfirmViewController* vc = nav.viewControllers.firstObject;
+        FirmURLModel* model = (FirmURLModel*) sender;
+        vc.branch = model.city;
+        vc.firmName = model.name;
     }
 }
 

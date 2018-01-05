@@ -13,5 +13,7 @@
 
 + (void)showAlertWithMessage:(NSString *)message actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController;
 
++ (NSArray*) separateNameIntoTwo:(NSString*) title;
 
++ (NSString*) todayWithTime;
 @end

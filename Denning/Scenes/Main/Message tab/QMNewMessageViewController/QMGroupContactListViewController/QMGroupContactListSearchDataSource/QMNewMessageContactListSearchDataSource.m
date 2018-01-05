@@ -67,6 +67,7 @@
     
     NSString *onlineStatus = [[QMCore instance].contactManager onlineStatusForUser:user];
     [cell setBody:onlineStatus];
+    [cell setPosition:user.twitterDigitsID];
     
     cell.checked = [self.selectedUsers containsObject:user];
     

@@ -32,6 +32,7 @@
     _timeLabel.text = nil;
 }
 
+
 //MARK: - Setters
 
 - (void)setTime:(NSString *)time {

@@ -15,4 +15,5 @@ typedef void (^FetchMyCompletionBlock)(NSArray *item, NSInteger statusCode);
 
 - (instancetype)initWithCustomURL:(NSURL*)url withCompletionBlock:(FetchMyCompletionBlock)completion;
 
+- (instancetype)initWithCustomURL:(NSURL*)url withCompletionBlock:(FetchMyCompletionBlock)completion params:(NSDictionary*) params;
 @end

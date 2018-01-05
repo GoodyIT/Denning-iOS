@@ -44,6 +44,7 @@ static UIImage *deselectedCheckImage() {
 @interface QMSelectableContactCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *checkmarkImageView;
+@property (weak, nonatomic) IBOutlet UILabel *positionLabel;
 
 @end
 
@@ -80,6 +81,11 @@ static UIImage *deselectedCheckImage() {
             [self.checkmarkImageView.layer addAnimation:transition forKey:nil];
         }
     }
+}
+
+- (void) setPosition:(NSString*) position
+{
+    self.positionLabel.text = position;
 }
 
 @end

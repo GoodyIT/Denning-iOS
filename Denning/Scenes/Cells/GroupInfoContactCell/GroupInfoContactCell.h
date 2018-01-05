@@ -13,11 +13,11 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastSeenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *positionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *roleBtn;
 
 @property (weak, nonatomic) IBOutlet QMImageView *avatarImageView;
 
 - (void) configureCellWithContact: (QBUUser*) user inChatDialog:(QBChatDialog*) chatDialog;
-
 
 @end

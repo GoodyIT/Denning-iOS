@@ -32,7 +32,7 @@
 
 static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
-static NSString * const kQMAppGroupIdentifier = @"group.com.quickblox.qmunicate";
+static NSString * const kQMAppGroupIdentifier = @"group.denningitshare.extension";
 
 #define DEVELOPMENT 1
 

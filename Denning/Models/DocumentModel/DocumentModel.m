@@ -7,6 +7,8 @@
 //
 
 #import "DocumentModel.h"
+#import "NSDictionary+NotNull.h"
+#import "FileModel.h"
 
 @implementation DocumentModel
 

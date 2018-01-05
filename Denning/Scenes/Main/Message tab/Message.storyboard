@@ -85,6 +85,7 @@ out here.</string>
                             <nil key="action"/>
                         </segue>
                         <segue destination="9Ir-rv-S3M" kind="custom" identifier="SceneSegueAuth" customClass="QMRootViewControllerSegue" id="p2z-QJ-OS8"/>
+                        <segue destination="xdT-P1-KH4" kind="show" identifier="SceneSegueUserInfo" id="Z8c-1a-aIu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WJx-tG-Bt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -243,6 +244,7 @@ out here.</string>
                         <outlet property="groupChatBtn" destination="Zxe-wM-uTY" id="SRr-vZ-ucH"/>
                         <outlet property="myPageViwer" destination="k2D-zg-hGn" id="Gi9-Th-wY0"/>
                         <outlet property="staffBtn" destination="qXn-Ky-6sF" id="j7t-zo-nyy"/>
+                        <outlet property="topBarHeightContraint" destination="Yct-wV-ER9" id="zeE-J1-vL7"/>
                         <segue destination="vjt-JF-gCK" kind="presentation" identifier="DenningSupportSegue" id="ty5-Xf-aPd"/>
                     </connections>
                 </viewController>
@@ -346,7 +348,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMGroupInfoViewController" id="OKo-87-3Ut" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehM-fF-IK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-308" y="-7295"/>
+            <point key="canvasLocation" x="-322" y="-7295"/>
         </scene>
         <!--DocumentView-->
         <scene sceneID="xgs-4g-19O">
@@ -354,7 +356,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Search" referencedIdentifier="DocumentView" id="RfV-cA-wN0" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ujm-cL-ZxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912" y="-7145"/>
+            <point key="canvasLocation" x="1962" y="-7023"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IUx-YH-HSL">
@@ -431,7 +433,15 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMUserInfoViewController" id="Vi6-Ys-ZwG" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wlL-qq-ZCQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-736" y="-7295"/>
+            <point key="canvasLocation" x="-770" y="-7295"/>
+        </scene>
+        <!--QMUserInfoViewController-->
+        <scene sceneID="LIr-sI-5uw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMUserInfoViewController" id="xdT-P1-KH4" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ull-nL-aK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1421" y="-8559"/>
         </scene>
         <!--DashboardContactNavigation-->
         <scene sceneID="qVU-b2-jG2">
@@ -439,7 +449,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="dashboard" referencedIdentifier="DashboardContactNavigation" id="0r1-1O-GW5" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Gh-te-zb7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2033" y="-7794"/>
+            <point key="canvasLocation" x="1961" y="-7593"/>
         </scene>
         <!--Contacts-->
         <scene sceneID="SrG-Op-eIT">
@@ -507,6 +517,7 @@ out here.</string>
                         <outlet property="userTypeSegment" destination="Vcw-rZ-14B" id="1Jb-iu-NOF"/>
                         <segue destination="t5g-eL-0FL" kind="showDetail" identifier="SceneSegueChat" id="Frh-IH-JRA"/>
                         <segue destination="eGm-Je-XuH" kind="show" identifier="GroupChatSegue" id="ha7-Ld-HrW"/>
+                        <segue destination="IGm-Dx-jXe" kind="custom" customClass="QMRootViewControllerSegue" id="qdF-bD-ck0"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aIF-hn-5zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -569,7 +580,15 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Auth" id="9Ir-rv-S3M" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cMC-bX-PLU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1527" y="-8691"/>
+            <point key="canvasLocation" x="-1482" y="-8735"/>
+        </scene>
+        <!--Auth-->
+        <scene sceneID="FLj-wp-GTZ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" id="IGm-Dx-jXe" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IJ7-al-rti" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2343" y="-5857"/>
         </scene>
         <!--Create Group-->
         <scene sceneID="HaZ-ei-WPo">
@@ -644,7 +663,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pcg-TA-5I2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="372" y="-6308"/>
+            <point key="canvasLocation" x="372" y="-6280"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fBd-RK-eOg">
@@ -920,7 +939,7 @@ out here.</string>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7KY-Zd-eqk">
-                                <rect key="frame" x="0.0" y="144" width="375" height="585"/>
+                                <rect key="frame" x="0.0" y="144" width="375" height="634"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="87" id="dMi-N4-od0">
@@ -997,7 +1016,7 @@ out here.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F3M-8U-Vf3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1988" y="-8183"/>
+            <point key="canvasLocation" x="2018" y="-7999"/>
         </scene>
         <!--Chat File List View Controller-->
         <scene sceneID="qp8-Bc-CPj">
@@ -1176,6 +1195,6 @@ out here.</string>
         <image name="m_empty_dialogs" width="180" height="265"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MgK-Fo-q1e"/>
+        <segue reference="Frh-IH-JRA"/>
     </inferredMetricsTieBreakers>
 </document>

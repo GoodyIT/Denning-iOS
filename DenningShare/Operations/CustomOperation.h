@@ -14,4 +14,5 @@ typedef void (^CustomCompletionBlock)(NSURL *url, NSURLResponse *response, NSDat
 
 - (id) initWithUrl:(NSURL*)url completion:(CustomCompletionBlock)completion;
 
+- (id) initWithUrl:(NSURL*)url completion:(CustomCompletionBlock)completion params:(NSDictionary*) params;
 @end
