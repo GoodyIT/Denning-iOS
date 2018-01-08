@@ -48,7 +48,12 @@ enum MATTERSECTION {
     section_count
 };
 
-@interface RelatedMatterViewController ()<MatterLastCellDelegate, NewContactHeaderCellDelegate, MatterNewLastCellDelegate>
+@interface RelatedMatterViewController ()
+<
+MatterLastCellDelegate,
+NewContactHeaderCellDelegate,
+MatterNewLastCellDelegate
+>
 {
     __block BOOL isLoading;
 }
@@ -65,6 +70,8 @@ enum MATTERSECTION {
     if (self.previousScreen.length != 0) {
         [self prepareUI];
     }
+    
+    [self setupFloatingButton];
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -77,6 +84,7 @@ enum MATTERSECTION {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (void) prepareUI {
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popupScreen:)];
@@ -141,7 +149,7 @@ enum MATTERSECTION {
             return 1;
             break;
         case MAIN_SECTION:
-            return 7;
+            return 8;
             break;
         case COURTCASE_SECTION:
             if (relatedMatterModel.court == nil) {
@@ -368,20 +376,22 @@ enum MATTERSECTION {
             [cell configureCellWithContact:@"Client" text:relatedMatterModel.clientName];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 1) {
+            [cell configureCellWithContact:@"Ref2" text:relatedMatterModel.ref];
+        } else if (indexPath.row == 2) {
             NSString* value = [NSString stringWithFormat:@"%@ / %@ / %@", [DIHelpers getOnlyDateFromDateTime:relatedMatterModel.openDate], relatedMatterModel.fileStatus.descriptionValue, relatedMatterModel.dateClose];
             [cell configureCellWithContact:@"Open Date / Status / Closed Date" text:value];
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == 3) {
             NSString* value = [NSString stringWithFormat:@"%@ / %@ / %@", relatedMatterModel.locationPhysical, relatedMatterModel.locationBox, relatedMatterModel.locationPocket];
             [cell configureCellWithContact:@"File Location / Box / Pocket" text:value];
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == 4) {
             [cell configureCellWithContact:@"Matter" text:relatedMatterModel.matter.matterDescription];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == 5) {
             NSString *string = [NSString stringWithFormat:@"%@ / %@ / %@", relatedMatterModel.partner.nickName, relatedMatterModel.legalAssistant.nickName, relatedMatterModel.clerk.nickName];
             [cell configureCellWithContact:@"Partner / LA / Clerk" text:string];
-        } else if (indexPath.row == 5) { // branch
+        } else if (indexPath.row == 6) { // branch
              [cell configureCellWithContact:@"Branch" text:relatedMatterModel.branch.city];
-        } else if (indexPath.row == 6)  { // remarks
+        } else if (indexPath.row == 7)  { // remarks
              [cell configureCellWithContact:@"Remarks" text:relatedMatterModel.remarks];
         }
     } else if (indexPath.section == COURTCASE_SECTION) { // Court Case information
@@ -403,19 +413,19 @@ enum MATTERSECTION {
         ClientModel* party = partyGroup.partyArray[[[partySectionInfo objectForKey:@"party"] integerValue]];
         if ([[partySectionInfo objectForKey:@"party"] integerValue] == 0) {
             ContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactCell cellIdentifier] forIndexPath:indexPath];
-           [cell configureCellWithContact:partyGroup.partyGroupName text:party.name.capitalizedString withLower:YES];
+           [cell configureCellWithContact:partyGroup.partyGroupName text:party.name.localizedUppercaseString withLower:YES];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         } else {
             ContactPartyCell *cell = [tableView dequeueReusableCellWithIdentifier:[ContactPartyCell cellIdentifier] forIndexPath:indexPath];
-            cell.partyName.text = party.name.capitalizedString;
+            cell.partyName.text = party.name.localizedUppercaseString;
              cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
              return cell;
         }
     } else if (indexPath.section == SOLICITORS_SECTION) { // Solicitor
         ThreeFieldsCell *cell = [tableView dequeueReusableCellWithIdentifier:[ThreeFieldsCell cellIdentifier] forIndexPath:indexPath];
         SolicitorGroup* solicitorGroup = relatedMatterModel.solicitorGroupArray[indexPath.row];
-        [cell configureCellWithValue1:solicitorGroup.solicitorGroupName value2:solicitorGroup.solicitorName value3:solicitorGroup.solicitorReference];
+        [cell configureCellWithValue1:solicitorGroup.solicitorGroupName value2:solicitorGroup.solicitorName.localizedUppercaseString value3:solicitorGroup.solicitorReference];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     } else if (indexPath.section == PROPERTIES_SECTION) { //Property

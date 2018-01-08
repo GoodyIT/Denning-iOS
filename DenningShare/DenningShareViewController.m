@@ -146,11 +146,12 @@ NSURLSessionDelegate, UITextFieldDelegate>
     UIImageView* searchImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_search_gray"]];
     self.searchTextField.leftView = searchImageView;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.searchTextField becomeFirstResponder];
-    });
+    [self performSelector:@selector(searchFieldKeyboardShow) withObject:nil afterDelay:1.0f];
 }
 
+- (void) searchFieldKeyboardShow {
+     [self.searchTextField becomeFirstResponder];
+}
 
 - (void) loadShareItems {
     shareItems = [NSMutableArray new];
@@ -184,12 +185,13 @@ NSURLSessionDelegate, UITextFieldDelegate>
 {
     [UITextField appearance].keyboardAppearance = UIKeyboardAppearanceDark;
     
-    self.url = MATTER_STAFF_TRANSIT_FOLDER;
-    fileNo1 = @"Transit Folder";
+    self.url = @"";
+    fileNo1 = @"";
+    _sendBtn.enabled = NO;
     
     selectedIndexPaths = [NSMutableArray new];
     searchType = @"Normal";
-    selectedIndex = 3;
+    selectedIndex = 0;
     page = 1;
     category = 0;
     _topSegment.selectedSegmentIndex = selectedIndex;
@@ -299,17 +301,12 @@ NSURLSessionDelegate, UITextFieldDelegate>
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:strongSelf];
             });
-            
         } else{
-            [strongSelf dismissViewControllerAnimated:YES completion:nil];
+            [strongSelf performSelector:@selector(dismissAlert) withObject:nil afterDelay:0.2f];
             if ([items[0] isEqualToString:@"200"]) {
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [ShareHelper showAlertWithMessage:@"Success" actionSuccess:YES inViewController:strongSelf];
-                });
+                [strongSelf performSelector:@selector(showCompleteMessage) withObject:nil afterDelay:0.3f];
             } else {
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [ShareHelper showAlertWithMessage:items[0] actionSuccess:NO inViewController:strongSelf];
-                });
+                [strongSelf performSelector:@selector(showCompleteMessage) withObject:nil afterDelay:0.3f];
             }
         }
     }];
@@ -320,6 +317,14 @@ NSURLSessionDelegate, UITextFieldDelegate>
     GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
                                                           withCompletionBlock:_requestDataObject.myCompletionBlock params:params];
     [[NSOperationQueue mainQueue] addOperation:operation];
+}
+
+- (void) dismissAlert {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) showCompleteMessage {
+    [ShareHelper showAlertWithMessage:@"Success" actionSuccess:YES inViewController:self];
 }
 
 - (IBAction)didTapTransitFolder:(id)sender {

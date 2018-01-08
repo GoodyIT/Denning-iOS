@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *termsOfTenancyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *resultTextField;
 @property (weak, nonatomic) IBOutlet UITextField *legalCostTextField;
+@property (weak, nonatomic) IBOutlet UITextField *totalTextField;
 
 @end
 

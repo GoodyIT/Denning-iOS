@@ -34,7 +34,7 @@ static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
 static NSString * const kQMAppGroupIdentifier = @"group.denningitshare.extension";
 
-#define DEVELOPMENT 1
+#define DEVELOPMENT 0
 
 #if DEVELOPMENT == 1
 
@@ -376,12 +376,12 @@ forRemoteNotification:(NSDictionary *)userInfo
     NSDate* eventDate = location.timestamp;
     
     float defaultTolerate = 1.0;
-    if (![[LocationManager sharedManager].cityName isEqualToString:@""]) {
+    if (![[LocationManager sharedManager].streetName isEqualToString:@""]) {
         defaultTolerate = 30.0;
     }
     
     NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[LocationManager sharedManager].lastLoggedDateTime];
-    if (fabs(howRecent) > defaultTolerate || [[LocationManager sharedManager].streetName isEqualToString:@""]) {
+    if (fabs(howRecent) > defaultTolerate) {
         
         [LocationManager sharedManager].lastLoggedDateTime = eventDate;
         [LocationManager sharedManager].oldLocation = location.coordinate;

@@ -7,7 +7,8 @@
 //
 
 #import "BranchListViewController.h"
-#import "BankBranchCell.h"
+#import "SecondContactCell.h"
+#import "PropertyContactCell.h"
 
 @interface BranchListViewController ()
 <UISearchBarDelegate, UISearchControllerDelegate, UIScrollViewDelegate>
@@ -41,7 +42,8 @@
 }
 
 - (void)registerNibs {
-    [BankBranchCell registerForReuseInTableView:self.tableView];
+    [SecondContactCell registerForReuseInTableView:self.tableView];
+    [PropertyContactCell registerForReuseInTableView:self.tableView];
     
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
@@ -141,11 +143,12 @@
     return 33;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 5;
+-(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    PropertyContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[PropertyContactCell cellIdentifier]];
+    cell.name.text = @"Branch Name";
+    cell.ID.text = @"HQ";
+    return cell;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -154,10 +157,12 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BankBranchCell *cell = [tableView dequeueReusableCellWithIdentifier:[BankBranchCell cellIdentifier] forIndexPath:indexPath];
+    SecondContactCell *cell = [tableView dequeueReusableCellWithIdentifier:[SecondContactCell cellIdentifier] forIndexPath:indexPath];
     
     BankBranchModel *model = self.listOfBankBranches[indexPath.row];
-    [cell configureCellWithModel:model];
+    
+    cell.firstValue.text = model.name;
+    cell.secondValue.text = model.HQ.name;
     
     return cell;
 }

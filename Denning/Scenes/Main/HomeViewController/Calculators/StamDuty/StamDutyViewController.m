@@ -54,7 +54,7 @@
 }
 
 - (void) prepareUI {
-    self.title = @"Stam Duty";
+    self.title = @"Basic Legal Costs";
     self.viewControllersIdentifiers = @[@"SPAViewController", @"LoanViewController", @"TenancyViewController"];
     
     SPAViewController *SPAVC = [[UIStoryboard storyboardWithName:@"Calculator" bundle:nil] instantiateViewControllerWithIdentifier:self.viewControllersIdentifiers[0]];

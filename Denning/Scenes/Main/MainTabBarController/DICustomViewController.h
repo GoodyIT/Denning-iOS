@@ -21,4 +21,8 @@
 - (void) gotoLogin;
 
 - (void) gotoMenu;
+
+- (void) setupFloatingButton;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end

@@ -146,6 +146,12 @@
     }];
 }
 
+- (void) setAvatarURL:(NSString*) url {
+    [[RLMRealm defaultRealm] transactionWithBlock:^{
+        user.avatarUrl = url;
+    }];
+}
+
 - (BOOL) isClient {
     return [[NSUserDefaults standardUserDefaults] boolForKey:@"isClient"];
 }
@@ -155,11 +161,11 @@
 }
 
 - (BOOL) isPublicUser {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isPublicUser"];
+    return (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"isPublicUser"];
 }
 
 - (BOOL) isStaff {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isStaff"];
+    return (BOOL)[[NSUserDefaults standardUserDefaults] boolForKey:@"isStaff"];
 }
 
 - (BOOL) checkDenningUser:(NSString*) email {
@@ -173,7 +179,11 @@
         }
     }
     
-    return isSupportMemember;
+    return isSupportMemember || [email containsString:@"denning.com.my"];
+}
+
+- (BOOL) isSuperUser:(NSString*) email {
+    return [@[@"tmho@denning.com.my", @"jingpiow@denning.com.my"] containsObject:email];
 }
 
 - (BOOL) isDenningUser {

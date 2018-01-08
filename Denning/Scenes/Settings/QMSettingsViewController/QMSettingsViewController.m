@@ -306,6 +306,8 @@ NYTPhotosViewControllerDelegate
                                     title:userData.fullName
                            completedBlock:nil];
     self.fullNameLabel.text = userData.fullName;
+    
+    
 }
 
 // MARK: - QMUsersServiceListenerProtocol
@@ -366,6 +368,8 @@ NYTPhotosViewControllerDelegate
 }
 
 - (void) changeAvatar:(NSString*) avatar_url {
+    
+    [[DataManager sharedManager] setAvatarURL:avatar_url];
     
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     NSDictionary* params = @{@"email":[DataManager sharedManager].user.email, @"avatar_url":avatar_url};

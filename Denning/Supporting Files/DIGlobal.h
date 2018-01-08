@@ -75,21 +75,21 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define GOOGLE_MAP_REVERSE_URL  @"https://maps.googleapis.com/maps/api/geocode/json?latlng=%lf,%lf&key=%@"
 
-#define kDIAgreementUrl @"http://denningsoft.dlinkddns.com/denningwcf/v1/table/eulaAPP"
+#define kDIAgreementUrl @"http://43.252.215.163:8313/denningapi/v1/table/eulaAPP"
 
-#define FORGOT_PASSWORD_SEND_SMS_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/SMS/lostPassword"
+#define FORGOT_PASSWORD_SEND_SMS_URL    @"http://43.252.215.163:8313/denningapi/v1/SMS/lostPassword"
 
-#define FORGOT_PASSWORD_REQUEST_URL     @"http://denningsoft.dlinkddns.com/denningwcf/v1/password/forget"
+#define FORGOT_PASSWORD_REQUEST_URL     @"http://43.252.215.163:8313/denningapi/v1/password/forget"
 
-#define CHANGE_PASSWORD_URL     @"http://denningsoft.dlinkddns.com/denningwcf/v1/password/new"
+#define CHANGE_PASSWORD_URL     @"http://43.252.215.163:8313/denningapi/v1/password/new"
 
-#define CHANGE_NICKNAME_URL @"http://denningsoft.dlinkddns.com/denningwcf/v1/nickName"
+#define CHANGE_NICKNAME_URL @"http://43.252.215.163:8313/denningapi/v1/nickName"
 
-#define LOGOUT_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/logout"
+#define LOGOUT_URL  @"http://43.252.215.163:8313/denningapi/v1/logout"
 
-#define LOGIN_SEND_SMS_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/SMS/request"
+#define LOGIN_SEND_SMS_URL  @"http://43.252.215.163:8313/denningapi/v1/SMS/request"
 
-#define NEW_DEVICE_SEND_SMS_URL     @"http://denningsoft.dlinkddns.com/denningwcf/v1/SMS/newDevice"
+#define NEW_DEVICE_SEND_SMS_URL     @"http://43.252.215.163:8313/denningapi/v1/SMS/newDevice"
 
 #define DENNING_SIGNIN_URL  @"denningwcf/v1/app/staffLogin"
 
@@ -97,13 +97,13 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define DENNING_CLIENT_FIRST_SIGNIN @"denningwcf/v1/app/clientLogin/first"
 
-#define SIGNUP_FIRM_LIST_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/Solicitor"
+#define SIGNUP_FIRM_LIST_URL    @"http://43.252.215.163:8313/denningapi/v1/Solicitor"
 
-#define SIGNUP_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/signUp"
+#define SIGNUP_URL  @"http://43.252.215.163:8313/denningapi/v1/signUp"
 
-#define SIGNIN_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/signIn"
+#define SIGNIN_URL  @"http://43.252.215.163:8313/denningapi/v1/signIn"
 
-#define Auth_ACTIVATION_URL @"http://denningsoft.dlinkddns.com/denningwcf/v1/signUp/activate"
+#define Auth_ACTIVATION_URL @"http://43.252.215.163:8313/denningapi/v1/signUp/activate"
 
 #define GENERAL_KEYWORD_SEARCH_URL  @"denningwcf/v1/generalSearch/keyword?search="
 
@@ -123,19 +123,19 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define SEARCH_TYPE_CATEGORY_GET    @"denningwcf/v1/Table/cbotemplatecategory?filter="
 
-#define PUBLIC_KEYWORD_SEARCH_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/publicSearch/keyword?search="
+#define PUBLIC_KEYWORD_SEARCH_URL   @"http://43.252.215.163:8313/denningapi/v1/publicSearch/keyword?search="
 
-#define PUBLIC_SEARCH_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/publicSearch?search="
+#define PUBLIC_SEARCH_URL    @"http://43.252.215.163:8313/denningapi/v1/publicSearch?search="
 
-#define UPDATES_LATEST_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/DenningUpdate"
+#define UPDATES_LATEST_URL   @"http://43.252.215.163:8313/denningapi/v1/DenningUpdate"
 
-#define NEWS_LATEST_URL        @"http://denningsoft.dlinkddns.com/denningwcf/v1/DenningNews"
+#define NEWS_LATEST_URL        @"http://43.252.215.163:8313/denningapi/v1/DenningNews"
 
 #define EVENT_LATEST_URL        @"denningwcf/v1/DenningCalendar"
 
 #define CALENDAR_MONTHLY_SUMMARY_URL    @"denningwcf/v1/DenningCalendar/MonthlySummary"
 
-#define HOME_ADS_GET_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/advertisement"
+#define HOME_ADS_GET_URL    @"http://43.252.215.163:8313/denningapi/v1/advertisement"
 
 #define ATTENDANCE_GET_URL  @"denningwcf/v1/app/StaffAttendance/101"
 
@@ -143,19 +143,19 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define ATTENDANCE_BREAK    @"denningwcf/v1/app/StaffAttendance/Break"
 
-#define GET_CHAT_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v2/chat/contact?userid="
+#define GET_CHAT_CONTACT_URL    @"http://43.252.215.163:8313/denningapi/v2/chat/contact?userid="
 
-#define GET_CHAT_FAV_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v2/chat/favcontact?userid="
+#define GET_CHAT_FAV_CONTACT_URL    @"http://43.252.215.163:8313/denningapi/v2/chat/favcontact?userid="
 
-#define CHANGE_AVATAR_URL   @"http://denningsoft.dlinkddns.com/denningwcf/v1/avatar"
+#define CHANGE_AVATAR_URL   @"http://43.252.215.163:8313/denningapi/v1/avatar"
 
-#define PUBLIC_ADD_FAVORITE_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/fav"
+#define PUBLIC_ADD_FAVORITE_CONTACT_URL    @"http://43.252.215.163:8313/denningapi/v1/chat/contact/fav"
 
-#define INVITE_DENNING_URL  @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/invite"
+#define INVITE_DENNING_URL  @"http://43.252.215.163:8313/denningapi/v1/chat/invite"
 
 #define PRIVATE_ADD_FAVORITE_CONTACT_URL    @"denningwcf/v1/chat/contact/fav"
 
-#define REMOVE_FAVORITE_CONTACT_URL    @"http://denningsoft.dlinkddns.com/denningwcf/v1/chat/contact/fav"
+#define REMOVE_FAVORITE_CONTACT_URL    @"http://43.252.215.163:8313/denningapi/v1/chat/contact/fav"
 
 #define CONTACT_ID_DUPLICATE    @"denningwcf/v1/generalSearch?category=1&isAutoComplete=1&search="
 

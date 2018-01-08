@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *relationshipLabel;
 @property (strong, nonatomic) NSArray* relationsArray;
 @property (weak, nonatomic) IBOutlet UITextField *legalCostTextField;
+@property (weak, nonatomic) IBOutlet UITextField *totalTextField;
 
 @end
 
@@ -204,22 +205,22 @@
 
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 2;
-    } else if (section == 1) {
-        return 2;
-    } else if (section == 2) {
-        return 1;
-    }
-    return 0;
-}
+//
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//
+//    return 3;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return 2;
+//    } else if (section == 1) {
+//        return 2;
+//    } else if (section == 2) {
+//        return 1;
+//    }
+//    return 0;
+//}
 
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

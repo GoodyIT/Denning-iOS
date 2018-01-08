@@ -106,14 +106,6 @@ NYTPhotosViewControllerDelegate
                                                 name:UIMenuControllerWillHideMenuNotification
                                               object:nil];
     
-    if (self.navigationController.viewControllers.count == 1) {
-        
-        // showing split view display mode buttons
-        // only if controller is first in stack
-        self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
-        self.navigationItem.leftItemsSupplementBackButton = YES;
-    }
-    
     self.hiddenSections = [NSMutableIndexSet indexSet];
     self.avatarImageView.imageViewType = QMImageViewTypeCircle;
     self.avatarImageView.delegate = self;
@@ -147,7 +139,11 @@ NYTPhotosViewControllerDelegate
 }
 
 - (IBAction)dismissScreen:(id)sender {
-    [self.navigationController  popViewControllerAnimated:YES];
+    if ((BOOL)self.isDismiss) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController  popViewControllerAnimated:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

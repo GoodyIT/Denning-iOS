@@ -176,13 +176,13 @@ shouldSelectViewController:(UIViewController *)viewController
       }],
       
       [RWDropdownMenuItem itemWithText:@"Add" image:[UIImage imageNamed:@"menu_add"] action:^{
-          if ([self checkPublicUser] != YES) {
+          if ([DataManager sharedManager].isStaff) {
               self.selectedViewController = self.viewControllers[1];
           }
       }],
       
       [RWDropdownMenuItem itemWithText:@"Dashboard" image:[UIImage imageNamed:@"menu_overview"] action:^{
-          if (![self checkPublicUser]) {
+          if ([DataManager sharedManager].isStaff) {
               self.selectedViewController = self.viewControllers[2];
           }
       }],
@@ -195,7 +195,12 @@ shouldSelectViewController:(UIViewController *)viewController
         }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:SHOW_RECENT_VIEW object:nil];
-          self.selectedViewController = self.viewControllers[3];
+        if ([DataManager sharedManager].isStaff) {
+            self.selectedViewController = self.viewControllers[3];
+        } else {
+            self.selectedViewController = self.viewControllers[1];
+        }
+        
       }],
       
       [RWDropdownMenuItem itemWithText:@"Our Products" image:[UIImage imageNamed:@"menu_our_product"] action:^{

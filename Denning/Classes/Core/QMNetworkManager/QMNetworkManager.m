@@ -168,7 +168,6 @@
     [self setPublicHTTPHeader];
     
     [self sendPostWithURL:url params:params completion:^(NSDictionary * _Nonnull result, NSError * error,  NSURLSessionDataTask * _Nonnull task) {
-                NSHTTPURLResponse *test = (NSHTTPURLResponse *)task.response;
                 if (error == nil) {
                         completion(YES, [[result valueForKeyNotNull:@"statusCode"] integerValue], error.localizedDescription, result);
                     } else {
@@ -572,7 +571,8 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }];
 }
 
-- (void) buildContactsFrom:(NSArray*) contacts for:(NSMutableArray*) dest withFriends:(NSArray*) friends{
+- (NSMutableArray*) buildContactsFrom:(NSArray*) contacts{
+    NSMutableArray* dest = [NSMutableArray new];
     for (ChatFirmModel *chatFirmModel in contacts) {
         ChatFirmModel* newModel = [ChatFirmModel new];
         newModel.firmName = chatFirmModel.firmName;
@@ -581,15 +581,18 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         for (ChatUserModel* chatUserModel in chatFirmModel.users) {
             QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage usersWithEmails:@[chatUserModel.email]].firstObject;
             if (user != nil) {
-                user.twitterDigitsID = chatUserModel.position;
-                user.twitterID = chatUserModel.tag;
-                [userArray addObject:user];
+                QBUUser *newUser = [user copy];
+                newUser.twitterDigitsID = chatUserModel.position;
+                newUser.twitterID = chatUserModel.tag;
+                [userArray addObject:newUser];
             }
         }
         
         newModel.users = [userArray copy];
         [dest addObject:newModel];
     }
+    
+    return dest;
 }
 
 - (BFTask *) getChatContacts
@@ -603,27 +606,21 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
         [self sendGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
             if (error == nil) {
                 chatContacts = [ChatContactModel getChatContactFromResponse:result];
-                NSArray *friends = [[QMCore instance].usersService.usersMemoryStorage unsortedUsers];
-                
-                // Client Contact
-                [DataManager sharedManager].clientContactsArray = [NSMutableArray new];
-                [self buildContactsFrom:chatContacts.clientContacts for:[DataManager sharedManager].clientContactsArray withFriends:friends];
-                
-                // Staff Contact
-                [DataManager sharedManager].staffContactsArray = [NSMutableArray new];
-                [self buildContactsFrom:chatContacts.staffContacts for:[DataManager sharedManager].staffContactsArray withFriends:friends];
                 
                 // Denning Contact
-                [DataManager sharedManager].denningContactArray = [NSMutableArray new];
-                [self buildContactsFrom:chatContacts.denningContacts for:[DataManager sharedManager].denningContactArray withFriends:friends];
+                [DataManager sharedManager].denningContactArray = [self buildContactsFrom:chatContacts.denningContacts];
                 
-                // favorite client
-                [DataManager sharedManager].favClientContactsArray = [NSMutableArray new];
-                [self buildContactsFrom:chatContacts.favClientContacts for:[DataManager sharedManager].favClientContactsArray withFriends:friends];
+                // Staff Contact
+                [DataManager sharedManager].staffContactsArray = [self buildContactsFrom:chatContacts.staffContacts];
+                
+                // Client Contact
+                [DataManager sharedManager].clientContactsArray = [self buildContactsFrom:chatContacts.clientContacts];
                 
                 // favorite Staff Contact
-                [DataManager sharedManager].favStaffContactsArray = [NSMutableArray new];
-                [self buildContactsFrom:chatContacts.favStaffContacts for:[DataManager sharedManager].favStaffContactsArray withFriends:friends];
+                [DataManager sharedManager].favStaffContactsArray = [self buildContactsFrom:chatContacts.favStaffContacts];
+                
+                // favorite client
+                [DataManager sharedManager].favClientContactsArray = [self buildContactsFrom:chatContacts.favClientContacts];
                 
                 // Set Expire values
                 [[DataManager sharedManager] setIsExpire:[chatContacts.isExpire boolValue]];

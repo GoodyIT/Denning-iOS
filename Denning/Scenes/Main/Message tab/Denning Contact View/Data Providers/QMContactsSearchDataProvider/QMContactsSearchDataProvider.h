@@ -11,5 +11,6 @@
 @interface QMContactsSearchDataProvider : QMSearchDataProvider
 
 @property (copy, nonatomic) NSArray *friends;
+@property (copy, nonatomic) NSArray *friendsWithoutDenning;
 
 @end

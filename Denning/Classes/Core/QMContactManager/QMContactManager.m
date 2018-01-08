@@ -149,32 +149,49 @@
     return NO;
 }
 
+- (NSArray*) friendsWithoutDenning {
+    NSArray *users = [self.serviceManager.usersService.usersMemoryStorage unsortedUsers];
+    NSMutableArray* friends = [NSMutableArray new];
+    // Staff Contact
+    for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].staffContactsArray) {
+        for (QBUUser* chatUserModel in chatFirmModel.users) {
+            for (QBUUser* user in users) {
+                if ([chatUserModel.email localizedCaseInsensitiveCompare:user.email] == NSOrderedSame && ![self isUserExist:user.ID inArray:friends] && user.ID != [QBSession currentSession].currentUser.ID) {
+                    [friends addObject:chatUserModel];
+                }
+            }
+        }
+    }
+    
+    for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].clientContactsArray) {
+        for (QBUUser* chatUserModel in chatFirmModel.users) {
+            for (QBUUser* user in users) {
+                if ([chatUserModel.email localizedCaseInsensitiveCompare: user.email] == NSOrderedSame && ![self isUserExist:user.ID inArray:friends] && user.ID != [QBSession currentSession].currentUser.ID) {
+                    [friends addObject:chatUserModel];
+                }
+            }
+        }
+    }
+    
+    return [friends copy];
+}
+
 - (NSArray *)friends {
     
     NSArray *users = [self.serviceManager.usersService.usersMemoryStorage unsortedUsers];
-    NSMutableArray* friends = [NSMutableArray new];
+    NSMutableArray* friends = [[self friendsWithoutDenning] mutableCopy];
     
-    for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].clientContactsArray) {
-        for (ChatUserModel* chatUserModel in chatFirmModel.users) {
-            for (QBUUser* user in users) {
-                if ([chatUserModel.email localizedCaseInsensitiveCompare: user.email] == NSOrderedSame && ![self isUserExist:user.ID inArray:friends] && user.ID != [QBSession currentSession].currentUser.ID) {
-                    [friends addObject:user];
-                }
-            }
-        }
-    }
-    
-    // Staff Contact
-    for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].staffContactsArray) {
-        for (ChatUserModel* chatUserModel in chatFirmModel.users) {
+    // Denning Contact
+    for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].denningContactArray) {
+        for (QBUUser* chatUserModel in chatFirmModel.users) {
             for (QBUUser* user in users) {
                 if ([chatUserModel.email localizedCaseInsensitiveCompare:user.email] == NSOrderedSame && ![self isUserExist:user.ID inArray:friends] && user.ID != [QBSession currentSession].currentUser.ID) {
-                    [friends addObject:user];
+                    [friends addObject:chatUserModel];
                 }
             }
         }
     }
-    
+   
     return [friends copy];
 }
 

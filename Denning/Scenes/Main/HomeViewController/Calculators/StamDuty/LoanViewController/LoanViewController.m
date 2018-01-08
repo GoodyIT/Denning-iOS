@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 @property (weak, nonatomic) IBOutlet UITextField *resultLabel;
 @property (weak, nonatomic) IBOutlet UITextField *legalCostTextField;
+@property (weak, nonatomic) IBOutlet UITextField *totalTextField;
 
 @property (strong, nonatomic)NSArray* typesArray;
 

@@ -16,6 +16,9 @@
 #import "QBChatDialog+OpponentID.h"
 #import "MessageViewController.h"
 #import "QMDialogsDataSource.h"
+#import "QMUserInfoViewController.h"
+#import "QMGroupInfoViewController.h"
+
 
 // category
 //#import "UINavigationController+QMNotification.h"
@@ -352,24 +355,19 @@ UIGestureRecognizerDelegate
     }
     
     cell.didTapAvatar = ^(QMTableViewCell *cell) {
-        NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-         QBChatDialog *chatDialog = self.items[indexPath.row];
-        if (![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
-            return;
-        }
-        
-        if (![DIHelpers hasAdminRole:chatDialog]) {
-            // Only admin can view the profile
-            return;
-        }
-        
-        if (chatDialog.type == QBChatDialogTypePrivate) {
-            
-            [self performInfoViewControllerForUserID:[chatDialog opponentID]];
-        }
-        else {
-            
-        }
+//        NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+//         QBChatDialog *chatDialog = self.items[indexPath.row];
+//        if (chatDialog.type == QBChatDialogTypePrivate) {
+//
+//            [self performInfoViewControllerForUserID:[chatDialog opponentID]];
+//        }
+//        else {
+//            if (![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
+//                return;
+//            }
+//
+//            [self performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:chatDialog];
+//        }
     };
     
     // there was a time when updated at didn't exist
@@ -422,6 +420,23 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         QMChatVC *chatViewController = (QMChatVC *)chatNavigationController.topViewController;
         chatViewController.chatDialog = sender;
+    } else if ([segue.identifier isEqualToString:kQMSceneSegueUserInfo]) {
+         QMNavigationController * nav = segue.destinationViewController;
+        
+        nav.currentAdditionalNavigationBarHeight =
+        [(QMNavigationController *)self.navigationController currentAdditionalNavigationBarHeight];
+        
+        QMUserInfoViewController *userInfoVC = nav.viewControllers.firstObject;
+        userInfoVC.user = sender;
+        userInfoVC.isDismiss = @(YES);
+    } else if ([segue.identifier isEqualToString:KQMSceneSegueGroupInfo]) {
+        QMGroupInfoViewController *groupInfoVC = segue.destinationViewController;
+        groupInfoVC.chatDialog = sender;
+        groupInfoVC.updateChatDialog = ^(QBChatDialog * _Nonnull chatDialog) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        };
     }
 }
 

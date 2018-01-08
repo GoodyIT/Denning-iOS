@@ -12,4 +12,6 @@
 
 - (void) configureMenuRightBtnWithImagename:(NSString*) imageName withSelector:(SEL) action;
 
+- (void) setupFloatingButton;
+
 @end

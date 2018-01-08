@@ -120,8 +120,7 @@
     return url;
 }
 
-- (IBAction)didTapShare:(id)sender {
-    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+- (void) _sendFiles:(NSArray*) selectedRows {
     NSMutableArray* urlArray = [NSMutableArray new];
     for (NSIndexPath *selectionIndex in selectedRows)
     {
@@ -139,8 +138,15 @@
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        _updateHandler(urlArray);
+        if (_updateHandler != nil) {
+            _updateHandler(urlArray);
+        }
     }];
+}
+
+- (IBAction)didTapShare:(id)sender {
+    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    [self _sendFiles:selectedRows];
 }
 
 - (void) shareDocument:(NSArray*) urls {
@@ -481,20 +487,24 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
         return;
     }
     
-    FileModel* file;
-    if (indexPath.section == 0) {
-        return;
-    } else if (indexPath.section == 1) {
-        file = self.documentModel.documents[indexPath.row];
+    if  (![_custom isEqualToString:@"custom"]) {
+        FileModel* file;
+        if (indexPath.section == 0) {
+            return;
+        } else if (indexPath.section == 1) {
+            file = self.documentModel.documents[indexPath.row];
+        } else {
+            DocumentModel* model = self.documentModel.folders[indexPath.section-2];
+            file = model.documents[indexPath.row];
+        }
+        NSURL *url = [self getFileURL:file];
+        
+        [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
+            selectedDocument = filePath;
+        }];
     } else {
-        DocumentModel* model = self.documentModel.folders[indexPath.section-2];
-        file = model.documents[indexPath.row];
+        [self _sendFiles:@[indexPath]];
     }
-    NSURL *url = [self getFileURL:file];
-    
-    [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
-        selectedDocument = filePath;
-    }];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

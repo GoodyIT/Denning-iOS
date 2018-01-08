@@ -326,7 +326,7 @@ QMUsersServiceDelegate
     // load messages from cache if needed and from REST
     [self refreshMessages];
     
-    if (![DataManager sharedManager].isExpire) {
+    if (![DataManager sharedManager].isExpire || [DataManager sharedManager].isStaff || [DataManager sharedManager].isDenningUser) {
         self.inputToolbar.audioRecordingEnabled = YES;
     } else {
         self.inputToolbar.audioRecordingEnabled = NO;
@@ -549,10 +549,12 @@ QMUsersServiceDelegate
 //            return YES;
 //        }
 //    }
-    
-    if ([DataManager sharedManager].isExpire) {
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restricted" actionSuccess:NO  inViewController:self];
-        return NO;
+    NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:self.chatDialog];
+    if (![@[kRoleAdminTag, kRoleStaffTag] containsObject:role] && ![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
+        if ([DataManager sharedManager].isExpire) {
+            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restricted" actionSuccess:NO  inViewController:self];
+            return NO;
+        }
     }
     
     return [self.deferredQueueManager shouldSendMessagesInDialogWithID:self.chatDialog.ID];
@@ -762,7 +764,6 @@ QMUsersServiceDelegate
         return;
     }
     
-    
     QBChatMessage *message = [QMMessagesHelper chatMessageWithText:text
                                                           senderID:senderId
                                                       chatDialogID:self.chatDialog.ID
@@ -790,9 +791,13 @@ QMUsersServiceDelegate
                                                         style:UIAlertActionStyleCancel
                                                       handler:nil]];
     
-    if ([DataManager sharedManager].isDenningUser && [DataManager sharedManager].isStaff) {
+    if ([DataManager sharedManager].isDenningUser || [DataManager sharedManager].isStaff) {
         [alertController addAction:[UIAlertAction actionWithTitle:@"Denning Files" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [self performSegueWithIdentifier:kOpenFileSegue sender:_chatDialog.name];
+            NSString* hint = _chatDialog.name;
+            if (_chatDialog.type == QBChatDialogTypePrivate && [[DIHelpers getTag:_chatDialog] isEqualToString:kChatClientsTag]) {
+                hint = @"";
+            }
+            [self performSegueWithIdentifier:kOpenFileSegue sender:hint];
         }]];
     }
     
@@ -1814,7 +1819,7 @@ QMUsersServiceDelegate
     __weak typeof(self) weakSelf = self;
     void(^onTapBlock)(QMImageView *) = ^(QMImageView __unused *imageView) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (![DataManager sharedManager].isStaff || ![DataManager sharedManager].isDenningUser) {
+        if (!([DataManager sharedManager].isStaff || [DataManager sharedManager].isDenningUser)) {
             return;
         }
         [strongSelf performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:strongSelf.chatDialog];
@@ -2185,7 +2190,7 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
 
 - (void)chatCellDidTapAvatar:(QMChatCell *)cell {
     
-    if (![DataManager sharedManager].isStaff || ![DataManager sharedManager].isDenningUser) {
+    if (!([DataManager sharedManager].isStaff || [DataManager sharedManager].isDenningUser)) {
         return;
     }
     

@@ -237,7 +237,7 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     TaxInvoiceModel *model = self.listOfTaxInvoices[indexPath.row];
-    if (_fileNo != nil) {
+   if (_updateHandler != nil) {
         [self.navigationController dismissViewControllerAnimated:YES completion:^{
             _updateHandler(model);
         }];

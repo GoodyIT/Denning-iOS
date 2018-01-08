@@ -29,6 +29,7 @@
 
 "QM_STR_CHAT_EXPIRED" = "Please contact your business service provider.";
 "STR_ACCESS_DENIED_REGISTER" = "The function is only accessible by registered Denning User, please register.";
+"STR_ACCESS_RESTRICT_CLIENT" = "This function is only available to public users invited by Denning Biz providers.";
 
 //  ********** Contact requests notification text: ***************
 "QM_STR_FRIEND_REQUEST_DID_SEND_FOR_ME" = "Your request has been sent";

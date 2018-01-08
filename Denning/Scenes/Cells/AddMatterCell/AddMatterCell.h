@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DIGeneralCell.h"
 #import "GeneralContactCell.h"
 
 @interface AddMatterCell : GeneralContactCell

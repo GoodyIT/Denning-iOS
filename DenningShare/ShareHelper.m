@@ -45,7 +45,7 @@
     NSString* date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     
-    NSTimeZone* timeZone = [NSTimeZone timeZoneForSecondsFromGMT:[[NSTimeZone localTimeZone] secondsFromGMT]/3600];
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     

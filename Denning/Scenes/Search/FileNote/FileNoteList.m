@@ -16,7 +16,7 @@
     BOOL isAppending;
     NSNumber* _page;
 }
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @property (weak, nonatomic) IBOutlet UILabel *fileNo;
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
 
@@ -30,6 +30,7 @@
     [self prepareUI];
     [self updateHeaderInfo];
     [self registerNibs];
+    [self setupFloatingButton];
 }
 
 - (void) prepareUI {

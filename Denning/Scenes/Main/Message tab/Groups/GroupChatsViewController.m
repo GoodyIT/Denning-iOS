@@ -16,9 +16,8 @@
 #import "QBChatDialog+OpponentID.h"
 #import "MessageViewController.h"
 #import "QMDialogsDataSource.h"
-
-// category
-//#import "UINavigationController+QMNotification.h"
+#import "QMUserInfoViewController.h"
+#import "QMGroupInfoViewController.h"
 
 static const NSInteger kQMNotAuthorizedInRest = -1000;
 static const NSInteger kQMUnauthorizedErrorCode = -1011;
@@ -91,7 +90,7 @@ MEVFloatingButtonDelegate
     // registering nibs for current VC and search results VC
     [self registerNibs];
     
-    if ([DataManager sharedManager].isStaff && [DataManager sharedManager].isDenningUser) {
+    if ([DataManager sharedManager].isStaff || [DataManager sharedManager].isDenningUser) {
         [self prepareUI];
     }
     
@@ -105,22 +104,6 @@ MEVFloatingButtonDelegate
                                 action:@selector(updateDataAndEndRefreshing)
                       forControlEvents:UIControlEventValueChanged];
     }
-    
-    @weakify(self);
-    // adding notification for showing chat connection
-    self.observerWillEnterForeground =
-    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification
-                                                      object:nil
-                                                       queue:nil
-                                                  usingBlock:^(NSNotification * _Nonnull __unused note)
-     {
-         @strongify(self);
-         if (![QBChat instance].isConnected) {
-             [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
-                                                                                   message:NSLocalizedString(@"QM_STR_CONNECTING", nil)
-                                                                                  duration:0];
-         }
-     }];
 }
 
 - (void) prepareUI
@@ -304,8 +287,6 @@ MEVFloatingButtonDelegate
     }];
 }
 
-
-
 //MARK: - MevFloatingButton Delegate
 - (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button
 {
@@ -389,6 +370,18 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         QMChatVC *chatViewController = (QMChatVC *)chatNavigationController.topViewController;
         chatViewController.chatDialog = sender;
+    } else if ([segue.identifier isEqualToString:kQMSceneSegueUserInfo]) {
+        
+        QMUserInfoViewController *userInfoVC = segue.destinationViewController;
+        userInfoVC.user = sender;
+    } else if ([segue.identifier isEqualToString:KQMSceneSegueGroupInfo]) {
+        QMGroupInfoViewController *groupInfoVC = segue.destinationViewController;
+        groupInfoVC.chatDialog = sender;
+        groupInfoVC.updateChatDialog = ^(QBChatDialog * _Nonnull chatDialog) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
+        };
     }
 }
 

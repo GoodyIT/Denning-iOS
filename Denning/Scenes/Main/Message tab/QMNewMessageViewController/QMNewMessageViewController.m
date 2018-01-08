@@ -111,12 +111,12 @@ QMTagFieldViewDelegate
 
             return [BFTask cancelledTask];
             
-        }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
-            
-            return task.isCancelled ? nil : [[QMCore instance].chatService sendNotificationMessageAboutAddingOccupants:occupantsIDs toDialog:chatDialog withNotificationText:kQMDialogsUpdateNotificationMessage];
         }] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
             
             return t.isCancelled ? nil : [[QMCore instance].chatManager updateRoleOfUsers:occupantsIDs forGroupChatDialog:chatDialog];
+        }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+            
+            return task.isCancelled ? nil : [[QMCore instance].chatService sendNotificationMessageAboutAddingOccupants:occupantsIDs toDialog:chatDialog withNotificationText:kQMDialogsUpdateNotificationMessage];
         }];
     }
     else {

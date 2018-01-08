@@ -819,15 +819,15 @@
 
 + (NSString*) getTag:(QBChatDialog*) dialog {
     NSString* tag = [dialog.data valueForKeyNotNull:@"tag"];
-    return tag.length == 0 ? @"Colleagues" : tag;
+    return tag.length == 0 ? kChatColleaguesTag : tag;
 }
 
 + (NSString*) getCurrentUserRole:(QBUUser*) user fromChatDialog:(QBChatDialog*) chatDialog
 {
-    NSString* role = kRoleNormalTag;
+    NSString* role = kRoleStaffTag;
     NSArray* adminRoles = [chatDialog.data objectForKey:kRoleAdminTag];
     NSArray* readerRoles = [chatDialog.data objectForKey:kRoleReaderTag];
-    NSArray* normalRoles = [chatDialog.data objectForKey:kRoleNormalTag];
+    NSArray* normalRoles = [chatDialog.data objectForKey:kRoleStaffTag];
     
     NSInteger userID = user.ID;
     if ([[DataManager sharedManager] checkDenningUser:user.email]) {
@@ -837,7 +837,7 @@
     } else if (readerRoles != nil && readerRoles.count > 0 && [readerRoles containsObject:@(userID)]) {
         role = kRoleReaderTag;
     } else if (normalRoles != nil && normalRoles.count > 0 && [normalRoles containsObject:@(userID)]) {
-        role = kRoleNormalTag;
+        role = kRoleStaffTag;
     } else {
         role = kRoleClientTag;
     }

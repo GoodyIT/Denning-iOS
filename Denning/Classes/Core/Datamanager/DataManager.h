@@ -12,6 +12,7 @@
 //@property RLMArray
 
 @class UserModel;
+@class ChatFirmModel;
 @interface DataManager : NSObject
 
 @property (strong, nonatomic) NSString  *searchType;
@@ -23,9 +24,9 @@
 @property (strong, nonatomic) NSString* documentView;
 @property (strong, nonatomic) NSMutableArray* favClientContactsArray;
 @property (strong, nonatomic) NSMutableArray* favStaffContactsArray;
-@property (strong, nonatomic) NSMutableArray* clientContactsArray;
-@property (strong, nonatomic) NSMutableArray* staffContactsArray;
-@property (strong, nonatomic) NSMutableArray* denningContactArray;
+@property (strong, nonatomic) NSMutableArray<ChatFirmModel*>* clientContactsArray;
+@property (strong, nonatomic) NSMutableArray<ChatFirmModel*>* staffContactsArray;
+@property (strong, nonatomic) NSMutableArray<ChatFirmModel*>* denningContactArray;
 @property (assign, nonatomic) BOOL userAgreementAccepted;
 
 @property (strong, nonatomic) NSString* tempServerURL;
@@ -45,6 +46,8 @@
 
 - (void) setSessionID: (NSDictionary*) response;
 
+- (void) setAvatarURL:(NSString*) url;
+
 - (void) setOnlySessionID:(NSString*) sessionID;
 
 - (void) setUserInfoFromNewDeviceLogin: (NSDictionary*) response;
@@ -60,6 +63,8 @@
 - (BOOL) isPublicUser;
 
 - (BOOL) isDenningUser;
+
+- (BOOL) isSuperUser:(NSString*) email;
 
 - (BOOL) checkDenningUser:(NSString*) email;
 

@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (strong, nonatomic) QBUUser *user;
 
+@property (strong, nonatomic) id isDismiss;
+
 @end
 
 NS_ASSUME_NONNULL_END

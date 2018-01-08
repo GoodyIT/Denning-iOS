@@ -47,7 +47,11 @@ QMSearchDataProviderDelegate
     self.dataSource = [[QMNewMessageContactListSearchDataSource alloc] initWithSearchDataProvider:dataProvider usingKeyPath:@keypath(QBUUser.new, fullName)];
     self.tableView.dataSource = self.dataSource;
     
-    [self.dataSource replaceItems:dataProvider.friends];
+    if ([DataManager sharedManager].isDenningUser) {
+        [self.dataSource replaceItems:dataProvider.friends];
+    } else {
+        [self.dataSource replaceItems:dataProvider.friendsWithoutDenning];
+    }
 }
 
 #pragma mark - Methods

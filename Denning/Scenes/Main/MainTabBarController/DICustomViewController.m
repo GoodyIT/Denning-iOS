@@ -10,6 +10,7 @@
 #import "MainTabBarController.h"
 
 @interface DICustomViewController ()
+<MEVFloatingButtonDelegate>
 
 @end
 
@@ -94,6 +95,46 @@
 - (void) gotoMenu {
     MainTabBarController *mainTabBarController = (MainTabBarController*)self.tabBarController;
     [mainTabBarController tapMenu:nil];
+}
+
+
+- (void) setupFloatingButton {
+    MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
+    button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
+    button.animationType = MEVFloatingButtonAnimationNone;
+    button.position = MEVFloatingButtonPositionBottomRight;
+    button.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.9];
+    button.horizontalOffset = -12.0f;
+    button.verticalOffset = -30.0f;
+    button.image = [UIImage imageNamed:@"Icon2"];
+    button.rounded = NO;
+    button.hideWhenScrollToTop = YES;
+    [self.tableView setFloatingButtonView:button];
+    [self.tableView setFloatingButtonDelegate:self];
+}
+
+#pragma mark - MEScrollToTopDelegate Methods
+
+- (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    NSLog(@"didTapButton");
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+- (void)floatingButtonWillAppear:(UIScrollView *)scrollView {
+    NSLog(@"floatingButtonWillAppear");
+}
+
+- (void)floatingButtonDidAppear:(UIScrollView *)scrollView {
+    NSLog(@"floatingButtonDidAppear");
+}
+
+- (void)floatingButtonWillDisappear:(UIScrollView *)scrollView {
+    NSLog(@"floatingButtonWillDisappear");
+}
+
+- (void)floatingButtonDidDisappear:(UIScrollView *)scrollView; {
+    NSLog(@"floatingButtonDidDisappear");
 }
 
 @end

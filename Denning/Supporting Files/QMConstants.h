@@ -30,8 +30,13 @@ static NSString *const kQBPassword = @"denningIT";
 static NSString* const kRoleDenningTag = @"role_denning";
 static NSString* const kRoleAdminTag = @"role_admin";
 static NSString* const kRoleReaderTag = @"role_reader";
-static NSString* const kRoleNormalTag = @"role_normal";
+static NSString* const kRoleStaffTag = @"role_normal";
 static NSString* const kRoleClientTag = @"role_client";
+
+static NSString* const kChatColleaguesTag = @"Colleagues";
+static NSString* const kChatClientsTag = @"Clients";
+static NSString* const kChatMattersTag = @"Matters";
+static NSString* const kChatDenningTag = @"Denning";
 
 static NSString* const kGroupPositionTag = @"position";
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FileNoteList : UIViewController
+@interface FileNoteList : DICustomViewController
 
 @property (strong, nonatomic) NSString* clientName;
 @property (strong, nonatomic) NSString* key;

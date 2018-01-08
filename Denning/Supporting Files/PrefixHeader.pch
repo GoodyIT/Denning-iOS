@@ -83,6 +83,8 @@
 #import "UIImage+Base64.h"
 #import "QMLicenseAgreement.h"
 #import "DIDocumentManager.h"
+#import "DICustomViewController.h"
+#import "DICustomTableViewController.h"
 
 #import "TimePickerViewController.h"
 #import "FZAccordionTableView.h"

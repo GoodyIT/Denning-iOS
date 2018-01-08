@@ -2852,7 +2852,7 @@
                     <connections>
                         <outlet property="fileName" destination="D6L-CX-UEd" id="zBf-fs-fmb"/>
                         <outlet property="fileNo" destination="3HE-wt-iqx" id="VRi-WY-9Dr"/>
-                        <outlet property="tableView" destination="hIP-cr-wZG" id="m6c-n2-rGj"/>
+                        <outlet property="tableView" destination="hIP-cr-wZG" id="5aS-Rz-AOx"/>
                         <segue destination="0NJ-HX-s4y" kind="show" identifier="FileNoteSegue" id="Gpx-4B-Mgb"/>
                     </connections>
                 </viewController>
@@ -2989,18 +2989,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YIe-jZ-6th" id="fAt-T1-Akd">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" misplaced="YES" text="File No" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bij-vD-XLY">
-                                                    <rect key="frame" x="20" y="11" width="86" height="21"/>
-                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="bij-vD-XLY" firstAttribute="centerY" secondItem="fAt-T1-Akd" secondAttribute="centerY" id="J5G-F2-vR1"/>
-                                                <constraint firstItem="bij-vD-XLY" firstAttribute="leading" secondItem="fAt-T1-Akd" secondAttribute="leadingMargin" constant="12" id="syD-LD-hvc"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
@@ -3125,7 +3113,6 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="767"/>
                     <connections>
-                        <outlet property="fileNoLabel" destination="bij-vD-XLY" id="in7-0O-KEh"/>
                         <outlet property="imagePreview" destination="tvF-oe-cik" id="hsJ-DO-jBx"/>
                         <outlet property="remarks" destination="m6s-RN-SdI" id="ua9-fb-xw8"/>
                         <outlet property="renameFile" destination="8Ay-aF-SLZ" id="aQL-5i-1rl"/>

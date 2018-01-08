@@ -34,6 +34,7 @@ QMUsersServiceDelegate
         [QMCore.instance.contactListService addDelegate:self];
         [QMCore.instance.usersService addDelegate:self];
         _friends = [QMCore.instance.contactManager friends];
+        _friendsWithoutDenning = [QMCore.instance.contactManager friendsWithoutDenning];
     }
     
     return self;
@@ -48,9 +49,15 @@ QMUsersServiceDelegate
         self.cachedSearchText = searchText;
     }
     
+    NSArray* newFriends = self.friends;
+    if (![DataManager sharedManager].isDenningUser) {
+        newFriends = self.friendsWithoutDenning;
+    }
+    
     if (searchText.length == 0) {
         
-        [self.dataSource replaceItems:self.friends];
+        [self.dataSource replaceItems:newFriends];
+        
         [self.delegate searchDataProviderDidFinishDataFetching:self];
         
         return;
@@ -61,7 +68,7 @@ QMUsersServiceDelegate
         
         @strongify(self);
         NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.fullName CONTAINS[cd] %@", searchText];
-        NSArray *friendsSearchResult = [self.friends filteredArrayUsingPredicate:usersSearchPredicate];
+        NSArray *friendsSearchResult = [newFriends filteredArrayUsingPredicate:usersSearchPredicate];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -74,11 +81,16 @@ QMUsersServiceDelegate
 //MARK: - Helpers
 
 - (void)updateData {
-    
     self.friends = [QMCore.instance.contactManager friends];
+    self.friendsWithoutDenning = [QMCore.instance.contactManager friendsWithoutDenning];
+    
+    NSArray* newFriends = self.friends;
+    if (![DataManager sharedManager].isDenningUser) {
+        newFriends = self.friendsWithoutDenning;
+    }
     [self performSearch:self.cachedSearchText];
     
-    [self.delegate searchDataProvider:self didUpdateData:self.friends];
+    [self.delegate searchDataProvider:self didUpdateData:newFriends];
 }
 
 //MARK: - QMUsersServiceDelegate

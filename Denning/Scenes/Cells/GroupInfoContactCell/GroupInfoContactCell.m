@@ -52,7 +52,7 @@
     } else if ([role isEqualToString:kRoleAdminTag]) {
         btnTitle = @"Admin";
         color = [UIColor babyRed];
-    } else if ([role isEqualToString:kRoleNormalTag]) {
+    } else if ([role isEqualToString:kRoleStaffTag]) {
         btnTitle = @"Staff";
         color = [UIColor babyBlue];
     } else if ([role isEqualToString:kRoleReaderTag]) {

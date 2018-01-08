@@ -139,6 +139,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)friendsByIDs:(NSArray *)userIDs;
 
+- (NSArray*) friendsWithoutDenning;
+
 @end
 
 NS_ASSUME_NONNULL_END

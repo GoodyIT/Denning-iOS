@@ -8,7 +8,7 @@
 
 #import "DICustomTableViewController.h"
 
-@interface DICustomTableViewController ()
+@interface DICustomTableViewController ()<MEVFloatingButtonDelegate>
 
 @end
 
@@ -60,6 +60,44 @@
     }];
 }
 
+- (void) setupFloatingButton {
+    MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
+    button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;
+    button.animationType = MEVFloatingButtonAnimationNone;
+    button.position = MEVFloatingButtonPositionBottomRight;
+    button.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.9];
+    button.horizontalOffset = -12.0f;
+    button.verticalOffset = -30.0f;
+    button.image = [UIImage imageNamed:@"Icon2"];
+    button.rounded = NO;
+    button.hideWhenScrollToTop = YES;
+    [self.tableView setFloatingButtonView:button];
+    [self.tableView setFloatingButtonDelegate:self];
+}
+
+
+#pragma mark - MEScrollToTopDelegate Methods
+
+- (void)floatingButton:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    NSLog(@"didTapButton");
+    [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
+}
+
+- (void)floatingButtonWillAppear:(UIScrollView *)scrollView {
+    NSLog(@"floatingButtonWillAppear");
+}
+
+- (void)floatingButtonDidAppear:(UIScrollView *)scrollView {
+    NSLog(@"floatingButtonDidAppear");
+}
+
+- (void)floatingButtonWillDisappear:(UIScrollView *)scrollView {
+    NSLog(@"floatingButtonWillDisappear");
+}
+
+- (void)floatingButtonDidDisappear:(UIScrollView *)scrollView; {
+    NSLog(@"floatingButtonDidDisappear");
+}
 
 /*
 // Override to support conditional editing of the table view.

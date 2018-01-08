@@ -28,6 +28,4 @@
     self.address.text = [DIHelpers capitalizedString:address];
 }
 
-
-
 @end

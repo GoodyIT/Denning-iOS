@@ -152,25 +152,28 @@ QMUsersServiceDelegate
         QBUUser *user = self.dataSource.items[userIndex];
         
         NSString* role = [DIHelpers getCurrentUserRole:user fromChatDialog:self.chatDialog];
-        
-        if (!([role isEqualToString:kRoleAdminTag] || [DataManager sharedManager].isDenningUser)) {
-            // Only Denning Staff & Admin can assign the role.
-            return;
-        }
-        
-        if ([[DataManager sharedManager] checkDenningUser:user.email]) {
-            // Cannot change the role of Denning User.
-            return;
-        }
+        NSString* myRole = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:self.chatDialog];
         
         if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
             // User cannot change his role
             return;
         }
         
-        if ([role isEqualToString:kRoleClientTag]) {
-            // Cannot change the client role
-            return;
+        if (![[DataManager sharedManager] isSuperUser:user.email]) {
+            if (!([myRole isEqualToString:kRoleAdminTag] || [DataManager sharedManager].isDenningUser)) {
+                // Only Denning Staff & Admin can assign the role.
+                return;
+            }
+            
+            if ([role isEqualToString:kRoleDenningTag]) {
+                // Cannot change the role of Denning User.
+                return;
+            }
+            
+            if ([role isEqualToString:kRoleClientTag]) {
+                // Cannot change the client role
+                return;
+            }
         }
         
         UIAlertController *customActionSheet = [UIAlertController alertControllerWithTitle:@"User Role" message:@"Please select role to assign." preferredStyle:UIAlertControllerStyleActionSheet];
@@ -182,10 +185,10 @@ QMUsersServiceDelegate
         [firstButton setValue:@(role == kRoleAdminTag) forKey:@"checked"];
         
         UIAlertAction *secondButton = [UIAlertAction actionWithTitle:@"Staff" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            [self updateUserRole:kRoleNormalTag userID:user.ID inIndexPath:indexPath];
+            [self updateUserRole:kRoleStaffTag userID:user.ID inIndexPath:indexPath];
         }];
         [secondButton setValue:[UIColor babyBlue] forKey:@"titleTextColor"];
-        [secondButton setValue:@(role == kRoleNormalTag) forKey:@"checked"];
+        [secondButton setValue:@(role == kRoleStaffTag) forKey:@"checked"];
         
         UIAlertAction *thirdButton = [UIAlertAction actionWithTitle:@"Reader" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
            [self updateUserRole:kRoleReaderTag userID:user.ID inIndexPath:indexPath];
@@ -214,17 +217,18 @@ QMUsersServiceDelegate
     
     if ([DIHelpers isSupportChat:self.chatDialog] && ![DataManager sharedManager].isDenningUser) {
         for (QBUUser* user in items) {
-            for (ChatFirmModel* firmModel in [DataManager sharedManager].denningContactArray) {
-                NSPredicate *usersSearchPredicate = [NSPredicate predicateWithFormat:@"SELF.email CONTAINS[cd] %@", user.email];
-                NSArray *filteredUsers = [firmModel.users filteredArrayUsingPredicate:usersSearchPredicate];
-                if (filteredUsers.count == 0) {
-                    [newItems addObject:user];
-                }
+            if ([[DataManager sharedManager] checkDenningUser:user.email]) {
+                [newItems addObject:user];
             }
         }
-        
     } else {
-        newItems = [items mutableCopy];
+        for (QBUUser* user in items) {
+            if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
+                [newItems insertObject:user atIndex:0];
+            } else {
+                [newItems addObject:user];
+            }
+        }
     }
     
     return [newItems mutableCopy];
@@ -234,7 +238,6 @@ QMUsersServiceDelegate
     
     [[QMCore.instance.usersService getUsersWithIDs:self.chatDialog.occupantIDs] continueWithBlock:^id _Nullable(BFTask<NSArray<QBUUser *> *> * _Nonnull t) {
         if (t.result) {
-            
             NSArray* items = [[t.result sortedArrayUsingComparator:^NSComparisonResult(QBUUser *u1, QBUUser *u2) {
                 return [u1.fullName caseInsensitiveCompare:u2.fullName];
             }] mutableCopy];
@@ -270,37 +273,37 @@ QMUsersServiceDelegate
         [QMAlert showAlertWithMessage:response.error.error.localizedDescription actionSuccess:NO inViewController:self];
     }];
     
-    NSURLSessionConfiguration *configuration =
-    [NSURLSessionConfiguration defaultSessionConfiguration];
-
-    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configuration];
-
-    NSString *path = [NSString stringWithFormat:@"https://api.quickblox.com/chat/Dialog/%@/notifications.json", dialogID];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:path]];
-    request.HTTPMethod = @"PUT";
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setValue:QBSession.currentSession.sessionDetails.token forHTTPHeaderField:@"QB-Token"];
-
-    NSString *data = [NSString stringWithFormat:@"{\"enabled\":\"%tu\"}", enabled ? 1 : 0];
-
-    [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
-
-    NSURLSessionDataTask *dataTask =
-    [defaultSession dataTaskWithRequest:request
-                      completionHandler:^(NSData* data, NSURLResponse *response, NSError *error)
-    {
-
-        if (!error) {
-            NSError *serializationError = nil;
-            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
-                                                                 options:kNilOptions
-                                                                   error:&serializationError];
-            NSNumber* enable = [[json objectForKeyNotNull:@"notifications"] valueForKeyNotNull:@"enabled"];
-            [QMCore.instance.chatManager changeCustomData:@{@"notifications":enable} forGroupChatDialog:_chatDialog];
-        }
-    }];
-
-    [dataTask resume];
+//    NSURLSessionConfiguration *configuration =
+//    [NSURLSessionConfiguration defaultSessionConfiguration];
+//
+//    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configuration];
+//
+//    NSString *path = [NSString stringWithFormat:@"https://api.quickblox.com/chat/Dialog/%@/notifications.json", dialogID];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:path]];
+//    request.HTTPMethod = @"PUT";
+//    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [request setValue:QBSession.currentSession.sessionDetails.token forHTTPHeaderField:@"QB-Token"];
+//
+//    NSString *data = [NSString stringWithFormat:@"{\"enabled\":\"%tu\"}", enabled ? 1 : 0];
+//
+//    [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
+//
+//    NSURLSessionDataTask *dataTask =
+//    [defaultSession dataTaskWithRequest:request
+//                      completionHandler:^(NSData* data, NSURLResponse *response, NSError *error)
+//    {
+//
+//        if (!error) {
+//            NSError *serializationError = nil;
+//            NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data
+//                                                                 options:kNilOptions
+//                                                                   error:&serializationError];
+//            NSNumber* enable = [[json objectForKeyNotNull:@"notifications"] valueForKeyNotNull:@"enabled"];
+//            [QMCore.instance.chatManager changeCustomData:@{@"notifications":enable} forGroupChatDialog:_chatDialog];
+//        }
+//    }];
+//
+//    [dataTask resume];
 }
 
 - (IBAction)notificationSetting:(UISwitch *)sender {

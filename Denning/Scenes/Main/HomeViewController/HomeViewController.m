@@ -75,30 +75,20 @@ iCarouselDataSource, iCarouselDelegate>
 }
 
 - (void) showTabBar {
-    [self setTabBarVisible:YES animated:NO completion:nil];
+    if ([((UINavigationController*)[self.tabBarController selectedViewController]).topViewController isKindOfClass:[HomeViewController class]]) {
+        if ([self tabBarIsVisible] == YES) return;
+        
+        CGRect frame = self.tabBarController.tabBar.frame;
+        CGFloat height = frame.size.height;
+        CGFloat offsetY = -height;
+        
+        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+    }
 }
 
 //Getter to know the current state
 - (BOOL)tabBarIsVisible {
     return self.tabBarController.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
-}
-
-- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
-    
-    // bail if the current state matches the desired state
-    if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
-    
-    // get a frame calculation ready
-    CGRect frame = self.tabBarController.tabBar.frame;
-    CGFloat height = frame.size.height;
-    CGFloat offsetY = (visible)? -height : height;
-    
-    // zero duration means no animation
-    CGFloat duration = (animated)? 0.3 : 0.0;
-    
-    [UIView animateWithDuration:duration animations:^{
-        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
-    } completion:completion];
 }
 
 - (void) changeUIBasedOnUserType {
@@ -439,10 +429,8 @@ iCarouselDataSource, iCarouselDelegate>
         [self getSharedFolder];
     } else if ([menu isEqualToString:@"Forum"]) {
         [self showComingSoon];
-        
     } else if ([menu isEqualToString:@"Products"]) {
         [self showComingSoon];
-        
     } else if ([menu isEqualToString:@"Attendance"]) {
         [self getAttendance];
     } else if ([menu isEqualToString:@"Upload"]) {
@@ -495,7 +483,7 @@ iCarouselDataSource, iCarouselDelegate>
     }
     
     if (![[DataManager sharedManager] isClient]) {
-        [QMAlert showAlertWithMessage:@"Sorry, only client can use this function" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_RESTRICT_CLIENT", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self];
         return NO;
     }
     return YES;

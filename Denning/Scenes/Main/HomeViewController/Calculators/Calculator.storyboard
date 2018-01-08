@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hyp-wb-ys6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="hyp-wb-ys6">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-UI-Text-Bold.otf">
+            <string>SFUIText-Bold</string>
+        </array>
         <array key="SF-UI-Text-Medium.otf">
             <string>SFUIText-Medium</string>
         </array>
@@ -26,7 +29,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="CalculatorSelectionViewController" id="N8i-Fw-EuZ" customClass="CalculatorSelectionViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="tHA-bn-yf4">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -36,11 +39,11 @@
                                         <rect key="frame" x="0.0" y="35" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PR8-vD-Czm" id="1dd-x7-vNW">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Stamp Duty &amp; Legal Cost" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCZ-ZV-e80">
-                                                    <rect key="frame" x="16" y="11.5" width="205" height="20"/>
+                                                    <rect key="frame" x="24" y="11.5" width="205" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -62,11 +65,11 @@
                                         <rect key="frame" x="0.0" y="79" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BNJ-Nq-Epo" id="OAV-Ha-hLM">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Income Tax" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXE-qE-MQc">
-                                                    <rect key="frame" x="16" y="11.5" width="93.5" height="20"/>
+                                                    <rect key="frame" x="24" y="11.5" width="93.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -87,11 +90,11 @@
                                         <rect key="frame" x="0.0" y="123" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XoC-zd-R4z" id="5pM-s8-90O">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Real Property Gains Tax" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xD4-oy-JnM">
-                                                    <rect key="frame" x="16" y="11.5" width="318" height="20"/>
+                                                    <rect key="frame" x="24" y="11.5" width="309" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -111,11 +114,11 @@
                                         <rect key="frame" x="0.0" y="167" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bTT-ze-F1I" id="Js2-hP-U4x">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Loan amortisation" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZB-5z-kjD">
-                                                    <rect key="frame" x="16" y="11.5" width="318" height="20"/>
+                                                    <rect key="frame" x="24" y="11.5" width="309" height="20"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -156,7 +159,7 @@
                         <viewControllerLayoutGuide type="bottom" id="urG-qn-CJB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZuK-a6-z0K">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bg9-t7-xES" userLabel="MainView">
@@ -198,7 +201,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="IncomeTaxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ozl-Xy-zHM" customClass="IncomeTaxViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="DuE-iH-7bC">
-                        <rect key="frame" x="0.0" y="64" width="375" height="1403"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1403"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -212,7 +215,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Taxable Income" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LA0-qO-xZl">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Bt6-KV-yDf"/>
                                                     </constraints>
@@ -221,10 +224,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2TW-rZ-HCT" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hWQ-7I-kmR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -265,7 +268,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Personal Relief" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qke-Mr-LTZ">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="TIg-ax-Qu3"/>
                                                     </constraints>
@@ -274,10 +277,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ia5-Qp-6tI" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="KLB-UB-XtK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -314,7 +317,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Life Insurance / EPF" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jwQ-xa-WSF">
-                                                    <rect key="frame" x="16" y="14" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="14" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Mir-vf-t9d"/>
                                                     </constraints>
@@ -323,10 +326,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lyk-kM-llU" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="8" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="8" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="y8p-cL-aEK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -360,7 +363,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Edu &amp; Medical Insurance" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPg-6I-RFv">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Zwe-pC-5yF"/>
                                                     </constraints>
@@ -369,10 +372,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bSo-N7-9c0" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wph-4T-1Jm">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -406,7 +409,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="SOCSO" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHF-Pi-g0h">
-                                                    <rect key="frame" x="16" y="14" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="14" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="ddr-Ey-ukV"/>
                                                     </constraints>
@@ -415,10 +418,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WIK-7m-Xsr" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="8" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="8" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NVQ-IR-onJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -456,7 +459,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Spouce Alimony Payment" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGo-7e-HQ2">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Sxt-Rt-BUu"/>
                                                     </constraints>
@@ -465,10 +468,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jkf-ET-MUS" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kh5-uJ-fZg">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -502,7 +505,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Medical Exp (Parents)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wIW-Ts-Inz">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="P8A-r3-wU0"/>
                                                     </constraints>
@@ -511,10 +514,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Jo-Lr-xQU" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="j3i-hP-nbj">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -548,7 +551,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Education Fee (Individual)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9zc-Uq-mMn">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="1Zb-xe-rHo"/>
                                                     </constraints>
@@ -557,10 +560,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4zH-ZP-8vD" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6oR-br-Jtx">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -594,7 +597,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Medical Check up" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ac3-8f-16u">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="nLs-sX-q6H"/>
                                                     </constraints>
@@ -603,10 +606,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cTz-Tg-PZb" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mg5-JF-Bdl">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -640,7 +643,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Books &amp; Magazines" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkU-wi-tBl">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="mGc-wC-mow"/>
                                                     </constraints>
@@ -649,10 +652,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63Y-yO-rL5" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yCA-ho-vBY">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -686,7 +689,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="PC (once every 3 years)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfE-Xd-2gn">
-                                                    <rect key="frame" x="16" y="10" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="10" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="IKw-ZF-SUg"/>
                                                     </constraints>
@@ -695,10 +698,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkI-ZY-3Ox" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="11" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="11" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ras-Pq-XaR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -732,7 +735,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Sport Equipment" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4w6-pe-k1J">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="20Y-KW-GaZ"/>
                                                     </constraints>
@@ -741,10 +744,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pih-Oi-sYq" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rYh-Sb-lWX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -778,7 +781,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Disabled Individual" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jek-Kq-Zkf">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="at2-NB-SaI"/>
                                                     </constraints>
@@ -787,10 +790,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hVN-KU-0ic" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0lX-wa-xgi">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -824,7 +827,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Basic Supporting Equipment" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Og3-a1-ToK">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="fzS-wc-uGQ"/>
                                                     </constraints>
@@ -833,10 +836,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQA-MG-B5D" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I4R-WO-bu2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -874,7 +877,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Child Relief" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ex3-x7-QHj">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="AwA-VH-x3I"/>
                                                     </constraints>
@@ -883,7 +886,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLY-b3-GJi" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="30" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y8F-Oa-Atn">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -903,10 +906,10 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k5E-n8-Acy" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="197" y="7" width="166" height="30"/>
+                                                    <rect key="frame" x="205" y="7" width="158" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PRQ-53-P8R">
-                                                            <rect key="frame" x="0.0" y="0.0" width="166" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -942,7 +945,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Child of 18+ on Pre-Course" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dSI-wX-GMt">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="cCB-Mg-LoI"/>
                                                     </constraints>
@@ -951,7 +954,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9xF-43-oB7" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="30" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MfA-WU-SwC">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -971,10 +974,10 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DdT-qk-uQV" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="197" y="7" width="166" height="30"/>
+                                                    <rect key="frame" x="205" y="7" width="158" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="17" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GdT-1x-RpX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="166" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1010,7 +1013,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Child of 18+ in University" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1x5-au-EXa">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="LhZ-Ol-ODb"/>
                                                     </constraints>
@@ -1019,7 +1022,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HVt-U4-8zV" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="30" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="18" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UKj-OI-0yQ">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -1039,10 +1042,10 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hak-Fe-SoH" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="197" y="7" width="166" height="30"/>
+                                                    <rect key="frame" x="205" y="7" width="158" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="19" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NGr-cZ-hxQ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="166" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1078,7 +1081,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Disabled Child" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iu9-ch-pHp">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="uHs-gY-WUQ"/>
                                                     </constraints>
@@ -1087,7 +1090,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vol-jx-q07" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="30" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="99W-E7-EkC">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -1107,10 +1110,10 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xCq-0I-Hri" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="197" y="7" width="166" height="30"/>
+                                                    <rect key="frame" x="205" y="7" width="158" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="21" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Atq-d1-GOX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="166" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1146,7 +1149,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Add disabled child in Uni" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ibl-f1-GKV">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="zRn-HL-mwQ"/>
                                                     </constraints>
@@ -1155,7 +1158,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xrw-pR-ObJ" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="30" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T7W-Eh-eU7">
                                                             <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -1175,10 +1178,10 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HPk-UM-tEz" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="197" y="7" width="166" height="30"/>
+                                                    <rect key="frame" x="205" y="7" width="158" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="23" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HcR-kq-OYa">
-                                                            <rect key="frame" x="0.0" y="0.0" width="166" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="158" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1214,7 +1217,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="SSPN" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1v9-Ys-jSY">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="sb5-U9-BSS"/>
                                                     </constraints>
@@ -1223,10 +1226,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jmp-YV-VVJ" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="24" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BaV-1g-CnD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1260,7 +1263,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="House Loan Interest" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mA4-Fe-PQf">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="5i6-a4-dM5"/>
                                                     </constraints>
@@ -1269,10 +1272,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PIv-nz-fF1" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="25" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="n3e-zX-Lh0">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1313,13 +1316,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Stamp duty payable" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEj-CD-to3">
-                                                    <rect key="frame" x="16" y="13" width="134.5" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="134.5" height="17"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="26" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4b4-hc-vW1">
-                                                    <rect key="frame" x="158.5" y="6" width="208.5" height="30"/>
+                                                    <rect key="frame" x="166.5" y="6" width="200.5" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="f9x-8n-q1e"/>
                                                     </constraints>
@@ -1387,7 +1390,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="opd-Ny-9kH">
-                                                    <rect key="frame" x="187" y="4" width="1" height="47"/>
+                                                    <rect key="frame" x="187" y="7" width="1" height="41"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="Leh-53-Vkv"/>
@@ -1458,7 +1461,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="RealPropertyGainTaxViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pgw-EZ-ReN" customClass="RealPropertyGainTaxViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="EOs-vP-MOL">
-                        <rect key="frame" x="0.0" y="64" width="375" height="1203"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="1203"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -1472,7 +1475,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Sale Price (+)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O9s-oz-3d7">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="oDf-B5-djS"/>
                                                     </constraints>
@@ -1481,10 +1484,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h9a-vl-IPs" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="cpq-IX-B4z">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1521,7 +1524,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Sale Commission (-)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CTc-TB-Kf3">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="T2e-LL-nl7"/>
                                                     </constraints>
@@ -1530,10 +1533,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dYW-uV-qXM" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5X0-Bz-K0f">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1570,7 +1573,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Legal Costs (-)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="npT-RX-X2W">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="f1H-Id-oOk"/>
                                                     </constraints>
@@ -1579,10 +1582,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ohn-fd-WhX" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="a3A-tm-xkt">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1619,7 +1622,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Renovation &amp; Improvements (-)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0f-xw-YDG">
-                                                    <rect key="frame" x="16" y="5.5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5.5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="1GR-u3-nQ9"/>
                                                     </constraints>
@@ -1628,10 +1631,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nry-0a-gfh" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="JCm-Nn-xtB">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1668,7 +1671,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Net Disposal Price (=)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PC-vX-3bU">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Dki-z1-EuQ"/>
                                                     </constraints>
@@ -1677,7 +1680,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l1R-P9-SeC">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="q78-kk-d2e"/>
                                                     </constraints>
@@ -1708,7 +1711,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Purchase Price (+)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iYT-wn-aI0">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="c1g-xY-wuC"/>
                                                     </constraints>
@@ -1717,10 +1720,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="apc-tg-jBn" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Kaf-se-7up">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1757,7 +1760,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Purchase Commission (+)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhz-Yw-eg1">
-                                                    <rect key="frame" x="16" y="6.5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="6.5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="i6T-Tx-qE0"/>
                                                     </constraints>
@@ -1766,10 +1769,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nHJ-eB-riO" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="8" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="8" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qPC-4B-V96">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1806,7 +1809,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Legal Costs &amp; Stamp Duty (+)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfL-7Z-dau">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="nke-ua-AU2"/>
                                                     </constraints>
@@ -1815,10 +1818,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9P-rg-F9E" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BbD-f0-hEh">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1855,7 +1858,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Other costs incurred  (+)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGt-PK-NSE">
-                                                    <rect key="frame" x="16" y="6.5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="6.5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="miV-yb-73r"/>
                                                     </constraints>
@@ -1864,10 +1867,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GbP-bv-hMG" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="8" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="8" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FHA-lv-TxU">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -1904,7 +1907,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Net Acqusition Price (=)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5G-3Y-oWA">
-                                                    <rect key="frame" x="16" y="6" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="6" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="mzd-kx-jGs"/>
                                                     </constraints>
@@ -1913,7 +1916,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="6Ri-VE-2Yt">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="SF3-6y-nc7"/>
                                                     </constraints>
@@ -1944,7 +1947,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text=" Gain / Loss (A - B)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAz-oo-Brh">
-                                                    <rect key="frame" x="16" y="14" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="14" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="mrr-QC-oil"/>
                                                     </constraints>
@@ -1953,7 +1956,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dxn-iH-zpX">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="rMk-CO-nQq"/>
                                                     </constraints>
@@ -1980,7 +1983,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Date of Disposal" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FnN-ZF-Nb5">
-                                                    <rect key="frame" x="16" y="14" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="14" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="b1r-QM-tNr"/>
                                                     </constraints>
@@ -1989,10 +1992,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xN1-Nj-2Vt" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7lp-7t-yj8">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2026,7 +2029,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Date of Acquisition" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qei-GH-APt">
-                                                    <rect key="frame" x="16" y="14" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="14" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Cmp-1U-xwW"/>
                                                     </constraints>
@@ -2035,10 +2038,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s4o-SX-WKg" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vMX-2A-0pJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2072,7 +2075,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Number of Years Held (P)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfL-bK-iKV">
-                                                    <rect key="frame" x="16" y="5.5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5.5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="FdK-RW-OBg"/>
                                                     </constraints>
@@ -2081,7 +2084,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Ay-8W-qda">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Gsm-82-kmf"/>
                                                     </constraints>
@@ -2108,7 +2111,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Status of TaxPayer" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mE9-yt-Jtq">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="t5I-Vl-wem"/>
                                                     </constraints>
@@ -2117,10 +2120,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnl-Sr-TLu" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w4J-ph-H3Z">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2161,7 +2164,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Tax Payable" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNh-9i-w2a">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="7iK-MO-VTr"/>
                                                     </constraints>
@@ -2170,7 +2173,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K7e-tn-H8j">
-                                                    <rect key="frame" x="159" y="6" width="208" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="200" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="cV0-y9-9hx"/>
                                                     </constraints>
@@ -2197,7 +2200,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Tax Rate (%)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EK3-OU-gIO">
-                                                    <rect key="frame" x="16" y="18" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="18" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="MCT-An-prs"/>
                                                     </constraints>
@@ -2206,7 +2209,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YH2-Yb-Pr5">
-                                                    <rect key="frame" x="159" y="12" width="196" height="30"/>
+                                                    <rect key="frame" x="167" y="12" width="180" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="9Ds-KX-lG0"/>
                                                     </constraints>
@@ -2274,7 +2277,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VaK-Ch-uZN">
-                                                    <rect key="frame" x="187" y="4" width="1" height="47"/>
+                                                    <rect key="frame" x="187" y="7" width="1" height="41"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="elF-L1-91X"/>
@@ -2348,7 +2351,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Monthly Rent (RM)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gI-up-e7x">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="GSL-6n-8KS"/>
                                                     </constraints>
@@ -2357,10 +2360,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UBu-Di-F0G" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Bsv-8u-8AE">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2397,7 +2400,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Annual Rent (RM)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYo-Wc-Ljn">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Ixj-5C-YUj"/>
                                                     </constraints>
@@ -2406,7 +2409,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wpw-8G-sJC">
-                                                    <rect key="frame" x="159" y="6" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="SoJ-Vr-sVY"/>
                                                     </constraints>
@@ -2436,7 +2439,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Term of Tenancy (year)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OId-D7-rXY">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="WyE-c7-AWR"/>
                                                     </constraints>
@@ -2445,10 +2448,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D80-IJ-GXh" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vyW-7m-5bS">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2489,7 +2492,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Stamp Duty" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zg7-fu-vaB">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="XTO-4I-j8m"/>
                                                     </constraints>
@@ -2498,7 +2501,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="egq-K7-c7J">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="97u-DZ-7wj"/>
                                                     </constraints>
@@ -2528,7 +2531,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Legal Fee" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cUu-ey-NWT">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="V9h-Zq-heM"/>
                                                     </constraints>
@@ -2537,7 +2540,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9En-8S-veL">
-                                                    <rect key="frame" x="159" y="6" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="OWd-9v-ACS"/>
                                                     </constraints>
@@ -2556,12 +2559,48 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hg1-JI-R05">
+                                        <rect key="frame" x="0.0" y="331.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hg1-JI-R05" id="wpa-rU-jzZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Total" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyW-sT-MGD">
+                                                    <rect key="frame" x="24" y="12" width="135" height="19.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="135" id="QLU-Dr-Mqg"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="16"/>
+                                                    <color key="textColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PBy-w3-TEn">
+                                                    <rect key="frame" x="167" y="6" width="196" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="1Cs-SI-ndr"/>
+                                                    </constraints>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="PBy-w3-TEn" secondAttribute="trailing" constant="12" id="h8e-Ks-I0e"/>
+                                                <constraint firstItem="DyW-sT-MGD" firstAttribute="centerY" secondItem="wpa-rU-jzZ" secondAttribute="centerY" id="hV1-vA-MS5"/>
+                                                <constraint firstItem="PBy-w3-TEn" firstAttribute="leading" secondItem="DyW-sT-MGD" secondAttribute="trailing" constant="8" id="q31-cl-Pk2"/>
+                                                <constraint firstItem="PBy-w3-TEn" firstAttribute="centerY" secondItem="wpa-rU-jzZ" secondAttribute="centerY" id="ucZ-Zx-QIZ"/>
+                                                <constraint firstItem="DyW-sT-MGD" firstAttribute="leading" secondItem="wpa-rU-jzZ" secondAttribute="leadingMargin" constant="8" id="zLT-Ti-iLr"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="0HC-Ia-lHf">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="55" id="CPV-Y4-LJK">
-                                        <rect key="frame" x="0.0" y="367.5" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="411.5" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CPV-Y4-LJK" id="Ihz-L9-P6j">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
@@ -2605,7 +2644,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbf-QN-lR0">
-                                                    <rect key="frame" x="187" y="4" width="1" height="47"/>
+                                                    <rect key="frame" x="187" y="7" width="1" height="41"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="LlH-K8-c6f"/>
@@ -2639,6 +2678,7 @@
                         <outlet property="monthlyRentTextField" destination="Bsv-8u-8AE" id="9HR-BF-opT"/>
                         <outlet property="resultTextField" destination="egq-K7-c7J" id="iDD-nW-pNf"/>
                         <outlet property="termsOfTenancyTextField" destination="vyW-7m-5bS" id="wI8-HS-dTg"/>
+                        <outlet property="totalTextField" destination="PBy-w3-TEn" id="1tq-C2-3Dn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fRp-A4-KLR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2650,7 +2690,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="LoanAmortisationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MD5-JG-TPR" customClass="LoanAmortisationViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="11T-wl-qxE">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -2664,7 +2704,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Loan Amount (RM)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6wB-Kz-P6d">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="xTl-gB-aJP"/>
                                                     </constraints>
@@ -2673,10 +2713,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nic-04-IjI" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="deM-Rf-RTF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2713,7 +2753,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Annual Interest Rate (%)" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EbO-f9-GNh">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="xEC-G3-L7G"/>
                                                     </constraints>
@@ -2722,10 +2762,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tZ1-Ov-qxx" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WQM-Fu-fw3">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2762,7 +2802,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Loan Period in Year" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gb3-FX-oYs">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="eLi-ps-USW"/>
                                                     </constraints>
@@ -2771,10 +2811,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aWg-8o-ZAE" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fgh-kY-Iri">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -2812,7 +2852,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Monthly Installment (RM)" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eli-JA-TMz">
-                                                    <rect key="frame" x="16" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="WT5-oQ-dkq"/>
                                                     </constraints>
@@ -2821,7 +2861,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1sC-Ah-97C">
-                                                    <rect key="frame" x="159" y="7" width="208" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="200" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="cXD-xp-XPI"/>
                                                     </constraints>
@@ -2848,7 +2888,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Number of Months" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ue7-Z9-sV1">
-                                                    <rect key="frame" x="16" y="12.5" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="12.5" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="prH-pD-1PD"/>
                                                     </constraints>
@@ -2857,7 +2897,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="htc-IM-x8S">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="H3m-Et-ss4"/>
                                                     </constraints>
@@ -2884,7 +2924,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Total Interest (RM)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J1e-pB-NMq">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="LbM-4A-VgH"/>
                                                     </constraints>
@@ -2893,7 +2933,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="adq-OP-s2X">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="wFK-fn-Zpt"/>
                                                     </constraints>
@@ -2961,7 +3001,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wLq-Ot-g3R">
-                                                    <rect key="frame" x="187" y="4" width="1" height="47"/>
+                                                    <rect key="frame" x="187" y="7" width="1" height="41"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="7Ma-uT-lwt"/>
@@ -3009,7 +3049,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hyp-wb-ys6" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Em7-AL-1EP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -3040,7 +3080,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="oeI-if-hiH">
-                                <rect key="frame" x="0.0" y="43" width="300" height="287"/>
+                                <rect key="frame" x="0.0" y="23" width="300" height="307"/>
                                 <date key="date" timeIntervalSinceReferenceDate="502347815.20387501">
                                     <!--2016-12-02 05:03:35 +0000-->
                                 </date>
@@ -3084,7 +3124,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Price or Market value (RM)" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pyx-WE-LKJ">
-                                                    <rect key="frame" x="16" y="17.5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="17.5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="9w3-Lc-09c"/>
                                                     </constraints>
@@ -3093,10 +3133,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oin-tw-r5S" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="19" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="19" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4TD-U3-7E6">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -3129,11 +3169,11 @@
                                         <rect key="frame" x="0.0" y="124.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0pW-b3-lXe" id="mHd-7x-jwu">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Relationship" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5J6-ad-TnR">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="yD0-Ke-JeC"/>
                                                     </constraints>
@@ -3142,10 +3182,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qMY-kk-Dr9" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="183" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="174" height="30"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seller-Purchaser (100%)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUd-bC-vCP">
-                                                            <rect key="frame" x="0.0" y="7" width="183" height="16"/>
+                                                            <rect key="frame" x="0.0" y="7" width="174" height="16"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -3182,7 +3222,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Stamp Duty" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBH-kw-dp1">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="cf4-ee-4N8"/>
                                                     </constraints>
@@ -3191,7 +3231,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vcA-Dk-MTe">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="vek-NT-tUe"/>
                                                     </constraints>
@@ -3221,7 +3261,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Legal Fee" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXA-zy-wVa">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="BSt-mR-xfT"/>
                                                     </constraints>
@@ -3230,7 +3270,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R61-jk-SwW">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Bgk-UL-bLU"/>
                                                     </constraints>
@@ -3252,12 +3292,51 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="uhr-Cg-RhS">
+                                        <rect key="frame" x="0.0" y="312.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uhr-Cg-RhS" id="2XH-09-o4i">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Total" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05u-l4-RvW">
+                                                    <rect key="frame" x="24" y="12" width="135" height="19.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="135" id="ZEN-1d-eLK"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="16"/>
+                                                    <color key="textColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M9m-Fi-YnJ">
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="RsT-Qz-Qtp"/>
+                                                    </constraints>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="4HK-Iy-cMZ" id="6y6-H6-RjS"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="M9m-Fi-YnJ" firstAttribute="leading" secondItem="05u-l4-RvW" secondAttribute="trailing" constant="8" id="1V7-Vb-ZtU"/>
+                                                <constraint firstItem="M9m-Fi-YnJ" firstAttribute="centerY" secondItem="2XH-09-o4i" secondAttribute="centerY" id="3wQ-h8-HzZ"/>
+                                                <constraint firstItem="05u-l4-RvW" firstAttribute="centerY" secondItem="2XH-09-o4i" secondAttribute="centerY" id="eJn-Ja-Afg"/>
+                                                <constraint firstItem="05u-l4-RvW" firstAttribute="leading" secondItem="2XH-09-o4i" secondAttribute="leadingMargin" constant="8" id="oEG-aI-GuD"/>
+                                                <constraint firstAttribute="trailing" secondItem="M9m-Fi-YnJ" secondAttribute="trailing" constant="12" id="uHV-O3-Tzm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="SbS-tG-VuF">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="55" id="IIu-aL-6l2">
-                                        <rect key="frame" x="0.0" y="348.5" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="392.5" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IIu-aL-6l2" id="SX7-Tz-Fuf">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
@@ -3301,7 +3380,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hOe-ev-89f">
-                                                    <rect key="frame" x="187" y="4" width="1" height="47"/>
+                                                    <rect key="frame" x="187" y="7" width="1" height="41"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="Xn8-dI-kgN"/>
@@ -3336,6 +3415,7 @@
                         <outlet property="priceValueTextField" destination="4TD-U3-7E6" id="8HB-aq-TDZ"/>
                         <outlet property="relationshipLabel" destination="fUd-bC-vCP" id="csK-16-Q0I"/>
                         <outlet property="resultTextField" destination="vcA-Dk-MTe" id="py6-x9-x15"/>
+                        <outlet property="totalTextField" destination="M9m-Fi-YnJ" id="NMa-zL-BbO"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uuX-5s-x9b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3361,7 +3441,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Loan Amount (RM)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3s7-Rn-2n1">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="KHS-pN-icb"/>
                                                     </constraints>
@@ -3370,10 +3450,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z5Y-mG-g7e" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="a7H-wz-du4">
-                                                            <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="30"/>
                                                             <nil key="textColor"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
@@ -3406,11 +3486,11 @@
                                         <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o5L-15-7SZ" id="1dh-N4-lNd">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Type" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuI-Mn-640">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="yFG-a6-I3c"/>
                                                     </constraints>
@@ -3419,10 +3499,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cf2-pu-bES" customClass="BaseTextInputView">
-                                                    <rect key="frame" x="159" y="6" width="183" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="174" height="30"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="krq-wX-eMS">
-                                                            <rect key="frame" x="0.0" y="15" width="183" height="0.0"/>
+                                                            <rect key="frame" x="0.0" y="15" width="174" height="0.0"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -3459,7 +3539,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Stamp Duty" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRu-UF-G5j">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="R51-JU-mZ8"/>
                                                     </constraints>
@@ -3468,7 +3548,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jsI-bg-rbK">
-                                                    <rect key="frame" x="159" y="6" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="6" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="xDD-ml-Y2j"/>
                                                     </constraints>
@@ -3498,7 +3578,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Legal Fee" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0v3-6J-r2Y">
-                                                    <rect key="frame" x="16" y="13" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="13" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="NMs-JH-Kfs"/>
                                                     </constraints>
@@ -3507,7 +3587,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eG6-P0-hlt">
-                                                    <rect key="frame" x="159" y="7" width="204" height="30"/>
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="QIC-V5-EGN"/>
                                                     </constraints>
@@ -3529,12 +3609,51 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Dm9-fw-tvG">
+                                        <rect key="frame" x="0.0" y="287.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dm9-fw-tvG" id="JdN-hS-ajH">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Total" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3g-ph-77N">
+                                                    <rect key="frame" x="24" y="12" width="135" height="19.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="135" id="Xlm-3V-VIM"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Bold" family="SF UI Text" pointSize="16"/>
+                                                    <color key="textColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qfg-YU-JKK">
+                                                    <rect key="frame" x="167" y="7" width="196" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="qoc-46-c30"/>
+                                                    </constraints>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="jiv-nX-7ME" id="iet-Dr-IDf"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Qfg-YU-JKK" secondAttribute="trailing" constant="12" id="5xD-bX-7e4"/>
+                                                <constraint firstItem="Qfg-YU-JKK" firstAttribute="leading" secondItem="D3g-ph-77N" secondAttribute="trailing" constant="8" id="Dwr-Dj-swq"/>
+                                                <constraint firstItem="D3g-ph-77N" firstAttribute="leading" secondItem="JdN-hS-ajH" secondAttribute="leadingMargin" constant="8" id="KHn-TI-CAN"/>
+                                                <constraint firstItem="D3g-ph-77N" firstAttribute="centerY" secondItem="JdN-hS-ajH" secondAttribute="centerY" id="YY1-Bb-jbv"/>
+                                                <constraint firstItem="Qfg-YU-JKK" firstAttribute="centerY" secondItem="JdN-hS-ajH" secondAttribute="centerY" id="onX-DV-WR3"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="Z1k-nZ-YEg">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="55" id="AoS-Cr-Td3">
-                                        <rect key="frame" x="0.0" y="323.5" width="375" height="55"/>
+                                        <rect key="frame" x="0.0" y="367.5" width="375" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AoS-Cr-Td3" id="c0a-fD-OPi">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
@@ -3578,7 +3697,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OiF-Qn-z5O">
-                                                    <rect key="frame" x="187" y="4" width="1" height="47"/>
+                                                    <rect key="frame" x="187" y="7" width="1" height="41"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="qaP-cJ-Sla"/>
@@ -3611,6 +3730,7 @@
                         <outlet property="legalCostTextField" destination="eG6-P0-hlt" id="GdQ-Wk-Ly1"/>
                         <outlet property="loanAmount" destination="a7H-wz-du4" id="vhm-Pe-mBE"/>
                         <outlet property="resultLabel" destination="jsI-bg-rbK" id="Ohw-zA-pgx"/>
+                        <outlet property="totalTextField" destination="Qfg-YU-JKK" id="LDE-Vi-P9Q"/>
                         <outlet property="typeLabel" destination="krq-wX-eMS" id="XC5-KX-vQC"/>
                     </connections>
                 </tableViewController>

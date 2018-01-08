@@ -35,6 +35,7 @@
     if (self.previousScreen.length != 0) {
         [self prepareUI];
     }
+    [self setupFloatingButton];
     [self showOnlyMatter];
     [self setNeedsStatusBarAppearanceUpdate];
 }

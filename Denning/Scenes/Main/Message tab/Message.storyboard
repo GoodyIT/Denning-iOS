@@ -86,6 +86,7 @@ out here.</string>
                         </segue>
                         <segue destination="9Ir-rv-S3M" kind="custom" identifier="SceneSegueAuth" customClass="QMRootViewControllerSegue" id="p2z-QJ-OS8"/>
                         <segue destination="xdT-P1-KH4" kind="show" identifier="SceneSegueUserInfo" id="Z8c-1a-aIu"/>
+                        <segue destination="DkL-nk-8Ni" kind="show" identifier="SceneSegueGroupInfo" id="nZ5-ve-OkX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WJx-tG-Bt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -348,7 +349,23 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMGroupInfoViewController" id="OKo-87-3Ut" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ehM-fF-IK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-322" y="-7295"/>
+            <point key="canvasLocation" x="-457" y="-7362"/>
+        </scene>
+        <!--QMGroupInfoViewController-->
+        <scene sceneID="WSh-R1-TTh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMGroupInfoViewController" id="dMR-9M-32S" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2p2-aV-QEN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2063" y="-5859"/>
+        </scene>
+        <!--QMGroupInfoViewController-->
+        <scene sceneID="uWJ-e9-wD9">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMGroupInfoViewController" id="DkL-nk-8Ni" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dwI-9g-TIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1415" y="-8852"/>
         </scene>
         <!--DocumentView-->
         <scene sceneID="xgs-4g-19O">
@@ -412,7 +429,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rjD-oe-OaN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="NXc-iC-dFK">
-                    <rect key="frame" x="0.0" y="0.0" width="340" height="30"/>
+                    <rect key="frame" x="0.0" y="-1" width="340" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="All"/>
@@ -433,15 +450,15 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMUserInfoViewController" id="Vi6-Ys-ZwG" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wlL-qq-ZCQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-770" y="-7295"/>
+            <point key="canvasLocation" x="-909" y="-7370"/>
         </scene>
-        <!--QMUserInfoViewController-->
+        <!--QMUserInfoNavigation-->
         <scene sceneID="LIr-sI-5uw">
             <objects>
-                <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMUserInfoViewController" id="xdT-P1-KH4" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Chat" referencedIdentifier="QMUserInfoNavigation" id="xdT-P1-KH4" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ull-nL-aK1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1421" y="-8559"/>
+            <point key="canvasLocation" x="-1370" y="-8562"/>
         </scene>
         <!--DashboardContactNavigation-->
         <scene sceneID="qVU-b2-jG2">
@@ -518,6 +535,7 @@ out here.</string>
                         <segue destination="t5g-eL-0FL" kind="showDetail" identifier="SceneSegueChat" id="Frh-IH-JRA"/>
                         <segue destination="eGm-Je-XuH" kind="show" identifier="GroupChatSegue" id="ha7-Ld-HrW"/>
                         <segue destination="IGm-Dx-jXe" kind="custom" customClass="QMRootViewControllerSegue" id="qdF-bD-ck0"/>
+                        <segue destination="dMR-9M-32S" kind="show" identifier="SceneSegueGroupInfo" id="GBZ-1B-MPX"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aIF-hn-5zw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -588,7 +606,7 @@ out here.</string>
                 <viewControllerPlaceholder storyboardName="Auth" id="IGm-Dx-jXe" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IJ7-al-rti" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2343" y="-5857"/>
+            <point key="canvasLocation" x="-2634" y="-5858"/>
         </scene>
         <!--Create Group-->
         <scene sceneID="HaZ-ei-WPo">
@@ -1195,6 +1213,6 @@ out here.</string>
         <image name="m_empty_dialogs" width="180" height="265"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Frh-IH-JRA"/>
+        <segue reference="yFu-Ld-5fp"/>
     </inferredMetricsTieBreakers>
 </document>
