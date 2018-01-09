@@ -83,6 +83,7 @@ typedef NS_ENUM(NSInteger, QMMediaViewState) {
  */
 @property (nonatomic, strong) UIImage *image;
 
+
 /**
  Tells the delegate that the error has been occured.
  

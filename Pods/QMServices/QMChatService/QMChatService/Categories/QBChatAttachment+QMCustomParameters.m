@@ -83,7 +83,6 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
     [self setTAttachmentType:@(attachmentType)];
 }
 
-
 - (NSNumber *)tAttachmentType {
     
     return objc_getAssociatedObject(self, @selector(tAttachmentType));

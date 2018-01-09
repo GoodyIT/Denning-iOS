@@ -826,13 +826,12 @@ NSMutableDictionary* keyValue;
 - (NSDictionary*) buildCaseDetailParam {
     NSMutableArray* caseDetailParam = [NSMutableArray new];
     
-    [caseDetailParam addObject:@{@"CaseNo":_contents[CASEDETAIL_SECTION][0][1]}];
-    [caseDetailParam addObject:@{@"Court":_contents[CASEDETAIL_SECTION][1][1]}];
-    [caseDetailParam addObject:@{@"Judge":_contents[CASEDETAIL_SECTION][2][1]}];
-    [caseDetailParam addObject:@{@"PartyType":_contents[CASEDETAIL_SECTION][3][1]}];
-    [caseDetailParam addObject:@{@"Place":_contents[CASEDETAIL_SECTION][4][1]}];
-    [caseDetailParam addObject:@{@"SAR":_contents[CASEDETAIL_SECTION][5][1]}];
-    [caseDetailParam addObject:@{@"TypeCase":_contents[CASEDETAIL_SECTION][6][1]}];
+    [caseDetailParam addObject:@{@"CaseNo":_contents[CASEDETAIL_SECTION][CaseType][1]}];
+    [caseDetailParam addObject:@{@"Court":_contents[CASEDETAIL_SECTION][CaseCourt][1]}];
+    [caseDetailParam addObject:@{@"Judge":_contents[CASEDETAIL_SECTION][CaseJudge][1]}];
+    [caseDetailParam addObject:@{@"Place":_contents[CASEDETAIL_SECTION][CasePlace][1]}];
+    [caseDetailParam addObject:@{@"SAR":_contents[CASEDETAIL_SECTION][CaseSAR][1]}];
+    [caseDetailParam addObject:@{@"TypeCase":_contents[CASEDETAIL_SECTION][CaseTypeNo][1]}];
     
     return @{@"courtInfo":caseDetailParam};
 }
@@ -890,7 +889,7 @@ NSMutableDictionary* keyValue;
     
     [partyArray addObject:[self buildPartyParam:@"Vendor" codeList:partyVendorCodeList]];
     [partyArray addObject:[self buildPartyParam:@"Purchaser" codeList:partyPurchaserCodeList]];
-    [partyArray addObject:[self buildPartyParam:@"Customer Group3" codeList:partyCustomerGroup3CodeList]];
+    [partyArray addObject:[self buildPartyParam:@"Borrower" codeList:partyCustomerGroup3CodeList]];
     [partyArray addObject:[self buildPartyParam:@"Customer Group4" codeList:partyCustomerGroup4CodeList]];
     
     return @{@"partyGroup":partyArray};
@@ -1098,15 +1097,14 @@ NSMutableDictionary* keyValue;
     } else if (indexPath.section == PROPERTIES_SECTION) { // Property
         
         if (indexPath.row == 0) {
-            AddMatterCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddMatterCell cellIdentifier] forIndexPath:indexPath];
-            cell.label.text = _contents[indexPath.section][indexPath.row][0];
-            cell.subLabel.hidden = YES;
-            cell.lastLabel.hidden = YES;
+            AddPartyCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddPartyCell cellIdentifier] forIndexPath:indexPath];
             
-            cell.addNew = ^(AddMatterCell *cell) {
+            cell.label.text = _contents[indexPath.section][indexPath.row][0];
+            cell.addNew = ^(AddPartyCell *cell) {
                 NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
                 [self addProperty:indexPath];
             };
+            
             return cell;
         }
         
@@ -1431,6 +1429,10 @@ NSMutableDictionary* keyValue;
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == PARTYGROUP_SECTION) {
+        return 44;
+    }
+    
+    if (indexPath.section == PROPERTIES_SECTION && indexPath.row == 0) {
         return 44;
     }
     return 60.0f;

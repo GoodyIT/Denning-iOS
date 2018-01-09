@@ -7,6 +7,8 @@
 //
 
 #import "FirmURLModel.h"
+#import "NSDictionary+NotNull.h"
+#import "DocumentModel.h"
 
 @implementation FirmURLModel
 
@@ -18,6 +20,7 @@
     model.name = [[response objectForKey:@"LawFirm"] objectForKey:@"name"];
     model.city = [[[response objectForKey:@"LawFirm"] objectForKey:@"address"] objectForKey:@"city"];
     model.document = [DocumentModel getDocumentFromResponse:[response objectForKey:@"folders"]];
+    model.theCode = [response objectForKey:@"theCode"];
     
     return model;
 }

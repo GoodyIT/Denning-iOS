@@ -93,13 +93,15 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
     NSNumber* length = [NSNumber numberWithInteger:imageData.length];
     NSString* fileName = [NSString stringWithFormat:@"IMG_%@.jpg", self.renameFile.text];
     NSDictionary* params = @{@"fileNo1":systemNo,
-                             @"FileName":fileName,
-                             @"MimeType":@"jpg",
-                             @"dateCreate":[DIHelpers todayWithTime],
-                             @"dateModify":[DIHelpers todayWithTime],
-                             @"fileLength":length,
-                             @"remarks":self.remarks.text,
-                             @"base64":[self.imagePreview.image encodeToBase64String]
+                             @"documents":@{
+                                     @"FileName":fileName,
+                                     @"MimeType":@"jpg",
+                                     @"dateCreate":[DIHelpers todayWithTime],
+                                     @"dateModify":[DIHelpers todayWithTime],
+                                     @"fileLength":length,
+                                     @"remarks":self.remarks.text,
+                                     @"base64":[self.imagePreview.image encodeToBase64String]
+                                     }
                              };
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;

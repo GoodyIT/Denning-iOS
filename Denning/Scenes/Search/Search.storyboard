@@ -2989,6 +2989,18 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YIe-jZ-6th" id="fAt-T1-Akd">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="2000-0077" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxV-6L-ndc">
+                                                    <rect key="frame" x="28" y="11" width="92" height="21"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="DxV-6L-ndc" firstAttribute="leading" secondItem="fAt-T1-Akd" secondAttribute="leadingMargin" constant="12" id="TJp-lv-Ime"/>
+                                                <constraint firstItem="DxV-6L-ndc" firstAttribute="centerY" secondItem="fAt-T1-Akd" secondAttribute="centerY" id="oYK-Cm-wZH"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
@@ -3113,6 +3125,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="767"/>
                     <connections>
+                        <outlet property="fileNoLabel" destination="DxV-6L-ndc" id="Dca-1U-eCf"/>
                         <outlet property="imagePreview" destination="tvF-oe-cik" id="hsJ-DO-jBx"/>
                         <outlet property="remarks" destination="m6s-RN-SdI" id="ua9-fb-xw8"/>
                         <outlet property="renameFile" destination="8Ay-aF-SLZ" id="aQL-5i-1rl"/>

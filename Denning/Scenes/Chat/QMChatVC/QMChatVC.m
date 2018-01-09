@@ -326,7 +326,7 @@ QMUsersServiceDelegate
     // load messages from cache if needed and from REST
     [self refreshMessages];
     
-    if (![DataManager sharedManager].isExpire || [DataManager sharedManager].isStaff || [DataManager sharedManager].isDenningUser) {
+    if ([self isAllowToSendForDialog]) {
         self.inputToolbar.audioRecordingEnabled = YES;
     } else {
         self.inputToolbar.audioRecordingEnabled = NO;
@@ -537,6 +537,25 @@ QMUsersServiceDelegate
     return YES;
 }
 
+- (BOOL) isAllowToSendForDialog {
+    NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:self.chatDialog];
+    if ([role isEqualToString:kRoleReaderTag]) {
+        // Reader can only get message;
+        return NO;
+    }
+    
+    if (![role isEqualToString:kRoleClientTag]) {
+        if (![[DIHelpers getTag:self.chatDialog] isEqualToString:kChatDenningTag]) {
+            if ([DataManager sharedManager].isExpire) {
+                [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restricted" actionSuccess:NO  inViewController:self];
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
 - (BOOL)messageSendingAllowed {
     
 //    if (self.chatDialog.type == QBChatDialogTypePrivate) {
@@ -549,12 +568,8 @@ QMUsersServiceDelegate
 //            return YES;
 //        }
 //    }
-    NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:self.chatDialog];
-    if (![@[kRoleAdminTag, kRoleStaffTag] containsObject:role] && ![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
-        if ([DataManager sharedManager].isExpire) {
-            [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restricted" actionSuccess:NO  inViewController:self];
-            return NO;
-        }
+    if (![self isAllowToSendForDialog]) {
+        return NO;
     }
     
     return [self.deferredQueueManager shouldSendMessagesInDialogWithID:self.chatDialog.ID];
@@ -1018,15 +1033,15 @@ QMUsersServiceDelegate
 
 - (NSAttributedString *)topLabelAttributedStringForItem:(QBChatMessage *)messageItem {
     
-    if (messageItem.senderID == self.senderID || self.chatDialog.type == QBChatDialogTypePrivate || [messageItem isAudioAttachment]) {
+    if ([messageItem isAudioAttachment]) {
         
         return nil;
     }
     
+
     UIFont *font = [UIFont systemFontOfSize:15.0f];
     
     QBUUser *opponentUser = [QMCore.instance.usersService.usersMemoryStorage userWithID:messageItem.senderID];
-    NSString *topLabelText = [NSString stringWithFormat:@"%@", opponentUser.fullName ?: @(messageItem.senderID)];
     
     // setting the paragraph style lineBreakMode to NSLineBreakByTruncatingTail
     // in order to let TTTAttributedLabel cut the line in a correct way
@@ -1036,6 +1051,29 @@ QMUsersServiceDelegate
                                   NSFontAttributeName:font,
                                   NSParagraphStyleAttributeName: paragraphStyle};
     
+    NSString *topLabelText = @"";
+    QBChatAttachment* attachment = messageItem.attachments.firstObject;
+    if (self.chatDialog.type == QBChatDialogTypePrivate) {
+        if (messageItem.attachments != nil && messageItem.attachments.count > 0) {
+            topLabelText = [NSString stringWithFormat:@"%@", attachment.name];
+        } else {
+            return nil;
+        }
+    } else {
+        
+        topLabelText = [NSString stringWithFormat:@"%@", opponentUser.fullName ?: @(messageItem.senderID)];
+        if (messageItem.attachments != nil && messageItem.attachments.count > 0) {
+            topLabelText = [NSString stringWithFormat:@"%@ \n%@", opponentUser.fullName ?: @(messageItem.senderID), attachment.name];
+            if (messageItem.senderID == self.senderID) {
+                topLabelText = [NSString stringWithFormat:@"%@", attachment.name];
+            }
+        } else {
+            if (messageItem.senderID == self.senderID) {
+                return nil;
+            }
+        }
+    }
+   
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:topLabelText attributes:attributes];
     
     return attributedString;
@@ -1165,17 +1203,19 @@ QMUsersServiceDelegate
                                   limitedToNumberOfLines:0];
     }
     
-    if (self.chatDialog.type != QBChatDialogTypePrivate) {
+    if (self.chatDialog.type == QBChatDialogTypeGroup || (message.attachments != nil && message.attachments.count > 0)) {
         
         CGSize topLabelSize =
         [TTTAttributedLabel sizeThatFitsAttributedString:[self topLabelAttributedStringForItem:message]
                                          withConstraints:CGSizeMake(CGRectGetWidth(collectionView.frame) - kQMWidthPadding,
                                                                     CGFLOAT_MAX)
-                                  limitedToNumberOfLines:1];
+                                  limitedToNumberOfLines:0];
         
         if (topLabelSize.width > size.width) {
-            
-            size = topLabelSize;
+            QMChatCellLayoutModel layoutModel =
+            [super collectionView:collectionView layoutModelAtIndexPath:indexPath];
+            layoutModel.topLabelHeight = (CGFloat)ceil(topLabelSize.height);
+            size = CGSizeMake(MIN(181, topLabelSize.width), topLabelSize.height);
         }
     }
     
@@ -1284,6 +1324,7 @@ QMUsersServiceDelegate
     
     QBChatMessage *item = [self.chatDataSource messageForIndexPath:indexPath];
     Class class = [self viewClassForItem:item];
+    CGSize size = CGSizeZero;
     
     if (class == [QMChatOutgoingCell class] ||
         class == [QMChatAttachmentOutgoingCell class] ||
@@ -1304,14 +1345,6 @@ QMUsersServiceDelegate
              || [class isSubclassOfClass: [QMMediaIncomingCell class]]
              || class == [QMChatIncomingLinkPreviewCell class]) {
         
-        BOOL isAudioCell =
-        class == QMAudioOutgoingCell.class || class == QMAudioIncomingCell.class;
-        
-        if (self.chatDialog.type != QBChatDialogTypePrivate && !isAudioCell) {
-            
-            layoutModel.topLabelHeight = 18;
-        }
-        
         if (class != [QMChatIncomingCell class]) {
             
             layoutModel.spaceBetweenTextViewAndBottomLabel = 5;
@@ -1321,7 +1354,7 @@ QMUsersServiceDelegate
         layoutModel.avatarSize = CGSizeMake(kQMAvatarSize, kQMAvatarSize);
     }
     
-    CGSize size = CGSizeZero;
+    
     
     if ([self.detailedCells containsObject:item.ID]
         || class == [QMChatAttachmentIncomingCell class]
@@ -1338,10 +1371,23 @@ QMUsersServiceDelegate
         CGSize constraintsSize =
         CGSizeMake(CGRectGetWidth(self.collectionView.frame) - kQMWidthPadding, CGFLOAT_MAX);
         
+        BOOL isAudioCell =
+        class == QMAudioOutgoingCell.class || class == QMAudioIncomingCell.class;
+        
+        if ((self.chatDialog.type == QBChatDialogTypeGroup || (item.attachments != nil && item.attachments.count > 0)) && !isAudioCell) {
+            
+            size =
+            [TTTAttributedLabel sizeThatFitsAttributedString:[self topLabelAttributedStringForItem:item]
+                                             withConstraints:constraintsSize
+                                      limitedToNumberOfLines:0];
+            layoutModel.topLabelHeight = (CGFloat)ceil(size.height);;
+        }
+        
         size =
         [TTTAttributedLabel sizeThatFitsAttributedString:[self bottomLabelAttributedStringForItem:item]
                                          withConstraints:constraintsSize
                                   limitedToNumberOfLines:0];
+        
     }
     
     layoutModel.bottomLabelHeight = (CGFloat)ceil(size.height);
@@ -1591,13 +1637,16 @@ QMUsersServiceDelegate
         vc.updateHandler = ^(NSArray *urls) {
             for (NSArray* urlAndName in urls) {
                 NSURL* url = urlAndName[0];
+                NSString* fileName = urlAndName[1];
                 [[DIDocumentManager shared] downloadFileFromURL:url withProgress:^(CGFloat progress) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [SVProgressHUD showProgress:progress];
                     });
                 } completion:^(NSURL *filePath) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        NSString* contentType =[DIHelpers mimeTypeForData:[NSData dataWithContentsOfURL:filePath]];
+                        NSData* fileData = [NSData dataWithContentsOfURL:filePath];
+                        NSString* contentType =[DIHelpers mimeTypeForData:fileData];
+                        NSInteger fileSize = fileData.length;
                         QBChatAttachment *attachment = nil;
                         if ([DIHelpers isAudioFileFromContentType:contentType]) {
                             attachment = [QBChatAttachment audioAttachmentWithFileURL:filePath];
@@ -1608,9 +1657,9 @@ QMUsersServiceDelegate
                             [self imagePicker:nil didFinishPickingVideo:filePath];
                         } else if ([DIHelpers isImageFileFromContentType:contentType]) {
                             UIImage *resizedImage = [self resizedImageFromImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:filePath]]];
-                            attachment = [QBChatAttachment imageAttachmentWithImage:resizedImage];
+                            attachment = [QBChatAttachment imageAttachmentWithImage:resizedImage fileName:fileName];
                         } else {
-                            attachment = [QBChatAttachment fileAttachmentWithFileURL:filePath contentType:contentType];
+                            attachment = [QBChatAttachment fileAttachmentWithFileURL:filePath contentType:contentType fileName:fileName fileSize:fileSize];
                         }
                         [SVProgressHUD dismiss];
                         [self sendMessageWithAttachment:attachment]; 

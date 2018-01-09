@@ -632,6 +632,34 @@ didUpdateStatus:(QMAudioPlayerStatus *)status {
             }
         }
         
+        if (attachmentStatus == QMMessageAttachmentStatusNotLoaded) {
+            if (!attachment.ID) {
+                [QMCore.instance.chatService deleteMessageLocally:message];
+                return;
+            }
+        }
+        else if (attachmentStatus == QMMessageAttachmentStatusUploading) {
+            [self.attachmentsService cancelOperationsWithMessageID:messageID];
+            [QMCore.instance.chatService deleteMessageLocally:message];
+            return;
+        }
+        else if (attachmentStatus == QMMessageAttachmentStatusError) {
+            if (!attachment.ID) {
+                [QMCore.instance.chatService.deferredQueueManager perfromDefferedActionForMessage:message withCompletion:nil];
+                return;
+            }
+            else {
+                [self loadAttachment:attachment
+                          forMessage:message
+                            withView:view];
+                return;
+            }
+        }
+        
+        if (!attachment.ID) {
+            return;
+        }
+        
         NSURL *fileURL = [[DIDocumentManager shared] isAttachedFileExist:attachment.ID];
         if (fileURL != nil) {
             [[DIDocumentManager shared] displayDocument:fileURL inView:viewController];

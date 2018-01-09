@@ -27,11 +27,22 @@ static NSString *const kQMAttachmentContentTypeVideo = @"video/mp4";
     QBChatAttachment *attachment = [QBChatAttachment new];
     
     attachment.type = type;
-    attachment.name = @"Test Image";
+    attachment.name = name;
     attachment.localFileURL = fileURL;
     attachment.contentType = contentType;
-    attachment.size = 12345;
-//    attachment.width = 255;
+    
+    return attachment;
+}
+
++ (instancetype)initWithName:(nullable NSString *)name
+                     fileURL:(nullable NSURL *)fileURL
+                 contentType:(NSString *)contentType
+              attachmentType:(NSString *)type
+                    fileSize:(NSInteger) fileSize {
+    
+    QBChatAttachment *attachment = [self initWithName:name fileURL:fileURL contentType:contentType attachmentType:type];
+    
+    attachment.size = fileSize;
     
     return attachment;
 }
@@ -56,15 +67,16 @@ static NSString *const kQMAttachmentContentTypeVideo = @"video/mp4";
                attachmentType:kQMAttachmentTypeAudio];
 }
 
-+ (instancetype) fileAttachmentWithFileURL:(NSURL *)fileURL contentType:(NSString*)contentType {
++ (instancetype) fileAttachmentWithFileURL:(NSURL *)fileURL contentType:(NSString*)contentType fileName:(NSString*) fileName fileSize:(NSInteger)fileSize{
     NSParameterAssert(fileURL);
-    return [self initWithName:@"File message"
+    return [self initWithName:fileName
                       fileURL:fileURL
                   contentType:contentType
-               attachmentType:@"file"];
+               attachmentType:@"file"
+                     fileSize:fileSize];
 }
 
-+ (instancetype)imageAttachmentWithImage:(UIImage *)image {
++ (instancetype)imageAttachmentWithImage:(UIImage *)image fileName:(NSString*) fileName {
     
     NSParameterAssert(image);
     
@@ -75,13 +87,17 @@ static NSString *const kQMAttachmentContentTypeVideo = @"video/mp4";
     
     NSString *contentType = [NSString stringWithFormat:@"image/%@", hasAlpha ? @"png" : @"jpg"];
     
-    QBChatAttachment *attachment = [self initWithName:@"Image attachment"
+    QBChatAttachment *attachment = [self initWithName:fileName
                                               fileURL:nil
                                           contentType:contentType
                                        attachmentType:kQMAttachmentTypeImage];
     attachment.image = image;
     
     return attachment;
+}
+
++ (instancetype)imageAttachmentWithImage:(UIImage *)image {
+    return [self imageAttachmentWithImage:image fileName:@"Image Attach"];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "DIGeneralCell.h"
 
 @class SearchResultModel;
+@class FirmURLModel;
 @interface FileSearchCell : DIGeneralCell
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -20,5 +21,6 @@
 
 - (void)setChecked:(BOOL)checked animated:(BOOL)animated;
 - (void) configureCell:(SearchResultModel*) model;
+- (void) configureCellWithFirm:(FirmURLModel*) model;
 
 @end

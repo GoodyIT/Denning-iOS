@@ -89,6 +89,10 @@ static UIImage *deselectedCheckImage() {
     }
 }
 
+- (void) configureCellWithFirm:(FirmURLModel*) model {
+    NSLog(@"%@", model);
+}
+
 - (void) configureCell:(SearchResultModel*) model
 {
     self.titleLabel.text = model.title;

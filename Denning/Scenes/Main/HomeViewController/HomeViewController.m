@@ -108,7 +108,7 @@ iCarouselDataSource, iCarouselDelegate>
     }
     
     CGFloat menuContainerHeight = (self.view.frame.size.width/4-2) * (homeLabelArray.count/4);
-    CGFloat intrinsicHeight = self.view.frame.size.height  - statusBarHeight - navHeight - branchHeight - searchBarHeight - bottomBarHeight;
+    CGFloat intrinsicHeight = self.view.frame.size.height   - navHeight - branchHeight - searchBarHeight - bottomBarHeight;
     
     _heightOfCarousel.constant = intrinsicHeight - MAX(menuContainerHeight, intrinsicHeight/2);
     _branchHeightContraint.constant = branchHeight;
@@ -119,6 +119,7 @@ iCarouselDataSource, iCarouselDelegate>
 {
     [super viewDidAppear:animated];
     [self showTabBar];
+    [self changeUIBasedOnUserType];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -128,7 +129,6 @@ iCarouselDataSource, iCarouselDelegate>
     
     [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
     [self configureMenuRightBtnWithImagename:@"icon_menu" withSelector:@selector(gotoMenu)];
-    [self changeUIBasedOnUserType];
     [self displayBranchInfo];
 }
 
@@ -180,8 +180,6 @@ iCarouselDataSource, iCarouselDelegate>
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
    
-    
-    
     self.searchTextField.leftViewMode = UITextFieldViewModeAlways;
     UIImageView* searchImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_search_gray"]];
     self.searchTextField.leftView = searchImageView;

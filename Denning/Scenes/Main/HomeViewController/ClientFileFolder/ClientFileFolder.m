@@ -86,13 +86,15 @@
     }
     NSNumber* length = [NSNumber numberWithInteger:imageData.length];
     NSDictionary* params = @{@"fileNo1":fileNo1,
-                             @"FileName":[self.renameFile.text stringByAppendingString:@".jpg"],
-                             @"MimeType":@"jpg",
-                             @"dateCreate":[DIHelpers todayWithTime],
-                             @"dateModify":[DIHelpers todayWithTime],
-                             @"fileLength":length,
-                             @"remarks":self.remarks.text,
-                             @"base64":[self.imagePreview.image encodeToBase64String]
+                             @"documents":@{
+                                     @"FileName":[self.renameFile.text stringByAppendingString:@".jpg"],
+                                     @"MimeType":@"jpg",
+                                     @"dateCreate":[DIHelpers todayWithTime],
+                                     @"dateModify":[DIHelpers todayWithTime],
+                                     @"fileLength":length,
+                                     @"remarks":self.remarks.text,
+                                     @"base64":[self.imagePreview.image encodeToBase64String]
+                                     }
                              };
     
     NSString* uploadURL;

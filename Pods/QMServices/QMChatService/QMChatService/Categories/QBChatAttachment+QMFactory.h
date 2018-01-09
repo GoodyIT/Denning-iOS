@@ -18,11 +18,18 @@ NS_ASSUME_NONNULL_BEGIN
                  contentType:(NSString *)contentType
               attachmentType:(NSString *)type;
 
++ (instancetype)initWithName:(nullable NSString *)name
+                     fileURL:(nullable NSURL *)fileURL
+                 contentType:(NSString *)contentType
+              attachmentType:(NSString *)type
+                    fileSize:(NSInteger) fileSize;
+
 + (instancetype)videoAttachmentWithFileURL:(NSURL *)fileURL;
 + (instancetype)audioAttachmentWithFileURL:(NSURL *)fileURL;
 + (instancetype)imageAttachmentWithImage:(UIImage *)image;
++ (instancetype)imageAttachmentWithImage:(UIImage *)image fileName:(NSString*) fileName;
 
-+ (instancetype) fileAttachmentWithFileURL:(NSURL *)fileURL contentType:(NSString*)contentType;
++ (instancetype) fileAttachmentWithFileURL:(NSURL *)fileURL contentType:(NSString*)contentType fileName:(NSString*) fileName fileSize:(NSInteger)fileSize;
 
 @end
 

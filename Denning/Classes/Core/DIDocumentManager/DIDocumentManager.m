@@ -173,7 +173,7 @@
     NSURLSessionDownloadTask *downloadTask = [_manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL* newPath = [self createNewDir:@"DenningIT"];
         
-        return [newPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@%@", [DIHelpers randomTime],[response suggestedFilename]]];
+        return [newPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@", [response suggestedFilename]]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
         if (((NSHTTPURLResponse *)response).statusCode == 410) {

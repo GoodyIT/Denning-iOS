@@ -117,7 +117,6 @@ typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
         
         QBUUser *user = self.items[indexPath.row - kQMNumberOfStaticCellsBeforeOccupantsList];
         
-        
         [cell configureCellWithContact:user inChatDialog:_chatDialog];
         
         cell.updateRoleBlock = _updateRoleBlock;
