@@ -80,13 +80,13 @@
         return;
     }
     NSData* imageData = UIImageJPEGRepresentation(self.imagePreview.image, 1);
-    NSString* fileNo1 = @"0";
+    NSString* fileNo1 = [DataManager sharedManager].tempTheCode;
     if (_model != nil) {
         fileNo1 = _model.key;
     }
     NSNumber* length = [NSNumber numberWithInteger:imageData.length];
     NSDictionary* params = @{@"fileNo1":fileNo1,
-                             @"documents":@{
+                             @"documents":@[@{
                                      @"FileName":[self.renameFile.text stringByAppendingString:@".jpg"],
                                      @"MimeType":@"jpg",
                                      @"dateCreate":[DIHelpers todayWithTime],
@@ -94,7 +94,7 @@
                                      @"fileLength":length,
                                      @"remarks":self.remarks.text,
                                      @"base64":[self.imagePreview.image encodeToBase64String]
-                                     }
+                                     }]
                              };
     
     NSString* uploadURL;
@@ -103,7 +103,6 @@
     } else {
         uploadURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString:self.url];
     }
-    
     
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;

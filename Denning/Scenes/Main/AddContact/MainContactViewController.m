@@ -59,7 +59,7 @@
 }
 
 - (void) hideTabBar {
-    [self setTabBarVisible:NO animated:YES completion:^(BOOL finished) {
+    [self setTabBarVisible:NO animated:NO completion:^(BOOL finished) {
     }];
 }
 
@@ -89,9 +89,7 @@
     // zero duration means no animation
     CGFloat duration = (animated)? 0.0 : 0.0;
     
-    [UIView animateWithDuration:duration animations:^{
-        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
-    } completion:completion];
+    self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
 }
 
 - (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {

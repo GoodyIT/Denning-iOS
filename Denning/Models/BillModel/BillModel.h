@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class TaxInvoiceCalcModel;
 @class PresetBillModel;
+@class StaffModel;
 
 @interface BillModel : NSObject
 
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) NSString* issueBy;
 @property (strong, nonatomic) NSString* issueDate;
 @property (strong, nonatomic) NSString* issueToName;
+@property (strong, nonatomic) StaffModel* issueTo1stCode;
 @property (strong, nonatomic) PresetBillModel* presetCode;
 @property (strong, nonatomic) MatterCodeModel* matter;
 @property (strong, nonatomic) NSString* primaryClient;

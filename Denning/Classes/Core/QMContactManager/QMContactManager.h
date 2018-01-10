@@ -101,6 +101,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSArray <NSNumber *> *)occupantsWithoutCurrentUser:(NSArray <NSNumber *> *)occupantIDs;
 
+- (NSArray *)occupantsWithoutUser:(NSArray *)occupantIDs user:(QBUUser*) user;
+
 /**
  *  Online status string for user.
  *
@@ -140,6 +142,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)friendsByIDs:(NSArray *)userIDs;
 
 - (NSArray*) friendsWithoutDenning;
+
+- (NSArray*) usersByExcludingDenningUsersWithIDS:(NSArray*) userIDs;
 
 @end
 

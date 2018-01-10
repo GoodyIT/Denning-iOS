@@ -30,6 +30,10 @@
 "QM_STR_CHAT_EXPIRED" = "Please contact your business service provider.";
 "STR_ACCESS_DENIED_REGISTER" = "The function is only accessible by registered Denning User, please register.";
 "STR_ACCESS_RESTRICT_CLIENT" = "This function is only available to public users invited by Denning Biz providers.";
+"STR_SESSION_EXPIRED"   = "Session expired. Please log in again.";
+"STR_ROLE_SELF_CHANGE"  = "You can change your own role.";
+"STR_ROLE_DENNING_CHANGE"  = "You can change the role of Denning users.";
+"STR_ROLE_CLIENT_CHANGE"  = "You can change the role of the client.";
 
 //  ********** Contact requests notification text: ***************
 "QM_STR_FRIEND_REQUEST_DID_SEND_FOR_ME" = "Your request has been sent";
@@ -53,6 +57,7 @@
 "QM_STR_LEAVE_GROUP_CONVERSATION_TEXT" = "%@ has left group chat.";
 
 "UPDATE_GROUP_TYPE_TEXT" = "%@ has changed the group chat type.";
+"UPDATE_GROUP_MEMBERS_TEXT" = "%@ has updated the group memebers";
 
 // *********** CALL NOTIFICATIONS *****************
 "QM_STR_OUTGOING_CALL" = "Outgoing Call";

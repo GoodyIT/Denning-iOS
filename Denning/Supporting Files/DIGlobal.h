@@ -113,7 +113,7 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define SEARCH_UPLOAD_SUGGESTED_FILENAME    @"denningwcf/v1/table/cboDocumentName?search="
 
-#define THIRD_PARTY_UPLOAD_CATEGORY     @"v1/catPersonal?email="
+#define THIRD_PARTY_UPLOAD_CATEGORY     @"http://43.252.215.163:8313/denningapi/v1/catPersonal?email="
 
 #define GENERAL_CONTACT_URL @"v1/generalSearch/cust"
 

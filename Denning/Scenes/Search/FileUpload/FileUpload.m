@@ -106,7 +106,7 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
-    NSString* uploadURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString:self.url];
+    NSString* uploadURL = [[DataManager sharedManager].tempServerURL stringByAppendingString:self.url];
     if ([[DataManager sharedManager].documentView isEqualToString:@"upload"]) {
         uploadURL = [[DataManager sharedManager].tempServerURL stringByAppendingString:self.url];
     }

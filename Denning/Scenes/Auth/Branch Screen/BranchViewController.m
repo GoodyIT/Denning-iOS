@@ -104,7 +104,7 @@
 }
 
 - (void) proceedLogin:(FirmURLModel*)urlModel {
-    [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
+    [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL firmURLModel:urlModel];
     [self staffLogin:urlModel];
 }
 
@@ -126,7 +126,6 @@
         self->isLoading = NO;
         if (error == nil) {
             if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
-                [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
                 [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
                 [self gotoMain];
             } else {
@@ -177,6 +176,8 @@
 {
     if ([[DataManager sharedManager].documentView isEqualToString: @"upload"] || [[DataManager sharedManager].documentView isEqualToString: @"shared"]) {
         [DataManager sharedManager].tempServerURL = self.firmArray[sender.tag].firmServerURL;
+        [DataManager sharedManager].tempTheCode = self.firmArray[sender.tag].theCode;
+        
         [self clientLogin:self.firmArray[sender.tag]];
     } else {
         [self proceedLogin:self.firmArray[sender.tag]];

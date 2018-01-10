@@ -7,7 +7,7 @@
 //
 #import <Foundation/Foundation.h>
 
-//@class DocumentModel;
+@class DocumentModel;
 @interface FirmURLModel : NSObject
 
 @property(strong, nonatomic) NSString      *firmServerURL;

@@ -21,6 +21,7 @@
     model.issueBy = [response valueForKeyNotNull:@"issueBy"];
     model.issueDate = [response valueForKeyNotNull:@"issueDate"];
     model.issueToName = [response valueForKeyNotNull:@"issueToName"];
+    model.issueTo1stCode = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"issueTo1stCode"]];
     model.primaryClient = [response valueForKeyNotNull:@"primaryClient"];
     model.propertyTitle = [response valueForKeyNotNull:@"propertyTitle"];
     model.relatedDocumentNo = [response valueForKeyNotNull:@"relatedDocumentNo"];

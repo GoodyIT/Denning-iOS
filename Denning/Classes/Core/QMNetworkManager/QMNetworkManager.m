@@ -1075,20 +1075,8 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }];
 }
 
-- (UIViewController*) topMostController
-{
-    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    
-    while (topController.presentedViewController) {
-        
-        topController = topController.presentedViewController;
-    }
-    
-    return topController;
-}
-
 - (void) displaySessionExpireMessage {
-    [QMAlert showAlertWithMessage:@"Session expired. Please log in again." actionSuccess:NO inViewController:[self topMostController]];
+    [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
 }
 
 /*

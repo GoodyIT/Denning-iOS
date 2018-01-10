@@ -177,7 +177,7 @@
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
         if (((NSHTTPURLResponse *)response).statusCode == 410) {
-            [QMAlert showAlertWithMessage:@"Session expired. Please log in again." actionSuccess:NO inViewController:viewController];
+            [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:viewController];
         } else if (error == nil) {
             if  (filePath != nil) {
                 [self displayDocument:filePath inView:viewController];

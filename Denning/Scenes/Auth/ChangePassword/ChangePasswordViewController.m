@@ -7,6 +7,7 @@
 //
 
 #import "ChangePasswordViewController.h"
+#import "BranchViewController.h"
 
 @interface ChangePasswordViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *newpasswordTextField;
@@ -104,7 +105,7 @@
 }
 
 - (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
-    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
+    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL firmURLModel:firmURLModel];
     [self staffLogin:firmURLModel];
 }
 
@@ -136,7 +137,6 @@
         @strongify(self)
         if (error == nil) {
             if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
-                [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
                 [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];
@@ -199,14 +199,13 @@
     
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kBranchSegue]){
+        UINavigationController* navVC = segue.destinationViewController;
+        BranchViewController *branchVC = navVC.viewControllers.firstObject;
+        branchVC.firmArray = sender;
+    }
 }
-*/
 
 @end

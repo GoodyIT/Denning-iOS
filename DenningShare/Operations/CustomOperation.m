@@ -19,6 +19,7 @@
 @property (nonatomic) BOOL terminated;
 @property (nonatomic, copy) CustomCompletionBlock completion;
 @property (nonatomic, copy) NSDictionary* params;
+@property (nonatomic, copy) NSString* sessionID;
 @end
 
 @implementation CustomOperation
@@ -30,6 +31,12 @@
 }
 
 - (id) initWithUrl:(NSURL*)url completion:(CustomCompletionBlock)completion params:(NSDictionary*) params {
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
+    
+    return [self initWithUrl:url sessionID:[defaults valueForKey:@"sessionID"] completion:completion params:nil];
+}
+
+- (id) initWithUrl:(NSURL*)url sessionID:(NSString*)sessionID completion:(CustomCompletionBlock)completion params:(NSDictionary*) params {
     self = [super init];
     
     if (self) {
@@ -37,6 +44,7 @@
         self.completion = completion;
         self.params = params;
     }
+    self.sessionID = sessionID;
     
     return self;
 }
@@ -53,7 +61,7 @@
     // This is how we set header fields
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:[defaults valueForKey:@"sessionID"]  forHTTPHeaderField:@"webuser-sessionid"];
+    [request setValue:_sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     [request setValue:[defaults valueForKey:@"email"] forHTTPHeaderField:@"webuser-id"];
     if (_params != nil) {
         [request setHTTPMethod: @"POST"];

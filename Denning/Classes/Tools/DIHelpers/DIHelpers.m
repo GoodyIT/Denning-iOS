@@ -845,6 +845,599 @@
     return role;
 }
 
++ (void) showRestrictAlert {
+    [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restriced" actionSuccess:NO inViewController:[self topMostController]];
+}
+
++ (BOOL) canChangeGroupInfoforDialog:(QBChatDialog*) dialog {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canChangeGroupNameforDialog:(QBChatDialog*) dialog {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canChangeGroupTagforDialog:(QBChatDialog*) dialog {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canChangeGroupRoleforDialog:(QBChatDialog*) dialog toUser:(QBUUser*) toUser{
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* roleofToUser = [self getCurrentUserRole:toUser fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    
+    if ([user.email isEqualToString:toUser.email]) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ROLE_SELF_CHANGE", nil) actionSuccess:NO inViewController:[self topMostController]];
+        return NO;
+    }
+    
+    if ([roleofToUser isEqualToString:kRoleClientTag]) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ROLE_CLIENT_CHANGE", nil) actionSuccess:NO inViewController:[self topMostController]];
+        return NO;
+    }
+    
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            if ([roleofToUser isEqualToString:kRoleDenningTag]) {
+                [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ROLE_DENNING_CHANGE", nil) actionSuccess:NO inViewController:[self topMostController]];
+                return NO;
+            }
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            if ([roleofToUser isEqualToString:kRoleDenningTag]) {
+                [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ROLE_DENNING_CHANGE", nil) actionSuccess:NO inViewController:[self topMostController]];
+                return NO;
+            }
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canMuteforDialog:(QBChatDialog*) dialog {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canAddMemberforDialog:(QBChatDialog*) dialog {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canRemoveMemberforDialog:(QBChatDialog*) dialog {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canLeaveChatforDialog:(QBChatDialog*) dialog {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canViewContactProfileforDialog:(QBChatDialog*) dialog toUser:(QBUUser*) toUser {
+    if (![self isAllowToSendForDialog:dialog]) {
+        return NO;
+    }
+    
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* roleofToUser = [self getCurrentUserRole:toUser fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            if ([roleofToUser isEqualToString:kRoleDenningTag]) {
+                return NO;
+            }
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            if ([roleofToUser isEqualToString:kRoleDenningTag]) {
+                return NO;
+            }
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            if ([roleofToUser isEqualToString:kRoleDenningTag]) {
+                return NO;
+            }
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            if ([roleofToUser isEqualToString:kRoleDenningTag]) {
+                return NO;
+            }
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canShowAllMembersStatusforDialog:(QBChatDialog*) dialog {
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = NO;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = NO;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canSendMessageforDialog:(QBChatDialog*) dialog {
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = YES;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = YES;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) canCallVideoforDialog:(QBChatDialog*) dialog {
+    BOOL isPossible = NO;
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
+    NSString* tag = [self getTag:dialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = YES;
+        }
+    } else {
+        if (isDenningUser) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleAdminTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleStaffTag]) {
+            isPossible = YES;
+        } else if ([role isEqualToString:kRoleReaderTag]) {
+            isPossible = NO;
+        } else { // Client
+            isPossible = YES;
+        }
+    }
+    
+    if  (!isPossible) {
+        [self showRestrictAlert];
+    }
+    
+    return isPossible;
+}
+
++ (BOOL) isExpiredChat {
+    if ([DataManager sharedManager].isExpire) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restricted" actionSuccess:NO  inViewController:[self topMostController]];
+        return NO;
+    }
+    
+    return YES;
+}
+
++ (BOOL) isAllowToSendForDialog:(QBChatDialog*) chatDialog {
+    NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:chatDialog];
+    if ([role isEqualToString:kRoleReaderTag]) {
+        // Reader can only get message;
+        return NO;
+    }
+    
+    if (![role isEqualToString:kRoleClientTag]) {
+        if (![[DIHelpers getTag:chatDialog] isEqualToString:kChatDenningTag]) {
+            return [self isExpiredChat];
+        }
+    }
+    
+    return YES;
+}
+
++ (NSArray*) getOnlieStatus:(NSArray*) onlineUsers inTotalUser:(NSArray*) totalUsers forChatDialog:(QBChatDialog*) chatDialog
+{
+    NSMutableArray* info = [NSMutableArray new];
+    NSInteger cntOfOnlineUsers, cntOfTotalUsers;
+    NSArray* onlineUsersByExcludingDenning = [QMCore.instance.contactManager usersByExcludingDenningUsersWithIDS:onlineUsers];
+    NSArray* totalUsersByExcludingDenning = [QMCore.instance.contactManager usersByExcludingDenningUsersWithIDS:onlineUsers];
+    QBUUser* user = [QBSession currentSession].currentUser;
+    NSString* role = [self getCurrentUserRole:user fromChatDialog:chatDialog];
+    NSString* tag = [self getTag:chatDialog];
+    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    
+    if ([tag isEqualToString:kChatDenningTag]) {
+        if (isDenningUser) {
+            cntOfOnlineUsers = onlineUsers.count;
+            cntOfTotalUsers = totalUsers.count;
+        } else if ([role isEqualToString:kRoleAdminTag] || [role isEqualToString:kRoleStaffTag]) {
+            cntOfOnlineUsers = onlineUsersByExcludingDenning.count;
+            cntOfTotalUsers = totalUsersByExcludingDenning.count;
+        } else {
+            return nil;
+        }
+    } else {
+        if (isDenningUser) {
+            cntOfOnlineUsers = onlineUsers.count;
+            cntOfTotalUsers = totalUsers.count;
+        } else if ([role isEqualToString:kRoleAdminTag] || [role isEqualToString:kRoleStaffTag]) {
+            cntOfOnlineUsers = onlineUsersByExcludingDenning.count;
+            cntOfTotalUsers = totalUsersByExcludingDenning.count;
+        } else {
+            return nil;
+        }
+    }
+    
+    return [info copy];
+}
+
 + (BOOL) hasAdminRole:(QBChatDialog*) chatDialog
 {
     QBUUser* user = [QBSession currentSession].currentUser;

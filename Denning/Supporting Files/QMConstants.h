@@ -54,6 +54,8 @@ static NSString *const kQMContactRequestNotificationMessage = @"Contact request"
 static NSString *const kQMLocationNotificationMessage = @"Location";
 static NSString *const kQMCallNotificationMessage = @"Call notification";
 static NSString *const kQMGroupTypeChangeNotificationMessage = @"Change group type";
+static NSString *const kQMGroupMembersChangeNotificationMessage = @"Update the group members";
+static NSString *const kQMGroupMemberUPdateUserRoleNotificationMessage = @"Update the user role";
 
 /**
  *  EditDialogTableViewController

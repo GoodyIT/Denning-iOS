@@ -869,17 +869,19 @@ NSMutableDictionary* keyValue;
     for (int j = 0; j < _matterModel.partyGroupArray.count; j++) {
         PartyGroupModel* partyGroup = _matterModel.partyGroupArray[j];
         if ([partyGroup.partyGroupName isEqualToString:partyName]) {
-            for (int i = 0; i < codeList.count; i++) {
-                if (partyGroup.partyArray.count > i) {
-                    if (![codeList[i] isEqualToString:partyGroup.partyArray[i].clientCode]){
-                        [partyParam addObject:@{@"code":codeList[i]}];
+                if (partyGroup.partyArray.count >= codeList.count) {
+                    for (int i = 0; i < codeList.count; i++) {
+                        if (![codeList[i] isEqualToString:partyGroup.partyArray[i].clientCode]){
+                            [partyParam addObject:@{@"code":codeList[i]}];
+                        }
                     }
                 } else {
-                    [partyParam addObject:@{@"code":codeList[i]}];
+                    for (int i = 0; i < codeList.count; i++) {
+                        [partyParam addObject:@{@"code":codeList[i]}];
+                    }
                 }
             }
         }
-    }
     [vendor addEntriesFromDictionary:@{@"party":partyParam}];
     return [vendor copy];
 }
@@ -919,12 +921,14 @@ NSMutableDictionary* keyValue;
 - (NSDictionary*) buildPropertiesGroupParams {
     NSMutableArray* propertyArray = [NSMutableArray new];
     
-    for (int i = 0; i < propertyCodeList.count; i++) {
-        if (_matterModel.propertyGroupArray.count > i) {
+    if (_matterModel.propertyGroupArray.count >= propertyCodeList.count) {
+        for (int i = 0; i < propertyCodeList.count; i++) {
             if (![propertyCodeList[i] isEqualToString:_matterModel.propertyGroupArray[i].key]) {
                 [propertyArray addObject:@{@"code":propertyCodeList[i]}];
             }
-        } else {
+        }
+    } else {
+        for (int i = 0; i < propertyCodeList.count; i++) {
             [propertyArray addObject:@{@"code":propertyCodeList[i]}];
         }
     }

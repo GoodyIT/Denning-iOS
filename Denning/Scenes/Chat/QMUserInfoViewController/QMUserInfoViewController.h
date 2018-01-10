@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (strong, nonatomic) QBUUser *user;
 
+@property (strong, nonatomic) QBChatDialog *toChatDialog;
+
 @property (strong, nonatomic) id isDismiss;
 
 @end

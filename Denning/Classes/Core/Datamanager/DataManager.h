@@ -13,6 +13,7 @@
 
 @class UserModel;
 @class ChatFirmModel;
+@class FirmURLModel;
 @interface DataManager : NSObject
 
 @property (strong, nonatomic) NSString  *searchType;
@@ -30,6 +31,7 @@
 @property (assign, nonatomic) BOOL userAgreementAccepted;
 
 @property (strong, nonatomic) NSString* tempServerURL;
+@property (strong, nonatomic) NSString* tempTheCode;
 
 @property (strong, nonatomic) NSString* isFirstLoading;
 
@@ -54,7 +56,7 @@
 
 - (void) setUserInfoFromChangePassword: (NSDictionary*) response;
 
-- (void) setServerAPI: (NSString*) serverAPI withFirmName:(NSString*) firmName withFirmCity:(NSString*)firmCity;
+- (void) setServerAPI: (NSString*) serverAPI firmURLModel:(FirmURLModel*) firmURLModel;
 
 - (BOOL) isClient;
 

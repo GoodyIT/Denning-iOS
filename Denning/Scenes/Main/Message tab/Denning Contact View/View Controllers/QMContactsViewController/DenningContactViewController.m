@@ -213,6 +213,11 @@ SWTableViewCellDelegate
     QBUUser *user = firmModel.users[indexPath.row];
     [cell configureCellWithContact:user];
     
+    cell.didTapAvatar = ^(GeneralContactCell *cell) {
+        NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+        [self tableView:self.tableView didSelectRowAtIndexPath:indexPath];
+    };
+    
     return cell;
 }
 
@@ -517,13 +522,6 @@ SWTableViewCellDelegate
 #pragma mark - Actions
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([segue.identifier isEqualToString:kQMSceneSegueUserInfo]) {
-        
-        UINavigationController *navigationController = segue.destinationViewController;
-        QMUserInfoViewController *userInfoVC = navigationController.viewControllers.firstObject;
-        userInfoVC.user = sender;
-    }
     
     if ([segue.identifier isEqualToString:kQMSceneSegueChat]) {
         UINavigationController *navigationController = segue.destinationViewController;

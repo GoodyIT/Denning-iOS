@@ -80,6 +80,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (BFTask*) updateRoleOfUsers:(NSArray*)userIDs forGroupChatDialog :(QBChatDialog *)chatDialog;
 
 - (BFTask*) changeCustomData:(NSDictionary*) data forGroupChatDialog:(QBChatDialog *)chatDialog;
+
+- (BFTask*) rejectOccupantsWithIDs:(NSArray *)ids toChatDialog:(QBChatDialog *)chatDialog;
+
+- (BFTask*) sendNotificationMessageAboutDialogUpdateWithText:(NSString*) notificationText forChatDialog:(QBChatDialog*) chatDialog;
+
+- (BFTask*) sendNotificationMessageAboutDialogUpdateWithText:(NSString*) notificationText forChatDialog:(QBChatDialog*) chatDialog changeType:(NSInteger) changeType;
 @end
 
 NS_ASSUME_NONNULL_END

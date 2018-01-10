@@ -206,24 +206,29 @@ NYTPhotosViewControllerDelegate
 
 - (void)updateUserIteractions {
     
-    BOOL isFriend = [QMCore.instance.contactManager isFriendWithUserID:self.user.ID];
-    if (isFriend) {
-        
-        [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
-    }
-    else {
-        
-        [self.hiddenSections addIndex:QMUserInfoSectionContactInteractions];
-        
-        BOOL isAwaitingForApproval = [QMCore.instance.contactManager isContactListItemExistentForUserWithID:self.user.ID];
-        if (isAwaitingForApproval) {
-            
-            [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
-        }
-        else {
-            
-            [self.hiddenSections addIndex:QMUserInfoSectionRemoveContact];
-        }
+//    BOOL isFriend = [QMCore.instance.contactManager isFriendWithUserID:self.user.ID];
+//    if (isFriend) {
+//
+//        [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
+//    }
+//    else {
+//
+//        [self.hiddenSections addIndex:QMUserInfoSectionContactInteractions];
+//
+//        BOOL isAwaitingForApproval = [QMCore.instance.contactManager isContactListItemExistentForUserWithID:self.user.ID];
+//        if (isAwaitingForApproval) {
+//
+//            [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
+//        }
+//        else {
+//
+//            [self.hiddenSections addIndex:QMUserInfoSectionRemoveContact];
+//        }
+//    }
+     [self.hiddenSections addIndex:QMUserInfoSectionAddAction];
+    
+    if (![DIHelpers canRemoveMemberforDialog:_toChatDialog]) {
+        [self.hiddenSections addIndex:QMUserInfoSectionRemoveContact];
     }
 }
 
@@ -269,6 +274,9 @@ NYTPhotosViewControllerDelegate
 //MARK: - Actions
 
 - (void)sendMessageAction {
+    if (![DIHelpers isExpiredChat]) {
+        return;
+    }
     
     __block BOOL chatDialogFound = NO;
     
@@ -349,6 +357,10 @@ NYTPhotosViewControllerDelegate
         return;
     }
     
+    if (![DIHelpers isExpiredChat]) {
+        return;
+    }
+    
     [QMCore.instance.callManager callToUserWithID:self.user.ID conferenceType:conferenceType];
 }
 
@@ -421,23 +433,23 @@ NYTPhotosViewControllerDelegate
                                                         style:UIAlertActionStyleCancel
                                                       handler:nil]];
     
+    @weakify(self)
     void (^removeAction)(UIAlertAction *action) = ^void(UIAlertAction * __unused action) {
         
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
         
-        self.task = [[QMCore.instance.contactManager removeUserFromContactList:self.user]
-                     continueWithBlock:^id _Nullable(BFTask * _Nonnull __unused task)
-                     {
-                         if (self.splitViewController.isCollapsed) {
-                             [self.navigationController popViewControllerAnimated:YES];
-                         }
-                         else {
-                             [(QMSplitViewController *)self.splitViewController showPlaceholderDetailViewController];
-                         }
-                         [SVProgressHUD dismiss];
-                         
-                         return nil;
-                     }];
+        @strongify(self)
+        self.task = [[QMCore.instance.chatManager rejectOccupantsWithIDs:@[@(self.user.ID)] toChatDialog:self.toChatDialog] continueWithSuccessBlock:^id _Nullable(BFTask * _Nonnull __unused task)
+         {
+             @strongify(self)
+             return [[QMCore.instance.chatManager sendNotificationMessageAboutDialogUpdateWithText:kQMGroupMembersChangeNotificationMessage forChatDialog:task.result changeType:QMDialogUpdateRemoveOccupant] continueWithSuccessBlock:^id _Nullable(BFTask * _Nonnull t) {
+                 
+                 [SVProgressHUD dismiss];
+                 @strongify(self)
+                 [self.navigationController popViewControllerAnimated:YES];
+                 return nil;
+             }];
+         }];
     };
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_DELETE", nil)

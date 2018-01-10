@@ -13,4 +13,9 @@
 + (void)registerForReuseInTableView:(UITableView *)tableView;
 + (NSString *)cellIdentifier;
 + (CGFloat)height;
+
+@property (weak, nonatomic) IBOutlet QMImageView *avatarImageView;
+
+@property (copy, nonatomic) void (^didTapAvatar)(GeneralContactCell *cell);
+
 @end

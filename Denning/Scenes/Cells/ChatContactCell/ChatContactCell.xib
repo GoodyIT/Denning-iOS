@@ -84,7 +84,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
-                <outlet property="avatarImageView" destination="m9l-uN-U96" id="8nz-vd-2Kw"/>
+                <outlet property="avatarImageView" destination="m9l-uN-U96" id="ufl-Ad-pBP"/>
                 <outlet property="favoriteBtn" destination="VxF-2O-jgY" id="btR-sG-RQv"/>
                 <outlet property="lastSeenLabel" destination="ZjP-YT-fs4" id="frk-9Z-h9A"/>
                 <outlet property="positionLabel" destination="6pq-m8-aP1" id="y7b-rH-myq"/>

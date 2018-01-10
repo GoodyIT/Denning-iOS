@@ -75,7 +75,7 @@
 }
 
 - (void) registerURLAndGotoMain: (FirmURLModel*) firmURLModel {
-    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL withFirmName:firmURLModel.name withFirmCity:firmURLModel.city];
+    [[DataManager sharedManager] setServerAPI:firmURLModel.firmServerURL firmURLModel:firmURLModel];
     [self staffLogin:firmURLModel];
 }
 
@@ -89,7 +89,6 @@
         @strongify(self)
         if (error == nil) {
             if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
-                [[DataManager sharedManager] setServerAPI:urlModel.firmServerURL withFirmName:urlModel.name withFirmCity:urlModel.city];
                 [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self performSegueWithIdentifier:kQMSceneSegueMain sender:nil];

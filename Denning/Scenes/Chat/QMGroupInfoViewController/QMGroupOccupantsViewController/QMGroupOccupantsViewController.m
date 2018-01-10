@@ -69,23 +69,27 @@ QMUsersServiceDelegate
     [self qm_smoothlyDeselectRowsForTableView:self.tableView];
 }
 
-- (void) updateUserRole:(NSString*) role userID:(NSInteger) userID inIndexPath:(NSIndexPath*) indexPath{
+- (void) updateUserRole:(NSString*) role userID:(QBUUser*) user inIndexPath:(NSIndexPath*) indexPath{
+    
+    NSString* originalRole = [DIHelpers getCurrentUserRole:user fromChatDialog:self.chatDialog];
+    
+    if ([role isEqualToString:originalRole]) {
+        return;
+    }
     
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    self.updateRoleTask = [[[QMCore instance].chatManager changeUserWithID:userID toRole:role forGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
-        [SVProgressHUD dismiss];
-        
-        if (!t.isFaulted) {
-            
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-        else {
-            
-            if (![QBChat instance].isConnected) {
+    self.updateRoleTask = [[[QMCore instance].chatManager changeUserWithID:user.ID toRole:role forGroupChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+        if (!task.isFaulted) {
+            return [[QMCore.instance.chatManager sendNotificationMessageAboutDialogUpdateWithText:kQMGroupMemberUPdateUserRoleNotificationMessage forChatDialog:task.result changeType:QMDialogUpdateRemoveOccupant] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+                [SVProgressHUD dismiss];
+                if (task.isFaulted) {
+                    [SVProgressHUD showErrorWithStatus:t.error.localizedDescription];
+                }
                 
-                [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_SERVER_UNAVAILABLE", nil) actionSuccess:NO inViewController:self];
-            }
+                return nil;
+            }];
         }
+        [SVProgressHUD showErrorWithStatus:task.error.localizedDescription];
         return nil;
     }];
 }
@@ -105,12 +109,7 @@ QMUsersServiceDelegate
             return;
         }
         
-        if ([DIHelpers isSupportChat:self.chatDialog]) {
-            if (![DataManager sharedManager].isDenningUser) {
-                // Only Denning user can change the avatar for Denning support
-                return;
-            }
-        } else if (![DataManager sharedManager].isStaff) {
+        if (![DIHelpers canAddMemberforDialog:self.chatDialog]) {
             return;
         }
 
@@ -152,26 +151,10 @@ QMUsersServiceDelegate
         QBUUser *user = self.dataSource.items[userIndex];
         
         NSString* role = [DIHelpers getCurrentUserRole:user fromChatDialog:self.chatDialog];
-        NSString* myRole = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:self.chatDialog];
-        
-        if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
-            // User cannot change his role
-            return;
-        }
         
         if (![[DataManager sharedManager] isSuperUser:user.email]) {
-            if (!([myRole isEqualToString:kRoleAdminTag] || [DataManager sharedManager].isDenningUser)) {
+            if (![DIHelpers canChangeGroupRoleforDialog:self.chatDialog toUser:user]) {
                 // Only Denning Staff & Admin can assign the role.
-                return;
-            }
-            
-            if ([role isEqualToString:kRoleDenningTag]) {
-                // Cannot change the role of Denning User.
-                return;
-            }
-            
-            if ([role isEqualToString:kRoleClientTag]) {
-                // Cannot change the client role
                 return;
             }
         }
@@ -179,19 +162,19 @@ QMUsersServiceDelegate
         UIAlertController *customActionSheet = [UIAlertController alertControllerWithTitle:@"User Role" message:@"Please select role to assign." preferredStyle:UIAlertControllerStyleActionSheet];
         
         UIAlertAction *firstButton = [UIAlertAction actionWithTitle:@"Admin" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            [self updateUserRole:kRoleAdminTag userID:user.ID inIndexPath:indexPath];
+            [self updateUserRole:kRoleAdminTag userID:user inIndexPath:indexPath];
         }];
         [firstButton setValue:[UIColor babyRed] forKey:@"titleTextColor"];
         [firstButton setValue:@(role == kRoleAdminTag) forKey:@"checked"];
         
         UIAlertAction *secondButton = [UIAlertAction actionWithTitle:@"Staff" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            [self updateUserRole:kRoleStaffTag userID:user.ID inIndexPath:indexPath];
+            [self updateUserRole:kRoleStaffTag userID:user inIndexPath:indexPath];
         }];
         [secondButton setValue:[UIColor babyBlue] forKey:@"titleTextColor"];
         [secondButton setValue:@(role == kRoleStaffTag) forKey:@"checked"];
         
         UIAlertAction *thirdButton = [UIAlertAction actionWithTitle:@"Reader" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-           [self updateUserRole:kRoleReaderTag userID:user.ID inIndexPath:indexPath];
+           [self updateUserRole:kRoleReaderTag userID:user inIndexPath:indexPath];
         }];
         [thirdButton setValue:[UIColor babyGreen] forKey:@"titleTextColor"];
         [thirdButton setValue:@(role == kRoleReaderTag) forKey:@"checked"];
@@ -258,6 +241,7 @@ QMUsersServiceDelegate
         
         QMUserInfoViewController *userInfoVC = segue.destinationViewController;
         userInfoVC.user = sender;
+        userInfoVC.toChatDialog = self.chatDialog;
     }
     else if ([segue.identifier isEqualToString:kQMSceneSegueGroupAddUsers]) {
         
@@ -352,20 +336,12 @@ QMUsersServiceDelegate
                                                                                                                                message:NSLocalizedString(@"QM_STR_LOADING", nil)
                                                                                                                               duration:0];
                                                               
-                                                              self.leaveTask = [[QMCore.instance.chatManager leaveChatDialog:self.chatDialog] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
+                                                              self.leaveTask = [[QMCore.instance.chatService deleteDialogWithID:self.chatDialog.ID] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
                                                                   
                                                                   [(QMNavigationController *)navigationController dismissNotificationPanel];
                                                                   
                                                                   if (!task.isFaulted) {
-                                                                      
-                                                                      if (self.splitViewController.isCollapsed) {
-                                                                          
-                                                                          [navigationController popToRootViewControllerAnimated:YES];
-                                                                      }
-                                                                      else {
-                                                                          
-                                                                          [(QMSplitViewController *)self.splitViewController showPlaceholderDetailViewController];
-                                                                      }
+                                                                      [self.navigationController popViewControllerAnimated:YES];
                                                                   }
                                                                   
                                                                   return nil;
@@ -423,6 +399,7 @@ QMUsersServiceDelegate
     if ([chatDialog isEqual:self.chatDialog]) {
         
         [self updateOccupants];
+        self.dataSource.chatDialog = chatDialog;
         [self.tableView reloadData];
     }
 }

@@ -195,6 +195,27 @@
     return [friends copy];
 }
 
+- (NSArray*) usersByExcludingDenningUsersWithIDS:(NSArray*) userIDs {
+    BOOL isExist = NO;
+    NSMutableArray *mutableUsers = [NSMutableArray new];
+    
+    for (NSNumber* ID in userIDs) {
+        for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].denningContactArray) {
+            for (QBUUser* user in chatFirmModel.users) {
+                if (ID.integerValue == user.ID) {
+                    isExist = YES;
+                }
+            }
+        }
+        
+        if (!isExist) {
+            [mutableUsers addObject:ID];
+        }
+    }
+    
+    return [mutableUsers copy];
+}
+
 - (NSArray *)friendsByExcludingUsersWithIDs:(NSArray *)userIDs {
     
     NSArray *friends = [self friends];
@@ -239,13 +260,18 @@
     return [ids copy];
 }
 
-- (NSArray *)occupantsWithoutCurrentUser:(NSArray *)occupantIDs {
+- (NSArray *)occupantsWithoutUser:(NSArray *)occupantIDs user:(QBUUser*) user{
     
     NSMutableArray *occupantsWithoutCurrentUser = [occupantIDs mutableCopy];
     
-    [occupantsWithoutCurrentUser removeObject:@(self.serviceManager.currentProfile.userData.ID)];
+    [occupantsWithoutCurrentUser removeObject:@(user.ID)];
     
     return [occupantsWithoutCurrentUser copy];
+}
+
+- (NSArray *)occupantsWithoutCurrentUser:(NSArray *)occupantIDs {
+    
+    return [self occupantsWithoutUser:occupantIDs user:self.serviceManager.currentUser];
 }
 
 - (NSString *)onlineStatusForUser:(QBUUser *)user {

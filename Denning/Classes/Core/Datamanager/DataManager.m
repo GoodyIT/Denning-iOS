@@ -48,7 +48,7 @@
         user = [UserModel allObjects].firstObject;
         if (!user) {
             [[RLMRealm defaultRealm] transactionWithBlock:^{
-                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @0, @"", @""]];
+                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @"", @"", @""]];
             }];
         }
     }
@@ -82,7 +82,7 @@
     [self _setInfoWithValue:[response valueForKeyNotNull:@"userType"] for:@"userType"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.email = [response valueForKeyNotNull:@"email"];
-        user.avatarUrl = [response valueForKeyNotNull:@"avatarUrl"];
+        user.avatarUrl = [response valueForKeyNotNull:@"avatar_url"];
         user.phoneNumber = [response valueForKeyNotNull:@"hpNumber"];
         user.sessionID = [response valueForKeyNotNull:@"sessionID"];
         user.status = [response valueForKeyNotNull:@"status"];
@@ -135,14 +135,15 @@
     }];
 }
 
-- (void) setServerAPI: (NSString*) serverAPI withFirmName:(NSString*) firmName withFirmCity:(NSString*)firmCity
+- (void) setServerAPI: (NSString*) serverAPI firmURLModel:(FirmURLModel*) firmURLModel
 {
     self.searchType = @"General";
     [self _setInfoWithValue:serverAPI for:@"api"];
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.serverAPI = serverAPI;
-        user.firmName = firmName;
-        user.firmCity = firmCity;
+        user.firmName = firmURLModel.name;
+        user.firmCity = firmURLModel.city;
+        user.theCode = firmURLModel.theCode;
     }];
 }
 
@@ -203,6 +204,7 @@
         user.serverAPI = @"";
         user.firmName = @"";
         user.firmCity = @"";
+        user.avatarUrl = @"";
     }];
     
     personalArray = [NSMutableArray new];

@@ -11,7 +11,7 @@
 #import "QMPlaceholder.h"
 
 @interface FavContactCell()
-@property (weak, nonatomic) IBOutlet QMImageView *avatarImageView;
+
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastseenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *positionLabel;
@@ -22,7 +22,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _avatarImageView.imageViewType = QMImageViewTypeCircle;
+    self.avatarImageView.imageViewType = QMImageViewTypeCircle;
 }
 
 - (void) configureCellWithContact: (QBUUser*) user

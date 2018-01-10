@@ -163,7 +163,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) hideTabBar {
-    [self setTabBarVisible:NO animated:YES completion:^(BOOL finished) {
+    [self setTabBarVisible:NO animated:NO completion:^(BOOL finished) {
     }];
 }
 
@@ -194,7 +194,9 @@ NSMutableDictionary* keyValue;
     CGFloat duration = (animated)? 0.0 : 0.0;
     
     [UIView animateWithDuration:duration animations:^{
-        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+        if ([self isKindOfClass:[DashboardViewController class]]) {
+            self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+        }
     } completion:completion];
 }
 

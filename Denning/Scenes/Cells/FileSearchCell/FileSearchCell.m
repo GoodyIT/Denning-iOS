@@ -10,6 +10,7 @@
 #import "SearchResultModel.h"
 #import "NSDictionary+NotNull.h"
 #import <QuartzCore/QuartzCore.h>
+#import "FirmURLModel.h"
 
 static UIImage *selectedCheckImage() {
     
@@ -90,7 +91,8 @@ static UIImage *deselectedCheckImage() {
 }
 
 - (void) configureCellWithFirm:(FirmURLModel*) model {
-    NSLog(@"%@", model);
+    self.titleLabel.text = model.name;
+    self.descLabel.text = model.city;
 }
 
 - (void) configureCell:(SearchResultModel*) model

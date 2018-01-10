@@ -16,11 +16,11 @@
 {
     FirmURLModel* model = [FirmURLModel new];
     
-    model.firmServerURL = [response objectForKey:@"APIServer"];
-    model.name = [[response objectForKey:@"LawFirm"] objectForKey:@"name"];
-    model.city = [[[response objectForKey:@"LawFirm"] objectForKey:@"address"] objectForKey:@"city"];
+    model.firmServerURL = [response valueForKey:@"APIServer"];
+    model.name = [[response objectForKey:@"LawFirm"] valueForKey:@"name"];
+    model.city = [[[response objectForKey:@"LawFirm"] objectForKey:@"address"] valueForKey:@"city"];
     model.document = [DocumentModel getDocumentFromResponse:[response objectForKey:@"folders"]];
-    model.theCode = [response objectForKey:@"theCode"];
+    model.theCode = [response valueForKey:@"theCode"];
     
     return model;
 }

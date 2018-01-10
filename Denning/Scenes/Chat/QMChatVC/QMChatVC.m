@@ -326,7 +326,7 @@ QMUsersServiceDelegate
     // load messages from cache if needed and from REST
     [self refreshMessages];
     
-    if ([self isAllowToSendForDialog]) {
+    if ([DIHelpers isAllowToSendForDialog:self.chatDialog]) {
         self.inputToolbar.audioRecordingEnabled = YES;
     } else {
         self.inputToolbar.audioRecordingEnabled = NO;
@@ -537,24 +537,7 @@ QMUsersServiceDelegate
     return YES;
 }
 
-- (BOOL) isAllowToSendForDialog {
-    NSString* role = [DIHelpers getCurrentUserRole:[QBSession currentSession].currentUser fromChatDialog:self.chatDialog];
-    if ([role isEqualToString:kRoleReaderTag]) {
-        // Reader can only get message;
-        return NO;
-    }
-    
-    if (![role isEqualToString:kRoleClientTag]) {
-        if (![[DIHelpers getTag:self.chatDialog] isEqualToString:kChatDenningTag]) {
-            if ([DataManager sharedManager].isExpire) {
-                [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restricted" actionSuccess:NO  inViewController:self];
-                return NO;
-            }
-        }
-    }
-    
-    return YES;
-}
+
 
 - (BOOL)messageSendingAllowed {
     
@@ -568,7 +551,7 @@ QMUsersServiceDelegate
 //            return YES;
 //        }
 //    }
-    if (![self isAllowToSendForDialog]) {
+    if (![DIHelpers isAllowToSendForDialog:self.chatDialog]) {
         return NO;
     }
     
@@ -1585,14 +1568,16 @@ QMUsersServiceDelegate
 - (void)performInfoViewControllerForUserID:(NSUInteger)userID {
     
     QBUUser *opponentUser = [QMCore.instance.usersService.usersMemoryStorage userWithID:userID];
-    
+    if (![DIHelpers canViewContactProfileforDialog:self.chatDialog toUser:opponentUser]) {
+        return;
+    }
     if (opponentUser == nil) {
         
         opponentUser = [QBUUser user];
         opponentUser.ID = userID;
         opponentUser.fullName = NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil);
     }
-    
+
     [self performSegueWithIdentifier:kQMSceneSegueUserInfo sender:opponentUser];
 }
 
@@ -1618,6 +1603,7 @@ QMUsersServiceDelegate
         
         QMUserInfoViewController *userInfoVC = segue.destinationViewController;
         userInfoVC.user = sender;
+        userInfoVC.toChatDialog = self.chatDialog;
     } else if ([segue.identifier isEqualToString:KQMSceneSegueGroupInfo]) {
         
         QMGroupInfoViewController *groupInfoVC = segue.destinationViewController;
@@ -1680,6 +1666,9 @@ QMUsersServiceDelegate
 }
 
 - (void)audioCallAction {
+    if (![DIHelpers isAllowToSendForDialog:self.chatDialog]) {
+        return;
+    }
     
     if (![self callsAllowed]) {
         
@@ -1689,12 +1678,12 @@ QMUsersServiceDelegate
     NSArray* opponentIDs = @[@([self.chatDialog opponentID])];
     
     [QMCore.instance.callManager callToUserWithIDs:[opponentIDs mutableCopy] conferenceType:QBRTCConferenceTypeAudio];
-    
-//    [QMCore.instance.callManager callToUserWithID:[self.chatDialog opponentID]
-//  conferenceType:QBRTCConferenceTypeAudio];
 }
 
 - (void)videoCallAction {
+    if (![DIHelpers isAllowToSendForDialog:self.chatDialog]) {
+        return;
+    }
     
     if (![self callsAllowed]) {
         
@@ -1853,10 +1842,16 @@ QMUsersServiceDelegate
 }
 
 - (void) groupCall {
+    if  (![DIHelpers isAllowToSendForDialog:self.chatDialog]) {
+        return;
+    }
     [QMCore.instance.callManager callToUserWithIDs:[_chatDialog.occupantIDs mutableCopy] conferenceType:QBRTCConferenceTypeAudio];
 }
 
 - (void) groupVideoCall {
+    if  (![DIHelpers isAllowToSendForDialog:self.chatDialog]) {
+        return;
+    }
     [QMCore.instance.callManager callToUserWithIDs:[_chatDialog.occupantIDs mutableCopy] conferenceType:QBRTCConferenceTypeVideo];
 }
 
@@ -1865,13 +1860,14 @@ QMUsersServiceDelegate
     self.imageBarButtonItem = [[QMImageBarButtonItem alloc] init];
     [self.imageBarButtonItem setSize:CGSizeMake(40, 40)];
     
-    __weak typeof(self) weakSelf = self;
+    @weakify(self)
     void(^onTapBlock)(QMImageView *) = ^(QMImageView __unused *imageView) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!([DataManager sharedManager].isStaff || [DataManager sharedManager].isDenningUser)) {
+        @strongify(self)
+        if (![DIHelpers canChangeGroupInfoforDialog:self.chatDialog]) {
             return;
         }
-        [strongSelf performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:strongSelf.chatDialog];
+        
+        [self performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:self.chatDialog];
     };
     
     self.imageBarButtonItem.onTapHandler = onTapBlock;
@@ -1903,8 +1899,12 @@ QMUsersServiceDelegate
         @strongify(self);
         
         if (error == nil) {
-            
-            [self.onlineTitleView setStatus:[NSString stringWithFormat:NSLocalizedString(@"QM_STR_GROUP_CHAT_STATUS_STRING", nil), self.chatDialog.occupantIDs.count, onlineUsers.count]];
+            NSArray* onlineInfo = [DIHelpers getOnlieStatus:onlineUsers inTotalUser:self.chatDialog.occupantIDs forChatDialog:self.chatDialog];
+            NSString* status = [NSString stringWithFormat:NSLocalizedString(@"QM_STR_GROUP_CHAT_STATUS_STRING", nil), self.chatDialog.occupantIDs.count, onlineUsers.count];
+            if (onlineInfo == nil) {
+                status = @"";
+            }
+            [self.onlineTitleView setStatus:status];
         }
     }];
 }
@@ -2239,9 +2239,7 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
 
 - (void)chatCellDidTapAvatar:(QMChatCell *)cell {
     
-    if (!([DataManager sharedManager].isStaff || [DataManager sharedManager].isDenningUser)) {
-        return;
-    }
+    
     
     if (self.chatDialog.type == QBChatDialogTypePrivate) {
         

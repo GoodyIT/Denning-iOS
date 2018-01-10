@@ -161,19 +161,20 @@ NSMutableDictionary* keyValue;
 - (NSDictionary*) buildParam {
     NSMutableDictionary* data = [NSMutableDictionary new];
     [data addEntriesFromDictionary:@{@"issueDate": [DIHelpers todayWithTime]}];
+    if (![issueToFirstCode isEqualToString:_model.issueTo1stCode.staffCode]) {
+        [data addEntriesFromDictionary:@{@"issueTo1stCode":issueToFirstCode}];
+    }
+    
     if (![_contents[0][2][1] isEqualToString: _model.fileNo]) {
         [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
     }
+    
     [data addEntriesFromDictionary:@{@"isRental": isRental}];
-    //    if (![isRental isEqualToString: _model.isRental]) {
-    //        [data addEntriesFromDictionary:@{@"isRental": isRental}];
-    //    }
-    //    if (![issueTo1stCode isEqualToString: _model.fileNo]) {
-    //        [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
-    //    }
+    
     if (![_contents[0][4][1] isEqualToString: _model.issueToName]) {
         [data addEntriesFromDictionary:@{@"issueToName": _contents[0][4][1]}];
     }
+    
     if (![selectedMatterCode isEqualToString: _model.matter.matterCode]) {
         [data addEntriesFromDictionary:@{@"matter": @{
                                                  @"code": selectedMatterCode
@@ -199,7 +200,7 @@ NSMutableDictionary* keyValue;
     if (![_contents[0][9][1] isEqualToString: _model.rentalPrice]) {
         [data addEntriesFromDictionary:@{@"rentalPrice": [self getActualNumber: [self getValidValue:_contents[0][9][1]]]}];
     }
-    
+
     return data;
 }
 

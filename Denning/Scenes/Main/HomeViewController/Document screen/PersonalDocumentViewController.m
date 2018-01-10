@@ -116,12 +116,17 @@
 
     NSURL *url = [NSURL URLWithString: file.URL];
     if (![file.ext isEqualToString:@".url"]) {
-        NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, file.URL];
+        NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].tempServerURL, file.URL];
         url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     }
     
-    [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
-        selectedDocument = filePath;
+    [[DIDocumentManager shared] downloadFileFromURL:url withProgress:^(CGFloat progress) {
+        [SVProgressHUD showProgress:progress];
+    } completion:^(NSURL *filePath) {
+        [SVProgressHUD dismiss];
+        [[DIDocumentManager shared] displayDocument:filePath inView:self];
+    } onError:^(NSError *error) {
+        [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
     }];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

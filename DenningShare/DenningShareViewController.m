@@ -27,6 +27,7 @@
 #import "SearchResultModel.h"
 #import "ShareHelper.h"
 #import "DocumentModel.h"
+#import "FirmURLModel.h"
 
 static int THE_CELL_HEIGHT = 450;
 
@@ -61,6 +62,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 }
 
 @property (weak, nonatomic) IBOutlet MLPAutoCompleteTextField *searchTextField;
+@property (weak, nonatomic) IBOutlet UITextField *clientSearchTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendBtn;
 @property (weak, nonatomic) IBOutlet UIButton *transitBtn;
 
@@ -79,6 +81,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 @property RequestObject *requestDataObject;
 @property (strong, nonatomic) NSString* url;
+@property (strong, nonatomic) NSString* filter;
 @end
 
 @implementation DenningShareViewController
@@ -90,8 +93,17 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [self registerNibs];
     [self loadShareItems];
     [self prepareUI];
-    [self prepareSearchTextField];
-    [self displaySearchResult];
+    if ([defaults boolForKey:@"isClient"] ) {
+        _searchContainerView.hidden = YES;
+        _topSegment.hidden = YES;
+        [self getBranch];
+    } else {
+        _clientSearchTextField.hidden = YES;
+        [self prepareSearchTextField];
+        [self displaySearchResult];
+        [self setupCustomIndicator];
+    }
+    
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -126,11 +138,9 @@ NSURLSessionDelegate, UITextFieldDelegate>
 - (void) prepareSearchTextField
 {
     self.searchTextField.delegate = self;
-    if (![defaults boolForKey:@"isClient"] ) {
-        self.searchTextField.autoCompleteDataSource = self;
-        self.searchTextField.autoCompleteDelegate = self;
-    }
-    
+    self.searchTextField.autoCompleteDataSource = self;
+    self.searchTextField.autoCompleteDelegate = self;
+
     self.searchTextField.backgroundColor = [UIColor whiteColor];
     [self.searchTextField registerAutoCompleteCellClass:[DEMOCustomAutoCompleteCell class]
                                  forCellReuseIdentifier:@"CustomCellId"];
@@ -184,48 +194,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     }
 }
 
-- (void) prepareUI
-{
-    [UITextField appearance].keyboardAppearance = UIKeyboardAppearanceDark;
-    
-    self.url = @"";
-    fileNo1 = @"";
-    _sendBtn.enabled = NO;
-    
-    selectedIndexPaths = [NSMutableArray new];
-    searchType = @"Normal";
-    selectedIndex = 0;
-    page = 1;
-    category = 0;
-    _topSegment.selectedSegmentIndex = selectedIndex;
-    
-    defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
-    userType = [defaults valueForKey:@"isDenning"];
-    
-    if (![defaults boolForKey:@"isDenning"] && ![defaults boolForKey:@"isClient"] && ![defaults boolForKey:@"isStaff"]) {
-        [self showAlertWithMessage:@"You cannot upload file. please login into Denning." withTitle:@"Warning" actionSuccess:NO inViewController:self withCallback:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }];
-    }
-    
-    _searchResultArray = [NSMutableArray new];
-    searchURL = [[defaults valueForKey:@"api"] stringByAppendingString: GENERAL_SEARCH_URL];
-    
-    _email = [defaults valueForKey:@"email"];
-    _sessionID = [defaults valueForKey:@"sessionID"];
- 
-    self.searchTextField.placeholder = @"Denning Folders";
-    if ([defaults boolForKey:@"isClient"] ) {
-        _topHeightConstraint.constant = 90;
-    } else {
-        _topHeightConstraint.constant = 130;
-        self.searchTextField.text = keyword = _initialKeyword;
-    }
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView.backgroundColor = [UIColor lightGrayColor];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
+- (void) setupCustomIndicator {
     CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
     
     // Set custom indicator
@@ -242,7 +211,51 @@ NSURLSessionDelegate, UITextFieldDelegate>
         
         [weakSelf appendSearchResult];
     }];
+}
+
+- (void) prepareUI
+{
+    [UITextField appearance].keyboardAppearance = UIKeyboardAppearanceDark;
     
+    self.url = @"";
+    fileNo1 = @"";
+    _sendBtn.enabled = NO;
+    _filter = @"";
+    
+    selectedIndexPaths = [NSMutableArray new];
+    searchType = @"Normal";
+    selectedIndex = 0;
+    page = 1;
+    category = 0;
+    _topSegment.selectedSegmentIndex = selectedIndex;
+    
+    defaults = [[NSUserDefaults alloc] initWithSuiteName:kGroupShareIdentifier];
+    userType = [defaults valueForKey:@"isDenning"];
+    
+    if (![defaults boolForKey:@"isDenning"] && ![defaults boolForKey:@"isClient"] && ![defaults boolForKey:@"isStaff"]) {
+        [self showAlertWithMessage:@"You cannot upload file. please login into Denning." withTitle:@"Warning" actionSuccess:NO inViewController:self withCallback:^{
+            [self dismissView:nil];
+        }];
+    }
+    
+    _searchResultArray = [NSMutableArray new];
+    searchURL = [[defaults valueForKey:@"api"] stringByAppendingString: GENERAL_SEARCH_URL];
+    
+    _email = [defaults valueForKey:@"email"];
+ 
+    self.searchTextField.placeholder = @"Denning Folders";
+    if ([defaults boolForKey:@"isClient"] ) {
+        _topHeightConstraint.constant = 90;
+        _sessionID = @"{334E910C-CC68-4784-9047-0F23D37C9CF9}";
+    } else {
+        _topHeightConstraint.constant = 130;
+        self.searchTextField.text = keyword = _initialKeyword;
+        _sessionID = [defaults valueForKey:@"sessionID"];
+    }
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.tableView.backgroundColor = [UIColor lightGrayColor];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectZero];
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -299,7 +312,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            [strongSelf dismissViewControllerAnimated:YES completion:nil];
+            [strongSelf dismissAlert];
         });
         
         if (statusCode == 410) {
@@ -316,10 +329,9 @@ NSURLSessionDelegate, UITextFieldDelegate>
         }
     }];
     
-    NSString* urlString = [NSString stringWithFormat:@"%@%@", [defaults valueForKey:@"api"], self.url];
-    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    NSString* urlString = [self.url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *downloadURL = [NSURL URLWithString:urlString];
-    GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
+    GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL sessionID:[defaults valueForKey:@"sessionID"]
                                                           withCompletionBlock:_requestDataObject.myCompletionBlock params:params];
     [[NSOperationQueue mainQueue] addOperation:operation];
 }
@@ -333,7 +345,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 }
 
 - (IBAction)didTapTransitFolder:(id)sender {
-    self.url = MATTER_STAFF_TRANSIT_FOLDER;
+    self.url = [[defaults valueForKey:@"api"] stringByAppendingString: MATTER_STAFF_TRANSIT_FOLDER];
     fileNo1 = @"Transit Folder";
     _sendBtn.enabled = YES;
 }
@@ -362,58 +374,83 @@ NSURLSessionDelegate, UITextFieldDelegate>
     return 0;
 }
 
-- (void) textFieldDidEndEditing:(UITextField *)textField
-{
-    if ([defaults boolForKey:@"isClient"] ) {
-        if (isLoading) return;
-        isLoading = YES;
-        
-        if ([NSOperationQueue mainQueue].operationCount > 0) {
-            [[NSOperationQueue mainQueue] cancelAllOperations];
-        }
-        
-        _requestDataObject = [RequestObject new];
-        [_requestDataObject setIncompleteString:@""];
-        __weak typeof(self) weakSelf = self;
-        [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
-            __strong typeof(self) strongSelf = weakSelf;
-            strongSelf->isLoading = NO;
-            if (statusCode == 410) {
-                dispatch_async(dispatch_get_main_queue(), ^(void){
-                    [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:weakSelf];
-                });
+- (void) getBranch {
+    if (isLoading) return;
+    isLoading = YES;
+    
+    if ([NSOperationQueue mainQueue].operationCount > 0) {
+        [[NSOperationQueue mainQueue] cancelAllOperations];
+    }
+    
+    _requestDataObject = [RequestObject new];
+    [_requestDataObject setIncompleteString:@""];
+    __weak typeof(self) weakSelf = self;
+    [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
+        __strong typeof(self) strongSelf = weakSelf;
+        strongSelf->isLoading = NO;
+        if (statusCode == 410) {
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:weakSelf];
+            });
+        } else {
+            
+            if (items > 0) {
+                strongSelf->page++;
+            }
+            NSArray* resultArray = [FirmURLModel getFirmArrayFromResponse:items];
+            if (strongSelf->isAppending) {
+                _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
             } else {
-                
-                if (items > 0) {
-                    strongSelf->page++;
-                }
-                NSArray* resultArray = [SearchResultModel getSearchResultArrayFromResponse:items];
-                if (strongSelf->isAppending) {
-                    _searchResultArray = [[_searchResultArray arrayByAddingObjectsFromArray:resultArray] mutableCopy];
-                } else {
-                    strongSelf.searchResultArray = [resultArray mutableCopy];
-                }
-                
-                [strongSelf filterResult];
+                strongSelf.searchResultArray = [resultArray mutableCopy];
             }
             
-            strongSelf->isAppending = NO;
-            [weakSelf.tableView finishInfiniteScroll];
-        }];
-        
-        NSString* urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%ld", searchURL, keyword, (long)category, (long)page];
-        if ([searchType isEqualToString:@"Normal"]) { // Direct Tap on the search button
-            urlString = [urlString stringByAppendingString:@"&isAutoComplete=1"];
+            [strongSelf filterResult];
         }
-        urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
-        NSURL *downloadURL = [NSURL URLWithString:urlString];
-        GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
-                                                              withCompletionBlock:_requestDataObject.myCompletionBlock];
-        [[NSOperationQueue mainQueue] addOperation:operation];
-    }
+        
+        strongSelf->isAppending = NO;
+        [weakSelf.tableView finishInfiniteScroll];
+    }];
+    
+    NSString* urlString = [NSString stringWithFormat:@"%@%@", THIRD_PARTY_UPLOAD_CATEGORY, _email];
+    
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    NSURL *downloadURL = [NSURL URLWithString:urlString];
+    GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL sessionID:_sessionID
+                                                          withCompletionBlock:_requestDataObject.myCompletionBlock params:nil];
+    [[NSOperationQueue mainQueue] addOperation:operation];
 }
 
-- (void) filterResult {
+- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([defaults boolForKey:@"isClient"] && [textField isKindOfClass:[_clientSearchTextField class]]) {
+        if (string.length == 0) {
+            _filter = @"";
+        } else {
+            _filter = [textField.text stringByAppendingString:string];
+        }
+        [self filterClientFolder];
+        [self.tableView reloadData];
+    }
+    
+    return YES;
+}
+
+- (void) filterClientFolder {
+    NSMutableArray* temp = [NSMutableArray new];
+    if (_filter.length == 0) {
+        temp = _searchResultArray;
+    } else {
+        for (FirmURLModel *model in _searchResultArray) {
+            if ([model.name localizedStandardContainsString:_filter.lowercaseString] || [model.city localizedStandardContainsString:_filter.lowercaseString]) {
+                [temp addObject:model];
+            }
+        }
+    }
+    
+    _filteredArray = [temp mutableCopy];
+}
+
+- (void) filterStaffFolder {
     NSMutableArray* temp = [NSMutableArray new];
     for (SearchResultModel* model in _searchResultArray) {
         NSUInteger cellType = [self detectItemType:model.form];
@@ -432,6 +469,17 @@ NSURLSessionDelegate, UITextFieldDelegate>
     }
     
     _filteredArray = [temp mutableCopy];
+}
+
+- (void) filterResult {
+    _sendBtn.enabled = NO;
+    
+    if ([defaults boolForKey:@"isClient"]) {
+        [self filterClientFolder];
+    } else {
+        [self filterStaffFolder];
+    }
+   
     [self.tableView reloadData];
 }
 
@@ -491,12 +539,18 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    keyword = self.searchTextField.text;
-    [self.searchTextField resignFirstResponder];
-    searchType = @"Special";
     page = 1;
-    selectedIndexPaths = [NSMutableArray new];
-    [self displaySearchResult];
+    if ([defaults boolForKey:@"isClient"] && [textField isKindOfClass:[_clientSearchTextField class]]) {
+        [self.clientSearchTextField resignFirstResponder];
+        [self getBranch];
+    } else {
+        keyword = self.searchTextField.text;
+        [self.searchTextField resignFirstResponder];
+        searchType = @"Special";
+        selectedIndexPaths = [NSMutableArray new];
+        [self displaySearchResult];
+    }
+    
     return YES;
 }
 
@@ -514,13 +568,15 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *sectionName;
-    SearchResultModel* model = self.filteredArray[section];
-    NSUInteger cellType = [self detectItemType:model.form];
-    if (cellType == DIContactCell) { // Contact
-        sectionName = @"Contact";
-    } else if (cellType == DIRelatedMatterCell){ // Related Matter
-        sectionName = @"Matter";
+    NSString *sectionName = @"";
+    if (![defaults boolForKey:@"isClient"] ) {
+        SearchResultModel* model = self.filteredArray[section];
+        NSUInteger cellType = [self detectItemType:model.form];
+        if (cellType == DIContactCell) { // Contact
+            sectionName = @"Contact";
+        } else if (cellType == DIRelatedMatterCell){ // Related Matter
+            sectionName = @"Matter";
+        }
     }
     
     return sectionName;
@@ -528,7 +584,10 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30;
+    if (![defaults boolForKey:@"isClient"] ) {
+        return 30;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -579,22 +638,21 @@ NSURLSessionDelegate, UITextFieldDelegate>
     
     if ([defaults boolForKey:@"isClient"] ) {
         FirmURLModel* model = self.filteredArray[indexPath.section];
-//        fileNo1 = model.theCode;
-        self.url = MATTER_CLIENT_FILEFOLDER;
+        fileNo1 = model.theCode;
+        self.url = [model.firmServerURL stringByAppendingString:  MATTER_CLIENT_FILEFOLDER];
     } else {
         SearchResultModel* model = self.filteredArray[indexPath.section];
         NSUInteger cellType = [self detectItemType:model.form];
         if (cellType == DIContactCell) {
-            self.url = MATTER_STAFF_CONTACT_FOLDER;
+            self.url = [[defaults valueForKey:@"api"] stringByAppendingString:MATTER_STAFF_CONTACT_FOLDER];
             
         } else {
             fileFolderTitle = @"File Folder";
-            self.url = MATTER_STAFF_FILEFOLDER;
+            self.url = [[defaults valueForKey:@"api"] stringByAppendingString:MATTER_STAFF_FILEFOLDER];
         }
         fileNo1 = model.key;
     }
-    
-    
+
 //    [self openDocument:url];
 }
 

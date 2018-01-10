@@ -159,6 +159,9 @@ static const NSUInteger kQMStatusStringNamesLimit = 2;
                 case QMDialogUpdateTypeType:
                     messageText = [NSString stringWithFormat:NSLocalizedString(@"UPDATE_GROUP_TYPE_TEXT", nil), sender.fullName ?: NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil)];
                     break;
+                    
+                case QMDialogUpdateRemoveOccupant:
+                    messageText = [NSString stringWithFormat:NSLocalizedString(@"UPDATE_GROUP_MEMBERS_TEXT", nil), sender.fullName ?: NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil)];
                     break;
                     
                 case QMDialogUpdateTypePhoto:

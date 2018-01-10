@@ -39,7 +39,7 @@ QMPushNotificationManagerDelegate>
     
     self.originControllers = [self.viewControllers mutableCopy];
     self.delegate = self;
-//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge) name:@"updateBadge" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadge) name:@"updateBadge" object:nil];
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -432,16 +432,16 @@ didAddMessageToMemoryStorage:(QBChatMessage *)message
 
 - (void) updateBadge {
  
-//    NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
-//
-//    if (unreadDialogs.count == 0) {
-//        [DataManager sharedManager].badgeValue = @"0";
-//        self.childViewControllers.lastObject.tabBarItem.badgeValue = nil;
-//    } else {
-//        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
-//        self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
-//    }
-//
-//    [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    NSArray* unreadDialogs = [[[QMCore instance].chatService.dialogsMemoryStorage unreadDialogs] mutableCopy];
+
+    if (unreadDialogs.count == 0) {
+        [DataManager sharedManager].badgeValue = @"0";
+        self.childViewControllers.lastObject.tabBarItem.badgeValue = nil;
+    } else {
+        [DataManager sharedManager].badgeValue = [NSString stringWithFormat:@"%ld", (unsigned long)unreadDialogs.count];
+        self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
+    }
+
+    [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
 }
 @end

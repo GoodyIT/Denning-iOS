@@ -393,6 +393,8 @@
 		795DF25A1E6F04E0006D617D /* CategorySelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795DF2591E6F04E0006D617D /* CategorySelectViewController.m */; };
 		796BBF9F1EA7B3CE001DA47F /* NewLedgerDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 796BBF9D1EA7B3CE001DA47F /* NewLedgerDetailCell.m */; };
 		796BBFA01EA7B3CE001DA47F /* NewLedgerDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 796BBF9E1EA7B3CE001DA47F /* NewLedgerDetailCell.xib */; };
+		796C08312004F25700EB49E0 /* FirmURLModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E7F1E8B5B2700320A28 /* FirmURLModel.h */; };
+		796C08322004F25700EB49E0 /* FirmURLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E801E8B5B2700320A28 /* FirmURLModel.m */; };
 		79734F5F1EB95BA700647215 /* MainContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79734F5E1EB95BA700647215 /* MainContactViewController.m */; };
 		79734F631EB97CAC00647215 /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79734F621EB97CAC00647215 /* AddContactViewController.m */; };
 		79734F6B1EB98C5100647215 /* AddContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79734F6A1EB98C5100647215 /* AddContact.storyboard */; };
@@ -10506,6 +10508,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				796C08312004F25700EB49E0 /* FirmURLModel.h in Sources */,
+				796C08322004F25700EB49E0 /* FirmURLModel.m in Sources */,
 				79FBFCA92000C9DC00A40B9A /* icon_shared.png in Sources */,
 				79FBFCAA2000C9DC00A40B9A /* icon_shared@2x.png in Sources */,
 				79FBFCAB2000C9DC00A40B9A /* icon_shared@3x.png in Sources */,

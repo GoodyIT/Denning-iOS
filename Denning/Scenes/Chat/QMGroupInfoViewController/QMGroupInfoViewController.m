@@ -67,12 +67,7 @@ QMChatConnectionDelegate,NYTPhotosViewControllerDelegate >
 
 //MARK: - Actions
 - (IBAction)didPressGroupHeader {
-    if ([DIHelpers isSupportChat:self.chatDialog]) {
-        if ([DataManager sharedManager].isDenningUser) {
-            // Only Denning user can change the name for Denning support
-            [self performSegueWithIdentifier:kQMSceneSegueGroupName sender:self.chatDialog];
-        }
-    } else if ([DataManager sharedManager].isStaff) {
+    if ([DIHelpers canChangeGroupNameforDialog:self.chatDialog]) {
         [self performSegueWithIdentifier:kQMSceneSegueGroupName sender:self.chatDialog];
     }
 }

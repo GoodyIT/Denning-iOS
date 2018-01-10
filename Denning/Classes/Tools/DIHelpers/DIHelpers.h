@@ -127,15 +127,46 @@
 
 + (NSString*) getUserPosition:(NSString*) email;
 
++ (NSString*) getGroupPosition:(QBChatDialog*) chatDialog;
+
++ (NSMutableArray*) filterMeout:(NSMutableArray*) contacts;
+
+// Role Management
++ (BOOL) isSupportChat:(QBChatDialog*) chatDialog;
+
 + (NSString*) getTag:(QBChatDialog*) dialog;
 
 + (NSString*) getCurrentUserRole:(QBUUser*) user fromChatDialog:(QBChatDialog*) chatDialog;
 
 + (BOOL) hasAdminRole:(QBChatDialog*) chatDialog;
 
-+ (BOOL) isSupportChat:(QBChatDialog*) chatDialog;
++ (BOOL) canChangeGroupInfoforDialog:(QBChatDialog*) dialog;
 
-+ (NSString*) getGroupPosition:(QBChatDialog*) chatDialog;
++ (BOOL) canChangeGroupNameforDialog:(QBChatDialog*) dialog;
 
-+ (NSMutableArray*) filterMeout:(NSMutableArray*) contacts;
++ (BOOL) canChangeGroupTagforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) canChangeGroupRoleforDialog:(QBChatDialog*) dialog toUser:(QBUUser*) toUser;
+
++ (BOOL) canMuteforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) canAddMemberforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) canRemoveMemberforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) canLeaveChatforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) canViewContactProfileforDialog:(QBChatDialog*) dialog toUser:(QBUUser*) toUser;
+
++ (BOOL) canShowAllMembersStatusforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) canSendMessageforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) canCallVideoforDialog:(QBChatDialog*) dialog;
+
++ (BOOL) isAllowToSendForDialog:(QBChatDialog*) chatDialog;
+
++ (NSArray*) getOnlieStatus:(NSArray*) onlineUsers inTotalUser:(NSArray*) totalUsers forChatDialog:(QBChatDialog*) chatDialog;
+
++ (BOOL) isExpiredChat;
 @end

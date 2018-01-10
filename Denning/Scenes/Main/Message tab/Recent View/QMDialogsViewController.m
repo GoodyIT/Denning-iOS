@@ -294,20 +294,6 @@ UIGestureRecognizerDelegate
     }];
 }
 
-- (void)performInfoViewControllerForUserID:(NSUInteger)userID {
-    
-    QBUUser *opponentUser = [QMCore.instance.usersService.usersMemoryStorage userWithID:userID];
-    
-    if (opponentUser == nil) {
-        
-        opponentUser = [QBUUser user];
-        opponentUser.ID = userID;
-        opponentUser.fullName = NSLocalizedString(@"QM_STR_UNKNOWN_USER", nil);
-    }
-    
-    [self performSegueWithIdentifier:kQMSceneSegueUserInfo sender:opponentUser];
-}
-
 //MARK: - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -355,19 +341,7 @@ UIGestureRecognizerDelegate
     }
     
     cell.didTapAvatar = ^(QMTableViewCell *cell) {
-//        NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-//         QBChatDialog *chatDialog = self.items[indexPath.row];
-//        if (chatDialog.type == QBChatDialogTypePrivate) {
-//
-//            [self performInfoViewControllerForUserID:[chatDialog opponentID]];
-//        }
-//        else {
-//            if (![DataManager sharedManager].isStaff && ![DataManager sharedManager].isDenningUser) {
-//                return;
-//            }
-//
-//            [self performSegueWithIdentifier:KQMSceneSegueGroupInfo sender:chatDialog];
-//        }
+        
     };
     
     // there was a time when updated at didn't exist
@@ -383,11 +357,11 @@ UIGestureRecognizerDelegate
 }
 
 - (BOOL)tableView:(UITableView *)__unused tableView canEditRowAtIndexPath:(NSIndexPath *)__unused indexPath {
-    
-    if ([DataManager sharedManager].isStaff && [DataManager sharedManager].isDenningUser) {
-        return YES;
+    QBChatDialog *chatDialog = self.items[indexPath.row];
+    if (![DIHelpers canLeaveChatforDialog:chatDialog]) {
+        return NO;
     }
-    return NO;
+    return YES;
 }
 
 - (void)tableView:(UITableView *)__unused tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -420,24 +394,7 @@ titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         QMChatVC *chatViewController = (QMChatVC *)chatNavigationController.topViewController;
         chatViewController.chatDialog = sender;
-    } else if ([segue.identifier isEqualToString:kQMSceneSegueUserInfo]) {
-         QMNavigationController * nav = segue.destinationViewController;
-        
-        nav.currentAdditionalNavigationBarHeight =
-        [(QMNavigationController *)self.navigationController currentAdditionalNavigationBarHeight];
-        
-        QMUserInfoViewController *userInfoVC = nav.viewControllers.firstObject;
-        userInfoVC.user = sender;
-        userInfoVC.isDismiss = @(YES);
-    } else if ([segue.identifier isEqualToString:KQMSceneSegueGroupInfo]) {
-        QMGroupInfoViewController *groupInfoVC = segue.destinationViewController;
-        groupInfoVC.chatDialog = sender;
-        groupInfoVC.updateChatDialog = ^(QBChatDialog * _Nonnull chatDialog) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
-            });
-        };
-    }
+    } 
 }
 
 // MARK: - Overrides
@@ -699,15 +656,17 @@ didLoadUsersFromCache:(NSArray<QBUUser *> *)__unused users {
                                     };
                                     
                                     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-                                    if (chatDialog.type == QBChatDialogTypeGroup) {
-                                        
-                                        chatDialog.occupantIDs = [QMCore.instance.contactManager occupantsWithoutCurrentUser:chatDialog.occupantIDs];
-                                        [[QMCore.instance.chatManager leaveChatDialog:chatDialog] continueWithSuccessBlock:completionBlock];
-                                    }
-                                    else {
-                                        // private and public group chats
-                                        [[QMCore.instance.chatService deleteDialogWithID:chatDialog.ID] continueWithSuccessBlock:completionBlock];
-                                    }
+                                    [[QMCore.instance.chatService deleteDialogWithID:chatDialog.ID] continueWithSuccessBlock:completionBlock];
+//                                    if (chatDialog.type == QBChatDialogTypeGroup) {
+//
+//                                        chatDialog.occupantIDs = [QMCore.instance.contactManager occupantsWithoutCurrentUser:chatDialog.occupantIDs];
+//                                        [[QMCore.instance.chatManager leaveChatDialog:chatDialog] continueWithSuccessBlock:completionBlock];
+//                                    }
+//                                    else {
+//                                        // private and public group chats
+//
+//                                    }
+                                    
                                 }]];
     
     [self presentViewController:alertController animated:YES completion:nil];

@@ -175,15 +175,17 @@
 - (BFTask*) changeUserWithID:(NSInteger) userID toRole:(NSString*)role forGroupChatDialog :(QBChatDialog *)chatDialog {
     NSAssert(chatDialog.type == QBChatDialogTypeGroup || chatDialog.type == QBChatDialogTypePublicGroup, @"Chat dialog must be group type!");
     
+    NSMutableArray* originDenningIDs = [[chatDialog.data objectForKeyNotNull:kRoleDenningTag] mutableCopy];
     NSMutableArray* originAdminIDs = [[chatDialog.data objectForKeyNotNull:kRoleAdminTag] mutableCopy];
     NSMutableArray* originReaderIDs = [[chatDialog.data objectForKeyNotNull:kRoleReaderTag] mutableCopy];
     NSMutableArray* originNormalIDs = [[chatDialog.data objectForKeyNotNull:kRoleStaffTag] mutableCopy];
     
+    originDenningIDs = [self updateRoleIDs:originDenningIDs withRole:role comparedRole:kRoleDenningTag forID:userID];
     originAdminIDs = [self updateRoleIDs:originAdminIDs withRole:role comparedRole:kRoleAdminTag forID:userID];
     originReaderIDs = [self updateRoleIDs:originReaderIDs withRole:role comparedRole:kRoleReaderTag forID:userID];
     originNormalIDs = [self updateRoleIDs:originNormalIDs withRole:role comparedRole:kRoleStaffTag forID:userID];
     
-    NSDictionary* roleData = @{kRoleAdminTag: originAdminIDs, kRoleReaderTag: originReaderIDs, kRoleStaffTag:originNormalIDs};
+    NSDictionary* roleData = @{kRoleDenningTag:originDenningIDs, kRoleAdminTag: originAdminIDs, kRoleReaderTag: originReaderIDs, kRoleStaffTag:originNormalIDs};
     return [self changeCustomData:roleData forGroupChatDialog:chatDialog];
 }
 
@@ -212,21 +214,20 @@
     return [self changeCustomData:roleData forGroupChatDialog:chatDialog];
 }
 
-- (BFTask*) sendNotificationMessageAboutDialogUpdateWithText:(NSString*) notificationText forChatDialog:(QBChatDialog*) chatDialog{
-    
+- (BFTask*) sendNotificationMessageAboutDialogUpdateWithText:(NSString*) notificationText forChatDialog:(QBChatDialog*) chatDialog changeType:(NSInteger) changeType {
     return make_task(^(BFTaskCompletionSource *source) {
         QBChatMessage *notificationMessage = [QBChatMessage message];
         notificationMessage.senderID = self.serviceManager.currentUser.ID;
         notificationMessage.text = notificationText;
-        notificationMessage.dialogUpdateType = QMDialogUpdateTypeType;
+        notificationMessage.dialogUpdateType = changeType;
         notificationMessage.dialogUpdatedAt = chatDialog.updatedAt;
         notificationMessage.dialogName = chatDialog.name;
         
         [self.serviceManager.chatService sendMessage:notificationMessage
-                     type:QMMessageTypeUpdateGroupDialog
-                 toDialog:chatDialog
-            saveToHistory:YES
-            saveToStorage:YES
+                                                type:QMMessageTypeUpdateGroupDialog
+                                            toDialog:chatDialog
+                                       saveToHistory:YES
+                                       saveToStorage:YES
                                           completion:^(NSError * _Nullable error) {
                                               if (error == nil) {
                                                   [source setResult:nil];
@@ -236,6 +237,10 @@
                                               }
                                           }];
     });
+}
+
+- (BFTask*) sendNotificationMessageAboutDialogUpdateWithText:(NSString*) notificationText forChatDialog:(QBChatDialog*) chatDialog {
+    return [self sendNotificationMessageAboutDialogUpdateWithText:notificationText forChatDialog:chatDialog changeType:QMDialogUpdateTypeType];
 }
 
 - (BFTask*) changeCustomData:(NSDictionary*) data forGroupChatDialog:(QBChatDialog *)chatDialog {
@@ -252,13 +257,7 @@
                                                                         andJoin:YES
                                                                      completion:^(QBChatDialog *addedDialog, NSError *error)
              {
-                 [QMCore.instance.chatService.dialogsMemoryStorage addChatDialog:updatedDialog
-                                                      andJoin:YES
-                                                   completion:^(QBChatDialog *addedDialog, NSError *error)
-                  {
-                      [source setResult:updatedDialog];
-                  }];
-                 
+                [source setResult:updatedDialog];
              }];
             
         } errorBlock:^(QBResponse *response) {
@@ -266,6 +265,46 @@
             [self.serviceManager handleErrorResponse:response];
             
             [source setError:response.error.error];
+        }];
+    });
+}
+
+- (void) clearUserTags:(QBChatDialog*) chatDialog userIDs:(NSArray*) userIDs {
+    NSMutableArray* originDenningIDs = [[chatDialog.data objectForKeyNotNull:kRoleDenningTag] mutableCopy];
+    NSMutableArray* originAdminIDs = [[chatDialog.data objectForKeyNotNull:kRoleAdminTag] mutableCopy];
+    NSMutableArray* originReaderIDs = [[chatDialog.data objectForKeyNotNull:kRoleReaderTag] mutableCopy];
+    NSMutableArray* originNormalIDs = [[chatDialog.data objectForKeyNotNull:kRoleStaffTag] mutableCopy];
+    
+    for (NSNumber* ID in userIDs) {
+        [originDenningIDs removeObject:ID];
+        [originAdminIDs removeObject:ID];
+        [originReaderIDs removeObject:ID];
+        [originNormalIDs removeObject:ID];
+    }
+}
+
+- (BFTask*) rejectOccupantsWithIDs:(NSArray *)ids toChatDialog:(QBChatDialog *)chatDialog {
+    
+    [self clearUserTags:chatDialog userIDs:ids];
+    chatDialog.pullOccupantsIDs = ids;
+    
+    @weakify(self)
+    return make_task(^(BFTaskCompletionSource *source) {
+    
+        [QBRequest updateDialog:chatDialog successBlock:^(QBResponse *response, QBChatDialog *updatedDialog) {
+            
+            @strongify(self)
+            
+            [self.serviceManager.chatService.dialogsMemoryStorage addChatDialog:updatedDialog andJoin:YES completion:^(QBChatDialog *addedDialog, NSError *error) {
+                 [source setResult:updatedDialog];
+            }];
+            
+        } errorBlock:^(QBResponse *response) {
+            
+            chatDialog.pushOccupantsIDs = @[];
+            [self.serviceManager handleErrorResponse:response];
+            
+             [source setError:response.error.error];
         }];
     });
 }

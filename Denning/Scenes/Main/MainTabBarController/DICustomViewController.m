@@ -8,6 +8,7 @@
 
 #import "DICustomViewController.h"
 #import "MainTabBarController.h"
+#import "MessageViewController.h"
 
 @interface DICustomViewController ()
 <MEVFloatingButtonDelegate>
@@ -38,7 +39,7 @@
 }
 
 - (void) hideTabBar {
-    [self setTabBarVisible:NO animated:YES completion:nil];
+    [self setTabBarVisible:NO animated:NO completion:nil];
 }
 
 //Getter to know the current state
@@ -60,7 +61,9 @@
     CGFloat duration = (animated)? 0.0 : 0.0;
     
     [UIView animateWithDuration:duration animations:^{
-        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+        if ([self isKindOfClass:[MessageViewController class]]) {
+            self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+        }
     } completion:completion];
 }
 

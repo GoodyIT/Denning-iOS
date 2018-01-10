@@ -109,6 +109,13 @@ typedef NS_ENUM(NSUInteger, QMGroupInfoSection) {
         } else {
             cell.notificationSwitch.on = NO;
         }
+        
+        if (![DIHelpers canMuteforDialog:self.chatDialog]) {
+            cell.userInteractionEnabled = NO;
+        } else {
+            cell.userInteractionEnabled = YES;
+        }
+        
         return cell;
     }
     else {

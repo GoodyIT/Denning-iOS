@@ -65,7 +65,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     FirmURLModel* model = self.branchArray[indexPath.row];
-    [[DataManager sharedManager] setServerAPI:model.firmServerURL withFirmName:model.name withFirmCity:model.city];
+    [[DataManager sharedManager] setServerAPI:model.firmServerURL firmURLModel:model];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

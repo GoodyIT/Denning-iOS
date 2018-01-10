@@ -61,22 +61,15 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
     [self.groupNameField becomeFirstResponder];
 }
 
-- (BOOL) isSupportChat {
-    BOOL isCorrect = NO;
-    NSString* tag = [_chatDialog.data valueForKey:@"tag"];
-    if (tag != nil && [tag isEqualToString:@"Denning"]) {
-        isCorrect = YES;
-    }
-    
-    return isCorrect;
-}
-
 - (void) updateGroupType {
     if  (![[DataManager sharedManager] isDenningUser]) {
         [_tagSegment removeSegmentAtIndex:3 animated:YES];
-        if ([self isSupportChat]) {
-            
-        }
+    }
+    
+    if ([DIHelpers canChangeGroupTagforDialog:self.chatDialog]) {
+        _tagSegment.enabled = YES;
+    } else {
+        _tagSegment.enabled = NO;
     }
 }
 
@@ -174,7 +167,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 {
     if (![[DataManager sharedManager] isDenningUser]) {
         [_tagSegment removeSegmentAtIndex:3 animated:YES];
-        if ([self isSupportChat]) {
+        if ([DIHelpers isSupportChat:self.chatDialog]) {
             return 1;
         }
     }

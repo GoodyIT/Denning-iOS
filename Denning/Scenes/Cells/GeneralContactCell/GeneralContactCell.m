@@ -40,6 +40,14 @@
     
     [self sizeToFit];
     [self updateConstraintsIfNeeded];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
+    tap.cancelsTouchesInView = NO;
+    [self.avatarImageView addGestureRecognizer:tap];
+}
+
+- (void) handleTap {
+    _didTapAvatar(self);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -30,7 +30,7 @@
 @property   NSString    *firmCity;
 @property   NSString    *userType;
 @property   NSString    *serverURL;
-@property   NSInteger   activationCode;
+@property   NSString   *theCode;
 @property   NSString    *firmName;
 @property   NSString    *avatarUrl;
 
