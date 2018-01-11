@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) NSString* courtDiaryCode;
 @property (strong, nonatomic) NSString* place;
-@property (strong, nonatomic) NSString* typeE;
+@property (strong, nonatomic) NSString* typeCase;
 
 + (CourtDiaryModel*) getCourtDiaryFromResponse: (NSDictionary*) response;
 

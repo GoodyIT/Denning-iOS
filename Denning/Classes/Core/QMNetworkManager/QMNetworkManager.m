@@ -287,8 +287,8 @@
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_CLOCK_IN];
     
-    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
-    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [DataManager sharedManager].user.latitude, [DataManager sharedManager].user.latitude];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[DataManager sharedManager].user.streetName, @"strRemarks": @"start work"};
     [self sendPrivatePostWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([AttendanceModel getAttendanceModelFromResponse:result], error);
     }];
@@ -532,7 +532,8 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 {
     NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/Solicitor/%@", [DataManager sharedManager].user.serverAPI, code];
     
-    [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [self setPublicHTTPHeader];
+    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([LegalFirmModel getLegalFirmFromResponse:result], error);
     }];
 }
@@ -789,7 +790,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getCourtDiaryArrayWithPage: (NSNumber*) page withSearch:(NSString*)search WithCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, COURTDIARY_GET_LIST_URL,search, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, COURTDIARY_COURT_GET_LIST_URL,search, page];
     
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([CourtDiaryModel getCourtDiaryArrayFromResponse:result], error);

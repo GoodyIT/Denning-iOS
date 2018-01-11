@@ -400,7 +400,7 @@ MatterNewLastCellDelegate
         } else if (indexPath.row == 1) {
             [cell configureCellWithContact:@"Place" text:relatedMatterModel.court.place];
         } else if (indexPath.row == 2) {
-            [cell configureCellWithContact:@"Case No" text: relatedMatterModel.court.caseNumber];
+            [cell configureCellWithContact:@"Case No" text: relatedMatterModel.court.caseNo];
         } else if (indexPath.row == 3) {
             [cell configureCellWithContact:@"Judge" text:relatedMatterModel.court.judge];
         } else if (indexPath.row == 4) {

@@ -34,7 +34,7 @@ static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
 static NSString * const kQMAppGroupIdentifier = @"group.denningitshare.extension";
 
-#define DEVELOPMENT 0
+#define DEVELOPMENT 1
 
 #if DEVELOPMENT == 1
 
@@ -369,22 +369,19 @@ forRemoteNotification:(NSDictionary *)userInfo
 
 -(void)locationManager:(CLLocationManager *)__unused manager didUpdateLocations:(NSArray *)locations{
     
-    if([DataManager sharedManager].user.userType.length == 0) return;
-    
     CLLocation* location = [locations lastObject];
     
     NSDate* eventDate = location.timestamp;
     
-    float defaultTolerate = 1.0;
-    if (![[LocationManager sharedManager].streetName isEqualToString:@""]) {
+    float defaultTolerate = 2.0;
+    if (![[DataManager sharedManager].user.streetName isEqualToString:@""]) {
         defaultTolerate = 30.0;
     }
     
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[LocationManager sharedManager].lastLoggedDateTime];
+    NSTimeInterval howRecent = [eventDate timeIntervalSinceDate:[DataManager sharedManager].user.lastLoggedDateTime];
     if (fabs(howRecent) > defaultTolerate) {
         
-        [LocationManager sharedManager].lastLoggedDateTime = eventDate;
-        [LocationManager sharedManager].oldLocation = location.coordinate;
+        [[DataManager sharedManager] setOldLocation:location lastLoggedDateTime:eventDate];
         
         GMSGeocoder *geocode= [GMSGeocoder geocoder];
         GMSReverseGeocodeCallback handler=^(GMSReverseGeocodeResponse *response,NSError *error)
@@ -392,39 +389,12 @@ forRemoteNotification:(NSDictionary *)userInfo
             GMSAddress *address=response.firstResult;
             if (address)
             {
-                [LocationManager sharedManager].countryName = address.country;
-                [LocationManager sharedManager].cityName = address.locality;
-                [LocationManager sharedManager].streetName = address.lines.firstObject;
+//                [LocationManager sharedManager].countryName = address.country;
+//                [LocationManager sharedManager].cityName = address.locality;
+                [[DataManager sharedManager] setStreetName:address.lines.firstObject];
             }
         };
         [geocode reverseGeocodeCoordinate:location.coordinate completionHandler:handler];
-        
-//        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-//        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
-//         {
-//             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-//             if ([placemark.country length] != 0) {
-//                 [LocationManager sharedManager].countryName = placemark.country;
-//             } else {
-//                 [LocationManager sharedManager].countryName = @"";
-//             }
-//
-//             if ([placemark.locality length] != 0) {
-//                 [LocationManager sharedManager].cityName = placemark.locality;
-//             }
-//
-//             if ([placemark.administrativeArea length] != 0) {
-//                 [LocationManager sharedManager].stateName = placemark.administrativeArea;
-//             } else {
-//                 [LocationManager sharedManager].cityName = @"";
-//             }
-//
-//             [LocationManager sharedManager].streetName = [[placemark addressDictionary] objectForKeyNotNull:(NSString *)CNPostalAddressStreetKey];
-////             if ([placemark.thoroughfare length] != 0) {
-////                 [LocationManager sharedManager].streetName = [NSString stringWithFormat:@"%@ %@", placemark.thoroughfare, placemark.subThoroughfare];
-////             }
-//
-//         }];
     }
 }
 

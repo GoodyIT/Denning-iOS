@@ -211,7 +211,7 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define COURT_HEARINGTYPE_GET_URL @"denningwcf/v1/courtDiary/hearingType?search="
 
-#define COURTDIARY_GET_LIST_URL @"denningwcf/v1/courtDiary/court?search="
+#define COURTDIARY_COURT_GET_LIST_URL @"denningwcf/v1/courtDiary/court?search="
 
 #define COURT_HEARINGDETAIL_GET_URL @"denningwcf/v1/courtDiary/hearingDetails?search="
 

@@ -1060,7 +1060,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="C3a-ZW-aHd">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="C3a-ZW-aHd">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1170,8 +1170,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="Nuf-Db-vAG"/>
         <segue reference="Kve-m2-lWv"/>
-        <segue reference="2bt-gq-iwV"/>
-        <segue reference="cqB-uN-mxx"/>
-        <segue reference="7Mr-nR-sFA"/>
+        <segue reference="T5P-mp-1U6"/>
+        <segue reference="QgY-oX-Ext"/>
+        <segue reference="79l-80-WBG"/>
     </inferredMetricsTieBreakers>
 </document>

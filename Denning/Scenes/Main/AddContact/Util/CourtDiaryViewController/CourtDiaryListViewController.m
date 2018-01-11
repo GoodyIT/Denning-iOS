@@ -164,7 +164,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier] forIndexPath:indexPath];
     CourtDiaryModel *model = self.listOfMatters[indexPath.row];
-    [cell configureCellWithCodeValue:model.place descValue:model.typeE];
+    [cell configureCellWithCodeValue:model.place descValue:model.typeCase];
     return cell;
 }
 

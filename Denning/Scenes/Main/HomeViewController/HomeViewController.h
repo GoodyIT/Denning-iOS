@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DICustomViewController.h"
 
-@interface HomeViewController : DICustomViewController //UITableViewController
+@interface HomeViewController : DICustomViewController 
 
 - (void) changeUIBasedOnUserType;
 

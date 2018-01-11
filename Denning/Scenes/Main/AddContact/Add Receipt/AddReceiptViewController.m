@@ -47,7 +47,11 @@ enum PAYMENT_MODE_ROWS {
     
     NSString* selectedIssuerBankCode, *selectedRecievedFromCode, *selectedTransactionCode, *modeCode;
     NSString* selectedID;
+    
+    __block BOOL isSaved, isLoading;
 }
+
+@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *fileNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *billNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *accountType;
@@ -90,7 +94,6 @@ enum PAYMENT_MODE_ROWS {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -166,10 +169,22 @@ enum PAYMENT_MODE_ROWS {
 }
 
 - (void) _save {
+    if (isSaved) {
+        self.saveBtn.enabled = NO;
+        return;
+    }
+    
+    if (isLoading) return;
+    isLoading = YES;
+    
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    @weakify(self)
     [[QMNetworkManager sharedManager] saveReceiptWithParams:[self buildSaveParam] WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
+        @strongify(self)
+        self->isLoading = NO;
+        self->isSaved = YES;
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Saved" duration:1.0];
             

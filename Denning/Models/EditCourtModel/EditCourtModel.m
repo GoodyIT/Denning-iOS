@@ -20,7 +20,7 @@
     model.coram = [CoramModel getCoramFromResponse:[response objectForKeyNotNull:@"coram"]];
     model.counselAssigned = [ClientModel getClientFromResponse:[response objectForKeyNotNull:@"counselAssigned"]];
     model.counselAttended = [response valueForKeyNotNull:@"counselAttended"];
-    model.court = [CourtModel getCourtFromResponse: [response objectForKeyNotNull:@"court"]];
+    model.court = [CourtDiaryModel getCourtDiaryFromResponse: [response objectForKeyNotNull:@"court"]];
     model.courtDecision = [response valueForKeyNotNull:@"courtDecision"];
     model.enclosureDetails = [response valueForKeyNotNull:@"enclosureDetails"];
     model.enclosureNo = [response valueForKeyNotNull:@"enclosureNo"];

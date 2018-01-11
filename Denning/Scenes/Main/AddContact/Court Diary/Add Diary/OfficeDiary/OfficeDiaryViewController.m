@@ -32,7 +32,7 @@
     
     CGFloat autocompleteCellHeight;
     
-    __block BOOL isLoading;
+    __block BOOL isLoading, isSaved;
     NSString* serverAPI;
 }
 
@@ -233,6 +233,11 @@
 }
 
 - (void) saveDiary {
+    if (isSaved) {
+        self.btnSave.enabled = NO;
+        return;
+    }
+    
     NSDictionary* data = @{
                            @"appointmentDetails": self.appointment.text,
                            @"attendedStatus": @{
@@ -550,7 +555,7 @@
         MatterLitigationViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterLitigationModel *model) {
             self.fileNo.text = model.systemNo;
-            self.caseNo.text = model.courtInfo.caseNumber;
+            self.caseNo.text = model.courtInfo.caseNo;
             self.caseName.text = model.courtInfo.caseName;
         };
     } else if ([segue.identifier isEqualToString:kStaffSegue]) {

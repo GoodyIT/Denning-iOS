@@ -33,6 +33,10 @@
 @property   NSString   *theCode;
 @property   NSString    *firmName;
 @property   NSString    *avatarUrl;
+@property   NSString    *streetName;
+@property   double      latitude;
+@property   double      longitude;
+@property   NSDate      *lastLoggedDateTime;
 
 @end
 

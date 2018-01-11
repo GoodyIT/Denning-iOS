@@ -22,6 +22,7 @@
 #import "Attendance.h"
 #import "QMChatVC.h"
 #import "FolderViewController.h"
+#import "MainTabBarController.h"
 
 @interface HomeViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate,
     UITextFieldDelegate,
@@ -118,8 +119,7 @@ iCarouselDataSource, iCarouselDelegate>
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self showTabBar];
-    [self changeUIBasedOnUserType];
+    [self performSelector:@selector(showTabBar) withObject:nil afterDelay:1.0f];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -129,7 +129,10 @@ iCarouselDataSource, iCarouselDelegate>
     
     [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
     [self configureMenuRightBtnWithImagename:@"icon_menu" withSelector:@selector(gotoMenu)];
+    
     [self displayBranchInfo];
+    [self changeUIBasedOnUserType];
+    [(MainTabBarController*)self.tabBarController updateBadge];
 }
 
 - (void) loadsAds {
@@ -195,7 +198,7 @@ iCarouselDataSource, iCarouselDelegate>
                                                                                      usingBlock:^(NSNotification * _Nonnull __unused note)
                                         {
                                             @strongify(self);
-                                            [self showTabBar];
+                                             [self performSelector:@selector(showTabBar) withObject:nil afterDelay:1.0f];
                                         }];
 }
 
@@ -215,7 +218,7 @@ iCarouselDataSource, iCarouselDelegate>
 }
 
 - (IBAction)changeBranch:(id)sender {
-    if ([DataManager sharedManager].isStaff) {
+    if (![DataManager sharedManager].isStaff) {
         [self alertAndLogin];
         return;
     }

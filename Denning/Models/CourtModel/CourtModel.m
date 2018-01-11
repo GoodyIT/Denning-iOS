@@ -17,10 +17,10 @@
     courtModel.partyType = @"";
     courtModel.court = @"";
     courtModel.place = @"";
-    courtModel.caseNumber = @"";
+    courtModel.caseNo = @"";
     courtModel.judge = @"";
     courtModel.SAR = @"";
-    courtModel.typeE = @"";
+    courtModel.typeCase = @"";
     
     return courtModel;
 }
@@ -31,15 +31,15 @@
     if (response == nil) {
         return courtModel;
     }
-    courtModel.courtCode = [response valueForKeyNotNull:@"code"];
-    courtModel.caseName = [response valueForKeyNotNull:@"caseName"];
-    courtModel.partyType = [response valueForKeyNotNull:@"partyType"];
-    courtModel.court = [response valueForKeyNotNull:@"court"];
-    courtModel.place = [response valueForKeyNotNull:@"place"];
-    courtModel.caseNumber = [response  valueForKeyNotNull:@"caseNo"];
-    courtModel.judge = [response valueForKeyNotNull:@"judge"];
+    
+    courtModel.caseName = [response valueForKeyNotNull:@"CaseName"];
+    courtModel.partyType = [response valueForKeyNotNull:@"PartyType"];
+    courtModel.court = [response valueForKeyNotNull:@"Court"];
+    courtModel.place = [response valueForKeyNotNull:@"Place"];
+    courtModel.caseNo = [response  valueForKeyNotNull:@"CaseNo"];
+    courtModel.judge = [response valueForKeyNotNull:@"Judge"];
     courtModel.SAR = [response valueForKeyNotNull:@"SAR"];
-    courtModel.typeE = [response valueForKeyNotNull:@"typeE"];
+    courtModel.typeCase = [response valueForKeyNotNull:@"TypeCase"];
     
     return courtModel;
 }

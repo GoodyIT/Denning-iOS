@@ -34,6 +34,7 @@
     [super viewDidLoad];
     
     [self prepareUI];
+    [self setupFloatingButton];
     [self getList];
 }
 

@@ -430,6 +430,7 @@
                         <outlet property="receivedFromCell" destination="pXh-PD-UFT" id="FVS-kv-iXr"/>
                         <outlet property="remarks" destination="ovo-4V-f5D" id="iGs-0k-eUd"/>
                         <outlet property="remarksCell" destination="b89-DC-jmK" id="miR-r0-2nh"/>
+                        <outlet property="saveBtn" destination="2sj-Lr-iLY" id="x0y-Wf-tRs"/>
                         <outlet property="transaction" destination="h1y-QG-hoX" id="aD5-KQ-5Sz"/>
                         <outlet property="transactionCell" destination="7TF-bR-PkL" id="xlf-zO-0HN"/>
                         <segue destination="zuQ-0y-bWG" kind="show" identifier="ListWithDescriptionSegue" id="c1Y-Yt-Nus">

@@ -38,7 +38,7 @@
     
     CGFloat autocompleteCellHeight;
     
-    __block BOOL isLoading;
+    __block BOOL isLoading, isSaved;
     NSString* serverAPI;
 }
 
@@ -106,6 +106,7 @@
     [self prepareUI];
     if (_courtDiary != nil) {
         [self.btnSave setTitle:@"Update" forState:UIControlStateNormal];
+        self.title = @"Update Court Diary";
         [self displayDiary];
     }
 }
@@ -117,8 +118,8 @@
 
 - (void) displayDiary {
     _place.text = _courtDiary.court.place;
-    _placeType.text = _courtDiary.court.typeE;
-    selectedCourtCode = _courtDiary.court.courtCode;
+    _placeType.text = _courtDiary.court.typeCase;
+    selectedCourtCode = _courtDiary.court.courtDiaryCode;
     _enclosureNo.text = _courtDiary.enclosureNo;
     _Remarks.text = _courtDiary.remarks;
     _caseNo.text = _courtDiary.caseNo;
@@ -146,6 +147,9 @@
     
     _nextDate.text = [DIHelpers getDateTimeSeprately:_courtDiary.nextStartDate][0];
     _nextTime.text = [DIHelpers getDateTimeSeprately:_courtDiary.nextStartDate][1];
+    if ([_nextTime.text isEqualToString:@"00:00"]) {
+        _nextTime.text = @"09:00";
+    }
 }
 
 - (IBAction)dismissScreen:(id)sender {
@@ -252,7 +256,7 @@
         [data addEntriesFromDictionary:@{@"coram":@{@"code":selectedCoramCode}}];
     }
     
-    if (![_place.text isEqualToString:_courtDiary.court.court]) {
+    if (![_place.text isEqualToString:_courtDiary.court.place]) {
         [data addEntriesFromDictionary:@{@"court":@{@"code":selectedCourtCode}}];
     }
     
@@ -308,8 +312,12 @@
     }];
 }
 
-
 - (void) saveDiary {
+    if (isSaved) {
+        self.btnSave.enabled = NO;
+        return;
+    }
+    
     NSDictionary* data = @{
                            @"chkDone":@"0",
                            @"attendedStatus": @{
@@ -317,7 +325,7 @@
                            @"coram":
                                @{
                                    @"code": @"0"},
-                           @"counselAssigned": self.councilAssigned.text,
+                           @"counselAssigned": @{@"code":selectedAssignedCode},
                            @"court": @{@"code":selectedCourtCode},
                            @"courtDecision": @"",
                            @"enclosureDetails": self.details.text,
@@ -342,13 +350,13 @@
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
+        self->isSaved = YES;
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             
         } else {
             [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
-        
     }];
 }
 
@@ -758,13 +766,13 @@
         MatterLitigationViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterLitigationModel *model) {
             self.fileNo.text = model.systemNo;
-            self.caseNo.text = model.courtInfo.caseNumber;
+            self.caseNo.text = model.courtInfo.caseNo;
             self.caseName.text = model.courtInfo.caseName;
         };
     } else if ([segue.identifier isEqualToString:kCourtDiarySegue]) {
         CourtDiaryListViewController* courtVC = segue.destinationViewController;
         courtVC.updateHandler = ^(CourtDiaryModel *model) {
-            self.placeType.text = model.typeE;
+            self.placeType.text = model.typeCase;
             self.place.text = model.place;
             selectedCourtCode = model.courtDiaryCode;
         };

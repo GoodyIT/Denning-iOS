@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-
+@class CourtDiaryModel;
 @interface EditCourtModel : NSObject
 
 @property (strong, nonatomic) CodeDescription* attendedStatus;
@@ -18,7 +18,7 @@
 @property (strong, nonatomic) CoramModel* coram;
 @property (strong, nonatomic) ClientModel* counselAssigned;
 @property (strong, nonatomic) NSString* counselAttended;
-@property (strong, nonatomic) CourtModel* court;
+@property (strong, nonatomic) CourtDiaryModel* court;
 @property (strong, nonatomic) NSString* courtDecision;
 @property (strong, nonatomic) NSString* enclosureDetails;
 @property (strong, nonatomic) NSString* enclosureNo;

@@ -89,7 +89,9 @@
     // zero duration means no animation
     CGFloat duration = (animated)? 0.0 : 0.0;
     
-    self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+    [UIView animateWithDuration:duration animations:^{
+        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+    } completion:completion];
 }
 
 - (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {

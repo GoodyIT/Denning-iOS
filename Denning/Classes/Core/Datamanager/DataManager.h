@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@import CoreLocation;
+
 //@interface FirmArray : RLMObject
 //@property RLMArray
 
@@ -73,5 +75,9 @@
 - (BOOL) isStaff;
 
 - (void) clearData;
+
+- (void) setOldLocation:(CLLocation*) oldLocation lastLoggedDateTime:(NSDate*) lastLoggedDateTime;
+
+- (void) setStreetName:(NSString*) streetName;
 
 @end

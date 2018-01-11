@@ -16,7 +16,7 @@
     
     model.courtDiaryCode = [response valueForKeyNotNull:@"code"];
     model.place = [response valueForKeyNotNull:@"place"];
-    model.typeE = [response valueForKeyNotNull:@"typeE"];
+    model.typeCase = [response valueForKeyNotNull:@"typeE"];
     
     return model;
 }

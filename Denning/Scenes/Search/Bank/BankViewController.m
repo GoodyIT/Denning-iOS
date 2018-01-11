@@ -152,7 +152,7 @@
     if (indexPath.section == 0) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
         [cell configureCellWithInfo:self.bankModel.name number:self.bankModel.IDNo image:[UIImage imageNamed:@"icon_client"]];
-        cell.chatBtn.hidden = cell.editBtn.hidden = YES;
+        cell.chatBtn.hidden = cell.editBtn.hidden = cell.chatLabel.hidden = cell.editLabel.hidden = YES;
 //        cell.delegate = self;
         return cell;
     } else if (indexPath.section == 1) {

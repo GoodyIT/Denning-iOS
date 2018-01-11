@@ -47,8 +47,9 @@
         isExpire = NO;
         user = [UserModel allObjects].firstObject;
         if (!user) {
+            NSDate* newDate = [NSDate date];
             [[RLMRealm defaultRealm] transactionWithBlock:^{
-                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @"", @"", @""]];
+                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @0.0, @0.0, newDate]];
             }];
         }
     }
@@ -212,4 +213,17 @@
     [self determineUserType];
 }
 
+- (void) setOldLocation:(CLLocation*) oldLocation lastLoggedDateTime:(NSDate*) lastLoggedDateTime {
+    [[RLMRealm defaultRealm] transactionWithBlock:^{
+        user.latitude = oldLocation.coordinate.latitude;
+        user.longitude = oldLocation.coordinate.longitude;
+        user.lastLoggedDateTime = lastLoggedDateTime;
+    }];
+}
+
+- (void) setStreetName:(NSString*) streetName {
+    [[RLMRealm defaultRealm] transactionWithBlock:^{
+        user.streetName = streetName;
+    }];
+}
 @end

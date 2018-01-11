@@ -1288,6 +1288,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="saveBtn" destination="iy2-cj-K4Z" id="Z21-qJ-SzN"/>
                         <outlet property="tableView" destination="L4y-jA-2TQ" id="2eE-ql-v4q"/>
                         <segue destination="pqG-K8-Tmq" kind="show" identifier="SimpleMatterSegue" id="1pX-FB-xJw"/>
                         <segue destination="t7u-Dl-FG9" kind="show" identifier="AddReceiptSegue" id="el7-sh-f31"/>
@@ -1460,6 +1461,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="saveBtn" destination="OY3-kx-uka" id="4eN-mb-ODl"/>
                         <outlet property="tableView" destination="5iM-Qe-Op5" id="6GI-ad-JXP"/>
                         <segue destination="pqG-K8-Tmq" kind="show" identifier="SimpleMatterSegue" id="HZU-VG-nlr"/>
                         <segue destination="4dK-GI-61Q" kind="show" identifier="QuotationSegue" id="Zqs-Zz-3nT"/>
@@ -1757,7 +1759,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="van-R0-R7y"/>
-        <segue reference="neS-8H-nXn"/>
+        <segue reference="9aE-LO-ISd"/>
         <segue reference="Z54-EA-HtM"/>
         <segue reference="ba6-u1-Tlf"/>
         <segue reference="Q4S-Mm-Vgk"/>

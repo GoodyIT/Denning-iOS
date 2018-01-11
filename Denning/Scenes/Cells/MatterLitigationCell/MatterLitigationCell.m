@@ -27,7 +27,7 @@
 - (void) configureCellWithModel: (MatterLitigationModel*) model
 {
     self.systemNo.text = model.systemNo;
-    self.courtCaseNo.text = model.courtInfo.caseNumber;
+    self.courtCaseNo.text = model.courtInfo.caseNo;
     self.courtCaseName.text = model.courtInfo.caseName;
 }
 

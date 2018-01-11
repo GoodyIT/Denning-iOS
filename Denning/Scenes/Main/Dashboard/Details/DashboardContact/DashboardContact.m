@@ -163,7 +163,9 @@
     if ([_callback isEqualToString:@"callback"]) {
         
         [self.navigationController dismissViewControllerAnimated:YES completion:^{
-            _updateHandler(self.listOfContacts[indexPath.row]);
+            if (_updateHandler != nil) {
+                _updateHandler(self.listOfContacts[indexPath.row]);
+            }
         }];
     } else {
         [self openContact:self.listOfContacts[indexPath.row]];

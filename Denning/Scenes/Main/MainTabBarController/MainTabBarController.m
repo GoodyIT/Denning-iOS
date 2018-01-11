@@ -50,6 +50,7 @@ QMPushNotificationManagerDelegate>
     } else {
         [temp removeObjectAtIndex:1];
         [temp removeObjectAtIndex:1];
+        [self updateBadge];
     }
     
     [self setViewControllers:temp];

@@ -28,7 +28,7 @@
     
     CGFloat autocompleteCellHeight;
     
-    __block BOOL isLoading;
+    __block BOOL isLoading, isSaved;
     NSString* serverAPI;
 }
 
@@ -203,6 +203,11 @@
 }
 
 - (void) saveDiary {
+    if (isSaved) {
+        self.btnSave.enabled = NO;
+        return;
+    }
+    
     NSString* endDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_endTime.text]];
     NSString* startDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_startTime.text]];
     NSDictionary* data = @{

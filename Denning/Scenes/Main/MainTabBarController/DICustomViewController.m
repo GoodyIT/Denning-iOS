@@ -100,7 +100,6 @@
     [mainTabBarController tapMenu:nil];
 }
 
-
 - (void) setupFloatingButton {
     MEVFloatingButton *button = [[MEVFloatingButton alloc] init];
     button.displayMode = MEVFloatingButtonDisplayModeWhenScrolling;

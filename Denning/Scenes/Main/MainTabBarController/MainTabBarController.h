@@ -16,4 +16,6 @@
 
 - (void) removeTabbarBasedOnUserType;
 
+- (void) updateBadge;
+
 @end

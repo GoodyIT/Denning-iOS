@@ -21,13 +21,13 @@
 
 @property (strong, nonatomic) NSString * place;
 
-@property (strong, nonatomic) NSString * caseNumber;
+@property (strong, nonatomic) NSString * caseNo;
 
 @property (strong, nonatomic) NSString * judge;
 
 @property (strong, nonatomic) NSString * SAR;
 
-@property (strong, nonatomic) NSString* typeE;
+@property (strong, nonatomic) NSString* typeCase;
 
 + (CourtModel*) getCourtFromResponse: (NSDictionary*) response;
 @end

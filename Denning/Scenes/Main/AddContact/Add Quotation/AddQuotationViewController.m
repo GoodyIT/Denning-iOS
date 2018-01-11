@@ -35,6 +35,7 @@
     CGRect originalFrame;
 }
 
+@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 @property (weak, nonatomic) IBOutlet FZAccordionTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *contents;
 @property (nonatomic, strong) NSArray *headers;
@@ -167,6 +168,10 @@ NSMutableDictionary* keyValue;
     return data;
 }
 - (IBAction)saveQuotaion:(id)sender {
+    if (isSaved) {
+        self.saveBtn.enabled = NO;
+        return;
+    }
 //    if (!_contents[0][1][1]) {
 //        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
 //        return;

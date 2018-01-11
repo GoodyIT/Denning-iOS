@@ -44,6 +44,7 @@
 @property (strong, nonatomic) NSIndexPath* textFieldIndexPath;
 @property (strong, nonatomic)
 NSMutableDictionary* keyValue;
+@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 
 @end
 
@@ -205,6 +206,11 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)saveBill:(id)sender {
+    if (isSaved) {
+        self.saveBtn.enabled = NO;
+        return;
+    }
+    
     if (((NSString*)_contents[0][2][1]).length == 0) {
         [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
         return;
@@ -233,6 +239,7 @@ NSMutableDictionary* keyValue;
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             self->isSaved = YES;
+            
             [self updateWholeData:result];
             
         } else {

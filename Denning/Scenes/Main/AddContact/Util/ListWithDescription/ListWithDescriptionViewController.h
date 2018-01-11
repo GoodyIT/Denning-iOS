@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol ContactListWithDescSelectionDelegate;
-@interface ListWithDescriptionViewController : UIViewController
+@interface ListWithDescriptionViewController : DICustomViewController
 @property (weak, nonatomic) id<ContactListWithDescSelectionDelegate> contactDelegate;
 
 @property (assign, nonatomic) NSString *titleOfList;

@@ -493,7 +493,7 @@ NSMutableDictionary* keyValue;
     
     // Case Detail
     newArray[index] = [NSMutableArray new];
-    [newArray[index] addObject:@[@"Case Type.", _matterModel.court.caseNumber]];
+    [newArray[index] addObject:@[@"Case Type.", _matterModel.court.caseNo]];
     [newArray[index] addObject:@[@"Type No", _matterModel.court.partyType]];
     [newArray[index] addObject:@[@"Court", _matterModel.court.place]];
     [newArray[index] addObject:@[@"Place", _matterModel.court.court]];
@@ -1864,7 +1864,7 @@ NSMutableDictionary* keyValue;
     } else if ([segue.identifier isEqualToString:kCourtDiarySegue]) {
         CourtDiaryListViewController* courtVC = segue.destinationViewController;
         courtVC.updateHandler = ^(CourtDiaryModel *model) {
-            [self replaceContentForSection:CASEDETAIL_SECTION InRow:CaseCourt withValue:model.typeE];
+            [self replaceContentForSection:CASEDETAIL_SECTION InRow:CaseCourt withValue:model.typeCase];
             [self replaceContentForSection:CASEDETAIL_SECTION InRow:CasePlace withValue:model.place];
             selectedCourtDiaryCode = model.courtDiaryCode;
         };
