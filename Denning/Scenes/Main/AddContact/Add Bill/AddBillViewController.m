@@ -207,7 +207,6 @@ NSMutableDictionary* keyValue;
 
 - (IBAction)saveBill:(id)sender {
     if (isSaved) {
-        self.saveBtn.enabled = NO;
         return;
     }
     
@@ -235,11 +234,12 @@ NSMutableDictionary* keyValue;
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
-        self->isCalcDone = YES;
         if (error == nil) {
+            
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             self->isSaved = YES;
-            
+            self->isCalcDone = YES;
+            self.saveBtn.enabled = NO;
             [self updateWholeData:result];
             
         } else {

@@ -11,7 +11,7 @@
 typedef void(^UpdateContactHandler)(ContactModel* model);
 @class ListWithCodeTableViewController;
 
-@interface AddContactViewController : UITableViewController<UITextFieldDelegate, ContactListWithCodeSelectionDelegate, ContactListWithDescSelectionDelegate>
+@interface AddContactViewController : DICustomTableViewController<UITextFieldDelegate, ContactListWithCodeSelectionDelegate, ContactListWithDescSelectionDelegate>
 
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *postcodeTextField;
 

@@ -314,7 +314,6 @@
 
 - (void) saveDiary {
     if (isSaved) {
-        self.btnSave.enabled = NO;
         return;
     }
     
@@ -350,10 +349,11 @@
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
-        self->isSaved = YES;
+        
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
-            
+            self->isSaved = YES;
+            self.btnSave.enabled = NO;
         } else {
             [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }

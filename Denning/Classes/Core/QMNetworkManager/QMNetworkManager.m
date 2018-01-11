@@ -520,22 +520,38 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     } else {
         point = @"PTG";
     }
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/GovOffice/%@/%@", [DataManager sharedManager].user.serverAPI, point, code];
     
-    [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
-        completion([GovOfficeModel getGovOfficeFromResponse:result], error);
-    }];
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
+        NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/GovOffice/%@/%@", [DataManager sharedManager].user.serverAPI, point, code];
+        [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            completion([GovOfficeModel getGovOfficeFromResponse:result], error);
+        }];
+    } else {
+        NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/GovOffice/%@/%@", PUBLIC_BASE_URL, point, code];
+        [self setPublicHTTPHeader];
+        [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            completion([GovOfficeModel getGovOfficeFromResponse:result], error);
+        }];
+    }
 }
 
 // Legal firm (Solicitor)
 - (void) loadLegalFirmWithCode: (NSString*) code completion: (void(^)(LegalFirmModel* legalFirmModel, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/Solicitor/%@", [DataManager sharedManager].user.serverAPI, code];
-    
-    [self setPublicHTTPHeader];
-    [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
-        completion([LegalFirmModel getLegalFirmFromResponse:result], error);
-    }];
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
+        NSString* url = [NSString stringWithFormat:@"%@%@%@", [DataManager sharedManager].user.serverAPI, PRIVATE_LEGAL_FIRM_URL, code];
+        
+        [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            completion([LegalFirmModel getLegalFirmFromResponse:result], error);
+        }];
+    } else {
+        NSString* url = [NSString stringWithFormat:@"%@%@", PUBLIC_LEGAL_FIRM_URL, code];
+        
+        [self setPublicHTTPHeader];
+        [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            completion([LegalFirmModel getLegalFirmFromResponse:result], error);
+        }];
+    }
 }
 
 // Ledger
@@ -565,11 +581,19 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Documents
 - (void) loadDocumentWithCode: (NSString*) code completion: (void(^)(DocumentModel* doumentModel, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, code];
-    
-    [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
-        completion([DocumentModel getDocumentFromResponse:result], error);
-    }];
+    if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
+        NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, code];
+        
+        [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            completion([DocumentModel getDocumentFromResponse:result], error);
+        }];
+    } else {
+        NSString* url = [NSString stringWithFormat:@"%@/v1/matter/%@/fileFolder", PUBLIC_BASE_URL, code];
+        
+        [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+            completion([DocumentModel getDocumentFromResponse:result], error);
+        }];
+    }
 }
 
 - (NSMutableArray*) buildContactsFrom:(NSArray*) contacts{

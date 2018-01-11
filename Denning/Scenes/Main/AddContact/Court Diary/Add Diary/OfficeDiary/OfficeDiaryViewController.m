@@ -234,7 +234,6 @@
 
 - (void) saveDiary {
     if (isSaved) {
-        self.btnSave.enabled = NO;
         return;
     }
     
@@ -264,6 +263,8 @@
         @strongify(self)
         self->isLoading = NO;
         if (error == nil) {
+            self->isSaved = YES;
+            self.btnSave.enabled = NO;
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             
         } else {

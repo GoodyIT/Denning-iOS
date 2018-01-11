@@ -9,11 +9,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-UI-Text-Medium.otf">
-            <string>SFUIText-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--CodeDescriptionNavigation-->
         <scene sceneID="PYH-B5-jST">
@@ -396,22 +391,14 @@
                                 <action selector="dismissScreen:" destination="Odd-de-FOI" id="5E4-Kz-5ZT"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="TXq-Q7-w0J">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="kdI-69-Kso">
-                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveMatter:" destination="Odd-de-FOI" eventType="touchUpInside" id="rka-17-DvU"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="htl-Qm-hOA">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="saveMatter:" destination="Odd-de-FOI" id="UYX-Xz-nPG"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="saveBtn" destination="kdI-69-Kso" id="cFD-qK-tZy"/>
                         <outlet property="tableView" destination="7tA-PF-zZy" id="ef6-5z-Cfl"/>
                         <segue destination="yyo-PD-7yg" kind="show" identifier="ContactGetListSegue" id="es0-EV-nCn">
                             <nil key="action"/>

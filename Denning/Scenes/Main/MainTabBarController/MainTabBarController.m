@@ -443,6 +443,6 @@ didAddMessageToMemoryStorage:(QBChatMessage *)message
         self.childViewControllers.lastObject.tabBarItem.badgeValue = [DataManager sharedManager].badgeValue;
     }
 
-    [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+//    [self.childViewControllers.lastObject.tabBarItem setBadgeTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
 }
 @end

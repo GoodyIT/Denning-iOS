@@ -14,14 +14,15 @@
 {
     LegalFirmModel* legalFirm = [LegalFirmModel new];
     
-    legalFirm.name = [response objectForKey:@"name"];
-    legalFirm.IDNo = [response objectForKey:@"IDNo"];
-    legalFirm.tel = [response objectForKey:@"phoneHome"];
-    legalFirm.fax = [response objectForKey:@"phoneFax"];
-    legalFirm.mobile = [response objectForKey:@"phoneMobile"];
-    legalFirm.office = [response objectForKey:@"phoneOffice"];
-    legalFirm.email = [response objectForKey:@"emailAddress"];
-    legalFirm.address = [[response objectForKey:@"address"] objectForKey:@"fullAddress"];
+    legalFirm.name = [response valueForKeyNotNull:@"name"];
+    legalFirm.IDNo = [response valueForKeyNotNull:@"IDNo"];
+    legalFirm.title = [response valueForKeyNotNull:@"title"];
+    legalFirm.tel = [response valueForKeyNotNull:@"phoneHome"];
+    legalFirm.fax = [response valueForKeyNotNull:@"phoneFax"];
+    legalFirm.mobile = [response valueForKeyNotNull:@"phoneMobile"];
+    legalFirm.office = [response valueForKeyNotNull:@"phoneOffice"];
+    legalFirm.email = [response valueForKeyNotNull:@"emailAddress"];
+    legalFirm.address = [[response valueForKeyNotNull:@"address"] objectForKey:@"fullAddress"];
     
     legalFirm.relatedMatter = [SearchResultModel getSearchResultArrayFromResponse:[response objectForKey:@"relatedMatter"]];
     

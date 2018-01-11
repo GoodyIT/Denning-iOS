@@ -53,7 +53,7 @@
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
-+ (void) showConfirmDialog:(NSString *)message withTitle:(NSString*)title inViewController:(UIViewController *)viewController completion:(void (^)(UIAlertAction * _Nonnull))completion
++ (void) showConfirmDialog:(NSString *)message withTitle:(NSString*)title inViewController:(UIViewController *)viewController forBarButton:(UIBarButtonItem*)button completion:(void (^)(UIAlertAction * _Nonnull))completion
 {
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:title
@@ -72,12 +72,22 @@
     
     [alertController.view layoutIfNeeded];
     
+    if(alertController.popoverPresentationController) {
+        if (button != nil) {
+            alertController.popoverPresentationController.barButtonItem = button;
+        } else {
+            alertController.popoverPresentationController.sourceView = viewController.view;
+            alertController.popoverPresentationController.sourceRect = CGRectMake(viewController.view.bounds.size.width/2,  viewController.view.bounds.size.height/2, 0, 0);
+            alertController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        }
+    }
+    
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 +(void)showConfirmDialog:(NSString*) message inViewController:(UIViewController *)viewController completion:(void(^)(UIAlertAction * _Nonnull action))completion
 {
-    [self showConfirmDialog:message withTitle:@"information" inViewController:viewController completion:completion];
+    [self showConfirmDialog:message withTitle:@"information" inViewController:viewController forBarButton:nil completion:completion];
 }
 
 @end

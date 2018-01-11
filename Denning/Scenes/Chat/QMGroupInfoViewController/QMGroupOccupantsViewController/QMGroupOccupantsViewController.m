@@ -189,7 +189,18 @@ QMUsersServiceDelegate
         [customActionSheet addAction:thirdButton];
         [customActionSheet addAction:cancelButton];
         
-        [self presentViewController:customActionSheet animated:YES completion:nil];
+        if(customActionSheet.popoverPresentationController) {
+            customActionSheet.popoverPresentationController.sourceView = self.tableView;
+            customActionSheet.popoverPresentationController.sourceRect = [self.tableView rectForRowAtIndexPath:indexPath];
+        }
+        
+        @weakify(self);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            @strongify(self);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self presentViewController:customActionSheet animated:YES completion:nil];
+            });
+        });
     };
 }
 

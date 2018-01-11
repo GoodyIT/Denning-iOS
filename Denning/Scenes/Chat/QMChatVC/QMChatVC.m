@@ -47,9 +47,6 @@
 
 @import SafariServices;
 
-static const float kQMAttachmentCellSize = 180.0f;
-static const NSTimeInterval kQMMaxAttachmentDuration = 30.0f;
-
 static const CGFloat kQMWidthPadding = 40.0f;
 static const CGFloat kQMAvatarSize = 28.0f;
 
@@ -808,7 +805,7 @@ QMUsersServiceDelegate
                                                                         maxDuration:kQMMaxAttachmentDuration
                                                                             quality:UIImagePickerControllerQualityTypeMedium
                                                                       resultHandler:self
-                                                                      allowsEditing:NO];
+                                                                      allowsEditing:YES];
                                 }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CHOOSE_MEDIA", nil)
@@ -819,7 +816,7 @@ QMUsersServiceDelegate
                                     [QMImagePicker chooseFromGaleryInViewController:self
                                                                         maxDuration:kQMMaxAttachmentDuration
                                                                       resultHandler:self
-                                                                      allowsEditing:NO];
+                                                                      allowsEditing:YES];
                                 }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_LOCATION", nil)

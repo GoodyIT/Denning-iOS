@@ -91,7 +91,6 @@
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *IRDBranch;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *registeredOffice;
 @property (weak, nonatomic) IBOutlet UISwitch *inviteDenning;
-@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *IDTypeCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *IDNoCell;
 @property (weak, nonatomic) IBOutlet SWTableViewCell *OldICCell;
@@ -128,6 +127,7 @@
     
     [self prepareUI];
     [self setDefaultCountryCode];
+    [self setupFloatingButton];
 }
 
 - (void) prepareUI {
@@ -135,7 +135,7 @@
     
     if (self.viewType.length == 0) {
         self.contactModel = [ContactModel new];
-        [self.saveBtn setTitle:@"Save" forState:UIControlStateNormal];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Save"];
         self.title = @"Add Contact";
     } else {
         self.IDType.text = self.contactModel.idType.descriptionValue;
@@ -183,7 +183,7 @@
             [self.inviteDenning setOn:NO];
         }
         
-        [self.saveBtn setTitle:@"Update" forState:UIControlStateNormal];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Update"];
         self.title = @"Update Contact";
     }
     
@@ -554,7 +554,7 @@
     return @"";
 }
 
-- (IBAction)saveContact:(id)sender {
+- (IBAction)saveContact:(UIBarButtonItem*)sender {
     if (![self checkValidation]) {
         return;
     }
@@ -593,7 +593,7 @@
     if (self.viewType == nil || self.viewType.length == 0) {
         [self _save];
     } else {
-        [QMAlert showConfirmDialog:@"Do you want to update contact?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+        [QMAlert showConfirmDialog:@"Do you want to update contact?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
                 [self _update];
             }

@@ -19,6 +19,9 @@
 
 #endif
 
+static const float kQMAttachmentCellSize = 180.0f;
+static const NSTimeInterval kQMMaxAttachmentDuration = 30.0f;
+
 static NSString* const kDenningPeople = @"denningpeople";
 static NSString* const kColleague = @"colleague";
 static NSString* const kClient = @"client";

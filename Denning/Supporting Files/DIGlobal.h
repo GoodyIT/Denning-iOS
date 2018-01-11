@@ -125,9 +125,15 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8E
 
 #define SEARCH_TYPE_CATEGORY_GET    @"denningwcf/v1/Table/cbotemplatecategory?filter="
 
+#define PUBLIC_BASE_URL     @"http://43.252.215.163:8313/denningapi/"
+
 #define PUBLIC_KEYWORD_SEARCH_URL   @"http://43.252.215.163:8313/denningapi/v1/publicSearch/keyword?search="
 
 #define PUBLIC_SEARCH_URL    @"http://43.252.215.163:8313/denningapi/v1/publicSearch?search="
+
+#define PUBLIC_LEGAL_FIRM_URL   @"http://43.252.215.163:8313/denningapi/v1/Solicitor/"
+
+#define PRIVATE_LEGAL_FIRM_URL  @"denningwcf/v1/app/Solicitor/"
 
 #define UPDATES_LATEST_URL   @"http://43.252.215.163:8313/denningapi/v1/DenningUpdate"
 

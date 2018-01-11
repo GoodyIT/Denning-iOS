@@ -55,7 +55,6 @@ enum  {
 @property (weak, nonatomic) IBOutlet FZAccordionTableView *tableView;
 @property (nonatomic, strong) NSMutableArray *contents;
 @property (nonatomic, strong) NSArray *headers;
-@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 
 @property (strong, nonatomic)
 NSMutableDictionary* keyValue;
@@ -108,7 +107,7 @@ NSMutableDictionary* keyValue;
         if ([_viewType isEqualToString:@"view"]) {
             self.title = @"View Property";
         }
-        [self.saveBtn setTitle:@"Update" forState:UIControlStateNormal];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Update"];
     } else {
         [self clearInput];
         self.title = @"Add Property";
@@ -544,11 +543,11 @@ NSMutableDictionary* keyValue;
     return YES;
 }
 
-- (IBAction)saveProperty:(id)sender {
+- (IBAction)saveProperty:(UIBarButtonItem*)sender {
     NSMutableDictionary* params = [self buildParams];
     if ([_viewType isEqualToString:@"view"]) {
         [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
-        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
                 if ([self checkValidation]) {
                     [self _update:params];

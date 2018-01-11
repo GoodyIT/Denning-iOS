@@ -51,7 +51,6 @@ enum PAYMENT_MODE_ROWS {
     __block BOOL isSaved, isLoading;
 }
 
-@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *fileNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *billNo;
 @property (weak, nonatomic) IBOutlet UIFloatLabelTextField *accountType;
@@ -170,7 +169,6 @@ enum PAYMENT_MODE_ROWS {
 
 - (void) _save {
     if (isSaved) {
-        self.saveBtn.enabled = NO;
         return;
     }
     
@@ -184,8 +182,10 @@ enum PAYMENT_MODE_ROWS {
     [[QMNetworkManager sharedManager] saveReceiptWithParams:[self buildSaveParam] WithCompletion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         self->isLoading = NO;
-        self->isSaved = YES;
+        
         if (error == nil) {
+            self->isSaved = YES;
+            self.navigationItem.rightBarButtonItem.enabled = NO;
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully Saved" duration:1.0];
             
             return;
@@ -284,11 +284,11 @@ enum PAYMENT_MODE_ROWS {
     return [data copy];
 }
 
-- (IBAction)saveReceipt:(id)sender {
+- (IBAction)saveReceipt:(UIBarButtonItem*)sender {
     if (![_isUpdate isEqualToString:@"update"]) {
         [self _save];
     } else {
-        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+        [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
                 [self _update];
             }

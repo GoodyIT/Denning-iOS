@@ -172,7 +172,7 @@
     if (indexPath.section == 0) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
         [cell configureCellWithInfo:self.legalFirmModel.name number:self.legalFirmModel.IDNo image:[UIImage imageNamed:@"icon_legalfirm"]];
-        cell.delegate = self;
+        cell.chatLabel.hidden = cell.chatBtn.hidden = cell.editLabel.hidden = cell.editBtn.hidden = YES;
         return cell;
     } else if (indexPath.section == 1) {
         [cell setEnableRightBtn:NO image:nil];

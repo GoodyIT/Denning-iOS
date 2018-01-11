@@ -389,18 +389,11 @@
                                 <action selector="dismissScreen:" destination="rtX-6x-CUv" id="Fn4-Cf-O3c"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="mfP-7N-Hq3">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2sj-Lr-iLY">
-                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveReceipt:" destination="rtX-6x-CUv" eventType="touchUpInside" id="UWy-zo-urK"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="zE4-TR-cJY">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="saveReceipt:" destination="rtX-6x-CUv" id="eDY-vt-yfe"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -430,7 +423,6 @@
                         <outlet property="receivedFromCell" destination="pXh-PD-UFT" id="FVS-kv-iXr"/>
                         <outlet property="remarks" destination="ovo-4V-f5D" id="iGs-0k-eUd"/>
                         <outlet property="remarksCell" destination="b89-DC-jmK" id="miR-r0-2nh"/>
-                        <outlet property="saveBtn" destination="2sj-Lr-iLY" id="x0y-Wf-tRs"/>
                         <outlet property="transaction" destination="h1y-QG-hoX" id="aD5-KQ-5Sz"/>
                         <outlet property="transactionCell" destination="7TF-bR-PkL" id="xlf-zO-0HN"/>
                         <segue destination="zuQ-0y-bWG" kind="show" identifier="ListWithDescriptionSegue" id="c1Y-Yt-Nus">

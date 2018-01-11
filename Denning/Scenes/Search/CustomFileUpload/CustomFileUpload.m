@@ -10,9 +10,11 @@
 
 #import "ChangeBranchViewController.h"
 #import "SuggestedFileName.h"
+#import "QMImagePicker.h"
 
 @interface CustomFileUpload ()< UIImagePickerControllerDelegate, UINavigationControllerDelegate,
-NYTPhotosViewControllerDelegate>
+NYTPhotosViewControllerDelegate,
+QMImagePickerResultHandler>
 
 @end
 
@@ -48,9 +50,7 @@ NYTPhotosViewControllerDelegate>
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-    self.uploadedFile.placeholder = [@"IMG_" stringByAppendingString:[[[DIHelpers todayWithTime] stringByReplacingOccurrencesOfString:@":" withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@""]];
-    self.renameFile.text = self.uploadedFile.placeholder;
-    self.imagePreview.image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    
     _imagePickerController = nil;
 }
 
@@ -121,44 +121,45 @@ NYTPhotosViewControllerDelegate>
 }
 
 - (void) takePhoto {
-    //    self.imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    //    [self presentViewController:self.imagePicker animated:YES completion:nil];
-    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (authStatus == AVAuthorizationStatusDenied)
-    {
-        // Denies access to camera, alert the user.
-        // The user has previously denied access. Remind the user that we need camera access to be useful.
-        UIAlertController *alertController =
-        [UIAlertController alertControllerWithTitle:@"Unable to access the Camera"
-                                            message:@"To enable access, go to Settings > Privacy > Camera and turn on Camera access for this app."
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-        [alertController addAction:ok];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-    else if (authStatus == AVAuthorizationStatusNotDetermined)
-        // The user has not yet been presented with the option to grant access to the camera hardware.
-        // Ask for it.
-        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^( BOOL granted ) {
-            // If access was denied, we do not set the setup error message since access was just denied.
-            if (granted)
-            {
-                // Allowed access to camera, go ahead and present the UIImagePickerController.
-                [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera fromButton:nil];
-            }
-        }];
-    else
-    {
-        // Allowed access to camera, go ahead and present the UIImagePickerController.
-        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera fromButton:nil];
-    }
+    [QMImagePicker takePhotoOrVideoInViewController:self
+                                        maxDuration:kQMMaxAttachmentDuration
+                                            quality:UIImagePickerControllerQualityTypeMedium
+                                      resultHandler:self
+                                      allowsEditing:YES];
 }
 
 - (void) uploadFile {
-    //    self.imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    //    [self presentViewController:self.imagePicker animated:YES completion:nil];
-    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary fromButton:nil];
+    [QMImagePicker chooseFromGaleryInViewController:self
+                                        maxDuration:kQMMaxAttachmentDuration
+                                      resultHandler:self
+                                      allowsEditing:YES];
+}
+
+- (void) displayPhoto:(UIImage*) photo {
+    self.uploadedFile.placeholder = [@"IMG_" stringByAppendingString:[[[DIHelpers todayWithTime] stringByReplacingOccurrencesOfString:@":" withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@""]];
+    self.renameFile.text = self.uploadedFile.placeholder;
+    self.imagePreview.image =photo;
+}
+
+- (void)imagePicker:(QMImagePicker *)__unused imagePicker
+didFinishPickingPhoto:(UIImage *)photo {
+    
+    @weakify(self);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        @strongify(self);
+        
+        if (imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            UIImage *newImage = [photo fixOrientation];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self displayPhoto: newImage];
+            });
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self displayPhoto: photo];
+            });
+        }
+    });
 }
 
 #pragma mark - NYTPhotosViewControllerDelegate

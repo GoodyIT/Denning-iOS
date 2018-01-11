@@ -40,7 +40,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     NSString* keyword;
     NSString* searchURL;
     NSString* searchKeywordURL;
-    NSArray* generalKeyArray;
+    NSArray* generalKeyArray, *publicKeyArray;
     NSMutableArray* generalValueArray;
     NSString* _matterCode;
     NSString* searchType;
@@ -208,6 +208,20 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
                                  @"Public Government Offices": [NSNumber numberWithInteger: PublicGovernmentOffices],
                                  };
     
+    publicKeyArray = [self.publicSearchFilters keysSortedByValueUsingComparator: ^(id obj1, id obj2) {
+        
+        if ([obj1 integerValue] > [obj2 integerValue]) {
+            
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        if ([obj1 integerValue] < [obj2 integerValue]) {
+            
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    
     self.selectionList.selectionIndicatorAnimationMode = HTHorizontalSelectionIndicatorAnimationModeLightBounce;
     self.selectionList.showsEdgeFadeEffect = YES;
     
@@ -287,8 +301,8 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     [self updateSelectionList];
     [self.searchResultArray removeAllObjects];
     [self.tableView reloadData];
+    keyword = @"";
     self.searchTextField.text = @"";
-    self.selectionList.hidden = NO;
 }
 
 - (IBAction)toggleSearchType:(UIButton*)sender {
@@ -305,6 +319,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         self.searchTextField.placeholder = @"Denning Search";
         [DataManager sharedManager].searchType = @"Denning";
         category = 0;
+        
          searchKeywordURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString: GENERAL_KEYWORD_SEARCH_URL];
     }
     
@@ -433,7 +448,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
 
         return generalKeyArray[index];
     }
-    return self.publicSearchFilters.allKeys[index];
+    return publicKeyArray[index];
 }
 
 #pragma mark - HTHorizontalSelectionListDelegate Protocol Methods
@@ -446,7 +461,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         category = [generalValueArray[index] integerValue];
         
     } else {
-        category = [self.publicSearchFilters.allValues[index] integerValue];
+        category = [self.publicSearchFilters[publicKeyArray[index]] integerValue];
     }
     
     [self buildSearchURL];
@@ -734,7 +749,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         if (error == nil) {
             [self performSegueWithIdentifier:kLegalFirmSearchSegue sender:legalFirmModel];
         } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
         }
     }];
 }

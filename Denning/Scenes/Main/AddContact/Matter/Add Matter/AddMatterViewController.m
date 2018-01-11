@@ -117,7 +117,6 @@ ContactListWithDescSelectionDelegate>
 @property (nonatomic, strong) NSMutableArray *headers;
 @property (strong, nonatomic)
 NSMutableDictionary* keyValue;
-@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 
 @end
 
@@ -693,11 +692,11 @@ NSMutableDictionary* keyValue;
 - (void) checkStatus {
     if (_matterModel.systemNo == nil || _matterModel.systemNo.length == 0) {
         isSaveMode = YES;
-        [self.saveBtn setTitle:@"Save" forState:UIControlStateNormal];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Save"];
         self.title = @"Add Matter";
     } else {
         isSaveMode = NO;
-        [self.saveBtn setTitle:@"Update" forState:UIControlStateNormal];
+        [self.navigationItem.rightBarButtonItem setTitle:@"Update"];
         self.title = @"Update Matter";
     }
 }
@@ -956,8 +955,8 @@ NSMutableDictionary* keyValue;
     return @{@"bankGroup":bankArray};
 }
 
-- (void) askAndUpdateMatter {
-    [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self completion:^(UIAlertAction * _Nonnull action) {
+- (void) askAndUpdateMatter:(UIBarButtonItem*)sender  {
+    [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
         if  ([action.title isEqualToString:@"OK"]) {
             [self updateMatter];
         }
@@ -986,7 +985,7 @@ NSMutableDictionary* keyValue;
 
 
 
-- (IBAction)saveMatter:(id)sender {
+- (IBAction)saveMatter:(UIBarButtonItem*)sender {
     
     if (![self checkValidate]) {
         return;
@@ -995,7 +994,7 @@ NSMutableDictionary* keyValue;
     [self checkStatus];
     
     if (!isSaveMode) {
-        [self askAndUpdateMatter];
+        [self askAndUpdateMatter:sender];
         
         return;
     }
@@ -1048,7 +1047,7 @@ NSMutableDictionary* keyValue;
             [cell.calculateBtn setTitle:@"Save" forState:UIControlStateNormal];
         } else {
             cell.calculateHandler = ^{
-                [self askAndUpdateMatter];
+                [self askAndUpdateMatter:nil];
             };
             [cell.calculateBtn setTitle:@"Update" forState:UIControlStateNormal];
         }

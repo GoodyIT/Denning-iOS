@@ -172,8 +172,7 @@
     if (indexPath.section == 0) {
         NewContactHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:[NewContactHeaderCell cellIdentifier] forIndexPath:indexPath];
         [cell configureCellWithInfo:self.govOfficeModel.name number:self.govOfficeModel.IDNo image:[UIImage imageNamed:@"icon_client"]];
-        cell.chatBtn.hidden = YES;
-        cell.editBtn.hidden = YES;
+        cell.chatBtn.hidden = cell.chatLabel.hidden = cell.editLabel.hidden = cell.editBtn.hidden = YES;
         return cell;
     } else if (indexPath.section == 1) {
         if (indexPath.row == 0) {

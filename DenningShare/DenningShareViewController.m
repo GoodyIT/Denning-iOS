@@ -93,15 +93,15 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [self registerNibs];
     [self loadShareItems];
     [self prepareUI];
-    if ([defaults boolForKey:@"isClient"] ) {
-        _searchContainerView.hidden = YES;
-        _topSegment.hidden = YES;
-        [self getBranch];
-    } else {
+    if ([defaults boolForKey:@"isStaff"] ) {
         _clientSearchTextField.hidden = YES;
         [self prepareSearchTextField];
         [self displaySearchResult];
         [self setupCustomIndicator];
+    } else {
+        _searchContainerView.hidden = YES;
+        _topSegment.hidden = YES;
+        [self getBranch];
     }
     
     [self setNeedsStatusBarAppearanceUpdate];
@@ -244,13 +244,13 @@ NSURLSessionDelegate, UITextFieldDelegate>
     _email = [defaults valueForKey:@"email"];
  
     self.searchTextField.placeholder = @"Denning Folders";
-    if ([defaults boolForKey:@"isClient"] ) {
-        _topHeightConstraint.constant = 90;
-        _sessionID = @"{334E910C-CC68-4784-9047-0F23D37C9CF9}";
-    } else {
+    if ([defaults boolForKey:@"isStaff"] ) {
         _topHeightConstraint.constant = 130;
         self.searchTextField.text = keyword = _initialKeyword;
         _sessionID = [defaults valueForKey:@"sessionID"];
+    } else {
+        _topHeightConstraint.constant = 90;
+        _sessionID = @"{334E910C-CC68-4784-9047-0F23D37C9CF9}";
     }
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -422,7 +422,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if ([defaults boolForKey:@"isClient"] && [textField isKindOfClass:[_clientSearchTextField class]]) {
+    if (![defaults boolForKey:@"isStaff"] && [textField isKindOfClass:[_clientSearchTextField class]]) {
         if (string.length == 0) {
             _filter = @"";
         } else {
@@ -474,10 +474,10 @@ NSURLSessionDelegate, UITextFieldDelegate>
 - (void) filterResult {
     _sendBtn.enabled = NO;
     
-    if ([defaults boolForKey:@"isClient"]) {
-        [self filterClientFolder];
-    } else {
+    if ([defaults boolForKey:@"isStaff"]) {
         [self filterStaffFolder];
+    } else {
+        [self filterClientFolder];
     }
    
     [self.tableView reloadData];
@@ -540,7 +540,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     page = 1;
-    if ([defaults boolForKey:@"isClient"] && [textField isKindOfClass:[_clientSearchTextField class]]) {
+    if ([defaults boolForKey:@"isStaff"] && [textField isKindOfClass:[_clientSearchTextField class]]) {
         [self.clientSearchTextField resignFirstResponder];
         [self getBranch];
     } else {
@@ -569,7 +569,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *sectionName = @"";
-    if (![defaults boolForKey:@"isClient"] ) {
+    if ([defaults boolForKey:@"isStaff"] ) {
         SearchResultModel* model = self.filteredArray[section];
         NSUInteger cellType = [self detectItemType:model.form];
         if (cellType == DIContactCell) { // Contact
@@ -584,7 +584,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (![defaults boolForKey:@"isClient"] ) {
+    if ([defaults boolForKey:@"isStaff"] ) {
         return 30;
     }
     return 0;
@@ -592,12 +592,12 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FileSearchCell *cell = [tableView dequeueReusableCellWithIdentifier:[FileSearchCell cellIdentifier] forIndexPath:indexPath];
-    if ([defaults boolForKey:@"isClient"] ) {
-        FirmURLModel* model = self.filteredArray[indexPath.section];
-        [cell configureCellWithFirm:model];
-    } else {
+    if ([defaults boolForKey:@"isStaff"] ) {
         SearchResultModel* model = self.filteredArray[indexPath.section];
         [cell configureCell:model];
+    } else {
+        FirmURLModel* model = self.filteredArray[indexPath.section];
+        [cell configureCellWithFirm:model];
     }
     
     if ([selectedIndexPaths containsObject:indexPath]) {
@@ -636,11 +636,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [cell setChecked:!isChecked];
     [self addIndexPath:indexPath checked:isChecked];
     
-    if ([defaults boolForKey:@"isClient"] ) {
-        FirmURLModel* model = self.filteredArray[indexPath.section];
-        fileNo1 = model.theCode;
-        self.url = [model.firmServerURL stringByAppendingString:  MATTER_CLIENT_FILEFOLDER];
-    } else {
+    if ([defaults boolForKey:@"isStaff"] ) {
         SearchResultModel* model = self.filteredArray[indexPath.section];
         NSUInteger cellType = [self detectItemType:model.form];
         if (cellType == DIContactCell) {
@@ -651,6 +647,10 @@ NSURLSessionDelegate, UITextFieldDelegate>
             self.url = [[defaults valueForKey:@"api"] stringByAppendingString:MATTER_STAFF_FILEFOLDER];
         }
         fileNo1 = model.key;
+    } else {
+        FirmURLModel* model = self.filteredArray[indexPath.section];
+        fileNo1 = model.theCode;
+        self.url = [model.firmServerURL stringByAppendingString:  MATTER_CLIENT_FILEFOLDER];
     }
 
 //    [self openDocument:url];
@@ -791,7 +791,6 @@ NSURLSessionDelegate, UITextFieldDelegate>
     
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
-
 
 #pragma mark - Navigation
 

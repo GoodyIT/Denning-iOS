@@ -169,7 +169,6 @@ NSMutableDictionary* keyValue;
 }
 - (IBAction)saveQuotaion:(id)sender {
     if (isSaved) {
-        self.saveBtn.enabled = NO;
         return;
     }
 //    if (!_contents[0][1][1]) {
@@ -193,6 +192,8 @@ NSMutableDictionary* keyValue;
         if (error == nil) {
             [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
             self->isSaved = YES;
+            self->isCalcDone = YES;
+            self.saveBtn.enabled = NO;
             [self updateWholeData:result];
             
         } else {

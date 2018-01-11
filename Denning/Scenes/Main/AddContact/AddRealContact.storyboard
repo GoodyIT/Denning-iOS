@@ -737,18 +737,11 @@
                                 <action selector="dismissScreen:" destination="ll2-66-E6O" id="adq-be-88B"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="5q0-9k-chR">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gMq-fE-4M6">
-                                <rect key="frame" x="276" y="5.5" width="83" height="33"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Save">
-                                    <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveContact:" destination="ll2-66-E6O" eventType="touchUpInside" id="KYY-Kg-R5b"/>
-                                </connections>
-                            </button>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="fu3-XO-Kkp">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="saveContact:" destination="ll2-66-E6O" id="OdH-pp-RUB"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -802,7 +795,6 @@
                         <outlet property="postcode" destination="eTk-l9-1hH" id="aqn-Ih-7cq"/>
                         <outlet property="registeredOffice" destination="pya-LU-poM" id="4fW-YF-hf5"/>
                         <outlet property="registeredOfficeCell" destination="B8F-m2-iLk" id="JbM-Jx-ER9"/>
-                        <outlet property="saveBtn" destination="gMq-fE-4M6" id="6re-yO-RNl"/>
                         <outlet property="state" destination="Qdd-12-8rL" id="1IZ-hi-Hjg"/>
                         <outlet property="stateCell" destination="xuF-2F-bfa" id="yAi-RD-Qdn"/>
                         <outlet property="taxFileNo" destination="JdZ-Hb-e9t" id="DoA-gL-1mq"/>
