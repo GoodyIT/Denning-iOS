@@ -96,10 +96,7 @@ ContactListWithDescSelectionDelegate>
     NSString* selectedCaseTypeCode;
     NSString* selectedBranchCode;
     
-    NSMutableArray<NSString*>* partyVendorCodeList, *partyVendorNameList;
-    NSMutableArray<NSString*>* partyPurchaserCodeList, *partyPurchaserNameList;
-    NSMutableArray<NSString*>* partyCustomerGroup3CodeList, *partyCustomerGroup3NameList;
-    NSMutableArray<NSString*>* partyCustomerGroup4CodeList, *partyCustomerGroup4NameList;
+    NSMutableArray<UpdatePartyGroup*>* updatePartyGroupList;
     
     NSMutableArray<NSString*> *bankCodeList, *bankNameList;
     NSMutableArray<NSString*>* solicitorCodeList, *solicitorNameList, *solicitorRefList;
@@ -159,14 +156,9 @@ NSMutableDictionary* keyValue;
                  @"Matter Information"
                  ] mutableCopy];
     
-    partyVendorCodeList = [NSMutableArray new];
-    partyVendorNameList = [NSMutableArray new];
-    partyPurchaserCodeList = [NSMutableArray new];
-    partyPurchaserNameList = [NSMutableArray new];
-    partyCustomerGroup3CodeList = [NSMutableArray new];
-    partyCustomerGroup3NameList = [NSMutableArray new];
-    partyCustomerGroup4CodeList = [NSMutableArray new];
-    partyCustomerGroup4NameList = [NSMutableArray new];
+    updatePartyGroupList = [NSMutableArray new];
+    
+    
     propertyCodeList = [NSMutableArray new];
     propertyFullTitleList = [NSMutableArray new];
     propertyAddressList = [NSMutableArray new];
@@ -193,33 +185,16 @@ NSMutableDictionary* keyValue;
 
 - (void) addPartyToContents: (NSString*)name code:(NSString*) code
 {
-    if ((partyVendorCodeList.count + partyPurchaserCodeList.count + partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count) > 25) {
-        [QMAlert showAlertWithMessage:@"You cannot add more parties" actionSuccess:NO inViewController:self];
-        return;
-    }
-    NSInteger index = 0;
-    NSInteger vendorCount = partyVendorCodeList.count;
-    NSInteger purchaserCount = partyPurchaserCodeList.count;
-    NSInteger customerGroup3Count = partyCustomerGroup3CodeList.count;
-    if (selectedContactRow == 0) { // add party to vendor
-        [partyVendorCodeList insertObject:code atIndex:partyVendorCodeList.count];
-        [partyVendorNameList insertObject:name atIndex:partyVendorNameList.count];
-        index += 1 + partyVendorCodeList.count - 1;
-    } else if (selectedContactRow == vendorCount+1) {
-        index = vendorCount + 2 + partyPurchaserCodeList.count;
-        [partyPurchaserCodeList insertObject:code atIndex:partyPurchaserCodeList.count];
-        [partyPurchaserNameList insertObject:name atIndex:partyPurchaserNameList.count];
-    } else if (selectedContactRow == vendorCount+purchaserCount+2) {
-        index = vendorCount+purchaserCount+3 + partyCustomerGroup3CodeList.count;
-        [partyCustomerGroup3CodeList insertObject:code atIndex:partyCustomerGroup3CodeList.count];
-        [partyCustomerGroup3NameList insertObject:name atIndex:partyCustomerGroup3NameList.count];
-    } else if (selectedContactRow == vendorCount+purchaserCount+ customerGroup3Count + 3) {
-        index = vendorCount+purchaserCount+ customerGroup3Count + 4 + partyCustomerGroup4CodeList.count;
-        [partyCustomerGroup4CodeList insertObject:code atIndex:partyCustomerGroup4CodeList.count];
-        [partyCustomerGroup4NameList insertObject:name atIndex:partyCustomerGroup4NameList.count];
-    }
+//    if ((partyVendorCodeList.count + partyPurchaserCodeList.count + borrowerCodeList.count + partyCustomerGroup4CodeList.count) > 25) {
+//        [QMAlert showAlertWithMessage:@"You cannot add more parties" actionSuccess:NO inViewController:self];
+//        return;
+//    }
     
-    [self addContentsAndRefresh:PARTYGROUP_SECTION index:index value1:name value2:code];
+    NSInteger index = [self isPartyAddCell:selectedContactRow];
+    [updatePartyGroupList[index].partys insertObject:[NameCode nameCode:name code:code] atIndex:0];
+    NSInteger totalIndex = [self totalPartyCount:index];
+    
+    [self addContentsAndRefresh:PARTYGROUP_SECTION index:totalIndex value1:name value2:code];
 }
 
 - (void) addContentsAndRefresh:(NSUInteger) section index:(NSInteger) index value1:(NSString*) value1 value2:(NSString*) value2 {
@@ -263,27 +238,17 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) removePartyFromContent {
-    NSInteger index;
-    NSInteger vendorCount = partyVendorCodeList.count;
-    NSInteger purchaserCount = partyPurchaserCodeList.count;
-    NSInteger customerGroup3Count = partyCustomerGroup3CodeList.count;
-    NSInteger customerGroup4Count = partyCustomerGroup4CodeList.count;
-    if (selectedContactRow <= vendorCount) {
-        index = vendorCount - selectedContactRow;
-        [partyVendorCodeList removeObjectAtIndex:index];
-        [partyVendorNameList removeObjectAtIndex:index];
-    } else if (selectedContactRow <= vendorCount+purchaserCount + 2) {
-        index = selectedContactRow - vendorCount  -  2;
-        [partyPurchaserCodeList removeObjectAtIndex:index];
-        [partyPurchaserNameList removeObjectAtIndex:index];
-    } else if (selectedContactRow <= vendorCount+purchaserCount+ customerGroup3Count+3) {
-        index = selectedContactRow - vendorCount - purchaserCount - 3;
-        [partyCustomerGroup3CodeList removeObjectAtIndex:index];
-        [partyCustomerGroup3NameList removeObjectAtIndex:index];
-    } else if (selectedContactRow <= vendorCount+purchaserCount + customerGroup3Count + customerGroup4Count+4) {
-        index = selectedContactRow - vendorCount - purchaserCount - customerGroup3Count  - 4;
-        [partyCustomerGroup4CodeList removeObjectAtIndex:index];
-        [partyCustomerGroup4NameList removeObjectAtIndex:index];
+    NSInteger totalIndex = 0, index = selectedContactRow;
+    NSInteger number = index;
+    for (int i = 0; i < updatePartyGroupList.count; i++) {
+        UpdatePartyGroup* model = updatePartyGroupList[i];
+        totalIndex++;
+        if (index <= totalIndex + model.partys.count) {
+            number -= totalIndex;
+            [updatePartyGroupList[i].partys removeObjectAtIndex:number];
+            break;
+        }
+        totalIndex += model.partys.count;
     }
     
     [self updateContentsAndRefresh:PARTYGROUP_SECTION];
@@ -448,7 +413,7 @@ NSMutableDictionary* keyValue;
 
 - (void) updateMainInfo {
     [self updateSystemNumber];
-    [self replaceContentForSection:MAIN_SECTION InRow:MAIN_REF2 withValue:_matterModel.ref];
+    [self replaceContentForSection:MAIN_SECTION InRow:MAIN_REF2 withValue:_matterModel.manualNo];
     [self replaceContentForSection:MAIN_SECTION InRow:MAIN_PRIMARY_CLIENT withValue:_matterModel.primaryClient.name];
     selectedPrimaryClientCode = _matterModel.primaryClient.clientCode;
     [self replaceContentForSection:MAIN_SECTION InRow:MAIN_FILE_STATUS withValue:_matterModel.fileStatus.descriptionValue];
@@ -464,8 +429,8 @@ NSMutableDictionary* keyValue;
     [self replaceContentForSection:MAIN_SECTION InRow:MAIN_BRANCH withValue:_matterModel.branch.city];
     selectedBranchCode = _matterModel.branch.codeValue;
     [self replaceContentForSection:MAIN_SECTION InRow:MAIN_FILE_LOCATION withValue:_matterModel.locationBox];
-    [self replaceContentForSection:MAIN_SECTION InRow:MAIN_POCKET_LOCATION withValue:_matterModel.locationPhysical];
-    [self replaceContentForSection:MAIN_SECTION InRow:MAIN_STORAGE_LOCATION withValue:_matterModel.locationPocket];
+    [self replaceContentForSection:MAIN_SECTION InRow:MAIN_POCKET_LOCATION withValue:_matterModel.locationPocket];
+    [self replaceContentForSection:MAIN_SECTION InRow:MAIN_STORAGE_LOCATION withValue:_matterModel.locationPhysical];
 }
 
 - (void) updateGroups {
@@ -509,16 +474,14 @@ NSMutableDictionary* keyValue;
     newArray[index][0] = [NSMutableArray new];
     [newArray[index][0] addObject:@"Add Property"];
     [newArray[index][0] addObject:@""];
-    if (_matterModel.propertyGroupArray.count > 0) {
-        for (int k = 0; k < _matterModel.propertyGroupArray.count; k++) {
-            PropertyModel* model = _matterModel.propertyGroupArray[k];
-            newArray[index][k+1] = [NSMutableArray new];
-            [newArray[index][k+1] addObject:model.fullTitle];
-            [newArray[index][k+1] addObject:model.address];
-            [propertyAddressList addObject:model.address];
-            [propertyCodeList addObject:model.key];
-            [propertyFullTitleList addObject:model.fullTitle];
-        }
+    for (int k = 0; k < _matterModel.propertyGroupArray.count; k++) {
+        PropertyModel* model = _matterModel.propertyGroupArray[k];
+        newArray[index][k+1] = [NSMutableArray new];
+        [newArray[index][k+1] addObject:model.fullTitle];
+        [newArray[index][k+1] addObject:model.address];
+        [propertyAddressList addObject:model.address];
+        [propertyCodeList addObject:model.key];
+        [propertyFullTitleList addObject:model.fullTitle];
     }
     index += 1;
     [_headers addObject:@"Properties"];
@@ -532,43 +495,15 @@ NSMutableDictionary* keyValue;
             newArray[index][k] = [NSMutableArray new];
             [newArray[index][k] addObject:model.partyGroupName];
             [newArray[index][k] addObject:@""];
-            if ([[model.partyGroupName lowercaseString] isEqualToString:@"vendor"]) {
-                for (int m = 0; m < model.partyArray.count; m++) {
-                    k++;
-                    newArray[index][k] = [NSMutableArray new];
-                    [newArray[index][k] addObject:model.partyArray[m].name];
-                    [newArray[index][k] addObject:@""];
-                    [partyVendorCodeList addObject:model.partyArray[m].clientCode];
-                    [partyVendorNameList addObject:model.partyArray[m].name];
-                }
-            } else if ([[model.partyGroupName lowercaseString] isEqualToString:@"purchaser"]) {
-                for (int m = 0; m < model.partyArray.count; m++) {
-                    k++;
-                    newArray[index][k] = [NSMutableArray new];
-                    [newArray[index][k] addObject:model.partyArray[m].name];
-                    [newArray[index][k] addObject:@""];
-                    [partyPurchaserCodeList addObject:model.partyArray[m].clientCode];
-                    [partyPurchaserNameList addObject:model.partyArray[m].name];
-                }
-            } else if ([[model.partyGroupName lowercaseString] isEqualToString:@"customer group3"]) {
-                for (int m = 0; m < model.partyArray.count; m++) {
-                    k++;
-                    newArray[index][k] = [NSMutableArray new];
-                    [newArray[index][k] addObject:model.partyArray[m].name];
-                    [newArray[index][k] addObject:@""];
-                    [partyCustomerGroup3CodeList addObject:model.partyArray[m].clientCode];
-                    [partyCustomerGroup3NameList addObject:model.partyArray[m].name];
-                }
-            } else if ([[model.partyGroupName lowercaseString] isEqualToString:@"customer group4"]) {
-                for (int m = 0; m < model.partyArray.count; m++) {
-                    k++;
-                    newArray[index][k] = [NSMutableArray new];
-                    [newArray[index][k] addObject:model.partyArray[m].name];
-                    [newArray[index][k] addObject:@""];
-                    [partyCustomerGroup4CodeList addObject:model.partyArray[m].clientCode];
-                    [partyCustomerGroup4NameList addObject:model.partyArray[m].name];
-                }
+            UpdatePartyGroup* updatePartyGroup  = [UpdatePartyGroup updatePartyGroup:model];
+            [updatePartyGroupList addObject:updatePartyGroup];
+            for (NameCode* nameCode in updatePartyGroup.partys) {
+                k++;
+                newArray[index][k] = [NSMutableArray new];
+                [newArray[index][k] addObject:nameCode.name];
+                [newArray[index][k] addObject:@""];
             }
+            
             k++;
         }
         [_headers addObject:@"PartyGroup"];
@@ -635,7 +570,7 @@ NSMutableDictionary* keyValue;
     for (int i = 0; i < importantDates.count; i++) {
         newArray[index][i] = [NSMutableArray new];
         [newArray[index][i] addObject:importantDates[i].label];
-        [newArray[index][i] addObject:importantDates[i].value];
+        [newArray[index][i] addObject:[DIHelpers getDateInShortForm:importantDates[i].value]];
     }
     
     index += 1;
@@ -707,6 +642,10 @@ NSMutableDictionary* keyValue;
     [data addEntriesFromDictionary:@{@"dateOpen": [DIHelpers todayWithTime]}];
     [data addEntriesFromDictionary:@{@"Branch": @{@"code": selectedBranchCode}}];
     
+    if (_contents[MAIN_SECTION][MAIN_REF2][1] && ![_contents[MAIN_SECTION][MAIN_REF2][1] isEqualToString:_matterModel.manualNo]) {
+        [data addEntriesFromDictionary:@{@"manualNo": _contents[MAIN_SECTION][MAIN_REF2][1]}];
+    }
+    
     if (selectedPrimaryClientCode.length > 0 && ![selectedPrimaryClientCode isEqualToString:_matterModel.primaryClient.clientCode]) {
         [data addEntriesFromDictionary:@{@"primaryClient": @{
                                                  @"code": selectedPrimaryClientCode}}];
@@ -716,32 +655,37 @@ NSMutableDictionary* keyValue;
         [data addEntriesFromDictionary:@{@"matter": @{
                                                  @"code": selectedMatterCode}}];
     }
+    
     if (selectedPartnerCode.length > 0 && ![selectedPartnerCode isEqualToString:_matterModel.partner.staffCode]) {
         [data addEntriesFromDictionary:@{@"partner": @{
                                                  @"code": selectedPartnerCode}}];
     }
+    
     if (selectedLACode.length > 0 && ![selectedLACode isEqualToString:_matterModel.legalAssistant.staffCode]) {
         [data addEntriesFromDictionary:@{@"legalAssistant": @{
                                                  @"code": selectedLACode}}];
     }
+    
     if (selectedClerkCode.length > 0 && ![selectedClerkCode isEqualToString:_matterModel.clerk.staffCode]) {
         [data addEntriesFromDictionary:@{@"clerk": @{
                                                  @"code": selectedClerkCode}}];
     }
+    
     if (selectedFileStatusCode.length > 0 && ![selectedFileStatusCode isEqualToString:_matterModel.fileStatus.codeValue]) {
         [data addEntriesFromDictionary:@{@"fileStatus": @{
                                                  @"code": selectedFileStatusCode}}];
     }
-    if (_contents[0][8][1] && ![_contents[0][8][1] isEqualToString:_matterModel.locationBox]) {
-        [data addEntriesFromDictionary:@{@"locationBox": _contents[0][9][1]}];
+    
+    if (_contents[MAIN_SECTION][MAIN_FILE_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_FILE_LOCATION][1] isEqualToString:_matterModel.locationBox]) {
+        [data addEntriesFromDictionary:@{@"locationBox": _contents[MAIN_SECTION][MAIN_FILE_LOCATION][1]}];
     }
     
-    if (_contents[0][9][1] && ![_contents[0][9][1] isEqualToString:_matterModel.locationPocket]) {
-        [data addEntriesFromDictionary:@{@"locationPocket": _contents[0][10][1]}];
+    if (_contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1] isEqualToString:_matterModel.locationPocket]) {
+        [data addEntriesFromDictionary:@{@"locationPocket": _contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1]}];
     }
     
-    if (_contents[0][10][1] && ![_contents[0][10][1] isEqualToString:_matterModel.locationPhysical]) {
-        [data addEntriesFromDictionary:@{@"locationPhysical": _contents[0][8][1]}];
+    if (_contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1] isEqualToString:_matterModel.locationPhysical]) {
+        [data addEntriesFromDictionary:@{@"locationPhysical": _contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1]}];
     }
     
     return data;
@@ -751,6 +695,10 @@ NSMutableDictionary* keyValue;
     NSMutableDictionary* data = [NSMutableDictionary new];
     
 //    [data addEntriesFromDictionary:@{@"dateOpen": [DIHelpers todayWithTime]}];
+    
+    if (_contents[MAIN_SECTION][MAIN_REF2][1] && ![_contents[MAIN_SECTION][MAIN_REF2][1] isEqualToString:_matterModel.manualNo]) {
+        [data addEntriesFromDictionary:@{@"manualNo": _contents[MAIN_SECTION][MAIN_REF2][1]}];
+    }
     
     if (selectedBranchCode.length > 0 && ![selectedBranchCode isEqualToString:_matterModel.branch.codeValue]) {
         [data addEntriesFromDictionary:@{@"branch": @{@"code": selectedBranchCode}}];
@@ -777,41 +725,44 @@ NSMutableDictionary* keyValue;
         [data addEntriesFromDictionary:@{@"fileStatus": @{
                                                  @"code": selectedFileStatusCode}}];
     }
-    if (_contents[0][9][1] && ![_contents[0][9][1] isEqualToString:_matterModel.locationBox]) {
-        [data addEntriesFromDictionary:@{@"locationBox": _contents[0][9][1]}];
+   
+    if (_contents[MAIN_SECTION][MAIN_FILE_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_FILE_LOCATION][1] isEqualToString:_matterModel.locationBox]) {
+        [data addEntriesFromDictionary:@{@"locationBox": _contents[MAIN_SECTION][MAIN_FILE_LOCATION][1]}];
     }
-    if (_contents[0][8][1] && ![_contents[0][8][1] isEqualToString:_matterModel.locationPhysical]) {
-        [data addEntriesFromDictionary:@{@"locationPhysical": _contents[0][8][1]}];
+    
+    if (_contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1] isEqualToString:_matterModel.locationPocket]) {
+        [data addEntriesFromDictionary:@{@"locationPocket": _contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1]}];
     }
-    if (_contents[0][10][1] && ![_contents[0][10][1] isEqualToString:_matterModel.locationPocket]) {
-        [data addEntriesFromDictionary:@{@"locationPocket": _contents[0][10][1]}];
+    
+    if (_contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1] isEqualToString:_matterModel.locationPhysical]) {
+        [data addEntriesFromDictionary:@{@"locationPhysical": _contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1]}];
     }
     
     [data addEntriesFromDictionary:@{@"systemNo":_matterModel.systemNo}];
     
     // Remarks
-    if (_contents[1][0][1] && ![_contents[1][0][1] isEqualToString:_matterModel.remarks]) {
-        [data addEntriesFromDictionary:@{@"remarks": _contents[1][0][1]}];
+    if (_contents[REMARKS_SECTION][0][1] && ![_contents[REMARKS_SECTION][0][1] isEqualToString:_matterModel.remarks]) {
+        [data addEntriesFromDictionary:@{@"remarks": _contents[REMARKS_SECTION][0][1]}];
     }
     
-    [data addEntriesFromDictionary:[self buildCaseDetailParam]];
+    [self buildCaseDetailParam:data];
     
-    [data addEntriesFromDictionary:[self buildPropertiesGroupParams]];
-    [data addEntriesFromDictionary:[self buildPartyGroupParams]];
-    [data addEntriesFromDictionary:[self buildSolicitorsGroupParams]];
-    [data addEntriesFromDictionary:[self buildBanksGroupParams]];
+    [self buildPropertiesGroupParams:data];
+    [self buildPartyGroupParams:data];
+    [self buildSolicitorsGroupParams:data];
+    [self buildBanksGroupParams:data];
     
-    [data addEntriesFromDictionary:[self buildImportantRMGroupParam]];
+    [self buildImportantRMGroupParam:data];
     // Important Dates
-    [data addEntriesFromDictionary:[self buildImportantDatesParam]];
+    [self buildImportantDatesParam:data];
     
     // Text Group
-    [data addEntriesFromDictionary:[self buildTextGroupParam]];
+    [self buildTextGroupParam:data];
     
     return [data copy];
 }
 
-- (NSDictionary*) buildTextGroupParam {
+- (void) buildTextGroupParam:(NSMutableDictionary*) parent {
     NSMutableArray* textGroupParam = [NSMutableArray new];
     
     for (int i = 0; i < textGroup.count; i++) {
@@ -819,23 +770,61 @@ NSMutableDictionary* keyValue;
         [textGroupParam addObject:@[@{@"fieldName":group.fieldName}, @{@"value":_contents[TEXTGROUP_SECTION][i][1]}]];
     }
     
-    return @{@"textGroup": textGroupParam};
+    BOOL hasValue = [self hasValueForGeneralGroupArray:textGroup];
+    
+    if ((hasValue && textGroupParam.count == 0) || textGroupParam.count != 0) {
+        [parent addEntriesFromDictionary:@{@"textGroup": textGroupParam}];
+    }
 }
 
-- (NSDictionary*) buildCaseDetailParam {
+- (void) buildCaseDetailParam:(NSMutableDictionary*) parent {
     NSMutableArray* caseDetailParam = [NSMutableArray new];
     
-    [caseDetailParam addObject:@{@"CaseNo":_contents[CASEDETAIL_SECTION][CaseType][1]}];
-    [caseDetailParam addObject:@{@"Court":_contents[CASEDETAIL_SECTION][CaseCourt][1]}];
-    [caseDetailParam addObject:@{@"Judge":_contents[CASEDETAIL_SECTION][CaseJudge][1]}];
-    [caseDetailParam addObject:@{@"Place":_contents[CASEDETAIL_SECTION][CasePlace][1]}];
-    [caseDetailParam addObject:@{@"SAR":_contents[CASEDETAIL_SECTION][CaseSAR][1]}];
-    [caseDetailParam addObject:@{@"TypeCase":_contents[CASEDETAIL_SECTION][CaseTypeNo][1]}];
+    if (_contents[CASEDETAIL_SECTION][CaseType][1] && ![_contents[CASEDETAIL_SECTION][CaseType][1] isEqualToString:_matterModel.court.caseNo] ) {
+        [caseDetailParam addObject:@{@"CaseNo":_contents[CASEDETAIL_SECTION][CaseType][1]}];
+    }
     
-    return @{@"courtInfo":caseDetailParam};
+    if (_contents[CASEDETAIL_SECTION][CaseCourt][1] && ![_contents[CASEDETAIL_SECTION][CaseCourt][1] isEqualToString:_matterModel.court.court]) {
+        [caseDetailParam addObject:@{@"Court":_contents[CASEDETAIL_SECTION][CaseCourt][1]}];
+    }
+    
+    if (_contents[CASEDETAIL_SECTION][CaseJudge][1] && ![_contents[CASEDETAIL_SECTION][CaseJudge][1] isEqualToString:_matterModel.court.judge]) {
+        [caseDetailParam addObject:@{@"Judge":_contents[CASEDETAIL_SECTION][CaseJudge][1]}];
+    }
+    
+    if (_contents[CASEDETAIL_SECTION][CasePlace][1] && ![_contents[CASEDETAIL_SECTION][CasePlace][1] isEqualToString:_matterModel.court.place]) {
+        [caseDetailParam addObject:@{@"Place":_contents[CASEDETAIL_SECTION][CasePlace][1]}];
+    }
+    
+    if (_contents[CASEDETAIL_SECTION][CaseSAR][1] && ![_contents[CASEDETAIL_SECTION][CaseSAR][1] isEqualToString:_matterModel.court.SAR]) {
+        [caseDetailParam addObject:@{@"SAR":_contents[CASEDETAIL_SECTION][CaseSAR][1]}];
+    }
+    
+    if (_contents[CASEDETAIL_SECTION][CaseTypeNo][1] && ![_contents[CASEDETAIL_SECTION][CaseTypeNo][1] isEqualToString:_matterModel.court.typeCase]) {
+        [caseDetailParam addObject:@{@"TypeCase":_contents[CASEDETAIL_SECTION][CaseTypeNo][1]}];
+    }
+    
+    BOOL hasValue = NO;
+    if (_matterModel.court.caseNo.length != 0 || _matterModel.court.court.length != 0 || _matterModel.court.judge.length != 0 || _matterModel.court.place.length != 0 || _matterModel.court.SAR.length != 0 || _matterModel.court.typeCase != 0) {
+        hasValue = YES;
+    }
+    
+    if ((hasValue && caseDetailParam.count == 0) || caseDetailParam.count != 0) {
+        [parent addEntriesFromDictionary:@{@"courtInfo":caseDetailParam}];
+    }
 }
 
-- (NSDictionary*) buildImportantRMGroupParam {
+- (BOOL) hasValueForGeneralGroupArray:(NSArray*) groupArray {
+    BOOL hasValue = NO;
+    for (GeneralGroup* group in groupArray) {
+        if (group.value.length != 0) {
+            hasValue = YES;
+        }
+    }
+    return hasValue;
+}
+
+- (void) buildImportantRMGroupParam:(NSMutableDictionary*) parent {
     NSMutableArray* importantRMGroupParam = [NSMutableArray new];
     
     for (int i = 0; i < importantRM.count; i++) {
@@ -845,55 +834,80 @@ NSMutableDictionary* keyValue;
         }
     }
     
-    return @{@"RMGroup": importantRMGroupParam};
+//    BOOL hasValue = [self hasValueForGeneralGroupArray:importantRM];
+//
+//    if ((hasValue && importantRMGroupParam.count == 0) || importantRMGroupParam.count != 0) {
+//        [parent addEntriesFromDictionary:@{@"RMGroup": importantRMGroupParam}];
+//    }
+    [parent addEntriesFromDictionary:@{@"RMGroup": importantRMGroupParam}];
 }
 
-- (NSDictionary*) buildImportantDatesParam {
+- (void) buildImportantDatesParam:(NSMutableDictionary*) parent {
     NSMutableArray* importantDatesParam = [NSMutableArray new];
     
     for (int i = 0; i < importantDates.count; i++) {
         GeneralGroup* group = importantDates[i];
-        if (_contents[IMPORTANT_DATE_SECTION][i][1] && ![group.value isEqualToString:_contents[IMPORTANT_DATE_SECTION][i][1]]) {
-            [importantDatesParam addObject:@[@{@"fieldName":group.fieldName}, @{@"value":[DIHelpers convertDateToMySQLFormat:_contents[IMPORTANT_DATE_SECTION][i][1]]}]];
+        NSString* value = [DIHelpers convertDateToMySQLFormat:_contents[IMPORTANT_DATE_SECTION][i][1]];
+        if (_contents[IMPORTANT_DATE_SECTION][i][1] && ![group.value isEqualToString:value]) {
+            [importantDatesParam addObject:@[@{@"fieldName":group.fieldName}, @{@"value":value}]];
         }
     }
     
-    return @{@"dateGroup": importantDatesParam};
+//    BOOL hasValue = [self hasValueForGeneralGroupArray:importantDates];
+//
+//    if ((hasValue && importantDatesParam.count == 0) || importantDatesParam.count != 0) {
+//
+//    }
+    [parent addEntriesFromDictionary:@{@"dateGroup": importantDatesParam}];
 }
 
-- (NSDictionary*) buildPartyParam:(NSString*) partyName codeList:(NSArray*)codeList {
-    NSMutableDictionary *vendor = [NSMutableDictionary new];
-    [vendor addEntriesFromDictionary:@{@"PartyName":partyName}];
+- (NSDictionary*) buildPartyParam:(NSString*) partyGroupName codeList:(NSArray<NameCode*>*)nameCodeList {
+    
+    PartyGroupModel* target = [PartyGroupModel new];
     NSMutableArray *partyParam = [NSMutableArray new];
     for (int j = 0; j < _matterModel.partyGroupArray.count; j++) {
         PartyGroupModel* partyGroup = _matterModel.partyGroupArray[j];
-        if ([partyGroup.partyGroupName isEqualToString:partyName]) {
-                if (partyGroup.partyArray.count >= codeList.count) {
-                    for (int i = 0; i < codeList.count; i++) {
-                        if (![codeList[i] isEqualToString:partyGroup.partyArray[i].clientCode]){
-                            [partyParam addObject:@{@"code":codeList[i]}];
-                        }
+        if ([partyGroup.partyGroupName isEqualToString:partyGroupName]) {
+            target.partyArray = partyGroup.partyArray;
+            if (partyGroup.partyArray.count >= nameCodeList.count) {
+                for (int i = 0; i < nameCodeList.count; i++) {
+                    if (![nameCodeList[i].code isEqualToString:partyGroup.partyArray[i].clientCode]){
+                        [partyParam addObject:@{@"code":nameCodeList[i].code}];
                     }
-                } else {
-                    for (int i = 0; i < codeList.count; i++) {
-                        [partyParam addObject:@{@"code":codeList[i]}];
-                    }
+                }
+            } else {
+                for (int i = 0; i < nameCodeList.count; i++) {
+                    [partyParam addObject:@{@"code":nameCodeList[i].code}];
                 }
             }
         }
-    [vendor addEntriesFromDictionary:@{@"party":partyParam}];
-    return [vendor copy];
+    }
+    
+    NSMutableDictionary *vendor;
+    if ((partyParam.count == 0 && target.partyArray != nil && target.partyArray.count != 0 && nameCodeList.count == 0) || partyParam.count != 0) {
+        vendor = [NSMutableDictionary new];
+        [vendor addEntriesFromDictionary:@{@"PartyName":partyGroupName}];
+        [vendor addEntriesFromDictionary:@{@"party":partyParam}];
+    }
+    
+    return vendor != nil ? [vendor copy] : nil;
 }
 
-- (NSDictionary*) buildPartyGroupParams {
+- (void) buildPartyGroupParams:(NSMutableDictionary*) parent {
     NSMutableArray* partyArray = [NSMutableArray new];
     
-    [partyArray addObject:[self buildPartyParam:@"Vendor" codeList:partyVendorCodeList]];
-    [partyArray addObject:[self buildPartyParam:@"Purchaser" codeList:partyPurchaserCodeList]];
-    [partyArray addObject:[self buildPartyParam:@"Borrower" codeList:partyCustomerGroup3CodeList]];
-    [partyArray addObject:[self buildPartyParam:@"Customer Group4" codeList:partyCustomerGroup4CodeList]];
+    BOOL hasValue = NO;
+    for (UpdatePartyGroup *partyGroup in updatePartyGroupList) {
+        id vendors =  [self buildPartyParam:partyGroup.groupName codeList:partyGroup.partys];
+        if (vendors != nil) {
+            hasValue = YES;
+            [partyArray addObject:vendors];
+        }
+    }
     
-    return @{@"partyGroup":partyArray};
+    if (hasValue) {
+        [parent addEntriesFromDictionary:@{@"partyGroup":partyArray}];
+    }
 }
 
 - (NSDictionary*) buildSolicitorParam:(NSString*) code groupName:(NSString*) name refList:(NSString*) ref
@@ -906,7 +920,7 @@ NSMutableDictionary* keyValue;
     return solicitor;
 }
 
-- (NSDictionary*) buildSolicitorsGroupParams {
+- (void) buildSolicitorsGroupParams:(NSMutableDictionary*) parent {
     NSMutableArray* solicitorArray = [NSMutableArray new];
     for (int i = 0; i < solicitorCodeList.count; i++) {
         if (![solicitorCodeList[i] isEqualToString:_matterModel.solicitorGroupArray[i].solicitorCode]) {
@@ -914,10 +928,12 @@ NSMutableDictionary* keyValue;
         }
     }
     
-    return @{@"solicitorsGroup":solicitorArray};
+    if ((solicitorArray.count == 0 && solicitorCodeList.count == 0 && _matterModel.solicitorGroupArray.count != 0) || solicitorArray.count != 0) {
+        [parent addEntriesFromDictionary:@{@"solicitorsGroup":solicitorArray}];
+    }
 }
 
-- (NSDictionary*) buildPropertiesGroupParams {
+- (void) buildPropertiesGroupParams:(NSMutableDictionary*) parent{
     NSMutableArray* propertyArray = [NSMutableArray new];
     
     if (_matterModel.propertyGroupArray.count >= propertyCodeList.count) {
@@ -932,7 +948,9 @@ NSMutableDictionary* keyValue;
         }
     }
     
-    return @{@"propertyGroup":propertyArray};
+    if ((propertyArray.count == 0 && propertyCodeList.count == 0 && _matterModel.propertyGroupArray.count != 0) || propertyArray.count != 0) {
+        [parent addEntriesFromDictionary:@{@"propertyGroup":propertyArray}];
+    }
 }
 
 - (NSDictionary*) buildBankParam:(NSString*) code groupName:(NSString*) name
@@ -944,7 +962,7 @@ NSMutableDictionary* keyValue;
     return bank;
 }
 
-- (NSDictionary*) buildBanksGroupParams {
+- (void) buildBanksGroupParams:(NSMutableDictionary*) parent {
     NSMutableArray* bankArray = [NSMutableArray new];
     for (int i = 0; i < bankCodeList.count; i++) {
         if (![bankCodeList[i] isEqualToString:_matterModel.bankGroupArray[i].bankCode]) {
@@ -952,7 +970,9 @@ NSMutableDictionary* keyValue;
         }
     }
     
-    return @{@"bankGroup":bankArray};
+    if ((bankArray.count == 0 && bankCodeList.count == 0 && _matterModel.bankGroupArray.count != 0) || bankArray.count != 0) {
+        [parent addEntriesFromDictionary:@{@"bankGroup":bankArray}];
+    }
 }
 
 - (void) askAndUpdateMatter:(UIBarButtonItem*)sender  {
@@ -983,22 +1003,7 @@ NSMutableDictionary* keyValue;
     }];
 }
 
-
-
-- (IBAction)saveMatter:(UIBarButtonItem*)sender {
-    
-    if (![self checkValidate]) {
-        return;
-    }
-    
-    [self checkStatus];
-    
-    if (!isSaveMode) {
-        [self askAndUpdateMatter:sender];
-        
-        return;
-    }
-    
+- (void) _save {
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
@@ -1019,6 +1024,27 @@ NSMutableDictionary* keyValue;
     }];
 }
 
+- (IBAction)saveMatter:(UIBarButtonItem*)sender {
+    
+    if (![self checkValidate]) {
+        return;
+    }
+    
+    [self checkStatus];
+    
+    if (!isSaveMode) {
+        [self askAndUpdateMatter:sender];
+        
+        return;
+    }
+    
+    [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _save];
+        }
+    }];
+}
+
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     if (textField.text.length > 14) {
@@ -1034,6 +1060,39 @@ NSMutableDictionary* keyValue;
     } else {
         return YES;
     }
+}
+
+- (NSInteger) totalPartyCount:(NSInteger) index {
+    int count = 0;
+    for (int i = 0; i < updatePartyGroupList.count; i++) {
+        UpdatePartyGroup* model = updatePartyGroupList[i];
+        count ++;
+        if (i == index) {
+            break;
+        }
+        count += model.partys.count;
+    }
+    return count;
+}
+
+- (NSInteger) isPartyAddCell:(NSInteger) index {
+    NSInteger totalIndex = 0;
+    if (index == 0) {
+        return 0;
+    }
+    
+    int k = 1;
+    int count = 0;
+    for (UpdatePartyGroup* model in updatePartyGroupList) {
+        totalIndex += model.partys.count + 1;
+        count += model.partys.count;
+        if (index == totalIndex) {
+            return k;
+        }
+        k++;
+    }
+    
+    return -1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1056,7 +1115,7 @@ NSMutableDictionary* keyValue;
     }
     
     if (indexPath.section == PARTYGROUP_SECTION) { // Party Group
-        if (indexPath.row == 0 || indexPath.row == partyVendorCodeList.count+1 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+2 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + 3 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4 ) {
+        if ([self isPartyAddCell:indexPath.row] > -1) {
             AddPartyCell *cell = [tableView dequeueReusableCellWithIdentifier:[AddPartyCell cellIdentifier] forIndexPath:indexPath];
             
             cell.label.text = _contents[indexPath.section][indexPath.row][0];
@@ -1491,20 +1550,18 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) loadContact:(NSInteger)section number: (NSInteger) number {
-    NSString* code;
-    if  (number < partyVendorCodeList.count+1) {
-        number--;
-        code = partyVendorCodeList[number];
-    } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+2) {
-        number = number - partyVendorCodeList.count - 2;
-        code = partyPurchaserCodeList[number];
-    } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + 3) {
-        number = number - partyVendorCodeList.count - partyPurchaserCodeList.count - 3;
-        code = partyCustomerGroup3CodeList[number];
-    } else if (number < partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4) {
-        number = number - partyVendorCodeList.count - partyPurchaserCodeList.count - partyCustomerGroup3CodeList.count - 4;
-        code = partyCustomerGroup4CodeList[number];
+    NSString* code = @"";
+    NSInteger totalIndex = 0, index = number;
+    for (UpdatePartyGroup* model in updatePartyGroupList) {
+        totalIndex++;
+        if (index <= totalIndex + model.partys.count) {
+            number -= totalIndex;
+            code = model.partys[number].code;
+            break;
+        }
+        totalIndex += model.partys.count;
     }
+    
     if (code.length == 0) {
         [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:@"Couldn't get the detail" duration:1.0];
         return;
@@ -1626,7 +1683,7 @@ NSMutableDictionary* keyValue;
 
 - (void) addParty: (NSIndexPath*) indexPath
 {
-    if (indexPath.row == 0 || indexPath.row == partyVendorCodeList.count+1 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+2 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + 3 || indexPath.row == partyVendorCodeList.count+partyPurchaserCodeList.count+partyCustomerGroup3CodeList.count + partyCustomerGroup4CodeList.count + 4 ) {
+    if ([self isPartyAddCell:indexPath.row]  > -1) {
         isAddNew = YES;
         selectedContactRow = indexPath.row;
         selectedSection = indexPath.section;

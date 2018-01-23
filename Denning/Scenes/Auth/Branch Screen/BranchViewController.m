@@ -170,8 +170,6 @@
     }];
 }
 
-
-
 - (IBAction) gotoPasswordConfirm: (UIButton*) sender
 {
     if ([[DataManager sharedManager].documentView isEqualToString: @"upload"] || [[DataManager sharedManager].documentView isEqualToString: @"shared"]) {

@@ -178,9 +178,9 @@ UIGestureRecognizerDelegate
             NSInteger errorCode = task.error.code;
             if (errorCode == kQMNotAuthorizedInRest
                 || errorCode == kQMUnauthorizedErrorCode
-                || (errorCode == kBFMultipleErrorsError
+                /*|| (errorCode == kBFMultipleErrorsError
                     && ([task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][0] code] == kQMUnauthorizedErrorCode
-                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))) {
+                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))*/) {
                         
                         return [QMCore.instance logout];
                     }

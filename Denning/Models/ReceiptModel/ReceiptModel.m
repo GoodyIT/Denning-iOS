@@ -15,7 +15,7 @@
     ReceiptModel *model = [ReceiptModel new];
     
     model.accountType = [AccountTypeModel getAccountTypeFromResponse:[response objectForKeyNotNull:@"accountType"]];
-    model.amount = [response valueForKeyNotNull:@""];
+    model.amount = [response valueForKeyNotNull:@"amount"];
     model.descriptionValue = [response valueForKeyNotNull:@"description"];
     model.payment = [PaymentModel getPayment:[response objectForKeyNotNull:@"payment"]];
     model.documentNo = [response valueForKeyNotNull:@"documentNo"];

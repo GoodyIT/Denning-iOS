@@ -34,7 +34,7 @@ static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
 static NSString * const kQMAppGroupIdentifier = @"group.denningitshare.extension";
 
-#define DEVELOPMENT 1
+#define DEVELOPMENT 0
 
 #if DEVELOPMENT == 1
 
@@ -92,6 +92,7 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [QBSettings setLogLevel:QBLogLevelDebug];
     [QBSettings enableXMPPLogging];
     [QMServicesManager enableLogging:YES];
+    [QBRTCConfig setLogLevel:QBRTCLogLevelVerbose];
     
     QMLogSetEnabled(YES);
 #endif
@@ -101,7 +102,7 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     // QuickbloxWebRTC settings
     [QBRTCClient initializeRTC];
     [QBRTCConfig mediaStreamConfiguration].audioCodec = QBRTCAudioCodecISAC;
-    [QBRTCConfig setStatsReportTimeInterval:0.0f]; // set to 1.0f to enable stats report
+    [QBRTCConfig setStatsReportTimeInterval:1.0f]; // set to 1.0f to enable stats report
     
     // Configuring app appearance
 //    [[UITabBar appearance] setTintColor:QMMainApplicationColor()];

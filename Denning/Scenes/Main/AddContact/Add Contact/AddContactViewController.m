@@ -591,7 +591,11 @@
     }
     
     if (self.viewType == nil || self.viewType.length == 0) {
-        [self _save];
+        [QMAlert showConfirmDialog:@"Do you want to save contact?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
+            if  ([action.title isEqualToString:@"OK"]) {
+                [self _save];
+            }
+        }];
     } else {
         [QMAlert showConfirmDialog:@"Do you want to update contact?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {

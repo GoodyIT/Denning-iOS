@@ -90,6 +90,9 @@
 
 + (NSString*) getDateInShortForm: (NSString*) date
 {
+    if (date.length == 0) {
+        return @"";
+    }
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     NSDateFormatter *newFormatter = [[NSDateFormatter alloc] init];
     
@@ -846,7 +849,7 @@
 }
 
 + (void) showRestrictAlert {
-    [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restriced" actionSuccess:NO inViewController:[self topMostController]];
+//    [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHAT_EXPIRED", nil) withTitle:@"Access Restriced" actionSuccess:NO inViewController:[self topMostController]];
 }
 
 + (BOOL) canChangeGroupInfoforDialog:(QBChatDialog*) dialog {

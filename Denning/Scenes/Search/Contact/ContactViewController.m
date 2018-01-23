@@ -93,8 +93,8 @@
     [SearchLastCell registerForReuseInTableView:self.tableView];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT/2;
+    self.tableView.tableFooterView = [UIView new];
 }
-
 
 #pragma mark - Table view data source
 

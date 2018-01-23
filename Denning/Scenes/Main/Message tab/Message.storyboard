@@ -1086,12 +1086,12 @@ out here.</string>
                                                     <action selector="dismissView:" destination="z3o-ZD-cJW" eventType="touchUpInside" id="asy-2E-t16"/>
                                                 </connections>
                                             </button>
-                                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dM9-ty-jUO">
-                                                <rect key="frame" x="1" y="96" width="283" height="29"/>
+                                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dM9-ty-jUO">
+                                                <rect key="frame" x="8" y="96" width="191" height="29"/>
                                                 <segments>
                                                     <segment title="All"/>
-                                                    <segment title="File Folder"/>
-                                                    <segment title="Contact Folder"/>
+                                                    <segment title="File"/>
+                                                    <segment title="Contact"/>
                                                 </segments>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
@@ -1099,7 +1099,7 @@ out here.</string>
                                                 </connections>
                                             </segmentedControl>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="50q-Q5-bp1">
-                                                <rect key="frame" x="292" y="96" width="82" height="28"/>
+                                                <rect key="frame" x="285" y="96" width="82" height="28"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                                 <state key="normal" title="Transit Folder">
@@ -1113,9 +1113,9 @@ out here.</string>
                                         <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="I7Z-pJ-hht" firstAttribute="leading" secondItem="MYL-ut-DdH" secondAttribute="leading" constant="8" id="1SR-lS-gAz"/>
-                                            <constraint firstAttribute="trailing" secondItem="50q-Q5-bp1" secondAttribute="trailing" constant="1" id="7Mq-9s-h4t"/>
+                                            <constraint firstAttribute="trailing" secondItem="50q-Q5-bp1" secondAttribute="trailing" constant="8" id="7Mq-9s-h4t"/>
                                             <constraint firstItem="dM9-ty-jUO" firstAttribute="top" secondItem="I7Z-pJ-hht" secondAttribute="bottom" constant="12" id="94a-R1-Y9u"/>
-                                            <constraint firstItem="dM9-ty-jUO" firstAttribute="leading" secondItem="MYL-ut-DdH" secondAttribute="leading" constant="1" id="P3I-qf-fuh"/>
+                                            <constraint firstItem="dM9-ty-jUO" firstAttribute="leading" secondItem="MYL-ut-DdH" secondAttribute="leading" constant="8" id="P3I-qf-fuh"/>
                                             <constraint firstAttribute="height" constant="130" id="YOZ-53-Pgu"/>
                                             <constraint firstItem="I7Z-pJ-hht" firstAttribute="top" secondItem="MYL-ut-DdH" secondAttribute="top" constant="40" id="ZBh-3G-hUe"/>
                                             <constraint firstItem="50q-Q5-bp1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dM9-ty-jUO" secondAttribute="trailing" constant="8" id="eNs-Lt-JAt"/>

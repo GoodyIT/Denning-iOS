@@ -507,13 +507,13 @@ QMUsersServiceDelegate
 
 - (BOOL)connectionExists {
     
-    if (![QMCore.instance isInternetConnected]) {
-        
-        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning
-                                                                              message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil)
-                                                                             duration:kQMDefaultNotificationDismissTime];
-        return NO;
-    }
+//    if (![QMCore.instance isInternetConnected]) {
+//
+//        [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeWarning
+//                                                                              message:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil)
+//                                                                             duration:kQMDefaultNotificationDismissTime];
+//        return NO;
+//    }
     
     if (![QBChat instance].isConnected) {
         
@@ -805,7 +805,7 @@ QMUsersServiceDelegate
                                                                         maxDuration:kQMMaxAttachmentDuration
                                                                             quality:UIImagePickerControllerQualityTypeMedium
                                                                       resultHandler:self
-                                                                      allowsEditing:YES];
+                                                                      allowsEditing:NO];
                                 }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_CHOOSE_MEDIA", nil)
@@ -816,7 +816,7 @@ QMUsersServiceDelegate
                                     [QMImagePicker chooseFromGaleryInViewController:self
                                                                         maxDuration:kQMMaxAttachmentDuration
                                                                       resultHandler:self
-                                                                      allowsEditing:YES];
+                                                                      allowsEditing:NO];
                                 }]];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"QM_STR_LOCATION", nil)
@@ -1351,10 +1351,10 @@ QMUsersServiceDelegate
         CGSize constraintsSize =
         CGSizeMake(CGRectGetWidth(self.collectionView.frame) - kQMWidthPadding, CGFLOAT_MAX);
         
-        BOOL isAudioCell =
-        class == QMAudioOutgoingCell.class || class == QMAudioIncomingCell.class;
+        BOOL isAudioOrLocationCell =
+        class == QMAudioOutgoingCell.class || class == QMAudioIncomingCell.class || class == QMChatLocationOutgoingCell.class || class == QMChatLocationIncomingCell.class;
         
-        if ((self.chatDialog.type == QBChatDialogTypeGroup || (item.attachments != nil && item.attachments.count > 0)) && !isAudioCell) {
+        if ((self.chatDialog.type == QBChatDialogTypeGroup || (item.attachments != nil && item.attachments.count > 0)) && !isAudioOrLocationCell) {
             
             size =
             [TTTAttributedLabel sizeThatFitsAttributedString:[self topLabelAttributedStringForItem:item]
@@ -1707,7 +1707,7 @@ QMUsersServiceDelegate
     
 //    BOOL isOnline = [QMCore.instance.contactManager isUserOnlineWithID:[self.chatDialog opponentID]];
 //    if (!isOnline) {
-        NSString* myName = [QBSession currentSession].currentUser.fullName;
+//        NSString* myName = [QBSession currentSession].currentUser.fullName;
     
 //        [QMNotification sendPushMessageToUser:[self.chatDialog opponentID] withUserName:myName withMessage:message];
 //    }
@@ -2409,13 +2409,7 @@ didFinishPickingVideo:(NSURL *)videoUrl {
         message = NSLocalizedString(@"You can allow access to Photos in Settings", nil);
     }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"SA_STR_CANCEL", nil)
-                                          otherButtonTitles:NSLocalizedString(@"Open Settings", nil),nil];
-    
-    [alert show];
+    [QMAlert showAlertWithMessage:message withTitle:title actionSuccess:NO inViewController:self];
 }
 
 - (void)openURL:(NSURL *)url {

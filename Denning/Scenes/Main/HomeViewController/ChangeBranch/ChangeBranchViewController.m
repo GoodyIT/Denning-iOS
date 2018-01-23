@@ -9,6 +9,9 @@
 #import "ChangeBranchViewController.h"
 
 @interface ChangeBranchViewController ()
+{
+    __block BOOL isLoading;
+}
 
 @end
 
@@ -66,9 +69,36 @@
     
     FirmURLModel* model = self.branchArray[indexPath.row];
     [[DataManager sharedManager] setServerAPI:model.firmServerURL firmURLModel:model];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self staffLogin:model];
 }
 
+- (void) staffLogin:(FirmURLModel*)urlModel {
+    if (isLoading) return;
+    isLoading = YES;
+    
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:DENNING_SIGNIN_URL];
+    
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"QM_STR_LOADING", nil)];
+    @weakify(self)
+    [[QMNetworkManager sharedManager] staffSignIn:url password:[DataManager sharedManager].user.password withCompletion:^(NSDictionary * _Nonnull responseObject, NSError * _Nonnull error) {
+        [SVProgressHUD dismiss];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(200)]) {
+                [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                   [self.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                [QMAlert showAlertWithMessage:@"You have no access privilege to this firm." actionSuccess:NO inViewController:self];
+            }
+            
+        } else {
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:self];
+        }
+    }];
+}
 
 
 @end

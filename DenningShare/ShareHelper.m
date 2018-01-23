@@ -12,7 +12,10 @@
 @implementation ShareHelper
 
 + (void)showAlertWithMessage:(NSString *)message actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController {
-    
+    [self showAlertWithMessage:message actionSuccess:success inViewController:viewController withAction:nil];
+}
+
++ (void)showAlertWithMessage:(NSString *)message actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController withAction:(void(^)(void)) completion{
     NSString *title = success ? NSLocalizedString(@"Success", nil) : NSLocalizedString(@"Error", nil);
     
     UIAlertController *alertController = [UIAlertController
@@ -21,11 +24,14 @@
                                           preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull __unused action) {
-        
+        if (completion != nil) {
+            completion();
+        }
     }]];
     [alertController.view layoutIfNeeded];
     
     [viewController presentViewController:alertController animated:YES completion:nil];
+
 }
 
 + (NSArray*) separateNameIntoTwo:(NSString*) title

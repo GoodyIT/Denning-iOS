@@ -47,7 +47,7 @@ static NSString * const kQMChatWordMessageTypeName = @"word";
 static NSString * const kQMChatFileMessageTypeName = @"file";
 
 static NSString* const kGoogleMapAPIKey = @"AIzaSyAxOQtqe1t0TkVgmYV1t7Y_JWFERGEpcuU";
-static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyDFlEPgCwnMXV3u58e-OH0m_8EkmaZZnko";
+static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI28lig8u6Y";
 
 #define kCountryName        @"name"
 #define kCountryCallingCode @"dial_code"

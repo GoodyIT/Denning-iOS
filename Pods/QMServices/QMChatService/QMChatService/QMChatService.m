@@ -787,7 +787,7 @@ static NSString* const kQMChatServiceDomain = @"com.q-municate.chatservice";
     chatDialog.name = name;
     chatDialog.photo = photo;
     chatDialog.occupantIDs = occupantIDs.allObjects;
-    chatDialog.data = @{@"class_name":@"dialog_data", @"tag": @"Colleague"};
+    chatDialog.data = @{@"class_name":@"dialog_data", @"tag": @"Colleagues"};
     
     __weak __typeof(self)weakSelf = self;
     [QBRequest createDialog:chatDialog successBlock:^(QBResponse *response, QBChatDialog *createdDialog) {

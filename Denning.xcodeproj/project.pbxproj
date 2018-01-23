@@ -395,6 +395,8 @@
 		796BBFA01EA7B3CE001DA47F /* NewLedgerDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 796BBF9E1EA7B3CE001DA47F /* NewLedgerDetailCell.xib */; };
 		796C08312004F25700EB49E0 /* FirmURLModel.h in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E7F1E8B5B2700320A28 /* FirmURLModel.h */; };
 		796C08322004F25700EB49E0 /* FirmURLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79EC0E801E8B5B2700320A28 /* FirmURLModel.m */; };
+		7970DB3C200F2F460041A423 /* UpdatePartyGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 7970DB3B200F2F460041A423 /* UpdatePartyGroup.m */; };
+		7970DB40200F2FCB0041A423 /* NameCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7970DB3F200F2FCB0041A423 /* NameCode.m */; };
 		79734F5F1EB95BA700647215 /* MainContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79734F5E1EB95BA700647215 /* MainContactViewController.m */; };
 		79734F631EB97CAC00647215 /* AddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79734F621EB97CAC00647215 /* AddContactViewController.m */; };
 		79734F6B1EB98C5100647215 /* AddContact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79734F6A1EB98C5100647215 /* AddContact.storyboard */; };
@@ -1784,6 +1786,10 @@
 		796BBF9C1EA7B3CE001DA47F /* NewLedgerDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewLedgerDetailCell.h; sourceTree = "<group>"; };
 		796BBF9D1EA7B3CE001DA47F /* NewLedgerDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewLedgerDetailCell.m; sourceTree = "<group>"; };
 		796BBF9E1EA7B3CE001DA47F /* NewLedgerDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewLedgerDetailCell.xib; sourceTree = "<group>"; };
+		7970DB3A200F2F460041A423 /* UpdatePartyGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdatePartyGroup.h; sourceTree = "<group>"; };
+		7970DB3B200F2F460041A423 /* UpdatePartyGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdatePartyGroup.m; sourceTree = "<group>"; };
+		7970DB3E200F2FCB0041A423 /* NameCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NameCode.h; sourceTree = "<group>"; };
+		7970DB3F200F2FCB0041A423 /* NameCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NameCode.m; sourceTree = "<group>"; };
 		79734F5D1EB95BA700647215 /* MainContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainContactViewController.h; sourceTree = "<group>"; };
 		79734F5E1EB95BA700647215 /* MainContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainContactViewController.m; sourceTree = "<group>"; };
 		79734F611EB97CAC00647215 /* AddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddContactViewController.h; sourceTree = "<group>"; };
@@ -4552,6 +4558,24 @@
 			path = NewLedgerDetailcell;
 			sourceTree = "<group>";
 		};
+		7970DB39200F2F380041A423 /* UpdatePartyGroup */ = {
+			isa = PBXGroup;
+			children = (
+				7970DB3A200F2F460041A423 /* UpdatePartyGroup.h */,
+				7970DB3B200F2F460041A423 /* UpdatePartyGroup.m */,
+			);
+			path = UpdatePartyGroup;
+			sourceTree = "<group>";
+		};
+		7970DB3D200F2FC00041A423 /* NameCode */ = {
+			isa = PBXGroup;
+			children = (
+				7970DB3E200F2FCB0041A423 /* NameCode.h */,
+				7970DB3F200F2FCB0041A423 /* NameCode.m */,
+			);
+			path = NameCode;
+			sourceTree = "<group>";
+		};
 		79734F601EB97CAC00647215 /* Add Contact */ = {
 			isa = PBXGroup;
 			children = (
@@ -6335,6 +6359,8 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7970DB3D200F2FC00041A423 /* NameCode */,
+				7970DB39200F2F380041A423 /* UpdatePartyGroup */,
 				791B4FFC1FD0D5C8003C30EC /* DashboardContactFolder */,
 				79161E0B1FCC15EA0025BCB8 /* SearchResultModel */,
 				79161CFD1FC95EDE0025BCB8 /* BillModel */,
@@ -10393,6 +10419,7 @@
 				7912A5F81FEB9F6E00C8B9A5 /* OpponentsFlowLayout.m in Sources */,
 				7903CF711ECD303D0090206C /* PropertyContactCell.m in Sources */,
 				9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */,
+				7970DB40200F2FCB0041A423 /* NameCode.m in Sources */,
 				79A6AFAA1E9DBE12007AA24D /* ChatContactCell.m in Sources */,
 				79FBDFD21E30421A00448FE3 /* QMPhoto.m in Sources */,
 				79161CE91FC896710025BCB8 /* PresetCodeModel.m in Sources */,
@@ -10447,6 +10474,7 @@
 				793FF1DB1EC382F8001F83A5 /* AddBillViewController.m in Sources */,
 				7954324D1FC53D5900FF9E57 /* MatterBranchModel.m in Sources */,
 				7903D0841ECECBA10090206C /* PropertyListViewController.m in Sources */,
+				7970DB3C200F2F460041A423 /* UpdatePartyGroup.m in Sources */,
 				960A66231F0200D20063AB6C /* DashboardSecondHeaderCell.m in Sources */,
 				7903D0961ECF9B520090206C /* TypeValueModel.m in Sources */,
 				7912A58C1FE4B1C500C8B9A5 /* ChatFileListViewController.m in Sources */,

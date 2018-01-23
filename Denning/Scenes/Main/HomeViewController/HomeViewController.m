@@ -231,8 +231,6 @@ iCarouselDataSource, iCarouselDelegate>
            [[DataManager sharedManager] setUserInfoFromLogin:responseObject];
             if ([DataManager sharedManager].isStaff){
                  [self performSegueWithIdentifier:kChangeBranchSegue sender:[DataManager sharedManager].denningArray];
-            } else if ([DataManager sharedManager].personalArray.count > 0) {
-                [self performSegueWithIdentifier:kChangeBranchSegue sender:[DataManager sharedManager].personalArray];
             } else {
                 [SVProgressHUD showErrorWithStatus:@"No more branches"];
             }
@@ -241,7 +239,6 @@ iCarouselDataSource, iCarouselDelegate>
         }
     }];
 }
-
 
 #pragma mark -
 #pragma mark iCarousel methods
@@ -389,7 +386,9 @@ iCarouselDataSource, iCarouselDelegate>
 
 - (void) getAttendance {
     if (![DataManager sharedManager].isStaff){
-        [QMAlert showAlertWithMessage:@"This function is reserved for registered business user only." withTitle:@"RESTRICTED" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_DENIED_REGISTER", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self withCallback:^{
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
+        }];
     } else if ([CLLocationManager locationServicesEnabled] == NO) {
         [(AppDelegate*)[UIApplication sharedApplication] showDeniedLocation];
     } else {
@@ -452,7 +451,9 @@ iCarouselDataSource, iCarouselDelegate>
             [self performSegueWithIdentifier:kEventSegue sender:array];
         }];
     } else {
-        [QMAlert showAlertWithMessage:@"This function is reserved for registered business user only." withTitle:@"RESTRICTED" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_DENIED_REGISTER", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self withCallback:^{
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
+        }];
     }
 }
 

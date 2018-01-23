@@ -201,11 +201,11 @@
     [originAdminIDs addObject:@([QBSession currentSession].currentUser.ID)];
     
     for (QBUUser* user in users) {
-        if  ([user.twitterID isEqualToString:kDenningPeople]) {
+        if  ([user.tags containsObject:kDenningPeople]) {
             [originDenningIDs addObject:@(user.ID)];
-        } else if ([user.twitterID isEqualToString:kColleague]) {
+        } else if ([user.tags containsObject:kColleague]) {
             [originNormalIDs addObject:@(user.ID)];
-        } else if ([user.twitterID isEqualToString:kClient] || [user.twitterID isEqualToString:kPublicUser]) {
+        } else if ([user.tags containsObject:kClient] || [user.tags containsObject:kPublicUser]) {
             [originReaderIDs addObject:@(user.ID)];
         } 
     }

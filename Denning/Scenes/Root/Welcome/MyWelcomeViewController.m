@@ -16,6 +16,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (![QMCore.instance isInternetConnected]) {
+        
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CHECK_INTERNET_CONNECTION", nil) actionSuccess:NO inViewController:self];
+        return;
+    }
+    
     self.navigationController.navigationBarHidden = YES;
 
     // Do any additional setup after loading the view.
@@ -26,7 +32,6 @@
 
     [[QMNetworkManager sharedManager] setPublicHTTPHeader];
     [[QMNetworkManager sharedManager] sendPostWithURL:kDIAgreementUrl params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
-//        [SVProgressHUD dismiss];
         if (error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         } else if ([[result valueForKeyNotNull:@"code"] isEqualToString:@"200"]) {

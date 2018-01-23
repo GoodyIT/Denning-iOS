@@ -140,7 +140,7 @@
     return [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text];
 }
 
-- (IBAction)updateDiary:(id)sender {
+- (NSDictionary*) buildUpdateParams {
     NSMutableDictionary* data = [NSMutableDictionary new];
     [data addEntriesFromDictionary:@{@"code":_personalDiary.diaryCode}];
     
@@ -181,6 +181,11 @@
     if (![_Remarks.text isEqualToString:_personalDiary.remarks]) {
         [data addEntriesFromDictionary:@{@"remarks":_Remarks.text}];
     }
+    
+    return [data copy];
+}
+
+- (void) _update {
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:PERSONAL_DIARY_SAVE_URL];
     if (isLoading) return;
     isLoading = YES;
@@ -189,7 +194,7 @@
                                                                          duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionTask* _Nonnull task) {
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:[self buildUpdateParams] completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionTask* _Nonnull task) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -202,18 +207,23 @@
     }];
 }
 
-- (void) saveDiary {
-    if (isSaved) {
-        return;
-    }
+- (IBAction)updateDiary:(id)sender {
     
+    [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:nil completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _update];
+        }
+    }];
+}
+
+- (NSDictionary*) buildSaveParams {
     NSString* endDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_endTime.text]];
     NSString* startDate = [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], [DIHelpers toMySQLDateFormatWithoutTime:_startTime.text]];
-    NSDictionary* data = @{
+    return  @{
                            @"appointmentDetails":self.details.text,
                            @"attendedStatus": @{
                                    @"code": @"0",
-                            },
+                                   },
                            @"endDate":endDate,
                            @"startDate": startDate,
                            @"staffAssigned": @{
@@ -224,6 +234,9 @@
                            
                            @"remark": self.Remarks.text
                            };
+}
+
+- (void) _save {
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
@@ -231,7 +244,7 @@
                                                                          duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] savePersonalDiaryWithData:data WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] savePersonalDiaryWithData:[self buildSaveParams] WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -242,6 +255,18 @@
             
         } else {
             [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:2.0];
+        }
+    }];
+}
+
+- (void) saveDiary {
+    if (isSaved) {
+        return;
+    }
+    
+    [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:nil completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _save];
         }
     }];
 }

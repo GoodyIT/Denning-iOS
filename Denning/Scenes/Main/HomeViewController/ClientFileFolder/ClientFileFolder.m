@@ -85,9 +85,10 @@
         fileNo1 = _model.key;
     }
     NSNumber* length = [NSNumber numberWithInteger:imageData.length];
+    NSString* fileName = [NSString stringWithFormat:@"IMG_%@%@.jpg",  self.renameFile.text, [DIHelpers randomTime]];
     NSDictionary* params = @{@"fileNo1":fileNo1,
                              @"documents":@[@{
-                                     @"FileName":[self.renameFile.text stringByAppendingString:@".jpg"],
+                                     @"FileName":fileName,
                                      @"MimeType":@"jpg",
                                      @"dateCreate":[DIHelpers todayWithTime],
                                      @"dateModify":[DIHelpers todayWithTime],
@@ -110,8 +111,12 @@
     [[QMNetworkManager sharedManager] uploadFileWithUrl:uploadURL params:params WithCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
         self->isLoading = NO;
-        if (error == nil && [result[0] isEqualToString:@"200"]) {
-            [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:1.0];
+        if (error == nil) {
+            if ([result[0] isEqualToString:@"200"]) {
+                [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"Success" duration:1.0];
+            } else {
+                [navigationController showNotificationWithType:QMNotificationPanelTypeSuccess message:@"If you face this message again, please contact Denning support." duration:1.0];
+            }
         } else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }

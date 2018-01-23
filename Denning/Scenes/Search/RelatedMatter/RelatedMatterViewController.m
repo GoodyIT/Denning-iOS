@@ -220,7 +220,7 @@ MatterNewLastCellDelegate
     } else if (indexPath.section == MAIN_SECTION) {
         if (indexPath.row == 0) { // Contact client
             [self gotoContact:relatedMatterModel.contactCode];
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == 4) {
             [self performSegueWithIdentifier:kMatterCodeSegue sender:relatedMatterModel.matter];
         }
     }
@@ -376,13 +376,13 @@ MatterNewLastCellDelegate
             [cell configureCellWithContact:@"Client" text:relatedMatterModel.clientName];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else if (indexPath.row == 1) {
-            [cell configureCellWithContact:@"Ref2" text:relatedMatterModel.ref];
+            [cell configureCellWithContact:@"Ref2" text:relatedMatterModel.manualNo];
         } else if (indexPath.row == 2) {
             NSString* value = [NSString stringWithFormat:@"%@ / %@ / %@", [DIHelpers getOnlyDateFromDateTime:relatedMatterModel.openDate], relatedMatterModel.fileStatus.descriptionValue, relatedMatterModel.dateClose];
             [cell configureCellWithContact:@"Open Date / Status / Closed Date" text:value];
         } else if (indexPath.row == 3) {
-            NSString* value = [NSString stringWithFormat:@"%@ / %@ / %@", relatedMatterModel.locationPhysical, relatedMatterModel.locationBox, relatedMatterModel.locationPocket];
-            [cell configureCellWithContact:@"File Location / Box / Pocket" text:value];
+            NSString* value = [NSString stringWithFormat:@"%@ / %@ / %@", relatedMatterModel.locationBox, relatedMatterModel.locationPocket, relatedMatterModel.locationPhysical];
+            [cell configureCellWithContact:@"File Location / Pocket / Storage" text:value];
         } else if (indexPath.row == 4) {
             [cell configureCellWithContact:@"Matter" text:relatedMatterModel.matter.matterDescription];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

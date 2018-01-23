@@ -166,6 +166,16 @@ NSURLSessionDelegate, UITextFieldDelegate>
      [self.searchTextField becomeFirstResponder];
 }
 
+- (NSString*) randomTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    NSTimeZone* timeZone = [NSTimeZone localTimeZone];
+    [formatter setTimeZone:timeZone];
+    [formatter setDateFormat:@"HHmmss"];
+    
+    return [formatter stringFromDate:[NSDate date]];
+}
+
 - (void) loadShareItems {
     shareItems = [NSMutableArray new];
     for (NSItemProvider* itemProvider in ((NSExtensionItem*)self.extensionContext.inputItems[0]).attachments) {
@@ -179,7 +189,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
             
             NSString* base64Data = [[NSData dataWithContentsOfFile:(NSString*)item] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             NSString* fileType = [(NSString*)item pathExtension];
-            NSString* fileName = [(NSString*)item lastPathComponent];
+            NSString* fileName = [[(NSString*)item lastPathComponent] stringByAppendingString:[self randomTime]];
             
             NSDictionary* dic = @{@"FileName":fileName,
                                   @"MimeType":fileType,
@@ -280,6 +290,24 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [self filterResult];
 }
 
+- (void) showExpiredAlertAndCancel {
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:self withAction:^{
+            NSError* error;
+            [self.extensionContext cancelRequestWithError:error];
+        }];
+    });
+}
+
+- (void) showExpiredAlertAndCancelForClient {
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [ShareHelper showAlertWithMessage:@"Please activate your share folder at the Denning App." actionSuccess:NO inViewController:self withAction:^{
+            NSError* error;
+            [self.extensionContext cancelRequestWithError:error];
+        }];
+    });
+}
+
 - (IBAction)didTapSend:(id)sender {
     if (isLoading) return;
     isLoading = YES;
@@ -316,15 +344,17 @@ NSURLSessionDelegate, UITextFieldDelegate>
         });
         
         if (statusCode == 410) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:strongSelf];
-            });
+            if ([strongSelf->defaults boolForKey:@"isStaff"] ) {
+                [strongSelf showExpiredAlertAndCancel];
+            } else {
+                [strongSelf showExpiredAlertAndCancelForClient];
+            }
         } else{
             [strongSelf performSelector:@selector(dismissAlert) withObject:nil afterDelay:0.2f];
             if ([items[0] isEqualToString:@"200"]) {
                 [strongSelf performSelector:@selector(showCompleteMessage) withObject:nil afterDelay:0.3f];
             } else {
-                [strongSelf performSelector:@selector(showCompleteMessage) withObject:nil afterDelay:0.3f];
+                [strongSelf performSelector:@selector(showFailureMessage) withObject:nil afterDelay:0.3f];
             }
         }
     }];
@@ -342,6 +372,10 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 - (void) showCompleteMessage {
     [ShareHelper showAlertWithMessage:@"Success" actionSuccess:YES inViewController:self];
+}
+
+- (void) showFailureMessage {
+    [ShareHelper showAlertWithMessage:@"If you face this message again, please contact Denning support." actionSuccess:YES inViewController:self];
 }
 
 - (IBAction)didTapTransitFolder:(id)sender {
@@ -389,9 +423,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
         if (statusCode == 410) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:weakSelf];
-            });
+            [strongSelf showExpiredAlertAndCancel];
         } else {
             
             if (items > 0) {
@@ -503,9 +535,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
          __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
         if (statusCode == 410) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:weakSelf];
-            });
+            [strongSelf showExpiredAlertAndCancel];
         } else {
            
             if (items > 0) {
@@ -671,9 +701,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
         if (statusCode == 410) {
-            dispatch_async(dispatch_get_main_queue(), ^(void){
-                [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:weakSelf];
-            });
+            [strongSelf showExpiredAlertAndCancel];
         } else {
             DocumentModel* documentModel = [DocumentModel getDocumentFromResponse:(NSDictionary*)items];
             [strongSelf performSegueWithIdentifier:@"DocumentSearchSegue" sender:documentModel];

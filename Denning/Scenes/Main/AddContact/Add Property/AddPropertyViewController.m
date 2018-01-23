@@ -556,7 +556,13 @@ NSMutableDictionary* keyValue;
         }];
     } else {
         if ([self checkValidation]) {
-            [self _save:params];
+            [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
+                if  ([action.title isEqualToString:@"OK"]) {
+                    if ([self checkValidation]) {
+                        [self _save:params];
+                    }
+                }
+            }];
         }
     }
 }

@@ -118,31 +118,42 @@ PKPushRegistryDelegate
         nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.callWindow.rootViewController = nav;
 
+        
+//        NSData *data =
+//        [NSJSONSerialization dataWithJSONObject:payload
+//                                        options:NSJSONWritingPrettyPrinted
+//                                          error:nil];
+//        NSString *message =
+//        [[NSString alloc] initWithData:data
+//                              encoding:NSUTF8StringEncoding];
+//
+//        QBMEvent *event = [QBMEvent event];
+//        event.notificationType = QBMNotificationTypePush;
+//        event.usersIDs = [opponentsIDs componentsJoinedByString:@","];
+//        event.type = QBMEventTypeOneShot;
+//        event.message = message;
+//
+//        [QBRequest createEvent:event
+//                  successBlock:^(QBResponse *response, NSArray<QBMEvent *> *events) {
+//                      NSLog(@"Send voip push - Success");
+//                  } errorBlock:^(QBResponse * _Nonnull response) {
+//                      NSLog(@"Send voip push - Error");
+//                  }];
+        
         NSDictionary *payload = @{
-                                  @"message"  : [NSString stringWithFormat:@"%@ is calling you.", [QBSession currentSession].currentUser.fullName],
+                                  @"text"  : [NSString stringWithFormat:@"%@ is calling you.", [QBSession currentSession].currentUser.fullName],
                                   @"ios_voip" : @"1",
                                   kVoipEvent  : @"1",
                                   };
-        NSData *data =
-        [NSJSONSerialization dataWithJSONObject:payload
-                                        options:NSJSONWritingPrettyPrinted
-                                          error:nil];
-        NSString *message =
-        [[NSString alloc] initWithData:data
-                              encoding:NSUTF8StringEncoding];
         
-        QBMEvent *event = [QBMEvent event];
-        event.notificationType = QBMNotificationTypePush;
-        event.usersIDs = [opponentsIDs componentsJoinedByString:@","];
-        event.type = QBMEventTypeOneShot;
-        event.message = message;
+        QBMPushMessage *pushMessage = [[QBMPushMessage alloc] initWithPayload:payload];
         
-        [QBRequest createEvent:event
-                  successBlock:^(QBResponse *response, NSArray<QBMEvent *> *events) {
-                      NSLog(@"Send voip push - Success");
-                  } errorBlock:^(QBResponse * _Nonnull response) {
-                      NSLog(@"Send voip push - Error");
-                  }];
+        NSString *userIDs = [opponentsIDs componentsJoinedByString:@","];
+        
+        [QBRequest sendVoipPush:pushMessage toUsers:userIDs
+                   successBlock:^(QBResponse * _Nonnull response, QBMEvent * _Nonnull event) {
+                   } errorBlock:^(QBError * _Nonnull error) {
+                   }];
         
         self.hasActiveCall = YES;
     }];
@@ -324,7 +335,6 @@ PKPushRegistryDelegate
             [CallKitManager.instance endCallWithUUID:self.callUUID completion:nil];
             self.callUUID = nil;
         }
-       
     });
 }
 
@@ -370,7 +380,7 @@ PKPushRegistryDelegate
         NSLog(@"Unregister Subscription request - Success");
     } errorBlock:^(QBError * _Nonnull error) {
         NSLog(@"Unregister Subscription request - Error");
-    }];
+    }]; 
 }
 
 - (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(PKPushType)type {

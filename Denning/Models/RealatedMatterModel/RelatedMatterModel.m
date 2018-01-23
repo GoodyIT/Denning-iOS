@@ -17,6 +17,8 @@
     
     relatedMatter.systemNo = [response objectForKey:@"systemNo"];
     
+    relatedMatter.manualNo = [response valueForKeyNotNull:@"manualNo"];
+    
     relatedMatter.clientName = [NSString stringWithFormat:@"%@", [[response objectForKeyNotNull:@"primaryClient"] valueForKeyNotNull:@"name"]];
     relatedMatter.contactCode = [[response objectForKeyNotNull:@"primaryClient"] valueForKeyNotNull:@"code"];
     relatedMatter.openDate = [response valueForKeyNotNull:@"dateOpen"];

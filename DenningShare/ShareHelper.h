@@ -11,6 +11,8 @@
 
 @interface ShareHelper : NSObject
 
++ (void)showAlertWithMessage:(NSString *)message actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController withAction:(void(^)(void)) completion;
+
 + (void)showAlertWithMessage:(NSString *)message actionSuccess:(BOOL)success inViewController:(UIViewController *)viewController;
 
 + (NSArray*) separateNameIntoTwo:(NSString*) title;

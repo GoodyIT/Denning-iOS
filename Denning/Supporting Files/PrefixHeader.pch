@@ -196,6 +196,8 @@
 #import "ReceiptModel.h"
 #import "BillModel.h"
 #import "ContactFolderItem.h"
+#import "NameCode.h"
+#import "UpdatePartyGroup.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

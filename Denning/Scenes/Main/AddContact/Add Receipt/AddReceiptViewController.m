@@ -163,12 +163,23 @@ enum PAYMENT_MODE_ROWS {
 }
 
 - (BOOL) checkValidation {
+    if  (_fileNo.text.length == 0) {
+        return NO;
+    }
     
+    if  (_billNo.text.length == 0) {
+        return NO;
+    }
+
     return YES;
 }
 
 - (void) _save {
     if (isSaved) {
+        return;
+    }
+    
+    if  (![self checkValidation]) {
         return;
     }
     
@@ -217,7 +228,7 @@ enum PAYMENT_MODE_ROWS {
                      @"ID": selectedID
                      },
              @"amount": self.amount.text,
-            @"fileNo": self.fileNo.text,
+             @"fileNo": self.fileNo.text,
              @"invoiceNo": self.billNo.text,
              @"payment":@{
                  @"bankBranch": self.bankBranch.text,
@@ -286,7 +297,11 @@ enum PAYMENT_MODE_ROWS {
 
 - (IBAction)saveReceipt:(UIBarButtonItem*)sender {
     if (![_isUpdate isEqualToString:@"update"]) {
-        [self _save];
+        [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
+            if  ([action.title isEqualToString:@"OK"]) {
+                [self _save];
+            }
+        }];
     } else {
         [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
@@ -498,6 +513,7 @@ enum PAYMENT_MODE_ROWS {
         } else if (indexPath.row == RECEIVED_FROM_ROW) {
             [self performSegueWithIdentifier:kContactGetListSegue sender:GENERAL_CONTACT_URL];
         } else if (indexPath.row == TRANSACTION_DESC_ROW) {
+            titleOfList = @"Select Transaction";
             [self showTransactionAutoComplete:TRANSACTION_DESCRIPTION_RECEIPT_GET];
         }
     } else if (indexPath.section == 1) {

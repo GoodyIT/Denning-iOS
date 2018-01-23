@@ -152,7 +152,7 @@ QMUsersServiceDelegate
         
         NSString* role = [DIHelpers getCurrentUserRole:user fromChatDialog:self.chatDialog];
         
-        if (![[DataManager sharedManager] isSuperUser:user.email]) {
+        if (![[DataManager sharedManager] isSuperUser:[QBSession currentSession].currentUser.email]) {
             if (![DIHelpers canChangeGroupRoleforDialog:self.chatDialog toUser:user]) {
                 // Only Denning Staff & Admin can assign the role.
                 return;

@@ -151,18 +151,18 @@ UIGestureRecognizerDelegate
     NSMutableArray* matterDialgs = [NSMutableArray new];
     for (QBChatDialog* dialog in groupDialogs) {
         if (dialog.type == QBChatDialogTypeGroup) {
-            if ([[DIHelpers getTag:dialog] isEqualToString:@"Colleagues"]) {
+            if ([[DIHelpers getTag:dialog] isEqualToString:kChatColleaguesTag]) {
                 [staffDialgs addObject:dialog];
-            } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Clients"]) {
+            } else if ([[DIHelpers getTag:dialog] isEqualToString:kChatClientsTag]) {
                 [clientDialgs addObject:dialog];
-            } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Matters"]){
+            } else if ([[DIHelpers getTag:dialog] isEqualToString:kChatMattersTag]){
                 [matterDialgs addObject:dialog];
             }
         } else if (dialog.type == QBChatDialogTypePrivate) {
             QBUUser* user = [[QMCore instance].usersService.usersMemoryStorage userWithID:dialog.opponentID];
-            if ([user.twitterID.lowercaseString isEqualToString:@"colleague"]) {
+            if ([user.tags containsObject:kColleague]) {
                 [staffDialgs addObject:dialog];
-            } else if ([user.twitterID.lowercaseString isEqualToString:@"client"]) {
+            } else if ([user.tags containsObject:kClient]) {
                 [clientDialgs addObject:dialog];
             }
         }
@@ -242,9 +242,9 @@ UIGestureRecognizerDelegate
             NSInteger errorCode = task.error.code;
             if (errorCode == kQMNotAuthorizedInRest
                 || errorCode == kQMUnauthorizedErrorCode
-                || (errorCode == kBFMultipleErrorsError
+                /*|| (errorCode == kBFMultipleErrorsError
                     && ([task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][0] code] == kQMUnauthorizedErrorCode
-                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))) {
+                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))*/) {
                         
                         return [QMCore.instance logout];
                     }

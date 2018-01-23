@@ -8,6 +8,7 @@
 "QM_STR_OK" = "OK";
 "QM_STR_SUCCESS" = "Success";
 "QM_STR_ERROR" = "Error";
+"SA_STR_CANCEL" = "Cancel";
 "QM_STR_EMAIL_FIELD_IS_EMPTY" = "Email field is empty";
 "QM_STR_USER_WITH_EMAIL_WASNT_FOUND" = "User with email wasn't found";
 "QM_STR_FILL_IN_ALL_THE_FIELDS" = "Fill in all the fields";
@@ -32,8 +33,8 @@
 "STR_ACCESS_RESTRICT_CLIENT" = "This function is only available to public users invited by Denning Biz providers.";
 "STR_SESSION_EXPIRED"   = "Session expired. Please log in again.";
 "STR_ROLE_SELF_CHANGE"  = "You can change your own role.";
-"STR_ROLE_DENNING_CHANGE"  = "You can change the role of Denning users.";
-"STR_ROLE_CLIENT_CHANGE"  = "You can change the role of the client.";
+"STR_ROLE_DENNING_CHANGE"  = "You cannot change the role of Denning users.";
+"STR_ROLE_CLIENT_CHANGE"  = "You cannot change the role of the client.";
 
 //  ********** Contact requests notification text: ***************
 "QM_STR_FRIEND_REQUEST_DID_SEND_FOR_ME" = "Your request has been sent";

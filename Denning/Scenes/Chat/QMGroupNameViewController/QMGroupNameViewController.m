@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 }
 
 - (NSInteger) getTagAsIndex:(NSString*) tag {
-    NSArray* tagArray = @[@"Colleagues", @"Clients", @"Matters", @"Denning"];
+    NSArray* tagArray = @[kChatColleaguesTag, kChatClientsTag, kChatMattersTag, kChatDenningTag];
     return [tagArray indexOfObject:tag];
 }
 
@@ -141,16 +141,16 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 - (IBAction)tagSelected:(UISegmentedControl*) sender {
     
     if (sender.selectedSegmentIndex == 0) {
-        selectedTag = @"Colleagues";
+        selectedTag = kChatColleaguesTag;
     } else if (sender.selectedSegmentIndex == 1) {
-        selectedTag = @"Clients";
+        selectedTag = kChatClientsTag;
     } else if (sender.selectedSegmentIndex == 2) {
-        selectedTag = @"Matters";
+        selectedTag = kChatMattersTag;
     }
     
     if ([[DataManager sharedManager] isDenningUser]) {
         if (sender.selectedSegmentIndex == 3) {
-            selectedTag = @"Denning";
+            selectedTag = kChatDenningTag;
         }
     }
     

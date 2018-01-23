@@ -98,7 +98,9 @@ QMImagePickerResultHandler>
 
 - (void)changeBranch {
     if ([DataManager sharedManager].isPublicUser) {
-        [QMAlert showAlertWithMessage:@"You cannot access this folder. please subscribe dening user" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_DENIED_REGISTER", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self withCallback:^{
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
+        }];
         return;
     }
     

@@ -287,7 +287,7 @@
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_CLOCK_IN];
     
-    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [DataManager sharedManager].user.latitude, [DataManager sharedManager].user.latitude];
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [DataManager sharedManager].user.latitude, [DataManager sharedManager].user.longitude                                ];
     NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[DataManager sharedManager].user.streetName, @"strRemarks": @"start work"};
     [self sendPrivatePostWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([AttendanceModel getAttendanceModelFromResponse:result], error);
@@ -297,8 +297,8 @@
 - (void) attendanceClockOut:(void(^)(AttendanceModel* result, NSError* error)) completion{
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_CLOCK_IN];
     
-    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
-    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [DataManager sharedManager].user.latitude, [DataManager sharedManager].user.longitude                                ];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[DataManager sharedManager].user.streetName, @"strRemarks": @"start work"};
     [self sendPrivatePutWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([AttendanceModel getAttendanceModelFromResponse:result], error);
     }];
@@ -308,8 +308,8 @@
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_BREAK];
     
-    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
-    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [DataManager sharedManager].user.latitude, [DataManager sharedManager].user.longitude                                ];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[DataManager sharedManager].user.streetName, @"strRemarks": @"start work"};
     
     [self sendPrivatePostWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([AttendanceModel getAttendanceModelFromResponse:result], nil);
@@ -319,8 +319,8 @@
 - (void) attendanceEndBreak:(void(^)(AttendanceModel* result, NSError* error)) completion
 {
     NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: ATTENDANCE_BREAK];
-    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [LocationManager sharedManager].oldLocation.latitude, [LocationManager sharedManager].oldLocation.latitude];
-    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[LocationManager sharedManager].streetName, @"strRemarks": @"start work"};
+    NSString* _location = [NSString stringWithFormat:@"%lf,%f", [DataManager sharedManager].user.latitude, [DataManager sharedManager].user.longitude                                ];
+    NSDictionary* params = @{@"strLocationLong":_location, @"strLocationName":[DataManager sharedManager].user.streetName, @"strRemarks": @"start work"};
     
     [self sendPrivatePutWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
          completion([AttendanceModel getAttendanceModelFromResponse:result], error);
@@ -608,7 +608,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
             if (user != nil) {
                 QBUUser *newUser = [user copy];
                 newUser.twitterDigitsID = chatUserModel.position;
-                newUser.twitterID = chatUserModel.tag;
+                newUser.tags = [@[chatUserModel.tag] mutableCopy];
                 [userArray addObject:newUser];
             }
         }

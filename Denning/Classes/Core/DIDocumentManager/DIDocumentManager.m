@@ -212,7 +212,7 @@
 - (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller
 {
     NSError *error;
-    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
+//    [[NSFileManager defaultManager] removeItemAtPath:[selectedDocument path] error:&error];
 }
 
 @end

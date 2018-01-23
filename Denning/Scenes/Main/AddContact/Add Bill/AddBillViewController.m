@@ -60,6 +60,7 @@ NSMutableDictionary* keyValue;
     issueToFirstCode = @"";
     selectedPresetCode = selectedMatterCode = @"";
     isRental = @"0";
+    selectedDocument = nil;
     
     self.keyValue = [@{
                        @(0): @(1), @(1):@(0)
@@ -205,26 +206,7 @@ NSMutableDictionary* keyValue;
     return data;
 }
 
-- (IBAction)saveBill:(id)sender {
-    if (isSaved) {
-        return;
-    }
-    
-    if (((NSString*)_contents[0][2][1]).length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
-        return;
-    }
-    
-    if (((NSString*)_contents[0][4][1]).length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the bill to." actionSuccess:NO inViewController:self];
-        return;
-    }
-    
-    if (selectedPresetCode.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the preset." actionSuccess:NO inViewController:self];
-        return;
-    }
-    
+- (void) _save {
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
@@ -244,6 +226,41 @@ NSMutableDictionary* keyValue;
             
         } else {
             [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+}
+
+- (BOOL) isValidToProceed {
+    if (((NSString*)_contents[0][2][1]).length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
+        return NO;
+    }
+    
+    if (((NSString*)_contents[0][4][1]).length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the bill to." actionSuccess:NO inViewController:self];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (IBAction)saveBill:(id)sender {
+    if (isSaved) {
+        return;
+    }
+    
+    if (![self isValidToProceed]) {
+        return;
+    }
+    
+    if (((NSString*)_contents[0][4][1]).length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the bill to." actionSuccess:NO inViewController:self];
+        return;
+    }
+    
+    [QMAlert showConfirmDialog:@"Do you want to save contact?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _save];
         }
     }];
 }
@@ -316,10 +333,10 @@ NSMutableDictionary* keyValue;
 }
 
 - (void) calcTax {
-    if (selectedPresetCode.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select preset" actionSuccess:NO inViewController:self];
+    if (![self isValidToProceed]) {
         return;
     }
+    
     NSDictionary* data = @{
                            @"isRental": isRental,
                            @"spaPrice": [self getValidValue:_contents[0][5][1]],
@@ -356,6 +373,11 @@ NSMutableDictionary* keyValue;
     if (!isSaved) {
         [QMAlert showAlertWithMessage:@"Please save your quotaion first to view" actionSuccess:NO inViewController:self];
         
+        return;
+    }
+    
+    if (selectedDocument != nil) {
+        [[DIDocumentManager shared] displayDocument:selectedDocument inView:self];
         return;
     }
     

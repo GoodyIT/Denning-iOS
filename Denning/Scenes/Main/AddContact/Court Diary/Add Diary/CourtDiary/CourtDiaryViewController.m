@@ -214,7 +214,27 @@
     return [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text];
 }
 
-- (IBAction)updateDiary:(id)sender {
+- (void) _update {
+    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:COURT_SAVE_UPATE_URL];
+    if (isLoading) return;
+    isLoading = YES;
+    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
+    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
+    @weakify(self);
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:[self buildUpdateParams] completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+        [navigationController dismissNotificationPanel];
+        @strongify(self)
+        self->isLoading = NO;
+        if (error == nil) {
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully updated" duration:1.0];
+            
+        } else {
+            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+        }
+    }];
+}
+
+- (NSDictionary*) buildUpdateParams {
     NSMutableDictionary* data = [NSMutableDictionary new];
     [data addEntriesFromDictionary:@{@"code":_courtDiary.courtCode}];
     
@@ -288,24 +308,63 @@
     if (![_nextTime.text isEqualToString:nextStartDateTime[1]]) {
         [data addEntriesFromDictionary:@{@"nextStartDate":[self getStartDate]}];
     }
- 
+    
     if (![_Remarks.text isEqualToString:_courtDiary.remarks]) {
         [data addEntriesFromDictionary:@{@"remarks":_Remarks.text}];
     }
     
-    NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:COURT_SAVE_UPATE_URL];
+    return [data copy];
+}
+
+- (IBAction)updateDiary:(id)sender {
+    [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _update];
+        }
+    }];
+}
+
+- (NSDictionary*) buildSaveParams {
+    return @{
+             @"chkDone":@"0",
+             @"attendedStatus": @{
+                     @"code": @"0"},
+             @"coram":
+                 @{
+                     @"code": @"0"},
+             @"counselAssigned": @{@"code":selectedAssignedCode},
+             @"court": @{@"code":selectedCourtCode},
+             @"courtDecision": @"",
+             @"enclosureDetails": self.details.text,
+             @"enclosureNo": self.enclosureNo.text,
+             @"fileNo1": self.fileNo.text,
+             @"hearingStartDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _startTime.text],
+             @"hearingType": selectedNatureOfHearing,
+             @"hearingEndDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text],
+             @"nextDateType": @{
+                     @"code": @"0"
+                     },
+             @"opponentCounsel":@"",
+             @"previousDate": @"2000-01-01 00:00:00",
+             @"remark": self.Remarks.text
+             };
+}
+
+- (void) _save {
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [[QMNetworkManager sharedManager] saveCourtDiaryWithData:[self buildSaveParams] WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
+        
         if (error == nil) {
-            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully updated" duration:1.0];
-            
+            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
+            self->isSaved = YES;
+            self.btnSave.enabled = NO;
         } else {
             [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
@@ -317,45 +376,9 @@
         return;
     }
     
-    NSDictionary* data = @{
-                           @"chkDone":@"0",
-                           @"attendedStatus": @{
-                                   @"code": @"0"},
-                           @"coram":
-                               @{
-                                   @"code": @"0"},
-                           @"counselAssigned": @{@"code":selectedAssignedCode},
-                           @"court": @{@"code":selectedCourtCode},
-                           @"courtDecision": @"",
-                           @"enclosureDetails": self.details.text,
-                           @"enclosureNo": self.enclosureNo.text,
-                           @"fileNo1": self.fileNo.text,
-                           @"hearingStartDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_startDate.text], _startTime.text],
-                           @"hearingType": selectedNatureOfHearing,
-                           @"hearingEndDate": [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text],
-                           @"nextDateType": @{
-                                   @"code": @"0"
-                                   },
-                           @"opponentCounsel":@"",
-                           @"previousDate": @"2000-01-01 00:00:00",
-                           @"remark": self.Remarks.text
-                           };
-    if (isLoading) return;
-    isLoading = YES;
-    [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
-    __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
-    @weakify(self);
-    [[QMNetworkManager sharedManager] saveCourtDiaryWithData:data WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
-        [navigationController dismissNotificationPanel];
-        @strongify(self)
-        self->isLoading = NO;
-        
-        if (error == nil) {
-            [navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:@"Successfully saved" duration:1.0];
-            self->isSaved = YES;
-            self.btnSave.enabled = NO;
-        } else {
-            [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
+    [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:nil completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _save];
         }
     }];
 }
@@ -680,9 +703,6 @@
         if ([selectedDetails isEqualToString: @"Court Decision"]) {
             _courtDecision.text = model.descriptionValue;
             selectedDecisionCode = model.codeValue;
-        } else if ([selecteDetail isEqualToString:@"Attendant Type"]) {
-            _attendedStatus.text = model.descriptionValue;
-            selectedAttendedStatus = model.codeValue;
         } else if ([selectedDetails isEqualToString:@"First Details"]) {
              self.details.text = model.descriptionValue;
         } else {
@@ -705,6 +725,9 @@
         self.nextDateType.text = model.descriptionValue;
         selectedNextDateTypeCode = model.codeValue;
         [self.tableView reloadData];
+    } else if ([name isEqualToString:@"Attendant Type"]) {
+        _attendedStatus.text = model.descriptionValue;
+        selectedAttendedStatus = model.codeValue;
     }
 }
 
@@ -728,8 +751,9 @@
         }
         if (_courtDiary != nil) {
             if (indexPath.row == 10) { // Attendant Type
-                selectedDetails = @"Attendant Type";
-                [self showDetailAutocomplete:COURT_ATTENDED_STATUS_GET_URL];
+                titleOfList = @"Attendant Type";
+                nameOfField = @"Attendant Type";
+                [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_ATTENDED_STATUS_GET_URL];
             } else if (indexPath.row == 11) { // Counsel Attended
                 [self showStaffAutocomplete];
             } else if (indexPath.row == 12) { // Coram
@@ -743,7 +767,6 @@
                 [self performSegueWithIdentifier:kListWithCodeSegue sender:COURT_NEXTDATE_TYPE_GET_URL];
             }
         }
-        
     } else {
         if (indexPath.row == 2) {
             titleOfList = @"List of Hearing Type";

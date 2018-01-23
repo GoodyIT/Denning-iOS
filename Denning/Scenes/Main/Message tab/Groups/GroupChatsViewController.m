@@ -138,11 +138,11 @@ MEVFloatingButtonDelegate
     NSMutableArray* staffDialgs = [NSMutableArray new];
     NSMutableArray* matterDialgs = [NSMutableArray new];
     for (QBChatDialog* dialog in groupDialogs) {
-        if ([[DIHelpers getTag:dialog] isEqualToString:@"Colleagues"]) {
+        if ([[DIHelpers getTag:dialog] isEqualToString:kChatColleaguesTag]) {
             [staffDialgs addObject:dialog];
-        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Clients"]) {
+        } else if ([[DIHelpers getTag:dialog] isEqualToString:kChatClientsTag]) {
             [clientDialgs addObject:dialog];
-        } else if ([[DIHelpers getTag:dialog] isEqualToString:@"Matters"]){
+        } else if ([[DIHelpers getTag:dialog] isEqualToString:kChatMattersTag]){
             [matterDialgs addObject:dialog];
         }
     }
@@ -236,9 +236,9 @@ MEVFloatingButtonDelegate
             NSInteger errorCode = task.error.code;
             if (errorCode == kQMNotAuthorizedInRest
                 || errorCode == kQMUnauthorizedErrorCode
-                || (errorCode == kBFMultipleErrorsError
+                /*|| (errorCode == kBFMultipleErrorsError
                     && ([task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][0] code] == kQMUnauthorizedErrorCode
-                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))) {
+                        || [task.error.userInfo[BFTaskMultipleErrorsUserInfoKey][1] code] == kQMUnauthorizedErrorCode))*/) {
                         
                         return [QMCore.instance logout];
                     }

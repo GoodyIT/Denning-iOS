@@ -164,7 +164,7 @@
     return [NSString stringWithFormat:@"%@ %@", [DIHelpers toMySQLDateFormatWithoutTime:_endDate.text], _endTime.text];
 }
 
-- (IBAction)updateDiary:(id)sender {
+- (NSDictionary*) buildUpdateParams {
     NSMutableDictionary* data = [NSMutableDictionary new];
     [data addEntriesFromDictionary:@{@"code":_officeDiary.diaryCode}];
     
@@ -213,13 +213,18 @@
     if (![_Remarks.text isEqualToString:_officeDiary.remarks]) {
         [data addEntriesFromDictionary:@{@"remarks":_Remarks.text}];
     }
+    
+    return [data copy];
+}
+
+- (void) _update {
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:OFFICE_DIARY_SAVE_URL];
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:data completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
+    [[QMNetworkManager sharedManager] sendPrivatePutWithURL:url params:[self buildUpdateParams] completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -232,33 +237,41 @@
     }];
 }
 
-- (void) saveDiary {
-    if (isSaved) {
-        return;
-    }
+- (IBAction)updateDiary:(id)sender {
     
-    NSDictionary* data = @{
-                           @"appointmentDetails": self.appointment.text,
-                           @"attendedStatus": @{
-                                   @"code": @"0"
-                                   },
-                           
-                           @"staffAssigned": @{@"code":selectedStaffAssigned},
-                           
-                           @"courtDecision": @"",
-                           @"fileNo1": self.fileNo.text,
-                           @"place": self.place.text,
-                           @"startDate": [self getStartDate],
-                           @"endDate": [self endDate],
-                           
-                           @"remark": self.Remarks.text
-                           };
+    [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:nil completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _update];
+        }
+    }];
+}
+
+- (NSDictionary*) buildSaveParams {
+    return @{
+             @"appointmentDetails": self.appointment.text,
+             @"attendedStatus": @{
+                     @"code": @"0"
+                     },
+             
+             @"staffAssigned": @{@"code":selectedStaffAssigned},
+             
+             @"courtDecision": @"",
+             @"fileNo1": self.fileNo.text,
+             @"place": self.place.text,
+             @"startDate": [self getStartDate],
+             @"endDate": [self endDate],
+             
+             @"remark": self.Remarks.text
+             };
+}
+
+- (void) _save {
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self);
-    [[QMNetworkManager sharedManager] saveOfficeDiaryWithData:data WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] saveOfficeDiaryWithData:[self buildSaveParams] WithCompletion:^(EditCourtModel * _Nonnull result, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         self->isLoading = NO;
@@ -271,6 +284,18 @@
             [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:error.localizedDescription duration:1.0];
         }
         
+    }];
+}
+
+- (void) saveDiary {
+    if (isSaved) {
+        return;
+    }
+    
+    [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:nil completion:^(UIAlertAction * _Nonnull action) {
+        if  ([action.title isEqualToString:@"OK"]) {
+            [self _save];
+        }
     }];
 }
 
