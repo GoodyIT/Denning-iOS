@@ -347,7 +347,7 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define LEAVE_NUMBER_OF_DAYS_URL    @"denningwcf/v1/generalSelection/frmStaffLeave/leaveLength?search="
 
-#define LEAVE_SUBMITTED_BY_URL  @"denningwcf/v1/WhoAmI?search="
+#define LEAVE_SUBMITTED_BY_URL  @"denningwcf/v1/WhoAmI"
 
 #define DASHBOARD_MAIN_GET_URL  @"denningwcf/v1/app/dashboard/main"
 

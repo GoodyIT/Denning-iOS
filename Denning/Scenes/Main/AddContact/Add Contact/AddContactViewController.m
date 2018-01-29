@@ -428,6 +428,7 @@
     
     DetailWithAutocomplete *vc = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DetailWithAutocomplete"];
     vc.url = url;
+    vc.title = nameOfField;
     vc.updateHandler =  ^(CodeDescription* model) {
         if ([nameOfField isEqualToString:@"Occupation"]) {
             self.occupation.text = model.descriptionValue;
@@ -701,9 +702,7 @@
         [data addEntriesFromDictionary:@{@"phoneFax":_phone}];
     }
     
-    if (_dateOfBirth.text.length > 0 && ![[DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text] isEqualToString:_contactModel.dateOfBirth]) {
-        [data addEntriesFromDictionary:@{@"dateBirth": [DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text]}];
-    }
+    
     
     if (_contactTitle.text.length > 0 && ![_contactTitle.text isEqualToString:_contactModel.contactTitle]) {
         [data addEntriesFromDictionary:@{@"title": [self getNotNull:_contactTitle.text]}];
@@ -717,10 +716,16 @@
         [data addEntriesFromDictionary:@{@"contactPerson": [self getNotNull:_contactPerson.text]}];
     }
     
-    if (selectedIRDBranchCode.length > 0 && ![selectedIRDBranchCode isEqualToString:_contactModel.IRDBranch.codeValue]) {
-        [data addEntriesFromDictionary:@{@"irdBranch": @{
-                                                 @"code":[self getValidValue:selectedIRDBranchCode]
-                                                 }}];
+    if (_citizenship.text.length > 0 && ![_citizenship.text isEqualToString:_contactModel.citizenShip]) {
+        [data addEntriesFromDictionary:@{@"citizenship": [self getNotNull:_citizenship.text]}];
+    }
+    
+    if (_dateOfBirth.text.length > 0 && ![[DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text] isEqualToString:_contactModel.dateOfBirth]) {
+        [data addEntriesFromDictionary:@{@"dateBirth": [DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text]}];
+    }
+    
+    if (_taxFileNo.text.length > 0 && ![_taxFileNo.text isEqualToString:_contactModel.tax]) {
+        [data addEntriesFromDictionary:@{@"taxFileNo": [self getNotNull:_taxFileNo.text]}];
     }
     
     if (selectedOccupationCode.length > 0 && ![selectedOccupationCode isEqualToString:_contactModel.occupation.codeValue]) {
@@ -728,17 +733,15 @@
                                                  @"code":[self getValidValue:selectedOccupationCode]
                                                  }}];
     }
-
+    
+    if (selectedIRDBranchCode.length > 0 && ![selectedIRDBranchCode isEqualToString:_contactModel.IRDBranch.codeValue]) {
+        [data addEntriesFromDictionary:@{@"irdBranch": @{
+                                                 @"code":[self getValidValue:selectedIRDBranchCode]
+                                                 }}];
+    }
+    
     if (_registeredOffice.text.length > 0 && ![_registeredOffice.text isEqualToString:_contactModel.registeredOffice]) {
         [data addEntriesFromDictionary:@{@"registeredOffice": [self getNotNull:_registeredOffice.text]}];
-    }
-    
-    if (_taxFileNo.text.length > 0 && ![_taxFileNo.text isEqualToString:_contactModel.tax]) {
-        [data addEntriesFromDictionary:@{@"taxFileNo": [self getNotNull:_taxFileNo.text]}];
-    }
-    
-    if (_oldIC.text.length > 0 && ![_oldIC.text isEqualToString:_contactModel.KPLama]) {
-        [data addEntriesFromDictionary:@{@"oldIC": [self getNotNull:_oldIC.text]}];
     }
     
     
@@ -848,7 +851,7 @@
     
     if (textField.tag == 2) {
         if ([selectedIDTypeCode integerValue] == 1 || [selectedIDTypeCode integerValue] == 2) {
-            string = [[[string stringByReplacingOccurrencesOfString:@"-" withString:@""] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]mutableCopy];
+            string = [[[string stringByReplacingOccurrencesOfString:@"-" withString:@""] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] mutableCopy];
             if (string.length > 12) {
                 [QMAlert showAlertWithMessage:@"ID is wrong" actionSuccess:NO inViewController:self];
                 return;
@@ -883,8 +886,9 @@
                 return;
             }
             isIDChecking = YES;
-            [self checkIDValidation:string url:CONTACT_ID_DUPLICATE message:@"ID Duplication " withCompletion:^{
+            [self checkIDValidation:string url:[CONTACT_ID_DUPLICATE stringByAppendingString:string]  message:@"ID Duplication " withCompletion:^{
                 self->isIDDuplicated = YES;
+                textField.text = @"";
             } withFinalCompletion:^{
                 self->isIDChecking = NO;
             }];
@@ -897,8 +901,9 @@
                 return;
             }
             isIDChecking = YES;
-            [self checkIDValidation:string url:CONTACT_ID_DUPLICATE message:@"ID Duplication " withCompletion:^{
+            [self checkIDValidation:string url:[CONTACT_ID_DUPLICATE stringByAppendingString:string] message:@"ID Duplication " withCompletion:^{
                 self->isIDDuplicated = YES;
+                textField.text = @"";
             } withFinalCompletion:^{
                 self->isIDChecking = NO;
             }];
@@ -911,8 +916,9 @@
                 return;
             }
             isNameChecking = YES;
-            [self checkIDValidation:string url:CONTACT_NAME_DUPLICATE message:@"Name Duplication" withCompletion:^{
+            [self checkIDValidation:string url:[CONTACT_NAME_DUPLICATE stringByAppendingString:string] message:@"Name Duplication" withCompletion:^{
                 self->isNameDuplicated = YES;
+                textField.text = @"";
             } withFinalCompletion:^{
                 self->isNameChecking = NO;
             }];

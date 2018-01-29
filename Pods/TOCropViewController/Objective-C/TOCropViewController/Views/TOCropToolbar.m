@@ -1,7 +1,7 @@
 //
 //  TOCropToolbar.h
 //
-//  Copyright 2015-2017 Timothy Oliver. All rights reserved.
+//  Copyright 2015-2018 Timothy Oliver. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to
@@ -59,8 +59,6 @@
     self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.12f alpha:1.0f];
     [self addSubview:self.backgroundView];
     
-    _rotateClockwiseButtonHidden = YES;
-    
     // On iOS 9, we can use the new layout features to determine whether we're in an 'Arabic' style language mode
     if (@available(iOS 9.0, *)) {
         self.reverseContentLayout = ([UIView userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute] == UIUserInterfaceLayoutDirectionRightToLeft);
@@ -90,6 +88,7 @@
     [_doneTextButton setTitleColor:[UIColor colorWithRed:1.0f green:0.8f blue:0.0f alpha:1.0f] forState:UIControlStateNormal];
     [_doneTextButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
     [_doneTextButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [_doneTextButton sizeToFit];
     [self addSubview:_doneTextButton];
     
     _doneIconButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -108,6 +107,7 @@
                        forState:UIControlStateNormal];
     [_cancelTextButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
     [_cancelTextButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [_cancelTextButton sizeToFit];
     [self addSubview:_cancelTextButton];
     
     _cancelIconButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -128,6 +128,13 @@
     [_rotateCounterclockwiseButton setImage:[TOCropToolbar rotateCCWImage] forState:UIControlStateNormal];
     [_rotateCounterclockwiseButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_rotateCounterclockwiseButton];
+    
+    _rotateClockwiseButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _rotateClockwiseButton.contentMode = UIViewContentModeCenter;
+    _rotateClockwiseButton.tintColor = [UIColor whiteColor];
+    [_rotateClockwiseButton setImage:[TOCropToolbar rotateCWImage] forState:UIControlStateNormal];
+    [_rotateClockwiseButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_rotateClockwiseButton];
     
     _resetButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _resetButton.contentMode = UIViewContentModeCenter;
@@ -175,9 +182,7 @@
         // Work out the cancel button frame
         CGRect frame = CGRectZero;
         frame.size.height = 44.0f;
-        CGFloat cancelButtonWidth = [self.cancelTextButtonTitle ?
-                                     self.cancelTextButtonTitle : self.cancelTextButton.titleLabel.text  sizeWithAttributes:@{NSFontAttributeName:self.cancelTextButton.titleLabel.font}].width + 10;
-        frame.size.width = MIN(self.frame.size.width / 3.0, cancelButtonWidth);
+        frame.size.width = MIN(self.frame.size.width / 3.0, self.cancelTextButton.frame.size.width);
 
         //If normal layout, place on the left side, else place on the right
         if (self.reverseContentLayout == NO) {
@@ -189,9 +194,7 @@
         self.cancelTextButton.frame = frame;
         
         // Work out the Done button frame
-        CGFloat doneButtonWidth = [self.cancelTextButtonTitle ?
-                                   self.cancelTextButtonTitle : self.doneTextButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:self.doneTextButton.titleLabel.font}].width + 10;
-        frame.size.width = MIN(self.frame.size.width / 3.0, doneButtonWidth);
+        frame.size.width = MIN(self.frame.size.width / 3.0, self.doneTextButton.frame.size.width);
         
         if (self.reverseContentLayout == NO) {
             frame.origin.x = boundsSize.width - (frame.size.width + insetPadding);
@@ -291,11 +294,6 @@
         CGPoint origin = horizontally ? CGPointMake(diffOffset, sameOffset) : CGPointMake(sameOffset, diffOffset);
         if (horizontally) {
             origin.x += CGRectGetMinX(containerRect);
-            if (@available(iOS 11.0, *)) {
-            }
-            else {
-                origin.y += self.statusBarHeightInset;
-            }
         } else {
             origin.y += CGRectGetMinY(containerRect);
         }
@@ -384,11 +382,13 @@
 - (void)setCancelTextButtonTitle:(NSString *)cancelTextButtonTitle {
     _cancelTextButtonTitle = cancelTextButtonTitle;
     [_cancelTextButton setTitle:_cancelTextButtonTitle forState:UIControlStateNormal];
+    [_cancelTextButton sizeToFit];
 }
 
 - (void)setDoneTextButtonTitle:(NSString *)doneTextButtonTitle {
     _doneTextButtonTitle = doneTextButtonTitle;
     [_doneTextButton setTitle:_doneTextButtonTitle forState:UIControlStateNormal];
+    [_doneTextButton sizeToFit];
 }
 
 #pragma mark - Image Generation -
@@ -591,19 +591,6 @@
     }
     
     _rotateClockwiseButtonHidden = rotateClockwiseButtonHidden;
-    
-    if (_rotateClockwiseButtonHidden == NO) {
-        _rotateClockwiseButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        _rotateClockwiseButton.contentMode = UIViewContentModeCenter;
-        _rotateClockwiseButton.tintColor = [UIColor whiteColor];
-        [_rotateClockwiseButton setImage:[TOCropToolbar rotateCWImage] forState:UIControlStateNormal];
-        [_rotateClockwiseButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_rotateClockwiseButton];
-    }
-    else {
-        [_rotateClockwiseButton removeFromSuperview];
-        _rotateClockwiseButton = nil;
-    }
     
     [self setNeedsLayout];
 }

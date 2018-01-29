@@ -218,6 +218,39 @@
 		7920E7B11EA0129F002FEFF3 /* ChatUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7920E7B01EA0129F002FEFF3 /* ChatUserModel.m */; };
 		7920E7B51EA0512C002FEFF3 /* DIFileBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7920E7B41EA0512C002FEFF3 /* DIFileBrowser.m */; };
 		7920E7B91EA05DF6002FEFF3 /* FCFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7920E7B81EA05DF6002FEFF3 /* FCFileManager.m */; };
+		792287EA2017BC94002AB744 /* MPGNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287DD2017BC92002AB744 /* MPGNotification.m */; };
+		792287EB2017BC94002AB744 /* QMCallKitAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287E02017BC92002AB744 /* QMCallKitAdapter.m */; };
+		792287EC2017BC94002AB744 /* QMShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287E42017BC94002AB744 /* QMShareHelper.m */; };
+		792287F32017BCA2002AB744 /* QBSettings+Qmunicate.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287EF2017BCA0002AB744 /* QBSettings+Qmunicate.m */; };
+		792287F42017BCA2002AB744 /* UIAlertController+QM.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287F22017BCA1002AB744 /* UIAlertController+QM.m */; };
+		792287F82017C6B2002AB744 /* QMDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287F62017C6B2002AB744 /* QMDataSource.m */; };
+		792288012017C72C002AB744 /* QMExtensionCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287FC2017C72B002AB744 /* QMExtensionCache.m */; };
+		792288022017C72C002AB744 /* QMActivityItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 792287FE2017C72B002AB744 /* QMActivityItem.m */; };
+		792288082017C762002AB744 /* NSString+QMSiriUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288052017C762002AB744 /* NSString+QMSiriUtils.m */; };
+		792288092017C762002AB744 /* NSString+QMTransliterating.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288062017C762002AB744 /* NSString+QMTransliterating.m */; };
+		7922885E2017C88E002AB744 /* QMShareItemsDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288162017C88E002AB744 /* QMShareItemsDataProvider.m */; };
+		7922885F2017C88E002AB744 /* QMShareDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288182017C88E002AB744 /* QMShareDataSource.m */; };
+		792288602017C88E002AB744 /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7922881A2017C88E002AB744 /* Image.xcassets */; };
+		792288612017C88E002AB744 /* QMShareTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7922881C2017C88E002AB744 /* QMShareTableViewController.xib */; };
+		792288622017C88E002AB744 /* QMShareRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7922881D2017C88E002AB744 /* QMShareRootViewController.m */; };
+		792288632017C88E002AB744 /* QMShareTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7922881E2017C88E002AB744 /* QMShareTableViewController.m */; };
+		792288642017C88E002AB744 /* ShareInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 792288212017C88E002AB744 /* ShareInterface.storyboard */; };
+		792288652017C88E002AB744 /* QMShareTasks.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288252017C88E002AB744 /* QMShareTasks.m */; };
+		792288662017C88E002AB744 /* QMAttachmentProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288272017C88E002AB744 /* QMAttachmentProvider.m */; };
+		792288672017C88E002AB744 /* QMShareEtxentionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288292017C88E002AB744 /* QMShareEtxentionOperation.m */; };
+		792288682017C88E002AB744 /* QMShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7922882D2017C88E002AB744 /* QMShareCollectionViewCell.xib */; };
+		792288692017C88E002AB744 /* QMShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7922882E2017C88E002AB744 /* QMShareCollectionViewCell.m */; };
+		7922886A2017C88E002AB744 /* QMShareTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288302017C88E002AB744 /* QMShareTableViewCell.m */; };
+		7922886B2017C88E002AB744 /* QMShareTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 792288322017C88E002AB744 /* QMShareTableViewCell.xib */; };
+		7922886C2017C88E002AB744 /* QMShareContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 792288342017C88E002AB744 /* QMShareContactsTableViewCell.xib */; };
+		7922886D2017C88E002AB744 /* QMShareContactsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288352017C88E002AB744 /* QMShareContactsTableViewCell.m */; };
+		7922886E2017C88E002AB744 /* QMExtensionCache+QMShareExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7922883A2017C88E002AB744 /* QMExtensionCache+QMShareExtension.m */; };
+		7922886F2017C88E002AB744 /* NSError+QMShareExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7922883C2017C88E002AB744 /* NSError+QMShareExtension.m */; };
+		792288702017C88E002AB744 /* NSURL+QMShareExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 7922883F2017C88E002AB744 /* NSURL+QMShareExtension.m */; };
+		792288712017C88E002AB744 /* QBChatDialog+QMShareItemProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288412017C88E002AB744 /* QBChatDialog+QMShareItemProtocol.m */; };
+		792288722017C88E002AB744 /* QBUUser+QMShareItemProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 792288452017C88E002AB744 /* QBUUser+QMShareItemProtocol.m */; };
+		792288732017C88E002AB744 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 792288492017C88E002AB744 /* Info.plist */; };
+		792288802017E595002AB744 /* QMAlphabetizedTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7922887D2017E595002AB744 /* QMAlphabetizedTableViewDataSource.m */; };
 		7931B4BC1EA851B00090BDE0 /* menu_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 7931B49E1EA851AF0090BDE0 /* menu_add.png */; };
 		7931B4BD1EA851B00090BDE0 /* menu_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7931B49F1EA851AF0090BDE0 /* menu_add@2x.png */; };
 		7931B4BE1EA851B00090BDE0 /* menu_add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7931B4A01EA851AF0090BDE0 /* menu_add@3x.png */; };
@@ -1562,6 +1595,69 @@
 		7920E7B41EA0512C002FEFF3 /* DIFileBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIFileBrowser.m; sourceTree = "<group>"; };
 		7920E7B71EA05DF6002FEFF3 /* FCFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCFileManager.h; sourceTree = "<group>"; };
 		7920E7B81EA05DF6002FEFF3 /* FCFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCFileManager.m; sourceTree = "<group>"; };
+		792287DD2017BC92002AB744 /* MPGNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGNotification.m; sourceTree = "<group>"; };
+		792287DE2017BC92002AB744 /* MPGNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGNotification.h; sourceTree = "<group>"; };
+		792287E02017BC92002AB744 /* QMCallKitAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMCallKitAdapter.m; sourceTree = "<group>"; };
+		792287E12017BC92002AB744 /* QMCallKitAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMCallKitAdapter.h; sourceTree = "<group>"; };
+		792287E32017BC94002AB744 /* QMShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareHelper.h; sourceTree = "<group>"; };
+		792287E42017BC94002AB744 /* QMShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareHelper.m; sourceTree = "<group>"; };
+		792287EE2017BCA0002AB744 /* QBSettings+Qmunicate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QBSettings+Qmunicate.h"; sourceTree = "<group>"; };
+		792287EF2017BCA0002AB744 /* QBSettings+Qmunicate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QBSettings+Qmunicate.m"; sourceTree = "<group>"; };
+		792287F12017BCA1002AB744 /* UIAlertController+QM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+QM.h"; sourceTree = "<group>"; };
+		792287F22017BCA1002AB744 /* UIAlertController+QM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+QM.m"; sourceTree = "<group>"; };
+		792287F62017C6B2002AB744 /* QMDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMDataSource.m; sourceTree = "<group>"; };
+		792287F72017C6B2002AB744 /* QMDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMDataSource.h; sourceTree = "<group>"; };
+		792287FB2017C72B002AB744 /* QMExtensionCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMExtensionCache.h; sourceTree = "<group>"; };
+		792287FC2017C72B002AB744 /* QMExtensionCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMExtensionCache.m; sourceTree = "<group>"; };
+		792287FE2017C72B002AB744 /* QMActivityItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMActivityItem.m; sourceTree = "<group>"; };
+		792287FF2017C72B002AB744 /* QMActivityItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMActivityItem.h; sourceTree = "<group>"; };
+		792288002017C72B002AB744 /* QMINPersonProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMINPersonProtocol.h; sourceTree = "<group>"; };
+		792288042017C762002AB744 /* NSString+QMTransliterating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+QMTransliterating.h"; sourceTree = "<group>"; };
+		792288052017C762002AB744 /* NSString+QMSiriUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QMSiriUtils.m"; sourceTree = "<group>"; };
+		792288062017C762002AB744 /* NSString+QMTransliterating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+QMTransliterating.m"; sourceTree = "<group>"; };
+		792288072017C762002AB744 /* NSString+QMSiriUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+QMSiriUtils.h"; sourceTree = "<group>"; };
+		792288122017C88E002AB744 /* QMShareExtension.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = QMShareExtension.entitlements; sourceTree = "<group>"; };
+		792288152017C88E002AB744 /* QMShareItemsDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareItemsDataProvider.h; sourceTree = "<group>"; };
+		792288162017C88E002AB744 /* QMShareItemsDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareItemsDataProvider.m; sourceTree = "<group>"; };
+		792288182017C88E002AB744 /* QMShareDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareDataSource.m; sourceTree = "<group>"; };
+		792288192017C88E002AB744 /* QMShareDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareDataSource.h; sourceTree = "<group>"; };
+		7922881A2017C88E002AB744 /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
+		7922881C2017C88E002AB744 /* QMShareTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QMShareTableViewController.xib; sourceTree = "<group>"; };
+		7922881D2017C88E002AB744 /* QMShareRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareRootViewController.m; sourceTree = "<group>"; };
+		7922881E2017C88E002AB744 /* QMShareTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareTableViewController.m; sourceTree = "<group>"; };
+		7922881F2017C88E002AB744 /* QMShareTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareTableViewController.h; sourceTree = "<group>"; };
+		792288202017C88E002AB744 /* QMShareRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareRootViewController.h; sourceTree = "<group>"; };
+		792288222017C88E002AB744 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ShareInterface.storyboard; sourceTree = "<group>"; };
+		792288242017C88E002AB744 /* QMAttachmentProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMAttachmentProvider.h; sourceTree = "<group>"; };
+		792288252017C88E002AB744 /* QMShareTasks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareTasks.m; sourceTree = "<group>"; };
+		792288262017C88E002AB744 /* QMShareEtxentionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareEtxentionOperation.h; sourceTree = "<group>"; };
+		792288272017C88E002AB744 /* QMAttachmentProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMAttachmentProvider.m; sourceTree = "<group>"; };
+		792288282017C88E002AB744 /* QMShareTasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareTasks.h; sourceTree = "<group>"; };
+		792288292017C88E002AB744 /* QMShareEtxentionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareEtxentionOperation.m; sourceTree = "<group>"; };
+		7922882C2017C88E002AB744 /* QMShareCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareCollectionViewCell.h; sourceTree = "<group>"; };
+		7922882D2017C88E002AB744 /* QMShareCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QMShareCollectionViewCell.xib; sourceTree = "<group>"; };
+		7922882E2017C88E002AB744 /* QMShareCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareCollectionViewCell.m; sourceTree = "<group>"; };
+		792288302017C88E002AB744 /* QMShareTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareTableViewCell.m; sourceTree = "<group>"; };
+		792288312017C88E002AB744 /* QMShareTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareTableViewCell.h; sourceTree = "<group>"; };
+		792288322017C88E002AB744 /* QMShareTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QMShareTableViewCell.xib; sourceTree = "<group>"; };
+		792288342017C88E002AB744 /* QMShareContactsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QMShareContactsTableViewCell.xib; sourceTree = "<group>"; };
+		792288352017C88E002AB744 /* QMShareContactsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMShareContactsTableViewCell.m; sourceTree = "<group>"; };
+		792288362017C88E002AB744 /* QMShareContactsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareContactsTableViewCell.h; sourceTree = "<group>"; };
+		792288392017C88E002AB744 /* QMExtensionCache+QMShareExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QMExtensionCache+QMShareExtension.h"; sourceTree = "<group>"; };
+		7922883A2017C88E002AB744 /* QMExtensionCache+QMShareExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QMExtensionCache+QMShareExtension.m"; sourceTree = "<group>"; };
+		7922883C2017C88E002AB744 /* NSError+QMShareExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+QMShareExtension.m"; sourceTree = "<group>"; };
+		7922883D2017C88E002AB744 /* NSURL+QMShareExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+QMShareExtension.h"; sourceTree = "<group>"; };
+		7922883E2017C88E002AB744 /* NSError+QMShareExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+QMShareExtension.h"; sourceTree = "<group>"; };
+		7922883F2017C88E002AB744 /* NSURL+QMShareExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+QMShareExtension.m"; sourceTree = "<group>"; };
+		792288412017C88E002AB744 /* QBChatDialog+QMShareItemProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QBChatDialog+QMShareItemProtocol.m"; sourceTree = "<group>"; };
+		792288422017C88E002AB744 /* QBChatDialog+QMShareItemProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QBChatDialog+QMShareItemProtocol.h"; sourceTree = "<group>"; };
+		792288442017C88E002AB744 /* QBUUser+QMShareItemProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QBUUser+QMShareItemProtocol.h"; sourceTree = "<group>"; };
+		792288452017C88E002AB744 /* QBUUser+QMShareItemProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "QBUUser+QMShareItemProtocol.m"; sourceTree = "<group>"; };
+		792288472017C88E002AB744 /* QMShareItemProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareItemProtocol.h; sourceTree = "<group>"; };
+		792288482017C88E002AB744 /* QMShareViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMShareViewProtocol.h; sourceTree = "<group>"; };
+		792288492017C88E002AB744 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7922887D2017E595002AB744 /* QMAlphabetizedTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMAlphabetizedTableViewDataSource.m; sourceTree = "<group>"; };
+		7922887F2017E595002AB744 /* QMAlphabetizedTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMAlphabetizedTableViewDataSource.h; sourceTree = "<group>"; };
 		7931B49E1EA851AF0090BDE0 /* menu_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_add.png; sourceTree = "<group>"; };
 		7931B49F1EA851AF0090BDE0 /* menu_add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_add@2x.png"; sourceTree = "<group>"; };
 		7931B4A01EA851AF0090BDE0 /* menu_add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_add@3x.png"; sourceTree = "<group>"; };
@@ -4039,6 +4135,283 @@
 			path = FCFileManager;
 			sourceTree = "<group>";
 		};
+		792287D02017BC92002AB744 /* ThirdPartyLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				792287DC2017BC92002AB744 /* MPGNotification */,
+			);
+			path = ThirdPartyLibraries;
+			sourceTree = "<group>";
+		};
+		792287DC2017BC92002AB744 /* MPGNotification */ = {
+			isa = PBXGroup;
+			children = (
+				792287DD2017BC92002AB744 /* MPGNotification.m */,
+				792287DE2017BC92002AB744 /* MPGNotification.h */,
+			);
+			path = MPGNotification;
+			sourceTree = "<group>";
+		};
+		792287DF2017BC92002AB744 /* QMCallKitAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				792287E02017BC92002AB744 /* QMCallKitAdapter.m */,
+				792287E12017BC92002AB744 /* QMCallKitAdapter.h */,
+			);
+			path = QMCallKitAdapter;
+			sourceTree = "<group>";
+		};
+		792287E22017BC94002AB744 /* QMShareHelper */ = {
+			isa = PBXGroup;
+			children = (
+				792287E32017BC94002AB744 /* QMShareHelper.h */,
+				792287E42017BC94002AB744 /* QMShareHelper.m */,
+			);
+			path = QMShareHelper;
+			sourceTree = "<group>";
+		};
+		792287ED2017BCA0002AB744 /* QBSettings */ = {
+			isa = PBXGroup;
+			children = (
+				792287EE2017BCA0002AB744 /* QBSettings+Qmunicate.h */,
+				792287EF2017BCA0002AB744 /* QBSettings+Qmunicate.m */,
+			);
+			path = QBSettings;
+			sourceTree = "<group>";
+		};
+		792287F02017BCA1002AB744 /* UIAlertViewController */ = {
+			isa = PBXGroup;
+			children = (
+				792287F12017BCA1002AB744 /* UIAlertController+QM.h */,
+				792287F22017BCA1002AB744 /* UIAlertController+QM.m */,
+			);
+			path = UIAlertViewController;
+			sourceTree = "<group>";
+		};
+		792287F52017C6B2002AB744 /* QMDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				792287F62017C6B2002AB744 /* QMDataSource.m */,
+				792287F72017C6B2002AB744 /* QMDataSource.h */,
+			);
+			path = QMDataSource;
+			sourceTree = "<group>";
+		};
+		792287F92017C72B002AB744 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				792287FA2017C72B002AB744 /* QMExtensionCache */,
+				792287FD2017C72B002AB744 /* QMActivityItem */,
+				792288002017C72B002AB744 /* QMINPersonProtocol.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		792287FA2017C72B002AB744 /* QMExtensionCache */ = {
+			isa = PBXGroup;
+			children = (
+				792287FB2017C72B002AB744 /* QMExtensionCache.h */,
+				792287FC2017C72B002AB744 /* QMExtensionCache.m */,
+			);
+			path = QMExtensionCache;
+			sourceTree = "<group>";
+		};
+		792287FD2017C72B002AB744 /* QMActivityItem */ = {
+			isa = PBXGroup;
+			children = (
+				792287FE2017C72B002AB744 /* QMActivityItem.m */,
+				792287FF2017C72B002AB744 /* QMActivityItem.h */,
+			);
+			path = QMActivityItem;
+			sourceTree = "<group>";
+		};
+		792288032017C762002AB744 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				792288042017C762002AB744 /* NSString+QMTransliterating.h */,
+				792288052017C762002AB744 /* NSString+QMSiriUtils.m */,
+				792288062017C762002AB744 /* NSString+QMTransliterating.m */,
+				792288072017C762002AB744 /* NSString+QMSiriUtils.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		792288112017C88E002AB744 /* QMShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				792288122017C88E002AB744 /* QMShareExtension.entitlements */,
+				792288132017C88E002AB744 /* Data Source */,
+				7922881A2017C88E002AB744 /* Image.xcassets */,
+				7922881B2017C88E002AB744 /* View Controllers */,
+				792288212017C88E002AB744 /* ShareInterface.storyboard */,
+				792288232017C88E002AB744 /* Common classes */,
+				7922882A2017C88E002AB744 /* Views */,
+				792288372017C88E002AB744 /* Categories */,
+				792288462017C88E002AB744 /* Protocols */,
+				792288492017C88E002AB744 /* Info.plist */,
+			);
+			path = QMShareExtension;
+			sourceTree = "<group>";
+		};
+		792288132017C88E002AB744 /* Data Source */ = {
+			isa = PBXGroup;
+			children = (
+				792288142017C88E002AB744 /* QMShareItemsDataProvider */,
+				792288172017C88E002AB744 /* QMShareDataSource */,
+			);
+			path = "Data Source";
+			sourceTree = "<group>";
+		};
+		792288142017C88E002AB744 /* QMShareItemsDataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				792288152017C88E002AB744 /* QMShareItemsDataProvider.h */,
+				792288162017C88E002AB744 /* QMShareItemsDataProvider.m */,
+			);
+			path = QMShareItemsDataProvider;
+			sourceTree = "<group>";
+		};
+		792288172017C88E002AB744 /* QMShareDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				792288182017C88E002AB744 /* QMShareDataSource.m */,
+				792288192017C88E002AB744 /* QMShareDataSource.h */,
+			);
+			path = QMShareDataSource;
+			sourceTree = "<group>";
+		};
+		7922881B2017C88E002AB744 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7922881C2017C88E002AB744 /* QMShareTableViewController.xib */,
+				7922881D2017C88E002AB744 /* QMShareRootViewController.m */,
+				7922881E2017C88E002AB744 /* QMShareTableViewController.m */,
+				7922881F2017C88E002AB744 /* QMShareTableViewController.h */,
+				792288202017C88E002AB744 /* QMShareRootViewController.h */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		792288232017C88E002AB744 /* Common classes */ = {
+			isa = PBXGroup;
+			children = (
+				792288242017C88E002AB744 /* QMAttachmentProvider.h */,
+				792288252017C88E002AB744 /* QMShareTasks.m */,
+				792288262017C88E002AB744 /* QMShareEtxentionOperation.h */,
+				792288272017C88E002AB744 /* QMAttachmentProvider.m */,
+				792288282017C88E002AB744 /* QMShareTasks.h */,
+				792288292017C88E002AB744 /* QMShareEtxentionOperation.m */,
+			);
+			path = "Common classes";
+			sourceTree = "<group>";
+		};
+		7922882A2017C88E002AB744 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7922882B2017C88E002AB744 /* QMShareCollectionViewCell */,
+				7922882F2017C88E002AB744 /* QMShareTableViewCell */,
+				792288332017C88E002AB744 /* QMShareContactsTableViewCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7922882B2017C88E002AB744 /* QMShareCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				7922882C2017C88E002AB744 /* QMShareCollectionViewCell.h */,
+				7922882D2017C88E002AB744 /* QMShareCollectionViewCell.xib */,
+				7922882E2017C88E002AB744 /* QMShareCollectionViewCell.m */,
+			);
+			path = QMShareCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		7922882F2017C88E002AB744 /* QMShareTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				792288302017C88E002AB744 /* QMShareTableViewCell.m */,
+				792288312017C88E002AB744 /* QMShareTableViewCell.h */,
+				792288322017C88E002AB744 /* QMShareTableViewCell.xib */,
+			);
+			path = QMShareTableViewCell;
+			sourceTree = "<group>";
+		};
+		792288332017C88E002AB744 /* QMShareContactsTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				792288342017C88E002AB744 /* QMShareContactsTableViewCell.xib */,
+				792288352017C88E002AB744 /* QMShareContactsTableViewCell.m */,
+				792288362017C88E002AB744 /* QMShareContactsTableViewCell.h */,
+			);
+			path = QMShareContactsTableViewCell;
+			sourceTree = "<group>";
+		};
+		792288372017C88E002AB744 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				792288382017C88E002AB744 /* QMExtensionCache+QMShareExtension */,
+				7922883B2017C88E002AB744 /* NSURL+QMShareExtension */,
+				792288402017C88E002AB744 /* QBChatDialog+QMShareItemProtocol */,
+				792288432017C88E002AB744 /* QBUUser+QMShareItemProtocol */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		792288382017C88E002AB744 /* QMExtensionCache+QMShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				792288392017C88E002AB744 /* QMExtensionCache+QMShareExtension.h */,
+				7922883A2017C88E002AB744 /* QMExtensionCache+QMShareExtension.m */,
+			);
+			path = "QMExtensionCache+QMShareExtension";
+			sourceTree = "<group>";
+		};
+		7922883B2017C88E002AB744 /* NSURL+QMShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				7922883C2017C88E002AB744 /* NSError+QMShareExtension.m */,
+				7922883D2017C88E002AB744 /* NSURL+QMShareExtension.h */,
+				7922883E2017C88E002AB744 /* NSError+QMShareExtension.h */,
+				7922883F2017C88E002AB744 /* NSURL+QMShareExtension.m */,
+			);
+			path = "NSURL+QMShareExtension";
+			sourceTree = "<group>";
+		};
+		792288402017C88E002AB744 /* QBChatDialog+QMShareItemProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				792288412017C88E002AB744 /* QBChatDialog+QMShareItemProtocol.m */,
+				792288422017C88E002AB744 /* QBChatDialog+QMShareItemProtocol.h */,
+			);
+			path = "QBChatDialog+QMShareItemProtocol";
+			sourceTree = "<group>";
+		};
+		792288432017C88E002AB744 /* QBUUser+QMShareItemProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				792288442017C88E002AB744 /* QBUUser+QMShareItemProtocol.h */,
+				792288452017C88E002AB744 /* QBUUser+QMShareItemProtocol.m */,
+			);
+			path = "QBUUser+QMShareItemProtocol";
+			sourceTree = "<group>";
+		};
+		792288462017C88E002AB744 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				792288472017C88E002AB744 /* QMShareItemProtocol.h */,
+				792288482017C88E002AB744 /* QMShareViewProtocol.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		7922887B2017E595002AB744 /* QMAlphabetizedDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				7922887D2017E595002AB744 /* QMAlphabetizedTableViewDataSource.m */,
+				7922887F2017E595002AB744 /* QMAlphabetizedTableViewDataSource.h */,
+			);
+			path = QMAlphabetizedDataSource;
+			sourceTree = "<group>";
+		};
 		7931B4DA1EA8E8E10090BDE0 /* UITextField+LeftView */ = {
 			isa = PBXGroup;
 			children = (
@@ -5595,6 +5968,7 @@
 		79FBDE661E302F6600448FE3 = {
 			isa = PBXGroup;
 			children = (
+				792288112017C88E002AB744 /* QMShareExtension */,
 				79FC42841E588B3800D9DC64 /* Localizable.strings */,
 				79FBDE711E302F6600448FE3 /* Denning */,
 				9685EBDE1F51F8E80006C0E0 /* DenningShare */,
@@ -5703,6 +6077,9 @@
 		79FBDEB81E30421A00448FE3 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				792288032017C762002AB744 /* Common */,
+				792287ED2017BCA0002AB744 /* QBSettings */,
+				792287F02017BCA1002AB744 /* UIAlertViewController */,
 				7912A5CF1FEB9F5B00C8B9A5 /* CornerView */,
 				7912A5D21FEB9F5C00C8B9A5 /* QBToolBar */,
 				7954327B1FC655BB00FF9E57 /* NSString */,
@@ -5890,6 +6267,10 @@
 		79FBDEF41E30421A00448FE3 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				792287F92017C72B002AB744 /* Common */,
+				792287DF2017BC92002AB744 /* QMCallKitAdapter */,
+				792287E22017BC94002AB744 /* QMShareHelper */,
+				792287D02017BC92002AB744 /* ThirdPartyLibraries */,
 				7912A63A1FEBA91B00C8B9A5 /* PlaceholderGenerator */,
 				7912A5FA1FEB9FF300C8B9A5 /* FileManager */,
 				7954329F1FC65BF600FF9E57 /* QMImageBarButtonItem */,
@@ -6469,6 +6850,8 @@
 		79FBE0211E304EAA00448FE3 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				7922887B2017E595002AB744 /* QMAlphabetizedDataSource */,
+				792287F52017C6B2002AB744 /* QMDataSource */,
 				795432731FC63A5500FF9E57 /* QMViewController */,
 				7954326F1FC63A2B00FF9E57 /* QMNavigationController */,
 				795432671FC631DD00FF9E57 /* QMTableViewController */,
@@ -9160,6 +9543,9 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.Siri = {
+								enabled = 0;
+							};
 						};
 					};
 					79FBDE871E302F6600448FE3 = {
@@ -9223,7 +9609,9 @@
 				793FF1621EBB7FD5001F83A5 /* icon_message@3x.png in Resources */,
 				793FF1661EBB7FDE001F83A5 /* icon_updates@3x.png in Resources */,
 				793FF18D1EBD4BDF001F83A5 /* icon_leave@2x.png in Resources */,
+				792288612017C88E002AB744 /* QMShareTableViewController.xib in Resources */,
 				793FF1301EBB78C9001F83A5 /* icon_edit_red.png in Resources */,
+				792288682017C88E002AB744 /* QMShareCollectionViewCell.xib in Resources */,
 				9636DCBE1F03C6C8008DDA41 /* icon_db_bank_balance.png in Resources */,
 				7903CF6C1ECD2B2D0090206C /* BillCell.xib in Resources */,
 				79EC0E6A1E8B0E8300320A28 /* icon_pdf@2x.png in Resources */,
@@ -9325,8 +9713,10 @@
 				79734F9D1EBAA11500647215 /* icon_delivery@3x.png in Resources */,
 				793FF2421EC4D12A001F83A5 /* AddLastTwoButtonsCell.xib in Resources */,
 				791360571FCDEF250022E80F /* phone-icon@2x.png in Resources */,
+				7922886B2017C88E002AB744 /* QMShareTableViewCell.xib in Resources */,
 				7931B4C01EA851B00090BDE0 /* menu_contact_us@2x.png in Resources */,
 				79EC0D8D1E87420200320A28 /* icon_news.png in Resources */,
+				792288732017C88E002AB744 /* Info.plist in Resources */,
 				793FF1651EBB7FDE001F83A5 /* icon_updates@2x.png in Resources */,
 				962082F31ED7B9E200BB595C /* LineGraphCell.xib in Resources */,
 				79EC0D251E77013A00320A28 /* SF-UI-Text-Regular.otf in Resources */,
@@ -9336,6 +9726,7 @@
 				79FBE1001E304F5000448FE3 /* QMSearchCell.xib in Resources */,
 				793FF19B1EBD4BDF001F83A5 /* icon_taxinvoice@3x.png in Resources */,
 				9636DCBD1F03C6C8008DDA41 /* icon_db_attendance@3x.png in Resources */,
+				7922886C2017C88E002AB744 /* QMShareContactsTableViewCell.xib in Resources */,
 				79D929DB1E8DA285000A53D2 /* icon_signout.png in Resources */,
 				79161CFC1FC95A0E0025BCB8 /* AddLastThreeButtonsCell.xib in Resources */,
 				79FF34FD1E97D95B001BECFB /* icon_home.png in Resources */,
@@ -9448,6 +9839,7 @@
 				79734FA01EBAA11500647215 /* icon_shared@3x.png in Resources */,
 				795DF22E1E6E3A81006D617D /* Contact@3x.png in Resources */,
 				79D929CC1E8DA27A000A53D2 /* icon_add.png in Resources */,
+				792288642017C88E002AB744 /* ShareInterface.storyboard in Resources */,
 				79D929E01E8DA285000A53D2 /* icon_termsOfUses@3x.png in Resources */,
 				79EC0E6E1E8B0E8300320A28 /* icon_png@3x.png in Resources */,
 				7931B4C31EA851B00090BDE0 /* menu_help@2x.png in Resources */,
@@ -9670,6 +10062,7 @@
 				797ED51F1EAF259B009C20C4 /* icon_edit@3x.png in Resources */,
 				9636DCC21F03C6C8008DDA41 /* icon_db_bank_recon@2x.png in Resources */,
 				795DF2431E6E4C3F006D617D /* Lato-BoldItalic.ttf in Resources */,
+				792288602017C88E002AB744 /* Image.xcassets in Resources */,
 				795DF2531E6E6FD0006D617D /* close.png in Resources */,
 				96A73A6E1F1A6CB600B97156 /* icon_close@3x.png in Resources */,
 				79FF353C1E9CB1DC001BECFB /* LastTableCell.xib in Resources */,
@@ -10047,6 +10440,7 @@
 				79EC0DD61E88013500320A28 /* ContactCell.m in Sources */,
 				79161CF11FC91C620025BCB8 /* ReceiptModel.m in Sources */,
 				96D1768A1F1FE9AB008734DA /* FileNoteSubModel.m in Sources */,
+				792288652017C88E002AB744 /* QMShareTasks.m in Sources */,
 				7954329D1FC65B8100FF9E57 /* QMAttachmentController.m in Sources */,
 				79E5FF061E71B22700E32AF8 /* PropertyModel.m in Sources */,
 				79FBE08B1E304EAB00448FE3 /* QMCornerButton.m in Sources */,
@@ -10063,6 +10457,7 @@
 				79161CCD1FC7E0600025BCB8 /* TaxInvoiceModel.m in Sources */,
 				79EC0E251E89E23800320A28 /* DocumentViewController.m in Sources */,
 				7912A5F61FEB9F6E00C8B9A5 /* StatsView.m in Sources */,
+				792288692017C88E002AB744 /* QMShareCollectionViewCell.m in Sources */,
 				79FBE0841E304EAA00448FE3 /* QMTableViewDataSource.m in Sources */,
 				79734F631EB97CAC00647215 /* AddContactViewController.m in Sources */,
 				79FBDFD41E30421A00448FE3 /* QMProfile.m in Sources */,
@@ -10092,11 +10487,14 @@
 				79FBE07C1E304EAA00448FE3 /* QMAlphabetizedDataSource.m in Sources */,
 				79FBDFAC1E30421A00448FE3 /* UIViewController+SmartDeselection.m in Sources */,
 				7920E78C1E9F2B9D002FEFF3 /* NSString+QMSiriUtils.m in Sources */,
+				792287EA2017BC94002AB744 /* MPGNotification.m in Sources */,
 				79FBE1081E304F5000448FE3 /* QMGroupAddUsersSearchDataProvider.m in Sources */,
 				7913604F1FCDB7F80022E80F /* QMLicenseAgreement.m in Sources */,
+				792288712017C88E002AB744 /* QBChatDialog+QMShareItemProtocol.m in Sources */,
 				96D176861F1FE884008734DA /* FileNoteModel.m in Sources */,
 				79FBE1101E304F5000448FE3 /* QMChangePasswordViewController.m in Sources */,
 				962082E21ED7734C00BB595C /* TwoColumnWithDotCell.m in Sources */,
+				792287F32017BCA2002AB744 /* QBSettings+Qmunicate.m in Sources */,
 				79EC0DEF1E88C7C500320A28 /* PartyModel.m in Sources */,
 				962083241EDBBF3E00BB595C /* ThreeColumnSecondCell.m in Sources */,
 				79FBE1011E304F5000448FE3 /* QMSelectableContactCell.m in Sources */,
@@ -10110,6 +10508,7 @@
 				79CE7C821EA78E20001A8101 /* NewLedgerModel.m in Sources */,
 				7912A62E1FEBA25100C8B9A5 /* RecordSettingsViewController.m in Sources */,
 				79161CED1FC8E59A0025BCB8 /* StaffAutoComplete.m in Sources */,
+				792288722017C88E002AB744 /* QBUUser+QMShareItemProtocol.m in Sources */,
 				96C7AF4A1EE6957D00EF0A37 /* MukimModel.m in Sources */,
 				79161CC51FC776590025BCB8 /* StaffLeaveModel.m in Sources */,
 				79FBDFDC1E30421A00448FE3 /* QMImages.m in Sources */,
@@ -10140,6 +10539,7 @@
 				96A73A871F1AAF3800B97156 /* FeesTransfer.m in Sources */,
 				79FBE0201E304E2300448FE3 /* UserModel.m in Sources */,
 				79556DC21E932F7700A16CB8 /* MessageViewController.m in Sources */,
+				7922886D2017C88E002AB744 /* QMShareContactsTableViewCell.m in Sources */,
 				7912A5CE1FEB9F4400C8B9A5 /* OpponentCollectionViewCell.m in Sources */,
 				7903CF4B1ECC00BB0090206C /* ListWithCodeTableViewController.m in Sources */,
 				96D66EEF1EFC4A1F003E3A4A /* SecondItemModel.m in Sources */,
@@ -10147,6 +10547,8 @@
 				79FBDFB91E30421A00448FE3 /* QMDigitsConfigurationFactory.m in Sources */,
 				795432491FC5386300FF9E57 /* CodeStrModel.m in Sources */,
 				79FF5B5A1E6FBB4000A27907 /* RelatedMatterViewController.m in Sources */,
+				792288092017C762002AB744 /* NSString+QMTransliterating.m in Sources */,
+				792288082017C762002AB744 /* NSString+QMSiriUtils.m in Sources */,
 				96821F2F1F1D7F4300F28708 /* FeeAndMatterGrowth.m in Sources */,
 				96A73AB31F1C9EA300B97156 /* FeesTranserDetail.m in Sources */,
 				7912A6351FEBA25200C8B9A5 /* SwitchItemModel.m in Sources */,
@@ -10165,6 +10567,7 @@
 				96821F1A1F1CF7D600F28708 /* DashboardAttendance.m in Sources */,
 				7903CF6B1ECD2B2D0090206C /* BillCell.m in Sources */,
 				7903CF7D1ECD37510090206C /* PropertyCodeCell.m in Sources */,
+				792288012017C72C002AB744 /* QMExtensionCache.m in Sources */,
 				962082BB1ED40C3000BB595C /* MatterLitigationModel.m in Sources */,
 				9635BB9E1F2A54FD00BE7CF0 /* SearchContactCell.m in Sources */,
 				793C1A0F1EC5314C00271B7F /* PresetBillModel.m in Sources */,
@@ -10173,7 +10576,9 @@
 				79FBDFD51E30421A00448FE3 /* QMTasks.m in Sources */,
 				962082C01ED417C200BB595C /* MatterLitigationCell.m in Sources */,
 				79161CC11FC754FA0025BCB8 /* LeavePendingApproval.m in Sources */,
+				792287EC2017BC94002AB744 /* QMShareHelper.m in Sources */,
 				9607589B1F014CFC008F9C69 /* SecondContactCell.m in Sources */,
+				792288662017C88E002AB744 /* QMAttachmentProvider.m in Sources */,
 				79FBDFDE1E30421A00448FE3 /* QMPermissions.m in Sources */,
 				79FBDF9D1E30421A00448FE3 /* BaseTextInputView.m in Sources */,
 				79EC0EB21E8BE7F700320A28 /* StamDutyViewController.m in Sources */,
@@ -10202,7 +10607,9 @@
 				960758A41F015B61008F9C69 /* MasterTitleModel.m in Sources */,
 				793FF1AE1EBF893C001F83A5 /* ClientModel.m in Sources */,
 				79FBDF9F1E30421A00448FE3 /* NSArray+Intersection.m in Sources */,
+				792288632017C88E002AB744 /* QMShareTableViewController.m in Sources */,
 				7912824E1FDE749C006E93E2 /* GroupChatsViewController.m in Sources */,
+				792288702017C88E002AB744 /* NSURL+QMShareExtension.m in Sources */,
 				962082B71ED3D03800BB595C /* AddDiaryViewController.m in Sources */,
 				7912A5821FE46D0900C8B9A5 /* FileSaveViewController.m in Sources */,
 				79FBDFE61E30421A00448FE3 /* REMessageUI.m in Sources */,
@@ -10216,10 +10623,13 @@
 				96A73A491F1A42A700B97156 /* DashboardContact.m in Sources */,
 				79F732261E96A929004F88DF /* AFHTTPSessionOperation.m in Sources */,
 				79FBDFA71E30421A00448FE3 /* UIImage+fixOrientation.m in Sources */,
+				792288022017C72C002AB744 /* QMActivityItem.m in Sources */,
 				96D66EFE1EFCB0F3003E3A4A /* DashboardTodayCell.m in Sources */,
 				79161CBD1FC754A30025BCB8 /* LeaveRecordsViewController.m in Sources */,
+				7922886E2017C88E002AB744 /* QMExtensionCache+QMShareExtension.m in Sources */,
 				79FBDFA81E30421A00448FE3 /* UIImage+Base64.m in Sources */,
 				96CACE101EE24E500087E76B /* TaskCheckModel.m in Sources */,
+				792287F42017BCA2002AB744 /* UIAlertController+QM.m in Sources */,
 				7912826B1FE0930F006E93E2 /* DIFileAttachmentIncomingCell.m in Sources */,
 				7912A5DB1FEB9F5C00C8B9A5 /* QBToolBar.m in Sources */,
 				79EC0E811E8B5B2700320A28 /* FirmURLModel.m in Sources */,
@@ -10232,6 +10642,7 @@
 				7954326E1FC6392B00FF9E57 /* UIScreen+QMLock.m in Sources */,
 				79FBDFB11E30421A00448FE3 /* QMCallManager.m in Sources */,
 				7912A5881FE481DB00C8B9A5 /* FileListViewController.m in Sources */,
+				792288622017C88E002AB744 /* QMShareRootViewController.m in Sources */,
 				9607F9751F06C2750012ABCD /* SolicitorHeaderCell.m in Sources */,
 				795432501FC5CD4200FF9E57 /* TodayEventViewController.m in Sources */,
 				79FBDFD81E30421A00448FE3 /* QMColors.m in Sources */,
@@ -10296,6 +10707,7 @@
 				962082D51ED641DE00BB595C /* CoramListViewController.m in Sources */,
 				7903D0811ECEC9680090206C /* PropertyTypeListViewController.m in Sources */,
 				960A661D1F0200570063AB6C /* DashboardSecondCell.m in Sources */,
+				792288802017E595002AB744 /* QMAlphabetizedTableViewDataSource.m in Sources */,
 				79EC0E101E89AD8400320A28 /* ThreeFieldsCell.m in Sources */,
 				79EC0EAB1E8BE7F700320A28 /* CalculatorSelectionViewController.m in Sources */,
 				79FBDFAD1E30421A00448FE3 /* DataManager.m in Sources */,
@@ -10327,10 +10739,12 @@
 				79FBE1F91E31600F00448FE3 /* QMForgotPasswordViewController.m in Sources */,
 				7920E7AE1EA01295002FEFF3 /* ChatFirmModel.m in Sources */,
 				9607588B1F00D412008F9C69 /* SecondMatterCell.m in Sources */,
+				7922885F2017C88E002AB744 /* QMShareDataSource.m in Sources */,
 				96A73A2E1F19A96800B97156 /* BankRecon.m in Sources */,
 				79FBDFA11E30421A00448FE3 /* NSString+Validation.m in Sources */,
 				7903D08D1ECF1D380090206C /* SolicitorCell.m in Sources */,
 				96D66EF31EFC91AD003E3A4A /* S3Model.m in Sources */,
+				7922885E2017C88E002AB744 /* QMShareItemsDataProvider.m in Sources */,
 				7912A5F71FEB9F6E00C8B9A5 /* LocalVideoView.m in Sources */,
 				7903CFA01ECD5BE50090206C /* CACModel.m in Sources */,
 				79F732271E96A929004F88DF /* AFURLSessionOperation.m in Sources */,
@@ -10364,8 +10778,10 @@
 				968E85E21EF19573001B442D /* IncreasingCell.m in Sources */,
 				79EC0DF21E88C7D100320A28 /* PartyGroupModel.m in Sources */,
 				79FBE07F1E304EAA00448FE3 /* QMSearchDataProvider.m in Sources */,
+				792288672017C88E002AB744 /* QMShareEtxentionOperation.m in Sources */,
 				791282721FE15861006E93E2 /* DIDocumentManager.m in Sources */,
 				96A73A931F1B1DE000B97156 /* ProfitLossDetail.m in Sources */,
+				7922886F2017C88E002AB744 /* NSError+QMShareExtension.m in Sources */,
 				79D929EC1E8DDD8D000A53D2 /* UpdateModel.m in Sources */,
 				79D59A261E95245E00CD3821 /* QMMessageContactListViewController.m in Sources */,
 				7920E7B11EA0129F002FEFF3 /* ChatUserModel.m in Sources */,
@@ -10419,6 +10835,7 @@
 				7912A5F81FEB9F6E00C8B9A5 /* OpponentsFlowLayout.m in Sources */,
 				7903CF711ECD303D0090206C /* PropertyContactCell.m in Sources */,
 				9635BBA31F2AEDDC00BE7CF0 /* Attendance.m in Sources */,
+				7922886A2017C88E002AB744 /* QMShareTableViewCell.m in Sources */,
 				7970DB40200F2FCB0041A423 /* NameCode.m in Sources */,
 				79A6AFAA1E9DBE12007AA24D /* ChatContactCell.m in Sources */,
 				79FBDFD21E30421A00448FE3 /* QMPhoto.m in Sources */,
@@ -10449,6 +10866,7 @@
 				7903CFAB1ECDCB240090206C /* AddReceiptViewController.m in Sources */,
 				79734FA91EBAA53C00647215 /* CustomeSearchCollectionLayout.m in Sources */,
 				96AA36571FBCC7AB003D9A2C /* LeaveRecordModel.m in Sources */,
+				792287F82017C6B2002AB744 /* QMDataSource.m in Sources */,
 				79EC0DE01E88077900320A28 /* RelatedMatterModel.m in Sources */,
 				96821F3A1F1DC4C400F28708 /* CompletionTrackingModel.m in Sources */,
 				79FBDFB31E30421A00448FE3 /* QMContactManager.m in Sources */,
@@ -10459,6 +10877,7 @@
 				79FBDFC91E30421A00448FE3 /* QMAlphabetizer.m in Sources */,
 				79FBDFCD1E30421A00448FE3 /* QMContent.m in Sources */,
 				9636DD121F05E30F008DDA41 /* ViewDepositCollection.m in Sources */,
+				792287EB2017BC94002AB744 /* QMCallKitAdapter.m in Sources */,
 				79FBE0891E304EAB00448FE3 /* QMLocalVideoView.m in Sources */,
 				79FBE0F51E304F5000448FE3 /* QMAddMemberCell.m in Sources */,
 				79D599FC1E9473D500CD3821 /* QMDialogsSearchDataProvider.m in Sources */,
@@ -10633,6 +11052,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		792288212017C88E002AB744 /* ShareInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				792288222017C88E002AB744 /* Base */,
+			);
+			name = ShareInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		79FBDE801E302F6600448FE3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

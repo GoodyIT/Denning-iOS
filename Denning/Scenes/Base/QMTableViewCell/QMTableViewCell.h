@@ -19,12 +19,7 @@
 
 - (void)setTitle:(NSString *)title;
 - (void)setBody:(NSString *)body;
+
 - (void) setPosition:(NSString*) position;
-
-// Custom
-- (void) configureCellWithUser: (QBUUser*) user;
-- (void) configureCellWithChatDialog:(QBChatDialog*) dialog;
-
-@property (copy, nonatomic) void (^didTapAvatar)(QMTableViewCell *cell);
 
 @end

@@ -57,6 +57,7 @@
 #import "QMBadgeView.h"
 #import "UIScrollView+FloatingButton.h"
 #import "M13ProgressViewBar.h"
+#import <NYTPhotoViewer/NYTPhotoViewer.h>
 
 #import "QMCore.h"
 #import "QMLog.h"

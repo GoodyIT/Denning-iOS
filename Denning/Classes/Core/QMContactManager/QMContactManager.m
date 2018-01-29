@@ -68,47 +68,46 @@
 
 - (BFTask *)confirmAddContactRequest:(QBUUser *)user {
     
-    @weakify(self);
-    return [[self.serviceManager.contactListService acceptContactRequest:user.ID] continueWithSuccessBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
-        @strongify(self);
-        return [self.serviceManager.chatService sendMessageAboutAcceptingContactRequest:YES toOpponentID:user.ID];
-    }];
+    return [[self.serviceManager.contactListService acceptContactRequest:user.ID]
+            continueWithSuccessBlock:^id(BFTask *__unused task) {
+                return [self.serviceManager.chatService sendMessageAboutAcceptingContactRequest:YES
+                                                                                   toOpponentID:user.ID];
+            }];
 }
 
 - (BFTask *)rejectAddContactRequest:(QBUUser *)user {
     
-    @weakify(self);
-    return [[self.serviceManager.contactListService rejectContactRequest:user.ID] continueWithSuccessBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
-        @strongify(self);
-        return [self.serviceManager.chatService sendMessageAboutAcceptingContactRequest:NO toOpponentID:user.ID];
-    }];
+    return [[self.serviceManager.contactListService rejectContactRequest:user.ID]
+            continueWithSuccessBlock:^id(BFTask *__unused task) {
+                return [self.serviceManager.chatService sendMessageAboutAcceptingContactRequest:NO
+                                                                                   toOpponentID:user.ID];
+            }];
 }
 
 - (BFTask *)removeUserFromContactList:(QBUUser *)user {
     
     __block QBChatDialog *chatDialog = nil;
     
-    @weakify(self);
-    return [[[[self.serviceManager.contactListService removeUserFromContactListWithUserID:user.ID] continueWithSuccessBlock:^id _Nullable(BFTask * _Nonnull __unused task) {
-        
-        @strongify(self);
-        
-        return [self.serviceManager.chatService createPrivateChatDialogWithOpponent:user];
-    }] continueWithSuccessBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull t) {
-        
-        chatDialog = t.result;
-        QBChatMessage *notificationMessage = [QMMessagesHelper removeContactNotificationForUser:user];
-        
-        return [self.serviceManager.chatService sendMessage:notificationMessage
-                                                       type:notificationMessage.messageType
-                                                   toDialog:chatDialog
-                                              saveToHistory:YES
-                                              saveToStorage:NO];
-        
-    }] continueWithBlock:^id _Nullable(BFTask * __unused _Nonnull t) {
-        
-        return [self.serviceManager.chatService deleteDialogWithID:chatDialog.ID];
-    }];
+    return [[[[self.serviceManager.contactListService removeUserFromContactListWithUserID:user.ID]
+              continueWithSuccessBlock:^id(BFTask *__unused task) {
+                  
+                  return [self.serviceManager.chatService createPrivateChatDialogWithOpponent:user];
+                  
+              }] continueWithSuccessBlock:^id _Nullable(BFTask<QBChatDialog *> * _Nonnull t) {
+                  
+                  chatDialog = t.result;
+                  QBChatMessage *notificationMessage = [QMMessagesHelper removeContactNotificationForUser:user];
+                  
+                  return [self.serviceManager.chatService sendMessage:notificationMessage
+                                                                 type:notificationMessage.messageType
+                                                             toDialog:chatDialog
+                                                        saveToHistory:YES
+                                                        saveToStorage:NO];
+                  
+              }] continueWithBlock:^id _Nullable(BFTask * __unused t) {
+                  
+                  return [self.serviceManager.chatService deleteDialogWithID:chatDialog.ID];
+              }];
 }
 
 //MARK: - Users

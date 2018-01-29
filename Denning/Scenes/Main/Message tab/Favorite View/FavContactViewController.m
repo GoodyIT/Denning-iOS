@@ -604,7 +604,7 @@ SWTableViewCellDelegate
 
 #pragma mark - QMSearchProtocol
 
-- (QMSearchDataSource *)searchDataSource {
+- (QMTableViewSearchDataSource *)searchDataSource {
     
     return (id)self.tableView.dataSource;
 }
@@ -616,8 +616,17 @@ SWTableViewCellDelegate
     [FavContactCell registerForReuseInTableView:self.tableView];
     
     [QMContactCell registerForReuseInTableView:self.tableView];
-    
     [QMNoContactsCell registerForReuseInTableView:self.tableView];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull __unused context) {
+        self.searchController.active = NO;
+    } completion:nil];
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 @end

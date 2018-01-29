@@ -15,12 +15,12 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Bolts (1.8.4):
-    - Bolts/AppLinks (= 1.8.4)
-    - Bolts/Tasks (= 1.8.4)
-  - Bolts/AppLinks (1.8.4):
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.8.4)
+  - Bolts/Tasks (1.9.0)
   - ChameleonFramework (2.1.0):
     - ChameleonFramework/Default (= 2.1.0)
   - ChameleonFramework/Default (2.1.0)
@@ -42,27 +42,28 @@ PODS:
   - FBSDKShareKit (4.11.0):
     - FBSDKCoreKit
   - FFCircularProgressView (0.5)
-  - Firebase/Auth (4.6.0):
+  - Firebase/Auth (4.8.1):
     - Firebase/Core
-    - FirebaseAuth (= 4.3.2)
-  - Firebase/Core (4.6.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.11)
-  - FirebaseAnalytics (4.0.5):
+    - FirebaseAuth (= 4.4.2)
+  - Firebase/Core (4.8.1):
+    - FirebaseAnalytics (= 4.0.7)
+    - FirebaseCore (= 4.0.14)
+  - FirebaseAnalytics (4.0.7):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseAuth (4.3.2):
+  - FirebaseAuth (4.4.2):
     - FirebaseAnalytics (~> 4.0)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.11):
+  - FirebaseCore (4.0.14):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (2.0.6)
-  - FirebaseUI/Auth (4.5.0):
+  - FirebaseInstanceID (2.0.8):
+    - FirebaseCore (~> 4.0)
+  - FirebaseUI/Auth (4.5.1):
     - Firebase/Auth (~> 4.2)
-  - FirebaseUI/Phone (4.5.0):
+  - FirebaseUI/Phone (4.5.1):
     - FirebaseUI/Auth
   - FLAnimatedImage (1.0.12)
   - FSCalendar (2.7.9)
@@ -95,11 +96,11 @@ PODS:
   - libextobjc/EXTScope (0.4.1):
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.4.1)
-  - libPhoneNumber-iOS (0.9.12)
+  - libPhoneNumber-iOS (0.9.13)
   - M13BadgeView (1.0.4)
   - M13ProgressSuite (1.2.9)
   - Masonry (1.1.0)
-  - MaterialComponents/ShadowElevations (40.0.2)
+  - MaterialComponents/ShadowElevations (44.5.0)
   - MBProgressHUD (1.0.0)
   - MEVFloatingButton (1.3)
   - MIBadgeButton (0.0.7)
@@ -109,73 +110,73 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - NYTPhotoViewer (1.1.0):
-    - NYTPhotoViewer/AnimatedGifSupport (= 1.1.0)
-    - NYTPhotoViewer/Core (= 1.1.0)
-  - NYTPhotoViewer/AnimatedGifSupport (1.1.0):
-    - FLAnimatedImage (~> 1.0.8)
+  - NYTPhotoViewer (2.0.0):
+    - NYTPhotoViewer/AnimatedGifSupport (= 2.0.0)
+    - NYTPhotoViewer/Core (= 2.0.0)
+  - NYTPhotoViewer/AnimatedGifSupport (2.0.0):
+    - FLAnimatedImage (~> 1.0.12)
     - NYTPhotoViewer/Core
-  - NYTPhotoViewer/Core (1.1.0)
+  - NYTPhotoViewer/Core (2.0.0)
   - PNChart (0.8.9):
     - UICountingLabel (~> 1.2.0)
   - pop (1.0.10)
-  - QMChatViewController (0.5.1):
+  - QMChatViewController (0.6):
     - FFCircularProgressView
-    - QMChatViewController/Categories (= 0.5.1)
-    - QMChatViewController/Protocols (= 0.5.1)
-    - QMChatViewController/QMChatDataSource (= 0.5.1)
-    - QMChatViewController/QMChatLocationSnapshotter (= 0.5.1)
-    - QMChatViewController/Utils (= 0.5.1)
-    - QMChatViewController/Views (= 0.5.1)
-    - QuickBlox (>= 2.10)
-    - SDWebImage (~> 4.0.0)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Categories (0.5.1):
+    - QMChatViewController/Categories (= 0.6)
+    - QMChatViewController/Protocols (= 0.6)
+    - QMChatViewController/QMChatDataSource (= 0.6)
+    - QMChatViewController/QMChatLocationSnapshotter (= 0.6)
+    - QMChatViewController/Utils (= 0.6)
+    - QMChatViewController/Views (= 0.6)
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Categories (0.6):
     - FFCircularProgressView
-    - QuickBlox (>= 2.10)
-    - SDWebImage (~> 4.0.0)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Protocols (0.5.1):
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Protocols (0.6):
     - FFCircularProgressView
-    - QuickBlox (>= 2.10)
-    - SDWebImage (~> 4.0.0)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/QMChatDataSource (0.5.1):
-    - FFCircularProgressView
-    - QMChatViewController/Utils
-    - QuickBlox (>= 2.10)
-    - SDWebImage (~> 4.0.0)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/QMChatLocationSnapshotter (0.5.1):
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/QMChatDataSource (0.6):
     - FFCircularProgressView
     - QMChatViewController/Utils
-    - QuickBlox (>= 2.10)
-    - SDWebImage (~> 4.0.0)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Utils (0.5.1):
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/QMChatLocationSnapshotter (0.6):
+    - FFCircularProgressView
+    - QMChatViewController/Utils
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Utils (0.6):
     - FFCircularProgressView
     - QMChatViewController/Categories
-    - QuickBlox (>= 2.10)
-    - SDWebImage (~> 4.0.0)
-    - TTTAttributedLabel (> 1.13)
-  - QMChatViewController/Views (0.5.1):
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMChatViewController/Views (0.6):
     - FFCircularProgressView
     - QMChatViewController/Categories
     - QMChatViewController/Protocols
     - QMChatViewController/Utils
-    - QuickBlox (>= 2.10)
-    - SDWebImage (~> 4.0.0)
-    - TTTAttributedLabel (> 1.13)
-  - QMServices (0.5.5):
-    - Bolts (>= 1.8.4)
-    - QuickBlox (>= 2.11)
-  - QuickBlox (2.14)
+    - QuickBlox
+    - SDWebImage
+    - TTTAttributedLabel
+  - QMServices (0.6):
+    - Bolts (>= 1.9.0)
+    - QuickBlox (>= 2.15)
+  - QuickBlox (2.15)
   - Quickblox-WebRTC (2.6.3):
     - QuickBlox (>= 2.7)
   - Reachability (3.2)
-  - Realm (3.0.2):
-    - Realm/Headers (= 3.0.2)
-  - Realm/Headers (3.0.2)
+  - Realm (3.1.0):
+    - Realm/Headers (= 3.1.0)
+  - Realm/Headers (3.1.0)
   - RWDropdownMenu (1.0.3)
   - SAMKeychain (1.5.3)
   - SDWebImage (4.0.0):
@@ -185,7 +186,7 @@ PODS:
   - SVProgressHUD (1.1.3)
   - SWTableViewCell (0.3.7)
   - SystemServices (2.0.1)
-  - TOCropViewController (2.3.4)
+  - TOCropViewController (2.3.6)
   - TTTAttributedLabel (2.0.0)
   - TwitterCore (1.15.3):
     - Fabric
@@ -233,7 +234,7 @@ DEPENDENCIES:
   - MEVFloatingButton
   - MIBadgeButton
   - MPGNotification (~> 1.2)
-  - NYTPhotoViewer (~> 1.1.0)
+  - NYTPhotoViewer (from `https://github.com/NYTimes/NYTPhotoViewer.git`, tag `v2.0.0`)
   - PNChart
   - QMChatViewController
   - QMServices
@@ -241,7 +242,7 @@ DEPENDENCIES:
   - Quickblox-WebRTC (= 2.6.3)
   - Reachability (~> 3.2)
   - Realm
-  - RWDropdownMenu (~> 1.0.0)
+  - RWDropdownMenu (~> 1.0.3)
   - SAMKeychain
   - SDWebImage (~> 4.0.0)
   - STPopup
@@ -262,16 +263,22 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   dyci:
     :git: https://github.com/DyCI/dyci-main.git
+  NYTPhotoViewer:
+    :git: https://github.com/NYTimes/NYTPhotoViewer.git
+    :tag: v2.0.0
 
 CHECKOUT OPTIONS:
   dyci:
     :commit: de33e13baba2a0bb274716ebc59daf8c14f8a388
     :git: https://github.com/DyCI/dyci-main.git
+  NYTPhotoViewer:
+    :git: https://github.com/NYTimes/NYTPhotoViewer.git
+    :tag: v2.0.0
 
 SPEC CHECKSUMS:
   ActionSheetPicker-3.0: eef157d75e151f255c5333d26656c7fbfe905a51
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   Digits: 9823f8aad766c0aa824fac9b08938e22bc635fac
@@ -284,12 +291,12 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: bade9fc78277764149ccc5bfaadbf13c83175c6a
   FBSDKShareKit: 2d1746144cfc8a9dbbd24997c34ee0471be51b6a
   FFCircularProgressView: 683a4ab1e1bd613246a3dffa61503ffdebcde8d8
-  Firebase: 27321a925aa85520618255a7c630859e0502ccbd
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseAuth: e58563adb207a43910a2ed87fecb9fa7d556df5a
-  FirebaseCore: 2a946ece8fbe3ce1fdeeb55324f273caade22df9
-  FirebaseInstanceID: 24958382a1011bba5aaff37e334e7a650b9118f5
-  FirebaseUI: 883482fea73b73bbb488c55176f4c6ad128957eb
+  Firebase: 2721056b8885eef90233b03f37be64358d35d262
+  FirebaseAnalytics: 617afa8c26b57a0c3f11361b248bc9e17bfd8dfd
+  FirebaseAuth: bd2738c5c1e92b108ba5f7f7335908097a4e50bb
+  FirebaseCore: 2e0b98fb2d64ca8140136beff15772bdd14d2dd7
+  FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
+  FirebaseUI: 1dc9c8a87a776b488a28a28541f029e60c824cfd
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FSCalendar: a04b09f16f811bc92e82f3cf852a15225233b9d5
   FZAccordionTableView: e64f49c71c32d750feda14025b088bcd25d1a71f
@@ -302,25 +309,25 @@ SPEC CHECKSUMS:
   HTHorizontalSelectionList: c38792f4bc87f941ab6c07b02a40abf111c68249
   JVFloatLabeledTextField: cfc44e3c4d493b2ed92ede8035e8e89c2912ba64
   libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
-  libPhoneNumber-iOS: b8a1038a101c78616c4df87815ac1556349faf98
+  libPhoneNumber-iOS: e444379ac18bbfbdefad571da735b2cd7e096caa
   M13BadgeView: 700dd0714fdc837c0cf1c8c004454963ec22441f
   M13ProgressSuite: ea9f7263e73e9215e6849dfa54e29ee0ad6a145c
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MaterialComponents: 3ddc6b0457477b1bf0e779cc69afbe451dea4b55
+  MaterialComponents: d50819588c896bbc206f2b145e00385159ef5f22
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MEVFloatingButton: 1f0adb47bdc6f9f56bb40ac59b60da27aa4f2fbf
   MIBadgeButton: 7c34f180a194d152bb3817c05443eab3a01433cd
   MPGNotification: 42d24c02ef1ca0b4dad54cd963eb99965e21d848
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  NYTPhotoViewer: e80e8767f3780d2df37c6f72cbab15d6c7232911
+  NYTPhotoViewer: 34b8bd6bcc297466adec1668f9a01249d73c90e6
   PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
-  QMChatViewController: eba84344fa542f905033bb49492d7abccd80e9c7
-  QMServices: 4aa2f43bf2700cda436a30c5d82bfe200cd394ea
-  QuickBlox: d40cd742985908ce7809058e5a63f1e3581165a0
+  QMChatViewController: f99d60d5c4720fab63237799a1bae13cb057b57f
+  QMServices: 9dad2b9a8863bff73d5cab134ab3d663e85f5718
+  QuickBlox: 5500c946da0525670434ff24ea78be9fc487ace9
   Quickblox-WebRTC: 1838368795c479dd61796a3423ce9e74a90fe939
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
+  Realm: 09513d7c054678d65cd02ce09871f805b0d758ac
   RWDropdownMenu: c7fda4b7adf4f3f63a46d96359c2f490a7713795
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
@@ -328,7 +335,7 @@ SPEC CHECKSUMS:
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   SystemServices: 7af348493ece8951449b476c41532df72569b181
-  TOCropViewController: 808c9724904be931dd2de5f97fcccf4cc8f8b03f
+  TOCropViewController: 6d972f2c609372312648f96758e13a7f689efbc0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   TwitterCore: cce24b3c798993ccde72787ea79ea9a478b284e4
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
@@ -340,6 +347,6 @@ SPEC CHECKSUMS:
   UITextView+Placeholder: 77680995fcdd07c3f52ec92fe1150874a2ac89ff
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
 
-PODFILE CHECKSUM: 23587da8cd8c4611321f6cd7675fcbdc9a3f43da
+PODFILE CHECKSUM: 526ab8b65d70bd8edac7240f9f5ee743aee2a215
 
 COCOAPODS: 1.3.1

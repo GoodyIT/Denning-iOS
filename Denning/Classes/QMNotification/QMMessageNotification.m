@@ -8,6 +8,7 @@
 
 #import "QMMessageNotification.h"
 #import "QMImageLoader.h"
+#import "UIImage+Cropper.h"
 
 static UIColor *backgroundColor() {
     

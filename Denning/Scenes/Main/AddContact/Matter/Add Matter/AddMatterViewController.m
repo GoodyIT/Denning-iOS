@@ -191,7 +191,7 @@ NSMutableDictionary* keyValue;
 //    }
     
     NSInteger index = [self isPartyAddCell:selectedContactRow];
-    [updatePartyGroupList[index].partys insertObject:[NameCode nameCode:name code:code] atIndex:0];
+    [updatePartyGroupList[index].partys addObject:[NameCode nameCode:name code:code]];
     NSInteger totalIndex = [self totalPartyCount:index];
     
     [self addContentsAndRefresh:PARTYGROUP_SECTION index:totalIndex value1:name value2:code];
@@ -1066,11 +1066,11 @@ NSMutableDictionary* keyValue;
     int count = 0;
     for (int i = 0; i < updatePartyGroupList.count; i++) {
         UpdatePartyGroup* model = updatePartyGroupList[i];
-        count ++;
+        count += model.partys.count;
         if (i == index) {
             break;
         }
-        count += model.partys.count;
+        count++;
     }
     return count;
 }

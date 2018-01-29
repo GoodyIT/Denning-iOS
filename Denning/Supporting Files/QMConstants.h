@@ -9,6 +9,8 @@
 #ifndef QMConstants_h
 #define QMConstants_h
 
+#import <CoreLocation/CLLocation.h>
+
 #ifdef DEBUG
 
 #define ILog(...) do { NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__]); } while(0)
@@ -18,6 +20,18 @@
 #define ILog(...) do { } while (0)
 
 #endif
+
+#define qm_keypath(__CLASS__, __KEY__)                      \
+({                                                          \
+while (1) {                                             \
+break;                                              \
+[__CLASS__ class];                                  \
+__CLASS__ * instance = nil;                         \
+[instance __KEY__];                                 \
+}                                                       \
+NSStringFromSelector(@selector(__KEY__));               \
+})
+
 
 static const float kQMAttachmentCellSize = 180.0f;
 static const NSTimeInterval kQMMaxAttachmentDuration = 30.0f;
@@ -70,6 +84,15 @@ static const CGFloat kQMSlashAnimationDuration = 0.1f;
 static const CGFloat kQMDefaultNotificationDismissTime = 2.0f;
 static const CGFloat kQMShadowViewHeight = 0.5f;
 
-static const double MKCoordinateSpanDefaultValue = 250;
+static const CLLocationDegrees MKCoordinateSpanDefaultValue = 250;
+
+//DarwinNotificationCenter
+
+//Extension notifications
+//Posted immediately after dialogs' updates in the Share Extension
+static NSNotificationName const kQMDidUpdateDialogsNotification = @"com.quickblox.shareextension.didUpdateDialogs.notification";
+//Posted immediately after dialog's updates in the Share Extension.
+//Full name of the notification should be 'kQMDidUpdateDialogNotificationPrefix:dialogID'
+static NSNotificationName const kQMDidUpdateDialogNotificationPrefix = @"com.quickblox.shareextension.didUpdateDialog.notification";
 
 #endif /* QMConstants_h */

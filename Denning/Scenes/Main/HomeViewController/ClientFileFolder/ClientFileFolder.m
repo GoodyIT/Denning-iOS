@@ -158,14 +158,17 @@
             QMPhoto *photo = [[QMPhoto alloc] init];
             photo.image = self.imagePreview.image;
             
-            NYTPhotosViewController *photosViewController = [[NYTPhotosViewController alloc] initWithPhotos:@[photo]];
+            NYTPhotoViewerSinglePhotoDataSource *photoDataSource =
+            [NYTPhotoViewerSinglePhotoDataSource dataSourceWithPhoto:photo];
+            
+            NYTPhotosViewController *photosViewController = [[NYTPhotosViewController alloc] initWithDataSource:photoDataSource];
             
             if ([self conformsToProtocol:@protocol(NYTPhotosViewControllerDelegate)]) {
                 
                 photosViewController.delegate = (UIViewController<NYTPhotosViewControllerDelegate> *)self;
             }
             
-            [photosViewController updateImageForPhoto:photo];
+//            [photosViewController updateImageForPhoto:photo];
             
             [self presentViewController:photosViewController animated:YES completion:nil];
         }

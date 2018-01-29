@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) UIWindow * _Nullable window;
 
+@property (strong, nonatomic) id rootViewController;
 
 @property (nonnull, nonatomic, strong, readonly) DemoDownloadStore *demoDownloadStore;
 

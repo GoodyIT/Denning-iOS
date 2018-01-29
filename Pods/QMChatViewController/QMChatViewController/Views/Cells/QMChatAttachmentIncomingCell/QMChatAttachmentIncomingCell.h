@@ -7,7 +7,6 @@
 //
 
 #import "QMMediaIncomingCell.h"
-@class QMProgressView;
 
 /**
  *  Incoming attachment message cell class.
@@ -17,8 +16,6 @@
 /**
  *  Attachment image view.
  */
-//@property (weak, nonatomic) IBOutlet QMProgressView *progressView;
-//
-//@property (weak, nonatomic) IBOutlet QMImageView* attachmentImageView;
+//@property (nonatomic, weak) IBOutlet UIImageView *attachmentImageView;
 
 @end

@@ -26,6 +26,7 @@ QMTagFieldViewDelegate
 
 @property (weak, nonatomic) IBOutlet QMTagFieldView *tagFieldView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tagFieldViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tagFieldViewTopConstraint;
 
 @property (weak, nonatomic) BFTask *dialogCreationTask;
 
@@ -33,7 +34,7 @@ QMTagFieldViewDelegate
 
 @implementation QMNewMessageViewController
 
-#pragma mark - Lifecycle
+//MARK: - Lifecycle
 
 - (void)dealloc {
     
@@ -173,7 +174,16 @@ QMTagFieldViewDelegate
     self.navigationItem.rightBarButtonItem.enabled = nextAllowed;
 }
 
-#pragma mark - QMMessageContactListViewControllerDelegate
+// MARK: - Overrides
+
+- (void)setAdditionalNavigationBarHeight:(CGFloat)additionalNavigationBarHeight {
+    CGFloat previousAdditionalNavigationBarHeight = self.additionalNavigationBarHeight;
+    [super setAdditionalNavigationBarHeight:additionalNavigationBarHeight];
+    
+    self.tagFieldViewTopConstraint.constant += additionalNavigationBarHeight - previousAdditionalNavigationBarHeight;
+}
+
+//MARK: - QMMessageContactListViewControllerDelegate
 
 - (void)messageContactListViewController:(QMMessageContactListViewController *)__unused messageContactListViewController didDeselectUser:(QBUUser *)deselectedUser {
     
@@ -195,7 +205,7 @@ QMTagFieldViewDelegate
     [self.view endEditing:YES];
 }
 
-#pragma mark - QMTagFieldViewDelegate
+//MARK: - QMTagFieldViewDelegate
 
 - (void)tagFieldView:(QMTagFieldView *)__unused tagFieldView didDeleteTagWithID:(id)tagID {
     
@@ -222,7 +232,7 @@ QMTagFieldViewDelegate
     }
 }
 
-#pragma mark - Helpers
+//MARK: - Helpers
 
 - (void)removeControllerFromStack {
     

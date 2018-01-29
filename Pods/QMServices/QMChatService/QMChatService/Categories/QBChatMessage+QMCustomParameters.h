@@ -98,10 +98,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)isImageAttachment;
 
-- (BOOL)isPdfAttachment;
-
-- (BOOL)isDocAttachment;
-
 
 @end
 

@@ -31,7 +31,7 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
 
 @interface CallViewController ()
 
-<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, QBRTCClientDelegate, QBRTCAudioSessionDelegate, LocalVideoViewDelegate>
+<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, QBRTCClientDelegate, QBRTCAudioSessionDelegate, LocalVideoViewDelegate, QMCallManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *opponentsCollectionView;
 @property (weak, nonatomic) IBOutlet QBToolBar *toolbar;
@@ -68,6 +68,7 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
     [super awakeFromNib];
     
     [[QBRTCClient instance] addDelegate:self];
+    [[QMCore instance].callManager addDelegate:self];
     [[QBRTCAudioSession instance] addDelegate:self];
 }
 
@@ -299,7 +300,10 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
                 [SVProgressHUD dismiss];
             }];
         }
-        [weakSelf.session hangUp:@{@"hangup" : @"hang up"}];
+        [self.session hangUp:@{@"hangup" : @"hang up"}];
+//        [self.session rejectCall:nil];
+        
+//        [QMCore.instance.callManager sendCallNotificationMessageWithState:QMCallNotificationStateMissedNoAnswer duration:0];
     }];
     
     [self.toolbar updateItems];
@@ -433,6 +437,7 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
 - (void)session:(QBRTCSession *)session acceptedByUser:(NSNumber *)userID userInfo:(NSDictionary *)userInfo {
     
     if (session == self.session) {
+        [[QMCore instance].callManager stopAllSounds];
         
         [self performUpdateUserID:userID block:^(OpponentCollectionViewCell *cell) {
             cell.connectionState = [self.session connectionStateForUser:userID];
@@ -446,6 +451,7 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
 - (void)session:(QBRTCSession *)session rejectedByUser:(NSNumber *)userID userInfo:(NSDictionary *)userInfo {
     
     if (session == self.session) {
+        [QMCore.instance.callManager stopAllSounds];
         
         [self performUpdateUserID:userID block:^(OpponentCollectionViewCell *cell) {
             cell.connectionState = [self.session connectionStateForUser:userID];
@@ -459,6 +465,8 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
 - (void)session:(QBRTCSession *)session hungUpByUser:(NSNumber *)userID userInfo:(NSDictionary *)userInfo {
     
     if (session == self.session) {
+        
+        [QMCore.instance.callManager stopAllSounds];
         
         [self performUpdateUserID:userID block:^(OpponentCollectionViewCell *cell) {
             
@@ -570,6 +578,36 @@ static NSString * const kQBRTCRecordingTitle = @"[Recording] ";
         }];
     }
 }
+
+- (void)callManagerCallWasEndedByCallKit:(QMCallManager *)callManager {
+    [callManager sendCallNotificationMessageWithState:QMCallNotificationStateHangUp
+                                             duration:self.timeDuration];
+}
+
+- (void)callManager:(nonnull QMCallManager *)callManager willChangeActiveCallState:(BOOL)willHaveActiveCall {
+    
+}
+
+
+- (void)callManager:(nonnull QMCallManager *)callManager willCloseCurrentSession:(nonnull QBRTCSession *)session {
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground
+        ) {
+            
+            [QMSoundManager playEndOfCallSound];
+        }
+    
+    if (self.cameraCapture != nil) {
+        
+        [self.cameraCapture stopSession:nil];
+        self.cameraCapture = nil;
+    }
+}
+
+
+- (void)callManagerDidChangeMicrophoneState:(nonnull QMCallManager *)callManager {
+    
+}
+
 
 /**
  *  Called in case when session will close

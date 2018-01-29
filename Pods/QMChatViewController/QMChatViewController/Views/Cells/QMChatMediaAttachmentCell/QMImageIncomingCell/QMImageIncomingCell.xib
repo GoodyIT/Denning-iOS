@@ -44,7 +44,7 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g9R-pB-Koi">
                                         <rect key="frame" x="0.0" y="21" width="148" height="152"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PAF-cC-e9g" customClass="TTTAttributedLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PAF-cC-e9g" customClass="TTTAttributedLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="148" height="21"/>
                                         <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -137,7 +137,7 @@
                 <outlet property="messageContainer" destination="ukH-9J-jpb" id="kU1-Rb-yoX"/>
                 <outlet property="messageContainerBottomInsetConstraint" destination="tTp-g8-2qS" id="DrZ-25-7gA"/>
                 <outlet property="messageContainerTopInsetConstraint" destination="svk-Rq-C3N" id="i95-7p-9mq"/>
-                <outlet property="previewImageView" destination="g9R-pB-Koi" id="DpR-3t-9xy"/>
+                <outlet property="previewImageView" destination="g9R-pB-Koi" id="nqM-Bv-9QP"/>
                 <outlet property="textViewBottomLabelVerticalSpaceConstraint" destination="Zx4-Gx-KBA" id="Veb-m1-8M0"/>
                 <outlet property="topLabel" destination="PAF-cC-e9g" id="cJL-Cl-biy"/>
                 <outlet property="topLabelHeightConstraint" destination="ZxP-nf-dRP" id="esl-nu-0xw"/>

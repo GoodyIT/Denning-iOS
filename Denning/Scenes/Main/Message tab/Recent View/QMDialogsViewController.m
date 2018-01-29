@@ -339,11 +339,7 @@ UIGestureRecognizerDelegate
         [cell setPosition:[DIHelpers getGroupPosition:chatDialog]];
         [cell setTitle:chatDialog.name avatarUrl:chatDialog.photo];
     }
-    
-    cell.didTapAvatar = ^(QMTableViewCell *cell) {
-        
-    };
-    
+  
     // there was a time when updated at didn't exist
     // in order to support old dialogs, showing their date as last message date
     NSDate *date = chatDialog.updatedAt ?: chatDialog.lastMessageDate;

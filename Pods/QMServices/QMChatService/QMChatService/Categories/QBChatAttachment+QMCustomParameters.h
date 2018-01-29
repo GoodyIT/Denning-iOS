@@ -13,10 +13,15 @@ typedef NS_ENUM(NSInteger, QMAttachmentType) {
     QMAttachmentContentTypeAudio = 1,
     QMAttachmentContentTypeVideo,
     QMAttachmentContentTypeImage,
-    QMAttachmentContentTypePdf,
-    QMAttachmentContentTypeDoc,
     QMAttachmentContentTypeCustom = 999
 };
+
+
+extern NSString *const kQMAttachmentTypeAudio;
+extern NSString *const kQMAttachmentTypeImage;
+extern NSString *const kQMAttachmentTypeVideo;
+extern NSString *const kQMAttachmentTypeLocation;
+
 
 @interface QBChatAttachment (QMCustomParameters)
 
@@ -36,7 +41,14 @@ typedef NS_ENUM(NSInteger, QMAttachmentType) {
 /**
  *  Determinates attachment's file extension. 'Content type' should be specified.
  */
-@property (copy, nonatomic, readonly) NSString *fileExtension;
+@property (nonatomic, readonly) NSString *fileExtension;
+
+
+/**
+ *  Determinates attachment's core type identifier. 'Content type' should be specified.
+ *  @see UTCoreTypes.h.
+ */
+@property (nonatomic, readonly) NSString *typeIdentifier;
 
 /**
  *  Image of attachment (for video/image).
@@ -67,6 +79,11 @@ typedef NS_ENUM(NSInteger, QMAttachmentType) {
  *  Attachment has all needed values
  */
 @property (nonatomic, assign, getter=isPrepared, readonly) BOOL prepared;
+
+/**
+ *  The NSData instance that identifies attachment resource.
+ */
+@property (nonatomic, copy) NSData *fileData;
 
 - (NSURL *)remoteURLWithToken:(BOOL)withToken;
 - (NSURL *)remoteURL;

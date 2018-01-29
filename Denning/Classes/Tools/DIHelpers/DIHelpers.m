@@ -835,11 +835,11 @@
     NSInteger userID = user.ID;
     if ([[DataManager sharedManager] checkDenningUser:user.email]) {
         role = kRoleDenningTag;
-    } else if (adminRoles != nil && adminRoles.count > 0 && [adminRoles containsObject:@(userID)]) {
+    } else if (adminRoles != [NSNull class] && adminRoles.count > 0 && [adminRoles containsObject:@(userID)]) {
         role = kRoleAdminTag;
-    } else if (readerRoles != nil && readerRoles.count > 0 && [readerRoles containsObject:@(userID)]) {
+    } else if (readerRoles != [NSNull class] && readerRoles.count > 0 && [readerRoles containsObject:@(userID)]) {
         role = kRoleReaderTag;
-    } else if (normalRoles != nil && normalRoles.count > 0 && [normalRoles containsObject:@(userID)]) {
+    } else if (normalRoles != [NSNull class] && normalRoles.count > 0 && [normalRoles containsObject:@(userID)]) {
         role = kRoleStaffTag;
     } else {
         role = kRoleClientTag;

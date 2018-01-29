@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, QMDialogUpdateType) {
     QMDialogUpdateTypeName      = 2,
     QMDialogUpdateTypeOccupants = 3,
     QMDialogUpdateTypeType = 4,
-    QMDialogUpdateRemoveOccupant = 5
+    QMDialogUpdateRemoveOccupant = 5,
 };
 
 /**

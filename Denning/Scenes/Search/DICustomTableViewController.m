@@ -38,7 +38,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self gotoHome];
+//    [self gotoHome];
 }
 
 - (void) gotoHome {

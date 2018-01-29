@@ -230,18 +230,22 @@ QMUsersServiceDelegate
 
 - (void)updateOccupants {
     
-    [[QMCore.instance.usersService getUsersWithIDs:self.chatDialog.occupantIDs] continueWithBlock:^id _Nullable(BFTask<NSArray<QBUUser *> *> * _Nonnull t) {
-        if (t.result) {
-            NSArray* items = [[t.result sortedArrayUsingComparator:^NSComparisonResult(QBUUser *u1, QBUUser *u2) {
-                return [u1.fullName caseInsensitiveCompare:u2.fullName];
-            }] mutableCopy];
-            
-            self.dataSource.items = [self filterItems:items];
-            [self.tableView reloadData];
-        }
-        
-        return nil;
-    }];
+    [[QMCore.instance.usersService getUsersWithIDs:self.chatDialog.occupantIDs]
+     continueWithBlock:^id _Nullable(BFTask<NSArray<QBUUser *> *> * _Nonnull t)
+     {
+         if (t.result) {
+             
+             NSArray *sortedItems = [t.result sortedArrayUsingComparator:
+                                     ^NSComparisonResult(QBUUser *u1, QBUUser *u2) {
+                                         return [u1.fullName caseInsensitiveCompare:u2.fullName];
+                                     }];
+             
+             [self.dataSource replaceItems:sortedItems];
+             [self.tableView reloadData];
+         }
+         
+         return nil;
+     }];
 }
 
 //MARK: - Actions

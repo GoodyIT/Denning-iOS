@@ -9,4 +9,36 @@
 	    QMDialogUpdateTypeName      = 2,
 	    QMDialogUpdateTypeOccupants = 3,
 	    QMDialogUpdateTypeType      = 4,
+		QMDialogUpdateRemoveOccupant = 5
 	};
+
+- QBChatAttachment+QMFactory.h, QBChatAttachment+QMFactory.m
+	+ (instancetype)imageAttachmentWithImage:(UIImage *)image fileName:(NSString*) fileName
+{
+    NSParameterAssert(image);
+    
+    int alphaInfo = CGImageGetAlphaInfo(image.CGImage);
+    BOOL hasAlpha = !(alphaInfo == kCGImageAlphaNone ||
+                      alphaInfo == kCGImageAlphaNoneSkipFirst ||
+                      alphaInfo == kCGImageAlphaNoneSkipLast);
+    
+    NSString *contentType = [NSString stringWithFormat:@"image/%@", hasAlpha ? @"png" : @"jpg"];
+    
+    QBChatAttachment *attachment = [[self alloc] initWithName:fileName
+                                                      fileURL:nil
+                                                  contentType:contentType
+                                               attachmentType:kQMAttachmentTypeImage];
+    attachment.image = image;
+    
+    return attachment;
+}
+
++ (instancetype)fileAttachmentWithFileURL:(NSURL*)filePath contentType:(NSString*)contentType fileName:(NSString*)fileName fileSize:(NSInteger)fileSize
+{
+    return [[self alloc] initWithName:fileName
+                      fileURL:filePath
+                  contentType:contentType
+               attachmentType:@"file"];
+}
+
+

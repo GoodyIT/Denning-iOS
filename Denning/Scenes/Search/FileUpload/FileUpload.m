@@ -106,7 +106,7 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
-    NSString* uploadURL = [[DataManager sharedManager].tempServerURL stringByAppendingString:self.url];
+    NSString* uploadURL = [[DataManager sharedManager].user.serverAPI stringByAppendingString:self.url];
     if ([[DataManager sharedManager].documentView isEqualToString:@"upload"]) {
         uploadURL = [[DataManager sharedManager].tempServerURL stringByAppendingString:self.url];
     }
@@ -187,14 +187,17 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
             QMPhoto *photo = [[QMPhoto alloc] init];
             photo.image = self.imagePreview.image;
             
-            NYTPhotosViewController *photosViewController = [[NYTPhotosViewController alloc] initWithPhotos:@[photo]];
+            NYTPhotoViewerSinglePhotoDataSource *photoDataSource =
+            [NYTPhotoViewerSinglePhotoDataSource dataSourceWithPhoto:photo];
+            
+            NYTPhotosViewController *photosViewController = [[NYTPhotosViewController alloc] initWithDataSource:photoDataSource];
             
             if ([self conformsToProtocol:@protocol(NYTPhotosViewControllerDelegate)]) {
                 
                 photosViewController.delegate = (UIViewController<NYTPhotosViewControllerDelegate> *)self;
             }
             
-            [photosViewController updateImageForPhoto:photo];
+//            [photosViewController updateImageForPhoto:photo];
             
             [self presentViewController:photosViewController animated:YES completion:nil];
         } else if (indexPath.row == 1) {

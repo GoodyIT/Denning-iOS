@@ -19,42 +19,26 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "LocationManager.h"
+#import <Intents/Intents.h>
 #import <FirebaseCore/FirebaseCore.h>
 #import <FirebaseAuth/FirebaseAuth.h>
 @import Contacts;
 @import GoogleMaps;
 @import GooglePlaces;
 
+@import UserNotifications;
+
 #import "UIScreen+QMLock.h"
 #import "UIImage+Cropper.h"
-
-//#import <Flurry.h>
+#import "QBSettings+Qmunicate.h"
 
 static NSString * const kQMNotificationActionTextAction = @"TEXT_ACTION";
 static NSString * const kQMNotificationCategoryReply = @"TEXT_REPLY";
 static NSString * const kQMAppGroupIdentifier = @"group.denningitshare.extension";
 
-#define DEVELOPMENT 0
 
-#if DEVELOPMENT == 1
 
-// Production
-static const NSUInteger kQMApplicationID = 55869;
-static NSString * const kQMAuthorizationKey = @"tpH4TbFKOcmrYet";
-static NSString * const kQMAuthorizationSecret = @"Tctz5xEDNWuJQq4";
-static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
-
-#else
-
-// Development
-static const NSUInteger kQMApplicationID = 55869;
-static NSString * const kQMAuthorizationKey = @"tpH4TbFKOcmrYet";
-static NSString * const kQMAuthorizationSecret = @"Tctz5xEDNWuJQq4";
-static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
-
-#endif
-
-@interface AppDelegate ()<QMPushNotificationManagerDelegate, CLLocationManagerDelegate, QMAuthServiceDelegate>
+@interface AppDelegate ()<QMPushNotificationManagerDelegate, CLLocationManagerDelegate, QMAuthServiceDelegate, UNUserNotificationCenterDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
@@ -73,43 +57,20 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 	application.applicationIconBadgeNumber = 0;
     
     // Quickblox settings
-    [QBSettings setApplicationID:kQMApplicationID];
-    [QBSettings setAuthKey:kQMAuthorizationKey];
-    [QBSettings setAuthSecret:kQMAuthorizationSecret];
-    [QBSettings setAccountKey:kQMAccountKey];
-    [QBSettings setApplicationGroupIdentifier:kQMAppGroupIdentifier];
-    
-    [QBSettings setAutoReconnectEnabled:YES];
-    [QBSettings setCarbonsEnabled:YES];
-    
-#if DEVELOPMENT == 0
-    [QBSettings setLogLevel:QBLogLevelNothing];
-    [QBSettings disableXMPPLogging];
-    [QMServicesManager enableLogging:NO];
-    
-    QMLogSetEnabled(NO);
-#else
-    [QBSettings setLogLevel:QBLogLevelDebug];
-    [QBSettings enableXMPPLogging];
-    [QMServicesManager enableLogging:YES];
-    [QBRTCConfig setLogLevel:QBRTCLogLevelVerbose];
-    
-    QMLogSetEnabled(YES);
-#endif
-    
-    [[QMCore instance].authService addDelegate:self];
+    [QBSettings configure];
+    [QMServicesManager enableLogging:QMCurrentApplicationZone != QMApplicationZoneProduction];
     
     // QuickbloxWebRTC settings
     [QBRTCClient initializeRTC];
     [QBRTCConfig mediaStreamConfiguration].audioCodec = QBRTCAudioCodecISAC;
-    [QBRTCConfig setStatsReportTimeInterval:1.0f]; // set to 1.0f to enable stats report
+    [QBRTCConfig setStatsReportTimeInterval:0.0f]; // set to 1.0f to enable stats report
     
     // Configuring app appearance
 //    [[UITabBar appearance] setTintColor:QMMainApplicationColor()];
   //  [[UINavigationBar appearance] setTintColor:QMSecondaryApplicationColor()];
 
     // Configuring searchbar appearance
-
+    
     [[UISearchBar appearance] setSearchBarStyle:UISearchBarStyleMinimal];
     [[UISearchBar appearance] setBarTintColor:[UIColor whiteColor]];
     [[UISearchBar appearance] setBackgroundImage:QMStatusBarBackgroundImage() forBarPosition:0 barMetrics:UIBarMetricsDefault];
@@ -117,11 +78,10 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
     [[UITextField appearance] setTintColor:QMSecondaryApplicationColor()];
     [UITextField appearance].keyboardAppearance = UIKeyboardAppearanceDark;
     
+    [SVProgressHUD setBackgroundColor:[[UIColor whiteColor] colorWithAlphaComponent:0.92f]];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     
-    // Registering for remote notifications
-//    [self registerForNotification];
-    // Handling push notifications if needed
-    
+    // Configuring external frameworks
     [FIRApp configure];
     [[FIRAuth auth] useAppLanguage];
     // Configuring external frameworks
@@ -140,10 +100,19 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
         [[QMCore instance].currentProfile clearLastFetchingDate];
     }
     
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                    didFinishLaunchingWithOptions:launchOptions];
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
+    
+    return YES;
 }
 
+- (void)application:(UIApplication *)__unused application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+
+    if ([[FIRAuth auth] canHandleNotification:userInfo]) {
+        completionHandler(UIBackgroundFetchResultNoData);
+        return;
+    }
+}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     
@@ -157,34 +126,29 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
         }
         
         [QMCore instance].pushNotificationManager.pushNotification = userInfo;
-        
         // calling dispatch async for push notification handling to have priority in main queue
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             [[QMCore instance].pushNotificationManager handlePushNotificationWithDelegate:self];
         });
     }
 }
-
-//- (void)application:(UIApplication *)__unused application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    if ([[FIRAuth auth] canHandleNotification:userInfo]) {
-//        completionHandler(UIBackgroundFetchResultNoData);
-//        return;
-//    }
-//}
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     application.applicationIconBadgeNumber = [[DataManager sharedManager].badgeValue integerValue];
     [[QMCore instance].chatManager disconnectFromChatIfNeeded];
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    [[QMCore instance] login];
+- (void)applicationWillEnterForeground:(UIApplication *)__unused application {
+    // sending presence after application becomes active,
+    // or just restoring state if chat is disconnected
+    if (QBChat.instance.manualInitialPresence) {
+        QBChat.instance.manualInitialPresence = NO;
+    }
+    // connect to chat now
+    [QMCore.instance login];
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+- (void)applicationDidBecomeActive:(UIApplication *)__unused application {
     
     [FBSDKAppEvents activateApp];
 }
@@ -197,24 +161,48 @@ static NSString * const kQMAccountKey = @"NuMeyx3adrFZURAvoA5j";
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)__unused notificationSettings {
     
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+        UIUserNotificationType allNotificationTypes =
+        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+    } else {
+        // iOS 10 or later
+#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+        // For iOS 10 display notification (sent via APNS)
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+        UNAuthorizationOptions authOptions =
+        UNAuthorizationOptionAlert
+        | UNAuthorizationOptionSound
+        | UNAuthorizationOptionBadge;
+        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authOptions completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        }];
+#endif
+    }
+    
     [application registerForRemoteNotifications];
 }
 
-- (void)application:(UIApplication *)__unused application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+- (void)application:(UIApplication *)__unused application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     [[QMCore instance].pushNotificationManager updateToken:deviceToken];
-    
     FIRAuthAPNSTokenType firTokenType;
-#if DEVELOPMENT == 0
-    firTokenType = FIRAuthAPNSTokenTypeProd;
-#else
-    firTokenType = FIRAuthAPNSTokenTypeSandbox;
-#endif
+
+    if (QMCurrentApplicationZone == QMApplicationZoneProduction) {
+        firTokenType = FIRAuthAPNSTokenTypeProd;
+    }
+    else {
+        firTokenType = FIRAuthAPNSTokenTypeSandbox;
+    }
+
     [[FIRAuth auth] setAPNSToken:deviceToken type:firTokenType];
 }
 
 - (void)application:(UIApplication *)__unused application
 didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    
     [[QMCore instance].pushNotificationManager handleError:error];
 }
 
@@ -306,11 +294,21 @@ forRemoteNotification:(NSDictionary *)userInfo
 
 }
 
+- (BOOL)application:(UIApplication *)__unused application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))__unused restorationHandler {
+    
+    BOOL isCallIntent = [userActivity.activityType isEqualToString:INStartAudioCallIntentIdentifier] || [userActivity.activityType isEqualToString:INStartVideoCallIntentIdentifier];
+    if (isCallIntent) {
+        [QMCore.instance.callManager handleUserActivityWithCallIntent:userActivity];
+    }
+    
+    return YES;
+}
+
 #pragma mark - QMPushNotificationManagerDelegate protocol
 
 - (void)pushNotificationManager:(QMPushNotificationManager *)__unused pushNotificationManager didSucceedFetchingDialog:(QBChatDialog *)chatDialog {
-    
     UITabBarController *tabBarController = [[(UISplitViewController *)self.window.rootViewController viewControllers] firstObject];
+    
     UIViewController *dialogsVC = [[(UINavigationController *)[[tabBarController viewControllers] firstObject] viewControllers] firstObject];
     
     NSString *activeDialogID = [QMCore instance].activeDialogID;

@@ -9,7 +9,6 @@
 #import "QMBaseMediaCell.h"
 #import "QMMediaViewDelegate.h"
 #import "QMChatResources.h"
-#import "QMChatViewController.h"
 
 @implementation UIButton (QMAnimated)
 
@@ -104,7 +103,8 @@
     }
     _currentTime = currentTime;
     
-    self.durationLabel.text = [self timestampString:currentTime forDuration:_duration];
+    self.durationLabel.text = [self timestampString:currentTime
+                                        forDuration:_duration];
 }
 
 
@@ -153,12 +153,31 @@
     [self.previewImageView setNeedsLayout];
 }
 
-- (void)setImage:(UIImage *)image {
+
+- (void)qm_setImage:(UIImage *)image
+        animated:(BOOL)animated {
     
     _image = image;
-    
-    self.previewImageView.image = image;
-    [self.previewImageView setNeedsLayout];
+    if (animated) {
+    [UIView transitionWithView:self.previewImageView
+                      duration:0.2f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        self.previewImageView.image = image;
+                    } completion:^(BOOL finished) {
+                        [self.previewImageView setNeedsLayout];
+                    }];
+    }
+    else {
+        self.previewImageView.image = image;
+        [self.previewImageView setNeedsLayout];
+    }
+}
+
+- (void)setImage:(UIImage *)image {
+    //animate only if the image wasn't been set before
+    [self qm_setImage:image
+             animated:_image ? NO : YES];
 }
 
 
@@ -299,9 +318,6 @@ static inline UIImage* QMPlayButtonImageForState(QMMediaViewState state) {
     UIImage *buttonImage =
     [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
-//    UIImage *buttonImage =
-//        [[UIImage imageNamed:imageName inBundle:[NSBundle bundleForClass:QMChatViewController.class] compatibleWithTraitCollection:nil]  imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-//
     return buttonImage;
 }
 

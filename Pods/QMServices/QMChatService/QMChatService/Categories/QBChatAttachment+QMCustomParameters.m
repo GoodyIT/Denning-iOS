@@ -11,6 +11,13 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "QMSLog.h"
 
+
+NSString *const kQMAttachmentTypeAudio = @"audio";
+NSString *const kQMAttachmentTypeImage = @"image";
+NSString *const kQMAttachmentTypeVideo = @"video";
+NSString *const kQMAttachmentTypeLocation = @"location";
+NSString *const kQMAttachmentTypeFile = @"file";
+
 /**
  *  Attachment keys
  */
@@ -29,8 +36,17 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
     CFStringRef MIMEType = (__bridge CFStringRef)self.contentType;
     CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, MIMEType, NULL);
     CFStringRef extension = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassFilenameExtension);
+    if (uti) CFRelease(uti);
     return (__bridge_transfer NSString *)extension;
 }
+
+- (NSString *)typeIdentifier {
+    
+    CFStringRef MIMEType = (__bridge CFStringRef)self.contentType;
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, MIMEType, NULL);
+    return (__bridge_transfer NSString *)uti;
+}
+
 
 - (NSString *)contentType {
     
@@ -59,6 +75,14 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
     objc_setAssociatedObject(self, @selector(localFileURL), localFileURL, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
+- (NSData *)fileData {
+    return objc_getAssociatedObject(self, @selector(fileData));
+}
+
+- (void)setFileData:(NSData *)fileData {
+    objc_setAssociatedObject(self, @selector(fileData), fileData, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
 - (UIImage *)image {
     return objc_getAssociatedObject(self, @selector(image));
 }
@@ -66,6 +90,7 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
 - (void)setImage:(UIImage *)image {
     objc_setAssociatedObject(self, @selector(image), image, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 
 
 - (QMAttachmentType)attachmentType {
@@ -82,6 +107,7 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
 - (void)setAttachmentType:(QMAttachmentType)attachmentType {
     [self setTAttachmentType:@(attachmentType)];
 }
+
 
 - (NSNumber *)tAttachmentType {
     
@@ -131,12 +157,10 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
 }
 
 - (NSInteger)duration {
-    
     return [self[kQMAttachmentDurationKey] integerValue];
 }
 
 - (void)setDuration:(NSInteger)duration {
-    
     if (self.duration != duration) {
         self[kQMAttachmentDurationKey] = [NSString stringWithFormat:@"%ld",(unsigned long)duration];
     }
@@ -210,7 +234,6 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
             return YES;
             break;
         default:
-            return NO;
             break;
     }
 }
@@ -228,12 +251,9 @@ NSString  *kQMAttachmentContentTypeKey = @"content-type";
         attachmentType = QMAttachmentContentTypeVideo;
     }
     else if ([self.type isEqualToString:@"image"] ||
-             [self.type isEqualToString:@"photo"] ||
-             [self.type isEqualToString:@"image/png"] ) {
+             [self.type isEqualToString:@"photo"]) {
         
         attachmentType = QMAttachmentContentTypeImage;
-    } else {
-        attachmentType = QMAttachmentContentTypeCustom;
     }
     
     return attachmentType;

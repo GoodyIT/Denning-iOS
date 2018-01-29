@@ -18,7 +18,8 @@
 <
 UITableViewDelegate,
 UIScrollViewDelegate,
-QMSearchDataProviderDelegate
+QMSearchDataProviderDelegate,
+QMUsersServiceDelegate
 >
 
 @property (strong, nonatomic) QMNewMessageContactListSearchDataSource *dataSource;
@@ -29,6 +30,8 @@ QMSearchDataProviderDelegate
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [QMCore.instance.usersService addDelegate:self];
     
     [self registerNibs];
     
@@ -43,8 +46,8 @@ QMSearchDataProviderDelegate
     
     QMContactsSearchDataProvider *dataProvider = [[QMContactsSearchDataProvider alloc] init];
     dataProvider.delegate = self;
-    
-    self.dataSource = [[QMNewMessageContactListSearchDataSource alloc] initWithSearchDataProvider:dataProvider usingKeyPath:@keypath(QBUUser.new, fullName)];
+    self.dataSource = [[QMNewMessageContactListSearchDataSource alloc] initWithSearchDataProvider:dataProvider
+                                                                                     usingKeyPath:qm_keypath(QBUUser, fullName)];
     self.tableView.dataSource = self.dataSource;
     
     if ([DataManager sharedManager].isDenningUser) {
@@ -81,7 +84,7 @@ QMSearchDataProviderDelegate
     [self.dataSource.searchDataProvider performSearch:searchText];
 }
 
-#pragma mark - UITableViewDelegate
+//MARK: - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -109,7 +112,7 @@ QMSearchDataProviderDelegate
     return [self.dataSource heightForRowAtIndexPath:indexPath];
 }
 
-#pragma mark - UIScrollViewDelegate
+//MARK: - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     
@@ -121,7 +124,7 @@ QMSearchDataProviderDelegate
     [self.delegate messageContactListViewController:self didScrollContactList:scrollView];
 }
 
-#pragma mark - QMSearchDataProviderDelegate
+//MARK: - QMSearchDataProviderDelegate
 
 - (void)searchDataProviderDidFinishDataFetching:(QMSearchDataProvider *)__unused searchDataProvider {
     
@@ -147,7 +150,23 @@ QMSearchDataProviderDelegate
     [self.tableView reloadData];
 }
 
-#pragma mark - Register nibs
+// MARK: QMUsersServiceDelegate
+
+- (void)usersService:(QMUsersService *)__unused usersService didUpdateUsers:(NSArray<QBUUser *> *)users {
+    
+    NSMutableArray *indexPaths = [[NSMutableArray alloc] initWithCapacity:users.count];
+    for (QBUUser *user in users) {
+        NSIndexPath *indexPath = [self.dataSource indexPathForObject:user];
+        if (indexPath != nil) {
+            [indexPaths addObject:indexPath];
+        }
+    }
+    if (indexPaths.count > 0) {
+        [self.tableView reloadRowsAtIndexPaths:[indexPaths copy] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+//MARK: - Register nibs
 
 - (void)registerNibs {
     

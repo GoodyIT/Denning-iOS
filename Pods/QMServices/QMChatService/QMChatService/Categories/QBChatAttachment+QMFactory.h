@@ -8,28 +8,23 @@
 
 #import <Quickblox/Quickblox.h>
 #import "QBChatAttachment+QMCustomParameters.h"
+#import <CoreLocation/CLLocation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface QBChatAttachment (QMFactory)
 
-+ (instancetype)initWithName:(nullable NSString *)name
+- (instancetype)initWithName:(NSString *)name
                      fileURL:(nullable NSURL *)fileURL
                  contentType:(NSString *)contentType
               attachmentType:(NSString *)type;
-
-+ (instancetype)initWithName:(nullable NSString *)name
-                     fileURL:(nullable NSURL *)fileURL
-                 contentType:(NSString *)contentType
-              attachmentType:(NSString *)type
-                    fileSize:(NSInteger) fileSize;
 
 + (instancetype)videoAttachmentWithFileURL:(NSURL *)fileURL;
 + (instancetype)audioAttachmentWithFileURL:(NSURL *)fileURL;
 + (instancetype)imageAttachmentWithImage:(UIImage *)image;
 + (instancetype)imageAttachmentWithImage:(UIImage *)image fileName:(NSString*) fileName;
-
-+ (instancetype) fileAttachmentWithFileURL:(NSURL *)fileURL contentType:(NSString*)contentType fileName:(NSString*) fileName fileSize:(NSInteger)fileSize;
++ (instancetype)fileAttachmentWithFileURL:(NSURL*)filePath contentType:(NSString*)contentType fileName:(NSString*)fileName fileSize:(NSInteger)fileSize;
++ (instancetype)locationAttachmentWithCoordinate:(CLLocationCoordinate2D)locationCoordinate;
 
 @end
 

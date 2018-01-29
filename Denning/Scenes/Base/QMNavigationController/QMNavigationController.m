@@ -106,6 +106,20 @@ UINavigationBarDelegate
      object:nil];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+    [super viewWillTransitionToSize:size
+          withTransitionCoordinator:coordinator];
+    //Fix hidesBottomBarWhenPushed
+    UITabBarController *tabBarController = self.tabBarController;
+    if (tabBarController != nil && self.hidesBottomBarWhenPushed) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [tabBarController.tabBar setHidden:YES];
+        });
+    }
+}
+
 // MARK: - UINavigationBarDelegate
 
 - (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPushItem:(UINavigationItem *)item {

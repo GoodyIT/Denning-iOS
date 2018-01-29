@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 
 #import "QBChatAttachment+QMCustomData.h"
+#import "QBChatAttachment+QMFactory.h"
 
 /**
  *  Message keys
@@ -22,8 +23,6 @@ NSString const *kQMCustomParameterMessageStatus = @"chat_message_status";
 static NSString * const kQMChatAudioMessageTypeName = @"audio";
 static NSString * const kQMChatVideoMessageTypeName = @"video";
 static NSString * const kQMChatImageMessageTypeName = @"image";
-static NSString * const kQMChatPdfMessageTypeName = @"pdf";
-static NSString * const kQMChatDocMessageTypeName = @"doc";
 
 static NSString * const kQMChatLocationMessageTypeName = @"location";
 static NSString * const kQMLocationLatitudeKey = @"lat";
@@ -393,15 +392,7 @@ NSString const *kQMCustomParameterDialogDeletedOccupantsIDs = @"deleted_occupant
 
 - (void)setLocationCoordinate:(CLLocationCoordinate2D)locationCoordinate {
     
-    QBChatAttachment *locationAttachment = [[QBChatAttachment alloc] init];
-    
-    locationAttachment.type = kQMChatLocationMessageTypeName;
-    locationAttachment.context[kQMLocationLatitudeKey] =
-    [NSString stringWithFormat:@"%lf", locationCoordinate.latitude];
-    locationAttachment.context[kQMLocationLongitudeKey] =
-    [NSString stringWithFormat:@"%lf", locationCoordinate.longitude];
-    [locationAttachment synchronize];
-    
+    QBChatAttachment *locationAttachment = [QBChatAttachment locationAttachmentWithCoordinate:locationCoordinate];
     self.attachments = @[locationAttachment];
 }
 
@@ -486,36 +477,6 @@ NSString const *kQMCustomParameterDialogDeletedOccupantsIDs = @"deleted_occupant
     }];
     
     return isImageAttachment;
-}
-
-- (BOOL)isPdfAttachment {
-    
-    __block BOOL isPdfAttachment = NO;
-    
-    [self.attachments enumerateObjectsUsingBlock:^(QBChatAttachment * _Nonnull obj, NSUInteger __unused idx, BOOL * _Nonnull stop) {
-        
-        if ([obj.type isEqualToString:kQMChatPdfMessageTypeName]) {
-            isPdfAttachment = YES;
-            *stop = YES;
-        }
-    }];
-    
-    return isPdfAttachment;
-}
-
-- (BOOL)isDocAttachment {
-    
-    __block BOOL isDocAttachment = NO;
-    
-    [self.attachments enumerateObjectsUsingBlock:^(QBChatAttachment * _Nonnull obj, NSUInteger __unused idx, BOOL * _Nonnull stop) {
-        
-        if ([obj.type isEqualToString:kQMChatDocMessageTypeName]) {
-            isDocAttachment = YES;
-            *stop = YES;
-        }
-    }];
-    
-    return isDocAttachment;
 }
 
 @end

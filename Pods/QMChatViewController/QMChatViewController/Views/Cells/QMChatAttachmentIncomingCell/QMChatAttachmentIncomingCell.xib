@@ -44,7 +44,15 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fa7-ju-G0X">
                                         <rect key="frame" x="0.0" y="21" width="148" height="152"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgQ-H7-Y5u" customClass="TTTAttributedLabel">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfc-xH-Q40" customClass="FFCircularProgressView">
+                                        <rect key="frame" x="51.5" y="74.5" width="45" height="45"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="CEF-L9-rG3"/>
+                                            <constraint firstAttribute="width" constant="45" id="er4-sm-Raz"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nickname" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgQ-H7-Y5u" customClass="TTTAttributedLabel">
                                         <rect key="frame" x="0.0" y="0.0" width="148" height="21"/>
                                         <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -70,19 +78,12 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UTu-Sz-Lzi" customClass="FFCircularProgressView">
-                                        <rect key="frame" x="51" y="74" width="45" height="45"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="45" id="RB4-JU-vZh"/>
-                                            <constraint firstAttribute="height" constant="45" id="rq2-Yf-tAO"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="wfc-xH-Q40" firstAttribute="centerY" secondItem="1rv-oZ-ov9" secondAttribute="centerY" id="Alc-HO-ofU"/>
+                                    <constraint firstItem="wfc-xH-Q40" firstAttribute="centerX" secondItem="1rv-oZ-ov9" secondAttribute="centerX" id="F6Q-ef-Wu8"/>
                                     <constraint firstItem="4Tj-AD-mYY" firstAttribute="leading" secondItem="1rv-oZ-ov9" secondAttribute="leading" id="J3O-3t-QEe"/>
-                                    <constraint firstItem="UTu-Sz-Lzi" firstAttribute="centerY" secondItem="1rv-oZ-ov9" secondAttribute="centerY" id="JCN-R9-GUe"/>
                                     <constraint firstAttribute="trailing" secondItem="4Tj-AD-mYY" secondAttribute="trailing" id="JbZ-J7-TpC"/>
                                     <constraint firstAttribute="trailing" secondItem="pgQ-H7-Y5u" secondAttribute="trailing" id="MHb-21-BnI"/>
                                     <constraint firstItem="4Tj-AD-mYY" firstAttribute="top" secondItem="Fa7-ju-G0X" secondAttribute="bottom" id="XHe-Ey-FfR"/>
@@ -90,7 +91,6 @@
                                     <constraint firstAttribute="centerX" secondItem="bt4-WH-s4r" secondAttribute="centerX" id="Yek-7L-ctn"/>
                                     <constraint firstAttribute="bottom" secondItem="4Tj-AD-mYY" secondAttribute="bottom" id="bxS-ng-UxW"/>
                                     <constraint firstAttribute="centerY" secondItem="bt4-WH-s4r" secondAttribute="centerY" id="fTt-zx-kle"/>
-                                    <constraint firstItem="UTu-Sz-Lzi" firstAttribute="centerX" secondItem="1rv-oZ-ov9" secondAttribute="centerX" id="iFT-os-lfE"/>
                                     <constraint firstItem="pgQ-H7-Y5u" firstAttribute="top" secondItem="1rv-oZ-ov9" secondAttribute="top" id="qvi-DU-nQs"/>
                                     <constraint firstAttribute="trailing" secondItem="Fa7-ju-G0X" secondAttribute="trailing" id="x6E-80-NrW"/>
                                     <constraint firstItem="pgQ-H7-Y5u" firstAttribute="leading" secondItem="1rv-oZ-ov9" secondAttribute="leading" id="xDn-Pp-trQ"/>
@@ -139,13 +139,14 @@
                 <outlet property="avatarView" destination="9r3-Wm-17e" id="ZSG-47-gWm"/>
                 <outlet property="bottomLabel" destination="4Tj-AD-mYY" id="new-qI-SJh"/>
                 <outlet property="bottomLabelHeightConstraint" destination="CGF-Kf-7DA" id="g0g-gT-Csq"/>
-                <outlet property="circularProgress" destination="UTu-Sz-Lzi" id="7bb-L8-keZ"/>
+                <outlet property="circularProgress" destination="wfc-xH-Q40" id="0cj-pG-kDk"/>
                 <outlet property="containerView" destination="X4d-J3-f3R" id="PGD-cW-pr4"/>
                 <outlet property="containerWidthConstraint" destination="q3d-xO-tGz" id="VmK-ch-bod"/>
                 <outlet property="messageContainer" destination="1rv-oZ-ov9" id="RQK-Dd-jIf"/>
                 <outlet property="messageContainerBottomInsetConstraint" destination="uq1-a3-hdy" id="M9y-ZL-Eba"/>
                 <outlet property="messageContainerTopInsetConstraint" destination="JYn-ad-AzN" id="kBu-AD-ojU"/>
-                <outlet property="previewImageView" destination="Fa7-ju-G0X" id="rqD-f8-m58"/>
+                <outlet property="previewImageView" destination="Fa7-ju-G0X" id="baS-Wj-IsQ"/>
+                <outlet property="progressLabel" destination="bt4-WH-s4r" id="yDe-FD-paY"/>
                 <outlet property="textViewBottomLabelVerticalSpaceConstraint" destination="XHe-Ey-FfR" id="Hh5-xs-Juc"/>
                 <outlet property="topLabel" destination="pgQ-H7-Y5u" id="56f-VT-nrf"/>
                 <outlet property="topLabelHeightConstraint" destination="9mx-bN-is7" id="gRI-ev-FiX"/>
