@@ -281,6 +281,7 @@ shouldSelectViewController:(UIViewController *)viewController
             [QMAlert showAlertWithMessage:@"Please subscribe the denning chat." actionSuccess:NO inViewController:self];
         } else {
             // Go to denning care group chat
+            [self performSegueWithIdentifier:kDenningSupportSegue sender:nil];
         }
     }
     

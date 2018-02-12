@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString* propertyCode;
 @property (nonatomic, strong) NSString* fullTitle;
 @property (nonatomic, strong) NSString* projectName;
-@property (nonatomic, strong) AddressModel* address;
+@property (nonatomic, strong) NSString* address;
 @property (nonatomic, strong) TypeValueModel* spaParcel;
 @property (nonatomic, strong) NSString* spaCondoName;
 

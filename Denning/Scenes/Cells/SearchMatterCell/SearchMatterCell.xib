@@ -222,6 +222,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5kh-Ky-Z1a" secondAttribute="trailing" constant="20" id="0DP-81-H0A"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="zZp-gX-TBh" secondAttribute="trailing" constant="12" id="0gW-n5-B4T"/>
                     <constraint firstItem="5kh-Ky-Z1a" firstAttribute="leading" secondItem="rsD-eB-gL0" secondAttribute="leading" id="CJm-nH-GAq"/>
                     <constraint firstItem="5kh-Ky-Z1a" firstAttribute="top" secondItem="rsD-eB-gL0" secondAttribute="bottom" constant="5" id="COi-Td-ZyU"/>

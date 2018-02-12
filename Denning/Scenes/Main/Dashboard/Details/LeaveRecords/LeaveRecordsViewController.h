@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LeaveRecordsViewController : UITableViewController
+@interface LeaveRecordsViewController : BaseTableViewController
 
 @property (strong, nonatomic) NSString* staffCode;
 

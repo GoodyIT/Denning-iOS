@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CourtDiaryViewController : UITableViewController
+@interface CourtDiaryViewController : BaseTableViewController
 
 @property (nonatomic, strong) EditCourtModel* courtDiary;
 

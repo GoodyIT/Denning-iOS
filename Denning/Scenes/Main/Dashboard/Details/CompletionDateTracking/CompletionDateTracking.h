@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CompletionDateTracking : UIViewController
+@interface CompletionDateTracking : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 @property (strong, nonatomic) NSString*selHeaderId;

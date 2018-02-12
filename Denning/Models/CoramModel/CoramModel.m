@@ -18,7 +18,6 @@
         coram.courtType = [response valueForKeyNotNull:@"courtType"];
         coram.position = [response valueForKeyNotNull:@"position"];
         coram.name = [response valueForKeyNotNull:@"name"];
-        coram.position = [response valueForKeyNotNull:@"position"];
     } else {
         coram.coramCode = @"";
         coram.courtType = @"";

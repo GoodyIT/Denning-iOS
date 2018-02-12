@@ -22,7 +22,7 @@
 {
     NSMutableArray* result = [NSMutableArray new];
     for (id obj in response) {
-        [result addObject:[CodeDescription getCodeDescriptionFromResponse:obj]];
+        [result addObject:[TypeValueModel getTypeValueFromResponse:obj]];
     }
     return result;
 }

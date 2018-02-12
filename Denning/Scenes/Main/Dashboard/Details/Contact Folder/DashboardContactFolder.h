@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DashboardContactFolder : UIViewController
+@interface DashboardContactFolder : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

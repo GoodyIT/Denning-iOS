@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TrialBalance : UIViewController
+@interface TrialBalance : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

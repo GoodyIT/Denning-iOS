@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewDepositCollection : UIViewController
+@interface ViewDepositCollection : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 @property (strong, nonatomic) NSString* selectedID;

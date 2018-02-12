@@ -232,7 +232,7 @@ NSMutableDictionary* keyValue;
 - (void) addPropertyToContent:(FullPropertyModel*) model {
     [propertyCodeList insertObject:model.propertyCode atIndex:propertyCodeList.count];
     [propertyFullTitleList insertObject:model.fullTitle atIndex:propertyFullTitleList.count];
-    [propertyAddressList insertObject:model.address.fullAddress atIndex:propertyAddressList.count];
+    [propertyAddressList insertObject:model.address atIndex:propertyAddressList.count];
     
     [self addContentsAndRefresh:PROPERTIES_SECTION index:propertyCodeList.count value1:model.fullTitle value2:model.propertyCode];
 }
@@ -523,6 +523,7 @@ NSMutableDictionary* keyValue;
             [newArray[index][k] addObject:model.solicitorName];
             solicitorCodeList[k] = model.solicitorCode;
             solicitorNameList[k] = model.solicitorName;
+            solicitorRefList[k] = model.solicitorReference;
         }
         
         [_headers addObject:@"Solicitors"];
@@ -602,22 +603,22 @@ NSMutableDictionary* keyValue;
 
 - (BOOL) checkValidate {
     if (selectedPrimaryClientCode.length == 0) {
-        [QMAlert showInformationWithMessage:@"Please input primary client" inViewController:self];
+        [QMAlert showInformationWithMessage:@"Please input primary client." inViewController:self];
         return NO;
     }
     
     if (selectedPartnerCode.length == 0) {
-        [QMAlert showInformationWithMessage:@"Please input partner-in-charge" inViewController:self];
+        [QMAlert showInformationWithMessage:@"Please input partner-in-charge." inViewController:self];
         return NO;
     }
 
     if (selectedClerkCode.length == 0) {
-        [QMAlert showInformationWithMessage:@"Please input clerk-in-charge" inViewController:self];
+        [QMAlert showInformationWithMessage:@"Please input clerk-in-charge." inViewController:self];
         return NO;
     }
     
     if (selectedMatterCode.length == 0) {
-        [QMAlert showInformationWithMessage:@"Please input matter" inViewController:self];
+        [QMAlert showInformationWithMessage:@"Please input matter." inViewController:self];
         return NO;
     }
 
@@ -696,52 +697,52 @@ NSMutableDictionary* keyValue;
     
 //    [data addEntriesFromDictionary:@{@"dateOpen": [DIHelpers todayWithTime]}];
     
-    if (_contents[MAIN_SECTION][MAIN_REF2][1] && ![_contents[MAIN_SECTION][MAIN_REF2][1] isEqualToString:_matterModel.manualNo]) {
+    if (![_contents[MAIN_SECTION][MAIN_REF2][1] isEqualToString:_matterModel.manualNo]) {
         [data addEntriesFromDictionary:@{@"manualNo": _contents[MAIN_SECTION][MAIN_REF2][1]}];
     }
     
-    if (selectedBranchCode.length > 0 && ![selectedBranchCode isEqualToString:_matterModel.branch.codeValue]) {
+    if (![selectedBranchCode isEqualToString:_matterModel.branch.codeValue]) {
         [data addEntriesFromDictionary:@{@"branch": @{@"code": selectedBranchCode}}];
     }
     
-    if (selectedPrimaryClientCode.length > 0 && ![selectedPrimaryClientCode isEqualToString:_matterModel.primaryClient.clientCode]) {
+    if (![selectedPrimaryClientCode isEqualToString:_matterModel.primaryClient.clientCode]) {
         [data addEntriesFromDictionary:@{@"primaryClient": @{
                                                  @"code": selectedPrimaryClientCode}}];
     }
     
-    if (selectedPartnerCode.length > 0 && ![selectedPartnerCode isEqualToString:_matterModel.partner.staffCode]) {
+    if ( ![selectedPartnerCode isEqualToString:_matterModel.partner.staffCode]) {
         [data addEntriesFromDictionary:@{@"partner": @{
                                                  @"code": selectedPartnerCode}}];
     }
-    if (selectedLACode.length > 0 && ![selectedLACode isEqualToString:_matterModel.legalAssistant.staffCode]) {
+    if (![selectedLACode isEqualToString:_matterModel.legalAssistant.staffCode]) {
         [data addEntriesFromDictionary:@{@"legalAssistant": @{
                                                  @"code": selectedLACode}}];
     }
-    if (selectedClerkCode.length > 0 && ![selectedClerkCode isEqualToString:_matterModel.clerk.staffCode]) {
+    if (![selectedClerkCode isEqualToString:_matterModel.clerk.staffCode]) {
         [data addEntriesFromDictionary:@{@"clerk": @{
                                                  @"code": selectedClerkCode}}];
     }
-    if (selectedFileStatusCode.length > 0 && ![selectedFileStatusCode isEqualToString:_matterModel.fileStatus.codeValue]) {
+    if (![selectedFileStatusCode isEqualToString:_matterModel.fileStatus.codeValue]) {
         [data addEntriesFromDictionary:@{@"fileStatus": @{
                                                  @"code": selectedFileStatusCode}}];
     }
    
-    if (_contents[MAIN_SECTION][MAIN_FILE_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_FILE_LOCATION][1] isEqualToString:_matterModel.locationBox]) {
+    if (![_contents[MAIN_SECTION][MAIN_FILE_LOCATION][1] isEqualToString:_matterModel.locationBox]) {
         [data addEntriesFromDictionary:@{@"locationBox": _contents[MAIN_SECTION][MAIN_FILE_LOCATION][1]}];
     }
     
-    if (_contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1] isEqualToString:_matterModel.locationPocket]) {
+    if ( ![_contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1] isEqualToString:_matterModel.locationPocket]) {
         [data addEntriesFromDictionary:@{@"locationPocket": _contents[MAIN_SECTION][MAIN_POCKET_LOCATION][1]}];
     }
     
-    if (_contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1] && ![_contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1] isEqualToString:_matterModel.locationPhysical]) {
+    if (![_contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1] isEqualToString:_matterModel.locationPhysical]) {
         [data addEntriesFromDictionary:@{@"locationPhysical": _contents[MAIN_SECTION][MAIN_STORAGE_LOCATION][1]}];
     }
     
     [data addEntriesFromDictionary:@{@"systemNo":_matterModel.systemNo}];
     
     // Remarks
-    if (_contents[REMARKS_SECTION][0][1] && ![_contents[REMARKS_SECTION][0][1] isEqualToString:_matterModel.remarks]) {
+    if (![_contents[REMARKS_SECTION][0][1] isEqualToString:_matterModel.remarks]) {
         [data addEntriesFromDictionary:@{@"remarks": _contents[REMARKS_SECTION][0][1]}];
     }
     
@@ -757,7 +758,9 @@ NSMutableDictionary* keyValue;
     [self buildImportantDatesParam:data];
     
     // Text Group
-    [self buildTextGroupParam:data];
+    if (_matterModel.textGroupArray.count > 0) {
+        [self buildTextGroupParam:data];
+    }
     
     return [data copy];
 }
@@ -767,40 +770,40 @@ NSMutableDictionary* keyValue;
     
     for (int i = 0; i < textGroup.count; i++) {
         GeneralGroup* group = textGroup[i];
-        [textGroupParam addObject:@[@{@"fieldName":group.fieldName}, @{@"value":_contents[TEXTGROUP_SECTION][i][1]}]];
+        if ( [_contents[TEXTGROUP_SECTION][i][1] isEqualToString:group.value]) {
+            [textGroupParam addObject:@[@{@"fieldName":group.fieldName}, @{@"value":_contents[TEXTGROUP_SECTION][i][1]}]];
+        }
     }
     
-    BOOL hasValue = [self hasValueForGeneralGroupArray:textGroup];
+//    BOOL hasValue = [self hasValueForGeneralGroupArray:textGroup];
     
-    if ((hasValue && textGroupParam.count == 0) || textGroupParam.count != 0) {
-        [parent addEntriesFromDictionary:@{@"textGroup": textGroupParam}];
-    }
+   [parent addEntriesFromDictionary:@{@"textGroup": textGroupParam}];
 }
 
 - (void) buildCaseDetailParam:(NSMutableDictionary*) parent {
     NSMutableArray* caseDetailParam = [NSMutableArray new];
     
-    if (_contents[CASEDETAIL_SECTION][CaseType][1] && ![_contents[CASEDETAIL_SECTION][CaseType][1] isEqualToString:_matterModel.court.caseNo] ) {
+    if (![_contents[CASEDETAIL_SECTION][CaseType][1] isEqualToString:_matterModel.court.caseNo] ) {
         [caseDetailParam addObject:@{@"CaseNo":_contents[CASEDETAIL_SECTION][CaseType][1]}];
     }
     
-    if (_contents[CASEDETAIL_SECTION][CaseCourt][1] && ![_contents[CASEDETAIL_SECTION][CaseCourt][1] isEqualToString:_matterModel.court.court]) {
+    if (![_contents[CASEDETAIL_SECTION][CaseCourt][1] isEqualToString:_matterModel.court.court]) {
         [caseDetailParam addObject:@{@"Court":_contents[CASEDETAIL_SECTION][CaseCourt][1]}];
     }
     
-    if (_contents[CASEDETAIL_SECTION][CaseJudge][1] && ![_contents[CASEDETAIL_SECTION][CaseJudge][1] isEqualToString:_matterModel.court.judge]) {
+    if (![_contents[CASEDETAIL_SECTION][CaseJudge][1] isEqualToString:_matterModel.court.judge]) {
         [caseDetailParam addObject:@{@"Judge":_contents[CASEDETAIL_SECTION][CaseJudge][1]}];
     }
     
-    if (_contents[CASEDETAIL_SECTION][CasePlace][1] && ![_contents[CASEDETAIL_SECTION][CasePlace][1] isEqualToString:_matterModel.court.place]) {
+    if (![_contents[CASEDETAIL_SECTION][CasePlace][1] isEqualToString:_matterModel.court.place]) {
         [caseDetailParam addObject:@{@"Place":_contents[CASEDETAIL_SECTION][CasePlace][1]}];
     }
     
-    if (_contents[CASEDETAIL_SECTION][CaseSAR][1] && ![_contents[CASEDETAIL_SECTION][CaseSAR][1] isEqualToString:_matterModel.court.SAR]) {
+    if (![_contents[CASEDETAIL_SECTION][CaseSAR][1] isEqualToString:_matterModel.court.SAR]) {
         [caseDetailParam addObject:@{@"SAR":_contents[CASEDETAIL_SECTION][CaseSAR][1]}];
     }
     
-    if (_contents[CASEDETAIL_SECTION][CaseTypeNo][1] && ![_contents[CASEDETAIL_SECTION][CaseTypeNo][1] isEqualToString:_matterModel.court.typeCase]) {
+    if (![_contents[CASEDETAIL_SECTION][CaseTypeNo][1] isEqualToString:_matterModel.court.typeCase]) {
         [caseDetailParam addObject:@{@"TypeCase":_contents[CASEDETAIL_SECTION][CaseTypeNo][1]}];
     }
     
@@ -834,11 +837,6 @@ NSMutableDictionary* keyValue;
         }
     }
     
-//    BOOL hasValue = [self hasValueForGeneralGroupArray:importantRM];
-//
-//    if ((hasValue && importantRMGroupParam.count == 0) || importantRMGroupParam.count != 0) {
-//        [parent addEntriesFromDictionary:@{@"RMGroup": importantRMGroupParam}];
-//    }
     [parent addEntriesFromDictionary:@{@"RMGroup": importantRMGroupParam}];
 }
 
@@ -848,16 +846,11 @@ NSMutableDictionary* keyValue;
     for (int i = 0; i < importantDates.count; i++) {
         GeneralGroup* group = importantDates[i];
         NSString* value = [DIHelpers convertDateToMySQLFormat:_contents[IMPORTANT_DATE_SECTION][i][1]];
-        if (_contents[IMPORTANT_DATE_SECTION][i][1] && ![group.value isEqualToString:value]) {
+        if (![group.value isEqualToString:value]) {
             [importantDatesParam addObject:@[@{@"fieldName":group.fieldName}, @{@"value":value}]];
         }
     }
     
-//    BOOL hasValue = [self hasValueForGeneralGroupArray:importantDates];
-//
-//    if ((hasValue && importantDatesParam.count == 0) || importantDatesParam.count != 0) {
-//
-//    }
     [parent addEntriesFromDictionary:@{@"dateGroup": importantDatesParam}];
 }
 
@@ -915,7 +908,7 @@ NSMutableDictionary* keyValue;
     NSMutableDictionary* solicitor = [NSMutableDictionary new];
     [solicitor addEntriesFromDictionary:@{@"groupName":name}];
     [solicitor addEntriesFromDictionary:@{@"reference":ref}];
-    [solicitor addEntriesFromDictionary:@{@"solicitor":@{@"code":code}}];
+    [solicitor addEntriesFromDictionary:@{@" ":@{@"code":code}}];
     
     return solicitor;
 }
@@ -1025,6 +1018,7 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)saveMatter:(UIBarButtonItem*)sender {
+    [self.view endEditing:YES];
     
     if (![self checkValidate]) {
         return;
@@ -1875,7 +1869,7 @@ NSMutableDictionary* keyValue;
             
             if (bankCodeList.count > selectedContactRow) {
                 bankCodeList[selectedContactRow] = model.bankBranchCode;
-                bankNameList[selectedContactRow] = model.name;
+                bankNameList[selectedContactRow] = model.HQ.name;
             } else {
                 [bankCodeList addObject:model.bankBranchCode];
                 [bankNameList addObject:model.name];
@@ -1891,7 +1885,6 @@ NSMutableDictionary* keyValue;
             newLabel = [NSString stringWithFormat:@"SolicitorGroup%ld", selectedContactRow-1];
             solicitorCodeList[selectedContactRow] = model.solicitorCode;
             solicitorNameList[selectedContactRow] = model.name;
-            solicitorRefList[selectedContactRow] = model.reference;
             [self replaceContentForSection:selectedSection InRow:selectedContactRow withValue:model.name];
         };
     }

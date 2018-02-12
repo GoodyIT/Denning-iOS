@@ -99,14 +99,12 @@
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
-    
 }
 
 - (void) appendList {
     isAppending = YES;
     [self getList];
 }
-
 
 - (void) getList{
     if (isLoading) return;
@@ -183,4 +181,34 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.text = @"";
+    [self searchBarSearchButtonClicked:searchBar];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    self.filter = searchBar.text;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+}
+
+- (void)willDismissSearchController:(UISearchController *) __unused searchController {
+    self.filter = @"";
+    self.page = @(1);
+    searchController.searchBar.text = @"";
+    isAppending = NO;
+    [self getList];
+}
+
+- (void)searchBar:(UISearchBar *) __unused searchBar textDidChange:(NSString *)searchText
+{
+    self.filter = searchText;
+    isAppending = NO;
+    self.page = @(1);
+    [self getList];
+}
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DashboardFileListing : UIViewController
+@interface DashboardFileListing : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

@@ -67,8 +67,22 @@ QMImagePickerResultHandler>
     imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
     imagePickerController.sourceType = sourceType;
     imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = NO;
     imagePickerController.modalPresentationStyle =
     (sourceType == UIImagePickerControllerSourceTypeCamera) ? UIModalPresentationFullScreen : UIModalPresentationPopover;
+    
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    
+    // iOS is going to calculate a size which constrains the 4:3 aspect ratio
+    // to the screen size. We're basically mimicking that here to determine
+    // what size the system will likely display the image at on screen.
+    // NOTE: screenSize.width may seem odd in this calculation - but, remember,
+    // the devices only take 4:3 images when they are oriented *sideways*.
+    float cameraAspectRatio = 4.0 / 3.0;
+    float imageWidth = floorf(screenSize.width * cameraAspectRatio);
+    float scale = ceilf((screenSize.height / imageWidth) * 10.0) / 10.0;
+    
+    imagePickerController.cameraViewTransform = CGAffineTransformMakeScale(scale, scale);
     
     UIPopoverPresentationController *presentationController = imagePickerController.popoverPresentationController;
     presentationController.barButtonItem = button;  // display popover from the UIBarButtonItem as an anchor
@@ -127,14 +141,15 @@ QMImagePickerResultHandler>
                                         maxDuration:kQMMaxAttachmentDuration
                                             quality:UIImagePickerControllerQualityTypeMedium
                                       resultHandler:self
-                                      allowsEditing:YES];
+                                      allowsEditing:NO];
 }
 
 - (void) uploadFile {
     [QMImagePicker chooseFromGaleryInViewController:self
                                         maxDuration:kQMMaxAttachmentDuration
                                       resultHandler:self
-                                      allowsEditing:YES];
+                                      allowsEditing:NO
+                                          mediaType:@[(NSString *)kUTTypeImage]];
 }
 
 - (void) displayPhoto:(UIImage*) photo {

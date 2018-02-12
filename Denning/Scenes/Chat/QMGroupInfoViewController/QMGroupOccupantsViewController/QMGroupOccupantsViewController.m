@@ -206,28 +206,6 @@ QMUsersServiceDelegate
 
 //MARK: - Methods
 
-- (NSMutableArray*) filterItems:(NSArray*) items {
-    NSMutableArray* newItems = [NSMutableArray new];
-    
-    if ([DIHelpers isSupportChat:self.chatDialog] && ![DataManager sharedManager].isDenningUser) {
-        for (QBUUser* user in items) {
-            if ([[DataManager sharedManager] checkDenningUser:user.email]) {
-                [newItems addObject:user];
-            }
-        }
-    } else {
-        for (QBUUser* user in items) {
-            if ([user.email isEqualToString:[QBSession currentSession].currentUser.email]) {
-                [newItems insertObject:user atIndex:0];
-            } else {
-                [newItems addObject:user];
-            }
-        }
-    }
-    
-    return [newItems mutableCopy];
-}
-
 - (void)updateOccupants {
     
     [[QMCore.instance.usersService getUsersWithIDs:self.chatDialog.occupantIDs]
@@ -240,7 +218,7 @@ QMUsersServiceDelegate
                                          return [u1.fullName caseInsensitiveCompare:u2.fullName];
                                      }];
              
-             [self.dataSource replaceItems:sortedItems];
+             [self.dataSource replaceItems:[DIHelpers filterGroupOccupants:sortedItems inChatDialog:self.chatDialog]];
              [self.tableView reloadData];
          }
          

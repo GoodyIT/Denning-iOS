@@ -77,6 +77,7 @@ NSMutableDictionary* keyValue;
         isRental = _model.isRental;
         selectedMatterCode = _model.matter.matterCode;
         selectedPresetCode = _model.presetCode.billCode;
+        issueToFirstCode = _model.issueTo1stCode.staffCode;
         _taxModel = _model.analysis;
         NSArray* temp = @[
                           @[@[@"Convert Quotation", _model.relatedDocumentNo], @[@"Bill No (System Auto-assinged)", @""], @[@"File No.", _model.fileNo], @[@"Matter", _model.matter.matterCode], @[@"Bill to", _model.issueToName], @[@"Preset Code", _model.presetCode.billCode], @[@"Price", _model.spaPrice], @[@"Loan", _model.spaLoan], @[@"Month", _model.rentalMonth], @[@"Rental", _model.rentalPrice]],
@@ -163,45 +164,57 @@ NSMutableDictionary* keyValue;
 - (NSDictionary*) buildParam {
     NSMutableDictionary* data = [NSMutableDictionary new];
     [data addEntriesFromDictionary:@{@"issueDate": [DIHelpers todayWithTime]}];
-    if (![issueToFirstCode isEqualToString:_model.issueTo1stCode.staffCode]) {
-        [data addEntriesFromDictionary:@{@"issueTo1stCode":issueToFirstCode}];
-    }
+//    if (![issueToFirstCode isEqualToString:_model.issueTo1stCode.staffCode]) {
+//
+//    }
     
-    if (![_contents[0][2][1] isEqualToString: _model.fileNo]) {
-        [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
-    }
+    [data addEntriesFromDictionary:@{@"issueTo1stCode":issueToFirstCode}];
+    
+//    if (![_contents[0][2][1] isEqualToString: _model.fileNo]) {
+//
+//    }
+    
+    [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
     
     [data addEntriesFromDictionary:@{@"isRental": isRental}];
     
-    if (![_contents[0][4][1] isEqualToString: _model.issueToName]) {
-        [data addEntriesFromDictionary:@{@"issueToName": _contents[0][4][1]}];
-    }
+//    if (![_contents[0][4][1] isEqualToString: _model.issueToName]) {
+//
+//    }
+    [data addEntriesFromDictionary:@{@"issueToName": _contents[0][4][1]}];
     
-    if (![selectedMatterCode isEqualToString: _model.matter.matterCode]) {
-        [data addEntriesFromDictionary:@{@"matter": @{
-                                                 @"code": selectedMatterCode
-                                                 }}];
-    }
-    if (![selectedPresetCode isEqualToString: _model.presetCode.billCode]) {
-        [data addEntriesFromDictionary:@{@"presetCode": @{
-                                                 @"code": selectedPresetCode
-                                                 }}];
-    }
-    if (![_contents[0][0][1] isEqualToString: _model.relatedDocumentNo]) {
-        [data addEntriesFromDictionary:@{@"relatedDocumentNo": _contents[0][0][1]}];
-    }
-    if (![_contents[0][6][1] isEqualToString: _model.spaPrice]) {
-        [data addEntriesFromDictionary:@{@"spaPrice": [self getActualNumber: [self getValidValue:_contents[0][6][1]]]}];
-    }
-    if (![_contents[0][7][1] isEqualToString: _model.spaLoan]) {
-        [data addEntriesFromDictionary:@{@"spaLoan": [self getActualNumber: [self getValidValue:_contents[0][7][1]]]}];
-    }
-    if (![_contents[0][8][1] isEqualToString: _model.rentalMonth]) {
-        [data addEntriesFromDictionary:@{@"rentalMonth": [self getActualNumber: [self getValidValue:_contents[0][8][1]]]}];
-    }
-    if (![_contents[0][9][1] isEqualToString: _model.rentalPrice]) {
-        [data addEntriesFromDictionary:@{@"rentalPrice": [self getActualNumber: [self getValidValue:_contents[0][9][1]]]}];
-    }
+//    if (![selectedMatterCode isEqualToString: _model.matter.matterCode]) {
+//
+//    }
+    [data addEntriesFromDictionary:@{@"matter": @{
+                                             @"code": selectedMatterCode
+                                             }}];
+//    if (![selectedPresetCode isEqualToString: _model.presetCode.billCode]) {
+//        
+//    }
+    [data addEntriesFromDictionary:@{@"presetCode": @{
+                                             @"code": selectedPresetCode
+                                             }}];
+//    if (![_contents[0][0][1] isEqualToString: _model.relatedDocumentNo]) {
+//
+//    }
+    [data addEntriesFromDictionary:@{@"relatedDocumentNo": _contents[0][0][1]}];
+//    if (![_contents[0][6][1] isEqualToString: _model.spaPrice]) {
+//
+//    }
+    [data addEntriesFromDictionary:@{@"spaPrice": [self getActualNumber: [self getValidValue:_contents[0][6][1]]]}];
+//    if (![_contents[0][7][1] isEqualToString: _model.spaLoan]) {
+//
+//    }
+    [data addEntriesFromDictionary:@{@"spaLoan": [self getActualNumber: [self getValidValue:_contents[0][7][1]]]}];
+//    if (![_contents[0][8][1] isEqualToString: _model.rentalMonth]) {
+//
+//    }
+    [data addEntriesFromDictionary:@{@"rentalMonth": [self getActualNumber: [self getValidValue:_contents[0][8][1]]]}];
+//    if (![_contents[0][9][1] isEqualToString: _model.rentalPrice]) {
+//
+//    }
+    [data addEntriesFromDictionary:@{@"rentalPrice": [self getActualNumber: [self getValidValue:_contents[0][9][1]]]}];
 
     return data;
 }
@@ -245,6 +258,8 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)saveBill:(id)sender {
+    [self.view endEditing:YES];
+    
     if (isSaved) {
         return;
     }
@@ -258,7 +273,7 @@ NSMutableDictionary* keyValue;
         return;
     }
     
-    [QMAlert showConfirmDialog:@"Do you want to save contact?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
+    [QMAlert showConfirmDialog:@"Do you want to save invoice?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
         if  ([action.title isEqualToString:@"OK"]) {
             [self _save];
         }
@@ -782,12 +797,12 @@ NSMutableDictionary* keyValue;
             selectedPresetCode = model.presetBill.codeValue;
             if (model.partyGroupArray.count > 0) {
                 PartyGroupModel* partyGroup = model.partyGroupArray[0];
-                issueToFirstCode = ((ClientModel*)partyGroup.partyArray[0]).clientCode;
                 
                 NSString *issueToName = @"";
                 
                 for(ClientModel* party in partyGroup.partyArray) {
                     issueToName = [NSString stringWithFormat:@"%@ %@ ", issueToName, party.name];
+                    issueToFirstCode = ((ClientModel*)partyGroup.partyArray[0]).clientCode;
                 }
                 
                 [self replaceContentForSection:0 InRow:4 withValue:issueToName];

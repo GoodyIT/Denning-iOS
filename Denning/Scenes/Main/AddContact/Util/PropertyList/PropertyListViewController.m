@@ -24,8 +24,6 @@
 @property (copy, nonatomic) NSString *filter;
 @property (strong, nonatomic) NSNumber* page;
 
-
-
 @end
 
 @implementation PropertyListViewController

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FileLedgerDetail : UIViewController
+@interface FileLedgerDetail : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

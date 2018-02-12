@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FeeTransferDetail : UIViewController
+@interface FeeTransferDetail : BaseViewController
 
 @property (strong, nonatomic) FeeTranserModel* model;
 @end

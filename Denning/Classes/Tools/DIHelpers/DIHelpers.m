@@ -861,7 +861,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -904,7 +904,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -947,7 +947,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -991,7 +991,7 @@
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* roleofToUser = [self getCurrentUserRole:toUser fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     
     if ([user.email isEqualToString:toUser.email]) {
         [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ROLE_SELF_CHANGE", nil) actionSuccess:NO inViewController:[self topMostController]];
@@ -1053,7 +1053,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1092,7 +1092,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1135,7 +1135,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1177,7 +1177,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1217,7 +1217,7 @@
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* roleofToUser = [self getCurrentUserRole:toUser fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1268,7 +1268,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1307,7 +1307,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1346,7 +1346,7 @@
     QBUUser* user = [QBSession currentSession].currentUser;
     NSString* role = [self getCurrentUserRole:user fromChatDialog:dialog];
     NSString* tag = [self getTag:dialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     if ([tag isEqualToString:kChatDenningTag]) {
         if (isDenningUser) {
             isPossible = YES;
@@ -1405,40 +1405,62 @@
     return YES;
 }
 
-+ (NSArray*) getOnlieStatus:(NSArray*) onlineUsers inTotalUser:(NSArray*) totalUsers forChatDialog:(QBChatDialog*) chatDialog
-{
-    NSMutableArray* info = [NSMutableArray new];
-    NSInteger cntOfOnlineUsers, cntOfTotalUsers;
-    NSArray* onlineUsersByExcludingDenning = [QMCore.instance.contactManager usersByExcludingDenningUsersWithIDS:onlineUsers];
-    NSArray* totalUsersByExcludingDenning = [QMCore.instance.contactManager usersByExcludingDenningUsersWithIDS:onlineUsers];
-    QBUUser* user = [QBSession currentSession].currentUser;
-    NSString* role = [self getCurrentUserRole:user fromChatDialog:chatDialog];
-    NSString* tag = [self getTag:chatDialog];
-    BOOL isDenningUser = [[DataManager sharedManager] checkDenningUser:user.email];
-    
-    if ([tag isEqualToString:kChatDenningTag]) {
-        if (isDenningUser) {
-            cntOfOnlineUsers = onlineUsers.count;
-            cntOfTotalUsers = totalUsers.count;
-        } else if ([role isEqualToString:kRoleAdminTag] || [role isEqualToString:kRoleStaffTag]) {
-            cntOfOnlineUsers = onlineUsersByExcludingDenning.count;
-            cntOfTotalUsers = totalUsersByExcludingDenning.count;
-        } else {
-            return nil;
-        }
++ (NSArray*) filterGroupOccupants:(NSArray*) users inChatDialog:(QBChatDialog*) chatDialog {
+    NSMutableArray* newUsers = [NSMutableArray new];
+    NSArray* ids = [QMCore.instance.contactManager idsOfUsers:users];
+    NSArray* totalUsersByExcludingDenning = [QMCore.instance.contactManager usersByExcludingDenningUsersWithIDS:ids];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
+    if (isDenningUser) {
+        newUsers = [users mutableCopy];
     } else {
-        if (isDenningUser) {
-            cntOfOnlineUsers = onlineUsers.count;
-            cntOfTotalUsers = totalUsers.count;
-        } else if ([role isEqualToString:kRoleAdminTag] || [role isEqualToString:kRoleStaffTag]) {
-            cntOfOnlineUsers = onlineUsersByExcludingDenning.count;
-            cntOfTotalUsers = totalUsersByExcludingDenning.count;
-        } else {
-            return nil;
-        }
+        newUsers = [totalUsersByExcludingDenning mutableCopy];
     }
     
-    return [info copy];
+    return [QMCore.instance.contactManager friendsByIDs:newUsers];
+}
+
++ (NSArray*) getOnlieStatus:(NSArray*) onlineUsers inTotalUser:(NSArray*) totalUsers forChatDialog:(QBChatDialog*) chatDialog
+{
+    NSInteger cntOfOnlineUsers, cntOfTotalUsers;
+    NSArray* onlineUsersByExcludingDenning = [QMCore.instance.contactManager usersByExcludingDenningUsersWithIDS:onlineUsers];
+    NSArray* totalUsersByExcludingDenning = [QMCore.instance.contactManager usersByExcludingDenningUsersWithIDS:totalUsers];
+//    QBUUser* user = [QBSession currentSession].currentUser;
+//    NSString* role = [self getCurrentUserRole:user fromChatDialog:chatDialog];
+//    NSString* tag = [self getTag:chatDialog];
+    BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
+    
+//    if ([tag isEqualToString:kChatDenningTag]) {
+//        if (isDenningUser) {
+//            cntOfOnlineUsers = onlineUsers.count;
+//            cntOfTotalUsers = totalUsers.count;
+//        } else if ([role isEqualToString:kRoleAdminTag] || [role isEqualToString:kRoleStaffTag]) {
+//            cntOfOnlineUsers = onlineUsersByExcludingDenning.count;
+//            cntOfTotalUsers = totalUsersByExcludingDenning.count;
+//        } else {
+//            return nil;
+//        }
+//    } else {
+//        if (isDenningUser) {
+//            cntOfOnlineUsers = onlineUsers.count;
+//            cntOfTotalUsers = totalUsers.count;
+//        } else if ([role isEqualToString:kRoleAdminTag] || [role isEqualToString:kRoleStaffTag]) {
+//            cntOfOnlineUsers = onlineUsersByExcludingDenning.count;
+//            cntOfTotalUsers = totalUsersByExcludingDenning.count;
+//        } else {
+//            return nil;
+//        }
+//    }
+    
+    if (isDenningUser) {
+        cntOfOnlineUsers = onlineUsers.count;
+        cntOfTotalUsers = totalUsers.count;
+    } else {
+        cntOfOnlineUsers = onlineUsersByExcludingDenning.count;
+        cntOfTotalUsers = totalUsersByExcludingDenning.count;
+    }
+    
+    
+    return @[@(cntOfOnlineUsers), @(cntOfTotalUsers)];
 }
 
 + (BOOL) hasAdminRole:(QBChatDialog*) chatDialog

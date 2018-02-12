@@ -13,7 +13,7 @@
 + (EditCourtModel*) getEditCourtFromResponse: (NSDictionary*) response
 {
     EditCourtModel* model = [EditCourtModel new];
-    model.attendedStatus = [CodeDescription getCodeDescriptionFromResponse: [response objectForKeyNotNull:@"attendedStatus"]];
+    model.attendedStatus = [CodeDescription getCodeDescriptionFromResponse: [response objectForKeyNotNull:@"S"]];
     model.courtCode = [response valueForKeyNotNull:@"code"];
     model.caseNo = [response valueForKeyNotNull:@"caseNo"];
     model.caseName = [response valueForKeyNotNull:@"caseName"];

@@ -195,10 +195,11 @@
 }
 
 - (NSArray*) usersByExcludingDenningUsersWithIDS:(NSArray*) userIDs {
-    BOOL isExist = NO;
+    
     NSMutableArray *mutableUsers = [NSMutableArray new];
     
     for (NSNumber* ID in userIDs) {
+        BOOL isExist = NO;
         for (ChatFirmModel *chatFirmModel in [DataManager sharedManager].denningContactArray) {
             for (QBUUser* user in chatFirmModel.users) {
                 if (ID.integerValue == user.ID) {
@@ -233,7 +234,7 @@
 
 - (NSArray *)friendsByIDs:(NSArray *)userIDs {
     
-    NSArray *friends = [self friends];
+    NSArray *friends = [self.serviceManager.usersService.usersMemoryStorage unsortedUsers];
     NSMutableArray *mutableUsers = [NSMutableArray new];
     
     for (QBUUser *user in friends) {

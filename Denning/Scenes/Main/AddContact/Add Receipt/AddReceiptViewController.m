@@ -296,6 +296,8 @@ enum PAYMENT_MODE_ROWS {
 }
 
 - (IBAction)saveReceipt:(UIBarButtonItem*)sender {
+    [self.view endEditing:YES];
+    
     if (![_isUpdate isEqualToString:@"update"]) {
         [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {

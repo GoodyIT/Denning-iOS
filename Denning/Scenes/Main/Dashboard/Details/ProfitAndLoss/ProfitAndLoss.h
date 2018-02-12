@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfitAndLoss : UITableViewController
+@interface ProfitAndLoss : BaseTableViewController
 
 @property (strong, nonatomic) NSString* url;
 

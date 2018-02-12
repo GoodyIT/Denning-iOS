@@ -100,6 +100,9 @@
     @weakify(self)
     [[QMNetworkManager sharedManager] getDashboardTrialBalanceWithURL:_url withPage:_page withFilter:_filter withCompletion:^(NSArray * _Nonnull result, NSError * _Nonnull error) {
         @strongify(self)
+        if (self == nil) {
+            return;
+        }
         if (error == nil) {
             self.listOfTrialBalances = [result mutableCopy];
             

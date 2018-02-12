@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FeesTransfer : UIViewController
+@interface FeesTransfer : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

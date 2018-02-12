@@ -190,6 +190,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
             NSString* base64Data = [[NSData dataWithContentsOfFile:(NSString*)item] base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
             NSString* fileType = [(NSString*)item pathExtension];
             NSString* fileName = [(NSString*)[[(NSString*)item lastPathComponent] stringByDeletingPathExtension] stringByAppendingString:[self randomTime]];
+            fileName = [NSString stringWithFormat:@"%@.%@", fileName, fileType];
             
             NSDictionary* dic = @{@"FileName":fileName,
                                   @"MimeType":fileType,

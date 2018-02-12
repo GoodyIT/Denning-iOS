@@ -1156,7 +1156,6 @@
 		96A73AA31F1BCADC00B97156 /* ProfitLossDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A73AA21F1BCADC00B97156 /* ProfitLossDetailModel.m */; };
 		96A73AA71F1C9BE100B97156 /* StaffOnline.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A73AA61F1C9BE100B97156 /* StaffOnline.m */; };
 		96A73AAB1F1C9D2100B97156 /* StaffOnlineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A73AAA1F1C9D2100B97156 /* StaffOnlineModel.m */; };
-		96A73AB31F1C9EA300B97156 /* FeesTranserDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A73AB21F1C9EA300B97156 /* FeesTranserDetail.m */; };
 		96A73AB81F1CA2FF00B97156 /* StaffOnlineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A73AB61F1CA2FF00B97156 /* StaffOnlineCell.m */; };
 		96A73AB91F1CA2FF00B97156 /* StaffOnlineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96A73AB71F1CA2FF00B97156 /* StaffOnlineCell.xib */; };
 		96A73ABE1F1CD77900B97156 /* StaffOnlineHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A73ABC1F1CD77900B97156 /* StaffOnlineHeaderCell.m */; };
@@ -2938,8 +2937,6 @@
 		96A73AA61F1C9BE100B97156 /* StaffOnline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffOnline.m; sourceTree = "<group>"; };
 		96A73AA91F1C9D2100B97156 /* StaffOnlineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffOnlineModel.h; sourceTree = "<group>"; };
 		96A73AAA1F1C9D2100B97156 /* StaffOnlineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffOnlineModel.m; sourceTree = "<group>"; };
-		96A73AB11F1C9EA300B97156 /* FeesTranserDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeesTranserDetail.h; sourceTree = "<group>"; };
-		96A73AB21F1C9EA300B97156 /* FeesTranserDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeesTranserDetail.m; sourceTree = "<group>"; };
 		96A73AB51F1CA2FF00B97156 /* StaffOnlineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffOnlineCell.h; sourceTree = "<group>"; };
 		96A73AB61F1CA2FF00B97156 /* StaffOnlineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffOnlineCell.m; sourceTree = "<group>"; };
 		96A73AB71F1CA2FF00B97156 /* StaffOnlineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StaffOnlineCell.xib; sourceTree = "<group>"; };
@@ -8452,7 +8449,6 @@
 				96A73AA41F1C9BC600B97156 /* StaffOnline */,
 				96A73A901F1B1C1400B97156 /* ProfitLossDetail */,
 				96A73A8C1F1B0F1000B97156 /* ProfitAndLoss */,
-				96A73AB01F1C9EA300B97156 /* FeesTranserDetail */,
 				96A73A7D1F1AAEDE00B97156 /* FeesTransfer */,
 				791B50001FD0F864003C30EC /* Quotation */,
 				96A73A731F1A877200B97156 /* TaxInvoice */,
@@ -9028,15 +9024,6 @@
 				96A73AAA1F1C9D2100B97156 /* StaffOnlineModel.m */,
 			);
 			path = StaffOnlineModel;
-			sourceTree = "<group>";
-		};
-		96A73AB01F1C9EA300B97156 /* FeesTranserDetail */ = {
-			isa = PBXGroup;
-			children = (
-				96A73AB11F1C9EA300B97156 /* FeesTranserDetail.h */,
-				96A73AB21F1C9EA300B97156 /* FeesTranserDetail.m */,
-			);
-			path = FeesTranserDetail;
 			sourceTree = "<group>";
 		};
 		96A73AB41F1CA2EE00B97156 /* StaffOnlineCell */ = {
@@ -10550,7 +10537,6 @@
 				792288092017C762002AB744 /* NSString+QMTransliterating.m in Sources */,
 				792288082017C762002AB744 /* NSString+QMSiriUtils.m in Sources */,
 				96821F2F1F1D7F4300F28708 /* FeeAndMatterGrowth.m in Sources */,
-				96A73AB31F1C9EA300B97156 /* FeesTranserDetail.m in Sources */,
 				7912A6351FEBA25200C8B9A5 /* SwitchItemModel.m in Sources */,
 				96FD653F1F21097300FB9009 /* UploadTo.m in Sources */,
 				7903CF541ECC00CE0090206C /* StaffViewController.m in Sources */,

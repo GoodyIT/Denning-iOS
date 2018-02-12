@@ -74,7 +74,7 @@
 - (void) loadView
 {
     [super loadView];
-     [self configureCalendar];
+    [self configureCalendar];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,7 +109,7 @@
 - (void) configureCalendar
 {
     //  calendar.allowsMultipleSelection = YES;
-    FSCalendar* calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 0, _calendarView.frame.size.width-50, _calendarView.frame.size.height)];
+    FSCalendar* calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(10, 0, _calendarView.frame.size.width-20, _calendarView.frame.size.height)];
     calendar.dataSource = self;
     calendar.delegate = self;
     calendar.swipeToChooseGesture.enabled = YES;

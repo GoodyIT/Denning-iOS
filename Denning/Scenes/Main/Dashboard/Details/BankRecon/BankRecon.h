@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BankRecon : UIViewController
+@interface BankRecon : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

@@ -1244,7 +1244,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Next Date" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bbW-Ia-WIo" userLabel="I" customClass="UIFloatLabelTextField">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Next Start Date" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bbW-Ia-WIo" userLabel="I" customClass="UIFloatLabelTextField">
                                                     <rect key="frame" x="16" y="11" width="163" height="22"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
@@ -1261,7 +1261,7 @@
                                                         <constraint firstAttribute="height" constant="35" id="slJ-GM-45P"/>
                                                     </constraints>
                                                 </view>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Next Time" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nDr-qG-0OO" customClass="UIFloatLabelTextField">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Time" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="nDr-qG-0OO" customClass="UIFloatLabelTextField">
                                                     <rect key="frame" x="195.5" y="0.0" width="179.5" height="43.5"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
@@ -1286,18 +1286,70 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="41n-Mx-UYh" customClass="SWTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="TTf-ig-jXq" customClass="SWTableViewCell">
                                         <rect key="frame" x="0.0" y="903.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TTf-ig-jXq" id="VJO-xl-YfK">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Next End Date" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jek-hf-RJq" userLabel="I" customClass="UIFloatLabelTextField">
+                                                    <rect key="frame" x="16" y="11" width="163" height="22"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="rcZ-Ge-uOV" id="gXi-Ma-ejC"/>
+                                                    </connections>
+                                                </textField>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yOR-gf-mNw">
+                                                    <rect key="frame" x="187" y="4.5" width="1" height="35"/>
+                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="1" id="JDu-Qc-uDd"/>
+                                                        <constraint firstAttribute="height" constant="35" id="m5u-cr-GWd"/>
+                                                    </constraints>
+                                                </view>
+                                                <textField opaque="NO" clipsSubviews="YES" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Time" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="i8p-df-b0g" customClass="UIFloatLabelTextField">
+                                                    <rect key="frame" x="195.5" y="0.0" width="179.5" height="43.5"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="rcZ-Ge-uOV" id="FTG-VR-PWv"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="i8p-df-b0g" firstAttribute="top" secondItem="VJO-xl-YfK" secondAttribute="top" id="1tF-gL-juT"/>
+                                                <constraint firstAttribute="trailing" secondItem="i8p-df-b0g" secondAttribute="trailing" id="Au0-DH-aP6"/>
+                                                <constraint firstAttribute="bottom" secondItem="i8p-df-b0g" secondAttribute="bottom" id="Bwo-nM-Qaz"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="jek-hf-RJq" secondAttribute="bottom" id="Qb4-tE-Pu9"/>
+                                                <constraint firstItem="jek-hf-RJq" firstAttribute="top" secondItem="VJO-xl-YfK" secondAttribute="topMargin" id="YVX-3b-1iZ"/>
+                                                <constraint firstItem="yOR-gf-mNw" firstAttribute="centerY" secondItem="VJO-xl-YfK" secondAttribute="centerY" id="bMr-Sr-KKl"/>
+                                                <constraint firstItem="yOR-gf-mNw" firstAttribute="leading" secondItem="jek-hf-RJq" secondAttribute="trailing" constant="8" id="bZa-Tf-xr5"/>
+                                                <constraint firstItem="jek-hf-RJq" firstAttribute="leading" secondItem="VJO-xl-YfK" secondAttribute="leadingMargin" id="byt-Ny-08b"/>
+                                                <constraint firstItem="i8p-df-b0g" firstAttribute="leading" secondItem="yOR-gf-mNw" secondAttribute="trailing" constant="8" id="eGk-zr-2MO"/>
+                                                <constraint firstItem="yOR-gf-mNw" firstAttribute="centerX" secondItem="VJO-xl-YfK" secondAttribute="centerX" id="lr9-V7-fUH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="41n-Mx-UYh" customClass="SWTableViewCell">
+                                        <rect key="frame" x="0.0" y="947.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="41n-Mx-UYh" id="DIy-yE-55b">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enclosure No" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Pb7-l3-0OF" customClass="UIFloatLabelTextField">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enclosure No" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Pb7-l3-0OF" customClass="UIFloatLabelTextField">
                                                     <rect key="frame" x="16" y="11" width="343" height="22"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="rcZ-Ge-uOV" id="eIf-8N-T2V"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -1310,7 +1362,7 @@
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="prt-UU-dea" customClass="SWTableViewCell">
-                                        <rect key="frame" x="0.0" y="947.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="991.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="prt-UU-dea" id="HEm-tO-M9K">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -1333,7 +1385,7 @@
                                         <inset key="separatorInset" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="KlT-c9-9UT" customClass="SWTableViewCell">
-                                        <rect key="frame" x="0.0" y="991.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1035.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KlT-c9-9UT" id="KOV-IY-1Mp">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
@@ -1419,17 +1471,20 @@
                         <outlet property="fileNoCell" destination="TYs-n3-gfx" id="aQ5-8Q-DD1"/>
                         <outlet property="natureOfHearing" destination="fMo-nd-zVl" id="vED-ix-gwh"/>
                         <outlet property="natureOfHearingCell" destination="j3I-QV-uvT" id="SRH-3f-4Q5"/>
-                        <outlet property="nextDate" destination="bbW-Ia-WIo" id="EF5-0j-b67"/>
-                        <outlet property="nextDateTimeCell" destination="03s-PW-Zkp" id="kTN-E6-6vP"/>
                         <outlet property="nextDateType" destination="RPC-Pf-Waa" id="9ON-5U-ioD"/>
                         <outlet property="nextDateTypeCell" destination="gYH-Pq-YIU" id="Avr-Hg-1qv"/>
                         <outlet property="nextDetailCell" destination="KlT-c9-9UT" id="hej-9f-uQP"/>
                         <outlet property="nextDetails" destination="C7U-2t-vCs" id="RcW-UN-vzu"/>
                         <outlet property="nextEnclosureNo" destination="Pb7-l3-0OF" id="1aH-sr-e0P"/>
                         <outlet property="nextEnclosureNoCell" destination="41n-Mx-UYh" id="FR2-mh-vcZ"/>
+                        <outlet property="nextEndDate" destination="jek-hf-RJq" id="Tje-Ox-Jlf"/>
+                        <outlet property="nextEndDateTimeCell" destination="TTf-ig-jXq" id="ic0-zp-Lh0"/>
+                        <outlet property="nextEndTime" destination="i8p-df-b0g" id="o1c-ZV-AdQ"/>
                         <outlet property="nextNatureOfHearing" destination="LxD-QK-gFr" id="LEg-1o-SgF"/>
                         <outlet property="nextNatureOfhearingCell" destination="prt-UU-dea" id="j8C-YE-Clh"/>
-                        <outlet property="nextTime" destination="nDr-qG-0OO" id="q1e-nn-cae"/>
+                        <outlet property="nextStartDate" destination="bbW-Ia-WIo" id="O9T-ka-EaK"/>
+                        <outlet property="nextStartDateTimeCell" destination="03s-PW-Zkp" id="4Xi-Ou-Ibl"/>
+                        <outlet property="nextStartTime" destination="nDr-qG-0OO" id="7eS-KI-49q"/>
                         <outlet property="opponentCounsel" destination="VWN-D2-rNg" id="smy-jq-5M2"/>
                         <outlet property="opponentCounselCell" destination="Jyk-I2-cRK" id="dVo-Pl-9xv"/>
                         <outlet property="place" destination="Cw2-Ua-Bqq" id="3gS-S9-rmK"/>

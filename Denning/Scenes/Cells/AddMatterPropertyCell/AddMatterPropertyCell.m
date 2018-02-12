@@ -23,7 +23,7 @@
 
 - (void) configureCellWithFullTitle: (NSString*) fullTitle withAddress:(NSString*) address inNumber:(NSInteger) number
 {
-    self.propertyNumber.text = [NSString stringWithFormat:@"%ld", number];
+    self.propertyNumber.text = [NSString stringWithFormat:@"%ld", (long)number];
     self.fullTitle.text = [DIHelpers capitalizedString:fullTitle];
     self.address.text = [DIHelpers capitalizedString:address];
 }

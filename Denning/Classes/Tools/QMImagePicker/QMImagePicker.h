@@ -39,6 +39,12 @@
                            resultHandler:(id<QMImagePickerResultHandler>)resultHandler
                            allowsEditing:(BOOL)allowsEditing;
 
++ (void)chooseFromGaleryInViewController:(UIViewController *)vc
+                             maxDuration:(NSTimeInterval)maxDuration
+                           resultHandler:(id<QMImagePickerResultHandler>)resultHandler
+                           allowsEditing:(BOOL)allowsEditing
+                               mediaType:(NSArray*) mediaType;
+
 @end
 
 @protocol QMImagePickerResultHandler <NSObject>

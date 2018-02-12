@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StaffOnline : UIViewController
+@interface StaffOnline : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 @end

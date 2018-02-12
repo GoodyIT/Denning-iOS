@@ -21,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *searchContainer;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (weak, nonatomic) IBOutlet UILabel *subTitle;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* listOfTasks;
 @property (strong, nonatomic) UISearchController *searchController;
@@ -82,12 +83,12 @@
 }
 
 - (void) parseUrl {
-    NSRange range =  [_url rangeOfString:@"?" options:NSBackwardsSearch];
+    NSRange range =  [_url rangeOfString:@"=" options:NSBackwardsSearch];
     if (range.location > _url.length) {
         baseUrl = _url;
         return;
     }
-    baseUrl = [_url substringToIndex:range.location];
+    baseUrl = [_url substringToIndex:range.location+1];
 }
 
 - (void) prepareUI
@@ -96,12 +97,16 @@
     self.filter = @"";
     isAppending = NO;
     
+    if (_name != nil) {
+        _subTitle.text = _name;
+    }
+    
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = THE_CELL_HEIGHT;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
-    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 66, self.view.frame.size.width, 44)];
+    self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 76, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
     self.selectionList.dataSource = self;
     

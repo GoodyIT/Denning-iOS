@@ -21,6 +21,7 @@
     model.decTotal = [response valueForKeyNotNull:@"decTotal"];
     
     model.Disb = [TaxInvoiceItemModel getTaxInvoiceItemArrayFromResponse:[response objectForKeyNotNull:@"Disb"]];
+    
     model.DisbGST = [TaxInvoiceItemModel getTaxInvoiceItemArrayFromResponse:[response objectForKeyNotNull:@"DisbGST"]];
     model.Fees = [TaxInvoiceItemModel getTaxInvoiceItemArrayFromResponse:[response objectForKeyNotNull:@"Fees"]];
     model.GST = [TaxInvoiceItemModel getTaxInvoiceItemArrayFromResponse:[response objectForKeyNotNull:@"GST"]];

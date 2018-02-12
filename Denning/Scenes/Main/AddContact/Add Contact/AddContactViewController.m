@@ -21,6 +21,63 @@
 #import "NBPhoneNumberUtil.h"
 #import "NBPhoneNumber.h"
 
+// Sections
+enum {
+    PERSONAL_INFO,
+    CONTACT_INFO,
+    OTHER_INFO,
+    COMPANY_INFO,
+    INVITATION,
+};
+
+
+// Personal Info
+enum {
+    ID_TYPE = 0,
+    ID_NO = 1,
+    OLD_IC = 2,
+    NAME = 3,
+    TITLE = 4,
+};
+
+// Contact Info
+enum {
+    ADDRESS1 = 0,
+    ADDRESS2 = 1,
+    ADDRESS3 = 2,
+    POSTCODE = 3,
+    TOWN = 4,
+    STATE = 5,
+    COUNTRY = 6,
+    PHONE_MOBILE = 7,
+    PHONE_HOME = 8,
+    PHONE_OFFICE = 9,
+    FAX = 10,
+    EMAIL = 11,
+    WEBSITE = 12,
+    CONTACT_PERSON = 13,
+};
+
+// Other Info
+enum {
+ CITIZENSHIP = 0,
+ DATE_OF_BIRTH = 1,
+ OCCUPATION = 2,
+ TAX_FILE_NO = 3,
+ IRD_BRANCH = 4,
+};
+
+// Company Info
+enum {
+ REGISTERED_OFFICE = 0,
+};
+
+
+// INVITATION
+enum {
+ INVITATION_TO_DENNING = 0,
+};
+
 @interface AddContactViewController() <SWTableViewCellDelegate>
 {
     __block BOOL isIDChecking, isNameChecking;
@@ -177,6 +234,7 @@
         self.IRDBranch.text = self.contactModel.IRDBranch.descriptionValue;
         selectedIRDBranchCode = _contactModel.IRDBranch.codeValue;
         self.website.text = self.contactModel.website;
+        self.registeredOffice.text = self.contactModel.registeredOffice;
         if ([self.contactModel.InviteToDenning isEqualToString:@"1"]) {
             [self.inviteDenning setOn:YES];
         } else {
@@ -556,6 +614,8 @@
 }
 
 - (IBAction)saveContact:(UIBarButtonItem*)sender {
+    [self.view endEditing:YES];
+    
     if (![self checkValidation]) {
         return;
     }
@@ -625,33 +685,41 @@
     return [phone1 isEqualToString:phone2];
 }
 
+- (NSString*) buildPhoneString: (NSString*) countryCallingCode phone:(NSString*) phone {
+    if (phone.length == 0) {
+        return @"";
+    }
+    
+    return [countryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:phone]]];
+}
+
 - (NSMutableDictionary*) buildParams {
     NSMutableDictionary* address = [NSMutableDictionary new];
-    if (_town.text.length > 0 && ![_town.text isEqualToString:_contactModel.address.city]) {
+    if (![_town.text isEqualToString:_contactModel.address.city]) {
         [address addEntriesFromDictionary:@{@"city": [self getValidValue:self.town.text]}];
     }
     
-    if (_state.text.length > 0 && ![_state.text isEqualToString:_contactModel.address.state]) {
+    if (![_state.text isEqualToString:_contactModel.address.state]) {
         [address addEntriesFromDictionary:@{@"state": [self getNotNull:self.state.text]}];
     }
     
-    if (_country.text.length > 0 && ![_country.text isEqualToString:_contactModel.address.country]) {
+    if (![_country.text isEqualToString:_contactModel.address.country]) {
         [address addEntriesFromDictionary:@{@"country": [self getNotNull:self.country.text]}];
     }
     
-    if (_postcode.text.length > 0 && ![_postcode.text isEqualToString:_contactModel.address.postCode]) {
+    if (![_postcode.text isEqualToString:_contactModel.address.postCode]) {
         [address addEntriesFromDictionary:@{@"postcode": [self getNotNull:_postcode.text]}];
     }
     
-    if (_address1.text.length > 0 && ![_address1.text isEqualToString:_contactModel.address.line1]) {
+    if (![_address1.text isEqualToString:_contactModel.address.line1]) {
         [address addEntriesFromDictionary:@{@"line1": [self getNotNull:self.address1.text]}];
     }
     
-    if (_address2.text.length > 0 && ![_address2.text isEqualToString:_contactModel.address.line2]) {
+    if (![_address2.text isEqualToString:_contactModel.address.line2]) {
         [address addEntriesFromDictionary:@{@"line2": [self getNotNull:self.address2.text]}];
     }
     
-    if (_address3.text.length > 0 && ![_address3.text isEqualToString:_contactModel.address.line3]) {
+    if (![_address3.text isEqualToString:_contactModel.address.line3]) {
         [address addEntriesFromDictionary:@{@"line3": [self getNotNull:self.address3.text]}];
     }
 
@@ -660,11 +728,11 @@
         [data addEntriesFromDictionary:@{@"address":address}];
     }
     
-    if (_IDNo.text.length > 0 && ![_IDNo.text isEqualToString:_contactModel.IDNo]){
+    if (![_IDNo.text isEqualToString:_contactModel.IDNo]){
         [data addEntriesFromDictionary:@{@"IDNo": _IDNo.text}];
     }
     
-    if (_oldIC.text.length > 0 && ![_oldIC.text isEqualToString:_contactModel.KPLama]) {
+    if (![_oldIC.text isEqualToString:_contactModel.KPLama]) {
         [data addEntriesFromDictionary:@{@"KPLama": _oldIC.text}];
     }
     
@@ -678,69 +746,67 @@
         [data addEntriesFromDictionary:@{@"name": [self getNotNull:self.name.text]}];
     }
     
-    if (_email.text.length > 0 && ![_email.text isEqualToString:_contactModel.email]) {
+    if (![_email.text isEqualToString:_contactModel.email]) {
         [data addEntriesFromDictionary:@{@"emailAddress": [self getNotNull:_email.text]}];
     }
     
-    NSString *_phone = [mobileCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneMobile.text]]];
-    if (_phoneMobile.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.mobilePhone]) {
+    NSString *_phone = [self buildPhoneString:mobileCountryCallingCode phone:_phoneMobile.text];
+    if (![self comparePhones:_phone phone2:_contactModel.mobilePhone]) {
         [data addEntriesFromDictionary:@{@"phoneMobile": _phone}];
     }
     
-    _phone = [homeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneHome.text]]];
-    if (_phoneHome.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.homePhone]) {
+    _phone = [self buildPhoneString:homeCountryCallingCode phone:_phoneHome.text];
+    if (![self comparePhones:_phone phone2:_contactModel.homePhone]) {
         [data addEntriesFromDictionary:@{@"phoneHome": _phone}];
     }
     
-    _phone = [officeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneOffice.text]]];
-    if (_phoneOffice.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.officePhone]) {
+    _phone = [self buildPhoneString:officeCountryCallingCode phone:_phoneOffice.text];
+    if (![self comparePhones:_phone phone2:_contactModel.officePhone]) {
         [data addEntriesFromDictionary:@{@"phoneOffice":_phone}];
     }
     
-    _phone = [faxCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_fax.text]]];
+    _phone = [self buildPhoneString:faxCountryCallingCode phone:_fax.text];
     if (_fax.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.fax]) {
         [data addEntriesFromDictionary:@{@"phoneFax":_phone}];
     }
     
-    
-    
-    if (_contactTitle.text.length > 0 && ![_contactTitle.text isEqualToString:_contactModel.contactTitle]) {
+    if (![_contactTitle.text isEqualToString:_contactModel.contactTitle]) {
         [data addEntriesFromDictionary:@{@"title": [self getNotNull:_contactTitle.text]}];
     }
     
-    if (_website.text.length > 0 && ![_website.text isEqualToString:_contactModel.website]) {
+    if (![_website.text isEqualToString:_contactModel.website]) {
         [data addEntriesFromDictionary:@{@"webSite": [self getNotNull:_website.text]}];
     }
     
-    if (_contactPerson.text.length > 0 && ![_contactPerson.text isEqualToString:_contactModel.contactPerson]) {
+    if (![_contactPerson.text isEqualToString:_contactModel.contactPerson]) {
         [data addEntriesFromDictionary:@{@"contactPerson": [self getNotNull:_contactPerson.text]}];
     }
     
-    if (_citizenship.text.length > 0 && ![_citizenship.text isEqualToString:_contactModel.citizenShip]) {
+    if (![_citizenship.text isEqualToString:_contactModel.citizenShip]) {
         [data addEntriesFromDictionary:@{@"citizenship": [self getNotNull:_citizenship.text]}];
     }
     
-    if (_dateOfBirth.text.length > 0 && ![[DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text] isEqualToString:_contactModel.dateOfBirth]) {
+    if (![[DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text] isEqualToString:_contactModel.dateOfBirth]) {
         [data addEntriesFromDictionary:@{@"dateBirth": [DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text]}];
     }
     
-    if (_taxFileNo.text.length > 0 && ![_taxFileNo.text isEqualToString:_contactModel.tax]) {
+    if (![_taxFileNo.text isEqualToString:_contactModel.tax]) {
         [data addEntriesFromDictionary:@{@"taxFileNo": [self getNotNull:_taxFileNo.text]}];
     }
     
-    if (selectedOccupationCode.length > 0 && ![selectedOccupationCode isEqualToString:_contactModel.occupation.codeValue]) {
+    if ( ![selectedOccupationCode isEqualToString:_contactModel.occupation.codeValue]) {
         [data addEntriesFromDictionary:@{@"occupation": @{
                                                  @"code":[self getValidValue:selectedOccupationCode]
                                                  }}];
     }
     
-    if (selectedIRDBranchCode.length > 0 && ![selectedIRDBranchCode isEqualToString:_contactModel.IRDBranch.codeValue]) {
+    if (![selectedIRDBranchCode isEqualToString:_contactModel.IRDBranch.codeValue]) {
         [data addEntriesFromDictionary:@{@"irdBranch": @{
                                                  @"code":[self getValidValue:selectedIRDBranchCode]
                                                  }}];
     }
     
-    if (_registeredOffice.text.length > 0 && ![_registeredOffice.text isEqualToString:_contactModel.registeredOffice]) {
+    if (![_registeredOffice.text isEqualToString:_contactModel.registeredOffice]) {
         [data addEntriesFromDictionary:@{@"registeredOffice": [self getNotNull:_registeredOffice.text]}];
     }
     
@@ -749,7 +815,7 @@
     if (self.inviteDenning.isOn) {
         inviteToDenning = @"1";
     }
-    if (inviteToDenning && ![inviteToDenning isEqual:_contactModel.InviteToDenning]) {
+    if (![inviteToDenning isEqual:_contactModel.InviteToDenning]) {
         [data addEntriesFromDictionary:@{@"inviteToDenning": inviteToDenning}];
     }
 
@@ -800,13 +866,14 @@
 
 - (NSArray*) adjustPhone: (NSString*) phone btn:(UIButton*) countryBtn
 {
-    if (phone.length == 0) {
-        return @[@"", @"+1", @"US"];
-    }
+    
     NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"-"];
    phone = [[phone componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
 
     NSArray* obj = [phone componentsSeparatedByString:@")"];
+    if (phone.length == 0 || obj.count == 1) {
+        return @[@"", @"+1", @"US"];
+    }
     NSString* countryCallingCode = [@"+" stringByAppendingString:[obj[0] substringFromIndex:1]];
     
     NSString *buttonTitle = [NSString stringWithFormat:@"(%@)",countryCallingCode];
@@ -996,64 +1063,64 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+    if (indexPath.section == PERSONAL_INFO) {
+        if (indexPath.row == ID_TYPE) {
             self.IDTypeCell.leftUtilityButtons = [self leftButtons];
             self.IDTypeCell.delegate = self;
             return self.IDTypeCell;
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == ID_NO) {
             
             return self.IDNoCell;
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == OLD_IC) {
             return self.OldICCell;
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == NAME) {
             return self.nameCell;;
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == TITLE) {
             self.titleCell.leftUtilityButtons = [self leftButtons];
             self.titleCell.delegate = self;
             return self.titleCell;
         }
-    } else if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
+    } else if (indexPath.section == CONTACT_INFO) {
+        if (indexPath.row == ADDRESS1) {
             return self.address1Cell;
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == ADDRESS2) {
             return self.address2Cell;
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == ADDRESS3) {
             return self.address3Cell;
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == POSTCODE) {
             self.postCodeCell.leftUtilityButtons = [self leftButtons];
             self.postCodeCell.delegate = self;
             return self.postCodeCell;
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == TOWN) {
             self.townCell.leftUtilityButtons = [self leftButtons];
             self.townCell.delegate = self;
             return self.townCell;;
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == STATE) {
             self.stateCell.leftUtilityButtons = [self leftButtons];
             self.stateCell.delegate = self;
             return self.stateCell;
-        } else if (indexPath.row == 6) {
+        } else if (indexPath.row == COUNTRY) {
             self.countryCell.leftUtilityButtons = [self leftButtons];
             self.countryCell.delegate = self;
             return self.countryCell;
-        } else if (indexPath.row == 7) {
+        } else if (indexPath.row == PHONE_MOBILE) {
             return self.phoneMobileCell;
-        } else if (indexPath.row == 8) {
+        } else if (indexPath.row == PHONE_HOME) {
             self.phoneHome.delegate = self;
             return self.phoneHomeCell;
-        } else if (indexPath.row == 9) {
+        } else if (indexPath.row == PHONE_OFFICE) {
             self.phoneOffice.delegate = self;
             return self.phoneOfficeCell;;
-        } else if (indexPath.row == 10) {
+        } else if (indexPath.row == FAX) {
             return self.faxCell;
-        } else if (indexPath.row == 11) {
+        } else if (indexPath.row == EMAIL) {
             return self.emailCell;
-        } else if (indexPath.row == 12) {
+        } else if (indexPath.row == WEBSITE) {
             return self.websiteCell;
-        } else if (indexPath.row == 13) {
+        } else if (indexPath.row == CONTACT_PERSON) {
             return self.contactPersonCell;
         }
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == OTHER_INFO) {
         if (indexPath.row == 0) {
             self.citizenshipCell.leftUtilityButtons = [self leftButtons];
             self.citizenshipCell.delegate = self;
@@ -1073,11 +1140,11 @@
             self.IRDBranchCell.delegate = self;
             return self.IRDBranchCell;
         }
-    } else if (indexPath.section == 3) {
+    } else if (indexPath.section == COMPANY_INFO) {
         if (indexPath.row == 0) {
             return self.registeredOfficeCell;
         }
-    } else if (indexPath.section == 4) {
+    } else if (indexPath.section == INVITATION) {
         if (indexPath.row == 0) {
             return self.inviteDenningCell;
         }
@@ -1103,29 +1170,29 @@
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     [cell hideUtilityButtonsAnimated:YES];
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == ID_TYPE) {
             self.IDType.text = @"";
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == TITLE) {
             self.contactTitle.text = @"";
         }
-    } else if (indexPath.section == 1) {
-        if (indexPath.row == 3) {
+    } else if (indexPath.section == CONTACT_INFO) {
+        if (indexPath.row == POSTCODE) {
             self.postcode.text = @"";
-        } else if (indexPath.row == 4) {
+        } else if (indexPath.row == TOWN) {
             self.town.text = @"";
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == STATE) {
             self.state.text = @"";
-        } else if (indexPath.row == 6) {
+        } else if (indexPath.row == COUNTRY) {
             self.country.text = @"";
         }
-    } else if (indexPath.section == 2) {
-        if (indexPath.row == 1) {
+    } else if (indexPath.section == OTHER_INFO) {
+        if (indexPath.row == CITIZENSHIP) {
             self.citizenship.text = @"";
-        } else if (indexPath.row == 2) {
+        } else if (indexPath.row == DATE_OF_BIRTH) {
             self.dateOfBirth.text = @"";
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == OCCUPATION) {
             self.occupation.text = @"";
-        } else if (indexPath.row == 5) {
+        } else if (indexPath.row == IRD_BRANCH) {
             self.IRDBranch.text = @"";
         }
     }
@@ -1161,13 +1228,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == PERSONAL_INFO) {
         return 5;
-    } else if (section == 1) {
+    } else if (section == CONTACT_INFO) {
         return 14;
-    } else if (section == 2) {
+    } else if (section == OTHER_INFO) {
         return 5;
-    } else if (section == 3) {
+    } else if (section == COMPANY_INFO) {
         return 1;
     }
     
@@ -1191,32 +1258,32 @@
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.view endEditing:YES];
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) { // ID type
+    if (indexPath.section == PERSONAL_INFO) {
+        if (indexPath.row == ID_TYPE) { // ID type
             titleOfList = @"Select ID Type";
             nameOfField = @"IDType";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:CONTACT_IDTYPE_URL];
         }
-        else if (indexPath.row == 4) { // title
+        else if (indexPath.row == TITLE) { // title
             titleOfList = @"Select Title";
             nameOfField = @"Title";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:CONTACT_TITLE_URL];
         }
     }
     
-    if (indexPath.section == 1) {
-        if (indexPath.row == 3) { // Postcode
+    if (indexPath.section == CONTACT_INFO) {
+        if (indexPath.row == POSTCODE) { // Postcode
             [self showPostcodeAutocomplete:CONTACT_POSTCODE_URL];
-        } else if (indexPath.row == 4) { // City
+        } else if (indexPath.row == TOWN) { // City
             titleOfList = @"Select City";
             nameOfField = @"Town";
             [self showSimpleAutocomplete:CONTACT_CITY_URL];
     
-        } else if (indexPath.row == 5) { // State
+        } else if (indexPath.row == STATE) { // State
             titleOfList = @"Select State";
             nameOfField = @"State";
             [self showSimpleAutocomplete:CONTACT_STATE_URL];
-        } else if (indexPath.row == 6) { // Postcode
+        } else if (indexPath.row == COUNTRY) { // country
             titleOfList = @"Select Country";
             nameOfField = @"Country";
 //            [self performSegueWithIdentifier:kListWithDescriptionSegue sender:CONTACT_COUNTRY_URL];
@@ -1224,19 +1291,19 @@
         }
     }
     
-    if (indexPath.section == 2) {
-        if (indexPath.row == 0) { // Citizenship
+    if (indexPath.section == OTHER_INFO) {
+        if (indexPath.row == CITIZENSHIP) { // Citizenship
             titleOfList = @"Select Citizen";
             nameOfField = @"Citizen";
             [self showDetailAutocomplete:CONTACT_CITIZENSHIP_URL];
 //            [self showCountryPicker];
-        } else if (indexPath.row == 1) {
+        } else if (indexPath.row == DATE_OF_BIRTH) {
             [self showCalendar];
-        } else if (indexPath.row == 2) { // Occupation
+        } else if (indexPath.row == OCCUPATION) { // Occupation
             titleOfList = @"Select Occupation";
             nameOfField = @"Occupation";
             [self showDetailAutocomplete:CONTACT_OCCUPATION_URL];
-        } else if (indexPath.row == 4) { // branch
+        } else if (indexPath.row == IRD_BRANCH) { // branch
             titleOfList = @"Select IRDBranch";
             nameOfField = @"IRDBranch";
             [self performSegueWithIdentifier:kListWithCodeSegue sender:CONTACT_IRDBRANCH_URL];
@@ -1288,8 +1355,16 @@
 }
 
 - (void) applyValidateRuleOfID {
+    if ([selectedIDTypeCode integerValue] == 1 || [selectedIDTypeCode integerValue] == 2) {
+        self.IDNo.keyboardType = UIKeyboardTypeNumberPad;
+    } else {
+        self.IDNo.keyboardType = UIKeyboardTypeDefault;
+    }
+    
     if ( [@[@"5", @"8", @"11"] containsObject:selectedIDTypeCode]) {
         self.citizenship.placeholder = @"Country of Incorporation";
+    } else {
+        self.citizenship.placeholder = @"Citizenship";
     }
     
     if ( [@[@"1", @"3"] containsObject:selectedIDTypeCode]) {
@@ -1305,11 +1380,6 @@
     if ([name isEqualToString:@"IDType"]) {
         self.IDType.text = model.descriptionValue;
         selectedIDTypeCode = model.codeValue;
-        if ([selectedIDTypeCode integerValue] == 1 || [selectedIDTypeCode integerValue] == 2) {
-            self.IDNo.keyboardType = UIKeyboardTypeNumberPad;
-        } else {
-            self.IDNo.keyboardType = UIKeyboardTypeDefault;
-        }
         
         [self applyValidateRuleOfID];
     } else if ([name isEqualToString:@"Title"]) {

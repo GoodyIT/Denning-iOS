@@ -334,7 +334,9 @@ TTTAttributedLabelDelegate
         
         // set up dialog name
         [self.onlineTitleView setTitle:self.chatDialog.name];
-        [self.onlineTitleView setStatus:[NSString stringWithFormat:NSLocalizedString(@"QM_STR_GROUP_CHAT_STATUS_STRING", nil), self.chatDialog.occupantIDs.count, 0]];
+        NSArray* onlineInfo = [DIHelpers getOnlieStatus:@[] inTotalUser:self.chatDialog.occupantIDs forChatDialog:self.chatDialog];
+        NSString* status = [NSString stringWithFormat:NSLocalizedString(@"QM_STR_GROUP_CHAT_STATUS_STRING", nil), [onlineInfo[1] integerValue], [onlineInfo[0] integerValue]];
+        [self.onlineTitleView setStatus:status];
         [self configureGroupChatAvatar];
         [self updateGroupChatOnlineStatus];
         
@@ -587,13 +589,13 @@ didAddMessagesToMemoryStorage:(NSArray<QBChatMessage *> *)__unused messages
 //        return NO;
 //    }
     
-    if (![QMCore.instance.contactManager isFriendWithUserID:[self.chatDialog opponentID]]) {
-        
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_MAKE_CALLS", nil)
-                        actionSuccess:NO
-                     inViewController:self];
-        return NO;
-    }
+//    if (![QMCore.instance.contactManager isFriendWithUserID:[self.chatDialog opponentID]]) {
+//        
+//        [QMAlert showAlertWithMessage:NSLocalizedString(@"QM_STR_CANT_MAKE_CALLS", nil)
+//                        actionSuccess:NO
+//                     inViewController:self];
+//        return NO;
+//    }
     
     return YES;
 }
@@ -2136,10 +2138,7 @@ didPerformAction:(SEL)action
         
         if (error == nil) {
             NSArray* onlineInfo = [DIHelpers getOnlieStatus:onlineUsers inTotalUser:self.chatDialog.occupantIDs forChatDialog:self.chatDialog];
-            NSString* status = [NSString stringWithFormat:NSLocalizedString(@"QM_STR_GROUP_CHAT_STATUS_STRING", nil), self.chatDialog.occupantIDs.count, onlineUsers.count];
-            if (onlineInfo == nil) {
-                status = @"";
-            }
+            NSString* status = [NSString stringWithFormat:NSLocalizedString(@"QM_STR_GROUP_CHAT_STATUS_STRING", nil), [onlineInfo[1] integerValue], [onlineInfo[0] integerValue]];
             [self.onlineTitleView setStatus:status];
         }
     }];

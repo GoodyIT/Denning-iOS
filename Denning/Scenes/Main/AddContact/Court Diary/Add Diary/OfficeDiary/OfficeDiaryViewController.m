@@ -238,6 +238,7 @@
 }
 
 - (IBAction)updateDiary:(id)sender {
+    [self.view endEditing:YES];
     
     [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:nil completion:^(UIAlertAction * _Nonnull action) {
         if  ([action.title isEqualToString:@"OK"]) {
@@ -261,7 +262,7 @@
              @"startDate": [self getStartDate],
              @"endDate": [self endDate],
              
-             @"remark": self.Remarks.text
+             @"remarks": self.Remarks.text
              };
 }
 
@@ -288,6 +289,8 @@
 }
 
 - (void) saveDiary {
+    [self.view endEditing:YES];
+    
     if (isSaved) {
         return;
     }

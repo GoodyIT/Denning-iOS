@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DashboardAttendanceDetail : UIViewController
+@interface DashboardAttendanceDetail : BaseViewController
 
 @property (strong, nonatomic) StaffOnlineModel* model;
 

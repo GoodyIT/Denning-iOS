@@ -116,15 +116,15 @@ static const NSUInteger kQMMaxFileSize = 100; //in MBs
 + (void)chooseFromGaleryInViewController:(UIViewController *)vc
                              maxDuration:(NSTimeInterval)maxDuration
                            resultHandler:(id<QMImagePickerResultHandler>)resultHandler
-                           allowsEditing:(BOOL)allowsEditing {
-    
+                           allowsEditing:(BOOL)allowsEditing
+                               mediaType:(NSArray*) mediaType{
     QMImagePicker *imagePicker = [[[self class] alloc] init];
     
     imagePicker.allowsEditing =
     (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : allowsEditing;
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    imagePicker.mediaTypes = @[(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage];
+    imagePicker.mediaTypes = mediaType;
     imagePicker.videoQuality = UIImagePickerControllerQualityTypeMedium;
     
     if (maxDuration > 0) {
@@ -150,6 +150,14 @@ static const NSUInteger kQMMaxFileSize = 100; //in MBs
     else {
         presentBlock();
     }
+}
+
++ (void)chooseFromGaleryInViewController:(UIViewController *)vc
+                             maxDuration:(NSTimeInterval)maxDuration
+                           resultHandler:(id<QMImagePickerResultHandler>)resultHandler
+                           allowsEditing:(BOOL)allowsEditing {
+    [[self class] chooseFromGaleryInViewController:vc maxDuration:maxDuration resultHandler:resultHandler allowsEditing:allowsEditing mediaType:@[(NSString *)kUTTypeMovie, (NSString *)kUTTypeImage]];
+    
 }
 
 + (void)chooseFromGaleryInViewController:(UIViewController *)vc resultHandler:(id<QMImagePickerResultHandler>)resultHandler {

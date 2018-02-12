@@ -590,7 +590,7 @@ out here.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BE6-Wd-Ugq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3156" y="-8660"/>
+            <point key="canvasLocation" x="-3068" y="-8699"/>
         </scene>
         <!--Auth-->
         <scene sceneID="rgS-VI-1Ze">
@@ -957,7 +957,7 @@ out here.</string>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="87" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7KY-Zd-eqk">
-                                <rect key="frame" x="0.0" y="144" width="375" height="634"/>
+                                <rect key="frame" x="0.0" y="144" width="375" height="585"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="87" id="dMi-N4-od0">
@@ -1213,6 +1213,6 @@ out here.</string>
         <image name="m_empty_dialogs" width="180" height="265"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yFu-Ld-5fp"/>
+        <segue reference="MgK-Fo-q1e"/>
     </inferredMetricsTieBreakers>
 </document>

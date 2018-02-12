@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StaffLeaveViewController : UIViewController
+@interface StaffLeaveViewController : BaseViewController
 
 @property (strong, nonatomic) NSString *url;
 

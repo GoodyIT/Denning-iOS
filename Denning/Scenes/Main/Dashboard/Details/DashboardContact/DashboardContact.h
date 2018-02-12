@@ -10,7 +10,7 @@
 
 typedef void(^UpdateContactHandler)(SearchResultModel* model);
 
-@interface DashboardContact : UIViewController
+@interface DashboardContact : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

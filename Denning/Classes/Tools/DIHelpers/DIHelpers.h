@@ -168,5 +168,7 @@
 
 + (NSArray*) getOnlieStatus:(NSArray*) onlineUsers inTotalUser:(NSArray*) totalUsers forChatDialog:(QBChatDialog*) chatDialog;
 
++ (NSArray*) filterGroupOccupants:(NSArray*) users inChatDialog:(QBChatDialog*) chatDialog;
+
 + (BOOL) isExpiredChat;
 @end

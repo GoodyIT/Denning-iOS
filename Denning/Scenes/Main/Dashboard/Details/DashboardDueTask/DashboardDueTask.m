@@ -221,6 +221,7 @@
         UINavigationController* nav = segue.destinationViewController;
         DashboarMyDueTask* vc = nav.viewControllers.firstObject;
         vc.url = ((ItemModel*)sender).api;
+        vc.name = ((ItemModel*)sender).label;
     }
 }
 

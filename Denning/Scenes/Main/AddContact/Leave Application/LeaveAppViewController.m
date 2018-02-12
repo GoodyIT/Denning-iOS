@@ -258,6 +258,8 @@
 }
 
 - (void) saveLeaveApplication {
+    [self.view endEditing:YES];
+    
     NSString* url = [[DataManager sharedManager].user.serverAPI stringByAppendingString:STAFF_LEAVE_SAVE_URL];
     if (isLoading) return;
     isLoading = YES;

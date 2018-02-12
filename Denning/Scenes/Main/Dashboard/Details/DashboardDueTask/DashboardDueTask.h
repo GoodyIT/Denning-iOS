@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DashboardDueTask : UIViewController
+@interface DashboardDueTask : BaseViewController
 
 @property (strong, nonatomic) NSString* url;
 

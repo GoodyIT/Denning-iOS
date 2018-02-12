@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonalDiaryViewController : UITableViewController
+@interface PersonalDiaryViewController : BaseTableViewController
 
 @property(strong, nonatomic) OfficeDiaryModel* personalDiary;
 

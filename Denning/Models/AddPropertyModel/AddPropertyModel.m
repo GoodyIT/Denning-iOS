@@ -28,7 +28,7 @@
      model.landUse = [response valueForKeyNotNull:@"landUse"];
      model.leaseExpiryDate = [response valueForKeyNotNull:@"leaseExpiryDate"];
      model.lotPT = [TypeValueModel getTypeValueFromResponse:[response objectForKeyNotNull:@"lotPT"]];
-     model.masterTitle = [response valueForKeyNotNull:@"masterTitle"];
+     model.masterTitle = [MasterTitleModel getMasterTitleFromResponse:[response objectForKeyNotNull:@"masterTitle"]];
     
      model.mukim = [TypeValueModel getTypeValueFromResponse:[response objectForKeyNotNull:@"mukim"]];
      model.negeri = [response valueForKeyNotNull:@"negeri"];

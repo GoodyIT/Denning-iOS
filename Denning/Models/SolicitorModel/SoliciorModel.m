@@ -27,7 +27,6 @@
     model.phoneOffice = [response valueForKeyNotNull:@"phoneOffice"];
     model.title = [response valueForKeyNotNull:@"title"];
     model.webSite = [response valueForKeyNotNull:@"webSite"];
-    model.reference = @"";
     
     return model;
 }

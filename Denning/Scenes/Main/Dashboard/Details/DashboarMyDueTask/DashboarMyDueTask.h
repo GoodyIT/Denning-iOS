@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DashboarMyDueTask : UIViewController
+@interface DashboarMyDueTask : BaseViewController
 @property (strong, nonatomic) NSString* url;
-
+@property (strong, nonatomic) NSString* name;
 
 @end

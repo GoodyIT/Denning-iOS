@@ -210,6 +210,8 @@ NSMutableDictionary* keyValue;
 }
 
 - (IBAction)saveQuotaion:(id)sender {
+    [self.view endEditing:YES];
+    
     if (isSaved) {
         return;
     }
@@ -764,12 +766,12 @@ NSMutableDictionary* keyValue;
             self->isRental = model.matter.isRental;
             if (model.partyGroupArray.count > 0) {
                 PartyGroupModel* partyGroup = model.partyGroupArray[0];
-                issueToFirstCode = ((ClientModel*)partyGroup.partyArray[0]).clientCode;
                 
                 NSString *issueToName = @"";
                 
                 for(ClientModel* party in partyGroup.partyArray) {
                     issueToName = [NSString stringWithFormat:@"%@ %@ ", issueToName, party.name];
+                    issueToFirstCode = ((ClientModel*)partyGroup.partyArray[0]).clientCode;
                 }
                 
                 [self replaceContentForSection:0 InRow:3 withValue:issueToName];

@@ -16,7 +16,7 @@
     
     model.propertyCode = [response valueForKeyNotNull:@"code"];
     model.fullTitle = [response valueForKeyNotNull:@"fullTitle"];
-    model.address = [AddressModel getAddressFromResponse:[response objectForKeyNotNull:@"address"]];
+    model.address = [response valueForKeyNotNull:@"address"];
     model.projectName = [response valueForKeyNotNull:@"projectName"];
     model.spaCondoName = [response valueForKeyNotNull:@"spaCondoName"];
     model.spaParcel = [TypeValueModel getTypeValueFromResponse:[response objectForKeyNotNull:@"spaParcel"]];

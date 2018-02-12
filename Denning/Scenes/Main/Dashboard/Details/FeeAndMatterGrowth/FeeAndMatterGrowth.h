@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FeeAndMatterGrowth : UITableViewController
+@interface FeeAndMatterGrowth : BaseTableViewController
 
 @property (strong, nonatomic) NSString* url;
 

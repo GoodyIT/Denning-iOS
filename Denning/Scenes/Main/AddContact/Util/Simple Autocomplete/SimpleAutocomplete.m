@@ -151,6 +151,9 @@
                                                                       
                                                                       handler([self parseResponse:responseObject]);                     } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
                                                                           NSLog(@"%@", error);
+                                                                           if (((NSHTTPURLResponse *)task.response).statusCode == 410) { // Session expired.
+                                                                               [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:self];
+                                                                           }
                                                                       }];
     [[NSOperationQueue mainQueue] addOperation:operation];
     
