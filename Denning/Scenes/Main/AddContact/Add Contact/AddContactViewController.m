@@ -671,6 +671,7 @@ enum {
     
     self.IDType.placeholder = @"ID Type *";
     _IDNo.placeholder = @"ID No *";
+    _name.placeholder = @"Name *";
     self.inviteDenning.on = NO;
     selectedIDTypeCode = @"";
     selectedTitleCode = @"";
@@ -766,7 +767,7 @@ enum {
     }
     
     _phone = [self buildPhoneString:faxCountryCallingCode phone:_fax.text];
-    if (_fax.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.fax]) {
+    if (![self comparePhones:_phone phone2:_contactModel.fax]) {
         [data addEntriesFromDictionary:@{@"phoneFax":_phone}];
     }
     
@@ -822,6 +823,135 @@ enum {
     return data;
 }
 
+- (NSMutableDictionary*) buildSaveParams {
+    NSMutableDictionary* address = [NSMutableDictionary new];
+    if (_town.text.length > 0 && ![_town.text isEqualToString:_contactModel.address.city]) {
+        [address addEntriesFromDictionary:@{@"city": [self getValidValue:self.town.text]}];
+    }
+    
+    if (_state.text.length > 0 && ![_state.text isEqualToString:_contactModel.address.state]) {
+        [address addEntriesFromDictionary:@{@"state": [self getNotNull:self.state.text]}];
+    }
+    
+    if (_country.text.length > 0 && ![_country.text isEqualToString:_contactModel.address.country]) {
+        [address addEntriesFromDictionary:@{@"country": [self getNotNull:self.country.text]}];
+    }
+    
+    if (_postcode.text.length > 0 && ![_postcode.text isEqualToString:_contactModel.address.postCode]) {
+        [address addEntriesFromDictionary:@{@"postcode": [self getNotNull:_postcode.text]}];
+    }
+    
+    if (_address1.text.length > 0 && ![_address1.text isEqualToString:_contactModel.address.line1]) {
+        [address addEntriesFromDictionary:@{@"line1": [self getNotNull:self.address1.text]}];
+    }
+    
+    if (_address2.text.length > 0 && ![_address2.text isEqualToString:_contactModel.address.line2]) {
+        [address addEntriesFromDictionary:@{@"line2": [self getNotNull:self.address2.text]}];
+    }
+    
+    if (_address3.text.length > 0 && ![_address3.text isEqualToString:_contactModel.address.line3]) {
+        [address addEntriesFromDictionary:@{@"line3": [self getNotNull:self.address3.text]}];
+    }
+    
+    NSMutableDictionary* data = [NSMutableDictionary new];
+    if (address.count > 0) {
+        [data addEntriesFromDictionary:@{@"address":address}];
+    }
+    
+    if (_IDNo.text.length > 0 && ![_IDNo.text isEqualToString:_contactModel.IDNo]){
+        [data addEntriesFromDictionary:@{@"IDNo": _IDNo.text}];
+    }
+    
+    if (_oldIC.text.length > 0 && ![_oldIC.text isEqualToString:_contactModel.KPLama]) {
+        [data addEntriesFromDictionary:@{@"KPLama": _oldIC.text}];
+    }
+    
+    if (selectedIDTypeCode.length > 0 && ![selectedIDTypeCode isEqualToString:_contactModel.idType.codeValue]) {
+        [data addEntriesFromDictionary:@{@"idType": @{
+                                                 @"code":[self getValidValue:selectedIDTypeCode]
+                                                 }}];
+    }
+    
+    if (_name.text.length > 0 && ![_name.text isEqualToString:_contactModel.name]) {
+        [data addEntriesFromDictionary:@{@"name": [self getNotNull:self.name.text]}];
+    }
+    
+    if (_email.text.length > 0 && ![_email.text isEqualToString:_contactModel.email]) {
+        [data addEntriesFromDictionary:@{@"emailAddress": [self getNotNull:_email.text]}];
+    }
+    
+    NSString *_phone = [mobileCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneMobile.text]]];
+    if (_phoneMobile.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.mobilePhone]) {
+        [data addEntriesFromDictionary:@{@"phoneMobile": _phone}];
+    }
+    
+    _phone = [homeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneHome.text]]];
+    if (_phoneHome.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.homePhone]) {
+        [data addEntriesFromDictionary:@{@"phoneHome": _phone}];
+    }
+    
+    _phone = [officeCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_phoneOffice.text]]];
+    if (_phoneOffice.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.officePhone]) {
+        [data addEntriesFromDictionary:@{@"phoneOffice":_phone}];
+    }
+    
+    _phone = [faxCountryCallingCode stringByAppendingString:[self removeSpecial:[self getNotNull:_fax.text]]];
+    if (_fax.text.length > 0 && ![self comparePhones:_phone phone2:_contactModel.fax]) {
+        [data addEntriesFromDictionary:@{@"phoneFax":_phone}];
+    }
+    
+    if (_dateOfBirth.text.length > 0 && ![[DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text] isEqualToString:_contactModel.dateOfBirth]) {
+        [data addEntriesFromDictionary:@{@"dateBirth": [DIHelpers convertDateToMySQLFormat:self.dateOfBirth.text]}];
+    }
+    
+    if (_contactTitle.text.length > 0 && ![_contactTitle.text isEqualToString:_contactModel.contactTitle]) {
+        [data addEntriesFromDictionary:@{@"title": [self getNotNull:_contactTitle.text]}];
+    }
+    
+    if (_website.text.length > 0 && ![_website.text isEqualToString:_contactModel.website]) {
+        [data addEntriesFromDictionary:@{@"webSite": [self getNotNull:_website.text]}];
+    }
+    
+    if (_contactPerson.text.length > 0 && ![_contactPerson.text isEqualToString:_contactModel.contactPerson]) {
+        [data addEntriesFromDictionary:@{@"contactPerson": [self getNotNull:_contactPerson.text]}];
+    }
+    
+    if (selectedIRDBranchCode.length > 0 && ![selectedIRDBranchCode isEqualToString:_contactModel.IRDBranch.codeValue]) {
+        [data addEntriesFromDictionary:@{@"irdBranch": @{
+                                                 @"code":[self getValidValue:selectedIRDBranchCode]
+                                                 }}];
+    }
+    
+    if (selectedOccupationCode.length > 0 && ![selectedOccupationCode isEqualToString:_contactModel.occupation.codeValue]) {
+        [data addEntriesFromDictionary:@{@"occupation": @{
+                                                 @"code":[self getValidValue:selectedOccupationCode]
+                                                 }}];
+    }
+    
+    if (_registeredOffice.text.length > 0 && ![_registeredOffice.text isEqualToString:_contactModel.registeredOffice]) {
+        [data addEntriesFromDictionary:@{@"registeredOffice": [self getNotNull:_registeredOffice.text]}];
+    }
+    
+    if (_taxFileNo.text.length > 0 && ![_taxFileNo.text isEqualToString:_contactModel.tax]) {
+        [data addEntriesFromDictionary:@{@"taxFileNo": [self getNotNull:_taxFileNo.text]}];
+    }
+    
+    if (_oldIC.text.length > 0 && ![_oldIC.text isEqualToString:_contactModel.KPLama]) {
+        [data addEntriesFromDictionary:@{@"oldIC": [self getNotNull:_oldIC.text]}];
+    }
+    
+    
+    NSString* inviteToDenning = @"";
+    if (self.inviteDenning.isOn) {
+        inviteToDenning = @"1";
+    }
+    if (inviteToDenning && ![inviteToDenning isEqual:_contactModel.InviteToDenning]) {
+        [data addEntriesFromDictionary:@{@"inviteToDenning": inviteToDenning}];
+    }
+    
+    return data;
+}
+
 - (void) _save {
     
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"Saving", nil) duration:0];
@@ -829,7 +959,7 @@ enum {
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     
     @weakify(self)
-    [[QMNetworkManager sharedManager] saveContactWithData:[self buildParams] withCompletion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
+    [[QMNetworkManager sharedManager] saveContactWithData:[self buildSaveParams] withCompletion:^(ContactModel * _Nonnull contactModel, NSError * _Nonnull error) {
         [navigationController dismissNotificationPanel];
         @strongify(self)
         if (error == nil) {

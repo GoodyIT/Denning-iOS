@@ -286,6 +286,172 @@ NSMutableDictionary* keyValue;
     [self showPopup:vc];
 }
 
+- (NSMutableDictionary*) buildSaveParams {
+    NSMutableDictionary* data = [NSMutableDictionary new];
+    
+    if (((NSString*)_contents[2][5][1]).length > 0 && ![_contents[2][5][1] isEqualToString:_propertyModel.accBuildingNo]) {
+        [data addEntriesFromDictionary:@{@"accBuildingNo":_contents[2][5][1]}];
+    }
+    
+    if (((NSString*)_contents[2][3][1]).length > 0 && ![_contents[2][3][1] isEqualToString:_propertyModel.accParcelNo]) {
+        [data addEntriesFromDictionary:@{@"accParcelNo":_contents[2][3][1]}];
+    }
+    
+    if (((NSString*)_contents[2][4][1]).length > 0 && ![_contents[2][4][1] isEqualToString:_propertyModel.accStoreyNo]) {
+        [data addEntriesFromDictionary:@{@"accStoreyNo":_contents[2][4][1]}];
+    }
+    
+    if (((NSString*)_contents[1][12][1]).length > 0 && ![_contents[1][12][1] isEqualToString:_propertyModel.accStoreyNo]) {
+        [data addEntriesFromDictionary:@{@"address":_contents[1][12][1]}];
+    }
+    
+    if (((NSString*)_contents[1][13][1]).length > 0 && ![_contents[1][13][1] isEqualToString:_propertyModel.approvingAuthority]) {
+        [data addEntriesFromDictionary:@{@"approvingAuthority":_contents[1][13][1]}];
+    }
+    
+    NSMutableDictionary* area = [NSMutableDictionary new];
+    if (((NSString*)_contents[1][9][1]).length > 0 && ![_contents[1][9][1] isEqualToString:_propertyModel.area.type]) {
+        [area addEntriesFromDictionary:@{@"type":_contents[1][9][1]}];
+    }
+    
+    if (((NSString*)_contents[1][8][1]).length > 0 && ![_contents[1][8][1] isEqualToString:_propertyModel.area.value]) {
+        [area addEntriesFromDictionary:@{@"value":_contents[1][8][1]}];
+    }
+    
+    [data addEntriesFromDictionary:@{@"area":area}];
+    
+    if (((NSString*)_contents[1][6][1]).length > 0 && ![_contents[1][6][1] isEqualToString:_propertyModel.daerah]) {
+        [data addEntriesFromDictionary:@{@"daerah":_contents[1][6][1]}];
+    }
+    
+    if (((NSString*)_contents[1][16][1]).length > 0 && ![_contents[1][16][1] isEqualToString:_propertyModel.landUse]) {
+        [data addEntriesFromDictionary:@{@"landUse":_contents[1][16][1]}];
+    }
+    
+    if (((NSString*)_contents[1][11][1]).length > 0 && ![[DIHelpers convertDateToMySQLFormat:_contents[1][11][1]] isEqualToString:_propertyModel.leaseExpiryDate]) {
+        [data addEntriesFromDictionary:@{@"leaseExpiryDate":[DIHelpers convertDateToMySQLFormat:_contents[1][11][1]]}];
+    }
+    
+    NSMutableDictionary* propertyTitle = [NSMutableDictionary new];
+    if (((NSString*)_contents[1][0][1]).length > 0 && ![_contents[1][0][1] isEqualToString:_propertyModel.title.type]) {
+        [propertyTitle addEntriesFromDictionary:@{@"type":_contents[1][0][1]}];
+    }
+    
+    if (((NSString*)_contents[1][1][1]).length > 0 && ![_contents[1][1][1] isEqualToString:_propertyModel.title.value]) {
+        [propertyTitle addEntriesFromDictionary:@{@"value":_contents[1][1][1]}];
+    }
+    [data addEntriesFromDictionary:@{@"title":propertyTitle}];
+    
+    NSMutableDictionary* lotPT = [NSMutableDictionary new];
+    if (((NSString*)_contents[1][2][1]).length > 0 && ![_contents[1][2][1] isEqualToString:_propertyModel.lotPT.type]) {
+        [lotPT addEntriesFromDictionary:@{@"type":_contents[1][2][1]}];
+    }
+    
+    if (((NSString*)_contents[1][3][1]).length > 0 && ![_contents[1][3][1] isEqualToString:_propertyModel.lotPT.value]) {
+        [lotPT addEntriesFromDictionary:@{@"value":_contents[1][3][1]}];
+    }
+    [data addEntriesFromDictionary:@{@"lotPT":lotPT}];
+    
+    NSMutableDictionary* mukim = [NSMutableDictionary new];
+    if (((NSString*)_contents[1][4][1]).length > 0 && ![_contents[1][4][1] isEqualToString:_propertyModel.mukim.type]) {
+        [mukim addEntriesFromDictionary:@{@"type":_contents[1][4][1]}];
+    }
+    
+    if (((NSString*)_contents[1][5][1]).length > 0 && ![_contents[1][5][1] isEqualToString:_propertyModel.mukim.value]) {
+        [mukim addEntriesFromDictionary:@{@"value":_contents[1][5][1]}];
+    }
+    [data addEntriesFromDictionary:@{@"mukim":mukim}];
+    
+    if (((NSString*)_contents[1][7][1]).length > 0 && ![_contents[1][7][1] isEqualToString:_propertyModel.negeri]) {
+        [data addEntriesFromDictionary:@{@"negeri":_contents[1][7][1]}];
+    }
+    
+    if (selectedPropertyType.length > 0 && ![selectedPropertyType isEqualToString:_propertyModel.propertyType.codeValue]) {
+        [data addEntriesFromDictionary:@{@"propertyType": @{@"code":selectedPropertyType}}];
+    }
+    
+    if (((NSString*)_contents[1][13][1]).length > 0 && ![_contents[1][13][1] isEqualToString:_propertyModel.restrictionAgainst]) {
+        [data addEntriesFromDictionary:@{@"restrictionAgainst":_contents[1][13][1]}];
+    }
+    
+    if (selectedRestrictionCode.length > 0 && ![selectedRestrictionCode isEqualToString:_propertyModel.restrictionInInterest.codeValue]) {
+        [data addEntriesFromDictionary:@{@"restrictionInInterest": @{@"code":selectedRestrictionCode}}];
+    }
+    
+    if (((NSString*)_contents[2][4][1]).length > 0 && ![_contents[2][4][1] isEqualToString:_propertyModel.spaAccParcelNo]) {
+        [data addEntriesFromDictionary:@{@"spaAccParcelNo":_contents[2][4][1]}];
+    }
+    
+    NSMutableDictionary* spaArea = [NSMutableDictionary new];
+    if (((NSString*)_contents[3][6][1]).length > 0 && ![_contents[3][6][1] isEqualToString:_propertyModel.spaArea.type]) {
+        [spaArea addEntriesFromDictionary:@{@"type":_contents[3][6][1]}];
+    }
+    
+    if (((NSString*)_contents[3][7][1]).length > 0 && ![_contents[3][7][1] isEqualToString:_propertyModel.spaArea.value]) {
+        [spaArea addEntriesFromDictionary:@{@"value":_contents[3][7][1]}];
+    }
+    [data addEntriesFromDictionary:@{@"spaArea":spaArea}];
+    
+    if (((NSString*)_contents[3][3][1]).length > 0 && ![_contents[3][3][1] isEqualToString:_propertyModel.spaBuildingNo]) {
+        [data addEntriesFromDictionary:@{@"spaBuildingNo":_contents[3][3][1]}];
+    }
+    
+    if (((NSString*)_contents[3][4][1]).length > 0 && ![_contents[3][4][1] isEqualToString:_propertyModel.spaCondoName]) {
+        [data addEntriesFromDictionary:@{@"spaCondoName":_contents[3][4][1]}];
+    }
+    
+    NSMutableDictionary* spaParcel = [NSMutableDictionary new];
+    if (((NSString*)_contents[3][0][1]).length > 0 && ![_contents[3][0][1] isEqualToString:_propertyModel.spaParcel.type]) {
+        [spaParcel addEntriesFromDictionary:@{@"type":_contents[3][0][1]}];
+    }
+    
+    if (((NSString*)_contents[3][1][1]).length > 0 && ![_contents[3][1][1] isEqualToString:_propertyModel.spaParcel.value]) {
+        [spaParcel addEntriesFromDictionary:@{@"value":_contents[3][1][1]}];
+    }
+    [data addEntriesFromDictionary:@{@"spaParcel":spaParcel}];
+    
+    if (((NSString*)_contents[3][2][1]).length > 0 && ![_contents[3][2][1] isEqualToString:_propertyModel.spaStoreyNo]) {
+        [data addEntriesFromDictionary:@{@"spaStoreyNo":_contents[3][2][1]}];
+    }
+    
+    if (((NSString*)_contents[1][10][1]).length > 0 && ![_contents[1][10][1] isEqualToString:_propertyModel.tenure]) {
+        [data addEntriesFromDictionary:@{@"tenure":_contents[1][10][1]}];
+    }
+    
+    if (selectedTitleIssuedCode.length > 0 && ![selectedTitleIssuedCode isEqualToString:_propertyModel.titleIssued.codeValue]) {
+        [data addEntriesFromDictionary:@{@"titleIssued": @{@"code":selectedTitleIssuedCode}}];
+    }
+    
+    if (((NSString*)_contents[2][7][1]).length > 0 && ![_contents[2][7][1] isEqualToString:_propertyModel.totalShare]) {
+        [data addEntriesFromDictionary:@{@"totalShare":_contents[2][7][1]}];
+    }
+    
+    if (((NSString*)_contents[2][6][1]).length > 0 && ![_contents[2][6][1] isEqualToString:_propertyModel.tenure]) {
+        [data addEntriesFromDictionary:@{@"unitShare":_contents[2][6][1]}];
+    }
+    
+    NSMutableDictionary* project = [NSMutableDictionary new];
+    if (selectedProjectCode.length > 0 && ![selectedProjectCode isEqualToString:_propertyModel.project.housingCode]) {
+        [project addEntriesFromDictionary:@{@"code":selectedProjectCode}];
+    }
+    
+    if (developerCode.length > 0 && ![developerCode isEqualToString:_propertyModel.project.developer.staffCode]) {
+        [project addEntriesFromDictionary:@{@"developer":@{@"code":developerCode}}];
+    }
+    
+    if (proprietorCode.length > 0 && ![proprietorCode isEqualToString:_propertyModel.project.proprietor.staffCode]) {
+        [project addEntriesFromDictionary:@{@"proprietor":@{@"code":developerCode}}];
+    }
+    
+    if (((NSString*)_contents[4][3][1]).length > 0 && ![_contents[4][3][1] isEqualToString:_propertyModel.tenure]) {
+        [project addEntriesFromDictionary:@{@"masterTitle":_contents[4][3][1]}];
+    }
+    
+    [data addEntriesFromDictionary:@{@"project": project}];
+    
+    return data;
+}
+
 - (NSMutableDictionary*) buildParams {
     NSMutableDictionary* data = [NSMutableDictionary new];
     
@@ -603,7 +769,7 @@ NSMutableDictionary* keyValue;
             [QMAlert showConfirmDialog:@"Do you want to save data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
                 if  ([action.title isEqualToString:@"OK"]) {
                     if ([self checkValidation]) {
-                        [self _save:params];
+                        [self _save:[self buildSaveParams]];
                     }
                 }
             }];
