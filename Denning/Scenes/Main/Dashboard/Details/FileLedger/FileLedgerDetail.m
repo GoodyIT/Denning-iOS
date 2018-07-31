@@ -196,7 +196,7 @@
 {
     [SVProgressHUD showWithStatus:@"Loading"];
     @weakify(self);
-    NSString *balanceUrl = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, baseUrl];
+    NSString *balanceUrl = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, baseUrl];
     [[QMNetworkManager sharedManager] loadLedgerWithUrl:balanceUrl completion:^(NewLedgerModel * _Nonnull newLedgerModel, NSError * _Nonnull error) {
         
         @strongify(self);

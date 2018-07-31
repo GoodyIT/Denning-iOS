@@ -113,7 +113,7 @@
 }
 
 - (void) loadTableData {
-    _url = [NSString stringWithFormat:@"%@denningwcf/%@%@&page=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curFilterURL[selectedPage], _page];
+    _url = [NSString stringWithFormat:@"%@%@%@&page=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curFilterURL[selectedPage], _page];
     
     if (isLoading) return;
     isLoading = NO;
@@ -190,7 +190,7 @@
 - (void) gotoLeavePendingApproval:(NSIndexPath *)indexPath {
     clsStaff = _listOfData[indexPath.row].clsStaff;
     
-    _url = [NSString stringWithFormat:@"%@denningwcf/v1/table/StaffLeave/%@", [DataManager sharedManager].user.serverAPI, _listOfData[indexPath.row].leaveCode];
+    _url = [NSString stringWithFormat:@"%@v1/table/StaffLeave/%@", [DataManager sharedManager].user.serverAPI, _listOfData[indexPath.row].leaveCode];
     if (isLoading) return;
     isLoading = NO;
     [SVProgressHUD show];

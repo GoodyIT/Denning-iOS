@@ -168,7 +168,7 @@
     if ([_fileNo isKindOfClass:[NSNull class]]) {
         _fileNo = @"";
     }
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@%@?search=%@&page=%@&fileNo=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curBalanceFilter, _filter, _page, _fileNo];
+    NSString* _url = [NSString stringWithFormat:@"%@/%@%@?search=%@&page=%@&fileNo=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curBalanceFilter, _filter, _page, _fileNo];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     @weakify(self)
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
@@ -248,7 +248,7 @@
 }
 
 - (void) viewPDF:(NSString*) pdfUrl {
-    NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, pdfUrl];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, pdfUrl];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     
     [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {

@@ -529,7 +529,7 @@ didCompleteWithError:(NSError *)error{
     self.requestDataObject = [RequestObject new];
     [self.requestDataObject setIncompleteString:[string urlEncodeUsingEncoding:NSUTF8StringEncoding]];
     [self.requestDataObject setCompletionBlock:handler];
-    NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/v1/table/cboDocumentName?search=%@", [defaults valueForKey:@"api"], string];
+    NSString* urlString = [NSString stringWithFormat:@"%@v1/table/cboDocumentName?search=%@", [defaults valueForKey:@"api"], string];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *downloadURL = [NSURL URLWithString:urlString];
     GetJSONOperation *operation = [[GetJSONOperation alloc] initWithDownloadURL:downloadURL

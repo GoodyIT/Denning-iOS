@@ -116,7 +116,7 @@
 
     NSURL *url = [NSURL URLWithString: file.URL];
     if (![file.ext isEqualToString:@".url"]) {
-        NSString *urlString = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].tempServerURL, file.URL];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].tempServerURL, file.URL];
         url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     }
     

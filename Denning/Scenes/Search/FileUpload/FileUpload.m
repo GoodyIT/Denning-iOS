@@ -74,7 +74,7 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self showAutocomplete:@"denningwcf/v1/table/cboDocumentName?search="];
+    [self showAutocomplete:@"v1/table/cboDocumentName?search="];
 }
 
 - (IBAction)didTapSend:(id)sender {

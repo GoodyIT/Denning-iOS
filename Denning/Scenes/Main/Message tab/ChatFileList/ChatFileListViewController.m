@@ -189,7 +189,7 @@ UITableViewDelegate, UITableViewDataSource>
 }
 
 - (IBAction)didTapTransitFolder:(id)sender {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/transit/fileFolder", [DataManager sharedManager].user.serverAPI];
+    NSString* url = [NSString stringWithFormat:@"%@v1/app/matter/transit/fileFolder", [DataManager sharedManager].user.serverAPI];
     fileFolderTitle = @"Transit Folder";
     [self openDocument:url];
 }
@@ -310,10 +310,10 @@ UITableViewDelegate, UITableViewDataSource>
     NSString* url;
     if (cellType == DIContactCell) {
         fileFolderTitle = @"Contact Folder";
-        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/contactFolder/%@", [DataManager sharedManager].user.serverAPI, model.key];
+        url = [NSString stringWithFormat:@"%@v1/app/contactFolder/%@", [DataManager sharedManager].user.serverAPI, model.key];
     } else {
         fileFolderTitle = @"File Folder";
-        url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, model.key];
+        url = [NSString stringWithFormat:@"%@v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, model.key];
     }
     
     [self openDocument:url];

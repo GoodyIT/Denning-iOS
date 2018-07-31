@@ -89,7 +89,7 @@
 - (void) getList{
     if (isLoading) return;
     isLoading = YES;
-    NSString* urlString = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, _url, _filter, _page];
+    NSString* urlString = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, _url, _filter, _page];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     __weak QMNavigationController *navigationController = (QMNavigationController *)self.navigationController;
     @weakify(self)

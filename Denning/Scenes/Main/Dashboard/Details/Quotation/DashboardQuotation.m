@@ -166,7 +166,7 @@
     if (isLoading) return;
     isLoading = YES;
 
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curBalanceFilter, _filter, _page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, baseUrl, curBalanceFilter, _filter, _page];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     @weakify(self)
     [[QMNetworkManager sharedManager] sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
@@ -241,7 +241,7 @@
     if (isLoading) return;
     isLoading = YES;
     
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, model.APIpdf];
+    NSString* url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, model.APIpdf];
     
     [SVProgressHUD show];
     @weakify(self)

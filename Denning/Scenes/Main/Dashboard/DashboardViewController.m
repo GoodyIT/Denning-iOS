@@ -379,7 +379,7 @@ NSMutableDictionary* keyValue;
 
 - (void) openTransitFolder: (NSString*) url
 {
-    url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, url];
     if (isLoading) return;
     isLoading = YES;
     @weakify(self);

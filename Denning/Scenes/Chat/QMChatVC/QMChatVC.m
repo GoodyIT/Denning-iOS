@@ -2520,7 +2520,6 @@ didAddChatDialogsToMemoryStorage:(NSArray<QBChatDialog *> *)chatDialogs {
                 [self openURL:textCheckingResult.URL];
             }
             
-            
             break;
         }
             

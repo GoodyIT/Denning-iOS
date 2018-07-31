@@ -50,6 +50,9 @@
 - (void)initManager
 {
     self.manager = [[AFHTTPSessionManager  alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+//    self.manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate withPinnedCertificates:[AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]]];
+//    self.manager.securityPolicy.allowInvalidCertificates = NO;
     self.manager.responseSerializer =  [AFJSONResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
     
@@ -403,7 +406,7 @@
 
 - (void) loadPropertyfromSearchWithCode: (NSString*) code completion: (void(^)(AddPropertyModel* propertyModel, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/Property/%@", [DataManager sharedManager].user.serverAPI, code];
+    NSString* url = [NSString stringWithFormat:@"%@v1/app/Property/%@", [DataManager sharedManager].user.serverAPI, code];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([AddPropertyModel getAddPropertyFromResponse:result], error);
     }];
@@ -412,7 +415,7 @@
 // Contact
 - (void) loadContactFromSearchWithCode: (NSString*) code completion: (void(^)(ContactModel* contactModel, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/Contact/%@", [DataManager sharedManager].user.serverAPI, code];
+    NSString* url = [NSString stringWithFormat:@"%@v1/app/Contact/%@", [DataManager sharedManager].user.serverAPI, code];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([ContactModel getContactFromResponse:result], error);
     }];
@@ -421,7 +424,7 @@
 // Related Matter
 - (void) loadRelatedMatterWithCode: (NSString*) code completion: (void(^)(RelatedMatterModel* contactModel, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@", [DataManager sharedManager].user.serverAPI, code];
+    NSString* url = [NSString stringWithFormat:@"%@v1/app/matter/%@", [DataManager sharedManager].user.serverAPI, code];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([RelatedMatterModel getRelatedMatterFromResponse:result], error);
     }];
@@ -430,7 +433,7 @@
 - (void) loadFileNoteListWithCode:(NSString*) code withPage:page
 completion: (void(^)(NSArray *result, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/table/Note?fileNo=%@&page=%@", [DataManager sharedManager].user.serverAPI, code, page];
+    NSString* url = [NSString stringWithFormat:@"%@v1/table/Note?fileNo=%@&page=%@", [DataManager sharedManager].user.serverAPI, code, page];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([FileNoteModel getFileNoteArrayFromResponse:(NSArray*)result], error);
     }];
@@ -438,7 +441,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) saveFileNoteWithParams: (NSDictionary*) params completion: (void(^)(FileNoteModel* result, NSError* error)) completion
 {
-    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: @"denningwcf/v1/table/Note"];
+    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: @"v1/table/Note"];
     [self sendPrivatePostWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([FileNoteModel getFileNoteFromResonse:result], error);
     }];
@@ -446,7 +449,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) updateFileNoteWithParams: (NSDictionary*) params completion: (void(^)(FileNoteModel* result, NSError* error)) completion
 {
-    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: @"denningwcf/v1/table/Note"];
+    NSString* _url = [[DataManager sharedManager].user.serverAPI stringByAppendingString: @"v1/table/Note"];
     [self sendPrivatePutWithURL:_url params:params completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([FileNoteModel getFileNoteFromResonse:result],error);
     }];
@@ -471,7 +474,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Payment Record
 - (void) getPaymentRecordWithFileNo:(NSString*) fileNo completion:(void(^)(NSDictionary* result, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/PaymentRecord/%@", [DataManager sharedManager].user.serverAPI, fileNo];
+    NSString* url = [NSString stringWithFormat:@"%@v1/app/PaymentRecord/%@", [DataManager sharedManager].user.serverAPI, fileNo];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion(result, error);
     }];
@@ -480,7 +483,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Template
 - (void) getTemplateWithFileno:(NSString*) fileNo online:(NSString*) online category:(NSString*) category type:(NSString*) type page:(NSNumber*) page search:(NSString*) search withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/Table/cboTemplate?fileno=%@&Online=%@&category=%@&Type=%@&page=%@&search=%@", [DataManager sharedManager].user.serverAPI, fileNo, online, category, type, page, search];
+    NSString* url = [NSString stringWithFormat:@"%@v1/Table/cboTemplate?fileno=%@&Online=%@&category=%@&Type=%@&page=%@&search=%@", [DataManager sharedManager].user.serverAPI, fileNo, online, category, type, page, search];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([TemplateModel getTemplateArrayFromResponse:(NSArray*)result], error);
     }];
@@ -505,7 +508,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Bank
 - (void) loadBankFromSearchWithCode: (NSString*) code completion: (void(^)(BankModel* bankModel, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/bank/branch/%@", [DataManager sharedManager].user.serverAPI, code];
+    NSString* url = [NSString stringWithFormat:@"%@v1/app/bank/branch/%@", [DataManager sharedManager].user.serverAPI, code];
     [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([BankModel getBankFromResponse:result], error);
     }];
@@ -522,12 +525,12 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
     }
     
     if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
-        NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/GovOffice/%@/%@", [DataManager sharedManager].user.serverAPI, point, code];
+        NSString* url = [NSString stringWithFormat:@"%@v1/app/GovOffice/%@/%@", [DataManager sharedManager].user.serverAPI, point, code];
         [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
             completion([GovOfficeModel getGovOfficeFromResponse:result], error);
         }];
     } else {
-        NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/GovOffice/%@/%@", PUBLIC_BASE_URL, point, code];
+        NSString* url = [NSString stringWithFormat:@"%@v1/GovOffice/%@/%@", PUBLIC_BASE_URL, point, code];
         [self setPublicHTTPHeader];
         [self sendGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
             completion([GovOfficeModel getGovOfficeFromResponse:result], error);
@@ -557,7 +560,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Ledger
 - (void) loadLedgerWithCode: (NSString*) code completion: (void(^)(NewLedgerModel* newLedgerModel, NSError* error)) completion
 {
-    NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/%@/fileLedger", [DataManager sharedManager].user.serverAPI, code];
+    NSString* url = [NSString stringWithFormat:@"%@v1/%@/fileLedger", [DataManager sharedManager].user.serverAPI, code];
 
     [self loadLedgerWithUrl:url completion:completion];
 }
@@ -572,7 +575,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 // Ledger detail
 - (void) loadLedgerDetailURL:(NSString*) url completion: (void(^)(NSArray* ledgerModelDetailArray, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    NSString* _url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, url];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([LedgerDetailModel getLedgerDetailArrayFromResponse:result], error);
     }];
@@ -582,7 +585,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) loadDocumentWithCode: (NSString*) code completion: (void(^)(DocumentModel* doumentModel, NSError* error)) completion
 {
     if ([[DataManager sharedManager].searchType isEqualToString:@"Denning"]){
-        NSString* url = [NSString stringWithFormat:@"%@denningwcf/v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, code];
+        NSString* url = [NSString stringWithFormat:@"%@v1/app/matter/%@/fileFolder", [DataManager sharedManager].user.serverAPI, code];
         
         [self sendPrivateGetWithURL:url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
             completion([DocumentModel getDocumentFromResponse:result], error);
@@ -795,7 +798,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getCourtWithCode:(NSString*) code WithCompletion:(void(^)(EditCourtModel* model, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/v1/courtDiary/%@", [DataManager sharedManager].user.serverAPI,code];
+    NSString* _url = [NSString stringWithFormat:@"%@v1/courtDiary/%@", [DataManager sharedManager].user.serverAPI,code];
     
     [self setPrivateHTTPHeader];
     [self.manager GET:_url parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -1264,7 +1267,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardItemModelWithURL: (NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([ItemModel getItemArrayFromResponse:result], error);
     }];
@@ -1272,7 +1275,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardMyDueTaskWithURL: (NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([TaskCheckModel getTaskCheckArrayFromResponse:result], error);
     }];
@@ -1280,7 +1283,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardBankReconWithURL:(NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([BankReconModel getBankReconArrayFromResponse:(NSArray*)result], error);
     }];
@@ -1288,7 +1291,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardTrialBalanceWithURL:(NSString*) url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion:(void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([TrialBalanceModel getTrialBalanceArrayFromResponse:(NSArray*)result], error);
     }];
@@ -1297,7 +1300,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) getNewMatterInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter  withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
     
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([SearchResultModel getSearchResultArrayFromResponse:(NSArray*)result], error);
     }];
@@ -1305,7 +1308,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardContactInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([SearchResultModel getSearchResultArrayFromResponse:(NSArray*)result], error);
@@ -1315,7 +1318,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 - (void) getDashboardFeeTransferInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
 
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion((NSArray*)result, nil);
     }];
@@ -1323,7 +1326,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getProfitLossDetailWithURL:(NSString*) url withCompletion:(void(^)(ProfitLossDetailModel* result, NSError* error)) completion {
     
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    NSString* _url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, url];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([ProfitLossDetailModel getProfitLossDetailFromResponse:result], error);
     }];
@@ -1331,7 +1334,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getStaffOnlineWithURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@&search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([StaffOnlineModel getStaffOnlineArrayFromResponse:(NSArray*)result], error);
     }];
@@ -1339,7 +1342,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getCompletionTrackingWithURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
+    NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion([CompletionTrackingModel getCompletionTrackingArrayFromResponse:(NSArray*)result], error);
     }];
@@ -1347,7 +1350,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getResponseWithUrl:(NSString*) url withCompletion:(void(^)(id result, NSError* error)) completion
 {
-    NSString* _url = [NSString stringWithFormat:@"%@denningwcf/%@", [DataManager sharedManager].user.serverAPI, url];
+    NSString* _url = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, url];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion(result, error);
     }];

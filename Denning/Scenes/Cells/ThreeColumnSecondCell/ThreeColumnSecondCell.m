@@ -29,13 +29,12 @@
     _amount.text = [DIHelpers addThousandsSeparatorWithDecimal:model.fee];
 }
 
-- (void) sconfigureCellWithContactFolderItem:(ContactFolderItem*) model {
+- (void) configureCellWithContactFolderItem:(ContactFolderItem*) model {
     _fileNo.text = model.strContactName;
     _fileName.text = model.strContactID;
     _invoiceNo.text = [DIHelpers getDateInShortForm:model.dtLastModified];
     _amount.text = model.strItemCount;
 }
-
 
 - (void) configureCellWithDict:(NSDictionary*) dict
 {
