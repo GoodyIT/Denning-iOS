@@ -30,7 +30,7 @@ NYTPhotosViewControllerDelegate, UITextFieldDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.fileNoLabel.text = [_titleValue substringFromIndex:9];
+    self.fileNoLabel.text = [[_titleValue componentsSeparatedByString:@":"][1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     systemNo = [DIHelpers separateFileNameAndNoFromTitle:_titleValue][0];
 }
 
