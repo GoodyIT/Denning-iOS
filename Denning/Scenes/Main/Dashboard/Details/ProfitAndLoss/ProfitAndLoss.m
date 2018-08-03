@@ -102,7 +102,7 @@
     TwoColumnSecondCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnSecondCell cellIdentifier] forIndexPath:indexPath];
     
     cell.leftLabel.text = model.label;
-    cell.rightLabel.text = [DIHelpers addThousandsSeparatorWithDecimal: model.value];
+    cell.rightLabel.text = [DIHelpers addThousandsSeparator: model.value];
     if ([model.value floatValue] > 0.0) {
         cell.rightLabel.textColor = [UIColor babyGreen];
     } else {

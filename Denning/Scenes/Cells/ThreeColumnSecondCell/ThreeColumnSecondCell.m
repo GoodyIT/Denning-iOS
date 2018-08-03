@@ -26,7 +26,7 @@
     _fileNo.text = model.fileNo;
     _fileName.text = model.fileName;
     _invoiceNo.text = model.invoiceNo;
-    _amount.text = [DIHelpers addThousandsSeparatorWithDecimal:model.fee];
+    _amount.text = [DIHelpers addThousandsSeparator:model.fee];
 }
 
 - (void) configureCellWithContactFolderItem:(ContactFolderItem*) model {

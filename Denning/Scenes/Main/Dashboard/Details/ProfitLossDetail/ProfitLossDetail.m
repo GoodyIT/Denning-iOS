@@ -119,13 +119,13 @@
     
     if (indexPath.row == 0) {
         cell.leftLabel.text = @"Revenue";
-        cell.rightLabel.text = [DIHelpers addThousandsSeparatorWithDecimal:_model.revenue];
+        cell.rightLabel.text = [DIHelpers addThousandsSeparator:_model.revenue];
     } else if (indexPath.row == 1) {
         cell.leftLabel.text = @"Expenses";
-        cell.rightLabel.text = [DIHelpers addThousandsSeparatorWithDecimal:_model.expenses];
+        cell.rightLabel.text = [DIHelpers addThousandsSeparator:_model.expenses];
     } else {
         cell.leftLabel.text = @"Profit/Loss";
-        cell.rightLabel.text = [DIHelpers addThousandsSeparatorWithDecimal:_model.profitLoss];
+        cell.rightLabel.text = [DIHelpers addThousandsSeparator:_model.profitLoss];
     }
     
     return cell;
