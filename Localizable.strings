@@ -1,4 +1,6 @@
-/* 
+
+
+/*
   Localized.strings
   Q-municate
 
@@ -224,3 +226,7 @@
 "QM_EXT_SHARE_COMMON_ERROR" = "Something went wrong";
 "QM_EXT_SHARE_SUCESS_MESSAGE" = "Successfully sent";
 "QM_EXT_SHARE_NOT_LOGGED_IN_ERROR" = "In order to share you should be logged in to Q-Municate";
+
+// ********** Login ************
+
+"QB_ACCOUNT_NOT_EXIST" = "Your account is not allowed to use chat function.Ok?";

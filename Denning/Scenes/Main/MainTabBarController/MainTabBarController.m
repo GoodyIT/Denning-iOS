@@ -59,9 +59,12 @@ QMPushNotificationManagerDelegate>
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[QMCore instance].chatService addDelegate:self];
-    [QMCore.instance.chatService addDelegate:self];
-    [self performAutoLoginAndFetchData];
+//    if ([QBSession currentSession].currentUser != nil) {
+    if ([[QBChat instance] isConnected]) {
+        [[QMCore instance].chatService addDelegate:self];
+        [QMCore.instance.chatService addDelegate:self];
+        [self performAutoLoginAndFetchData];
+    }
     
     [self removeTabbarBasedOnUserType];
 }
@@ -74,9 +77,6 @@ QMPushNotificationManagerDelegate>
 }
 
 - (void)performAutoLoginAndFetchData {
-    if ([QBSession currentSession].currentUser == nil) {
-        return;
-    }
     
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading
                                                                           message:NSLocalizedString(@"QM_STR_CONNECTING", nil)
@@ -113,7 +113,7 @@ QMPushNotificationManagerDelegate>
     }] continueWithBlock:^id _Nullable(BFTask * _Nonnull task) {
 
         if (!task.isCancelled) {
-            [self performSegueWithIdentifier:kAuthSegue sender:nil];
+//            [self performSegueWithIdentifier:kAuthSegue sender:nil];
         }
 
         return nil;
@@ -137,7 +137,7 @@ shouldSelectViewController:(UIViewController *)viewController
         }
     }
     if ([viewController.childViewControllers[0] isKindOfClass:[MessageViewController class]]) {
-        if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) && ![[DataManager sharedManager] isLoggedIn]) {
+        if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) || ![[DataManager sharedManager] isLoggedIn]) {
             self.tabBarController.selectedIndex = 0;
             [self alertAndLogin];
             return NO;
@@ -189,7 +189,7 @@ shouldSelectViewController:(UIViewController *)viewController
       }],
       
       [RWDropdownMenuItem itemWithText:@"Chats" image:[UIImage imageNamed:@"icon_message"] action:^{
-        if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) && ![[DataManager sharedManager] isLoggedIn]) {
+        if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) || ![[DataManager sharedManager] isLoggedIn]) {
             self.tabBarController.selectedIndex = 0;
             [self alertAndLogin];
             return;
@@ -225,7 +225,7 @@ shouldSelectViewController:(UIViewController *)viewController
       }],
       
       [RWDropdownMenuItem itemWithText:@"Log out" image:[UIImage imageNamed:@"menu_logout"] action:^{
-          if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
+          if ([[QBChat instance] isConnected] || [[DataManager sharedManager] isLoggedIn]) {
               [DIHelpers logout:self];
           }
       }],

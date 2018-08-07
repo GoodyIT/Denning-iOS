@@ -317,7 +317,7 @@
 - (void) didTapMessage:(NewContactHeaderCell *)cell
 {
     // Go to message
-    if (![QMCore instance].callManager.hasActiveCall && [QMCore instance].currentProfile != nil) {
+    if (![QMCore instance].callManager.hasActiveCall && [[QBChat instance] isConnected]) {
         
         NSArray* contactArray = [[DataManager sharedManager].staffContactsArray arrayByAddingObjectsFromArray:[DataManager sharedManager].clientContactsArray];
         QBUUser* __user = nil;

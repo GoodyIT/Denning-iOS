@@ -238,12 +238,15 @@
     self.task = [[[QMCore instance].authService loginWithUser:user] continueWithBlock:^id _Nullable(BFTask<QBUUser *> * _Nonnull task) {
         
         @strongify(self);
-        if (!task.isFaulted) {
-            [QMCore instance].currentProfile.accountType = QMAccountTypeEmail;
-            [[QMCore instance].currentProfile synchronizeWithUserData:task.result];
-            [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+        if (!task.isFaulted || ((NSError*)task.error).code == 401) {
+            if (((NSError*)task.error).code != 401) {
+                [QMCore instance].currentProfile.accountType = QMAccountTypeEmail;
+                [[QMCore instance].currentProfile synchronizeWithUserData:task.result];
+                [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+            }
+           
             [self manageSuccessResult:statusCode response:responseObject];
-        } else {
+        } else{
             [SVProgressHUD dismiss];
             [QMAlert showAlertWithMessage:task.error.localizedDescription actionSuccess:NO inViewController:self];
         }
