@@ -390,7 +390,7 @@ iCarouselDataSource, iCarouselDelegate>
             [self performSegueWithIdentifier:kAuthSegue sender:nil];
         }];
     } else if ([CLLocationManager locationServicesEnabled] == NO) {
-        [(AppDelegate*)[UIApplication sharedApplication] showDeniedLocation];
+        [(AppDelegate*)[UIApplication sharedApplication].delegate showDeniedLocation];
     } else {
         [SVProgressHUD show];
         

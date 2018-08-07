@@ -44,7 +44,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="4zn-MO-OxI">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="4zn-MO-OxI">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="263"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -54,11 +54,11 @@
                                         <constraint firstAttribute="height" constant="126" id="HdA-Lz-dtx"/>
                                     </constraints>
                                 </imageView>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kdm-Hs-j05" userLabel="title View">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kdm-Hs-j05" userLabel="title View">
                                     <rect key="frame" x="0.0" y="126" width="375" height="33"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tfc-ak-aGb">
-                                            <rect key="frame" x="8" y="5" width="359" height="0.0"/>
+                                            <rect key="frame" x="8" y="5" width="359" height="23"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="17"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -73,10 +73,10 @@
                                         <constraint firstAttribute="trailing" secondItem="Tfc-ak-aGb" secondAttribute="trailing" constant="8" id="riz-1c-Vfh"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I5h-tg-cjC" userLabel="text View">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5h-tg-cjC" userLabel="text View">
                                     <rect key="frame" x="0.0" y="159" width="375" height="96"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Keep the stories about first days ain the law coming" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CD-HT-kBF">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep the stories about first days ain the law coming" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CD-HT-kBF">
                                             <rect key="frame" x="8" y="5" width="359" height="60"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="60" id="v4w-RE-kYm"/>
@@ -85,7 +85,7 @@
                                             <color key="textColor" red="0.65490196079999996" green="0.66274509800000003" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="27 Feb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5c-fT-4jT">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 Feb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5c-fT-4jT">
                                             <rect key="frame" x="328.5" y="64" width="38.5" height="27"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
                                             <color key="textColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -372,14 +372,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="fOF-Vi-by8">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="246"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="301"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maxresdefault.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="dEX-jM-QBo">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="109"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="164"/>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9FP-Pp-DNR" userLabel="title View">
-                                    <rect key="frame" x="0.0" y="109" width="375" height="31"/>
+                                    <rect key="frame" x="0.0" y="164" width="375" height="31"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VkR-6m-K46">
                                             <rect key="frame" x="8" y="5" width="359" height="21"/>
@@ -399,7 +399,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="erJ-Zt-khi" userLabel="text View">
-                                    <rect key="frame" x="0.0" y="140" width="375" height="98"/>
+                                    <rect key="frame" x="0.0" y="195" width="375" height="98"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep the stories about first days ain the law coming" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QYk-6k-w90">
                                             <rect key="frame" x="8" y="5" width="359" height="60"/>
@@ -431,13 +431,13 @@
                             </subviews>
                             <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
+                                <constraint firstItem="dEX-jM-QBo" firstAttribute="top" secondItem="fOF-Vi-by8" secondAttribute="top" multiplier="44" id="2lv-BN-sKL"/>
                                 <constraint firstAttribute="trailing" secondItem="erJ-Zt-khi" secondAttribute="trailing" id="9ao-Ze-jry"/>
                                 <constraint firstAttribute="bottom" secondItem="erJ-Zt-khi" secondAttribute="bottom" constant="8" id="Iqi-Ec-Vod"/>
                                 <constraint firstAttribute="trailing" secondItem="dEX-jM-QBo" secondAttribute="trailing" id="SIo-h8-oEv"/>
                                 <constraint firstItem="erJ-Zt-khi" firstAttribute="leading" secondItem="fOF-Vi-by8" secondAttribute="leading" id="WAL-D4-0tQ"/>
                                 <constraint firstItem="9FP-Pp-DNR" firstAttribute="top" secondItem="dEX-jM-QBo" secondAttribute="bottom" id="ZEk-74-7Mg"/>
                                 <constraint firstAttribute="trailing" secondItem="9FP-Pp-DNR" secondAttribute="trailing" id="Zlt-cz-isW"/>
-                                <constraint firstItem="dEX-jM-QBo" firstAttribute="top" secondItem="fOF-Vi-by8" secondAttribute="top" id="eEU-r7-O72"/>
                                 <constraint firstItem="9FP-Pp-DNR" firstAttribute="leading" secondItem="fOF-Vi-by8" secondAttribute="leading" id="f3Y-zo-I3s"/>
                                 <constraint firstItem="dEX-jM-QBo" firstAttribute="leading" secondItem="fOF-Vi-by8" secondAttribute="leading" id="fGk-Wt-k3I"/>
                                 <constraint firstItem="erJ-Zt-khi" firstAttribute="top" secondItem="9FP-Pp-DNR" secondAttribute="bottom" id="wP7-dS-arX"/>
@@ -445,7 +445,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ULq-Wy-wfY">
-                                <rect key="frame" x="0.0" y="274" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="329" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ULq-Wy-wfY" id="kWz-WW-Zf4">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1622,7 +1622,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="dSM-6G-5bU">
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="dSM-6G-5bU">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

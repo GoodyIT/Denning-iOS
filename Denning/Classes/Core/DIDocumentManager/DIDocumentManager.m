@@ -184,8 +184,10 @@
                 selectedDocument = filePath;
                 completion(filePath);
             }
-        } else {
-            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        } else if (((NSHTTPURLResponse *)response).statusCode == 404) {
+            [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_FILE_NOT_FOUNT", nil) actionSuccess:NO inViewController:viewController];
+        } else  {
+            [QMAlert showAlertWithMessage:error.localizedDescription actionSuccess:NO inViewController:viewController];
         }
     }];
     [downloadTask resume];

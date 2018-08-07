@@ -535,15 +535,18 @@
     if (((NSString*)value).length == 0) {
         return value;
     }
-    NSScanner *scanner = [NSScanner scannerWithString:[value stringByReplacingOccurrencesOfString:@"," withString:@""]];
-    BOOL isNumeric = [scanner scanInteger:NULL] && [scanner isAtEnd];
-    if (((NSString*)value).length == 0 && !isNumeric) {
-        return value;
-    }
-    NSNumber *number = [NSDecimalNumber decimalNumberWithString:value];
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    return [numberFormatter stringFromNumber:number];
+//    NSScanner *scanner = [NSScanner scannerWithString:[value stringByReplacingOccurrencesOfString:@"," withString:@""]];
+//    BOOL isNumeric = [scanner scanInteger:NULL] && [scanner isAtEnd];
+//    if (((NSString*)value).length == 0 && !isNumeric) {
+//        return value;
+//    }
+//    NSNumber *number = [NSDecimalNumber decimalNumberWithString:value];
+//    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+//    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    NSNumberFormatter *currencyFormatter = [[NSNumberFormatter alloc] init];
+    [currencyFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [currencyFormatter setCurrencySymbol:@""]; //To remove currency symbol
+    return [currencyFormatter stringFromNumber:[NSNumber numberWithDouble:[value floatValue]]];
 }
 
 + (NSString*) capitalizedString: (id) value
