@@ -30,7 +30,7 @@
 @property   NSString    *firmCity;
 @property   NSString    *userType;
 @property   NSString    *serverURL;
-@property   NSString   *theCode;
+@property   NSString    *theCode;
 @property   NSString    *firmName;
 @property   NSString    *avatarUrl;
 @property   NSString    *streetName;

@@ -50,6 +50,7 @@
 
 - (void) configureCellForFeesTransfer: (FeeTranserModel*) model
 {
+    _thirdValue.textAlignment = NSTextAlignmentRight;
     _firstValue.text = [DIHelpers getDateInShortForm:model.batchDate];
     _secondValue.text = model.batchNo;
     _thirdValue.text = [DIHelpers addThousandsSeparatorWithDecimal:model.totalAmount];

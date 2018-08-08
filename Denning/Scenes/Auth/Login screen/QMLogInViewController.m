@@ -240,9 +240,12 @@
         @strongify(self);
         if (!task.isFaulted || ((NSError*)task.error).code == 401) {
             if (((NSError*)task.error).code != 401) {
+                [[DataManager sharedManager] setQBLoginState:YES];
                 [QMCore instance].currentProfile.accountType = QMAccountTypeEmail;
                 [[QMCore instance].currentProfile synchronizeWithUserData:task.result];
                 [[QMCore instance].pushNotificationManager subscribeForPushNotifications];
+            } else {
+                [[DataManager sharedManager] setQBLoginState:NO];
             }
            
             [self manageSuccessResult:statusCode response:responseObject];

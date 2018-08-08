@@ -80,4 +80,8 @@
 
 - (void) setStreetName:(NSString*) streetName;
 
+- (void) setQBLoginState: (BOOL) state;
+
+- (BOOL) havingQBAccount;
+
 @end

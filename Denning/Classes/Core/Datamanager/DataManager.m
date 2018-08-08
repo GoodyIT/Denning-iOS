@@ -47,9 +47,8 @@
         isExpire = NO;
         user = [UserModel allObjects].firstObject;
         if (!user) {
-            NSDate* newDate = [NSDate date];
             [[RLMRealm defaultRealm] transactionWithBlock:^{
-                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @0.0, @0.0, newDate]];
+                user = [UserModel createInDefaultRealmWithValue:@[@"", @"", @"",  @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @0.0, @0.0, [NSDate date]]];
             }];
         }
     }
@@ -152,6 +151,16 @@
     [[RLMRealm defaultRealm] transactionWithBlock:^{
         user.avatarUrl = url;
     }];
+}
+
+- (void) setQBLoginState: (BOOL) state {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:state forKey:@"isQBLoggedIn"];
+    [defaults synchronize];
+}
+
+- (BOOL) havingQBAccount {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isQBLoggedIn"];
 }
 
 - (BOOL) isClient {

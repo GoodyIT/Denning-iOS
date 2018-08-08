@@ -59,13 +59,11 @@ QMPushNotificationManagerDelegate>
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    if ([QBSession currentSession].currentUser != nil) {
-    if ([[QBChat instance] isConnected]) {
+    if ([[DataManager sharedManager] havingQBAccount]) {
         [[QMCore instance].chatService addDelegate:self];
         [QMCore.instance.chatService addDelegate:self];
         [self performAutoLoginAndFetchData];
     }
-    
     [self removeTabbarBasedOnUserType];
 }
 

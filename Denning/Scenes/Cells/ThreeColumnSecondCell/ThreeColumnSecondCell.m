@@ -23,6 +23,7 @@
 
 - (void) configureCellWithModel:(FeeUntransferModel*) model
 {
+    _amount.textAlignment = NSTextAlignmentRight;
     _fileNo.text = model.fileNo;
     _fileName.text = model.fileName;
     _invoiceNo.text = model.invoiceNo;
