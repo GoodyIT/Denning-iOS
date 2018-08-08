@@ -61,15 +61,15 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    
-    // Set custom indicator
-    self.tableView.infiniteScrollIndicatorView = indicator;
-    // Set custom indicator margin
-    self.tableView.infiniteScrollIndicatorMargin = 40;
-    
-    // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 500;
+//    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+//
+//    // Set custom indicator
+//    self.tableView.infiniteScrollIndicatorView = indicator;
+//    // Set custom indicator margin
+//    self.tableView.infiniteScrollIndicatorMargin = 40;
+//
+//    // Set custom trigger offset
+//    self.tableView.infiniteScrollTriggerOffset = 400;
     
     // Add infinite scroll handler
     @weakify(self)
@@ -169,6 +169,7 @@
             }
             
             [self.tableView reloadData];
+            [self.tableView finishInfiniteScroll];
         }
         else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
