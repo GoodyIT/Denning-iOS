@@ -62,6 +62,7 @@
     self.tableView.tableFooterView = [UIView new];
     
 //    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    
 //
 //    // Set custom indicator
 //    self.tableView.infiniteScrollIndicatorView = indicator;
@@ -72,11 +73,12 @@
 //    self.tableView.infiniteScrollTriggerOffset = 400;
     
     // Add infinite scroll handler
-    @weakify(self)
-    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
-        @strongify(self)
-        [self appendList];
-    }];
+//    @weakify(self)
+//    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+//        [self.tableView finishInfiniteScroll];
+//        @strongify(self)
+//        [self appendList];
+//    }];
 }
 
 - (void)registerNibs {
@@ -142,7 +144,6 @@
         else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
         }
-        
     }];
 }
 
