@@ -37,6 +37,7 @@
     return manager;
 }
 
+
 #pragma mark -  Lifecycle
 
 - (instancetype)init {
@@ -1317,7 +1318,6 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) getDashboardFeeTransferInURL:(NSString*)url withPage:(NSNumber*) page withFilter:(NSString*)filter withCompletion: (void(^)(NSArray* result, NSError* error)) completion
 {
-
     NSString* _url = [NSString stringWithFormat:@"%@%@?search=%@&page=%@", [DataManager sharedManager].user.serverAPI, url, filter, page];
     [self sendPrivateGetWithURL:_url completion:^(NSDictionary * _Nonnull result, NSError * _Nonnull error, NSURLSessionDataTask * _Nonnull task) {
         completion((NSArray*)result, nil);
