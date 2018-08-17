@@ -176,7 +176,7 @@
         NSError* error;
         NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
         [request setHTTPBody:postData];
-       fileName  = [[[data valueForKey:@"strDocumentName"] stringByAppendingString:@""] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+       fileName  = [[[data valueForKey:@"strDocumentName"] stringByAppendingString:[data valueForKey:@"eOutput"]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     }
     
     
