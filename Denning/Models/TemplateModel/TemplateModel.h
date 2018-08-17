@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString* generateAPI;
 @property (strong, nonatomic) NSString* strLangauge;
 @property (strong, nonatomic) NSString* strSource;
+@property (strong, nonatomic) id    generateBody;
 
 + (TemplateModel*) getTemplateFromResponse: (NSDictionary*) response;
 

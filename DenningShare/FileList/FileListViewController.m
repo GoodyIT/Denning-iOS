@@ -102,7 +102,7 @@
     [requestDataObject setIncompleteString:@""];
     __weak typeof(self) weakSelf = self;
     [requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
-        if (statusCode == 410) {
+        if (statusCode == 408) {
             [ShareHelper showAlertWithMessage:@"Session is expired. Please log in again." actionSuccess:NO inViewController:weakSelf];
         } else {
             if (items > 0) {

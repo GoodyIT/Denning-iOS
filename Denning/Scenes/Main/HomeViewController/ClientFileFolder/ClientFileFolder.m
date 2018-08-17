@@ -64,7 +64,7 @@
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self showAutocomplete:@"v1/table/cboDocumentName?search="];
+    [self showAutocomplete:@"table/cboDocumentName?search="];
 }
 
 - (IBAction)didTapSend:(id)sender {

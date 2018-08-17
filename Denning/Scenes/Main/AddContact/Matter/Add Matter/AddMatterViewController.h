@@ -10,7 +10,7 @@
 
 typedef void(^UpdateMatterHandler)(RelatedMatterModel* model);
 
-@interface AddMatterViewController : UIViewController
+@interface AddMatterViewController : BaseViewController
 
 @property (nonatomic, strong) RelatedMatterModel* matterModel;
 

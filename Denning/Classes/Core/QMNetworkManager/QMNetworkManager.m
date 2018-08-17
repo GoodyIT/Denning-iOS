@@ -1127,7 +1127,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
                                                              progressBlock(downloadProgress.fractionCompleted);
                                                          } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
                                                                       if (completion != nil) {                                 completion(responseObject, nil, task);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                          if (((NSHTTPURLResponse *)task.response).statusCode == 410) { // Session expired.
+                                                                          if (((NSHTTPURLResponse *)task.response).statusCode == 408) { // Session expired.
                                                                               [self displaySessionExpireMessage];
                                                                               
                                                                           }
@@ -1154,7 +1154,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
                                                          downloadProgress:nil
                                                                   success:^(NSURLSessionDataTask * _Nonnull task, id  _Nonnull responseObject) {
                                                                       if (completion != nil) {                                 completion(responseObject, nil, task);                         }                } failure:^(NSURLSessionDataTask * _Nonnull task, NSError * _Nonnull error) {
-                                                                          if (((NSHTTPURLResponse *)task.response).statusCode == 410) { // Session expired.
+                                                                          if (((NSHTTPURLResponse *)task.response).statusCode == 408) { // Session expired.
                                                                               [self displaySessionExpireMessage];
                                                                               
                                                                           }

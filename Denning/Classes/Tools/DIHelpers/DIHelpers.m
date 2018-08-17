@@ -401,8 +401,7 @@
 + (NSArray*) separateFileNameAndNoFromTitle:(NSString*) title {
     NSString* removedTitle;
     
-    NSRange range = NSMakeRange(9, title.length-9);
-    removedTitle = [title substringWithRange:range];
+    removedTitle = [title componentsSeparatedByString:@":"][1];
     
     NSMutableArray *items = [[removedTitle componentsSeparatedByString:@"("] mutableCopy];
     
@@ -417,10 +416,7 @@
 
 + (NSArray*) removeFileNoAndSeparateFromMatterTitle: (NSString*) title
 {
-    NSString* removedTitle;
-    
-    NSRange range = NSMakeRange(9, title.length-9);
-    removedTitle = [title substringWithRange:range];
+    NSString* removedTitle = [title componentsSeparatedByString:@":"][1];
     
     NSMutableArray *items = [[removedTitle componentsSeparatedByString:@"("] mutableCopy];
     

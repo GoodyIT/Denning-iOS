@@ -517,7 +517,7 @@
         courtString = @"PersonalDiary";
     }
     
-    NSString* url = [NSString stringWithFormat:@"%@v1/%@/%@", [DataManager sharedManager].user.serverAPI,courtString,  event.eventCode];
+    NSString* url = [NSString stringWithFormat:@"%@%@/%@", [DataManager sharedManager].user.serverAPI,courtString,  event.eventCode];
     if (isLoading) return;
     isLoading = YES;
     [(QMNavigationController *)self.navigationController showNotificationWithType:QMNotificationPanelTypeLoading message:NSLocalizedString(@"QM_STR_LOADING", nil) duration:0];

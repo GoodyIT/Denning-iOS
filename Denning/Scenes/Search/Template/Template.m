@@ -262,9 +262,10 @@ ContactListWithDescSelectionDelegate>
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TemplateModel *model = self.listOfTemplates[indexPath.row];
-    NSString *urlString = [NSString stringWithFormat:@"%@v1/%@", [DataManager sharedManager].user.serverAPI, model.generateAPI];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, model.generateAPI];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
-    [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
+    
+    [[DIDocumentManager shared] viewDocument:url inViewController:self withData:model.generateBody withCompletion:^(NSURL *filePath) {
         
     }];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

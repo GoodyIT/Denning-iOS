@@ -754,8 +754,9 @@ NSMutableDictionary* keyValue;
 - (IBAction)saveProperty:(UIBarButtonItem*)sender {
     [self.view endEditing:YES];
     
-    NSMutableDictionary* params = [self buildParams];
+    
     if ([_viewType isEqualToString:@"view"]) {
+        NSMutableDictionary* params = [self buildParams];
         [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
         [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {

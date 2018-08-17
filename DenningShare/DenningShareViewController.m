@@ -344,7 +344,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
             [strongSelf dismissAlert];
         });
         
-        if (statusCode == 410) {
+        if (statusCode == 408) {
             if ([strongSelf->defaults boolForKey:@"isStaff"] ) {
                 [strongSelf showExpiredAlertAndCancel];
             } else {
@@ -423,7 +423,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
-        if (statusCode == 410) {
+        if (statusCode == 408) {
             [strongSelf showExpiredAlertAndCancel];
         } else {
             
@@ -535,7 +535,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
          __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
-        if (statusCode == 410) {
+        if (statusCode == 408) {
             [strongSelf showExpiredAlertAndCancel];
         } else {
            
@@ -701,7 +701,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
-        if (statusCode == 410) {
+        if (statusCode == 408) {
             [strongSelf showExpiredAlertAndCancel];
         } else {
             DocumentModel* documentModel = [DocumentModel getDocumentFromResponse:(NSDictionary*)items];

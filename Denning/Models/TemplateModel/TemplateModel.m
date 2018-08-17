@@ -21,6 +21,9 @@
     model.strDescription = [response valueForKeyNotNull:@"strDescription"];
     model.generateAPI = [response valueForKeyNotNull:@"generateAPI"];
     model.intVersionID = [response valueForKeyNotNull:@"intVersionID"];
+    NSData *data = [[response objectForKeyNotNull:@"generateBody"] dataUsingEncoding:NSUTF8StringEncoding];
+    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    model.generateBody = json;
     
     return model;
 }

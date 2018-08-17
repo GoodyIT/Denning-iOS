@@ -39,6 +39,7 @@
 
 - (void) configureCellForBankBalance:(BankReconModel*) model
 {
+    _thirdValue.textAlignment = NSTextAlignmentRight;
     _firstValue.text = model.accountName;
     _secondValue.text = model.accountNo;
     if ([model.credit floatValue] != 0.0f) {

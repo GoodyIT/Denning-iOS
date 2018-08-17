@@ -157,7 +157,7 @@
     [self viewDocument:Url inViewController:viewController withCompletion:completion];
 }
 
-- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion {
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withData:(id) data withCompletion:(void(^)(NSURL *filePath)) completion {
     _viewController = viewController;
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -169,6 +169,20 @@
     [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
     [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     
+    if (data != nil) {
+        [request setHTTPMethod:@"POST"];
+//        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+        NSMutableArray* parametersArray = [NSMutableArray new];
+        [(NSDictionary*)data enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            [parametersArray addObject:[NSString stringWithFormat:@"%@=%@", key, obj]];
+        }];
+        NSString* body = [parametersArray componentsJoinedByString:@"&"];
+        
+        NSData *postData = [[body stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        [request setHTTPBody:postData];
+    }
+    
     [SVProgressHUD showWithStatus:@"Loading"];
     NSURLSessionDownloadTask *downloadTask = [_manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL* newPath = [self createNewDir:@"DenningIT"];
@@ -176,7 +190,7 @@
         return [newPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@", [response suggestedFilename]]];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
-        if (((NSHTTPURLResponse *)response).statusCode == 410) {
+        if (((NSHTTPURLResponse *)response).statusCode == 408) {
             [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:viewController];
         } else if (error == nil) {
             if  (filePath != nil) {
@@ -191,6 +205,10 @@
         }
     }];
     [downloadTask resume];
+}
+
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion {
+    [self viewDocument:Url inViewController:viewController withData:nil withCompletion:completion];
 }
 
 - (void)displayDocument:(NSURL*)document inView:(UIViewController*) viewController {

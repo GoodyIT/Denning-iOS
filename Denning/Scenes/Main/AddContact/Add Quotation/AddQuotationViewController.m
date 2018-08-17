@@ -131,6 +131,7 @@ NSMutableDictionary* keyValue;
                          self.tableView.frame = originalFrame;
                          self.tableView.contentOffset = originalContentOffset;
                          [self.tableView layoutIfNeeded];
+                         [self.tableView reloadData];
                      }
      ];
 }

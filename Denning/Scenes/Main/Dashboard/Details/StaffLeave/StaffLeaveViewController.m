@@ -190,7 +190,7 @@
 - (void) gotoLeavePendingApproval:(NSIndexPath *)indexPath {
     clsStaff = _listOfData[indexPath.row].clsStaff;
     
-    _url = [NSString stringWithFormat:@"%@v1/table/StaffLeave/%@", [DataManager sharedManager].user.serverAPI, _listOfData[indexPath.row].leaveCode];
+    _url = [NSString stringWithFormat:@"%@table/StaffLeave/%@", [DataManager sharedManager].user.serverAPI, _listOfData[indexPath.row].leaveCode];
     if (isLoading) return;
     isLoading = NO;
     [SVProgressHUD show];

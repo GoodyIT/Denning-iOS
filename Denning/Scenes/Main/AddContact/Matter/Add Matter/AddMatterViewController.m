@@ -107,6 +107,9 @@ ContactListWithDescSelectionDelegate>
     NSString* newLabel, *newValue;
     NSInteger selectedContactRow, selectedSection;
     __block BOOL isAddNew;
+    
+    CGPoint originalContentOffset;
+    CGRect originalFrame;
 }
 
 @property (weak, nonatomic) IBOutlet FZAccordionTableView *tableView;
@@ -115,6 +118,7 @@ ContactListWithDescSelectionDelegate>
 @property (strong, nonatomic)
 NSMutableDictionary* keyValue;
 
+@property (strong, nonatomic) NSIndexPath* textFieldIndexPath;
 @end
 
 @implementation AddMatterViewController
@@ -181,6 +185,69 @@ NSMutableDictionary* keyValue;
  
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = 60;
+}
+
+
+- (void)keyboardWillShow:(NSNotification *)notification{
+    NSValue* keyboardFrameValue = [notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrame = [keyboardFrameValue CGRectValue];
+    keyboardFrame = [self.view convertRect:keyboardFrame fromView:nil];
+    
+    CGFloat tableViewHeight = CGRectGetMinY(keyboardFrame) - CGRectGetMinY(self.view.bounds);
+    
+    originalContentOffset = _tableView.contentOffset;
+    originalFrame = _tableView.frame;
+    
+    // Get the duration of the animation.
+    NSValue* animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    CGRect cellRect = [self.tableView rectForRowAtIndexPath:self.textFieldIndexPath];
+    CGFloat minCellOffsetY = CGRectGetMaxY(cellRect) - tableViewHeight + 10.0; // Add a small margin below the row
+    CGFloat maxCellOffsetY = CGRectGetMinY(cellRect) - 10.0; // Add a small margin above the row
+    maxCellOffsetY = MAX(0.0, maxCellOffsetY);
+    CGFloat maxContentOffsetY = self.tableView.contentSize.height - tableViewHeight;
+    CGFloat scrollOffsetY = self.tableView.contentOffset.y;
+    if (scrollOffsetY < minCellOffsetY)
+    {
+        scrollOffsetY = minCellOffsetY;
+    }
+    else if (scrollOffsetY > maxCellOffsetY)
+    {
+        scrollOffsetY = maxCellOffsetY;
+    }
+    scrollOffsetY = MIN(scrollOffsetY, maxContentOffsetY);
+    CGPoint updatedContentOffset = CGPointMake(self.tableView.contentOffset.x, scrollOffsetY);
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.tableView.contentOffset = updatedContentOffset;
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = CGRectMake(CGRectGetMinX(self.tableView.frame), CGRectGetMinY(self.tableView.frame),
+                                                           CGRectGetWidth(self.tableView.frame), tableViewHeight);
+                     }];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification *) __unused notification{
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                     }
+                     completion:^(BOOL finished) {
+                         self.tableView.frame = originalFrame;
+                         self.tableView.contentOffset = originalContentOffset;
+                         [self.tableView layoutIfNeeded];
+                         [self.tableView reloadData];
+                     }
+     ];
 }
 
 - (void) addPartyToContents: (NSString*)name code:(NSString*) code
@@ -1037,6 +1104,12 @@ NSMutableDictionary* keyValue;
             [self _save];
         }
     }];
+}
+
+- (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
+    NSInteger section = [[self calcSectionNumber:textField.tag][0] integerValue];
+    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:section];
+    return YES;
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

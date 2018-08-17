@@ -1027,8 +1027,12 @@ didAddMessagesToMemoryStorage:(NSArray<QBChatMessage *> *)__unused messages
 
 - (NSAttributedString *)topLabelAttributedStringForItem:(QBChatMessage *)messageItem {
     
-    if (messageItem.senderID == self.senderID || self.chatDialog.type == QBChatDialogTypePrivate || [messageItem isAudioAttachment]) {
-        
+//    if (messageItem.senderID == self.senderID || self.chatDialog.type == QBChatDialogTypePrivate || [messageItem isAudioAttachment]) {
+//
+//        return nil;
+//    }
+    
+    if ([messageItem isAudioAttachment]) {
         return nil;
     }
     
@@ -1553,9 +1557,18 @@ didPerformAction:(SEL)action
         
         layoutModel.avatarSize = CGSizeZero;
         
+        BOOL isAudioCell =
+        class == QMAudioOutgoingCell.class || class == QMAudioIncomingCell.class;
+        
+        if (self.chatDialog.type != QBChatDialogTypePrivate && !isAudioCell) {
+            
+            layoutModel.topLabelHeight = 18;
+        }
+        
         if (class != [QMChatOutgoingCell class]) {
             
             layoutModel.spaceBetweenTextViewAndBottomLabel = 5;
+            layoutModel.spaceBetweenTopLabelAndTextView = 5;
         }
     }
     else if (class == [QMChatAttachmentIncomingCell class]
