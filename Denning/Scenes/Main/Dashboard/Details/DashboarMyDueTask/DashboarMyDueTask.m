@@ -127,15 +127,15 @@
     self.selectionList.selectedButtonIndex = 0;
     self.selectionList.hidden = NO;
     
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    
-    // Set custom indicator
-    self.tableView.infiniteScrollIndicatorView = indicator;
-    // Set custom indicator margin
-    self.tableView.infiniteScrollIndicatorMargin = 40;
-    
-    // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 500;
+//    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+//    
+//    // Set custom indicator
+//    self.tableView.infiniteScrollIndicatorView = indicator;
+//    // Set custom indicator margin
+//    self.tableView.infiniteScrollIndicatorMargin = 40;
+//    
+//    // Set custom trigger offset
+//    self.tableView.infiniteScrollTriggerOffset = 500;
     
     // Add infinite scroll handler
     @weakify(self)
@@ -205,6 +205,11 @@
                 self.listOfTasks = [[self.listOfTasks arrayByAddingObjectsFromArray:result] mutableCopy];
                 
             } else {
+                if (_listOfTasks.count > 0) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                    });
+                }
                 self.listOfTasks = [result mutableCopy];
             }
             

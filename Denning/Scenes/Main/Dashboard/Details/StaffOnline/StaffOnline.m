@@ -73,12 +73,12 @@
 //    self.tableView.infiniteScrollTriggerOffset = 400;
     
     // Add infinite scroll handler
-//    @weakify(self)
-//    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
-//        [self.tableView finishInfiniteScroll];
-//        @strongify(self)
-//        [self appendList];
-//    }];
+    @weakify(self)
+    [self.tableView addInfiniteScrollWithHandler:^(UITableView *tableView) {
+        [self.tableView finishInfiniteScroll];
+        @strongify(self)
+        [self appendList];
+    }];
 }
 
 - (void)registerNibs {
@@ -166,10 +166,17 @@
                 _onlineModel = [[_onlineModel arrayByAddingObjectsFromArray:result] mutableCopy];
                 
             } else {
+                if (_onlineModel.count > 0) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                    });
+                }
                 _onlineModel = result;
             }
             
-            [self.tableView reloadData];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.tableView reloadData];
+             });
             [self.tableView finishInfiniteScroll];
         }
         else {

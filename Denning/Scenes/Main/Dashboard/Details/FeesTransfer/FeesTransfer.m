@@ -160,6 +160,11 @@
                 self.listOfFees = [[self.listOfFees arrayByAddingObjectsFromArray:result] mutableCopy];
                 
             } else {
+                if (_listOfFees.count > 0) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                    });
+                }
                 self.listOfFees = [result mutableCopy];
             }
             

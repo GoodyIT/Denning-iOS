@@ -161,33 +161,37 @@
     _viewController = viewController;
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    _manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
-    
+    _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
+    _manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+  
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:Url];
     
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
     [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     
+    NSString* fileName = @"";
     if (data != nil) {
         [request setHTTPMethod:@"POST"];
-//        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-        
-        NSMutableArray* parametersArray = [NSMutableArray new];
-        [(NSDictionary*)data enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            [parametersArray addObject:[NSString stringWithFormat:@"%@=%@", key, obj]];
-        }];
-        NSString* body = [parametersArray componentsJoinedByString:@"&"];
-        
-        NSData *postData = [[body stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSError* error;
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
         [request setHTTPBody:postData];
+       fileName  = [[[data valueForKey:@"strDocumentName"] stringByAppendingString:@""] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     }
+    
     
     [SVProgressHUD showWithStatus:@"Loading"];
     NSURLSessionDownloadTask *downloadTask = [_manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
         NSURL* newPath = [self createNewDir:@"DenningIT"];
         
-        return [newPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@", [response suggestedFilename]]];
+        NSURL* fileURL;
+        if (fileName.length != 0) {
+            fileURL = [newPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@", fileName]];
+        } else {
+            fileURL = [newPath URLByAppendingPathComponent:[NSString stringWithFormat:@"%@", [response suggestedFilename]]];
+        }
+        
+        return fileURL;
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         [SVProgressHUD dismiss];
         if (((NSHTTPURLResponse *)response).statusCode == 408) {

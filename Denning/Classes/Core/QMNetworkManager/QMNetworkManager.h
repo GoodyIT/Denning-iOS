@@ -63,6 +63,8 @@ typedef void(^CompletionHandler)(BOOL success, id response, NSError *error);
 
 + (QMNetworkManager *)sharedManager;
 
+- (void) updateManagerForDocument;
+
 - (AFHTTPSessionManager*) setPrivateHTTPHeader;
 - (AFHTTPSessionManager*) setPublicHTTPHeader;
 

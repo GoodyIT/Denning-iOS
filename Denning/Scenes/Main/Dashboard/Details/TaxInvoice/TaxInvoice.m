@@ -104,15 +104,15 @@
     self.selectionList.selectedButtonIndex = 0;
     self.selectionList.hidden = NO;
     
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    
-    // Set custom indicator
-    self.tableView.infiniteScrollIndicatorView = indicator;
-    // Set custom indicator margin
-    self.tableView.infiniteScrollIndicatorMargin = 40;
-    
-    // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 100;
+//    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+//    
+//    // Set custom indicator
+//    self.tableView.infiniteScrollIndicatorView = indicator;
+//    // Set custom indicator margin
+//    self.tableView.infiniteScrollIndicatorMargin = 40;
+//    
+//    // Set custom trigger offset
+//    self.tableView.infiniteScrollTriggerOffset = 100;
     
     // Add infinite scroll handler
     @weakify(self)
@@ -185,6 +185,11 @@
                 self.listOfTaxInvoices = [[self.listOfTaxInvoices arrayByAddingObjectsFromArray:array] mutableCopy];
                 
             } else {
+                if (_listOfTaxInvoices.count > 0) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                    });
+                }
                 self.listOfTaxInvoices = [array mutableCopy];
             }
             

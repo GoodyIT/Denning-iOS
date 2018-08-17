@@ -142,15 +142,15 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [UIView new];
     
-    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    
-    // Set custom indicator
-    self.tableView.infiniteScrollIndicatorView = indicator;
-    // Set custom indicator margin
-    self.tableView.infiniteScrollIndicatorMargin = 40;
-    
-    // Set custom trigger offset
-    self.tableView.infiniteScrollTriggerOffset = 500;
+//    CustomInfiniteIndicator *indicator = [[CustomInfiniteIndicator alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+//
+//    // Set custom indicator
+//    self.tableView.infiniteScrollIndicatorView = indicator;
+//    // Set custom indicator margin
+//    self.tableView.infiniteScrollIndicatorMargin = 40;
+//
+//    // Set custom trigger offset
+//    self.tableView.infiniteScrollTriggerOffset = 500;
     
     // Add infinite scroll handler
     @weakify(self)
@@ -211,12 +211,18 @@
             }
             if (isAppending) {
                 _listOfCompletion = [[_listOfCompletion arrayByAddingObjectsFromArray:result] mutableCopy];
-                
             } else {
+                if (_listOfCompletion.count > 0) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                     });
+                }
                 _listOfCompletion = result;
             }
             
-            [self.tableView reloadData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
         }
         else {
             [navigationController showNotificationWithType:QMNotificationPanelTypeWarning message:error.localizedDescription duration:1.0];
