@@ -59,10 +59,10 @@
 //    self.manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate withPinnedCertificates:[AFSecurityPolicy certificatesInBundle:[NSBundle mainBundle]]];
 //    self.manager.securityPolicy.allowInvalidCertificates = NO;
     self.manager.responseSerializer =  [AFJSONResponseSerializer serializer];
-    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"application/odt", nil];
+    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", nil];
     
     self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    self.manager.requestSerializer.timeoutInterval= 20;
+    self.manager.requestSerializer.timeoutInterval= 50;
     [self.manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [self.manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [self.manager.requestSerializer setValue:@"{334E910C-CC68-4784-9047-0F23D37C9CF9}" forHTTPHeaderField:@"webuser-sessionid"];

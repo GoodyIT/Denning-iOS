@@ -1108,7 +1108,8 @@ NSMutableDictionary* keyValue;
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
     NSInteger section = [[self calcSectionNumber:textField.tag][0] integerValue];
-    _textFieldIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:section];
+    NSInteger row =  [[self calcSectionNumber:textField.tag][1] integerValue];
+    _textFieldIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
     return YES;
 }
 
@@ -1323,7 +1324,7 @@ NSMutableDictionary* keyValue;
                 cell.floatingTextField.userInteractionEnabled =  NO;
             }
         }
-        cell.tag = indexPath.section;
+        cell.tag = [self calcTag:indexPath];
         cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
     } else if (indexPath.section == IMPORTANT_DATE_SECTION) { // Date Group
         cell.floatingTextField.userInteractionEnabled = NO;

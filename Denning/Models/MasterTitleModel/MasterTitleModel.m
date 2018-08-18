@@ -14,9 +14,13 @@
 {
     MasterTitleModel* model = [MasterTitleModel new];
     
-    model.address = [response valueForKeyNotNull:@"address"];
-    model.masterCode = [response valueForKeyNotNull:@"code"];
-    model.fullTitle = [response valueForKeyNotNull:@"fullTitle"];
+    if (response == nil) {
+        model.address = model.masterCode = model.fullTitle = @"";
+    } else {
+        model.address = [response valueForKeyNotNull:@"address"];
+        model.masterCode = [response valueForKeyNotNull:@"code"];
+        model.fullTitle = [response valueForKeyNotNull:@"fullTitle"];
+    }
     
     return model;
 }
