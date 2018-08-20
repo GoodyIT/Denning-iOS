@@ -15,24 +15,35 @@
 + (StaffModel*) getStaffFromResponse: (NSDictionary*) response
 {
     StaffModel *staff = [StaffModel new];
-    staff.IDNo = [response valueForKeyNotNull:@"IDNo"];
-    staff.address = [AddressModel getAddressFromResponse:[response objectForKeyNotNull:@"address"]];
-    staff.citizenship = [response valueForKeyNotNull:@"citizenship"];
-    staff.staffCode = [response valueForKeyNotNull:@"code"];
-    staff.dateBirth = [response valueForKeyNotNull:@"dateBirth"];
-    staff.emailAddress = [response valueForKeyNotNull:@"emailAddress"];
-    staff.idTypeCode = [[response objectForKeyNotNull:@"idType"] valueForKeyNotNull:@"code"];
-    staff.idTypeDescription = [[response objectForKeyNotNull:@"idType"] valueForKeyNotNull:@"description"];
-    staff.name = [response valueForKeyNotNull:@"name"];
-    staff.phoneFax = [response valueForKeyNotNull:@"phoneFax"];
-    staff.phoneHome = [response valueForKeyNotNull:@"phoneHome"];
-    staff.phoneOffice = [response valueForKeyNotNull:@"phoneOffice"];
-    staff.title = [response valueForKeyNotNull:@"title"];
-    staff.webSite = [response valueForKeyNotNull:@"webSite"];
-    staff.chatStatus = [response valueForKeyNotNull:@"chatStatus"];
-    staff.nickName = [response valueForKeyNotNull:@"nickName"];
-    staff.userID = [response valueForKeyNotNull:@"userID"];
-    staff.KPLama = [response valueForKeyNotNull:@"KPLama"];
+    
+    if (response == nil) {
+        staff.IDNo = [response valueForKeyNotNull:@"IDNo"];
+        
+        staff.citizenship = staff.staffCode = staff.dateBirth = staff.emailAddress = staff.name = staff.phoneFax = staff.phoneHome = staff.phoneOffice = staff.title = staff.webSite = staff.chatStatus = staff.nickName = staff.userID = staff.KPLama = @"";
+        
+        staff.address = [AddressModel getAddressFromResponse:[response objectForKeyNotNull:@"address"]];
+        staff.idTypeCode = [[response objectForKeyNotNull:@"idType"] valueForKeyNotNull:@"code"];
+        staff.idTypeDescription = [[response objectForKeyNotNull:@"idType"] valueForKeyNotNull:@"description"];
+    } else {
+        staff.IDNo = [response valueForKeyNotNull:@"IDNo"];
+        staff.address = [AddressModel getAddressFromResponse:[response objectForKeyNotNull:@"address"]];
+        staff.citizenship = [response valueForKeyNotNull:@"citizenship"];
+        staff.staffCode = [response valueForKeyNotNull:@"code"];
+        staff.dateBirth = [response valueForKeyNotNull:@"dateBirth"];
+        staff.emailAddress = [response valueForKeyNotNull:@"emailAddress"];
+        staff.idTypeCode = [[response objectForKeyNotNull:@"idType"] valueForKeyNotNull:@"code"];
+        staff.idTypeDescription = [[response objectForKeyNotNull:@"idType"] valueForKeyNotNull:@"description"];
+        staff.name = [response valueForKeyNotNull:@"name"];
+        staff.phoneFax = [response valueForKeyNotNull:@"phoneFax"];
+        staff.phoneHome = [response valueForKeyNotNull:@"phoneHome"];
+        staff.phoneOffice = [response valueForKeyNotNull:@"phoneOffice"];
+        staff.title = [response valueForKeyNotNull:@"title"];
+        staff.webSite = [response valueForKeyNotNull:@"webSite"];
+        staff.chatStatus = [response valueForKeyNotNull:@"chatStatus"];
+        staff.nickName = [response valueForKeyNotNull:@"nickName"];
+        staff.userID = [response valueForKeyNotNull:@"userID"];
+        staff.KPLama = [response valueForKeyNotNull:@"KPLama"];
+    }
     
     return staff;
 }

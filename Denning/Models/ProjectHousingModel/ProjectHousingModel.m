@@ -14,13 +14,18 @@
 {
     ProjectHousingModel* model = [ProjectHousingModel new];
     
-    model.housingCode = [response valueForKeyNotNull:@"code"];
-    model.developer = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"developer"]];
-    model.licenseNo = [response valueForKeyNotNull:@"licenseNo"];
-    model.masterTitle = [response valueForKeyNotNull:@"masterTitle"];
-    model.name = [response valueForKeyNotNull:@"name"];
-    model.phase = [response valueForKeyNotNull:@"phase"];
-    model.proprietor = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"proprietor"]];
+    if (response == nil) {
+        model.housingCode = model.licenseNo = model.masterTitle = model.name = model.phase = @"";
+        model.proprietor = model.developer = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"developer"]];
+    } else {
+        model.housingCode = [response valueForKeyNotNull:@"code"];
+        model.developer = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"developer"]];
+        model.licenseNo = [response valueForKeyNotNull:@"licenseNo"];
+        model.masterTitle = [response valueForKeyNotNull:@"masterTitle"];
+        model.name = [response valueForKeyNotNull:@"name"];
+        model.phase = [response valueForKeyNotNull:@"phase"];
+        model.proprietor = [StaffModel getStaffFromResponse:[response objectForKeyNotNull:@"proprietor"]];
+    }
     
     return model;
 }

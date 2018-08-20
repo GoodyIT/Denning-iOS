@@ -95,6 +95,7 @@ NSMutableDictionary* keyValue;
         selectedPropertyCode = _propertyModel.propertyCode;
         developerCode = _propertyModel.developer.staffCode;
         proprietorCode = _propertyModel.proprietor.staffCode;
+        selectedProjectCode = _propertyModel.project.housingCode;
         NSArray* temp = @[
                           @[@[@"Property Type", _propertyModel.propertyType.descriptionValue], @[@"Individual / Strata Title", _propertyModel.titleIssued.descriptionValue], @[@"ID (System assinged)", _propertyModel.propertyID]],
                           @[@[@"Title Type", _propertyModel.title.type], @[@"Title No.", _propertyModel.title.value], @[@"Lot Type", _propertyModel.lotPT.type], @[@"Lot / PT No.", _propertyModel.lotPT.value], @[@"Mukim Type", _propertyModel.mukim.type], @[@"Mukim", _propertyModel.mukim.value], @[@"Daerah", _propertyModel.daerah], @[@"Negeri", _propertyModel.negeri],  @[@"Area Value", _propertyModel.area.value], @[@"Area Type", _propertyModel.area.type], @[@"Tenure", _propertyModel.tenure],@[@"Lease Expiry Date", [DIHelpers convertDateToCustomFormat:_propertyModel.leaseExpiryDate]], @[@"Address / Place", _propertyModel.address],  @[@"Restriction in Interest", _propertyModel.restrictionInInterest.descriptionValue], @[@"Restriction Against", _propertyModel.restrictionAgainst], @[@"Approving Authority", _propertyModel.approvingAuthority], @[@"Category of Land Use", _propertyModel.landUse]
@@ -756,11 +757,11 @@ NSMutableDictionary* keyValue;
     
     
     if ([_viewType isEqualToString:@"view"]) {
-        NSMutableDictionary* params = [self buildParams];
-        [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
         [QMAlert showConfirmDialog:@"Do you want to update data?" withTitle:@"Alert" inViewController:self forBarButton:sender completion:^(UIAlertAction * _Nonnull action) {
             if  ([action.title isEqualToString:@"OK"]) {
                 if ([self checkValidation]) {
+                    NSMutableDictionary* params = [self buildParams];
+                    [params addEntriesFromDictionary:@{@"code":_propertyModel.propertyCode}];
                     [self _update:params];
                 }
             }

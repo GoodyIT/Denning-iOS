@@ -14,9 +14,13 @@
 {
     MatterBranchModel *model = [MatterBranchModel new];
     
-    model.codeValue = [response valueForKeyNotNull:@"code"];
-    model.city = [response valueForKeyNotNull:@"city"];
-    model.defaultfirm = [response valueForKeyNotNull:@"defaultfirm"];
+    if (response == nil) {
+        model.codeValue =  model.city =  model.defaultfirm = @"";
+    } else {
+        model.codeValue = [response valueForKeyNotNull:@"code"];
+        model.city = [response valueForKeyNotNull:@"city"];
+        model.defaultfirm = [response valueForKeyNotNull:@"defaultfirm"];
+    }
     
     return model;
 }
