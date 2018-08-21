@@ -75,21 +75,21 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define GOOGLE_MAP_REVERSE_URL  @"https://maps.googleapis.com/maps/api/geocode/json?latlng=%lf,%lf&key=%@"
 
-#define kDIAgreementUrl @"https://www.denningchat.com/denningapi/v1/table/eulaAPP"
+#define kDIAgreementUrl @"https://www.denningonline.com.my/denningapi/v1/table/eulaAPP"
 
-#define FORGOT_PASSWORD_SEND_SMS_URL    @"https://www.denningchat.com/denningapi/v1/SMS/lostPassword"
+#define FORGOT_PASSWORD_SEND_SMS_URL    @"https://www.denningonline.com.my/denningapi/v1/SMS/lostPassword"
 
-#define FORGOT_PASSWORD_REQUEST_URL     @"https://www.denningchat.com/denningapi/v1/password/forget"
+#define FORGOT_PASSWORD_REQUEST_URL     @"https://www.denningonline.com.my/denningapi/v1/password/forget"
 
-#define CHANGE_PASSWORD_URL     @"https://www.denningchat.com/denningapi/v1/password/new"
+#define CHANGE_PASSWORD_URL     @"https://www.denningonline.com.my/denningapi/v1/password/new"
 
-#define CHANGE_NICKNAME_URL @"https://www.denningchat.com/denningapi/v1/nickName"
+#define CHANGE_NICKNAME_URL @"https://www.denningonline.com.my/denningapi/v1/nickName"
 
-#define LOGOUT_URL  @"https://www.denningchat.com/denningapi/v1/logout"
+#define LOGOUT_URL  @"https://www.denningonline.com.my/denningapi/v1/logout"
 
-#define LOGIN_SEND_SMS_URL  @"https://www.denningchat.com/denningapi/v1/SMS/request"
+#define LOGIN_SEND_SMS_URL  @"https://www.denningonline.com.my/denningapi/v1/SMS/request"
 
-#define NEW_DEVICE_SEND_SMS_URL     @"https://www.denningchat.com/denningapi/v1/SMS/newDevice"
+#define NEW_DEVICE_SEND_SMS_URL     @"https://www.denningonline.com.my/denningapi/v1/SMS/newDevice"
 
 #define DENNING_SIGNIN_URL  @"v1/app/staffLogin"
 
@@ -97,13 +97,13 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define DENNING_CLIENT_FIRST_SIGNIN @"v1/app/clientLogin/first"
 
-#define SIGNUP_FIRM_LIST_URL    @"https://www.denningchat.com/denningapi/v1/Solicitor"
+#define SIGNUP_FIRM_LIST_URL    @"https://www.denningonline.com.my/denningapi/v1/Solicitor"
 
-#define SIGNUP_URL  @"https://www.denningchat.com/denningapi/v1/signUp"
+#define SIGNUP_URL  @"https://www.denningonline.com.my/denningapi/v1/signUp"
 
-#define SIGNIN_URL  @"https://www.denningchat.com/denningapi/v1/signIn"
+#define SIGNIN_URL  @"https://www.denningonline.com.my/denningapi/v1/signIn"
 
-#define Auth_ACTIVATION_URL @"https://www.denningchat.com/denningapi/v1/signUp/activate"
+#define Auth_ACTIVATION_URL @"https://www.denningonline.com.my/denningapi/v1/signUp/activate"
 
 #define GENERAL_KEYWORD_SEARCH_URL  @"v1/generalSearch/keyword?search="
 
@@ -113,7 +113,7 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define SEARCH_UPLOAD_SUGGESTED_FILENAME    @"v1/table/cboDocumentName?search="
 
-#define THIRD_PARTY_UPLOAD_CATEGORY     @"https://www.denningchat.com/denningapi/v1/catPersonal?email="
+#define THIRD_PARTY_UPLOAD_CATEGORY     @"https://www.denningonline.com.my/denningapi/v1/catPersonal?email="
 
 #define GENERAL_CONTACT_URL @"v1/generalSearch/cust"
 
@@ -125,25 +125,25 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define SEARCH_TYPE_CATEGORY_GET    @"v1/Table/cbotemplatecategory?filter="
 
-#define PUBLIC_BASE_URL     @"https://www.denningchat.com/denningapi/"
+#define PUBLIC_BASE_URL     @"https://www.denningonline.com.my/denningapi/"
 
-#define PUBLIC_KEYWORD_SEARCH_URL   @"https://www.denningchat.com/denningapi/v1/publicSearch/keyword?search="
+#define PUBLIC_KEYWORD_SEARCH_URL   @"https://www.denningonline.com.my/denningapi/v1/publicSearch/keyword?search="
 
-#define PUBLIC_SEARCH_URL    @"https://www.denningchat.com/denningapi/v1/publicSearch?search="
+#define PUBLIC_SEARCH_URL    @"https://www.denningonline.com.my/denningapi/v1/publicSearch?search="
 
-#define PUBLIC_LEGAL_FIRM_URL   @"https://www.denningchat.com/denningapi/v1/Solicitor/"
+#define PUBLIC_LEGAL_FIRM_URL   @"https://www.denningonline.com.my/denningapi/v1/Solicitor/"
 
 #define PRIVATE_LEGAL_FIRM_URL  @"v1/app/Solicitor/"
 
-#define UPDATES_LATEST_URL   @"https://www.denningchat.com/denningapi/v1/DenningUpdate"
+#define UPDATES_LATEST_URL   @"https://www.denningonline.com.my/denningapi/v1/DenningUpdate"
 
-#define NEWS_LATEST_URL        @"https://www.denningchat.com/denningapi/v1/DenningNews"
+#define NEWS_LATEST_URL        @"https://www.denningonline.com.my/denningapi/v1/DenningNews"
 
 #define EVENT_LATEST_URL        @"v1/DenningCalendar"
 
 #define CALENDAR_MONTHLY_SUMMARY_URL    @"v1/DenningCalendar/MonthlySummary"
 
-#define HOME_ADS_GET_URL    @"https://www.denningchat.com/denningapi/v1/advertisement"
+#define HOME_ADS_GET_URL    @"https://www.denningonline.com.my/denningapi/v1/advertisement"
 
 #define ATTENDANCE_GET_URL  @"v1/app/StaffAttendance/101"
 
@@ -151,19 +151,19 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define ATTENDANCE_BREAK    @"v1/app/StaffAttendance/Break"
 
-#define GET_CHAT_CONTACT_URL    @"https://www.denningchat.com/denningapi/v2/chat/contact?userid="
+#define GET_CHAT_CONTACT_URL    @"https://www.denningonline.com.my/denningapi/v2/chat/contact?userid="
 
-#define GET_CHAT_FAV_CONTACT_URL    @"https://www.denningchat.com/denningapi/v2/chat/favcontact?userid="
+#define GET_CHAT_FAV_CONTACT_URL    @"https://www.denningonline.com.my/denningapi/v2/chat/favcontact?userid="
 
-#define CHANGE_AVATAR_URL   @"https://www.denningchat.com/denningapi/v1/avatar"
+#define CHANGE_AVATAR_URL   @"https://www.denningonline.com.my/denningapi/v1/avatar"
 
-#define PUBLIC_ADD_FAVORITE_CONTACT_URL    @"https://www.denningchat.com/denningapi/v1/chat/contact/fav"
+#define PUBLIC_ADD_FAVORITE_CONTACT_URL    @"https://www.denningonline.com.my/denningapi/v1/chat/contact/fav"
 
-#define INVITE_DENNING_URL  @"https://www.denningchat.com/denningapi/v1/chat/invite"
+#define INVITE_DENNING_URL  @"https://www.denningonline.com.my/denningapi/v1/chat/invite"
 
 #define PRIVATE_ADD_FAVORITE_CONTACT_URL    @"v1/chat/contact/fav"
 
-#define REMOVE_FAVORITE_CONTACT_URL    @"https://www.denningchat.com/denningapi/v1/chat/contact/fav"
+#define REMOVE_FAVORITE_CONTACT_URL    @"https://www.denningonline.com.my/denningapi/v1/chat/contact/fav"
 
 #define CONTACT_ID_DUPLICATE    @"v1/generalSearch?category=1&isAutoComplete=1&search="
 
