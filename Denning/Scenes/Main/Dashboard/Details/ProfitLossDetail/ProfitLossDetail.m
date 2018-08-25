@@ -119,13 +119,16 @@
     
     if (indexPath.row == 0) {
         cell.leftLabel.text = @"Revenue";
-        cell.rightLabel.text = [DIHelpers addThousandsSeparator:_model.revenue];
+        NSString* revenue = [DIHelpers addThousandsSeparator:_model.revenue];
+        cell.rightLabel.text = [revenue isEqualToString:@""] ? @"0.00" : revenue;
     } else if (indexPath.row == 1) {
         cell.leftLabel.text = @"Expenses";
-        cell.rightLabel.text = [DIHelpers addThousandsSeparator:_model.expenses];
+        NSString* expenses = [DIHelpers addThousandsSeparator:_model.expenses];
+        cell.rightLabel.text = [expenses isEqualToString:@""] ? @"0.00" : expenses;
     } else {
         cell.leftLabel.text = @"Profit/Loss";
-        cell.rightLabel.text = [DIHelpers addThousandsSeparator:_model.profitLoss];
+        NSString* profitLoss = [DIHelpers addThousandsSeparator:_model.profitLoss];
+        cell.rightLabel.text = [profitLoss isEqualToString:@""] ? @"0.00" : profitLoss;
     }
     
     return cell;

@@ -528,8 +528,8 @@
 
 + (NSString*) addThousandsSeparator: (id) value
 {
-    if (((NSString*)value).length == 0) {
-        return value;
+    if (value ==  nil || ((NSString*)value).length == 0) {
+        return @"";
     }
 //    NSScanner *scanner = [NSScanner scannerWithString:[value stringByReplacingOccurrencesOfString:@"," withString:@""]];
 //    BOOL isNumeric = [scanner scanInteger:NULL] && [scanner isAtEnd];

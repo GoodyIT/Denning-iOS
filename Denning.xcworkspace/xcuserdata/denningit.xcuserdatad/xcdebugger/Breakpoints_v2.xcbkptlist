@@ -168,7 +168,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/DIHelpers/DIHelpers.m"
-            timestampString = "556191003.9911031"
+            timestampString = "556883731.7989841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "526"
@@ -184,7 +184,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/DIHelpers/DIHelpers.m"
-            timestampString = "556191003.991405"
+            timestampString = "556883731.79905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "564"
@@ -200,7 +200,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/DIHelpers/DIHelpers.m"
-            timestampString = "556191003.991461"
+            timestampString = "556883731.7990969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "577"
@@ -216,7 +216,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Dashboard/Details/ProfitLossDetail/ProfitLossDetail.m"
-            timestampString = "554967904.0732549"
+            timestampString = "556883731.799143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
@@ -248,7 +248,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Classes/Tools/DIHelpers/DIHelpers.m"
-            timestampString = "556191003.991549"
+            timestampString = "556883731.799535"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "542"
@@ -260,11 +260,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Denning/Scenes/Main/Dashboard/Details/ProfitLossDetail/ProfitLossDetail.m"
-            timestampString = "555334357.377972"
+            timestampString = "556883731.799583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "122"
@@ -486,7 +486,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/Denning-iOS/Denning/Scenes/Main/HomeViewController/EventViewController/EventViewController.m"
-                  timestampString = "556847186.759272"
+                  timestampString = "556883732.130453"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "199"
@@ -501,7 +501,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/Denning-iOS/Denning/Scenes/Main/HomeViewController/EventViewController/EventViewController.m"
-                  timestampString = "556847186.76213"
+                  timestampString = "556883732.133857"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "201"
@@ -516,7 +516,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/Denning-iOS/Denning/Scenes/Main/HomeViewController/EventViewController/EventViewController.m"
-                  timestampString = "556847186.765257"
+                  timestampString = "556883732.136115"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "199"
@@ -1441,7 +1441,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/Denning-iOS/Denning/Scenes/Main/AddContact/Matter/Add%20Matter/AddMatterViewController.m"
-                  timestampString = "556847186.795066"
+                  timestampString = "556883732.179602"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1053"
@@ -1456,7 +1456,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/Denning-iOS/Denning/Scenes/Main/AddContact/Matter/Add%20Matter/AddMatterViewController.m"
-                  timestampString = "556847186.797642"
+                  timestampString = "556883732.181675"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1054"
@@ -1471,7 +1471,7 @@
                   moduleName = "Denning"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/denningit/MyWork/Denning-iOS/Denning/Scenes/Main/AddContact/Matter/Add%20Matter/AddMatterViewController.m"
-                  timestampString = "556847186.799674"
+                  timestampString = "556883732.183717"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1053"
@@ -1638,6 +1638,38 @@
                   offsetFromSymbolStart = "16">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Scenes/Main/Dashboard/Details/ProfitLossDetail/ProfitLossDetail.m"
+            timestampString = "556883731.800364"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Denning/Classes/Tools/DIHelpers/DIHelpers.m"
+            timestampString = "556883731.800576"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "531"
+            endingLineNumber = "531"
+            landmarkName = "+addThousandsSeparator:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
