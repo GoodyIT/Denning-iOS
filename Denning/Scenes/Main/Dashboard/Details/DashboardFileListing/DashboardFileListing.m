@@ -200,9 +200,7 @@
                 
             } else {
                 if (_listOfFiles.count > 0) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                    });
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 }
                 self.listOfFiles = [result mutableCopy];
             }

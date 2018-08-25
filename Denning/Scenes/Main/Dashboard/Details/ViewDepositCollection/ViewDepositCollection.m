@@ -173,9 +173,7 @@
                 self.listOfSelectedLedgers = [[_listOfSelectedLedgers arrayByAddingObjectsFromArray:ledgerDetailModelArray] mutableCopy];
             } else {
                 if (_listOfSelectedLedgers.count > 0) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                    });
+                     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 }
                 self.listOfSelectedLedgers = ledgerDetailModelArray;
             }
@@ -212,6 +210,7 @@
 - (void)selectionList:(HTHorizontalSelectionList *)selectionList didSelectButtonWithIndex:(NSInteger)index {
     // update the view for the corresponding index
     curBalanceFilter = _arrayOfFilters[index];
+    page = 1;
     [self loadLedgersWithCompletion:nil];
 }
 
