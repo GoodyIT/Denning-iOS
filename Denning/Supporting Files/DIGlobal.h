@@ -101,7 +101,7 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define SIGNUP_URL  @"https://www.denningonline.com.my/denningapi/v1/signUp"
 
-#define SIGNIN_URL  @"https://www.denningonline.com.my/denningapi/v1/signIn"
+#define SIGNIN_URL  @"https://www.denningonline.com.my/denningapi/v1/app/signIn"
 
 #define Auth_ACTIVATION_URL @"https://www.denningonline.com.my/denningapi/v1/signUp/activate"
 

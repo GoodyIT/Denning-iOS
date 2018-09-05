@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YH4-rQ-UBO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YH4-rQ-UBO">
     <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -445,7 +445,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zax-N9-tTb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2945" y="-6333"/>
+            <point key="canvasLocation" x="-2897" y="-6218"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="UCo-bq-ZiE">
@@ -1115,9 +1115,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="JGs-qJ-sw7" kind="show" identifier="DocumentSegue" id="CeA-Zd-NAs">
-                            <nil key="action"/>
-                        </segue>
+                        <segue destination="JGs-qJ-sw7" kind="show" identifier="DocumentSegue" id="CeA-Zd-NAs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P5T-9d-wMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1170,8 +1168,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="Nuf-Db-vAG"/>
         <segue reference="Kve-m2-lWv"/>
-        <segue reference="T5P-mp-1U6"/>
+        <segue reference="dc0-qL-bzh"/>
         <segue reference="QgY-oX-Ext"/>
-        <segue reference="79l-80-WBG"/>
+        <segue reference="uPh-MT-glH"/>
     </inferredMetricsTieBreakers>
 </document>
