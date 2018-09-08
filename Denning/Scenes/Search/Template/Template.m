@@ -265,7 +265,9 @@ ContactListWithDescSelectionDelegate>
     NSString *urlString = [NSString stringWithFormat:@"%@%@", [DataManager sharedManager].user.serverAPI, model.generateAPI];
     NSURL *url = [NSURL URLWithString:[urlString  stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     
-    [[DIDocumentManager shared] viewDocument:url inViewController:self withData:model.generateBody withCompletion:^(NSURL *filePath) {
+    NSString* fileName  = [[[model.generateBody valueForKey:@"strDocumentName"] stringByAppendingString:[model.generateBody valueForKey:@"eOutput"]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    
+    [[DIDocumentManager shared] viewDocument:url inViewController:self withData:model.generateBody forPost:YES withFileName:fileName withCompletion:^(NSURL *filePath) {
         
     }];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

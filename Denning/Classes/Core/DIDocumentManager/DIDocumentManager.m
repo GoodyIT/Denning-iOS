@@ -157,28 +157,26 @@
     [self viewDocument:Url inViewController:viewController withCompletion:completion];
 }
 
-- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withData:(id) data withCompletion:(void(^)(NSURL *filePath)) completion {
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withData:(id) data forPost:(BOOL) isPost withFileName:(NSString*) fileName withCompletion:(void(^)(NSURL *filePath)) completion
+{
     _viewController = viewController;
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     _manager = [[AFHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
     _manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-  
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:Url];
     
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[DataManager sharedManager].user.email  forHTTPHeaderField:@"webuser-id"];
     [request setValue:[DataManager sharedManager].user.sessionID  forHTTPHeaderField:@"webuser-sessionid"];
     
-    NSString* fileName = @"";
-    if (data != nil) {
+    if (isPost) {
         [request setHTTPMethod:@"POST"];
         NSError* error;
         NSData *postData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
         [request setHTTPBody:postData];
-       fileName  = [[[data valueForKey:@"strDocumentName"] stringByAppendingString:[data valueForKey:@"eOutput"]] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     }
-    
     
     [SVProgressHUD showWithStatus:@"Loading"];
     NSURLSessionDownloadTask *downloadTask = [_manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
@@ -209,6 +207,10 @@
         }
     }];
     [downloadTask resume];
+}
+
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withData:(id) data withCompletion:(void(^)(NSURL *filePath)) completion {
+    [self viewDocument:Url inViewController:viewController withData:data forPost:NO withFileName:@"" withCompletion:completion];
 }
 
 - (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion {

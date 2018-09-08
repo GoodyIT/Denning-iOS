@@ -427,10 +427,11 @@ NSMutableDictionary* keyValue;
     [self.tableView reloadData];
 }
 
-- (void) showCalendar {
+- (void) showCalendar:(NSString*) initialDate {
     [self.view endEditing:YES];
     
     BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
+    calendarViewController.initialDate = initialDate;
     calendarViewController.updateHandler =  ^(NSString* date) {
         
         [self replaceContentForSection:selectedSection InRow:selectedContactRow withValue:date];
@@ -1814,7 +1815,7 @@ NSMutableDictionary* keyValue;
     } else if (indexPath.section == IMPORTANT_DATE_SECTION) { // Date Group
         isAddNew = NO;
         selectedContactRow = indexPath.row;
-        [self showCalendar];
+        [self showCalendar:self.contents[indexPath.section][selectedContactRow][1]];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

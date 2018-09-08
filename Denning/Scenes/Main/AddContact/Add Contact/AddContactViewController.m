@@ -1328,10 +1328,11 @@ enum {
     }
 }
 
-- (void) showCalendar {
+- (void) showCalendar:(NSString*) initialDate {
     [self.view endEditing:YES];
     
     BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
+    calendarViewController.initialDate = initialDate;
     calendarViewController.updateHandler =  ^(NSString* date) {
         self.dateOfBirth.text = date;
     };
@@ -1428,7 +1429,7 @@ enum {
             [self showDetailAutocomplete:CONTACT_CITIZENSHIP_URL];
 //            [self showCountryPicker];
         } else if (indexPath.row == DATE_OF_BIRTH) {
-            [self showCalendar];
+            [self showCalendar:self.dateOfBirth.text];
         } else if (indexPath.row == OCCUPATION) { // Occupation
             titleOfList = @"Select Occupation";
             nameOfField = @"Occupation";

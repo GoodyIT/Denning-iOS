@@ -170,10 +170,10 @@ NSMutableDictionary* keyValue;
 }
 
 - (BOOL) isValidToProceed {
-    if (((NSString*)_contents[0][2][1]).length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
-        return NO;
-    }
+//    if (((NSString*)_contents[0][2][1]).length == 0) {
+//        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
+//        return NO;
+//    }
     
     if (((NSString*)_contents[0][4][1]).length == 0) {
         [QMAlert showAlertWithMessage:@"Please select the bill to." actionSuccess:NO inViewController:self];
@@ -216,10 +216,10 @@ NSMutableDictionary* keyValue;
     if (isSaved) {
         return;
     }
-    if (!_contents[0][1][1]) {
-        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
-        return;
-    }
+//    if (!_contents[0][1][1]) {
+//        [QMAlert showAlertWithMessage:@"Please select the file no." actionSuccess:NO inViewController:self];
+//        return;
+//    }
     
     if (selectedPresetCode.length == 0) {
         [QMAlert showAlertWithMessage:@"Please select the preset." actionSuccess:NO inViewController:self];

@@ -82,10 +82,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) showCalendar {
+- (void) showCalendar:(NSString*) initialDate {
     [self.view endEditing:YES];
     
     DateTimeView *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
+    
     calendarViewController.updateHandler =  ^(NSString* date) {
         [_date setTitle:date forState:UIControlStateNormal];
         curDate = [DIHelpers convertDateToMySQLFormat:date];
@@ -105,7 +106,7 @@
     [popupController presentInViewController:self];
 }
 - (IBAction)didTapDate:(id)sender {
-    [self showCalendar];
+    [self showCalendar:@""];
 }
 
 - (IBAction)didTapSave:(id)sender {

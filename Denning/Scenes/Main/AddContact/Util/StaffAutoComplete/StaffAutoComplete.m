@@ -30,6 +30,7 @@
     [super viewDidLoad];
     
     [self configureAutocompleteSearch];
+    [self.autocompleteTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,7 +104,7 @@
     return YES;
 }
 
-- (void) textFieldDidEndEditing:(UITextField *)textField
+- (void) textFieldDidChange:(UITextField *)textField
 {
     customString = [DIHelpers capitalizedString:textField.text];
 }

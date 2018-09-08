@@ -31,6 +31,7 @@
     [super viewDidLoad];
     
     [self configureAutocompleteSearch];
+    [self.autocompleteTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)didReceiveMemoryWarning {

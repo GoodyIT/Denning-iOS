@@ -498,8 +498,8 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath
             file = model.documents[indexPath.row];
         }
         NSURL *url = [self getFileURL:file];
-        
-        [[DIDocumentManager shared] viewDocument:url inViewController:self withCompletion:^(NSURL *filePath) {
+        NSString* fileName = [NSString stringWithFormat:@"%@%@", file.name, file.ext];
+        [[DIDocumentManager shared] viewDocument:url inViewController:self withData:nil forPost:NO withFileName:fileName withCompletion:^(NSURL *filePath) {
             selectedDocument = filePath;
         }];
     } else {

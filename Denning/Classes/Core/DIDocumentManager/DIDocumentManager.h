@@ -22,7 +22,9 @@
 
 - (void)displayDocument:(NSURL*)document inView:(UIViewController*) viewController;
 
-- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withData:(id) data  withCompletion:(void(^)(NSURL *filePath)) completion;
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withData:(id) data withCompletion:(void(^)(NSURL *filePath)) completion;
+
+- (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withData:(id) data forPost:(BOOL) isPost withFileName:(NSString*) fileName withCompletion:(void(^)(NSURL *filePath)) completion;
 
 - (void) viewDocument:(NSURL*) Url inViewController:(UIViewController*) viewController withCompletion:(void(^)(NSURL *filePath)) completion withCustomParam:(NSString*) custom;
 

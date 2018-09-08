@@ -42,6 +42,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"d MMM yyyy"];
+    if (_initialDate.length != 0) {
+        _datePicker.date = [dateFormatter dateFromString:_initialDate];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

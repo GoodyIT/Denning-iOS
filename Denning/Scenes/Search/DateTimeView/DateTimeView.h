@@ -13,6 +13,6 @@ typedef void (^UpdateDateTimeHandler)(NSString *date);
 @interface DateTimeView : UIViewController
 
 @property (strong, nonatomic) UpdateDateTimeHandler updateHandler;
-
+@property (strong,  nonatomic) NSString* initialDate;
 
 @end

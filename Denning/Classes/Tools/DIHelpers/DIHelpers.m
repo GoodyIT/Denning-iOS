@@ -1415,7 +1415,7 @@
         newUsers = [totalUsersByExcludingDenning mutableCopy];
     }
     
-    return [QMCore.instance.contactManager friendsByIDs:newUsers];
+    return newUsers;
 }
 
 + (NSArray*) getOnlieStatus:(NSArray*) onlineUsers inTotalUser:(NSArray*) totalUsers forChatDialog:(QBChatDialog*) chatDialog

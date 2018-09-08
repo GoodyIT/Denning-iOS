@@ -14,5 +14,6 @@ typedef void (^UpdateDateHandler)(NSString *date);
 @interface BirthdayCalendarViewController : UIViewController
 
 @property (strong, nonatomic) UpdateDateHandler updateHandler;
+@property (strong, nonatomic) NSString* initialDate;
 
 @end

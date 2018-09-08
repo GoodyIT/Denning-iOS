@@ -1179,11 +1179,12 @@ NSMutableDictionary* keyValue;
     return [self updateCustomSectionHeaderInSection:section withTableView:tableView];
 }
 
-- (void) showCalendar {
+- (void) showCalendar:(NSString*) initialDate {
     [self.view endEditing:YES];
     
     BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@
                                                                "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
+    calendarViewController.initialDate = initialDate;
     calendarViewController.updateHandler =  ^(NSString* date) {
         [self replaceContentForSection:1 InRow:11 withValue:date];
     };
@@ -1239,7 +1240,7 @@ NSMutableDictionary* keyValue;
             nameOfField = self.contents[indexPath.section][rows][0];
             [self performSegueWithIdentifier:kListWithDescriptionSegue sender:PROPERTY_TENURE_TYPE_GET_URL];
         } else if (indexPath.row == 7) {
-            [self showCalendar];
+            [self showCalendar:self.contents[indexPath.section][rows][1]];
         } else if (indexPath.row == 9) {
             titleOfList = @"Restriction in Interest";
             nameOfField = self.contents[indexPath.section][rows][0];

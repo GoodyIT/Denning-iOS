@@ -294,10 +294,11 @@
     [popupController presentInViewController:self];
 }
 
-- (void) showCalendar {
+- (void) showCalendar:(NSString*) initialDate {
     [self.view endEditing:YES];
     
     DateTimeViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"DateTimeViewController"];
+    calendarViewController.initialDate = initialDate;
     calendarViewController.updateHandler =  ^(NSString* date) {
         if (selectedRow == 0) {
             startDate = date;
@@ -456,8 +457,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (selectedPage == 0) {
         selectedRow = indexPath.row;
-        if (selectedRow == 0 || selectedRow == 1) {
-            [self showCalendar];
+        if (selectedRow == 0) {
+            [self showCalendar:startDate];
+        } else if (selectedRow == 1) {
+            [self showCalendar:endDate];
         } else if (selectedRow == 2) {
             titleOfList = @"Leave Type";
             nameOfField = @"Leave Type";

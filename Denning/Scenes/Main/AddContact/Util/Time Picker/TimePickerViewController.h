@@ -13,5 +13,6 @@ typedef void (^UpdateTimeHandler)(NSString *date);
 @interface TimePickerViewController : UIViewController
 
 @property (strong, nonatomic) UpdateTimeHandler updateHandler;
+@property (strong, nonatomic) NSString* initialTime;
 
 @end

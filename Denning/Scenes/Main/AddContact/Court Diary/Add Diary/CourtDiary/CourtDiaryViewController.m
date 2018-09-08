@@ -407,35 +407,35 @@
     switch (textField.tag) {
         case 1:
             nameOfField = @"startDate";
-            [self showCalendar];
+            [self showCalendar: self.startDate.text];
             break;
         case 2:
             nameOfField = @"startTime";
-            [self showTimePicker];
+            [self showTimePicker:self.startTime.text];
             break;
         case 3:
             nameOfField = @"endDate";
-            [self showCalendar];
+            [self showCalendar: self.endDate.text];
             break;
         case 4:
             nameOfField = @"endTime";
-            [self showTimePicker];
+            [self showTimePicker:self.endTime.text];
             break;
         case 11:
             nameOfField = @"nextStartDate";
-            [self showCalendar];
+            [self showCalendar: self.nextStartDate.text];
             break;
         case 12:
             nameOfField = @"nextStartTime";
-            [self showTimePicker];
+            [self showTimePicker:self.nextStartTime.text];
             break;
         case 13:
             nameOfField = @"nextEndDate";
-            [self showCalendar];
+            [self showCalendar: self.nextEndDate.text];
             break;
         case 14:
             nameOfField = @"nextEndTime";
-            [self showTimePicker];
+            [self showTimePicker:self.nextEndTime.text];
             break;
             
             
@@ -675,11 +675,12 @@
     [popupController presentInViewController:self];
 }
 
-- (void) showTimePicker {
+- (void) showTimePicker:(NSString*) initialTime {
     [self.view endEditing:YES];
     
     TimePickerViewController *timeViewController = [[UIStoryboard storyboardWithName:@
                                                      "AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"TimePickerView"];
+    timeViewController.initialTime = initialTime;
     timeViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startTime"]) {
             self.startTime.text = date;
@@ -695,10 +696,11 @@
     [self showPopup:timeViewController];
 }
 
-- (void) showCalendar {
+- (void) showCalendar: (NSString*) initialDate {
     [self.view endEditing:YES];
     
     BirthdayCalendarViewController *calendarViewController = [[UIStoryboard storyboardWithName:@"AddContact" bundle:nil] instantiateViewControllerWithIdentifier:@"CalendarView"];
+    calendarViewController.initialDate = initialDate;
     calendarViewController.updateHandler =  ^(NSString* date) {
         if ([nameOfField isEqualToString:@"startDate"]) {
             self.startDate.text = date;
