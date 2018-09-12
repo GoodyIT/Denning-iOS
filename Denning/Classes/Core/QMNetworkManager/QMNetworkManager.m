@@ -1110,6 +1110,7 @@ completion: (void(^)(NSArray *result, NSError* error)) completion
 
 - (void) displaySessionExpireMessage {
     [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+    [DataManager sharedManager].isSessionExpired = YES;
 }
 
 /*

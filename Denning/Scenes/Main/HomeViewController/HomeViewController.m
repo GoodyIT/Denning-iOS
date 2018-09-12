@@ -308,16 +308,23 @@ iCarouselDataSource, iCarouselDelegate>
 
 #pragma mark - search
 
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
+- (BOOL) gotoSearchView {
+    if ([DataManager sharedManager].isSessionExpired == YES) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+        return YES;
+    }
     [self performSegueWithIdentifier:kMainSearchSegue sender:nil];
     return NO;
 }
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    return [self gotoSearchView];
+}
+
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
 {
-    [self performSegueWithIdentifier:kMainSearchSegue sender:nil];
-    return NO;
+    return [self gotoSearchView];
 }
 
 #pragma mark -
@@ -406,6 +413,11 @@ iCarouselDataSource, iCarouselDelegate>
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([DataManager sharedManager].isSessionExpired == YES) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+        return;
+    }
+    
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor greenColor];
     NSString* menu = homeLabelArray[indexPath.row];

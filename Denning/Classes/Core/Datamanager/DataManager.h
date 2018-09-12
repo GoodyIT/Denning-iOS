@@ -42,6 +42,8 @@
 @property (strong, nonatomic) NSString* dtExpire;
 @property (assign, nonatomic) BOOL isExpire;
 
+@property (strong, nonatomic) BOOL isSessionExpired;
+
 + (DataManager *)sharedManager;
 
 - (void) setUserPassword: (NSString*) password;

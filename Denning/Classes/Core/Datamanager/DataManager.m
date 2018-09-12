@@ -24,6 +24,7 @@
 @synthesize userAgreementAccepted;
 @synthesize tempServerURL;
 @synthesize isExpire;
+@synthesize isSessionExpired;
 
 + (DataManager *)sharedManager {
     static DataManager *manager = nil;
@@ -45,6 +46,7 @@
         userAgreementAccepted = NO;
         tempServerURL = @"";
         isExpire = NO;
+        isSessionExpired = NO;
         user = [UserModel allObjects].firstObject;
         if (!user) {
             [[RLMRealm defaultRealm] transactionWithBlock:^{

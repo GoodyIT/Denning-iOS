@@ -993,7 +993,7 @@
     BOOL isDenningUser = [[DataManager sharedManager] isDenningUser];
     
     if ([user.email isEqualToString:toUser.email]) {
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ROLE_SELF_CHANGE", nil) actionSuccess:NO inViewController:[self topMostController]];
+        [QMAlert showAlertWithMessage:NSLocalizedString(@".", nil) actionSuccess:NO inViewController:[self topMostController]];
         return NO;
     }
     

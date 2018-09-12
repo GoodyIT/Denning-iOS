@@ -16,6 +16,7 @@
 #import "MessageViewController.h"
 #import "DashboardViewController.h"
 #import "MainContactViewController.h"
+#import "HomeViewController.h"
 
 static const NSInteger kQMNotAuthorizedInRest = -1000;
 static const NSInteger kQMUnauthorizedErrorCode = -1011;
@@ -127,6 +128,13 @@ QMPushNotificationManagerDelegate>
 - (BOOL)tabBarController:(UITabBarController *)tabBarController
 shouldSelectViewController:(UIViewController *)viewController
 {
+    if (![viewController.childViewControllers[0] isKindOfClass:[HomeViewController class]]) {
+        if ([DataManager sharedManager].isSessionExpired == YES) {
+            [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+            return NO;
+        }
+    }
+   
     if ([viewController.childViewControllers[0] isKindOfClass:[DashboardViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[MainContactViewController class]]) {
         if ([DataManager sharedManager].user.username.length == 0) {
             self.tabBarController.selectedIndex = 0;
@@ -250,6 +258,10 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 - (void) contactUs {
+    if ([DataManager sharedManager].isSessionExpired == YES) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+        return;
+    }
     if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
         [self performSegueWithIdentifier:kDenningSupportSegue sender:nil];
     } else {
@@ -258,6 +270,11 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 - (void) tapSetting {
+    if ([DataManager sharedManager].isSessionExpired == YES) {
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+        return;
+    }
+    
     if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
         [self performSegueWithIdentifier:kQMSceneSegueSetting sender:nil];
     } else {

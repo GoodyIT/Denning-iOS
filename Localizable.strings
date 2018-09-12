@@ -34,7 +34,7 @@
 "STR_ACCESS_DENIED_REGISTER" = "The function is only accessible by registered Denning User, please register.";
 "STR_ACCESS_RESTRICT_CLIENT" = "This function is only available to public users invited by Denning Biz providers.";
 "STR_SESSION_EXPIRED"   = "Session expired. Please log in again.";
-"STR_ROLE_SELF_CHANGE"  = "You can change your own role.";
+"STR_ROLE_SELF_CHANGE"  = "You cannot change your own role.";
 "STR_ROLE_DENNING_CHANGE"  = "You cannot change the role of Denning users.";
 "STR_ROLE_CLIENT_CHANGE"  = "You cannot change the role of the client.";
 "STR_FILE_NOT_FOUNT" = "File not exist on the server.";

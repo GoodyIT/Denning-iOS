@@ -204,6 +204,7 @@
             for (QBUUser* user in chatFirmModel.users) {
                 if (ID.integerValue == user.ID) {
                     isExist = YES;
+                    break;
                 }
             }
         }

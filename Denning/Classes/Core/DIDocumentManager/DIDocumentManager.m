@@ -194,6 +194,7 @@
         [SVProgressHUD dismiss];
         if (((NSHTTPURLResponse *)response).statusCode == 408) {
             [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:viewController];
+            [DataManager sharedManager].isSessionExpired = YES;
         } else if (error == nil) {
             if  (filePath != nil) {
                 [self displayDocument:filePath inView:viewController];
