@@ -584,6 +584,7 @@ MatterNewLastCellDelegate
         UINavigationController* navC = segue.destinationViewController;
         FileUpload* vc = navC.viewControllers.firstObject;
         vc.titleValue = sender;
+        vc.url = MATTER_STAFF_FILEFOLDER;
     } else  if ([segue.identifier isEqualToString:kFileNoteListSegue]){
         FileNoteList* vc = segue.destinationViewController;
         vc.clientName = self.relatedMatterModel.clientName;

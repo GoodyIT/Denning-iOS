@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -54,6 +49,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="jyO-Ni-Qx8" firstAttribute="leading" secondItem="xUi-aS-G6G" secondAttribute="trailing" constant="14" id="0vR-V3-yBg"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="qkP-hr-u6F" secondAttribute="bottom" constant="8" id="4tP-fG-ebJ"/>
+                    <constraint firstItem="qkP-hr-u6F" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="7oU-Mv-Z5M"/>
                     <constraint firstItem="qkP-hr-u6F" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="PsO-ao-cNu"/>
                     <constraint firstItem="qkP-hr-u6F" firstAttribute="leading" secondItem="jyO-Ni-Qx8" secondAttribute="trailing" constant="12" id="bfj-48-9fg"/>
                     <constraint firstItem="jyO-Ni-Qx8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cYu-SZ-f34"/>

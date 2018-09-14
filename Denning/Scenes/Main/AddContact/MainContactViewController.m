@@ -9,6 +9,7 @@
 #import "MainContactViewController.h"
 #import "MainTabBarController.h"
 #import "AddDiaryViewController.h"
+#import "Attendance.h"
 
 @interface MainContactViewController ()
 
@@ -132,11 +133,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+    if (section == 3) {
+        return 1;
+    }
     return 3;
 }
 
@@ -145,9 +148,38 @@
     if (indexPath.section == 1 && indexPath.row == 1) {
         [self performSegueWithIdentifier:kDiarySegue sender:@"OfficeDiary"];
     }
+    
+    if (indexPath.section == 3 && indexPath.row == 0) {
+        [self getAttendance];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+- (void) handleResponse:(AttendanceModel*) result error:(NSError*) error {
+    if (!error) {
+        [self performSegueWithIdentifier:kAttendanceSegue sender:result];
+    } else {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription maskType:SVProgressHUDMaskTypeClear];
+    }
+}
+
+- (void) getAttendance {
+    if (![DataManager sharedManager].isStaff){
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_DENIED_REGISTER", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self withCallback:^{
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
+        }];
+    } else if ([CLLocationManager locationServicesEnabled] == NO) {
+        [(AppDelegate*)[UIApplication sharedApplication].delegate showDeniedLocation];
+    } else {
+        [SVProgressHUD show];
+        
+        [[QMNetworkManager sharedManager] getAttendanceListWithCompletion:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
+            [SVProgressHUD dismiss];
+            [self handleResponse:result error:error];
+        }];
+    }
+}
 
 #pragma mark - Navigation
 
@@ -157,7 +189,11 @@
         UINavigationController* navVC = segue.destinationViewController;
         AddDiaryViewController* diaryVC = navVC.viewControllers.firstObject;
         diaryVC.type = sender;
-    }
+    } else if ([segue.identifier isEqualToString:kAttendanceSegue]) {
+        UINavigationController* navVC = segue.destinationViewController;
+        Attendance* vc = navVC.viewControllers.firstObject;
+        vc.attendanceModel = sender;
+    } 
 }
 
 

@@ -708,6 +708,15 @@
 		79EC0EDC1E8C85F100320A28 /* icon_settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0ED01E8C85F100320A28 /* icon_settings.png */; };
 		79EC0EDD1E8C85F100320A28 /* icon_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0ED11E8C85F100320A28 /* icon_settings@2x.png */; };
 		79EC0EDE1E8C85F100320A28 /* icon_settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC0ED21E8C85F100320A28 /* icon_settings@3x.png */; };
+		79F5B404214BBE0C00DC0787 /* icon_real_estate.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B3FB214BBE0900DC0787 /* icon_real_estate.png */; };
+		79F5B405214BBE0C00DC0787 /* icon_jobs@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B3FC214BBE0900DC0787 /* icon_jobs@3x.png */; };
+		79F5B406214BBE0C00DC0787 /* icon_services@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B3FD214BBE0A00DC0787 /* icon_services@2x.png */; };
+		79F5B407214BBE0C00DC0787 /* icon_jobs.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B3FE214BBE0A00DC0787 /* icon_jobs.png */; };
+		79F5B408214BBE0C00DC0787 /* icon_real_estate@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B3FF214BBE0A00DC0787 /* icon_real_estate@3x.png */; };
+		79F5B409214BBE0C00DC0787 /* icon_jobs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B400214BBE0B00DC0787 /* icon_jobs@2x.png */; };
+		79F5B40A214BBE0C00DC0787 /* icon_real_estate@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B401214BBE0B00DC0787 /* icon_real_estate@2x.png */; };
+		79F5B40B214BBE0C00DC0787 /* icon_services@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B402214BBE0B00DC0787 /* icon_services@3x.png */; };
+		79F5B40C214BBE0C00DC0787 /* icon_services.png in Resources */ = {isa = PBXBuildFile; fileRef = 79F5B403214BBE0C00DC0787 /* icon_services.png */; };
 		79F732261E96A929004F88DF /* AFHTTPSessionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F732121E96A929004F88DF /* AFHTTPSessionOperation.m */; };
 		79F732271E96A929004F88DF /* AFURLSessionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F732141E96A929004F88DF /* AFURLSessionOperation.m */; };
 		79F732281E96A929004F88DF /* AsynchronousOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 79F732161E96A929004F88DF /* AsynchronousOperation.m */; };
@@ -2245,6 +2254,15 @@
 		79EC0ED01E8C85F100320A28 /* icon_settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_settings.png; sourceTree = "<group>"; };
 		79EC0ED11E8C85F100320A28 /* icon_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_settings@2x.png"; sourceTree = "<group>"; };
 		79EC0ED21E8C85F100320A28 /* icon_settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_settings@3x.png"; sourceTree = "<group>"; };
+		79F5B3FB214BBE0900DC0787 /* icon_real_estate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_real_estate.png; sourceTree = "<group>"; };
+		79F5B3FC214BBE0900DC0787 /* icon_jobs@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_jobs@3x.png"; sourceTree = "<group>"; };
+		79F5B3FD214BBE0A00DC0787 /* icon_services@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_services@2x.png"; sourceTree = "<group>"; };
+		79F5B3FE214BBE0A00DC0787 /* icon_jobs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_jobs.png; sourceTree = "<group>"; };
+		79F5B3FF214BBE0A00DC0787 /* icon_real_estate@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_real_estate@3x.png"; sourceTree = "<group>"; };
+		79F5B400214BBE0B00DC0787 /* icon_jobs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_jobs@2x.png"; sourceTree = "<group>"; };
+		79F5B401214BBE0B00DC0787 /* icon_real_estate@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_real_estate@2x.png"; sourceTree = "<group>"; };
+		79F5B402214BBE0B00DC0787 /* icon_services@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_services@3x.png"; sourceTree = "<group>"; };
+		79F5B403214BBE0C00DC0787 /* icon_services.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_services.png; sourceTree = "<group>"; };
 		79F732111E96A929004F88DF /* AFHTTPSessionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionOperation.h; sourceTree = "<group>"; };
 		79F732121E96A929004F88DF /* AFHTTPSessionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionOperation.m; sourceTree = "<group>"; };
 		79F732131E96A929004F88DF /* AFURLSessionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionOperation.h; sourceTree = "<group>"; };
@@ -7526,6 +7544,15 @@
 		79FBE14B1E30F7F500448FE3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79F5B3FE214BBE0A00DC0787 /* icon_jobs.png */,
+				79F5B400214BBE0B00DC0787 /* icon_jobs@2x.png */,
+				79F5B3FC214BBE0900DC0787 /* icon_jobs@3x.png */,
+				79F5B3FB214BBE0900DC0787 /* icon_real_estate.png */,
+				79F5B401214BBE0B00DC0787 /* icon_real_estate@2x.png */,
+				79F5B3FF214BBE0A00DC0787 /* icon_real_estate@3x.png */,
+				79F5B403214BBE0C00DC0787 /* icon_services.png */,
+				79F5B3FD214BBE0A00DC0787 /* icon_services@2x.png */,
+				79F5B402214BBE0B00DC0787 /* icon_services@3x.png */,
 				79E5B1B21FF3334300CE0943 /* icon_attach_pdf.png */,
 				79E5B1AF1FF3334200CE0943 /* icon_attach_pdf@2x.png */,
 				79E5B1B31FF3334300CE0943 /* icon_attach_pdf@3x.png */,
@@ -9599,6 +9626,7 @@
 				792288612017C88E002AB744 /* QMShareTableViewController.xib in Resources */,
 				793FF1301EBB78C9001F83A5 /* icon_edit_red.png in Resources */,
 				792288682017C88E002AB744 /* QMShareCollectionViewCell.xib in Resources */,
+				79F5B404214BBE0C00DC0787 /* icon_real_estate.png in Resources */,
 				9636DCBE1F03C6C8008DDA41 /* icon_db_bank_balance.png in Resources */,
 				7903CF6C1ECD2B2D0090206C /* BillCell.xib in Resources */,
 				79EC0E6A1E8B0E8300320A28 /* icon_pdf@2x.png in Resources */,
@@ -9613,6 +9641,7 @@
 				9636DCD91F03C6C8008DDA41 /* icon_db_tax_invoice.png in Resources */,
 				79556DBF1E9323D000A16CB8 /* Message.storyboard in Resources */,
 				79EC0D1B1E77013A00320A28 /* SF-UI-Display-Thin.otf in Resources */,
+				79F5B407214BBE0C00DC0787 /* icon_jobs.png in Resources */,
 				96A73A9D1F1B245200B97156 /* icon_next.png in Resources */,
 				7912A5C31FEABBEC00C8B9A5 /* support.png in Resources */,
 				96821F161F1CE6F700F28708 /* icon_status_offline@3x.png in Resources */,
@@ -9631,6 +9660,7 @@
 				96A73A3A1F19C8A300B97156 /* BankReconHeaderCell.xib in Resources */,
 				969A60431EDE62DA00A5D961 /* FeeTransferCell.xib in Resources */,
 				96D66F041EFCB361003E3A4A /* DashboardFirstCell.xib in Resources */,
+				79F5B40C214BBE0C00DC0787 /* icon_services.png in Resources */,
 				79EC0EDA1E8C85F100320A28 /* icon_phone@2x.png in Resources */,
 				968E85E31EF19573001B442D /* IncreasingCell.xib in Resources */,
 				79FBE0FE1E304F5000448FE3 /* QMNoResultsCell.xib in Resources */,
@@ -9665,6 +9695,7 @@
 				960017821FB0CE0D001EAB51 /* blue_circle@2x.png in Resources */,
 				96A73A6D1F1A6CB600B97156 /* icon_close@2x.png in Resources */,
 				7920E7861E9E5D0C002FEFF3 /* icon_searchswitch@3x.png in Resources */,
+				79F5B408214BBE0C00DC0787 /* icon_real_estate@3x.png in Resources */,
 				7920E7A91E9FA747002FEFF3 /* icon_staff_selected.png in Resources */,
 				79E5B1B51FF3334400CE0943 /* icon_attach_pdf@2x.png in Resources */,
 				797ED52C1EAF73C1009C20C4 /* icon_calendar_red.png in Resources */,
@@ -9872,6 +9903,7 @@
 				797ED5111EAEDA86009C20C4 /* icon_message_red.png in Resources */,
 				797ED5271EAF277F009C20C4 /* icon_legalfirm@2x.png in Resources */,
 				7920E7A81E9FA747002FEFF3 /* icon_search_black@3x.png in Resources */,
+				79F5B40B214BBE0C00DC0787 /* icon_services@3x.png in Resources */,
 				7920E7A31E9FA747002FEFF3 /* icon_message_selected.png in Resources */,
 				9636DCDB1F03C6C8008DDA41 /* icon_db_tax_invoice@3x.png in Resources */,
 				79EC0D611E85520700320A28 /* splash_logo@3x.png in Resources */,
@@ -9882,6 +9914,7 @@
 				79FF35021E97D95B001BECFB /* icon_share@3x.png in Resources */,
 				793FF1941EBD4BDF001F83A5 /* icon_property@3x.png in Resources */,
 				79D929CE1E8DA27A000A53D2 /* icon_add@3x.png in Resources */,
+				79F5B409214BBE0C00DC0787 /* icon_jobs@2x.png in Resources */,
 				79EC0ED51E8C85F100320A28 /* icon_help@3x.png in Resources */,
 				793FF1531EBB7D67001F83A5 /* icon_home_selected@3x.png in Resources */,
 				96EAEB9F1F21B0CC004F75FC /* comming_soon@3x.png in Resources */,
@@ -9907,6 +9940,7 @@
 				79FBDE7F1E302F6600448FE3 /* Assets.xcassets in Resources */,
 				7931B4CE1EA851B00090BDE0 /* menu_overview.png in Resources */,
 				79EC0D1C1E77013A00320A28 /* SF-UI-Display-Ultralight.otf in Resources */,
+				79F5B406214BBE0C00DC0787 /* icon_services@2x.png in Resources */,
 				79EC0EAC1E8BE7F700320A28 /* Calculator.storyboard in Resources */,
 				7931B4C71EA851B00090BDE0 /* menu_home@3x.png in Resources */,
 				79A6AFA01E9D611D007AA24D /* icon_favorite.png in Resources */,
@@ -9915,6 +9949,7 @@
 				9636DCC01F03C6C8008DDA41 /* icon_db_bank_balance@3x.png in Resources */,
 				79EC0E771E8B160600320A28 /* LedgerDetailCell.xib in Resources */,
 				9636DCD21F03C6C8008DDA41 /* icon_db_profit_loss@3x.png in Resources */,
+				79F5B40A214BBE0C00DC0787 /* icon_real_estate@2x.png in Resources */,
 				9620834C1EDE236D00BB595C /* BankCashSecondCell.xib in Resources */,
 				79FBE0861E304EAB00448FE3 /* QMCallInfoView.xib in Resources */,
 				793FF1881EBD4BDF001F83A5 /* icon_contact_blue@3x.png in Resources */,
@@ -10096,6 +10131,7 @@
 				9635BB9F1F2A54FD00BE7CF0 /* SearchContactCell.xib in Resources */,
 				797556FB1FC0AD22001CCD46 /* AddCourt.storyboard in Resources */,
 				96A73A971F1B240900B97156 /* icon_prev.png in Resources */,
+				79F5B405214BBE0C00DC0787 /* icon_jobs@3x.png in Resources */,
 				793FF1311EBB78C9001F83A5 /* icon_edit_red@2x.png in Resources */,
 				9636DCD61F03C6C8008DDA41 /* icon_db_task_checklist.png in Resources */,
 				96334EAB1FB5DEE6005151AB /* ic_new.png in Resources */,

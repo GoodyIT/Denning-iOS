@@ -545,11 +545,12 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         
         cell.contactHandler = ^(SearchResultModel *_model) {
             fileFolderTitle = @"Contact Folder";
-            [self openDocumentFromContact:_model];
+            NSString* url = [NSString stringWithFormat:@"v1/app/contactFolder/%@", _model.key];
+            [self openDocumentFrom:url];
         };
         
         cell.uploadHandler = ^(SearchResultModel *_model) {
-            [self performSegueWithIdentifier:kClientFileUploadSegue sender:model];
+            [self performSegueWithIdentifier:kClientFileUploadSegue sender:@{@"model":_model, @"url": MATTER_CLIENT_FILEFOLDER, @"defaultFileName": @""}];
         };
         
         return cell;
@@ -563,6 +564,16 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         } else {
             cell.matterBtn.hidden = NO;
         }
+        
+        cell.contactHandler = ^(SearchResultModel *_model) {
+            fileFolderTitle = @"Contact Folder";
+            NSString* url = [NSString stringWithFormat:@"v1/document/property/dir/%@", _model.key];
+            [self openDocumentFrom:url];
+        };
+        
+        cell.uploadHandler = ^(SearchResultModel *_model) {
+            [self performSegueWithIdentifier:kClientFileUploadSegue sender:@{@"model":_model, @"url": PROPERTY_FILE_FOLDER_URL, @"defaultFileName": _model.title}];
+        };
         
         cell.tag = indexPath.section;
         cell.delegate = self;
@@ -603,8 +614,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     }];
 }
 
-- (void) openDocumentFromContact:(SearchResultModel*) model {
-    NSString* url = [NSString stringWithFormat:@"v1/app/contactFolder/%@", model.key];
+
+
+- (void) openDocumentFrom:(NSString*) url {
     if (isLoading) return;
     isLoading = YES;
     @weakify(self);
@@ -977,7 +989,9 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     if ([segue.identifier isEqualToString:kClientFileUploadSegue]){
         UINavigationController* navC = segue.destinationViewController;
         ClientFileFolder* vc = navC.viewControllers.firstObject;
-        vc.model = sender;
+        vc.url = [sender valueForKey:@"url"];
+        vc.model = [sender objectForKey:@"model"];
+        vc.defaultFileName = [sender valueForKey:@"defaultFileName"];
     }
     
     if ([segue.identifier isEqualToString:kFileUploadSegue]){
@@ -985,6 +999,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
         UINavigationController* navC = segue.destinationViewController;
         FileUpload* vc = navC.viewControllers.firstObject;
         vc.titleValue = sender;
+        vc.url = MATTER_STAFF_FILEFOLDER;
     }
 }
 

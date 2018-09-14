@@ -261,6 +261,8 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define PROPERTY_GET_LIST_URL   @"v1/Property?search="
 
+#define PROPERTY_FILE_FOLDER_URL @"v1/document/property/upload"
+
 #define PROPERTY_TYPE_GET_URL   @"v1/Property/PropertyType?search="
 
 #define PROPERTY_TYPE_GET_LIST_URL   @"v1/generalSelection/frmProperty/propertyType?search="

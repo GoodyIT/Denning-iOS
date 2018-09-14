@@ -19,7 +19,6 @@
 #import "MenuCell.h"
 #import "ChangeBranchViewController.h"
 #import "MainTabBarController.h"
-#import "Attendance.h"
 #import "QMChatVC.h"
 #import "FolderViewController.h"
 #import "MainTabBarController.h"
@@ -94,18 +93,17 @@ iCarouselDataSource, iCarouselDelegate>
 
 - (void) changeUIBasedOnUserType {
     CGFloat branchHeight = 50;
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
     CGFloat navHeight = self.navigationController.navigationBar.frame.size.height;
     CGFloat searchBarHeight = 56;
     CGFloat bottomBarHeight = self.tabBarController.tabBar.frame.size.height;
     if ([DataManager sharedManager].isStaff) {
         branchHeight = 50;
-        homeIconArray = @[@"icon_news", @"icon_updates", @"icon_market", @"icon_delivery", @"icon_calculator", @"icon_shared", @"icon_forum", @"icon_products", @"icon_attendance", @"icon_upload", @"icon_calendar", @"icon_topup"];
-        homeLabelArray = @[@"News", @"Updates", @"Market", @"Delivery", @"Calculators", @"Shared", @"Forum", @"Products", @"Attendance", @"Upload", @"Calendar", @"Top-Up"];
+        homeIconArray = @[@"icon_news", @"icon_real_estate", @"icon_market", @"icon_services", @"icon_calculator", @"icon_jobs", @"icon_forum", @"icon_products", @"icon_shared", @"icon_upload", @"icon_calendar", @"icon_topup"];
+        homeLabelArray = @[@"News", @"Property", @"Market", @"Services", @"Calculators", @"Jobs", @"Forum", @"Products", @"Shared", @"Upload", @"Calendar", @"Top-Up"];
     } else {
         branchHeight = 0;
-        homeIconArray = @[@"icon_news", @"icon_calculator", @"icon_shared", @"icon_forum", @"icon_products",  @"icon_upload"];
-        homeLabelArray = @[@"News", @"Calculators", @"Shared", @"Forum", @"Products", @"Upload",];
+        homeIconArray = @[@"icon_news", @"icon_calculator",  @"icon_forum", @"icon_products", @"icon_shared", @"icon_upload"];
+        homeLabelArray = @[@"News", @"Calculators", @"Forum", @"Products", @"Shared",  @"Upload"];
     }
     
     CGFloat menuContainerHeight = (self.view.frame.size.width/4-2) * (homeLabelArray.count/4);
@@ -308,11 +306,22 @@ iCarouselDataSource, iCarouselDelegate>
 
 #pragma mark - search
 
-- (BOOL) gotoSearchView {
+- (BOOL) showSessionExpireAlertAndLogin {
     if ([DataManager sharedManager].isSessionExpired == YES) {
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
-        return YES;
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) withTitle:@"Warning" actionSuccess:NO inViewController:[DIHelpers topMostController] withCallback:^{
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
+        }];
+        return NO;
     }
+    
+    return YES;
+}
+
+- (BOOL) gotoSearchView {
+    if (![self showSessionExpireAlertAndLogin]) {
+        return NO;
+    }
+    
     [self performSegueWithIdentifier:kMainSearchSegue sender:nil];
     return NO;
 }
@@ -383,38 +392,12 @@ iCarouselDataSource, iCarouselDelegate>
 //    [QMAlert showInformationWithMessage:@"Coming Soon. Thank you for your support." inViewController:self];
 }
 
-- (void) handleResponse:(AttendanceModel*) result error:(NSError*) error {
-    if (!error) {
-        [self performSegueWithIdentifier:kAttendanceSegue sender:result];
-    } else {
-        [SVProgressHUD showErrorWithStatus:error.localizedDescription maskType:SVProgressHUDMaskTypeClear];
-    }
-}
-
-- (void) getAttendance {
-    if (![DataManager sharedManager].isStaff){
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_ACCESS_DENIED_REGISTER", nil) withTitle:@"Access Restricted" actionSuccess:NO inViewController:self withCallback:^{
-            [self performSegueWithIdentifier:kAuthSegue sender:nil];
-        }];
-    } else if ([CLLocationManager locationServicesEnabled] == NO) {
-        [(AppDelegate*)[UIApplication sharedApplication].delegate showDeniedLocation];
-    } else {
-        [SVProgressHUD show];
-        
-        [[QMNetworkManager sharedManager] getAttendanceListWithCompletion:^(AttendanceModel * _Nonnull result, NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
-            [self handleResponse:result error:error];
-        }];
-    }
-}
-
 #pragma mark -
 #pragma mark UICollectionViewDelegate
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([DataManager sharedManager].isSessionExpired == YES) {
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+    if (![self showSessionExpireAlertAndLogin]) {
         return;
     }
     
@@ -425,16 +408,16 @@ iCarouselDataSource, iCarouselDelegate>
         [self getLatestNewsWithCompletion:^(NSArray *array) {
             [self performSegueWithIdentifier:kNewsSegue sender:array];
         }];
-    } else if ([menu isEqualToString:@"Updates"]) {
-        [self getLatestUpdatesWithCompletion:^(NSArray *array) {
-            [self performSegueWithIdentifier:kUpdateSegue sender:array];
-        }];
+    } else if ([menu isEqualToString:@"Property"]) {
+        [self showComingSoon];
     } else if ([menu isEqualToString:@"Market"]) {
         [self showComingSoon];
 
-    } else if ([menu isEqualToString:@"Delivery"]) {
+    } else if ([menu isEqualToString:@"Services"]) {
         [self showComingSoon];
         
+    } else if ([menu isEqualToString:@"Calculators"]) {
+        [self performSegueWithIdentifier:kCalculateSegue sender:nil];
     } else if ([menu isEqualToString:@"Calculators"]) {
         [self performSegueWithIdentifier:kCalculateSegue sender:nil];
     } else if ([menu isEqualToString:@"Shared"]) {
@@ -443,8 +426,8 @@ iCarouselDataSource, iCarouselDelegate>
         [self showComingSoon];
     } else if ([menu isEqualToString:@"Products"]) {
         [self showComingSoon];
-    } else if ([menu isEqualToString:@"Attendance"]) {
-        [self getAttendance];
+    } else if ([menu isEqualToString:@"Jobs"]) {
+        [self showComingSoon];
     } else if ([menu isEqualToString:@"Upload"]) {
         [self gotoUpload];
     } else if ([menu isEqualToString:@"Calendar"]) {
@@ -609,10 +592,6 @@ iCarouselDataSource, iCarouselDelegate>
     } else if ([segue.identifier isEqualToString:kChangeBranchSegue]){
         ChangeBranchViewController* changeBranchVC = segue.destinationViewController;
         changeBranchVC.branchArray = sender;
-    } else if ([segue.identifier isEqualToString:kAttendanceSegue]) {
-        UINavigationController* navVC = segue.destinationViewController;
-        Attendance* vc = navVC.viewControllers.firstObject;
-        vc.attendanceModel = sender;
     } else if ([segue.identifier isEqualToString:kQMSceneSegueChat]) {
         
         QMNavigationController *chatNavigationController = segue.destinationViewController;

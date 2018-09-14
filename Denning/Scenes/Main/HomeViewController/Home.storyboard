@@ -353,7 +353,6 @@
                         <segue destination="5qi-ge-IcO" kind="show" identifier="ChangeBranchSegue" id="t51-e3-eMK"/>
                         <segue destination="Wme-2n-0zk" kind="show" identifier="ComingSoonSegue" id="8Rs-Fl-9Kd"/>
                         <segue destination="KWs-Rb-WJ3" kind="show" identifier="FileUploadSegue" id="gSe-9y-x3C"/>
-                        <segue destination="OYt-4h-DpJ" kind="show" identifier="AttendanceSegue" id="p24-7O-vrw"/>
                         <segue destination="iGN-TX-TDN" kind="show" identifier="SceneSegueChat" id="doI-gF-qQA"/>
                         <segue destination="kKT-Gi-Abc" kind="show" identifier="PersonalFolderSegue" id="UVN-3m-AEg"/>
                     </connections>

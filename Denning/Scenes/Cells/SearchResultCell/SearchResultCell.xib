@@ -1,89 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-            <string>HelveticaNeue-Medium</string>
-        </array>
-        <array key="SF-UI-Text-Semibold.otf">
-            <string>SFUIText-Semibold</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="146" id="KGk-i7-Jjw" customClass="SearchResultCell">
-            <rect key="frame" x="0.0" y="0.0" width="562" height="146"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="131" id="KGk-i7-Jjw" customClass="SearchResultCell">
+            <rect key="frame" x="0.0" y="0.0" width="562" height="131"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="562" height="145.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="562" height="130.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuC-jd-efq" userLabel="inner view">
-                        <rect key="frame" x="10" y="8" width="542" height="129.5"/>
+                        <rect key="frame" x="10" y="8" width="542" height="114.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avY-CP-Yhs">
-                                <rect key="frame" x="8" y="1" width="66.5" height="41.5"/>
+                                <rect key="frame" x="8" y="1" width="66.5" height="34"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                 <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GL8-NT-Xqf">
-                                <rect key="frame" x="8" y="62" width="76.5" height="17.5"/>
+                                <rect key="frame" x="8" y="40" width="76.5" height="17.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.57647058823529407" green="0.58431372549019611" blue="0.59607843137254901" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJ9-mg-BhY">
-                                <rect key="frame" x="20" y="84.5" width="159" height="44"/>
-                                <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="159" id="fYQ-FO-iX4"/>
-                                    <constraint firstAttribute="height" constant="44" id="yna-mU-UMW"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="17"/>
-                                <state key="normal" title="Related Matters">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="relatedMatterTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5r0-tv-XG2"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDP-m6-ta2">
-                                <rect key="frame" x="8" y="43.5" width="76.5" height="17.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" red="0.1333333333" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="jg9-ij-WTi">
+                                <rect key="frame" x="12" y="62.5" width="522" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Gx-xh-jQ3">
+                                        <rect key="frame" x="0.0" y="0.0" width="164" height="44"/>
+                                        <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="jdl-RN-x3l"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Related Matters">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="15" name="Helvetica"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T8Y-87-gkg">
+                                        <rect key="frame" x="179" y="0.0" width="164" height="44"/>
+                                        <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Ayj-oH-uBh"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Contact Folder">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="16" name="Helvetica"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didTapContactFolder:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Bcc-aN-45o"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CMD-qw-Qwt">
+                                        <rect key="frame" x="358" y="0.0" width="164" height="44"/>
+                                        <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Dup-Ox-lpM"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Upload">
+                                                    <attributes>
+                                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <font key="NSFont" size="16" name="Helvetica"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didTapUpload:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ul1-BB-0E7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TJ9-mg-BhY" firstAttribute="top" secondItem="GL8-NT-Xqf" secondAttribute="bottom" constant="5" id="G8M-SQ-frb"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hDP-m6-ta2" secondAttribute="trailing" constant="20" id="Hve-qr-UZf"/>
+                            <constraint firstAttribute="trailing" secondItem="jg9-ij-WTi" secondAttribute="trailing" constant="8" id="01e-Vn-WSd"/>
+                            <constraint firstItem="jg9-ij-WTi" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="12" id="Dpi-eE-vEZ"/>
                             <constraint firstItem="avY-CP-Yhs" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="8" id="IL7-Fd-vdI"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="avY-CP-Yhs" secondAttribute="trailing" constant="12" id="Ilk-4X-4n4"/>
                             <constraint firstItem="avY-CP-Yhs" firstAttribute="top" secondItem="uuC-jd-efq" secondAttribute="top" constant="1" id="J9d-Ze-9l8"/>
-                            <constraint firstItem="TJ9-mg-BhY" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="20" id="Q0L-gW-uHJ"/>
-                            <constraint firstItem="hDP-m6-ta2" firstAttribute="top" secondItem="avY-CP-Yhs" secondAttribute="bottom" constant="1" id="UR6-Wo-EzN"/>
-                            <constraint firstAttribute="bottom" secondItem="TJ9-mg-BhY" secondAttribute="bottom" constant="1" id="fFj-50-e9w"/>
-                            <constraint firstItem="GL8-NT-Xqf" firstAttribute="top" secondItem="hDP-m6-ta2" secondAttribute="bottom" constant="1" id="iDa-oD-dc9"/>
+                            <constraint firstItem="GL8-NT-Xqf" firstAttribute="top" secondItem="avY-CP-Yhs" secondAttribute="bottom" constant="5" id="kPF-Ed-bHL"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GL8-NT-Xqf" secondAttribute="trailing" constant="20" id="m2s-AP-ptG"/>
-                            <constraint firstItem="hDP-m6-ta2" firstAttribute="leading" secondItem="avY-CP-Yhs" secondAttribute="leading" id="m5F-Yc-Jdt"/>
+                            <constraint firstAttribute="bottom" secondItem="jg9-ij-WTi" secondAttribute="bottom" constant="8" id="mB8-T0-zK7"/>
                             <constraint firstItem="GL8-NT-Xqf" firstAttribute="leading" secondItem="uuC-jd-efq" secondAttribute="leading" constant="8" id="n8f-4S-TTW"/>
+                            <constraint firstItem="jg9-ij-WTi" firstAttribute="top" secondItem="GL8-NT-Xqf" secondAttribute="bottom" constant="5" id="qU6-gW-cjl"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -96,12 +140,13 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="contactFolderBtn" destination="T8Y-87-gkg" id="4P5-St-R7g"/>
                 <outlet property="descriptionLabel" destination="GL8-NT-Xqf" id="2y5-0S-N5n"/>
-                <outlet property="indexData" destination="hDP-m6-ta2" id="bUt-Nl-Lwi"/>
-                <outlet property="matterBtn" destination="TJ9-mg-BhY" id="T1J-Wr-kG0"/>
+                <outlet property="matterBtn" destination="9Gx-xh-jQ3" id="RX5-Pc-BJB"/>
                 <outlet property="titleLabel" destination="avY-CP-Yhs" id="aXy-L5-lFw"/>
+                <outlet property="uploadBtn" destination="CMD-qw-Qwt" id="fAO-iY-60N"/>
             </connections>
-            <point key="canvasLocation" x="-375" y="-449"/>
+            <point key="canvasLocation" x="-375" y="-402.5"/>
         </tableViewCell>
     </objects>
 </document>

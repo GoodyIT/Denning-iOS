@@ -57,7 +57,6 @@
 {
     _model = model;
     self.titleLabel.text = model.title;
-    self.indexData.text = model.header;
     NSString* str = @"";
     for (NSDictionary *obj in model.Json) {
         if (str.length == 0) {

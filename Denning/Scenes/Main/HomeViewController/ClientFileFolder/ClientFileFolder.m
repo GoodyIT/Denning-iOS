@@ -20,7 +20,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.url = MATTER_CLIENT_FILEFOLDER;
+    if (self.defaultFileName.length != 0) {
+        self.renameFile.text = self.defaultFileName;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,7 +33,6 @@
 - (IBAction)dismissScreen:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 - (void) showPopup: (UIViewController*) vc {
     STPopupController *popupController = [[STPopupController alloc] initWithRootViewController:vc];
@@ -64,7 +65,7 @@
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self showAutocomplete:@"table/cboDocumentName?search="];
+    [self showAutocomplete:@"v1/table/cboDocumentName?search="];
 }
 
 - (IBAction)didTapSend:(id)sender {

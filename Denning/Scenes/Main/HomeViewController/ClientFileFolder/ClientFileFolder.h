@@ -12,4 +12,5 @@
 @interface ClientFileFolder : CustomFileUpload
 
 @property (strong, nonatomic) SearchResultModel *model;
+@property (strong, nonatomic) NSString* defaultFileName;
 @end

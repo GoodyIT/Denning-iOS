@@ -129,10 +129,7 @@ QMPushNotificationManagerDelegate>
 shouldSelectViewController:(UIViewController *)viewController
 {
     if (![viewController.childViewControllers[0] isKindOfClass:[HomeViewController class]]) {
-        if ([DataManager sharedManager].isSessionExpired == YES) {
-            [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
-            return NO;
-        }
+        return [self showSessionExpireAlertAndLogin];
     }
    
     if ([viewController.childViewControllers[0] isKindOfClass:[DashboardViewController class]] || [viewController.childViewControllers[0] isKindOfClass:[MainContactViewController class]]) {
@@ -257,11 +254,22 @@ shouldSelectViewController:(UIViewController *)viewController
     }];
 }
 
-- (void) contactUs {
+- (BOOL) showSessionExpireAlertAndLogin {
     if ([DataManager sharedManager].isSessionExpired == YES) {
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) withTitle:@"Warning" actionSuccess:NO inViewController:[DIHelpers topMostController] withCallback:^{
+            [self performSegueWithIdentifier:kAuthSegue sender:nil];
+        }];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void) contactUs {
+    if (![self showSessionExpireAlertAndLogin]) {
         return;
     }
+    
     if ([[QBChat instance] isConnected] && [[DataManager sharedManager] isLoggedIn]) {
         [self performSegueWithIdentifier:kDenningSupportSegue sender:nil];
     } else {
@@ -270,8 +278,7 @@ shouldSelectViewController:(UIViewController *)viewController
 }
 
 - (void) tapSetting {
-    if ([DataManager sharedManager].isSessionExpired == YES) {
-        [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:[DIHelpers topMostController]];
+    if (![self showSessionExpireAlertAndLogin]) {
         return;
     }
     

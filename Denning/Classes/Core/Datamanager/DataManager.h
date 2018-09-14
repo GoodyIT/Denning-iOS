@@ -42,7 +42,7 @@
 @property (strong, nonatomic) NSString* dtExpire;
 @property (assign, nonatomic) BOOL isExpire;
 
-@property (strong, nonatomic) BOOL isSessionExpired;
+@property (assign, nonatomic) BOOL isSessionExpired;
 
 + (DataManager *)sharedManager;
 

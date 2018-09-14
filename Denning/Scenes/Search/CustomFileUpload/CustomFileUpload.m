@@ -33,7 +33,6 @@ QMImagePickerResultHandler>
 
 
 - (void) prepareUI {
-    _url = MATTER_STAFF_FILEFOLDER;
     
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
@@ -108,7 +107,6 @@ QMImagePickerResultHandler>
 - (void) handleTap {
     [self.view endEditing:YES];
 }
-
 
 - (void)changeBranch {
     if ([DataManager sharedManager].isPublicUser) {
