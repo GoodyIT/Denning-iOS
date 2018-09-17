@@ -911,7 +911,6 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     NSLog(@"Autocomplete table view was added to the view hierarchy");
 }
 
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

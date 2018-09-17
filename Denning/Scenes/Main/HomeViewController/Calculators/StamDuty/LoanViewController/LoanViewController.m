@@ -49,21 +49,21 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 2;
-    } else if (section == 1) {
-        return 2;
-    } else if (section == 2) {
-        return 1;
-    }
-    return 6;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//    
+//    return 3;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return 2;
+//    } else if (section == 1) {
+//        return 2;
+//    } else if (section == 2) {
+//        return 1;
+//    }
+//    return 6;
+//}
 
 - (NSString*) removeCommaFromString: (NSString*) formattedNumber
 {
@@ -151,42 +151,8 @@
     
     // calculate the legal cost
     double priceValue = [self getActualNumber:self.loanAmount.text];
-    double legalCost = 0;
-    if (priceValue  >= 500000) {
-        legalCost  += 500000* 0.01;
-    } else {
-        legalCost  += priceValue * 0.01;
-        legalCost = MAX(legalCost,500);
-    }
-    priceValue  -= 500000;
-    
-    if (priceValue  > 0 && priceValue  < 500000){
-        legalCost  += priceValue *0.008;
-    } else if (priceValue  >= 500000) {
-        legalCost  += 500000*0.008;
-    }
-    priceValue  -= 500000;
-    
-    if (priceValue  > 0 && priceValue  < 2000000){
-        legalCost  += priceValue *0.007;
-    } else if (priceValue  >= 2000000) {
-        legalCost  += 2000000*0.007;
-    }
-    priceValue  -= 2000000;
-    
-    if (priceValue  > 0 && priceValue  < 2000000){
-        legalCost  += priceValue *0.006;
-    } else if (priceValue  >= 2000000) {
-        legalCost  += 2000000*0.006;
-    }
-    priceValue  -= 2000000;
-    
-    if (priceValue  > 0 && priceValue  < 2500000){
-        legalCost  += priceValue *0.005;
-    } else if (priceValue  >= 2500000) {
-        legalCost  += 2500000*0.005;
-    }
-    priceValue  -= 2500000;
+    double legalCost = [[DIHelpers calcLoanAndLegal:priceValue][1] doubleValue];
+    priceValue = [[DIHelpers calcLoanAndLegal:priceValue][0] doubleValue];
     
     if (priceValue > 0) {
         [QMAlert showAlertWithMessage:@"There will be a negotiation for the legal cost with such amount of money" actionSuccess:YES inViewController:self];

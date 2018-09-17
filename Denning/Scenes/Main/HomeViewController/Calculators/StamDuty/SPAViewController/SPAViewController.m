@@ -12,12 +12,23 @@
 @interface SPAViewController ()<UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *priceValueTextField;
-@property (weak, nonatomic) IBOutlet UITextField *resultTextField;
-@property (weak, nonatomic) IBOutlet UILabel *relationshipLabel;
-@property (strong, nonatomic) NSArray* relationsArray;
-@property (weak, nonatomic) IBOutlet UITextField *legalCostTextField;
-@property (weak, nonatomic) IBOutlet UITextField *totalTextField;
+@property (weak, nonatomic) IBOutlet UITextField *loanAmount;
+@property (weak, nonatomic) IBOutlet UILabel *loanType;
 
+@property (weak, nonatomic) IBOutlet UITextField *stampSPA;
+@property (weak, nonatomic) IBOutlet UITextField *stampLoan;
+@property (weak, nonatomic) IBOutlet UILabel *relationshipLabel;
+@property (weak, nonatomic) IBOutlet UILabel *marginLabel;
+@property (strong, nonatomic) NSArray* relationsArray;
+@property (strong, nonatomic) NSMutableDictionary* marginArray;
+@property (strong, nonatomic) NSDictionary* loanTypeArray;
+@property (strong, nonatomic) NSMutableArray* loanMarginLabelArray;
+@property (weak, nonatomic) IBOutlet UITextField *legalSPA;
+@property (weak, nonatomic) IBOutlet UITextField *legalLoan;
+@property (weak, nonatomic) IBOutlet UITextField *totalSPA;
+@property (weak, nonatomic) IBOutlet UITextField *totalLoan;
+
+@property (weak, nonatomic) IBOutlet UITextField *grandTotal;
 @end
 
 @implementation SPAViewController
@@ -29,7 +40,21 @@
 }
 
 - (void) prepareUI {
-    self.relationsArray = [NSArray arrayWithObjects:@"Seller-Purchaser (100%)", @"Husband-wife (0%)", @"Parents-Child (50%)", @"Grandparent-Grandchild (50%)", @"Trustee-Beneficiary (RM10)", @"Administrator-Beneficiary (+RM10)", @"Trustee-Trustee (RM10)flat", @"No consideration(Gift)100%", @"Others (RM10)", nil];
+    self.relationsArray = [NSArray arrayWithObjects:@"Seller-Purchaser (100%)", @"Husband-wife (0%)", @"Parents-Child (50%)", @"Grandparent-Grandchild (50%)", @"Trustee-Beneficiary (RM10)", @"Administrator-Beneficiary (RM10)", @"Executor-Beneficiary (RM10)", @"Trustee-Trustee (RM10)flat", @"No consideration(Gift)100%", @"Others (RM10)", nil];
+    
+    self.marginArray = [NSMutableDictionary new];
+    self.loanMarginLabelArray = [NSMutableArray new];
+    for (int i = 100; i >= 1; i--) {
+        NSString* label = [NSString stringWithFormat:@"%d%%", i];
+        [self.loanMarginLabelArray addObject:label];
+        [self.marginArray addEntriesFromDictionary:@{label: @(i)}];
+    }
+    
+    self.loanTypeArray = @{@"Conventional":@(0.005), @"Islamic":@(0.005*0.8)};
+    // Set the defaul value
+    self.relationshipLabel.text = self.relationsArray[0];
+    self.marginLabel.text = @"90%";
+    self.loanType.text = @"Conventional";
     
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
@@ -39,9 +64,9 @@
                             [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                             [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(handleTap)]];
     [accessoryView sizeToFit];
-    self.priceValueTextField.inputAccessoryView = accessoryView;
+    self.priceValueTextField.inputAccessoryView = self.loanAmount.inputAccessoryView = accessoryView;
     
-    [self.resultTextField addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingChanged];
+    [self.totalSPA addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)handleTap {
@@ -54,14 +79,23 @@
 }
 
 - (IBAction)didTapReset:(id)sender {
-    self.priceValueTextField.text = @"";
-    self.relationshipLabel.text = @"";
-    self.resultTextField.text = @"";
-    self.legalCostTextField.text = @"";
+    self.priceValueTextField.text = self.relationshipLabel.text = self.totalSPA.text = self.totalLoan.text =
+    self.legalSPA.text = self.legalLoan.text = @"";
 }
+
+- (void) calcLoanAmount {
+    if (self.priceValueTextField.text.length == 0) {
+        return;
+    }
+    double priceValue = [self getActualNumber:self.priceValueTextField.text];
+    double loanMarginValue = [[self.marginArray valueForKey:self.marginLabel.text] doubleValue];
+    self.loanAmount.text = [NSString stringWithFormat:@"%.2f", (priceValue*loanMarginValue/100.0f)];
+}
+
 
 - (IBAction)didTapCalculate:(id)sender {
     double priceValue = [self getActualNumber:self.priceValueTextField.text];
+    double backPrice = priceValue;
     if ([self.priceValueTextField.text isEqualToString:@""]){
         [QMAlert showAlertWithMessage:@"Please input the price or market value to calculate stamp duty" actionSuccess:NO inViewController:self];
         return;
@@ -71,6 +105,13 @@
         [QMAlert showAlertWithMessage:@"Please select the relationship you want to apply for" actionSuccess:YES inViewController:self];
         return;
     }
+    
+    if (self.marginLabel.text.length == 0) {
+        [QMAlert showAlertWithMessage:@"Please select the loan margin you want to apply for" actionSuccess:YES inViewController:self];
+        return;
+    }
+    
+   
     
     // Calculate the stam Duty
     double stamDuty = 0;
@@ -95,47 +136,12 @@
     }
     
     // calculate the legal cost
-    priceValue = [self getActualNumber:self.priceValueTextField.text];
+    priceValue = [[DIHelpers calcLoanAndLegal:backPrice][0] doubleValue];
     
-    double legalCost = 0;
-    if (priceValue  >= 500000) {
-        legalCost  += 500000* 0.01;
-    } else {
-        legalCost  += priceValue * 0.01;
-        legalCost = MAX(legalCost,500);
-    }
-    priceValue  -= 500000;
-    
-    if (priceValue  > 0 && priceValue  < 500000){
-        legalCost  += priceValue *0.008;
-    } else if (priceValue  >= 500000) {
-        legalCost  += 500000*0.008;
-    }
-    priceValue  -= 500000;
-    
-    if (priceValue  > 0 && priceValue  < 2000000){
-        legalCost  += priceValue *0.007;
-    } else if (priceValue  >= 2000000) {
-        legalCost  += 2000000*0.007;
-    }
-    priceValue  -= 2000000;
-    
-    if (priceValue  > 0 && priceValue  < 2000000){
-        legalCost  += priceValue *0.006;
-    } else if (priceValue  >= 2000000) {
-        legalCost  += 2000000*0.006;
-    }
-    priceValue  -= 2000000;
-    
-    if (priceValue  > 0 && priceValue  < 2500000){
-        legalCost  += priceValue *0.005;
-    } else if (priceValue  >= 2500000) {
-        legalCost  += 2500000*0.005;
-    }
-    priceValue  -= 2500000;
+    double legalCost = [[DIHelpers calcLoanAndLegal:backPrice][1] doubleValue];
     
     if (priceValue > 0) {
-        [QMAlert showAlertWithMessage:@"There will be a negotiation for the legal cost with such amount of money" actionSuccess:YES inViewController:self];
+        [QMAlert showInformationWithMessage:@"Legal fee is negotiable for such price" inViewController:self];
     }
     
     if ([self.relationshipLabel.text isEqualToString:@"Seller-Purchaser (100%)"] || [self.relationshipLabel.text isEqualToString:@"No consideration(Gift)100%"])
@@ -149,78 +155,52 @@
         stamDuty  *= .5; // 50%
     } else if ([self.relationshipLabel.text isEqualToString:@"Grandparent-Grandchild (50%)"]){
         stamDuty  *= .5; // 50%
-    } else if ([self.relationshipLabel.text isEqualToString:@"Administrator-Beneficiary (+RM10)"] || [self.relationshipLabel.text isEqualToString:@"Trustee-Beneficiary (RM10)"] || [self.relationshipLabel.text isEqualToString:@"Trustee-Trustee (RM10)flat"] || [self.relationshipLabel.text isEqualToString:@"Others (RM10)"]) {
+    } else if ([self.relationshipLabel.text isEqualToString:@"Administrator-Beneficiary (RM10)"] ||  [self.relationshipLabel.text isEqualToString:@"Executor-Beneficiary (RM10)"] || [self.relationshipLabel.text isEqualToString:@"Trustee-Beneficiary (RM10)"] || [self.relationshipLabel.text isEqualToString:@"Trustee-Trustee (RM10)flat"] || [self.relationshipLabel.text isEqualToString:@"Others (RM10)"]) {
         stamDuty = 10;
     } else {
         stamDuty  += 10; // Add RM10
     }
     
     legalCost *= 1;
-    self.resultTextField.text = [NSString stringWithFormat:@"%.2f", stamDuty ];
-    self.legalCostTextField.text = [NSString stringWithFormat:@"%.2f", legalCost];
+    self.stampSPA.text = [NSString stringWithFormat:@"%.2f", stamDuty ];
+    self.legalSPA.text = [NSString stringWithFormat:@"%.2f", legalCost];
+    double totalValue = stamDuty + legalCost;
+    self.totalSPA.text = [NSString stringWithFormat:@"%.2f", totalValue];
+    [DIHelpers applyCommaToTextField:self.totalSPA];
+    [DIHelpers applyCommaToTextField:self.legalSPA];
+    [DIHelpers applyCommaToTextField:self.totalSPA];
     
-    [self applyCommaToTextField:self.resultTextField];
-    [self applyCommaToTextField:self.legalCostTextField];
+    // Calculate Loan
+    double amountValue = priceValue * [[self.marginArray valueForKey:self.marginLabel.text] doubleValue] / 100.0f;
+    self.loanAmount.text = [NSString stringWithFormat:@"%.2f", amountValue];
+    double stampDutyLoan = [[self.loanTypeArray valueForKey:self.loanType.text] doubleValue] * backPrice;
+    double legalLoan = [[DIHelpers calcLoanAndLegal:backPrice][1] doubleValue];
+    priceValue = [[DIHelpers calcLoanAndLegal:backPrice][0] doubleValue];
+    self.stampLoan.text = [NSString stringWithFormat:@"%.2f", stampDutyLoan];
+    self.legalLoan.text = [NSString stringWithFormat:@"%.2f", legalLoan];
+    self.totalLoan.text = [NSString stringWithFormat:@"%.2f", (stampDutyLoan+legalLoan)];
+    self.grandTotal.text = [NSString stringWithFormat:@"%.2f", (self.totalLoan.text.doubleValue+self.totalSPA.text.doubleValue)];
 }
 
-- (NSString*) removeCommaFromString: (NSString*) formattedNumber
-{
-    NSArray * comps = [formattedNumber componentsSeparatedByString:@","];
-    
-    NSString * result = nil;
-    for(NSString *s in comps)
-    {
-        if(result)
-        {
-            result = [result stringByAppendingFormat:@"%@",[s capitalizedString]];
-        } else
-        {
-            result = [s capitalizedString];
-        }
-    }
-    
-    return result;
-}
 - (double) getActualNumber: (NSString*) formattedNumber
 {
-    return [[self removeCommaFromString:formattedNumber] doubleValue];
-}
-
-- (void) applyCommaToTextField:(UITextField*) textField
-{
-    NSString *mystring = [self removeCommaFromString:textField.text];
-    NSNumber *number = [NSDecimalNumber decimalNumberWithString:mystring];
-    NSNumberFormatter *formatter = [NSNumberFormatter new];
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    textField.text = [formatter stringFromNumber:number];
+    return [[DIHelpers removeCommaFromString:formattedNumber] doubleValue];
 }
 
 #pragma mark - UITexFieldDelegate
 - (void) textFieldDidEndEditing:(UITextField *)textField
 {
     if (textField.text.length > 0) {
-        [self applyCommaToTextField:textField];
+        [DIHelpers applyCommaToTextField:textField];
+    }
+    
+    if (textField.tag == 10) {
+         double priceValue = [self getActualNumber:self.priceValueTextField.text];
+        if (priceValue > 0) {
+            
+        }
     }
 }
-
-
-#pragma mark - Table view data source
-//
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//
-//    return 3;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return 2;
-//    } else if (section == 1) {
-//        return 2;
-//    } else if (section == 2) {
-//        return 1;
-//    }
-//    return 0;
-//}
 
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -240,61 +220,37 @@
                                               origin:self.relationshipLabel];
     }
     
+    if (indexPath.section == 0 && indexPath.row == 2) {
+        [ActionSheetStringPicker showPickerWithTitle:@"Select a Margin"
+                                                rows:self.loanMarginLabelArray
+                                    initialSelection:0
+                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                                               
+                                               self.marginLabel.text = selectedValue;
+                                               [self calcLoanAmount];
+                                           }
+                                         cancelBlock:^(ActionSheetStringPicker *picker) {
+                                             NSLog(@"Block Picker Canceled");
+                                         }
+                                              origin:self.relationshipLabel];
+    }
+    
+    if (indexPath.section == 0 && indexPath.row == 4) {
+        [ActionSheetStringPicker showPickerWithTitle:@"Select a Loan Type"
+                                                rows:[self.loanTypeArray allKeys]
+                                    initialSelection:0
+                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                                               
+                                               self.loanType.text = selectedValue;
+                                           }
+                                         cancelBlock:^(ActionSheetStringPicker *picker) {
+                                             NSLog(@"Block Picker Canceled");
+                                         }
+                                              origin:self.relationshipLabel];
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *resultTextField;
 @property (weak, nonatomic) IBOutlet UITextField *legalCostTextField;
 @property (weak, nonatomic) IBOutlet UITextField *totalTextField;
+@property (weak, nonatomic) IBOutlet UILabel *type;
+
+@property (strong, nonatomic) NSDictionary* typeArray;
 
 @end
 
@@ -46,6 +49,10 @@
     [accessoryView sizeToFit];
     self.monthlyRentTextField.inputAccessoryView = accessoryView;
     self.termsOfTenancyTextField.inputAccessoryView = accessoryView;
+    
+    self.typeArray = @{@"Tenency":@(0.25), @"Lease":@(0.5)};
+    
+    self.type.text = @"Tenency";
 }
 
 - (void)handleTap {
@@ -98,22 +105,22 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 3;
-    } else if (section == 1) {
-        return 2;
-    } else if (section == 2) {
-        return 1;
-    }
-    
-    return 0;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//
+//    return 3;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return 3;
+//    } else if (section == 1) {
+//        return 2;
+//    } else if (section == 2) {
+//        return 1;
+//    }
+//    
+//    return 0;
+//}
 
 - (IBAction)didTapCalculate:(id)sender {
     if ([self.monthlyRentTextField.text isEqualToString:@""]){
@@ -141,52 +148,17 @@
     }
     
     // calculate the legal cost
-    double priceValue = [self getActualNumber:self.annualRentLabel.text];
     double legalCost = 0;
-    if (priceValue  >= 500000) {
-        legalCost  += 500000* 0.01;
-    } else {
-        legalCost  += priceValue * 0.01;
-        legalCost = MAX(legalCost,500);
-    }
-    priceValue  -= 500000;
-    
-    if (priceValue  > 0 && priceValue  < 500000){
-        legalCost  += priceValue *0.008;
-    } else if (priceValue  >= 500000) {
-        legalCost  += 500000*0.008;
-    }
-    priceValue  -= 500000;
-    
-    if (priceValue  > 0 && priceValue  < 2000000){
-        legalCost  += priceValue *0.007;
-    } else if (priceValue  >= 2000000) {
-        legalCost  += 2000000*0.007;
-    }
-    priceValue  -= 2000000;
-    
-    if (priceValue  > 0 && priceValue  < 2000000){
-        legalCost  += priceValue *0.006;
-    } else if (priceValue  >= 2000000) {
-        legalCost  += 2000000*0.006;
-    }
-    priceValue  -= 2000000;
-    
-    if (priceValue  > 0 && priceValue  < 2500000){
-        legalCost  += priceValue *0.005;
-    } else if (priceValue  >= 2500000) {
-        legalCost  += 2500000*0.005;
-    }
-    priceValue  -= 2500000;
-    
-    if (priceValue > 0) {
-        [QMAlert showAlertWithMessage:@"There will be a negotiation for the legal cost with such amount of money" actionSuccess:YES inViewController:self];
-    }
-    
+    double factor = [[self.typeArray valueForKey:self.type.text] doubleValue];
+    double monthlyRent = [[self removeCommaFromString:self.monthlyRentTextField.text] doubleValue];
+    legalCost = monthlyRent * factor;
     self.legalCostTextField.text = [NSString stringWithFormat:@"%.2f", legalCost];
+    self.totalTextField.text = [NSString stringWithFormat:@"%.2f", (self.resultTextField.text.doubleValue+legalCost)];
     
     [self applyCommaToTextField:self.resultTextField];
     [self applyCommaToTextField: self.legalCostTextField];
+    [self applyCommaToTextField: self.totalTextField];
+    
 }
 
 - (IBAction)didTapReset:(id)sender {
@@ -195,6 +167,26 @@
     self.termsOfTenancyTextField.text = @"";
     self.resultTextField.text = @"";
     self.legalCostTextField.text = @"";
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.view endEditing:YES];
+    
+    if (indexPath.section == 0 && indexPath.row == 3) {
+        [ActionSheetStringPicker showPickerWithTitle:@"Select a Relationship"
+                                                rows:[self.typeArray allKeys]
+                                    initialSelection:0
+                                           doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                                               
+                                               self.type.text = selectedValue;
+                                           }
+                                         cancelBlock:^(ActionSheetStringPicker *picker) {
+                                             NSLog(@"Block Picker Canceled");
+                                         }
+                                              origin:self.type];
+    }
+    
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "LoanViewController.h"
 #import "SPAViewController.h"
 #import "TenancyViewController.h"
+#import "SharesViewController.h"
 
 #import <HTHorizontalSelectionList/HTHorizontalSelectionList.h>
 #import "QMAlert.h"
@@ -55,12 +56,13 @@
 
 - (void) prepareUI {
     self.title = @"Basic Legal Costs";
-    self.viewControllersIdentifiers = @[@"SPAViewController", @"LoanViewController", @"TenancyViewController"];
+    self.viewControllersIdentifiers = @[@"SPAViewController", @"LoanViewController", @"TenancyViewController", @"SharesViewController"];
     
     SPAViewController *SPAVC = [[UIStoryboard storyboardWithName:@"Calculator" bundle:nil] instantiateViewControllerWithIdentifier:self.viewControllersIdentifiers[0]];
     LoanViewController *loanVC  = [[UIStoryboard storyboardWithName:@"Calculator" bundle:nil] instantiateViewControllerWithIdentifier:self.viewControllersIdentifiers[1]];
     TenancyViewController* tenancyVC = [[UIStoryboard storyboardWithName:@"Calculator" bundle:nil] instantiateViewControllerWithIdentifier:self.viewControllersIdentifiers[2]];
-    self.viewControllers = @[SPAVC, loanVC, tenancyVC];
+    SharesViewController* sharesVC = [[UIStoryboard storyboardWithName:@"Calculator" bundle:nil] instantiateViewControllerWithIdentifier:self.viewControllersIdentifiers[3]];
+    self.viewControllers = @[SPAVC, loanVC, tenancyVC, sharesVC];
 
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(popupScreen:)];
     [backButtonItem setTintColor:[UIColor whiteColor]];
@@ -100,7 +102,7 @@
 }
 
 - (void) prepareStamDutyTypes {
-    self.stamdutyTypesArray = @[@"SPA", @"Loan", @"Tenancy/Lease"];
+    self.stamdutyTypesArray = @[@"SPA", @"Loan", @"Tenancy", @"Shares"];
     self.selectionList = [[HTHorizontalSelectionList alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
     self.selectionList.delegate = self;
     self.selectionList.dataSource = self;

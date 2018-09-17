@@ -11,6 +11,9 @@
 #import "RealPropertyGainTaxViewController.h"
 
 @interface CalendarViewController ()
+{
+    NSDateFormatter *dateFormat;
+}
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 
 @end
@@ -28,6 +31,7 @@
     self.contentSizeInPopup = CGSizeMake(300, 350);
     self.landscapeContentSizeInPopup = CGSizeMake(350, 300);
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(nextBtnDidTap)];
+   
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -39,8 +43,7 @@
 
 - (IBAction)nextBtnDidTap
 {
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"dd-MM-yyyy"];
+   
     NSDate *pickerDate = [_datePicker date];
  
     [self.popupController dismissWithCompletion:^{
@@ -54,6 +57,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd MMM yyyy"];
+    if (_minDate != nil) {
+        [self.datePicker setMinimumDate:[dateFormat dateFromString:_minDate]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

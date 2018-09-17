@@ -1523,4 +1523,73 @@
     return dest;
 }
 
++ (NSArray*) calcLoanAndLegal: (double) priceValue {
+    double legalCost = 0;
+    if (priceValue  >= 500000) {
+        legalCost  += 500000* 0.01;
+    } else {
+        legalCost  += priceValue * 0.01;
+        legalCost = MAX(legalCost,500);
+    }
+    priceValue  -= 500000;
+    
+    if (priceValue  > 0 && priceValue  < 500000){
+        legalCost  += priceValue *0.008;
+    } else if (priceValue  >= 500000) {
+        legalCost  += 500000*0.008;
+    }
+    priceValue  -= 500000;
+    
+    if (priceValue  > 0 && priceValue  < 2000000){
+        legalCost  += priceValue *0.007;
+    } else if (priceValue  >= 2000000) {
+        legalCost  += 2000000*0.007;
+    }
+    priceValue  -= 2000000;
+    
+    if (priceValue  > 0 && priceValue  < 2000000){
+        legalCost  += priceValue *0.006;
+    } else if (priceValue  >= 2000000) {
+        legalCost  += 2000000*0.006;
+    }
+    priceValue  -= 2000000;
+    
+    if (priceValue  > 0 && priceValue  < 2500000){
+        legalCost  += priceValue *0.005;
+    } else if (priceValue  >= 2500000) {
+        legalCost  += 2500000*0.005;
+    }
+    priceValue  -= 2500000;
+    
+    return@[@(priceValue), @(legalCost)];
+}
+
++ (NSString*) removeCommaFromString: (NSString*) formattedNumber
+{
+    NSArray * comps = [formattedNumber componentsSeparatedByString:@","];
+    
+    NSString * result = nil;
+    for(NSString *s in comps)
+    {
+        if(result)
+        {
+            result = [result stringByAppendingFormat:@"%@",[s capitalizedString]];
+        } else
+        {
+            result = [s capitalizedString];
+        }
+    }
+    
+    return result;
+}
+
++ (void) applyCommaToTextField:(UITextField*) textField
+{
+    NSString *mystring = [self removeCommaFromString:textField.text];
+    NSNumber *number = [NSDecimalNumber decimalNumberWithString:mystring];
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    textField.text = [formatter stringFromNumber:number];
+}
+
 @end

@@ -63,6 +63,7 @@
 
 - (void) prepareUI {
     self.statusOfTaxPayerArray = @[@"Malaysian Individual / PR", @"Malaysian Company", @"Foreigner", @"Foreign Company"];
+    self.statusOfTaxPayerTF.text = self.statusOfTaxPayerArray[0];
     
     UIToolbar *accessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetMaxX(self.view.frame), 50)];
     accessoryView.barTintColor = [UIColor groupTableViewBackgroundColor];
@@ -114,6 +115,9 @@
     CalendarViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CalendarView"];
     calendarViewController.realVC = self;
     calendarViewController.typeOfDate = typeString;
+    if ([typeString isEqualToString:@"Date of Disposal"]) {
+        calendarViewController.minDate = @"01 Jan 2014";
+    }
     STPopupController *popupController = [[STPopupController alloc] initWithRootViewController:calendarViewController];
     [STPopupNavigationBar appearance].barTintColor = [UIColor blackColor];
     [STPopupNavigationBar appearance].tintColor = [UIColor whiteColor];
@@ -179,14 +183,14 @@
     }
     
     self.taxRateTF.text = [NSString stringWithFormat:@"%.2f", taxRate];
-    self.taxPayable.text = [NSString stringWithFormat:@"%2.f", realpropertyTax];
+    self.taxPayable.text = [NSString stringWithFormat:@"%.2f", realpropertyTax];
     [self applyCommaToTextField:self.taxRateTF];
     [self applyCommaToTextField:self.taxPayable];
 }
 
 - (void) applyTaxRestriction
 {
-    if ([acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+    if ([acquisitionDate earlierDate:[dateFormat dateFromString:@"01 Jan 2014"]]) {
         realpropertyTax = MAX(realpropertyTax, 5000);
     } else {
         realpropertyTax = MAX(realpropertyTax, 10000);
@@ -196,33 +200,8 @@
 - (void) calculateTaxRateForLocalCompany
 {
     taxRate = 0;
-//    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2009-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-01-01"]]){
-//        taxRate = 5;
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2011-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-01-01"]]) {
-//        if (numberOfYears <= 2) {
-//            taxRate = 10;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 5;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
-//        if (numberOfYears <= 2) {
-//            taxRate = 15;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 10;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-12-31"]]) {
-//        if (numberOfYears <= 3) {
-//            taxRate = 30;
-//        } else if (numberOfYears <= 4) {
-//            taxRate = 20;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 15;
-//        } else if (numberOfYears <= 6) {
-//           taxRate = 5;
-//        }
-//    }
     
-    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"01 Jan 2014"]]) {
         if (numberOfYears < 2) {
             taxRate = 30;
         } else if (numberOfYears < 3) {
@@ -239,31 +218,7 @@
 
 - (void) calculateTaxRateForLocalPerson
 {
-    taxRate = 0;
-//    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2009-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-01-01"]]){
-//        taxRate = 5;
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2011-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-01-01"]]) {
-//        if (numberOfYears <= 2) {
-//            taxRate = 10;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 5;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-12-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-01-01"]]) {
-//        if (numberOfYears <= 2) {
-//            taxRate = 15;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 10;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-12-31"]]) {
-//        if (numberOfYears <= 3) {
-//            taxRate = 30;
-//        } else if (numberOfYears <= 4) {
-//            taxRate = 20;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 15;
-//        }
-//    }
-    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-01-01"]]) {
+    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"01 Jan 2014"]]) {
         if (numberOfYears < 2) {
             taxRate = 30;
         } else if (numberOfYears < 3) {
@@ -282,51 +237,14 @@
 - (void) calculateTaxRateForForeignerAndCompany
 {
     taxRate = 0;
-//    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"1997-10-16"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2007-04-01"]]){
-//        if (numberOfYears <= 5) {
-//            taxRate = 30;
-//        } else {
-//            taxRate = 5;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2007-03-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2010-01-01"]]){
-//        taxRate = 0;
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2010-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2012-06-01"]]){
-//        if (numberOfYears <= 5) {
-//            taxRate = 5;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2012-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2013-06-01"]]){
-//        if (numberOfYears <= 2) {
-//            taxRate = 10;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 5;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2013-05-31"]] && [acquisitionDate earlierDate:[dateFormat dateFromString:@"2014-06-01"]]){
-//        if (numberOfYears <= 2) {
-//            taxRate = 15;
-//        } else if (numberOfYears <= 5) {
-//            taxRate = 10;
-//        }
-//    } else if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-05-31"]]){
-//        if (numberOfYears <= 5) {
-//            taxRate = 30;
-//        } else {
-//            taxRate = 5;
-//        }
-//    }
-    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"2014-01-01"]]) {
-        if (numberOfYears < 2) {
-            taxRate = 30;
-        } else if (numberOfYears < 3) {
-            taxRate = 30;
-        } else if (numberOfYears < 4) {
-            taxRate = 30;
-        } else if (numberOfYears < 5) {
+
+    if ([acquisitionDate laterDate:[dateFormat dateFromString:@"01 Jan 2014"]]) {
+        if (numberOfYears < 5) {
             taxRate = 30;
         } else {
             taxRate = 5;
         }
     }
-
 }
 
 - (IBAction)didTapReset:(id)sender {
@@ -358,7 +276,7 @@
     }
     
     dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"dd-MM-yyyy"];
+    [dateFormat setDateFormat:@"dd MMM yyyy"];
     disposalDate = [dateFormat dateFromString:self.dateOfDisposalTF.text];
     acquisitionDate = [dateFormat dateFromString:self.dateOfAcquizition.text];
     
@@ -390,32 +308,14 @@
     [self calculateNumberOfYearHeld];
 }
 
-- (NSString*) removeCommaFromString: (NSString*) formattedNumber
-{
-    NSArray * comps = [formattedNumber componentsSeparatedByString:@","];
-    
-    NSString * result = nil;
-    for(NSString *s in comps)
-    {
-        if(result)
-        {
-            result = [result stringByAppendingFormat:@"%@",[s capitalizedString]];
-        } else
-        {
-            result = [s capitalizedString];
-        }
-    }
-    
-    return result;
-}
 - (double) getActualNumber: (NSString*) formattedNumber
 {
-    return [[self removeCommaFromString:formattedNumber] doubleValue];
+    return [[DIHelpers removeCommaFromString:formattedNumber] doubleValue];
 }
 
 - (void) applyCommaToTextField:(UITextField*) textField
 {
-    NSString *mystring = [self removeCommaFromString:textField.text];
+    NSString *mystring = [DIHelpers removeCommaFromString:textField.text];
     NSNumber *number = [NSDecimalNumber decimalNumberWithString:mystring];
     NSNumberFormatter *formatter = [NSNumberFormatter new];
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];

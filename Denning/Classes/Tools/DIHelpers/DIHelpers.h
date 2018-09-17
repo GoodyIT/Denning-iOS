@@ -171,4 +171,10 @@
 + (NSArray*) filterGroupOccupants:(NSArray*) users inChatDialog:(QBChatDialog*) chatDialog;
 
 + (BOOL) isExpiredChat;
+
++ (NSArray*) calcLoanAndLegal: (double) priceValue ;
+
++ (NSString*) removeCommaFromString: (NSString*) formattedNumber ;
+
++ (void) applyCommaToTextField:(UITextField*) textField ;
 @end
