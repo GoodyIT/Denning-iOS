@@ -85,6 +85,21 @@
 }
 
 - (IBAction)doCalc:(id)sender {
+    if ([self.saleConsideration.text isEqualToString:@""]){
+        [QMAlert showAlertWithMessage:@"Please input the sale consideration to calculate stamp duty." actionSuccess:NO inViewController:self];
+        return;
+    }
+    
+    if ([self.NTA.text isEqualToString:@""]){
+        [QMAlert showAlertWithMessage:@"Please input the NTA to calculate stamp duty." actionSuccess:NO inViewController:self];
+        return;
+    }
+    
+    if ([self.PER.text isEqualToString:@""]){
+        [QMAlert showAlertWithMessage:@"Please input the PER to calculate stamp duty." actionSuccess:NO inViewController:self];
+        return;
+    }
+    
     double highestValue = MAX([[DIHelpers removeCommaFromString:self.saleConsideration.text] doubleValue], [[DIHelpers removeCommaFromString:self.NTA.text] doubleValue]);
     highestValue = MAX(highestValue, [[DIHelpers removeCommaFromString:self.PER.text] doubleValue]);
     double stampDuty = ceil(highestValue / 1000.0f) * 3;

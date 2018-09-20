@@ -168,19 +168,18 @@
     
     if ([self.statusOfTaxPayerTF.text isEqualToString:@"Malaysian Company"]) {
         [self calculateTaxRateForLocalCompany];
-        realpropertyTax =  gainsLoss * taxRate / 100;
+        
     } else if ([self.statusOfTaxPayerTF.text isEqualToString:@"Malaysian Individual / PR"]) {
         [self calculateTaxRateForLocalPerson];
-        realpropertyTax =  gainsLoss * taxRate / 100;
 //        [self applyTaxRestriction];
     } else if ([self.statusOfTaxPayerTF.text isEqualToString:@"Foreigner"]) {
         [self calculateTaxRateForForeignerAndCompany];
-        realpropertyTax =  gainsLoss * taxRate / 100;
 //        [self applyTaxRestriction];
     } else if ([self.statusOfTaxPayerTF.text isEqualToString:@"Foreign Company"]) {
         [self calculateTaxRateForForeignerAndCompany];
-        realpropertyTax =  gainsLoss * taxRate / 100;
     }
+    
+    realpropertyTax =  gainsLoss * taxRate / 100;
     
     self.taxRateTF.text = [NSString stringWithFormat:@"%.2f", taxRate];
     self.taxPayable.text = [NSString stringWithFormat:@"%.2f", realpropertyTax];
@@ -351,26 +350,26 @@
 }
 
 #pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 5;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 5;
-    } else if (section == 1) {
-        return 5;
-    } else if (section == 2) {
-        return 5;
-    } else if (section == 3) {
-        return 2;
-    } else if (section == 4) {
-        return 1;
-    }
-
-    return 0;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//
+//    return 5;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return 5;
+//    } else if (section == 1) {
+//        return 5;
+//    } else if (section == 2) {
+//        return 5;
+//    } else if (section == 3) {
+//        return 2;
+//    } else if (section == 4) {
+//        return 1;
+//    }
+//
+//    return 0;
+//}
 
 #pragma mark - TextField delegate
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField

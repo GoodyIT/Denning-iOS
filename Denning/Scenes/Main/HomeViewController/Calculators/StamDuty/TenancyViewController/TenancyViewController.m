@@ -50,9 +50,9 @@
     self.monthlyRentTextField.inputAccessoryView = accessoryView;
     self.termsOfTenancyTextField.inputAccessoryView = accessoryView;
     
-    self.typeArray = @{@"Tenency":@(0.25), @"Lease":@(0.5)};
+    self.typeArray = @{@"Tenancy":@(0.25), @"Lease":@(0.5)};
     
-    self.type.text = @"Tenency";
+    self.type.text = @"Tenancy";
 }
 
 - (void)handleTap {
@@ -124,12 +124,12 @@
 
 - (IBAction)didTapCalculate:(id)sender {
     if ([self.monthlyRentTextField.text isEqualToString:@""]){
-        [QMAlert showAlertWithMessage:@"Please input the monthly rent to calculate stamp duty" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please input the monthly rent to calculate stamp duty." actionSuccess:NO inViewController:self];
         return;
     }
     
     if ([self.termsOfTenancyTextField.text isEqualToString:@""]){
-        [QMAlert showAlertWithMessage:@"Please input the terms of tenancy to calculate stamp duty" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please input the terms of tenancy to calculate stamp duty." actionSuccess:NO inViewController:self];
         return;
     }
 
@@ -148,10 +148,9 @@
     }
     
     // calculate the legal cost
-    double legalCost = 0;
     double factor = [[self.typeArray valueForKey:self.type.text] doubleValue];
     double monthlyRent = [[self removeCommaFromString:self.monthlyRentTextField.text] doubleValue];
-    legalCost = monthlyRent * factor;
+    double legalCost = monthlyRent * factor;
     self.legalCostTextField.text = [NSString stringWithFormat:@"%.2f", legalCost];
     self.totalTextField.text = [NSString stringWithFormat:@"%.2f", (self.resultTextField.text.doubleValue+legalCost)];
     

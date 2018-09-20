@@ -97,21 +97,19 @@
     double priceValue = [self getActualNumber:self.priceValueTextField.text];
     double backPrice = priceValue;
     if ([self.priceValueTextField.text isEqualToString:@""]){
-        [QMAlert showAlertWithMessage:@"Please input the price or market value to calculate stamp duty" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please input the price or market value to calculate stamp duty." actionSuccess:NO inViewController:self];
         return;
     }
     
     if (self.relationshipLabel.text.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the relationship you want to apply for" actionSuccess:YES inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please select the relationship you want to apply for." actionSuccess:YES inViewController:self];
         return;
     }
     
     if (self.marginLabel.text.length == 0) {
-        [QMAlert showAlertWithMessage:@"Please select the loan margin you want to apply for" actionSuccess:YES inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please select the loan margin you want to apply for." actionSuccess:YES inViewController:self];
         return;
     }
-    
-   
     
     // Calculate the stam Duty
     double stamDuty = 0;
@@ -141,7 +139,7 @@
     double legalCost = [[DIHelpers calcLoanAndLegal:backPrice][1] doubleValue];
     
     if (priceValue > 0) {
-        [QMAlert showInformationWithMessage:@"Legal fee is negotiable for such price" inViewController:self];
+        [QMAlert showInformationWithMessage:@"Legal fee is negotiable for such price." inViewController:self];
     }
     
     if ([self.relationshipLabel.text isEqualToString:@"Seller-Purchaser (100%)"] || [self.relationshipLabel.text isEqualToString:@"No consideration(Gift)100%"])
@@ -171,7 +169,7 @@
     [DIHelpers applyCommaToTextField:self.totalSPA];
     
     // Calculate Loan
-    double amountValue = priceValue * [[self.marginArray valueForKey:self.marginLabel.text] doubleValue] / 100.0f;
+    double amountValue = backPrice * [[self.marginArray valueForKey:self.marginLabel.text] doubleValue] / 100.0f;
     self.loanAmount.text = [NSString stringWithFormat:@"%.2f", amountValue];
     double stampDutyLoan = [[self.loanTypeArray valueForKey:self.loanType.text] doubleValue] * backPrice;
     double legalLoan = [[DIHelpers calcLoanAndLegal:backPrice][1] doubleValue];

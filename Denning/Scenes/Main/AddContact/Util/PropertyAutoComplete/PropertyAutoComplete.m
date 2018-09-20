@@ -155,6 +155,10 @@
  possibleCompletionsForString:(NSString *)string
             completionHandler:(void (^)(NSArray *))handler
 {
+    if ([DataManager sharedManager].isSessionExpired == YES) {
+        return;
+    }
+    
     if ([NSOperationQueue mainQueue].operationCount > 0) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
     }
@@ -175,7 +179,7 @@
                                                                           NSLog(@"%@", error);
                                                                           if (((NSHTTPURLResponse *)task.response).statusCode == 408) { // Session expired.
                                                                               [QMAlert showAlertWithMessage:NSLocalizedString(@"STR_SESSION_EXPIRED", nil) actionSuccess:NO inViewController:self];
-                                                                          }
+                                                                              [DataManager sharedManager].isSessionExpired = YES;       }
                                                                       }];
     [[NSOperationQueue mainQueue] addOperation:operation];
     
@@ -200,6 +204,7 @@
             forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     customString = selectedString;
+    [self nextBtnDidTap];
 }
 
 - (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField willHideAutoCompleteTableView:(UITableView *)autoCompleteTableView {

@@ -75,7 +75,7 @@
 
 - (IBAction)didTapCalculate:(id)sender {
     if ([self.loanAmountTF.text isEqualToString:@""] || self.loanAmountTF.text.length == 0){
-        [QMAlert showAlertWithMessage:@"Please input the loan amount value or loan period in year to calculate stamp duty" actionSuccess:NO inViewController:self];
+        [QMAlert showAlertWithMessage:@"Please input the loan amount value or loan period in year to calculate stamp duty." actionSuccess:NO inViewController:self];
         return;
     }
     

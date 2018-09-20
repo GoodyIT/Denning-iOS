@@ -110,7 +110,7 @@
     [self.view endEditing:YES];
     
     if (indexPath.section == 0 && indexPath.row == 1) {
-        [ActionSheetStringPicker showPickerWithTitle:@"Select a Relation"
+        [ActionSheetStringPicker showPickerWithTitle:@"Select a type"
                                                 rows:self.typesArray
                                     initialSelection:0
                                            doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {

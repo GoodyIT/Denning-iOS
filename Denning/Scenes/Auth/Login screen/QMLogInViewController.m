@@ -197,6 +197,7 @@
 
 - (void) manageSuccessResult: (NSInteger) statusCode response:(NSDictionary*) response {
     [SVProgressHUD dismiss];
+    [DataManager sharedManager].isSessionExpired = NO;
     [[DataManager sharedManager] setUserPassword:self.passwordField.text];
     [[DataManager sharedManager] setUserInfoFromLogin:response];
     if (statusCode == 250) { // New Device login

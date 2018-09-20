@@ -163,7 +163,6 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (NSArray *)menuItems
 {
-    
     NSString* userInfo = [DataManager sharedManager].user.username;
     if (userInfo.length == 0) {
         userInfo = @"Login";
@@ -180,18 +179,28 @@ shouldSelectViewController:(UIViewController *)viewController
       }],
       
       [RWDropdownMenuItem itemWithText:@"Add" image:[UIImage imageNamed:@"menu_add"] action:^{
+        if (![self showSessionExpireAlertAndLogin]) {
+            return;
+        }
           if ([DataManager sharedManager].isStaff) {
               self.selectedViewController = self.viewControllers[1];
           }
       }],
       
       [RWDropdownMenuItem itemWithText:@"Dashboard" image:[UIImage imageNamed:@"menu_overview"] action:^{
+            if (![self showSessionExpireAlertAndLogin]) {
+                return;
+            }
           if ([DataManager sharedManager].isStaff) {
               self.selectedViewController = self.viewControllers[2];
           }
       }],
       
       [RWDropdownMenuItem itemWithText:@"Chats" image:[UIImage imageNamed:@"icon_message"] action:^{
+        if (![self showSessionExpireAlertAndLogin]) {
+            return;
+        }
+        
         if (!([[QBChat instance] isConnected] || [[QBChat instance] isConnecting]) || ![[DataManager sharedManager] isLoggedIn]) {
             self.tabBarController.selectedIndex = 0;
             [self alertAndLogin];
@@ -216,10 +225,16 @@ shouldSelectViewController:(UIViewController *)viewController
       }],
       
       [RWDropdownMenuItem itemWithText:@"Settings" image:[UIImage imageNamed:@"menu_settings"] action:^{
+            if (![self showSessionExpireAlertAndLogin]) {
+                return;
+            }
           [self tapSetting];
       }],
       
       [RWDropdownMenuItem itemWithText:@"Contact Us" image:[UIImage imageNamed:@"menu_contact_us"] action:^{
+            if (![self showSessionExpireAlertAndLogin]) {
+                return;
+            }
           [self contactUs];
       }],
       
