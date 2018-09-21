@@ -504,15 +504,15 @@ NSMutableDictionary* keyValue;
                 cell.floatingTextField.keyboardType = UIKeyboardTypeDecimalPad;
             }
         }
-        if (((NSString*)_contents[0][2][1]).length > 0){
-            if (indexPath.row >= 5 && indexPath.row <= 8) {
-                cell.floatingTextField.userInteractionEnabled = NO;
-            }
-        } else {
-            if (indexPath.row >= 5 && indexPath.row <= 8) {
-                cell.floatingTextField.userInteractionEnabled = YES;
-            }
-        }
+//        if (((NSString*)_contents[0][2][1]).length > 0){
+//            if (indexPath.row >= 5 && indexPath.row <= 8) {
+//                cell.floatingTextField.userInteractionEnabled = NO;
+//            }
+//        } else {
+//            if (indexPath.row >= 5 && indexPath.row <= 8) {
+//                cell.floatingTextField.userInteractionEnabled = YES;
+//            }
+//        }
     }
     
     if (indexPath.section == 1) {
