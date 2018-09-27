@@ -102,7 +102,7 @@ NSMutableDictionary* keyValue;
                             ],
                           @[@[@"Parcel No.", _propertyModel.parcelNo], @[@"Storey No.", _propertyModel.storeyNo], @[@"Building No", _propertyModel.buildingNo], @[@"Accessory Parcel No.", _propertyModel.accParcelNo], @[@"Accessory Storey No.", _propertyModel.accStoreyNo], @[@"Accessory Building No.", _propertyModel.accBuildingNo], @[@"Units of Shares", _propertyModel.unitShare], @[@"Total Shares", _propertyModel.totalShare]],
                           @[@[@"Parcel Type", _propertyModel.spaParcel.type], @[@"Unit/ParcelmNo.", _propertyModel.spaParcel.value], @[@"Storey No.", _propertyModel.storeyNo], @[@"Building/Block No.", _propertyModel.spaBuildingNo], @[@"Apt/Condo Name", _propertyModel.spaCondoName], @[@"Accessory Parcel No", _propertyModel.spaAccParcelNo], @[@"SPA Area", _propertyModel.spaArea.value], @[@"Measurement Unit", _propertyModel.spaArea.type]],
-                          @[@[@"Project Name", _propertyModel.project], @[@"Developer", _propertyModel.developer], @[@"Proprietor", _propertyModel.proprietor], @[@"Block/Master Title", _propertyModel.masterTitle.fullTitle]],
+                          @[@[@"Project Name", _propertyModel.project.name], @[@"Developer", _propertyModel.developer.name], @[@"Proprietor", _propertyModel.proprietor.name], @[@"Block/Master Title", _propertyModel.masterTitle.fullTitle]],
                           ];
         _contents = [temp mutableCopy];
         if ([_viewType isEqualToString:@"view"]) {
