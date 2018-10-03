@@ -33,7 +33,11 @@
     if ([model.credit floatValue] != 0.0f) {
         _thirdValue.text = [model.credit stringByAppendingString:@" (CR)"];
     } else {
-        _thirdValue.text = [model.debit stringByAppendingString:@" (DR)"];
+        NSString* debit = model.debit;
+        if (![model.debit isEqualToString:@"0.00"]) {
+            debit =  [model.debit stringByAppendingString:@" (DR)"];
+        }
+        _thirdValue.text = debit;
     }
 }
 

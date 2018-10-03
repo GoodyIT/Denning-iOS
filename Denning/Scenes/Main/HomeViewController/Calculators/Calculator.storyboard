@@ -208,7 +208,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Taxable Income" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LA0-qO-xZl">
-                                                    <rect key="frame" x="24" y="13.5" width="135" height="16.5"/>
+                                                    <rect key="frame" x="24" y="13.5" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Bt6-KV-yDf"/>
                                                     </constraints>
@@ -261,7 +261,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Personal Relief" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qke-Mr-LTZ">
-                                                    <rect key="frame" x="24" y="13.5" width="135" height="16.5"/>
+                                                    <rect key="frame" x="24" y="13.5" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="TIg-ax-Qu3"/>
                                                     </constraints>
@@ -310,7 +310,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Life Insurance / EPF" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jwQ-xa-WSF">
-                                                    <rect key="frame" x="24" y="14.5" width="135" height="16.5"/>
+                                                    <rect key="frame" x="24" y="14.5" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Mir-vf-t9d"/>
                                                     </constraints>
@@ -356,7 +356,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Edu &amp; Medical Insurance" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KPg-6I-RFv">
-                                                    <rect key="frame" x="24" y="5.5" width="135" height="33"/>
+                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="Zwe-pC-5yF"/>
                                                     </constraints>
@@ -402,7 +402,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="SOCSO" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHF-Pi-g0h">
-                                                    <rect key="frame" x="24" y="14.5" width="135" height="16.5"/>
+                                                    <rect key="frame" x="24" y="14.5" width="135" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="ddr-Ey-ukV"/>
                                                     </constraints>
@@ -2432,7 +2432,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Term of Tenancy (year)" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OId-D7-rXY">
-                                                    <rect key="frame" x="24" y="5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="5.5" width="135" height="33"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="WyE-c7-AWR"/>
                                                     </constraints>
@@ -2605,7 +2605,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyW-sT-MGD">
-                                                    <rect key="frame" x="24" y="12" width="135" height="19.5"/>
+                                                    <rect key="frame" x="24" y="12.5" width="135" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="QLU-Dr-Mqg"/>
                                                     </constraints>
@@ -3163,7 +3163,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Price or Market value (RM)" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pyx-WE-LKJ">
-                                                    <rect key="frame" x="24" y="17.5" width="135" height="33.5"/>
+                                                    <rect key="frame" x="24" y="18" width="135" height="33"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="9w3-Lc-09c"/>
                                                     </constraints>
@@ -3302,7 +3302,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Loan Amount" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n46-py-323">
-                                                    <rect key="frame" x="24" y="26" width="135" height="17"/>
+                                                    <rect key="frame" x="24" y="26" width="135" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="135" id="peZ-wH-218"/>
                                                     </constraints>
@@ -3413,7 +3413,7 @@
                                                     <subviews>
                                                         <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SPA" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rf4-Q8-AKO">
                                                             <rect key="frame" x="0.0" y="0.0" width="116.5" height="17"/>
-                                                            <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             <connections>
@@ -3422,7 +3422,7 @@
                                                         </textField>
                                                         <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Loan" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kg0-JY-Y73">
                                                             <rect key="frame" x="124.5" y="0.0" width="116.5" height="17"/>
-                                                            <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="textColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="SFUIText-Semibold" family="SF UI Text" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                             <connections>
@@ -3450,7 +3450,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Stamp Duty" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vhp-A0-WmK">
-                                                    <rect key="frame" x="24" y="13.5" width="100" height="17"/>
+                                                    <rect key="frame" x="24" y="13.5" width="100" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="Tii-iH-uBJ"/>
                                                     </constraints>
@@ -3500,7 +3500,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Legal Fee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXA-zy-wVa">
-                                                    <rect key="frame" x="24" y="13.5" width="100" height="17"/>
+                                                    <rect key="frame" x="24" y="13.5" width="100" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="BSt-mR-xfT"/>
                                                     </constraints>
@@ -3550,7 +3550,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05u-l4-RvW">
-                                                    <rect key="frame" x="24" y="12" width="100" height="19.5"/>
+                                                    <rect key="frame" x="24" y="12.5" width="100" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="ZEN-1d-eLK"/>
                                                     </constraints>
@@ -3600,7 +3600,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Grand Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHK-bI-rYt">
-                                                    <rect key="frame" x="24" y="12" width="100" height="19.5"/>
+                                                    <rect key="frame" x="24" y="12.5" width="100" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="bga-x8-LCb"/>
                                                     </constraints>
@@ -4165,7 +4165,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="(c) PER" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jaL-tn-USr">
-                                                    <rect key="frame" x="24" y="13.5" width="150" height="17"/>
+                                                    <rect key="frame" x="24" y="13.5" width="150" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="jE8-JD-Ok0"/>
                                                     </constraints>
@@ -4257,7 +4257,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Legal Fee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6yk-5R-H0H">
-                                                    <rect key="frame" x="24" y="13.5" width="80" height="17"/>
+                                                    <rect key="frame" x="24" y="13.5" width="80" height="16.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="3dD-e2-FhV"/>
                                                     </constraints>
@@ -4307,7 +4307,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVm-VP-8LL">
-                                                    <rect key="frame" x="24" y="12" width="80" height="19.5"/>
+                                                    <rect key="frame" x="24" y="12.5" width="80" height="19"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="80" id="tG3-iD-YrP"/>
                                                     </constraints>

@@ -1585,11 +1585,9 @@
 
 + (void) applyCommaToTextField:(UITextField*) textField
 {
-    NSString *mystring = [self removeCommaFromString:textField.text];
-    NSNumber *number = [NSDecimalNumber decimalNumberWithString:mystring];
-    NSNumberFormatter *formatter = [NSNumberFormatter new];
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    textField.text = [formatter stringFromNumber:number];
+    NSString *myString = [self removeCommaFromString:textField.text];
+   
+    textField.text = [DIHelpers addThousandsSeparatorWithDecimal:myString];
 }
 
 @end

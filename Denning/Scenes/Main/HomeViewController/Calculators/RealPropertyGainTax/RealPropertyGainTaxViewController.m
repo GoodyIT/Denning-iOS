@@ -36,9 +36,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *numberOfYearHeldTF;
 @property (weak, nonatomic) IBOutlet UITextField *statusOfTaxPayerTF;
 @property (weak, nonatomic) IBOutlet UITextField *taxRateTF;
-
 @property (weak, nonatomic) IBOutlet UITextField *taxPayable;
-
 @property (strong, nonatomic) NSArray* statusOfTaxPayerArray;
 
 @end

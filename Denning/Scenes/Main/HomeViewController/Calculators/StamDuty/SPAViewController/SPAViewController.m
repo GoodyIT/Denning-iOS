@@ -160,13 +160,10 @@
     }
     
     legalCost *= 1;
-    self.stampSPA.text = [NSString stringWithFormat:@"%.2f", stamDuty ];
-    self.legalSPA.text = [NSString stringWithFormat:@"%.2f", legalCost];
-    double totalValue = stamDuty + legalCost;
-    self.totalSPA.text = [NSString stringWithFormat:@"%.2f", totalValue];
-    [DIHelpers applyCommaToTextField:self.totalSPA];
-    [DIHelpers applyCommaToTextField:self.legalSPA];
-    [DIHelpers applyCommaToTextField:self.totalSPA];
+    self.stampSPA.text = [DIHelpers addThousandsSeparatorWithDecimal:[NSString stringWithFormat:@"%.2f", stamDuty]];
+    self.legalSPA.text = [DIHelpers addThousandsSeparatorWithDecimal:[NSString stringWithFormat:@"%.2f", legalCost]];
+    double totalSPA = stamDuty + legalCost;
+    self.totalSPA.text = [DIHelpers addThousandsSeparatorWithDecimal:[NSString stringWithFormat:@"%.2f", totalSPA]];
     
     // Calculate Loan
     double amountValue = backPrice * [[self.marginArray valueForKey:self.marginLabel.text] doubleValue] / 100.0f;
@@ -174,10 +171,12 @@
     double stampDutyLoan = [[self.loanTypeArray valueForKey:self.loanType.text] doubleValue] * backPrice;
     double legalLoan = [[DIHelpers calcLoanAndLegal:backPrice][1] doubleValue];
     priceValue = [[DIHelpers calcLoanAndLegal:backPrice][0] doubleValue];
-    self.stampLoan.text = [NSString stringWithFormat:@"%.2f", stampDutyLoan];
-    self.legalLoan.text = [NSString stringWithFormat:@"%.2f", legalLoan];
-    self.totalLoan.text = [NSString stringWithFormat:@"%.2f", (stampDutyLoan+legalLoan)];
-    self.grandTotal.text = [NSString stringWithFormat:@"%.2f", (self.totalLoan.text.doubleValue+self.totalSPA.text.doubleValue)];
+    double totalLoan = (stampDutyLoan+legalLoan);
+    double grandTotal = totalLoan + totalSPA;
+    self.stampLoan.text = [DIHelpers addThousandsSeparatorWithDecimal:[NSString stringWithFormat:@"%.2f", stampDutyLoan]];
+    self.legalLoan.text = [DIHelpers addThousandsSeparatorWithDecimal:[NSString stringWithFormat:@"%.2f", legalLoan]];
+    self.totalLoan.text = [DIHelpers addThousandsSeparatorWithDecimal:[NSString stringWithFormat:@"%.2f", totalLoan]];
+    self.grandTotal.text = [DIHelpers addThousandsSeparatorWithDecimal:[NSString stringWithFormat:@"%.2f", grandTotal]];
 }
 
 - (double) getActualNumber: (NSString*) formattedNumber
