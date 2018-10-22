@@ -459,6 +459,10 @@
 		79734FCB1EBABD3E00647215 /* ChangeBranchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79734FCA1EBABD3E00647215 /* ChangeBranchViewController.m */; };
 		797556F91FC0AA06001CCD46 /* AddMatter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797556F81FC0AA06001CCD46 /* AddMatter.storyboard */; };
 		797556FB1FC0AD22001CCD46 /* AddCourt.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797556FA1FC0AD22001CCD46 /* AddCourt.storyboard */; };
+		797D9946217A971A00983403 /* DynamicAddTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 797D9945217A971A00983403 /* DynamicAddTableViewController.m */; };
+		797D994A217B195C00983403 /* AddMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 797D9949217B195C00983403 /* AddMenu.m */; };
+		797D9952217B236A00983403 /* AddMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 797D9950217B236A00983403 /* AddMenuCell.m */; };
+		797D9953217B236A00983403 /* AddMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797D9951217B236A00983403 /* AddMenuCell.xib */; };
 		797ED5031EAED9F2009C20C4 /* NewContactHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 797ED5011EAED9F2009C20C4 /* NewContactHeaderCell.m */; };
 		797ED5041EAED9F2009C20C4 /* NewContactHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797ED5021EAED9F2009C20C4 /* NewContactHeaderCell.xib */; };
 		797ED50E1EAEDA86009C20C4 /* icon_email_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 797ED5051EAEDA86009C20C4 /* icon_email_red.png */; };
@@ -1932,6 +1936,13 @@
 		79734FCA1EBABD3E00647215 /* ChangeBranchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeBranchViewController.m; sourceTree = "<group>"; };
 		797556F81FC0AA06001CCD46 /* AddMatter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddMatter.storyboard; sourceTree = "<group>"; };
 		797556FA1FC0AD22001CCD46 /* AddCourt.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddCourt.storyboard; sourceTree = "<group>"; };
+		797D9944217A971A00983403 /* DynamicAddTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicAddTableViewController.h; sourceTree = "<group>"; };
+		797D9945217A971A00983403 /* DynamicAddTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DynamicAddTableViewController.m; sourceTree = "<group>"; };
+		797D9948217B195C00983403 /* AddMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddMenu.h; sourceTree = "<group>"; };
+		797D9949217B195C00983403 /* AddMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddMenu.m; sourceTree = "<group>"; };
+		797D994F217B236A00983403 /* AddMenuCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddMenuCell.h; sourceTree = "<group>"; };
+		797D9950217B236A00983403 /* AddMenuCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddMenuCell.m; sourceTree = "<group>"; };
+		797D9951217B236A00983403 /* AddMenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddMenuCell.xib; sourceTree = "<group>"; };
 		797ED5001EAED9F2009C20C4 /* NewContactHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewContactHeaderCell.h; sourceTree = "<group>"; };
 		797ED5011EAED9F2009C20C4 /* NewContactHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewContactHeaderCell.m; sourceTree = "<group>"; };
 		797ED5021EAED9F2009C20C4 /* NewContactHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewContactHeaderCell.xib; sourceTree = "<group>"; };
@@ -4459,6 +4470,8 @@
 				79AC729D1FC0AF26005F7199 /* AddRealContact.storyboard */,
 				79AC729F1FC0B00F005F7199 /* AddProperty.storyboard */,
 				79AC72A11FC0B169005F7199 /* AddReceipt.storyboard */,
+				797D9944217A971A00983403 /* DynamicAddTableViewController.h */,
+				797D9945217A971A00983403 /* DynamicAddTableViewController.m */,
 			);
 			path = AddContact;
 			sourceTree = "<group>";
@@ -5021,6 +5034,25 @@
 				79734FCA1EBABD3E00647215 /* ChangeBranchViewController.m */,
 			);
 			path = ChangeBranch;
+			sourceTree = "<group>";
+		};
+		797D9947217B194600983403 /* AddMenu */ = {
+			isa = PBXGroup;
+			children = (
+				797D9948217B195C00983403 /* AddMenu.h */,
+				797D9949217B195C00983403 /* AddMenu.m */,
+			);
+			path = AddMenu;
+			sourceTree = "<group>";
+		};
+		797D994B217B234600983403 /* AddMenuCell */ = {
+			isa = PBXGroup;
+			children = (
+				797D994F217B236A00983403 /* AddMenuCell.h */,
+				797D9950217B236A00983403 /* AddMenuCell.m */,
+				797D9951217B236A00983403 /* AddMenuCell.xib */,
+			);
+			path = AddMenuCell;
 			sourceTree = "<group>";
 		};
 		797ED4FF1EAED9D8009C20C4 /* NewContactHeaderCell */ = {
@@ -6768,6 +6800,7 @@
 		79FBE01C1E304E0E00448FE3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				797D9947217B194600983403 /* AddMenu */,
 				7970DB3D200F2FC00041A423 /* NameCode */,
 				7970DB39200F2F380041A423 /* UpdatePartyGroup */,
 				791B4FFC1FD0D5C8003C30EC /* DashboardContactFolder */,
@@ -7189,6 +7222,7 @@
 		79FBE09B1E304F5000448FE3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				797D994B217B234600983403 /* AddMenuCell */,
 				7912A5CB1FEB9F4300C8B9A5 /* OpponentCollectionViewCell */,
 				7912A5981FE82FD900C8B9A5 /* TwoButtonsCell */,
 				7912A58D1FE4F03A00C8B9A5 /* FileSearchCell */,
@@ -9742,6 +9776,7 @@
 				79EC0D241E77013A00320A28 /* SF-UI-Text-MediumItalic.otf in Resources */,
 				79EC0D171E77013A00320A28 /* SF-UI-Display-Light.otf in Resources */,
 				79734F9D1EBAA11500647215 /* icon_delivery@3x.png in Resources */,
+				797D9953217B236A00983403 /* AddMenuCell.xib in Resources */,
 				793FF2421EC4D12A001F83A5 /* AddLastTwoButtonsCell.xib in Resources */,
 				791360571FCDEF250022E80F /* phone-icon@2x.png in Resources */,
 				7922886B2017C88E002AB744 /* QMShareTableViewCell.xib in Resources */,
@@ -10584,6 +10619,7 @@
 				795432491FC5386300FF9E57 /* CodeStrModel.m in Sources */,
 				79FF5B5A1E6FBB4000A27907 /* RelatedMatterViewController.m in Sources */,
 				792288092017C762002AB744 /* NSString+QMTransliterating.m in Sources */,
+				797D9946217A971A00983403 /* DynamicAddTableViewController.m in Sources */,
 				792288082017C762002AB744 /* NSString+QMSiriUtils.m in Sources */,
 				96821F2F1F1D7F4300F28708 /* FeeAndMatterGrowth.m in Sources */,
 				7912A6351FEBA25200C8B9A5 /* SwitchItemModel.m in Sources */,
@@ -10896,6 +10932,7 @@
 				790DD4971ECBBD38009D5634 /* ProjectHousingModel.m in Sources */,
 				9636DCE21F03DBB7008DDA41 /* DashboardForthCell.m in Sources */,
 				79F73CB71FFD86CC00E37A17 /* FirmPasswordConfirmViewController.m in Sources */,
+				797D994A217B195C00983403 /* AddMenu.m in Sources */,
 				79FBDFB21E30421A00448FE3 /* QMChatManager.m in Sources */,
 				796BBF9F1EA7B3CE001DA47F /* NewLedgerDetailCell.m in Sources */,
 				7903CFAB1ECDCB240090206C /* AddReceiptViewController.m in Sources */,
@@ -10923,6 +10960,7 @@
 				79FBE1061E304F5000448FE3 /* QMChatVC.m in Sources */,
 				79FBE0951E304EAB00448FE3 /* QMSettingsFooterView.m in Sources */,
 				79FBDFBB1E30421A00448FE3 /* QMMessagesHelper.m in Sources */,
+				797D9952217B236A00983403 /* AddMenuCell.m in Sources */,
 				79161CD51FC7F3040025BCB8 /* CodeTransactionDesc.m in Sources */,
 				7903CFAF1ECE3D1F0090206C /* TaxInvoiceListViewController.m in Sources */,
 				793FF1DB1EC382F8001F83A5 /* AddBillViewController.m in Sources */,

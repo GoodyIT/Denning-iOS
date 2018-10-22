@@ -7,6 +7,7 @@
 //
 
 #import "BaseViewController.h"
+#import "MainTabBarController.h"
 
 @interface BaseViewController ()
 
@@ -55,6 +56,58 @@
 
 - (void)keyboardWillBeHidden:(NSNotification *) __unused notification{
     
+}
+
+- (void) hideTabBar {
+    [self setTabBarVisible:NO animated:NO completion:^(BOOL finished) {
+    }];
+}
+
+- (BOOL)tabBarIsVisible {
+    return self.tabBarController.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame);
+}
+
+- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion {
+    
+    // bail if the current state matches the desired state
+    if ([self tabBarIsVisible] == visible) return (completion)? completion(YES) : nil;
+    
+    // get a frame calculation ready
+    CGRect frame = self.tabBarController.tabBar.frame;
+    CGFloat height = frame.size.height;
+    CGFloat offsetY = (visible)? -height : height;
+    
+    // zero duration means no animation
+    CGFloat duration = (animated)? 0.0 : 0.0;
+    
+    [UIView animateWithDuration:duration animations:^{
+        self.tabBarController.tabBar.frame = CGRectOffset(frame, 0, offsetY);
+    } completion:completion];
+}
+
+- (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action {
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:imageName] style:UIBarButtonItemStylePlain target:self action:action];
+    [backButtonItem setTintColor:[UIColor whiteColor]];
+    
+    [self.tabBarController.navigationItem setLeftBarButtonItems:@[backButtonItem] animated:YES];
+}
+
+- (void) popupScreen {
+    self.tabBarController.tabBar.hidden = NO;
+    self.tabBarController.selectedViewController = self.tabBarController.viewControllers[0];
+    
+    [self setTabBarVisible:YES animated:NO completion:nil];
+    [self configureBackBtnWithImageName:@"icon_user" withSelector:@selector(gotoLogin)];
+}
+
+- (void) gotoLogin {
+    MainTabBarController *mainTabBarController = (MainTabBarController*) self.tabBarController;
+    [mainTabBarController tapLogin:nil];
+}
+
+- (void) gotoMenu {
+    MainTabBarController *mainTabBarController = (MainTabBarController*)self.tabBarController;
+    [mainTabBarController tapMenu:nil];
 }
 
 @end

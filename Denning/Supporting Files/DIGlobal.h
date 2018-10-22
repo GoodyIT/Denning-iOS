@@ -169,6 +169,8 @@ static NSString* const kGoogleMapPlaceAPIKey = @"AIzaSyCFoYw3FsFxc6-1-424Z1NKRI2
 
 #define CONTACT_NAME_DUPLICATE  @"v1/generalSearch?category=1&isAutoComplete=1&search="
 
+#define ADD_DYNAMIC_MENU    @"v1/app/menu?strUserID="
+
 #define CONTACT_IDTYPE_URL  @"v1/IDType?search="
 
 #define CONTACT_TITLE_URL   @"v1/Salutation?search="

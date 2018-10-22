@@ -199,6 +199,7 @@
 #import "ContactFolderItem.h"
 #import "NameCode.h"
 #import "UpdatePartyGroup.h"
+#import "AddMenu.h"
 
 @protocol ContactListWithCodeSelectionDelegate <NSObject>
 

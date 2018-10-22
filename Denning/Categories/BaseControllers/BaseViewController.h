@@ -13,5 +13,12 @@
 - (void)addKeyboardObservers;
 - (void)removeKeyboardObservers;
 
+- (void) hideTabBar;
+
+- (void)setTabBarVisible:(BOOL)visible animated:(BOOL)animated completion:(void (^)(BOOL))completion;
+
+- (void) configureBackBtnWithImageName:(NSString*) imageName withSelector:(SEL) action;
+
+- (void) popupScreen;
 
 @end

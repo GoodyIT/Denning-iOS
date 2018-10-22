@@ -574,7 +574,7 @@ NSMutableDictionary* keyValue;
             
             k++;
         }
-        [_headers addObject:@"PartyGroup"];
+        [_headers addObject:@"Parties"];
         NSDictionary* temp = @{@(1):@(1)};
         [_keyValue addEntriesFromDictionary:temp];
         

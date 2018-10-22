@@ -108,6 +108,8 @@ static NSString* const kCalendarRangeSegue = @"CalendarRangeSegue";
 
 static NSString* const kAddContactSegue = @"AddContactSegue";
 
+static NSString* const kAddCourtSegue = @"AddCourtSegue";
+
 static NSString* const kAddMatterSegue = @"AddMatterSegue";
 
 static NSString* const kListWithCodeSegue = @"ListWithCodeSegue";
@@ -165,6 +167,12 @@ static NSString* const kCourtDiarySegue = @"CourtDiarySegue";
 static NSString* const kDiarySegue = @"DiarySegue";
 
 static NSString* const kAddReceiptSegue = @"AddReceiptSegue";
+
+static NSString* const kAddTaxInvoiceSegue = @"AddTaxInvoiceSegue";
+
+static NSString* const kAddQuotationSegue = @"AddQuotationSegue";
+
+static NSString* const kAddLeaveAppSegue = @"AddLeaveAppSegue";
 
 static NSString* const kAddBillSegue = @"AddBillSegue";
 
