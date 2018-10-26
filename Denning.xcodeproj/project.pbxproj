@@ -5955,7 +5955,6 @@
 				791282401FDC6BF0006E93E2 /* Folder screen */,
 				9635BBA01F2AEDC700BE7CF0 /* Attendance */,
 				960F03071F29511500B25BBC /* ClientFileFolder */,
-				96EAEBB01F22B3A1004F75FC /* ComingSoon */,
 				79734FC81EBABD3E00647215 /* ChangeBranch */,
 				797ED52F1EAFDC19009C20C4 /* CalendarRangeView */,
 				79EC0E881E8BE7F700320A28 /* Calculators */,
@@ -8296,6 +8295,7 @@
 			children = (
 				960F03081F29512900B25BBC /* ClientFileFolder.h */,
 				960F03091F29512900B25BBC /* ClientFileFolder.m */,
+				96EAEBB01F22B3A1004F75FC /* ComingSoon */,
 			);
 			path = ClientFileFolder;
 			sourceTree = "<group>";

@@ -81,7 +81,7 @@
         return;
     }
     NSData* imageData = UIImageJPEGRepresentation(self.imagePreview.image, 1);
-    NSString* fileNo1 = [DataManager sharedManager].tempTheCode;
+    NSString* fileNo1 = [DataManager sharedManager].user.theCode;
     if (_model != nil) {
         fileNo1 = _model.key;
     }

@@ -151,6 +151,7 @@
         self->isLoading = NO;
         if (error == nil) {
             [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"sessionID"]];
+            [[DataManager sharedManager] setOnlySessionID:[responseObject valueForKeyNotNull:@"theCode"]];
             if ([[responseObject valueForKeyNotNull:@"statusCode"] isEqual:@(250)]) {
                 [self performSegueWithIdentifier:kFirmPasswordSegue sender:urlModel];
             } else {

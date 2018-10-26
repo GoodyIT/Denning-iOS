@@ -137,6 +137,12 @@
     }];
 }
 
+- (void) setTheCode:(NSString*) theCode {
+    [[RLMRealm defaultRealm] transactionWithBlock:^{
+        user.theCode = theCode;
+    }];
+}
+
 - (void) setServerAPI: (NSString*) serverAPI firmURLModel:(FirmURLModel*) firmURLModel
 {
     self.searchType = @"General";
