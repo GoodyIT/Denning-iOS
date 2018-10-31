@@ -83,7 +83,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 Feb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5c-fT-4jT">
-                                            <rect key="frame" x="329.5" y="64" width="37.5" height="27"/>
+                                            <rect key="frame" x="328.5" y="64" width="38.5" height="27"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
                                             <color key="textColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -309,6 +309,15 @@
                                     <outlet property="delegate" destination="p6s-xC-Q4n" id="LVV-9d-pjS"/>
                                 </connections>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJ6-K0-TCY">
+                                <rect key="frame" x="299" y="587" width="60" height="30"/>
+                                <state key="normal" title="Visit Ads">
+                                    <color key="titleColor" red="0.99607843139999996" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapAds:" destination="p6s-xC-Q4n" eventType="touchUpInside" id="eef-ay-MU3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -320,9 +329,11 @@
                             <constraint firstAttribute="trailing" secondItem="LCu-gp-J0O" secondAttribute="trailing" id="ZQP-vs-Plq"/>
                             <constraint firstItem="LCu-gp-J0O" firstAttribute="top" secondItem="yCW-D0-QmI" secondAttribute="bottom" id="aM6-dH-c08"/>
                             <constraint firstItem="Rrg-ay-2bM" firstAttribute="top" secondItem="MM1-Ph-TBu" secondAttribute="bottom" id="cCA-Vl-pYX"/>
+                            <constraint firstItem="fJ6-K0-TCY" firstAttribute="trailing" secondItem="eAU-aF-ps9" secondAttribute="trailingMargin" id="gMG-AD-nPW"/>
                             <constraint firstItem="MM1-Ph-TBu" firstAttribute="leading" secondItem="eAU-aF-ps9" secondAttribute="leading" id="iMc-Lc-gzV"/>
                             <constraint firstItem="Rrg-ay-2bM" firstAttribute="leading" secondItem="eAU-aF-ps9" secondAttribute="leading" id="jqx-tq-udy"/>
                             <constraint firstItem="yCW-D0-QmI" firstAttribute="top" secondItem="Rrg-ay-2bM" secondAttribute="bottom" id="mR9-fb-bzV"/>
+                            <constraint firstItem="LCu-gp-J0O" firstAttribute="top" secondItem="fJ6-K0-TCY" secondAttribute="bottom" constant="-30" id="pwo-4w-Wlz"/>
                             <constraint firstItem="yCW-D0-QmI" firstAttribute="leading" secondItem="eAU-aF-ps9" secondAttribute="leading" id="rvF-Nk-myu"/>
                             <constraint firstAttribute="trailing" secondItem="yCW-D0-QmI" secondAttribute="trailing" id="xfV-ou-mjp"/>
                         </constraints>
@@ -407,7 +418,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 Feb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W56-Cw-acf">
-                                            <rect key="frame" x="325.5" y="64" width="37.5" height="29"/>
+                                            <rect key="frame" x="324.5" y="64" width="38.5" height="29"/>
                                             <fontDescription key="fontDescription" name="SFUIText-Light" family="SF UI Text" pointSize="12"/>
                                             <color key="textColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>

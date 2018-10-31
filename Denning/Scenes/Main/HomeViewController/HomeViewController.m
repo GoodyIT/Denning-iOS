@@ -28,6 +28,7 @@
 iCarouselDataSource, iCarouselDelegate>
 {
     BOOL hideCells;
+    BOOL isAdsLoaded;
     NSArray* homeIconArray;
     NSArray* homeLabelArray;
     __block BOOL isLoading;
@@ -143,6 +144,9 @@ iCarouselDataSource, iCarouselDelegate>
         self.carouselTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(runMethod) userInfo:nil repeats:YES];
         
         _items = [result mutableCopy];
+        if (_items.count > 0) {
+            isAdsLoaded = true;
+        }
         for (int i = 0; i < result.count; i++) {
             NSURL *URL = [NSURL URLWithString:
                           [NSString stringWithFormat:@"data:application/octet-stream;base64,%@",
@@ -241,6 +245,12 @@ iCarouselDataSource, iCarouselDelegate>
 #pragma mark -
 #pragma mark iCarousel methods
 
+- (IBAction)tapAds:(id)sender {
+    if (!isAdsLoaded) return;
+    
+    [self gotoAdsURL:0];
+}
+
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
     //return the total number of items in the carousel
@@ -274,8 +284,7 @@ iCarouselDataSource, iCarouselDelegate>
     return view;
 }
 
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-{
+- (void) gotoAdsURL: (NSInteger) index{
     UIApplication *application = [UIApplication sharedApplication];
     NSURL *URL = [NSURL URLWithString:_items[index].URL];
     
@@ -287,6 +296,11 @@ iCarouselDataSource, iCarouselDelegate>
     } else {
         [application openURL:URL];
     }
+}
+
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
+{
+//    [self gotoAdsURL:index];
 }
 
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
