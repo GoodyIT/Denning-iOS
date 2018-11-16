@@ -1957,7 +1957,7 @@ NSMutableDictionary* keyValue;
         UINavigationController* nav = segue.destinationViewController;
         SolicitorListViewController *listVC = nav.viewControllers.firstObject;
         listVC.updateHandler = ^(SoliciorModel *model) {
-            newLabel = [NSString stringWithFormat:@"SolicitorGroup%ld", selectedContactRow-1];
+            newLabel = [NSString stringWithFormat:@"SolicitorGroup%d", selectedContactRow-1];
             solicitorCodeList[selectedContactRow] = model.solicitorCode;
             solicitorNameList[selectedContactRow] = model.name;
             [self replaceContentForSection:selectedSection InRow:selectedContactRow withValue:model.name];

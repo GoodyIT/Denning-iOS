@@ -21,6 +21,9 @@
     model.totalHour = [response valueForKeyNotNull:@"totalHour"];
     model.outTime = [response valueForKeyNotNull:@"outTime"];
     model.status = [response valueForKeyNotNull:@"status"];
+    model.onlineExe = [response valueForKeyNotNull:@"onlineExe"];
+    model.onlineWeb = [response valueForKeyNotNull:@"onlineWeb"];
+    model.onlineApp = [response valueForKeyNotNull:@"onlineApp"];
     
     return model;
 }

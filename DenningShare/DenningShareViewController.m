@@ -34,7 +34,7 @@ static int THE_CELL_HEIGHT = 450;
 @interface DenningShareViewController ()
 <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MLPAutoCompleteTextFieldDataSource,
 UITableViewDelegate, UITableViewDataSource,
-NSURLSessionDelegate, UITextFieldDelegate>
+NSURLSessionDelegate>
 {
     NSInteger category;
     NSInteger selectedIndexOfFilter;
@@ -65,6 +65,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *clientSearchTextField;
 @property (weak, nonatomic) IBOutlet UIButton *sendBtn;
 @property (weak, nonatomic) IBOutlet UIButton *transitBtn;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 @property (strong, nonatomic) UIAlertController *uploadingIndicator;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeightConstraint;
@@ -255,6 +256,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     _email = [defaults valueForKey:@"email"];
  
     self.searchTextField.placeholder = @"Denning Folders";
+    self.searchTextField.delegate = self;
     if ([defaults boolForKey:@"isStaff"] ) {
         _topHeightConstraint.constant = 130;
         self.searchTextField.text = keyword = _initialKeyword;
@@ -323,10 +325,12 @@ NSURLSessionDelegate, UITextFieldDelegate>
                                preferredStyle:UIAlertControllerStyleAlert];
     
     __weak typeof(self) weakSelf = self;
+    self.activityView.hidden = YES;
     [self.uploadingIndicator addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull __unused action) {
         [[NSOperationQueue mainQueue] cancelAllOperations];
          __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
+        strongSelf.activityView.hidden = YES;
     }]];
     
     [self presentViewController:self.uploadingIndicator animated:YES completion:nil];
@@ -340,6 +344,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
+        strongSelf.activityView.hidden = YES;
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [strongSelf dismissAlert];
         });
@@ -420,9 +425,11 @@ NSURLSessionDelegate, UITextFieldDelegate>
     _requestDataObject = [RequestObject new];
     [_requestDataObject setIncompleteString:@""];
     __weak typeof(self) weakSelf = self;
+    self.activityView.hidden = NO;
     [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
+        strongSelf.activityView.hidden = YES;
         if (statusCode == 408) {
             [strongSelf showExpiredAlertAndCancel];
         } else {
@@ -487,11 +494,11 @@ NSURLSessionDelegate, UITextFieldDelegate>
     NSMutableArray* temp = [NSMutableArray new];
     for (SearchResultModel* model in _searchResultArray) {
         NSUInteger cellType = [self detectItemType:model.form];
-        if  (selectedIndex == 0 && (cellType == DIContactCell || cellType == DIRelatedMatterCell)) {
+        if  (selectedIndex == 0 && cellType == DIRelatedMatterCell) {
             [temp addObject:model];
-        } else if (cellType == DIContactCell && selectedIndex == 2 ) { // Contact
+        } else if  (selectedIndex == 1 && cellType == DIContactCell) {
             [temp addObject:model];
-        } else if (cellType == DIRelatedMatterCell && selectedIndex == 1) { // File
+        } else if (cellType == DIPropertyCell && selectedIndex == 2 ) { // Contact
             [temp addObject:model];
         }
     }
@@ -532,9 +539,12 @@ NSURLSessionDelegate, UITextFieldDelegate>
     _requestDataObject = [RequestObject new];
     [_requestDataObject setIncompleteString:@""];
     __weak typeof(self) weakSelf = self;
+    self.activityView.hidden = NO;
     [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
          __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
+        
+        strongSelf.activityView.hidden = YES;
         if (statusCode == 408) {
             [strongSelf showExpiredAlertAndCancel];
         } else {
@@ -560,6 +570,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
     if ([searchType isEqualToString:@"Normal"]) { // Direct Tap on the search button
         urlString = [urlString stringByAppendingString:@"&isAutoComplete=1"];
     }
+    
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *downloadURL = [NSURL URLWithString:urlString];
     GetJSONOperation *operation = [[GetJSONOperation alloc] initWithCustomURL:downloadURL
@@ -570,16 +581,18 @@ NSURLSessionDelegate, UITextFieldDelegate>
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    NSLog(@"should return");
     page = 1;
-    if ([defaults boolForKey:@"isStaff"] && [textField isKindOfClass:[_clientSearchTextField class]]) {
-        [self.clientSearchTextField resignFirstResponder];
-        [self getBranch];
-    } else {
+    if ([defaults boolForKey:@"isStaff"] )  {
         keyword = self.searchTextField.text;
         [self.searchTextField resignFirstResponder];
-        searchType = @"Special";
+        searchType = @"Normal";
+        
         selectedIndexPaths = [NSMutableArray new];
         [self displaySearchResult];
+    } else {
+        [self.clientSearchTextField resignFirstResponder];
+        [self getBranch];
     }
     
     return YES;
@@ -607,6 +620,8 @@ NSURLSessionDelegate, UITextFieldDelegate>
             sectionName = @"Contact";
         } else if (cellType == DIRelatedMatterCell){ // Related Matter
             sectionName = @"Matter";
+        } else if (cellType == DIPropertyCell){ // Related Matter
+            sectionName = @"Property";
         }
     }
     
@@ -673,6 +688,9 @@ NSURLSessionDelegate, UITextFieldDelegate>
         if (cellType == DIContactCell) {
             self.url = [[defaults valueForKey:@"api"] stringByAppendingString:MATTER_STAFF_CONTACT_FOLDER];
             
+        } else if (cellType == DIPropertyCell) {
+            self.url = [[defaults valueForKey:@"api"] stringByAppendingString:PROPERTY_FILE_FOLDER_URL];
+            
         } else {
             fileFolderTitle = @"File Folder";
             self.url = [[defaults valueForKey:@"api"] stringByAppendingString:MATTER_STAFF_FILEFOLDER];
@@ -698,9 +716,11 @@ NSURLSessionDelegate, UITextFieldDelegate>
     _requestDataObject = [RequestObject new];
     [_requestDataObject setIncompleteString:@""];
     __weak typeof(self) weakSelf = self;
+    self.activityView.hidden = NO;
     [_requestDataObject setMyCompletionBlock:^(NSArray *items, NSInteger statusCode) {
         __strong typeof(self) strongSelf = weakSelf;
         strongSelf->isLoading = NO;
+        strongSelf.activityView.hidden = YES;
         if (statusCode == 408) {
             [strongSelf showExpiredAlertAndCancel];
         } else {
@@ -709,7 +729,7 @@ NSURLSessionDelegate, UITextFieldDelegate>
         }
     }];
     
-    NSString* urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%ld", searchURL, keyword, (long)category, page];
+    NSString* urlString = [NSString stringWithFormat:@"%@%@&category=%ld&page=%ld", searchURL, keyword, (long)category, (long)page];
     if ([searchType isEqualToString:@"Normal"]) { // Direct Tap on the search button
         urlString = [urlString stringByAppendingString:@"&isAutoComplete=1"];
     }

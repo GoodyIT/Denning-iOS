@@ -24,8 +24,7 @@
 - (void) configureCell:(LeaveRecordModel*) model
 {
     _staff.text = model.clsStaff.strName;
-    _startDate.text = model.dtStartDate;
-    _endDate.text = model.dtEndDate;
+    _startDate.text = model.decLeaveLength;
     _type.text = model.clsTypeOfLeave.codeValue;
 }
 

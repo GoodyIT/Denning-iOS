@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -25,19 +24,25 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Staff" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nyg-2w-L99" userLabel="left">
-                        <rect key="frame" x="13" y="29.5" width="33" height="17"/>
+                        <rect key="frame" x="25" y="20.5" width="33" height="17"/>
                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Status" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fA-lY-Las">
-                        <rect key="frame" x="400" y="29.5" width="44" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="App" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fA-lY-Las">
+                        <rect key="frame" x="404.5" y="20.5" width="27.5" height="17"/>
                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Device" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HUP-m1-xNe">
-                        <rect key="frame" x="334" y="29.5" width="46" height="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Web" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HUP-m1-xNe">
+                        <rect key="frame" x="366.5" y="20.5" width="30" height="17"/>
+                        <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
+                        <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="360" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b57-Cf-iKf">
+                        <rect key="frame" x="331" y="20.5" width="27.5" height="17"/>
                         <fontDescription key="fontDescription" name="SFUIText-Medium" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" red="1" green="0.23137254900000001" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -45,18 +50,21 @@
                 </subviews>
                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                 <constraints>
-                    <constraint firstItem="nyg-2w-L99" firstAttribute="top" secondItem="1fA-lY-Las" secondAttribute="top" id="BXR-CW-fUs"/>
-                    <constraint firstItem="HUP-m1-xNe" firstAttribute="top" secondItem="1fA-lY-Las" secondAttribute="top" id="GQe-2g-eKe"/>
+                    <constraint firstItem="b57-Cf-iKf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2hT-ly-I5e"/>
+                    <constraint firstItem="nyg-2w-L99" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="FLb-Ft-1Wp"/>
                     <constraint firstAttribute="trailingMargin" secondItem="1fA-lY-Las" secondAttribute="trailing" constant="5" id="HKY-iR-ciD"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="nyg-2w-L99" secondAttribute="bottom" constant="3" id="KaJ-LX-p8w"/>
-                    <constraint firstItem="1fA-lY-Las" firstAttribute="leading" secondItem="HUP-m1-xNe" secondAttribute="trailing" constant="20" id="LNv-VI-MCH"/>
+                    <constraint firstItem="1fA-lY-Las" firstAttribute="leading" secondItem="HUP-m1-xNe" secondAttribute="trailing" constant="8" id="LNv-VI-MCH"/>
+                    <constraint firstItem="HUP-m1-xNe" firstAttribute="leading" secondItem="b57-Cf-iKf" secondAttribute="trailing" constant="8" id="QYX-bY-0YD"/>
+                    <constraint firstItem="HUP-m1-xNe" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TDu-sv-xBS"/>
+                    <constraint firstItem="1fA-lY-Las" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gcT-Ux-w76"/>
                     <constraint firstItem="nyg-2w-L99" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="ljx-P5-cce"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="device" destination="HUP-m1-xNe" id="PNz-or-wch"/>
+                <outlet property="appTitle" destination="1fA-lY-Las" id="LhP-gk-MwL"/>
+                <outlet property="exeTitle" destination="b57-Cf-iKf" id="aDi-4g-Ux9"/>
                 <outlet property="staff" destination="nyg-2w-L99" id="mwh-9V-gEf"/>
-                <outlet property="status" destination="1fA-lY-Las" id="jOs-Hj-Zer"/>
+                <outlet property="webTitle" destination="HUP-m1-xNe" id="Ovy-5k-s8b"/>
             </connections>
             <point key="canvasLocation" x="49.5" y="61"/>
         </tableViewCell>

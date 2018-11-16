@@ -1067,7 +1067,7 @@ enum {
                     [QMAlert showAlertWithMessage:@"Please input valid ID No." actionSuccess:NO inViewController:self];
                     return;
                 } else {
-                    birth = [NSString stringWithFormat:@"%@-%@-%@ 00:00:00", _year, _month, _day];
+                    birth = [NSString stringWithFormat:@"%@-%@-%@", _year, _month, _day];
                     self.dateOfBirth.text = [DIHelpers getDateInShortFormWithoutTime:birth];
                 }
                 

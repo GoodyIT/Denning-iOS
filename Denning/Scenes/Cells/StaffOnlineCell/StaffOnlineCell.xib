@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -27,13 +24,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a2G-Hf-gRa" userLabel="left">
-                        <rect key="frame" x="13" y="13" width="160" height="17.5"/>
-                        <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rdV-cN-Oc8" userLabel="left">
-                        <rect key="frame" x="201.5" y="13" width="36" height="17.5"/>
+                        <rect key="frame" x="21" y="16" width="160" height="12"/>
                         <fontDescription key="fontDescription" name="SFUIText-Regular" family="SF UI Text" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -41,23 +32,31 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_status.png" translatesAutoresizingMaskIntoConstraints="NO" id="YxX-LH-6YC">
                         <rect key="frame" x="279" y="16.5" width="11" height="11"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_status.png" translatesAutoresizingMaskIntoConstraints="NO" id="B79-dM-XJR">
+                        <rect key="frame" x="209" y="16.5" width="11" height="11"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_status.png" translatesAutoresizingMaskIntoConstraints="NO" id="vsR-n1-aTK">
+                        <rect key="frame" x="244" y="16.5" width="11" height="11"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="YxX-LH-6YC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6vH-pK-dT5"/>
                     <constraint firstItem="a2G-Hf-gRa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="Gj6-MN-5Th"/>
-                    <constraint firstItem="rdV-cN-Oc8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="MWN-VQ-m07"/>
+                    <constraint firstItem="YxX-LH-6YC" firstAttribute="leading" secondItem="vsR-n1-aTK" secondAttribute="trailing" constant="24" id="P0f-zN-Z65"/>
                     <constraint firstItem="a2G-Hf-gRa" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="1:2" id="UOt-oZ-l1Q"/>
+                    <constraint firstItem="vsR-n1-aTK" firstAttribute="leading" secondItem="B79-dM-XJR" secondAttribute="trailing" constant="24" id="ba5-T0-DdZ"/>
                     <constraint firstAttribute="trailing" secondItem="YxX-LH-6YC" secondAttribute="trailing" constant="30" id="dRl-PZ-ZyA"/>
                     <constraint firstItem="a2G-Hf-gRa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="dmG-eA-Gkb"/>
-                    <constraint firstItem="YxX-LH-6YC" firstAttribute="leading" secondItem="rdV-cN-Oc8" secondAttribute="centerX" constant="60" id="n6r-np-ACr"/>
                     <constraint firstAttribute="bottomMargin" secondItem="a2G-Hf-gRa" secondAttribute="bottom" constant="5" id="nWe-25-ef1"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="rdV-cN-Oc8" secondAttribute="bottom" constant="5" id="t9f-iQ-A4U"/>
+                    <constraint firstItem="B79-dM-XJR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zLt-7I-9Vp"/>
+                    <constraint firstItem="vsR-n1-aTK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="znr-rK-gwB"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="device" destination="rdV-cN-Oc8" id="pb3-8k-JrN"/>
+                <outlet property="appStatus" destination="YxX-LH-6YC" id="qYI-Ti-HUA"/>
+                <outlet property="exeStatus" destination="B79-dM-XJR" id="V69-m2-haX"/>
                 <outlet property="staff" destination="a2G-Hf-gRa" id="erI-Hy-8E0"/>
-                <outlet property="statusImage" destination="YxX-LH-6YC" id="beQ-eX-RVL"/>
+                <outlet property="webStatus" destination="vsR-n1-aTK" id="E1r-Ja-6fy"/>
             </connections>
         </tableViewCell>
     </objects>

@@ -11,8 +11,9 @@
 
 @interface StaffOnlineCell : DIGeneralCell
 @property (weak, nonatomic) IBOutlet UILabel *staff;
-@property (weak, nonatomic) IBOutlet UILabel *device;
-@property (weak, nonatomic) IBOutlet UIImageView *statusImage;
+@property (weak, nonatomic) IBOutlet UIImageView *exeStatus;
+@property (weak, nonatomic) IBOutlet UIImageView *webStatus;
+@property (weak, nonatomic) IBOutlet UIImageView *appStatus;
 
 - (void) configureCellWithModel:(StaffOnlineModel*) model;
 

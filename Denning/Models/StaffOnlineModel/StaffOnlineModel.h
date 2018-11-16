@@ -17,6 +17,9 @@
 @property (strong, nonatomic) NSString* totalHour;
 @property (strong, nonatomic) NSString* outTime;
 @property (strong, nonatomic) NSString* status;
+@property (strong, nonatomic) id onlineExe;
+@property (strong, nonatomic) id onlineWeb;
+@property (strong, nonatomic) id onlineApp;
 + (StaffOnlineModel*) getStaffOnlineFromResponse:(NSDictionary*) response;
 
 + (NSArray*) getStaffOnlineArrayFromResponse:(NSArray*) response;

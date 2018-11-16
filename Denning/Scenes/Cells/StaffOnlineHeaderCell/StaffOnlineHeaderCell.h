@@ -10,8 +10,9 @@
 #import "DIGeneralCell.h"
 
 @interface StaffOnlineHeaderCell : DIGeneralCell
-@property (weak, nonatomic) IBOutlet UILabel *device;
+@property (weak, nonatomic) IBOutlet UILabel *exeTitle;
 @property (weak, nonatomic) IBOutlet UILabel *staff;
-@property (weak, nonatomic) IBOutlet UILabel *status;
+@property (weak, nonatomic) IBOutlet UILabel *webTitle;
+@property (weak, nonatomic) IBOutlet UILabel *appTitle;
 
 @end

@@ -24,11 +24,22 @@
 - (void) configureCellWithModel:(StaffOnlineModel*) model
 {
     _staff.text = model.name;
-    _device.text = model.device;
-    if ([model.status isEqualToString:@"online"]) {
-        _statusImage.image = [UIImage imageNamed:@"icon_status"];
+    if ([model.onlineExe boolValue]) {
+        _exeStatus.image = [UIImage imageNamed:@"icon_status"];
     } else {
-        _statusImage.image = [UIImage imageNamed:@"icon_status_offline"];
+        _exeStatus.image = [UIImage imageNamed:@"icon_status_offline"];
+    }
+    
+    if ([model.onlineWeb boolValue]) {
+        _webStatus.image = [UIImage imageNamed:@"icon_status"];
+    } else {
+        _webStatus.image = [UIImage imageNamed:@"icon_status_offline"];
+    }
+    
+    if ([model.onlineApp boolValue]) {
+        _appStatus.image = [UIImage imageNamed:@"icon_status"];
+    } else {
+        _appStatus.image = [UIImage imageNamed:@"icon_status_offline"];
     }
 }
 @end

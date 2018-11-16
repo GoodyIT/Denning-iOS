@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="StT-RK-NHJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="StT-RK-NHJ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Helvetica.ttc">
-            <string>Helvetica</string>
-        </array>
-        <array key="HelveticaNeue.ttc">
-            <string>HelveticaNeue</string>
-            <string>HelveticaNeue-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Auto Complete Data Source-->
         <scene sceneID="XVm-4C-KZV">
@@ -76,7 +64,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wse-rP-nAM">
-                                <rect key="frame" x="91" y="35" width="192" height="128"/>
+                                <rect key="frame" x="91.5" y="35" width="192" height="128"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="hyC-kI-Ytz"/>
@@ -401,9 +389,9 @@
                                             <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YYa-Tz-pWi">
                                                 <rect key="frame" x="1" y="96" width="374" height="29"/>
                                                 <segments>
-                                                    <segment title="All"/>
                                                     <segment title="Matter"/>
                                                     <segment title="Contact"/>
+                                                    <segment title="Property"/>
                                                     <segment title="Transit"/>
                                                 </segments>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -437,17 +425,22 @@
                                                     <outlet property="delegate" destination="StT-RK-NHJ" id="x6c-lj-gt8"/>
                                                 </connections>
                                             </textField>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="waV-7l-5Yl">
+                                                <rect key="frame" x="320" y="18" width="37" height="37"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="YYa-Tz-pWi" firstAttribute="leading" secondItem="KHv-48-ose" secondAttribute="leading" constant="1" id="7s4-eL-LKu"/>
                                             <constraint firstItem="1UT-VI-jQm" firstAttribute="centerY" secondItem="qjI-3v-Aor" secondAttribute="centerY" id="Dxs-WY-ge7"/>
                                             <constraint firstAttribute="trailing" secondItem="YYa-Tz-pWi" secondAttribute="trailing" id="HGu-i1-Spu"/>
+                                            <constraint firstItem="waV-7l-5Yl" firstAttribute="top" secondItem="KHv-48-ose" secondAttribute="top" constant="18" id="KgU-KS-xYI"/>
                                             <constraint firstItem="9lF-HE-ddd" firstAttribute="leading" secondItem="1UT-VI-jQm" secondAttribute="trailing" constant="3" id="MNe-4u-EOV"/>
                                             <constraint firstItem="1UT-VI-jQm" firstAttribute="leading" secondItem="qjI-3v-Aor" secondAttribute="trailing" constant="8" id="SlC-kT-zhl"/>
                                             <constraint firstItem="qjI-3v-Aor" firstAttribute="top" secondItem="KHv-48-ose" secondAttribute="top" constant="40" id="Vdd-BL-HnX"/>
                                             <constraint firstItem="YYa-Tz-pWi" firstAttribute="top" secondItem="qjI-3v-Aor" secondAttribute="bottom" constant="12" id="c3K-6Y-KZN"/>
                                             <constraint firstItem="qjI-3v-Aor" firstAttribute="leading" secondItem="KHv-48-ose" secondAttribute="leading" constant="8" id="gHk-Hh-BLs"/>
+                                            <constraint firstAttribute="trailing" secondItem="waV-7l-5Yl" secondAttribute="trailing" constant="18" id="hsw-YI-TZx"/>
                                             <constraint firstAttribute="height" constant="130" id="nDR-xj-f19"/>
                                             <constraint firstAttribute="trailing" secondItem="9lF-HE-ddd" secondAttribute="trailing" constant="5" id="nK2-In-sf9"/>
                                             <constraint firstItem="9lF-HE-ddd" firstAttribute="centerY" secondItem="qjI-3v-Aor" secondAttribute="centerY" id="wW5-0l-OJo"/>
@@ -462,9 +455,6 @@
                                                 <color key="textColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="search"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="StT-RK-NHJ" id="K7B-J0-fGh"/>
-                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -505,6 +495,7 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="activityView" destination="waV-7l-5Yl" id="Rf1-yc-4wA"/>
                         <outlet property="clientSearchTextField" destination="1UT-VI-jQm" id="hju-Gx-Mdw"/>
                         <outlet property="searchContainerConstraint" destination="1jS-Yv-atR" id="TNP-Zk-FCA"/>
                         <outlet property="searchContainerView" destination="hD8-yB-88F" id="Xz8-Ex-xx4"/>

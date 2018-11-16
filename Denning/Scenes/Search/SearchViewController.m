@@ -178,7 +178,7 @@ UITableViewDelegate, UITableViewDataSource, HTHorizontalSelectionListDataSource,
     
     self.generalSearchFilters = @{@"All": [NSNumber numberWithInteger: All],
                                   @"Contacts":[NSNumber numberWithInteger: Contact],
-                                  @"Related Matter": [NSNumber numberWithInteger: RelatedMatter],
+                                  @"Matters": [NSNumber numberWithInteger: RelatedMatter],
                                   @"Property": [NSNumber numberWithInteger: Property],
                                   @"Bank": [NSNumber numberWithInteger: Bank],
                                   @"Government Offices": [NSNumber numberWithInteger: GovernmentOffices],

@@ -75,7 +75,7 @@ typedef NS_ENUM(NSUInteger, QMUserInfoSection) {
 
 //MARK: - Actions
 
-- (IBAction)saveButtonPressed:(UIBarButtonItem *)__unused sender {
+- (IBAction)saveButtonPressed:(id) sender {
     
     NSMutableArray* tasks = [NSMutableArray new];
     if (nameChanged) {

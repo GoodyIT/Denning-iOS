@@ -12,7 +12,6 @@
 @interface PendingApprovalCell : DIGeneralCell
 @property (weak, nonatomic) IBOutlet UILabel *staff;
 @property (weak, nonatomic) IBOutlet UILabel *startDate;
-@property (weak, nonatomic) IBOutlet UILabel *endDate;
 @property (weak, nonatomic) IBOutlet UILabel *type;
 
 - (void) configureCell:(LeaveRecordModel*) model;
