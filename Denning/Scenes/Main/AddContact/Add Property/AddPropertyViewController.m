@@ -84,7 +84,7 @@ NSMutableDictionary* keyValue;
                        } mutableCopy];
 
     _headers = @[
-                 @"", @"Title Details (if issued)", @"More Strata Title Details (if issued)", @"Unit / Parcel Details (Per Principal SPA)", @"Project"
+                 @"", @"Title Details (if issued)", @"More Strata Title Details (if issued)", @"Unit / Parcel Details (Per SPA)", @"Project"
                  ];
     
     if ([self.viewType isEqualToString:@"view"]) {
@@ -101,7 +101,7 @@ NSMutableDictionary* keyValue;
                           @[@[@"Title Type", _propertyModel.title.type], @[@"Title No.", _propertyModel.title.value], @[@"Lot Type", _propertyModel.lotPT.type], @[@"Lot / PT No.", _propertyModel.lotPT.value], @[@"Mukim Type", _propertyModel.mukim.type], @[@"Mukim", _propertyModel.mukim.value], @[@"Daerah", _propertyModel.daerah], @[@"Negeri", _propertyModel.negeri],  @[@"Area Value", _propertyModel.area.value], @[@"Area Type", _propertyModel.area.type], @[@"Tenure", _propertyModel.tenure],@[@"Lease Expiry Date", [DIHelpers convertDateToCustomFormat:_propertyModel.leaseExpiryDate]], @[@"Address / Place", _propertyModel.address],  @[@"Restriction in Interest", _propertyModel.restrictionInInterest.descriptionValue], @[@"Restriction Against", _propertyModel.restrictionAgainst], @[@"Approving Authority", _propertyModel.approvingAuthority], @[@"Category of Land Use", _propertyModel.landUse]
                             ],
                           @[@[@"Parcel No.", _propertyModel.parcelNo], @[@"Storey No.", _propertyModel.storeyNo], @[@"Building No", _propertyModel.buildingNo], @[@"Accessory Parcel No.", _propertyModel.accParcelNo], @[@"Accessory Storey No.", _propertyModel.accStoreyNo], @[@"Accessory Building No.", _propertyModel.accBuildingNo], @[@"Units of Shares", _propertyModel.unitShare], @[@"Total Shares", _propertyModel.totalShare]],
-                          @[@[@"Parcel Type", _propertyModel.spaParcel.type], @[@"Unit/ParcelmNo.", _propertyModel.spaParcel.value], @[@"Storey No.", _propertyModel.storeyNo], @[@"Building/Block No.", _propertyModel.spaBuildingNo], @[@"Apt/Condo Name", _propertyModel.spaCondoName], @[@"Accessory Parcel No", _propertyModel.spaAccParcelNo], @[@"SPA Area", _propertyModel.spaArea.value], @[@"Measurement Unit", _propertyModel.spaArea.type]],
+                          @[@[@"Partly Hidden", _propertyModel.spaParcel.type], @[@"Unit/ParcelmNo.", _propertyModel.spaParcel.value], @[@"Storey No.", _propertyModel.storeyNo], @[@"Building/Block No.", _propertyModel.spaBuildingNo], @[@"Apt/Condo Name", _propertyModel.spaCondoName], @[@"Accessory Parcel No", _propertyModel.spaAccParcelNo], @[@"SPA Area", _propertyModel.spaArea.value], @[@"Measurement Unit", _propertyModel.spaArea.type]],
                           @[@[@"Project Name", _propertyModel.project.name], @[@"Developer", _propertyModel.developer.name], @[@"Proprietor", _propertyModel.proprietor.name], @[@"Block/Master Title", _propertyModel.masterTitle.fullTitle]],
                           ];
         _contents = [temp mutableCopy];
@@ -123,7 +123,7 @@ NSMutableDictionary* keyValue;
                       @[@[@"Title Type", @""], @[@"Title No.", @""], @[@"Lot Type", @""], @[@"Lot / PT No.", @""], @[@"Mukim Type", @""], @[@"Mukim", @""], @[@"Daerah", @""], @[@"Negeri", @""],  @[@"Area Value", @""], @[@"Area Type", @""], @[@"Tenure", @""], @[@"Lease Expiry Date", @""], @[@"Address / Place", @""], @[@"Restriction in Interest", @""], @[@"Restriction Against", @""], @[@"Approving Authority", @""], @[@"Category of Land Use", @""]
                         ],
                       @[@[@"Parcel No.", @""], @[@"Storey No.", @""], @[@"Building No.", @""], @[@"Accessory Parcel No.", @""], @[@"Accessory Storey No.", @""], @[@"Accessory Building No.", @""], @[@"Units of Shares", @""], @[@"Total Shares", @""]],
-                      @[@[@"Parcel Type", @""], @[@"Unit/Parcel No.", @""], @[@"Storey No.", @""], @[@"Building/Block No.", @""], @[@"Apt/Condo name", @""], @[@"Accessory Parcel No", @""], @[@"SPA Area", @""], @[@"Measurement Unit", @""]],
+                      @[@[@"Partly Hidden", @""], @[@"Unit/Parcel No.", @""], @[@"Storey No.", @""], @[@"Building/Block No.", @""], @[@"Apt/Condo name", @""], @[@"Accessory Parcel No", @""], @[@"SPA Area", @""], @[@"Measurement Unit", @""]],
                       @[@[@"Project Name", @""], @[@"Developer", @""], @[@"Proprietor", @""], @[@"Block/Master Title", @""]],
                       ];
     _contents = [temp mutableCopy];

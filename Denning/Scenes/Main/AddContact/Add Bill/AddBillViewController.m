@@ -26,6 +26,7 @@
     NSURL *selectedDocument;
     __block NSString *isRental;
     __block NSString* issueToFirstCode;
+    NSString* fileNo;
     NSString* selectedMatterCode, *selectedPresetCode;
     __block BOOL isLoading;
     __block BOOL isSaved;
@@ -174,7 +175,7 @@ NSMutableDictionary* keyValue;
 //
 //    }
     
-    [data addEntriesFromDictionary:@{@"fileNo": _contents[0][2][1]}];
+    [data addEntriesFromDictionary:@{@"fileNo": fileNo}];
     
     [data addEntriesFromDictionary:@{@"isRental": isRental}];
     
@@ -785,7 +786,9 @@ NSMutableDictionary* keyValue;
         SimpleMatterViewController* matterVC = segue.destinationViewController;
         matterVC.updateHandler = ^(MatterSimple *model) {
             self->isRental = model.matter.isRental;
-            [self replaceContentForSection:0 InRow:2 withValue:model.systemNo];
+            NSString* string = [NSString stringWithFormat:@"%@ (%@)", model.systemNo, model.primaryClient.name];
+            fileNo = model.systemNo;
+            [self replaceContentForSection:0 InRow:2 withValue:string];
             [self replaceContentForSection:0 InRow:3 withValue:model.matter.matterDescription];
             [self replaceContentForSection:0 InRow:5 withValue:model.presetBill.strDescription];
             [self replaceContentForSection:0 InRow:6 withValue:model.spaPrice];

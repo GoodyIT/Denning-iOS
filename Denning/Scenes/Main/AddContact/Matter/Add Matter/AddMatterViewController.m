@@ -146,7 +146,7 @@ NSMutableDictionary* keyValue;
                        @(0): @(1)
                        } mutableCopy];
     NSArray* temp = @[
-                      @[@[@"File No (Auto Assigned)", @""], @[@"Ref 2", @""], @[@"Primary Client", @""], @[@"File Status", @""], @[@"Partner-in-Charge", @""], @[@"LA-in-Charge", @""], @[@"Clerk-in-Charge", @""], @[@"Matter", @""], @[@"Branch", @""], @[@"File Location", @""], @[@"Pocket Location", @""], @[@"Storage Location", @""],
+                      @[@[@"File No (Auto Assigned)", @""], @[@"Ref 2 (if any)", @""], @[@"Primary Client", @""], @[@"File Status", @""], @[@"Partner-in-Charge", @""], @[@"LA-in-Charge", @""], @[@"Clerk-in-Charge", @""], @[@"Matter", @""], @[@"Branch", @""], @[@"File Location", @""], @[@"Pocket Location", @""], @[@"Storage Location", @""],
                           @[@"Save", @""]
                         ]
                       ];
@@ -526,7 +526,7 @@ NSMutableDictionary* keyValue;
     // Case Detail
     newArray[index] = [NSMutableArray new];
     [newArray[index] addObject:@[@"Case Type.", _matterModel.court.caseNo]];
-    [newArray[index] addObject:@[@"Type No", _matterModel.court.partyType]];
+    [newArray[index] addObject:@[@"Case", _matterModel.court.partyType]];
     [newArray[index] addObject:@[@"Court", _matterModel.court.place]];
     [newArray[index] addObject:@[@"Place", _matterModel.court.court]];
     [newArray[index] addObject:@[@"Judge", _matterModel.court.judge]];
@@ -590,7 +590,7 @@ NSMutableDictionary* keyValue;
             [newArray[index][k] addObject:model.solicitorGroupName];
             [newArray[index][k] addObject:model.solicitorName];
             solicitorCodeList[k] = model.solicitorCode;
-            solicitorNameList[k] = model.solicitorName;
+            solicitorNameList[k] = [model.solicitorName uppercaseString];
             solicitorRefList[k] = model.solicitorReference;
         }
         
@@ -1959,7 +1959,7 @@ NSMutableDictionary* keyValue;
         listVC.updateHandler = ^(SoliciorModel *model) {
             newLabel = [NSString stringWithFormat:@"SolicitorGroup%d", selectedContactRow-1];
             solicitorCodeList[selectedContactRow] = model.solicitorCode;
-            solicitorNameList[selectedContactRow] = model.name;
+            solicitorNameList[selectedContactRow] = [model.name uppercaseString];
             [self replaceContentForSection:selectedSection InRow:selectedContactRow withValue:model.name];
         };
     }

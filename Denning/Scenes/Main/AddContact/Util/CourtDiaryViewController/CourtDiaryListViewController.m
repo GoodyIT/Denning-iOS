@@ -146,7 +146,7 @@
 
 -(UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     TwoColumnCell *cell = [tableView dequeueReusableCellWithIdentifier:[TwoColumnCell cellIdentifier]];
-    [cell configureCellWithCodeValue:@"Place" descValue:@"TypeE"];
+    [cell configureCellWithCodeValue:@"Place" descValue:@"Court"];
     cell.backgroundColor = [UIColor grayColor];
     return cell;
 }

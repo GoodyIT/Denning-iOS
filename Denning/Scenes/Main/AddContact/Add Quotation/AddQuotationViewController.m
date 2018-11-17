@@ -777,7 +777,8 @@ NSMutableDictionary* keyValue;
                 
                 [self replaceContentForSection:0 InRow:3 withValue:issueToName];
             }
-            [self replaceContentForSection:0 InRow:1 withValue:model.systemNo];
+            NSString* string = [NSString stringWithFormat:@"%@ (%@)", model.systemNo, model.primaryClient.name];
+            [self replaceContentForSection:0 InRow:1 withValue:string];
             [self replaceContentForSection:0 InRow:2 withValue:model.matter.matterDescription];
             [self replaceContentForSection:0 InRow:4 withValue:model.presetBill.strDescription];
             [self replaceContentForSection:0 InRow:5 withValue:model.spaPrice];
